@@ -6,7 +6,7 @@
 
 * 在**Console > Database > RDS for MySQL**的**DB Instance **标签中单击左上端的**+创建**按钮，如下图所示，在页面下端出现输入界面。
 
-![rds_01_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_01_20190723_zh.png)
+![rds_01_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_01_20210112_zh.png)
 
 * **具体设置**界面中显示的必需项目全部输入完成后，单击界面右上端的**下一步**按钮。
     * DB Instance:输入DB实例名。
@@ -24,6 +24,8 @@
         * 可创建为20GB~2,000GB的大小。
     * Availabillity Zone:选择要创建DB实例的区域。
     * 高可用性：创建DB实例时，在与Master不同的Availability Zone创建Candidate Master。
+    * Ping Interval: 고가용성 사용 시, Master 인스턴스 상태를 확인하는 시간 간격을 설정합니다. 4회 실패 시 장애로 식별합니다.
+        * 1초~600초 사이로 설정할 수 있습니다.
     * DB文件加密：加密用户数据文件及备份文件。
     * 默认警报：可登记DB实例事件中与提前定义事件相关的警报。
         * 使用默认警报时，应选择接收组。
@@ -38,19 +40,22 @@
 
 在**备份&Access控制**界面中指定备份信息。
 
-![rds_02_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_02_20190723_zh.png)
+![rds_02_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_02_20210112_zh.png)
 
 * 设置自动备份及访问控制后，单击**下一步**按钮。
+* 쿼리 지연 대기 시간: 백업 수행 시에 FLUSH TABLES WITH READ LOCK 지연 대기 시간을 설정할 수 있습니다. 
+  * 0~21600 사이 값으로 설정할 수 있습니다.
 * 备份保存期限：若欲进行自动备份，请选择1天以上。
     若选择**无**，则不进行自动备份。
 * 备份开始时间：自动备份从备份开始时间至Duration之间任意的时间开始。
     Duration指开始备份的时间。不意味着在Duration中备份结束。
 * 用户访问控制：以CIDR格式输入可访问DB实例的用户。
     未注册于用户访问控制中的IP无法连接。
+    접근 제어 시, 방향 설정에서 `수신/송신`에 대해 각각 허용 여부를 선택합니다.
 
 可在DB Configuration界面中更改设置值。
 
-![rds_03_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_03_20190723_zh.png)
+![rds_03_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_03_20210112_zh.png)
 
 * 更改所需设置值后，单击**创建**按钮。
 * 最后单击**确认**按钮，创建DB实例。
@@ -66,15 +71,15 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 2.将浮动IP项目修改为**使用**。
 3.单击**确定**按钮，反映修改项。
 
-![rds_04_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_04_20190723_zh.png)
+![rds_04_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_04_20210112_zh.png)
 
 设置后浮动IP生成，可确认是否能从外部连接。
 
-![rds_05_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_05_20190723_zh.png)
+![rds_05_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_05_20210112_zh.png)
 
 以下为MySQL Workbench连接示例。
 
-![rds_06_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_06_20190723_zh.png)
+![rds_06_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_06_20210112_zh.png)
 
 #### 限制事项
 
@@ -147,7 +152,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 若欲提高读取性能，可以创建支持MySQL的Read Only Slave。
 * 若欲创建Read Only Slave，选择原始DB实例后单击**附加功能>创建副本**。
 
-![rds_07_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_07_20190723_zh.png)
+![rds_07_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_07_20210112_zh.png)
 
 * 输入创建副本所需的设置，单击**复制**按钮，创建副本。
 * 建议创建为与原始DB实例相同的类型或更高的类型，创建为较低的类型时，有可能发生复制延迟。
@@ -175,7 +180,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 #### 删除二进制日志
 
-![rds_08_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_08_20190723_zh.png)
+![rds_08_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_08_20210112_zh.png)
 
 * 删除二进制日志文件，确保磁盘空间。
 
@@ -185,7 +190,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 ### 扩展存储
 
-![rds_09_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_09_20190723_zh.png)
+![rds_09_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_09_20210112_zh.png)
 
 * 扩展DB实例的存储大小。
 * 若存在Read Only Slave，则一同扩展为与Master相同的存储大小。
@@ -207,12 +212,12 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * RDS定期收集DB运营及使用所需的监控项目，并以图表显示。
 * 若欲查看特定DB实例的监控项目，在**DB Instance**列表中选择特定DB实例后，选择**Monitoring**标签。
 
-![rds_10_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_10_20190723_zh.png)
+![rds_10_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_10_20210112_zh.png)
 
 * 若欲查看整体DB实例的监控项目，在**Monitoring**标签中选择所需DB实例后，单击**添加**按钮。
 * 若更改图表范围、间距、种类及项目，更改的事项影响添加的所有DB实例。
 
-![rds_11_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_11_20190723_zh.png)
+![rds_11_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_11_20210112_zh.png)
 
 * 可以使用能够轻松调整图表范围的按钮。
 * 每按一次1小时、6小时等按钮，以当前时间为准自动计算from~to并更新。
@@ -232,24 +237,24 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 * RDS支持的监控项目如下。
 
-![rds_12_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_12_20190723_zh.png)
+![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_zh.png)
 
 ### 日志文件
 
 * 无需访问DB实例，即可轻松查看或下载日志文件。
 * 选择**DB Instance**后单击**Events & Log**标签，可查看error.log, slow_query.log, general.log文件。
 
-![rds_13_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_13_20190723_zh.png)
+![rds_13_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_13_20210112_zh.png)
 
 * 但，应在**DB Configuration**中设置为保留该日志。
 * 单击**查看**按钮，可在新窗口中确认日志文件。
 * 可按照在日志长度中输入的行数查看，可从最后查看1MB大小的日志。
 
-![rds_14_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_14_20190723_zh.png)
+![rds_14_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_14_20210112_zh.png)
 
 * 若欲查看整个日志文件，应单击**下载**按钮，直接下载日志文件。
 
-![rds_15_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_15_20190723_zh.png)
+![rds_15_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_15_20210112_zh.png)
 
 * 单击**下载**按钮，可打开新窗口。
 * 单击**加载**按钮后稍待片刻，**下载**按钮激活，可进行下载。
@@ -263,7 +268,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 若欲查看特定DB实例中发生的事件，选择DB实例后，可在**具体设置**界面的**Event & Log**标签中确认。
 * 若欲一次性查看DB实例中发生的事件，可跳转至**Event**标签确认。
 
-![rds_16_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_16_20190723_zh.png)
+![rds_16_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_16_20210112_zh.png)
 
 * **类型**指的是在何种资源中发生的事件。
     * INSTANCE:与DB实例相关的事件。
@@ -284,11 +289,11 @@ RDS可将在所需资源中发生的特定事件警报传达给接收组。
 5.在接收对象窗口中单击**创建**按钮。
 6.警报设置完成后，单击**创建**按钮。 
 
-![rds_17_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_17_20190723_zh.png)
+![rds_17_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_17_20210112_zh.png)
 
 若满足设置的条件，可通过接收对象中输入的邮箱地址和电话接收警报。
 
-![rds_18_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_18_20190723_zh.png)
+![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112_zh.png)
 
 >[参考] 若在接收组中不勾选所需对象的复选框，则不发送邮件或SMS。
 
