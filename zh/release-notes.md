@@ -1,49 +1,59 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2020. 12. 15
+### 2021. 01. 19.
 
 #### 기능 추가
 
-- --ftwrl-wait-timeout 옵션 값을 사용자가 설정 할 수 있도록 기능 추가
+- 고가용성(HA) 기능 사용 시, Ping Interval(Master 인스턴스 상태를 확인하는 시간 간격)을 설정할 수 있도록 기능 추가
+- 고가용성(HA) 일시 중지/다시 시작 기능 추가
+- **Access 제어 설정** 대화 상자에서, 접근 제어 방향(수신/송신)을 설정할 수 있도록 기능 추가
+- t2.c1m1 Flavor 인스턴스 생성 불가 변경.
+- t2.c1m1 Flavor로 기존에 생성한 일반 인스턴스의 경우, 고가용성으로 변경하지 못하도록 변경.
 
-### 2020. 11. 10
+### 2020. 12. 15.
+
+#### 기능 추가
+
+- --ftwrl-wait-timeout 옵션 값을 사용자가 설정할 수 있도록 기능 추가
+
+### 2020. 11. 10.
 
 #### 버그 수정
 
-- 간헐적으로 자동 백업 생성 실패 현상 수정
-- 간헉적으로 기간 만료된 자동 백업 삭제 실패 현상 수정
+- 간헐적으로 자동 백업 생성에 실패하는 현상 수정
+- 간헐적으로 기간이 만료된 자동 백업 삭제에 실패하는 현상 수정
 
-### 2020. 10. 13.
+### October 13, 2020
 
-#### 버그 수정
+#### Bug Fixes 
 
-- innodb_buffer_pool_size 값이 의도한 값으로 수정되지 않는 현상 수정
-- require_secure_transport 값이 on일 경우 ha candidate master 인스턴스의 복제 실패 현상 수정
-- 대용량 인스턴스 백업 시 과도한 시간 지연 현상 수정
+- Fixed an issue in which innodb_buffer_pool_size cannot be modified as intended
+- Fixed failed copy of the ha candidate master instance, when the require_secure_transport is on
+- Fixed delays in the backup of large-scale instance
 
-### 2020. 09. 22.
+### September 22, 2020
 
-#### 기능 추가
+#### More Features
 
-- 한국(평촌) 리전 오픈
+- New region opened in Korea (Pyeongchon) 
 
-### 2020. 09. 15.
+### September 15, 2020
 
-#### 기능 추가
+#### More Features 
 
-- 모니터링 API 지원
+- Supports Monitoring API 
 
-### 2020. 08. 11.
+### August 11, 2020
 
-#### 버그 수정
+#### Bug Fixes
 
-- 사용자 VPC 서브넷이 없을 경우, 이상한 서브넷이 목록에 나타나는 현상 수정
+- Fixed an issue in which an invalid subnet appears on the list when user VPC subnet is unavailable 
 
-### 2020. 07. 14.
+### July 14, 2020
 
-#### 기능 추가
+#### More Features 
 
-- MySQL 8.0.18 버전을 추가 지원
+- Further supports MySQL 8.0.18  
 
 ### Dec. 10, 2019
 

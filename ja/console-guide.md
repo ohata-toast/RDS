@@ -6,7 +6,7 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
 
 * **Console > Database > RDS for MySQL**の **DB Instance **タブで左上の **+ 作成** ボタンをクリックすると、下図のようにページの下に入力画面が現れます。
 
-![rds_01_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_01_20190723_jp.png)
+![rds_01_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_01_20210112_jp.png)
 
 * **詳細設定** 画面に表示された必須項目をすべて入力した後、画面右上の **次へ** ボタンをクリックします。
     * DB Instance：DBインスタンス名を入力します。
@@ -25,6 +25,8 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
         * 20GB～2,000GBのサイズで作成できます。
     * Availabillity Zone：DBインスタンスが作成される領域を選択します。
     * 高可用性：DBインスタンスを作成する時、Masterとは異なるAvailability ZoneにCandidate Masterを作成します。
+    * Ping Interval：高可用性使用時、 Masterインスタンスの状態を確認する時間間隔を設定します。4回失敗すると障害と判断します。
+        * 1～600秒の間で設定できます。
     * DBファイルの暗号化：ユーザーデータファイルおよびバックアップファイルを暗号化します。
     * 基本アラーム：DBインスタンスのイベントのうち、定義されているイベントに対するアラームを登録できます。
         * 基本アラーム使用時、受信グループを選択する必要があります。
@@ -38,9 +40,11 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
 
 **バックアップ&アクセス制御** 画面でバックアップ情報を指定します。
 
-![rds_02_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_02_20190723_jp.png)
+![rds_02_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_02_20210112_jp.png)
 
 * 自動バックアップおよびアクセス制御を設定した後、 **次へ** ボタンをクリックします。
+* クエリー遅延待機時間：バックアップ遂行時にFLUSH TABLES WITH READ LOCK遅延待機時間を設定できます。 
+  * 0～21600の間の値に設定できます。
 * バックアップ保管期間：自動バックアップをするには、1日以上を選択します。
     **なし**を選択すると、自動バックアップが行われません。
 * バックアップ開始時刻：自動バックアップはバックアップ開始時刻からDurationの間の任意の時点に始まります。
@@ -48,10 +52,11 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
     * Duration内にバックアップが終了することを意味するわけではありません。
 * ユーザーアクセス制御：DBインスタンスにアクセス可能なユーザーをCIDR形式で入力します。
     * ユーザーアクセス制御に登録されていないIPは接続できません。
+    * アクセス制御を行う時、方向設定で`受信/送信`を許可するかどうかを選択します。
 
 DB Configuration画面で設定値を変更できます。
 
-![rds_03_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_03_20190723_jp.png)
+![rds_03_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_03_20210112_jp.png)
 
 * 設定値を変更した後、 **作成** ボタンをクリックします。
 * 最後に **確認** ボタンをクリックすると、DBインスタンスが作成されます。
@@ -68,15 +73,15 @@ DB Configuration画面で設定値を変更できます。
 2. Floating IP項目を **使用する**に修正します。
 3. **確認** ボタンをクリックすると、修正事項が反映されます。
 
-![rds_04_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_04_20190723_jp.png)
+![rds_04_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_04_20210112_jp.png)
 
 * 設定後、Floating IPが作成され、外部からアクセスできることを確認できます。
 
-![rds_05_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_05_20190723_jp.png)
+![rds_05_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_05_20210112_jp.png)
 
 * 次はMySQL Workbenchの接続例です。
 
-![rds_06_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_06_20190723_jp.png)
+![rds_06_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_06_20210112_jp.png)
 
 #### 制約事項
 
@@ -152,7 +157,7 @@ DB Configuration画面で設定値を変更できます。
 * 読み取り性能高めるには、MySQLがサポートするRead Only Slaveを作成します。
 * Read Only Slaveを作成するには、原本DBインスタンスを選択した後、 **追加機能 > コピー作成**を選択します。
 
-![rds_07_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_07_20190723_jp.png)
+![rds_07_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_07_20210112_jp.png)
 
 * コピー作成のための詳細設定を入力し、 **コピー** ボタンをクリックすると、コピーが作成されます。
 * コピー元DBインスタンスと同じタイプまたはさらにスペックの高いタイプでの作成を推奨します。スペックの低いタイプで作成した場合、コピー作成処理に遅延が発生することがあります。
@@ -179,7 +184,7 @@ DB Configuration画面で設定値を変更できます。
 
 #### バイナリログ削除
 
-![rds_08_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_08_20190723_jp.png)
+![rds_08_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_08_20210112_jp.png)
 
 * バイナリログファイルを削除してディスクスペースを確保します。
 
@@ -190,7 +195,7 @@ DB Configuration画面で設定値を変更できます。
 
 ### ストレージ拡張
 
-![rds_09_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_09_20190723_jp.png)
+![rds_09_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_09_20210112_jp.png)
 
 * DBインスタンスのストレージサイズを拡張します。
 * Read Only Slaveが存在する場合、Masterと同じストレージサイズに拡張されます。
@@ -212,12 +217,12 @@ DB Configuration画面で設定値を変更できます。
 * RDSはDB運営および使用に必要なモニタリング項目を周期的に収集し、チャートで表示します。
 * 特定DBインスタンスのモニタリング項目を見たい場合は、**DB Instance** リストから特定DBインスタンスを選択し、 **Monitoring** タブを選択します。
 
-![rds_10_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_10_20190723_jp.png)
+![rds_10_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_10_20210112_jp.png)
 
 * 特定DBインスタンスのモニタリング項目を見たい場合は、**Monitoring** タブで希望するDBインスタンスを選択し、 **追加** ボタンをクリックします。
 * チャート範囲、間隔、種類および項目を変更すると、変更事項が追加されたすべてのDBインスタンスに影響を与えます。
 
-![rds_11_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_11_20190723_jp.png)
+![rds_11_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_11_20210112_jp.png)
 
 * チャートの範囲を簡単に調整できるボタンを使用できます。
 * 1時間、6時間などのボタンを押すと、現在の時刻を基準に自動でfrom～toを計算してアップデートします。
@@ -237,24 +242,24 @@ DB Configuration画面で設定値を変更できます。
 
 * RDSでサポートするモニタリング項目は次のとおりです。
 
-![rds_12_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_12_20190723_jp.png)
+![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_jp.png)
 
 ### ログファイル
 
 * DBインスタンスに接続しなくても、ログファイルの閲覧やダウンロードができます。
 * **DB Instance**を選択した後、 **Events & Log** タブをクリックすると、error.log, slow_query.log, general.logファイルを閲覧できます。
 
-![rds_13_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_13_20190723_jp.png)
+![rds_13_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_13_20210112_jp.png)
 
 * また、必ず **DB Configuration**でログを残すように設定する必要があります。
 * **参照** ボタンをクリックすると、新しいウィンドウでログファイルを閲覧できます。
 * ログの長さに入力されたライン数だけ閲覧でき、終わりから512KBサイズのログを閲覧できます。
 
-![rds_14_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_14_20190723_jp.png)
+![rds_14_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_14_20210112_jp.png)
 
 * ログファイル全体を閲覧したい場合、 **ダウンロード** ボタンをクリックして直接ファイルをダウンロードする必要があります。
 
-![rds_15_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_15_20190723_jp.png)
+![rds_15_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_15_20210112_jp.png)
 
 * **ダウンロード** ボタンをクリックすると、新しいウィンドウが表示されます。
 * **取得** ボタンをクリックして少し待つと、 **ダウンロード** ボタンが有効になり、ダウンロードできるようになります。
@@ -268,7 +273,7 @@ DB Configuration画面で設定値を変更できます。
 * 特定DBインスタンスで発生したイベントを確認したい場合、DBインスタンスを選択した後、 **詳細設定** 画面の **Event & Log** タブで確認できます。
 * マイDBインスタンスで発生したイベントを一度に確認するには、 **Event** タブに移動して確認できます。
 
-![rds_16_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_16_20190723_jp.png)
+![rds_16_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_16_20210112_jp.png)
 
 * **タイプ**は、どのリソースで発生したイベントかを指します。
     * INSTANCE：DBインスタンスに関連するイベントです。
@@ -290,11 +295,11 @@ RDSは、希望するリソースで発生する特定イベント通知を受�
 5. 受信対象ウィンドウで **作成** ボタンをクリックします。
 6. 通知設定を完了した後、 **作成** ボタンをクリックします。 
 
-![rds_17_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_17_20190723_jp.png)
+![rds_17_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_17_20210112_jp.png)
 
 設定した条件を満たすと、受信対象に入力したメールアドレスと電話番号で通知を受け取ることができます。
 
-![rds_18_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_18_20190723_jp.png)
+![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112_jp.png)
 
 > [参考]受信グループでチェックボックスを選択していない対象には、メール/SMSが送信されません。
 

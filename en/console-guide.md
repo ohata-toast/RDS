@@ -6,7 +6,7 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
 
 * Go to **Console > Database > RDS for MySQL** and **DB Instance**, and click **+ Create** on top left, and the screen shows at the bottom of the page.   
 
-![rds_01_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_01_20190723_en.png)
+![rds_01_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_01_20210112_en.png)
 
 * Fill out required information on **Detail Setting**, and click **Next** on the top right.  
     * DB Instance: Enter name of a DB instance. 
@@ -24,6 +24,8 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
         * Between 20GB and 2,000GB  
     * Availability Zone: Select an area where DB instance is to be created.
     * High Availability: To create database instances, the candidate master is created at a different availability zone from the master.
+    * Ping Interval: 고가용성 사용 시, Master 인스턴스 상태를 확인하는 시간 간격을 설정합니다. 4회 실패 시 장애로 식별합니다.
+        * 1초~600초 사이로 설정할 수 있습니다.
     * Database File Encryption: User data files and backup files are encrypted.
     * Default Alarm: Register alarms for pre-defined events of a database instance.
       * To enable default alarm, a recipient group must be selected.
@@ -36,19 +38,22 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
 
 Specify backup information on the **Backup & Access Control** page. 
 
-![rds_02_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_02_20190723_en.png)
+![rds_02_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_02_20210112_en.png)
 
 * Set auto backup and access control, and click **Next**. 
+* 쿼리 지연 대기 시간: 백업 수행 시에 FLUSH TABLES WITH READ LOCK 지연 대기 시간을 설정할 수 있습니다. 
+  * 0~21600 사이 값으로 설정할 수 있습니다.
 * Backup Retention Period: Select more than a day, to allow auto backups. 
     Select **N/A**, and auto backup is not enabled. 
 * Backup Start Time: Auto backup starts at some point between start time and duration.  
     Duration refers to time when backup starts: but, not that backup ends within duration.  
 * User Access Control: Enter accessible users to DB instance in the CIDR format. 
     Unregistered IPs for user access control are not accessible. 
+    접근 제어 시, 방향 설정에서 `수신/송신`에 대해 각각 허용 여부를 선택합니다.
 
 Values can be changed on DB Configuration. 
 
-![rds_03_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_03_20190723_en.png)
+![rds_03_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_03_20210112_en.png)
 
 * Change values, and click **Create**. 
 * Click **Confirm**, and a DB instance is created. 
@@ -66,15 +71,15 @@ Values can be changed on DB Configuration.
 * Modify to **Enable** for floating IP. 
 * Click **Confirm** to apply changes. 
 
-![rds_04_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_04_20190723_en.png)
+![rds_04_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_04_20210112_en.png)
 
 After setting, you can find a floating IP is created to allow external access.  
 
-![rds_05_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_05_20190723_en.png)
+![rds_05_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_05_20210112_en.png)
 
 Below is an example of access to MySQL Workbench. 
 
-![rds_06_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_06_20190723_en.png)
+![rds_06_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_06_20210112_en.png)
 
 #### Constraints 
 
@@ -150,7 +155,7 @@ Below is an example of access to MySQL Workbench.
 * For better read performances, create Read Only Slave supported by MySQL. 
 * To create Read Only Slave, select an original DB instance and click **Additional Functions > Create Replica**. 
 
-![rds_07_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_07_20190723_en.png)
+![rds_07_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_07_20210112_en.png)
 
 * Fill out settings to create replica, and click **Replicate**, and its replication is created. 
 * It is recommended to create the same or higher type than an original database instance, since using a lower type may cause delays in replication. 
@@ -177,7 +182,7 @@ Below is an example of access to MySQL Workbench.
 
 #### Deleting Binary Logs 
 
-![rds_08_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_08_20190723_en.png)
+![rds_08_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_08_20210112_en.png)
 
 * Delete a binary log file to secure more disk space. 
 
@@ -187,7 +192,7 @@ Below is an example of access to MySQL Workbench.
 
 ### Scaling Storage  
 
-![rds_09_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_09_20190723_en.png)
+![rds_09_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_09_20210112_en.png)
 
 * Scale up storage of a DB instance. 
 * If Read Only Slave exists, the storage is scaled to the same size of Master. 
@@ -209,12 +214,12 @@ Below is an example of access to MySQL Workbench.
 * RDS periodically collects monitoring items required for database operations and usage, and shows them on a chart. 
 * To check monitoring items of a particular DB instance, select a particular DB instance from the **DB Instance List** and select **Monitoring**. 
 
-![rds_10_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_10_20190723_en.png)
+![rds_10_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_10_20210112_en.png)
 
 * To check monitoring items of all DB instances, select a DB instance on the **Monitoring** tab and click **Add**. 
 * Any change in chart range, interval, type and item affects all DB instances where changes are added.  
 
-![rds_11_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_11_20190723_en.png)
+![rds_11_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_11_20210112_en.png)
 
 * Buttons are available to easily adjust chart ranges. 
 * At each press of the button, like 1 hour or 6 hours, it is automatically calculated and updated as of the current time.
@@ -234,24 +239,24 @@ Below is an example of access to MySQL Workbench.
 
 * RDS supports the monitoring items as follows: 
 
-![rds_12_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_12_20190723_en.png)
+![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_en.png)
 
 ### Log Files 
 
 * View or download log files without accessing DB instances. 
 * Select **DB Instances** and click **Events & Logs**, to find error.log, slow_query.log, and general.log files. 
 
-![rds_13_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_13_20190723_en.png)
+![rds_13_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_13_20210112_en.png)
 
 * Make sure, though, to leave logs by configuring in **DB Configuration**.  
 * Click **View** to find log files on a new window. 
 * You can find as many lines as entered for a log length, and logs as big as 1MB are available.  (*원문 의미 확인요망: '끌에서부터')
 
-![rds_14_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_14_20190723_en.png)
+![rds_14_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_14_20210112_en.png)
 
 * To view the entire log files, click **Download** to directly download files. 
 
-![rds_15_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_15_20190723_en.png)
+![rds_15_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_15_20210112_en.png)
 
 * Click **Download** and a new window pops up. 
 * Click **Import** and wait, then the **Download** button is enabled.  
@@ -265,7 +270,7 @@ Below is an example of access to MySQL Workbench.
 * To check events that occur at a particular database instance, select a DB instance and go to **Events & Logs** on **Detail Setting**.  
 * To look through all events that occur in my DB instances, check on the **Event** tab. 
 
-![rds_16_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_16_20190723_en.png)
+![rds_16_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_16_20210112_en.png)
 
 * **Type** shows the resource an event is occurred.  
     * INSTANCE: An event related to DB instances. 
@@ -287,11 +292,11 @@ RDS delivers notifications on particular events occurring  at a resource to grou
 5. Then, click **Create** at the bottom. 
 6. After setting is completed, click **Create**.  
 
-![rds_17_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_17_20190723_en.png)
+![rds_17_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_17_20210112_en.png)
 
 Now, when conditions are met as configured, notifications are sent via mail addresses and phone numbers of the receivers. 
 
-![rds_18_20190723](https://static.toastoven.net/prod_rds/19.07.23/rds_18_20190723_en.png)
+![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112_en.png)
 
 > [Note] Unless receivers are checked to select, mail or SMS messages cannot be sent.  
 
