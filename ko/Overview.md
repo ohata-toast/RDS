@@ -26,7 +26,7 @@ NHN Cloud Cloud Relational Database Service (RDS) 는 Relational Database 를 �
 
 * RDS 에서 제공하는 Relational Database 의 단위입니다.
 * DB 인스턴스는 가상 장비와 설치된 Relational Database 를 아우르는 개념입니다.
-* TOAST Cloud 의 Compute & Network 상품에서 제공하는 모든 사양의 가상 장비로 DB 인스턴스를 생성 할 수 있습니다.
+* NHN Cloud 의 Compute & Network 상품에서 제공하는 모든 사양의 가상 장비로 DB 인스턴스를 생성 할 수 있습니다.
 * DB 인스턴스는 최소 20GB~1,000GB 크기의 HDD 및 SSD 스토리지를 지원합니다.
 * DB 인스턴스의 운영체제에 직접 접근 할 수 없으며, 오직 DB 인스턴스 생성 시 입력하신 port 를 통해서 Database 로만 접근 할 수 있습니다.
 * DB 인스턴스는 사용자의 Compute & Network 상품의 VPC Subnet을 선택해야만 생성할 수 있으며, 이를 통하여 사용자의 Compute & Network 상품의 Instance들과 통신이 가능합니다.

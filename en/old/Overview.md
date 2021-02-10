@@ -1,6 +1,6 @@
 ## Upcoming Products > RDS > Overview
 
-TOAST Cloud Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
+NHN Cloud Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
 복잡한 설정 없이 고가용성의 Relational Database 사용할 수 있습니다.
 
 ## 특징 및 기능 
@@ -29,7 +29,7 @@ TOAST Cloud Relational Database Service (RDS) 는 Relational Database 를 클라
 
 * RDS 에서 제공하는 Relational Database 의 단위입니다.
 * DB 인스턴스는 가상 장비와 설치된 Relational Database 를 아우르는 개념입니다.
-* TOAST Cloud 의 Compute & Network 상품에서 제공하는 모든 사양의 가상 장비로 DB 인스턴스를 생성 할 수 있습니다.
+* NHN Cloud 의 Compute & Network 상품에서 제공하는 모든 사양의 가상 장비로 DB 인스턴스를 생성 할 수 있습니다.
 * DB 인스턴스는 최소 20 GB ~ 600 GB 크기의 HDD 스토리지를 지원합니다.
 * 더 나은 성능을 원하면 Fusion I/O 사양의 가상장비를 선택 할 수 있습니다.
 * DB 인스턴스의 운영체제에 직접 접근 할 수 없으며, 오직 DB 인스턴스 생성 시 입력하신 port 를 통해서 Database 로만 접근 할 수 있습니다.
