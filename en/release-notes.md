@@ -1,5 +1,20 @@
 ## Database > RDS for MySQL > Release Notes
 
+### February 9, 2021
+
+#### More Features
+
+- Added a feature that controls DB User and DB Schema through web console
+
+#### Feature Updates
+
+- Tooltip provided when the DB file encryption feature is selected
+- Verification message displayed if query latency value is abnormal
+
+#### Bug Fixes
+
+-  Fixed a bug where project members cannot be registered as a Notification member if there are 20 or more project members
+
 ### 2021. 01. 19.
 
 #### 기능 추가
