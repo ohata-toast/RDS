@@ -96,6 +96,13 @@ Below is an example of access to MySQL Workbench.
 
 > [Note] For high availability instances, use MySQL query statement to force replication of other instances or master of external MySQL, and then high availability and some features do not operate.    
 
+#### High Availability Pause and Resume
+
+* High Availability can be temporarily stopped if disconnection or a massive volume of workload is expected due to temporary work in the Master instance.
+* If High Availability is paused, fault won't be detected; therefore, no failover will take place.
+* If the instance is changed or restarted while High Availability is paused, the paused High Availability function will resume.
+* Even if High Availability is paused, data duplication works fine. However, since no fault will be detected during the pause, it is not recommended to keep the paused state for a long time.
+
 #### Constraints 
 
 * Highly available instances are ensured for the initial one-time measure against failure. If a measure is taken against failure, the candidate master instance is changed into a general master for which high availability is not enabled.
@@ -235,6 +242,39 @@ Below is an example of access to MySQL Workbench.
 > [Note] Monitoring Data for Each RDS DB are temporarily saved and in a database called 'rds_maintenace' of user DB instance, and then deleted. Hence, even if such instance shows no sign of operations after created, its graph may show periodic movement by some monitoring items. 
 > [Note] If data on rds_maintenance database is manipulated, collected monitoring data may not be precise. 
 
+### DB Schema & DB User Management
+
+* Web console can manage DB Schema and DB User.
+
+> [Note] You can no longer create, modify, or delete DB Schema or DB User with a query.
+> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_list_20210209_ko.png)
+
+* Clicking the **Change**  button enables it so that DB Schema and User can be changed.
+
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_modify_20210209_ko.png)
+
+* Clicking the **Add**  button applies the changes in DB Schema and DB User all at once.
+* Renaming of DB Schema is not supported.
+* DB User is given four permissions.
+  * READ: Can read data.
+  * CRUD: In addition to READ permission, DML can be inquired.
+  * DDL: In addition to CRUD permission, DDL can be inquired.
+  * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
+
+> [Caution] In the case of having a Read-Only Slave or a high availability instance, if you directly add a user as DB User, replication could stop. This is a known MySQL bug. Please make sure to add a user in web console.
+
+* The DB User shown below cannot be used due to the policy:
+  * mysql.session
+  * mysql.sys
+  * sqlgw
+  * admin
+  * etladm
+  * alertman
+  * prom
+  * rds_admin
+  * rds_mha
+  * rds_repl
+  
 ### Monitoring Items 
 
 * RDS supports the monitoring items as follows: 
