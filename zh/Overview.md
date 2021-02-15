@@ -1,6 +1,6 @@
 ## 数据库 > RDS for MySQL > 概要
 
-TOAST RDS for MySQ是在云环境中提供关系型数据库的服务。
+NHN Cloud RDS for MySQ是在云环境中提供关系型数据库的服务。
 无需复杂的设置过程，即可使用具有极高可用性的关系型数据库。
 
 RDS for MySQL在激活用户的Compute & Network服务后方可使用。
@@ -18,7 +18,7 @@ RDS for MySQL在激活用户的Compute & Network服务后方可使用。
 
 * RDS提供的关系型数据库的单位。
 * DB实例是包含虚拟设备及已安装的关系型数据库的概念。
-* 可利用TOAST的Compute & Network服务中提供的所有类型的虚拟设备创建DB实例。
+* 可利用NHN Cloud的Compute & Network服务中提供的所有类型的虚拟设备创建DB实例。
 * DB实例支持最小20GB~1,000GB的HDD及SSD存储。
 * 无法直接访问DB实例的OS，仅可通过创建DB时输入的端口访问数据库。
 * 只有选择用户的Compute & Network服务的VPC子网才能够创建DB数据库，可以通过这种方式与用户的Compute & Network服务的实例通信。
