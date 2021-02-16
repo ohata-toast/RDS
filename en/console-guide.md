@@ -16,7 +16,7 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
     * DB User ID: Enter account ID for administrator to create when database is created.  
     * DB Password: Enter account password for administrator to create when database is created.  
     * VPC Subnet: Select a subnet of Compute & Network to communicate with DB instance to create, via private network.
-    * Floating IP: Enable Floating IP, to connect with external networks of TOAST Cloud. 
+    * Floating IP: Enable Floating IP, to connect with external networks of NHN Cloud. 
     * Flavor: Select a type of DB instance. 
     * Storage Type: Specify volume type of DB instance.
         * Either HDD or SSD.
@@ -96,6 +96,13 @@ Below is an example of access to MySQL Workbench.
 
 > [Note] For high availability instances, use MySQL query statement to force replication of other instances or master of external MySQL, and then high availability and some features do not operate.    
 
+#### High Availability Pause and Resume
+
+* High Availability can be temporarily stopped if disconnection or a massive volume of workload is expected due to temporary work in the Master instance.
+* If High Availability is paused, fault won't be detected; therefore, no failover will take place.
+* If the instance is changed or restarted while High Availability is paused, the paused High Availability function will resume.
+* Even if High Availability is paused, data duplication works fine. However, since no fault will be detected during the pause, it is not recommended to keep the paused state for a long time.
+
 #### Constraints 
 
 * Highly available instances are ensured for the initial one-time measure against failure. If a measure is taken against failure, the candidate master instance is changed into a general master for which high availability is not enabled.
@@ -110,7 +117,7 @@ Below is an example of access to MySQL Workbench.
 
 ### Instance Type 
 
-* DB instances can be created in all types provided by TOAST Compute & Network.  
+* DB instances can be created in all types provided by NHN Cloud Compute & Network.  
 
 ### Backups 
 
@@ -119,7 +126,7 @@ Below is an example of access to MySQL Workbench.
 * If you don't want extra charges, be aware of the backup cycle. 
 * Performance may be degraded during backups. 
 * It is recommended to back up during when service load is low. 
-* TOAST RDS supports restoration at a specified point of time. 
+* NHN Cloud RDS supports restoration at a specified point of time. 
     If the size of binary logs and retention period is too short, restoring to a specific time may be difficult. 
 * DB instances under restoration cannot be backed up. 
 
@@ -235,6 +242,39 @@ Below is an example of access to MySQL Workbench.
 > [Note] Monitoring Data for Each RDS DB are temporarily saved and in a database called 'rds_maintenace' of user DB instance, and then deleted. Hence, even if such instance shows no sign of operations after created, its graph may show periodic movement by some monitoring items. 
 > [Note] If data on rds_maintenance database is manipulated, collected monitoring data may not be precise. 
 
+### DB Schema & DB User Management
+
+* Web console can manage DB Schema and DB User.
+
+> [Note] You can no longer create, modify, or delete DB Schema or DB User with a query.
+> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_list_20210209_ko.png)
+
+* Clicking the **Change**  button enables it so that DB Schema and User can be changed.
+
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_modify_20210209_ko.png)
+
+* Clicking the **Add**  button applies the changes in DB Schema and DB User all at once.
+* Renaming of DB Schema is not supported.
+* DB User is given four permissions.
+  * READ: Can read data.
+  * CRUD: In addition to READ permission, DML can be inquired.
+  * DDL: In addition to CRUD permission, DDL can be inquired.
+  * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
+
+> [Caution] In the case of having a Read-Only Slave or a high availability instance, if you directly add a user as DB User, replication could stop. This is a known MySQL bug. Please make sure to add a user in web console.
+
+* The DB User shown below cannot be used due to the policy:
+  * mysql.session
+  * mysql.sys
+  * sqlgw
+  * admin
+  * etladm
+  * alertman
+  * prom
+  * rds_admin
+  * rds_mha
+  * rds_repl
+  
 ### Monitoring Items 
 
 * RDS supports the monitoring items as follows: 
@@ -302,9 +342,9 @@ Now, when conditions are met as configured, notifications are sent via mail addr
 
 ## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 
-TOAST updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. Instances that are running on a target hypervisor for maintenance must be migrated to a hypervisor which is completed with maintenance.
+NHN Cloud updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. Instances that are running on a target hypervisor for maintenance must be migrated to a hypervisor which is completed with maintenance.
 
-Migration of database instance can start on a TOAST console.
+Migration of database instance can start on a NHN Cloud console.
 Depending on database configuration, select a particular instance to migrate it as well, if its relevant database instance (e.g. slave instance) is also the target of maintenance.
 Follow the guide as below, to use the migration service on console.
 Go to the project in which a database instance for maintenance is located.
@@ -322,7 +362,7 @@ Put a cursor on the migration button, and you can find its maintenance schedule.
 ### 2. Make sure to close any application programs that are running on the database instance.
 
 It is recommended to take appropriate measures so as impact on relevant services can be limited.
-Nevertheless, if impact on service is inevitable, contact TOAST Customer Center to be guided further.
+Nevertheless, if impact on service is inevitable, contact NHN Cloud Customer Center to be guided further.
 
 ### 3. Select a database instance for maintenance, click migration, and click OK on window asking of migration.
 
@@ -335,4 +375,4 @@ If instance status remains the same, try ‘Refresh’.
 ![rds_planed_migration_3](https://static.toastoven.net/prod_rds/planned_migration_alarm/image3_en.png)
 
 While migration is underway, operation is not permitted.
-An abnormal closure of database instance migration shall be automatically reported to administrator, and it such case, you’ll be contacted by TOAST.
+An abnormal closure of database instance migration shall be automatically reported to administrator, and it such case, you’ll be contacted by NHN Cloud.

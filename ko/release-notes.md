@@ -1,5 +1,20 @@
 ## Database > RDS for MySQL > 릴리스 노트
 
+### 2021. 02. 16.
+
+#### 기능 추가
+
+- DB User와 DB 스키마를 웹 콘솔을 통해서 제어할 수 있는 기능 추가
+
+#### 기능 개선
+
+- DB 파일 암호화 기능 선택 시 툴팁 제공
+- 쿼리 지연 대기 시간의 값이 이상한 경우 검증 메시지 노출
+
+#### 버그 수정
+
+- 프로젝트 멤버가 20명 이상인 경우 Notification 멤버로 등록할 수 없는 버그 수정
+
 ### 2021. 01. 19.
 
 #### 기능 추가
@@ -238,6 +253,6 @@
 
 #### 신규 상품 출시
 
-- TOAST Cloud Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
+- NHN Cloud Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
 - 복잡한 설정 없이 Relational Database 사용할 수 있습니다.
 - MySQL 5.6.33 버전을 제공합니다.
