@@ -1,6 +1,6 @@
 ## Database > RDS for MySQL > Overview
 
-TOAST RDS for MySQL provides relational database in the cloud environment. 
+NHN Cloud RDS for MySQL provides relational database in the cloud environment. 
 No complicated setting is required to use highly available relational database. 
 
 RDS for MySQL is available only when user enables Compute & Network. 
@@ -18,7 +18,7 @@ RDS for MySQL is available only when user enables Compute & Network.
 
 * Unit of relational database provided by RDS. 
 * Refers both to virtual appliance and relational database that is installed. 
-* Can be created by all-type virtual appliances provided by TOAST Compute & Network. 
+* Can be created by all-type virtual appliances provided by NHN Cloud Compute & Network. 
 * Supports HDD and SSD storage, between 20GB and 1,000GB.
 * Cannot directly access OS of a DB instance, but access to DB instance is available only via the port entered when it is created.  
 * Can be created only by selecting VPC subnet of user's Compute & Network service, so as to communicate instances of user's Compute & Network service.  
