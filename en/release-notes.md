@@ -1,6 +1,6 @@
 ## Database > RDS for MySQL > Release Notes
 
-### February 9, 2021
+### February 16, 2021
 
 #### More Features
 
