@@ -233,6 +233,42 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 >[参考] 各RDS DB实例的监控数据临时保存在用户DB实例的名为“rds_maintenance”的数据库中，然后删除。因此，即使创建后未进行任何操作的实例，也会显示几个监控项目规则移动的图表状态。 
 >[参考] 若操作rds_maintenance database的数据，可能会收集到错误的监控数据。
 
+### DB 스키마 & DB User 관리
+
+* DB 스키마와 DB User를 웹 콘솔에서 관리할 수 있습니다.
+
+> [참고] 더이상 DB 스키마와 DB User를 쿼리를 통해 생성, 수정, 삭제할 수 없습니다.
+
+![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_zh.png)
+
+* **변경** 버튼 클릭 시, DB 스키마와 사용자를 변경할 수 있게 활성화됩니다.
+
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_zh.png)
+
+* **추가** 버튼 클릭 시, DB 스키마와 DB User의 변경 사항이 한꺼번에 적용됩니다.
+* DB 스키마의 이름 변경은 지원하지 않습니다.
+* DB User의 권한은 4개의 권한으로 구성됩니다.
+  * READ: 데이터를 조회할 수 있습니다.
+  * CRUD: READ 권한에 더해 DML 질의를 실행할 수 있습니다.
+  * DDL: CRUD 권한에 더해 DDL 질의를 실행할 수 있습니다.
+  * CUSTOM: 기존에 사용 중이던 사용자의 권한입니다. CUSTOM 권한으로 변경할 수는 없으며, CUSTOM 권한인 사용자는 오직 삭제만 가능합니다.
+
+> [주의] Read Only Slave를 가지고 있거나, 고가용성 인스턴스의 경우 기존 DB User로 직접 사용자를 추가하면, 복제가 중단될 수 있습니다. 이는 MySQL의 버그로 꼭 웹 콘솔에서 사용자를 추가해 주세요.
+
+* 아래의 DB User는 정책상 사용할 수 없습니다.
+  * mysql.session
+  * mysql.sys
+  * sqlgw
+  * admin
+  * etladm
+  * alertman
+  * prom
+  * rds_admin
+  * rds_mha
+  * rds_repl
+
+* DB 스키마와 DB User 항목의 **동기화** 버튼 클릭 시, DB 인스턴스에 생성된 DB 스키마와 DB User 정보들을 각각 가져올 수 있습니다.
+
 ### 监控项目
 
 * RDS支持的监控项目如下。

@@ -247,11 +247,11 @@ Below is an example of access to MySQL Workbench.
 * Web console can manage DB Schema and DB User.
 
 > [Note] You can no longer create, modify, or delete DB Schema or DB User with a query.
-> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_list_20210209_ko.png)
+> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_en.png)
 
 * Clicking the **Change**  button enables it so that DB Schema and User can be changed.
 
-![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_modify_20210209_ko.png)
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_en.png)
 
 * Clicking the **Add**  button applies the changes in DB Schema and DB User all at once.
 * Renaming of DB Schema is not supported.
@@ -274,6 +274,8 @@ Below is an example of access to MySQL Workbench.
   * rds_admin
   * rds_mha
   * rds_repl
+
+* DB 스키마와 DB User 항목의 **동기화** 버튼 클릭 시, DB 인스턴스에 생성된 DB 스키마와 DB User 정보들을 각각 가져올 수 있습니다.
   
 ### Monitoring Items 
 
