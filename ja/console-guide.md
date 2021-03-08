@@ -250,11 +250,11 @@ DB Configuration画面で設定値を変更できます。
 * DBスキーマとDB UserをWebコンソールで管理できます。
 
 > [参考] DBスキーマとDB Userをクエリーで作成、修正、削除できません。
-![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_list_20210209_ko.png)
+![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_jp.png)
 
 * **変更**ボタンを押すと、DBスキーマとユーザーを変更できるようになります。
 
-![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_modify_20210209_ko.png)
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_jp.png)
 
 * **追加**ボタンを押すと、DBスキーマとDB Userの変更事項が一度に適用されます。
 * DBスキーマの名前変更はサポートしません。
@@ -281,6 +281,8 @@ DB Configuration画面で設定値を変更できます。
   * rds_admin
   * rds_mha
   * rds_repl
+
+* DB 스키마와 DB User 항목의 **동기화** 버튼 클릭 시, DB 인스턴스에 생성된 DB 스키마와 DB User 정보들을 각각 가져올 수 있습니다.
 
 ### モニタリング項目
 
