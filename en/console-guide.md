@@ -247,11 +247,11 @@ Below is an example of access to MySQL Workbench.
 * Web console can manage DB Schema and DB User.
 
 > [Note] You can no longer create, modify, or delete DB Schema or DB User with a query.
-> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_list_20210209_ko.png)
+> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_en.png)
 
 * Clicking the **Change**  button enables it so that DB Schema and User can be changed.
 
-![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_modify_20210209_ko.png)
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_en.png)
 
 * Clicking the **Add**  button applies the changes in DB Schema and DB User all at once.
 * Renaming of DB Schema is not supported.
@@ -261,7 +261,7 @@ Below is an example of access to MySQL Workbench.
   * DDL: In addition to CRUD permission, DDL can be inquired.
   * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
 
-> [Caution] In the case of having a Read-Only Slave or a high availability instance, if you directly add a user as DB User, replication could stop. This is a known MySQL bug. Please make sure to add a user in web console.
+> [주의] Read Only Slave를 가지고 있거나, 고가용성 인스턴스의 경우 기존 DB User로 `CREATE USER`, `ALTER USER`, `GRANT` 와 관련된 작업 이후에 반드시 `flush privileges` 구문을 실행해야 합니다. 그렇지 않을 경우, 백업이 실패할 수 있으며 이는 MySQL 의 버그입니다.
 
 * The DB User shown below cannot be used due to the policy:
   * mysql.session
@@ -274,6 +274,8 @@ Below is an example of access to MySQL Workbench.
   * rds_admin
   * rds_mha
   * rds_repl
+
+* DB 스키마와 DB User 항목의 **동기화** 버튼 클릭 시, DB 인스턴스에 생성된 DB 스키마와 DB User 정보들을 각각 가져올 수 있습니다.
   
 ### Monitoring Items 
 
