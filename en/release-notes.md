@@ -1,5 +1,10 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2021. 03. 09.
+
+- 프로젝트 별 리소스 쿼터 제한 기능 개선
+- 특정한 경우에서 인스턴스 재시작이 정상적으로 이루어지지 않는 버그 수정
+
 ### February 16, 2021
 
 #### More Features
