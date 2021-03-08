@@ -261,7 +261,7 @@ Below is an example of access to MySQL Workbench.
   * DDL: In addition to CRUD permission, DDL can be inquired.
   * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
 
-> [Caution] In the case of having a Read-Only Slave or a high availability instance, if you directly add a user as DB User, replication could stop. This is a known MySQL bug. Please make sure to add a user in web console.
+> [주의] Read Only Slave를 가지고 있거나, 고가용성 인스턴스의 경우 기존 DB User로 `CREATE USER`, `ALTER USER`, `GRANT` 와 관련된 작업 이후에 반드시 `flush privileges` 구문을 실행해야 합니다. 그렇지 않을 경우, 백업이 실패할 수 있으며 이는 MySQL 의 버그입니다.
 
 * The DB User shown below cannot be used due to the policy:
   * mysql.session

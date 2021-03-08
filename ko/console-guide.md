@@ -259,7 +259,7 @@
   * DDL: CRUD 권한에 더해 DDL 질의를 실행할 수 있습니다.
   * CUSTOM: 기존에 사용 중이던 사용자의 권한입니다. CUSTOM 권한으로 변경할 수는 없으며, CUSTOM 권한인 사용자는 오직 삭제만 가능합니다.
 
-> [주의] Read Only Slave를 가지고 있거나, 고가용성 인스턴스의 경우 기존 DB User로 직접 사용자를 추가하면, 복제가 중단될 수 있습니다. 이는 MySQL의 버그로 꼭 웹 콘솔에서 사용자를 추가해 주세요.
+> [주의] Read Only Slave를 가지고 있거나, 고가용성 인스턴스의 경우 기존 DB User로 `CREATE USER`, `ALTER USER`, `GRANT` 와 관련된 작업 이후에 반드시 `flush privileges` 구문을 실행해야 합니다. 그렇지 않을 경우, 백업이 실패할 수 있으며 이는 MySQL 의 버그입니다.
 
 * 아래의 DB User는 정책상 사용할 수 없습니다.
   * mysql.session
