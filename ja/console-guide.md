@@ -250,11 +250,11 @@ DB Configuration画面で設定値を変更できます。
 * DBスキーマとDB UserをWebコンソールで管理できます。
 
 > [参考] DBスキーマとDB Userをクエリーで作成、修正、削除できません。
-![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_list_20210209_ko.png)
+![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_jp.png)
 
 * **変更**ボタンを押すと、DBスキーマとユーザーを変更できるようになります。
 
-![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_modify_20210209_ko.png)
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_jp.png)
 
 * **追加**ボタンを押すと、DBスキーマとDB Userの変更事項が一度に適用されます。
 * DBスキーマの名前変更はサポートしません。
@@ -264,7 +264,12 @@ DB Configuration画面で設定値を変更できます。
   * DDL：CRUD権限に加えてDDLクエリを実行できます。
   * CUSTOM：既存ユーザーの権限です。 CUSTOM権限に変更することはできず、CUSTOM権限のユーザーは削除のみ可能です。
 
-> [注意] Read Only Slaveを持っていたり、高可用性インスタンスの場合、既存DB Userで直接ユーザーを追加すると複製が中断される場合があります。これはMySQLのバグです。必ずWebコンソールからユーザーを追加してください。
+> [注意] 2021.2.16以後に作成されたRDS for MySQLインスタンスは、Webコンソールからのみuserを追加いただけます。
+> これはMySQLのバグに起因し、当サービスで採用しているバックアップソリューションによる複製が中断されるための回避策となります。
+> CLIによる操作を希望の場合、カスタマーサポートまでお問い合わせください。
+
+> また、2021.2.16以前のインスタンスではCLIによる操作も可能ですが、Read Only Slaveを持っていたり、高可用性インスタンスを有効化している場合、
+> CREATE USER、 ALTER USER、 GRANTに関わる作業後にflush privilegesを実行することで上述のバグによる中断が回避されます。
 * 下記のDB Userはポリシー上使用できません。
   * mysql.session
   * mysql.sys
@@ -276,6 +281,8 @@ DB Configuration画面で設定値を変更できます。
   * rds_admin
   * rds_mha
   * rds_repl
+
+* DB 스키마와 DB User 항목의 **동기화** 버튼 클릭 시, DB 인스턴스에 생성된 DB 스키마와 DB User 정보들을 각각 가져올 수 있습니다.
 
 ### モニタリング項目
 
