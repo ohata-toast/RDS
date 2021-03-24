@@ -8,7 +8,7 @@
 
 #### 기능 개선
 
-* 프로젝트 멤버의 권한을 ADMIN / MEMBER로 세분화
+* 프로젝트 멤버의 권한을 RDS for MySQL ADMIN / RDS for MySQL MEMBER로 세분화
 * MySQL이 다운된 상태에서 재시작이 가능하도록 수정
 * 임의의 가용성 영역을 선택할 수 있도록 수정
 * 알람 설정 시, 노출되는 쿼터 제한 문구 수정
