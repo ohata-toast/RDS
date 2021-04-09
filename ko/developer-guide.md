@@ -158,3 +158,104 @@ mysql> call mysql.tcrds_repl_slave_start;
 ```
 mysql> call mysql.tcrds_repl_init();
 ```
+
+
+## Procedure
+
+* RDS for MySQL은 사용자의 편의를 제공하기 위하여 사용자 계정에서 제한되는 몇몇 기능들을 수행하는 프로시저들을 자체적으로 제공하고 있습니다.
+
+### tcrds_active_process
+
+* Processlist에서 Sleep 상태가 아닌 ACTIVE 상태의 쿼리를 조회합니다.
+* 수행시간이 오래된 순서로 출력하며 쿼리내용(SQL)은 100자리 까지만 출력됩니다.
+
+```
+mysql> CALL mysql.tcrds_active_process();
+```
+
+### tcrds_process_kill
+
+* 특정 프로세스를 강제 종료합니다.
+* 종료할 프로세스 아이디는 information_schema.processlist 에서 확인할 수 있으며 tcrds_active_process 와 tcrds_current_lock 프로시저를 이용해서 프로세스의 정보를 확인할 수 있습니다.
+
+```
+mysql> CALL mysql.tcrds_process_kill(processlist_id );
+```
+
+### tcrds_current_lock
+
+* 현재 락을 기다리고 있는 프로세스와 락을 점유하고 있는 프로세스 정보를 확인합니다.
+* (w) 컬럼정보가 락을 획득하기 위해 대기하는 프로세스 정보
+* (B) 컬럼정보가 락을 점유하고 있는 프로세스 정보
+* 락을 점유하는 프로세스를 강제종료하려면 (B)PROCESS 컬럼을 확인한 후, call tcrds_process_kill(process_id)를 수행합니다.
+
+```
+mysql> CALL mysql.tcrds_current_lock();
+```
+
+### tcrds_repl_changemaster
+
+* 복제를 이용해 외부 MySQL DB를 NHN Cloud RDS 로 가져올 때 사용 합니다.
+* NHN Cloud RDS의 복제 구성은 콘솔의 “복제본 생성”으로 진행할 수 있습니다.
+
+```
+mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
+```
+
+* 파라미터 설명
+    * master_instance_ip : 복제 대상(Master) 서버의 IP
+    * master_instance_port : 복제 대상(Master) 서버의 MySQL Port
+    * user_id_for_replication : 복제 대상(Master) 서버의 MySQL 에 접속 할 복제용 계정
+    * password_for_replication_user : 복제용 계정 패스워드
+    * MASTER_LOG_FILE : 복제 대상(Master) 의 binary log 파일명
+    * MASTER_LOG_POS : 복제 대상(Master) 의 binary log 포지션
+
+```
+ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
+> [주의] 복제용 계정이 복제 대상(Master) MySQL 에 생성되어 있어야 합니다.
+
+### tcrds_repl_init
+
+* MySQL 복제 정보를 초기화합니다.
+
+```
+mysql> CALL mysql.tcrds_repl_init();
+```
+
+### tcrds_repl_slave_stop
+
+* MySQL 복제를 멈춥니다.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_stop();
+```
+
+### tcrds_repl_slave_start
+
+* MySQL 복제를 시작합니다.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_start();
+
+```
+
+### tcrds_repl_skip_repl_error
+
+* SQL_SLAVE_SKIP_COUNTER=1 를 수행 합니다. 다음과 같은 Duplicate key 에러 발생시 해당 프로시저를 실행하면 복제 에러를 해결 할 수 있습니다.
+* MySQL error code 1062: 'Duplicate entry ? for key ?'
+
+```
+mysql> CALL mysql. tcrds_repl_skip_repl_error();
+```
+
+### tcrds_repl_next_changemaster
+
+* Master의 다음 binary log 로그를 바라보도록 복제 정보를 변경 합니다.
+* 다음과 같은 복제 에러 발생시 해당 프로시저를 실행하면 복제 에러를 해결 할 수 있습니다.
+    * ex) MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
+
+```
+mysql> CALL mysql.tcrds_repl_next_changemaster();
+```
