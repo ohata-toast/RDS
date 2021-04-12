@@ -21,7 +21,7 @@
     * Storage 타입: DB 인스턴스 볼륨의 타입을 지정합니다.
         * HDD 및 SSD를 선택할 수 있습니다.
     * Storage: DB 인스턴스 볼륨의 크기를 입력합니다.
-        * 20GB~2,000GB 크기로 생성할 수 있습니다.
+        * 20GB~2TB 크기로 생성할 수 있습니다.
     * Availabillity Zone: DB 인스턴스가 생성 될 Zone 을 선택합니다.
     * 고가용성: DB 인스턴스를 생성할 때, Master와 서로 다른 Availability Zone에 Candidate Master를 생성합니다.
     * Ping Interval: 고가용성 사용 시, Master 인스턴스 상태를 확인하는 시간 간격을 설정합니다. 4회 실패 시 장애로 식별합니다.
@@ -281,10 +281,10 @@
 
 ![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112.png)
 
-### 로그 파일
+## 로그 파일
 
 * DB 인스턴스에 접속하지 않고 편하게 로그파일을 보거나 다운로드 받을 수 있습니다.
-* **DB Instance** 를 선택한 후, **Events & Log** 탭을 누르면 error.log, slow_query.log, general.log 파일을 볼 수 있습니다.
+* **DB Instance**를 선택한 후, **Events & Log** 탭을 누르면 설정에 따라 error.log, slow_query.log, general.log, server_audit.log 파일을 볼 수 있습니다.
 
 ![rds_13_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_13_20210112.png)
 
@@ -303,6 +303,14 @@
 * 로그 파일은 임시 Object Storage 에 업로드 되어 최대 5분 동안 다운로드할 수 있도록 유지됩니다.
 > [참고] Object Storage에 업로드 되고 삭제되는 5분간 Object Storage 사용 요금이 청구될 수 있습니다.
 
+### Audit Log
+
+* DB Configuration의 설정을 통해 audit log를 남길 수 있습니다.
+* 생성된 audit log 파일은 Event & Log 탭에서 확인하거나, 다운로드할 수 있습니다.
+* 자세한 설정값은 다음 사이트에서 확인 가능합니다.
+  * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
+  
+> [주의] MySQL 8.0.18 버전은 지원하지 않습니다.
 
 ## Event
 
@@ -339,6 +347,14 @@
 ![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112.png)
 
 > [참고] 수신그룹에서 원하는 대상에 체크박스를 선택하지 않으면 메일이나 SMS가 전달되지 않습니다.
+
+## 사용자 권한 분리
+
+* 프로젝트 멤버의 권한을 RDS for MySQL ADMIN / RDS for MySQL MEMBER로 구분하여 부여할 수 있습니다.
+* RDS for MySQL ADMIN 권한은 기존처럼 모든 기능을 사용 가능합니다.
+* RDS for MySQL MEMBER 권한은 정보를 조회하는 기능만 사용 가능합니다.
+  * 인스턴스를 생성, 수정, 삭제하거나, 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
+  * 단, Notification 탭에서 알람과 관련된 기능은 사용 가능합니다.
 
 ## 부록1. 하이퍼바이저 점검을 위한 DB 인스턴스 마이그레이션 가이드
 
