@@ -284,7 +284,7 @@
 ## 로그 파일
 
 * DB 인스턴스에 접속하지 않고 편하게 로그파일을 보거나 다운로드 받을 수 있습니다.
-* **DB Instance** 를 선택한 후, **Events & Log** 탭을 누르면 설정에 따라 error.log, slow_query.log, general.log, server_audit.log 파일을 볼 수 있습니다.
+* **DB Instance**를 선택한 후, **Events & Log** 탭을 누르면 설정에 따라 error.log, slow_query.log, general.log, server_audit.log 파일을 볼 수 있습니다.
 
 ![rds_13_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_13_20210112.png)
 
@@ -306,7 +306,7 @@
 ### Audit Log
 
 * DB Configuration의 설정을 통해 audit log를 남길 수 있습니다.
-* 생성된 audit log파일은 Event & Log 탭에서 확인하거나, 다운로드할 수 있습니다.
+* 생성된 audit log 파일은 Event & Log 탭에서 확인하거나, 다운로드할 수 있습니다.
 * 자세한 설정값은 다음 사이트에서 확인 가능합니다.
   * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
   
