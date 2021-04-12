@@ -24,8 +24,8 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
         * Between 20GB and 2,000GB  
     * Availability Zone: Select an area where DB instance is to be created.
     * High Availability: To create database instances, the candidate master is created at a different availability zone from the master.
-    * Ping Interval: 고가용성 사용 시, Master 인스턴스 상태를 확인하는 시간 간격을 설정합니다. 4회 실패 시 장애로 식별합니다.
-        * 1초~600초 사이로 설정할 수 있습니다.
+    * Ping Interval: Sets the interval for checking the status of the master instance when using the high availability feature. An error occurs after 4 failed attempts.
+        * It can be anywhere between 1 and 600 seconds.
     * Database File Encryption: User data files and backup files are encrypted.
     * Default Alarm: Register alarms for pre-defined events of a database instance.
       * To enable default alarm, a recipient group must be selected.
@@ -41,15 +41,15 @@ Specify backup information on the **Backup & Access Control** page.
 ![rds_02_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_02_20210112_en.png)
 
 * Set auto backup and access control, and click **Next**. 
-* 쿼리 지연 대기 시간: 백업 수행 시에 FLUSH TABLES WITH READ LOCK 지연 대기 시간을 설정할 수 있습니다. 
-  * 0~21600 사이 값으로 설정할 수 있습니다.
+* Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
+  * It can be anywhere between 0 and 21,600.
 * Backup Retention Period: Select more than a day, to allow auto backups. 
     Select **N/A**, and auto backup is not enabled. 
 * Backup Start Time: Auto backup starts at some point between start time and duration.  
     Duration refers to time when backup starts: but, not that backup ends within duration.  
 * User Access Control: Enter accessible users to DB instance in the CIDR format. 
     Unregistered IPs for user access control are not accessible. 
-    접근 제어 시, 방향 설정에서 `수신/송신`에 대해 각각 허용 여부를 선택합니다.
+    Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
 
 Values can be changed on DB Configuration. 
 
@@ -261,7 +261,7 @@ Below is an example of access to MySQL Workbench.
   * DDL: In addition to CRUD permission, DDL can be inquired.
   * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
 
-> [주의] Read Only Slave를 가지고 있거나, 고가용성 인스턴스의 경우 기존 DB User로 `CREATE USER`, `ALTER USER`, `GRANT` 와 관련된 작업 이후에 반드시 `flush privileges` 구문을 실행해야 합니다. 그렇지 않을 경우, 백업이 실패할 수 있으며 이는 MySQL 의 버그입니다.
+> [Caution] If you have Read Only Slave, or in the case of a high availability instance, if you have done a task related to `CREATE USER`, `ALTER USER`, or `GRANT` with an existing DB User, you must execute `flush privileges` syntax. Otherwise, backup could fail. This is a known MySQL bug.
 
 * The DB User shown below cannot be used due to the policy:
   * mysql.session
@@ -275,7 +275,7 @@ Below is an example of access to MySQL Workbench.
   * rds_mha
   * rds_repl
 
-* DB 스키마와 DB User 항목의 **동기화** 버튼 클릭 시, DB 인스턴스에 생성된 DB 스키마와 DB User 정보들을 각각 가져올 수 있습니다.
+* If you click the **Synchronize** button for DB schema and DB User, you can get the information of DB schema and DB User created in the DB instance.
   
 ### Monitoring Items 
 
