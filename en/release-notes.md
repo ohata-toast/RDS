@@ -6,7 +6,7 @@
 
 * Provides audit log function for MySQL versions 5.6.33 to 5.7.26
 
-#### 기능 개선
+#### Feature Updates
 
 * Permission of project members subdivided into RDS for MySQL ADMIN / RDS for MySQL MEMBER
 * Modified the system to allow restart during MySQL down
