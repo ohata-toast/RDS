@@ -1,5 +1,25 @@
 ## Database > RDS for MySQL > Release Notes
 
+### April 13, 2021
+
+#### More Features
+
+* Provides audit log function for MySQL versions 5.6.33 to 5.7.26
+
+#### 기능 개선
+
+* Permission of project members subdivided into RDS for MySQL ADMIN / RDS for MySQL MEMBER
+* Modified the system to allow restart during MySQL down
+* Modified system to allow users to select any availability areas
+* Modified quarter limit text displayed when setting alarms
+* Added user guide for procedures provided from RDS
+
+#### Bug Fixes  
+
+* Fixed an issue where status of instance with a completed failover intermittently becomes normalized
+* Fixed an issue where some features of master instance does not work due to failed Read Only Slave
+* Fixed an issue where MySQL cannot run properly when data encryption instance is forced to reboot
+
 ### 2021. 03. 09.
 
 #### 기능 개선
