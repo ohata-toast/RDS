@@ -159,3 +159,102 @@ mysql> call mysql.tcrds_repl_slave_start;
 ```
 mysql> call mysql.tcrds_repl_init();
 ```
+
+
+## Procedure
+
+* RDS for MySQLは、ユーザーの利便性を提供するために、ユーザーアカウントで制限されているいくつかの機能を実行するプロシージャを独自に提供しています。
+
+### tcrds_active_process
+
+* ProcesslistでSleep状態ではなく、ACTIVE状態のクエリを照会します。
+* 実行時間が古い順に出力され、クエリー内容(SQL)は100桁まで出力されます。
+
+```
+mysql> CALL mysql.tcrds_active_process();
+```
+
+### tcrds_process_kill
+
+* 特定のプロセスを強制終了します。
+* 終了するプロセスIDはinformation_schema.processlistで確認することができ、tcrds_active_processとtcrds_current_lockプロシージャを利用して、プロセスの情報を確認できます。
+
+```
+mysql> CALL mysql.tcrds_process_kill(processlist_id );
+```
+
+### tcrds_current_lock
+
+* 現在ロックを待っているプロセスと、ロックを専有しているプロセス情報を確認します。
+* (w)カラム情報がロックを取得するために待機するプロセス情報
+* (B)カラム情報がロックを専有しているプロセス情報
+* ロックを専有しているプロセスを強制終了するには、(B)PROCESSカラムを確認した後、call tcrds_process_kill(process_id)を実行します。
+
+```
+mysql> CALL mysql.tcrds_current_lock();
+```
+
+### tcrds_repl_changemaster
+
+* 複製を利用して外部MySQL DBをNHN Cloud RDSにインポートする時に使用します。
+* NHN Cloud RDSの複製は、コンソールの **複製作成**で行うことができます。
+
+```
+mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
+```
+
+* パラメータ説明
+    * master_instance_ip：複製対象(Master)サーバーのIP
+    * master_instance_port：複製対象(Master)サーバーのMySQL Port
+    * user_id_for_replication：複製対象(Master)サーバーのMySQLに接続する複製用のアカウント
+    * password_for_replication_user：複製用アカウントのパスワード
+    * MASTER_LOG_FILE：複製対象(Master)のbinary logファイル名
+    * MASTER_LOG_POS：複製対象(Master)のbinary logポジション
+
+```
+ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
+> [注意] 複製用アカウントが複製対象(Master) MySQLに作成されている必要があります。
+### tcrds_repl_init
+
+* MySQL 複製情報を初期化します。
+
+```
+mysql> CALL mysql.tcrds_repl_init();
+```
+
+### tcrds_repl_slave_stop
+
+* MySQLの複製を停止します。
+
+```
+mysql> CALL mysql.tcrds_repl_slave_stop();
+```
+
+### tcrds_repl_slave_start
+
+* MySQLの複製を開始します。
+
+```
+mysql> CALL mysql.tcrds_repl_slave_start();
+```
+
+### tcrds_repl_skip_repl_error
+
+* SQL_SLAVE_SKIP_COUNTER=1を実行します。次のようなDuplicate keyエラー発生した時は、tcrds_repl_skip_repl_errorプロシージャを実行すると複製エラーを解決できます。
+* MySQL error code 1062: 'Duplicate entry ? for key ?'
+
+```
+mysql> CALL mysql. tcrds_repl_skip_repl_error();
+```
+
+### tcrds_repl_next_changemaster
+
+* Masterの次のバイナリ(binary log)ログを読み取れるように複製情報を変更します。
+* 次のような複製エラーが発生した時は、tcrds_repl_next_changemasterプロシージャを実行すると複製エラーを解決できます。
+    * 例) MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
+
+```
+mysql> CALL mysql.tcrds_repl_next_changemaster();
+```
