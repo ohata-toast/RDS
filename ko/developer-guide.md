@@ -159,6 +159,79 @@ mysql> call mysql.tcrds_repl_slave_start;
 mysql> call mysql.tcrds_repl_init();
 ```
 
+## 오브젝트 스토리지를 이용한 백업 및 복원
+
+* RDS for MySQL의 백업 파일을 오브젝트 스토리지로 내보내거나, 오브젝트 스토리지의 백업 파일을 이용하여 DB 인스턴스를 복원할 수 있습니다.
+* RDS for MySQL은 Percona XtraBackup을 이용하여 백업 및 복원을 수행하므로, 오브젝트 스토리지의 백업 파일을 사용하기 위해서는 MySQL 각 버전별 권장하는 XtraBackup을 사용해야 합니다.
+
+| MySQL 버전 | XtraBackup 버전 |
+| --- | --- |
+| 5.6.33 | 2.4.20 |
+| 5.7.15 | 2.4.20 |
+| 5.7.19 | 2.4.20 |
+| 5.7.26 | 2.4.20 |
+| 8.0.18 | 8.0.12 |
+
+* XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+
+> [주의] 권장하는 XtraBackup 이외의 버전을 사용하면, 정상으로 동작하지 않을 수 있습니다.
+> [주의] DB 파일 암호화 기능을 사용할 경우 백업을 오브젝트 스토리지로 내보낼 수 없습니다.
+
+### 오브젝트 스토리지에 백업 내보내기
+
+* NHN Cloud의 오브젝트 스토리지에 RDS for MySQL의 백업을 내보낼 수 있습니다.
+* 웹 콘솔의 **Instance** 탭에서 DB 인스턴스를 선택한 후, **추가 기능** 메뉴에서 **오브젝트 스토리지로 백업 내보내기** 버튼을 클릭하면 수동 백업을 진행합니다. 백업된 파일을 곧바로 사용자가 지정한 오브젝트 스토리지로 업로드할 수 있습니다.
+* 또한, DB 인스턴스 상세 화면의 **백업 & Acess 제어** 탭에서 기존 백업 파일을 선택하고 **오브젝트 스토리지로 백업 내보내기** 버튼을 클릭하면 사용자가 지정한 오브젝트 스토리지로 업로드할 수 있습니다.
+* 백업 파일은 사용자가 지정한 오브젝트 스토리지의 컨테이너에 멀티 파트로 구성된 오브젝트로 업로드됩니다.
+
+### 오브젝트 스토리지의 백업 파일을 이용하여 수동으로 복원
+
+* 오브젝트 스토리지의 백업 파일을 이용하여 직접 MySQL을 복원할 수 있습니다.
+* 복원할 MySQL 및 XtraBackup이 설치되어 있다고 가정합니다.
+* 오브젝트 스토리지의 백업을 복원하고자 하는 서버에 다운로드합니다.
+* MySQL 서비스를 정지합니다.
+* MySQL 데이터 저장 경로의 모든 파일을 삭제합니다.
+
+```
+rm -rf {MySQL 데이터 저장 경로}/*
+```  
+
+* 다운로드한 백업 파일의 압축을 해제하고 복원합니다.
+* XtraBackup 2.4.20 예제
+
+```
+cat {백업 파일 저장 경로} | xbstream -x -C {MySQL 데이터 저장 경로}
+innobackupex --decompress {MySQL 데이터 저장 경로}
+innobackupex --defaults-file={my.cnf 경로} --apply-log {MySQL 데이터 저장 경로}
+```
+* XtraBackup 8.0.12 예제
+
+```
+cat {백업 파일 저장 경로} | xbstream -x -C {MySQL 데이터 저장 경로}
+xtrabackup --decompress --target-dir={MySQL 데이터 저장 경로}
+xtrabackup --prepare --target-dir={MySQL 데이터 저장 경로}
+xtrabackup --defaults-file={my.cnf 경로} --copy-back --target-dir={MySQL 데이터 저장 경로}
+```
+
+* 압축 해제 후 불필요한 파일을 제거합니다.
+
+```
+find {MySQL 데이터 저장 경로} -name "*.qp" -print0 | xargs -0 rm
+```
+
+* MySQL 서비스를 시작합니다.
+
+> [주의] 오브젝트 스토리지의 백업 파일과 복원하려는 MySQL의 버전은 동일해야 합니다.
+
+### 오브젝트 스토리지의 백업 파일을 이용하여 DB 인스턴스 생성
+
+* 오브젝트 스토리지의 백업 파일을 이용하여 동일 리전 다른 프로젝트의 RDS for MySQL로 복원할 수 있습니다.
+* 웹 콘솔의 **Instance** 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
+* 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
+
+> [주의] 오브젝트 스토리지의 백업 파일과 복원하려는 RDS for MySQL의 버전은 동일해야 합니다.
 
 ## Procedure
 
