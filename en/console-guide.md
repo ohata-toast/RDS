@@ -305,7 +305,7 @@ Below is an example of access to MySQL Workbench.
 * Log files are uploaded to temporary object storage, and remain to be downloaded for the maximum 5 minutes. 
 > [Note] For the 5 minutes while it is uploaded to object storage and deleted, object storage may be charged. 
 
-### Audit log
+### Audit Log
 
 * Can leave an audit log using the DB Configuration settings.
 * Generated audit log file can be checked or downloaded from the Event & Log tab.
