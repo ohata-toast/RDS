@@ -312,7 +312,7 @@ Below is an example of access to MySQL Workbench.
 * For detailed settings, please check the website below.
   * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
 
-> [Caution] MySQL 8.0.18 version is not supported.
+> [Caution] MySQL 5.6.33, 8.0.18 version is not supported.
 
 ## Events 
 

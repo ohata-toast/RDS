@@ -311,7 +311,7 @@
 * 자세한 설정값은 다음 사이트에서 확인 가능합니다.
   * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
   
-> [주의] MySQL 8.0.18 버전은 지원하지 않습니다.
+> [주의] MySQL 5.6.33 8.0.18 버전은 지원하지 않습니다.
 
 ## Event
 
