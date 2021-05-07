@@ -159,3 +159,102 @@ mysql> call mysql.tcrds_repl_slave_start;
 ```
 mysql> call mysql.tcrds_repl_init();
 ```
+
+
+## Procedure
+
+* RDS for MySQL provides its own procedures for user convenience that perform several features that are otherwise limited on user accounts.
+
+### tcrds_active_process
+
+* Retrieves queries in ACTIVE status instead of Sleep status from Processlist.
+* Data output is displayed in order of longest performance time to shortest, and the query value (SQL) is displayed up to hundred digits.
+
+```
+mysql> CALL mysql.tcrds_active_process();
+```
+
+### tcrds_process_kill
+
+* Force shutdown a specific process.
+* Process ID to end can be checked in information_schema.processlist, and the process information can be checked using the tcrds_active_process and tcrds_current_lock procedures.
+
+```
+mysql> CALL mysql.tcrds_process_kill(processlist_id );
+```
+
+### tcrds_current_lock
+
+* Checks the information of the process waiting for a lock and the process that holds a lock.
+* (w) Process information where column information waits to acquire a lock.
+* (B) Process information where column information holds a lock.
+* To force shutdown a process that occupies a lock, check the (B)PROCESS column and perform call tcrds_process_kill(process_id).
+
+```
+mysql> CALL mysql.tcrds_current_lock();
+```
+
+### tcrds_repl_changemaster
+
+* Used to bring external MySQL DB to NHN Cloud RDS through replication.
+* Replication configuration of NHN Cloud RDS is done with **Create replication** of the console.
+
+```
+mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
+```
+
+* Explaining parameter
+    * master_instance_ip : IP of replication target (Master) server
+    * master_instance_port : MySQL Port of replication target (Master) server
+    * user_id_for_replication : Account for replication to access the MySQL of replication target (Master) server
+    * password_for_replication_user : Password of account for replication
+    * MASTER_LOG_FILE : Binary log file name of replication target (Master)
+    * MASTER_LOG_POS : Binary log file position of replication target (Master)
+
+```
+ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
+> [Caution] The account for replication must be created in MySQL of the replication target (Master).
+### tcrds_repl_init
+
+* Reset MySQL replication information.
+
+```
+mysql> CALL mysql.tcrds_repl_init();
+```
+
+### tcrds_repl_slave_stop
+
+* Stop MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_stop();
+```
+
+### tcrds_repl_slave_start
+
+* Start MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_start();
+```
+
+### tcrds_repl_skip_repl_error
+
+* Perform SQL_SLAVE_SKIP_COUNTER=1. Resolve replication error by performing tcrds_repl_skip_repl_error procedure when Duplicate key error occurs as shown below.
+* MySQL error code 1062: 'Duplicate entry ? for key ?'
+
+```
+mysql> CALL mysql. tcrds_repl_skip_repl_error();
+```
+
+### tcrds_repl_next_changemaster
+
+* Changes replication information to read the next binary log of master.
+* Resolve replication error by performing tcrds_repl_next_changemaster procedure when replication error occurs as shown below.
+    * e.g. MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
+
+```
+mysql> CALL mysql.tcrds_repl_next_changemaster();
+```
