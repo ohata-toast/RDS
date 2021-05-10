@@ -84,6 +84,7 @@ Below is an example of access to MySQL Workbench.
 #### Constraints 
 
 * If user's compute instance lies in the network environment which cannot access DNS server, the instance cannot access RDS instance via domain.
+* The user's ISP may block a well-known port for security purposes. In such cases, the user cannot access NHN Cloud's RDS and must use a different port number.
 
 ## DB Instances
 
