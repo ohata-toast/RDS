@@ -160,6 +160,78 @@ mysql> call mysql.tcrds_repl_slave_start;
 mysql> call mysql.tcrds_repl_init();
 ```
 
+## Backup and restoration using object storage
+
+* RDS for MySQL backup files can be exported to object storage, and DB instances can be restored using backup files in object storage.
+* RDS for MySQL uses Percona XtraBackup for backup and restoration, so the recommended XtraBackup version for each MySQL version must be used to use the backup files in object storage.
+
+| MySQL version | XtraBackup version |
+| --- | --- |
+| 5.6.33 | 2.4.20 |
+| 5.7.15 | 2.4.20 |
+| 5.7.19 | 2.4.20 |
+| 5.7.26 | 2.4.20 |
+| 8.0.18 | 8.0.12 |
+
+* Refer to the Percona's website for detailed descriptions on installing XtraBackup
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+
+> [Caution] It might now work properly if you use an XtraBackup version other than the ones recommended.
+> [Caution] When using DB file encryption feature, backup cannot be exported to object storage.
+
+### Exporting backup to object storage
+
+* You may export an RDS for MySQL backup to the NHN Cloud object storage
+* After choosing DB Instance on **Instance** tab of the web console, go to the **Additional Functions** menu and click the **Export Backup to Object Storage** for a manual backup. The backup file can be uploaded to the object storage designated by the user right away.
+* Moreover, choose the existing backup file on **Control Backup and Access** tab of the DB instance detail screen and click on the **Export Backup to Object Storage** to upload to the object storage designated by the user.
+* Backup files are uploaded onto the object storage designated by the user in the form of a multi-part object.
+
+### Restore manually using backup files in object storage
+
+* You can restore MySQL manually using backup files in object storage.
+* Let's suppose that the MySQL for restoration and XtraBackup are installed.
+* Download the object storage file onto the server you wish to restore.
+* Stop the MySQL service.
+* Delete all files in the MySQL data storage path.
+```
+rm -rf {MySQL data storage path}/*
+```  
+
+* Decompress and restore the downloaded backup file.
+* XtraBackup 2.4.20 example
+
+```
+cat {backup file storage path} | xbstream -x -C {MySQL data storage path}
+innobackupex --decompress {MySQL data storage path}
+innobackupex --defaults-file={my.cnf 경로} --apply-log {MySQL data storage path}
+```
+* XtraBackup 8.0.12 example
+
+```
+cat {backup file storage path} | xbstream -x -C {MySQL data storage path}
+xtrabackup --decompress --target-dir={MySQL data storage path}
+xtrabackup --prepare --target-dir={MySQL data storage path}
+xtrabackup --defaults-file={my.cnf path} --copy-back --target-dir={MySQL data storage path}
+```
+
+* Delete unnecessary files after decompression.
+
+```
+find {MySQL data storage path} -name "*.qp" -print0 | xargs -0 rm
+```
+
+* Start MySQL service.
+
+> [Caution] The versions of the backup file in object storage and the MySQL for restoration must be the same.
+
+### Create DB instance using backup file in object storage
+
+* You can restore the backup file in object storage into a RDS for MySQL of a different project in the same region.
+* Click on the **Restore from Backup in Object Storage** in the **Instance** tab on the web console.
+* Enter the information of the object storage with the backup file and the DB instance, and click the **Create** button.
+
+> [Caution] The versions of the backup file in object storage and the RDS for MySQL for restoration must be the same.
 
 ## Procedure
 
