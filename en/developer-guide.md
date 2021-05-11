@@ -159,3 +159,174 @@ mysql> call mysql.tcrds_repl_slave_start;
 ```
 mysql> call mysql.tcrds_repl_init();
 ```
+
+## Backup and restoration using object storage
+
+* RDS for MySQL backup files can be exported to object storage, and DB instances can be restored using backup files in object storage.
+* RDS for MySQL uses Percona XtraBackup for backup and restoration, so the recommended XtraBackup version for each MySQL version must be used to use the backup files in object storage.
+
+| MySQL version | XtraBackup version |
+| --- | --- |
+| 5.6.33 | 2.4.20 |
+| 5.7.15 | 2.4.20 |
+| 5.7.19 | 2.4.20 |
+| 5.7.26 | 2.4.20 |
+| 8.0.18 | 8.0.12 |
+
+* Refer to the Percona's website for detailed descriptions on installing XtraBackup
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+
+> [Caution] It might now work properly if you use an XtraBackup version other than the ones recommended.
+> [Caution] When using DB file encryption feature, backup cannot be exported to object storage.
+
+### Exporting backup to object storage
+
+* You may export an RDS for MySQL backup to the NHN Cloud object storage
+* After choosing DB Instance on **Instance** tab of the web console, go to the **Additional Functions** menu and click the **Export Backup to Object Storage** for a manual backup. The backup file can be uploaded to the object storage designated by the user right away.
+* Moreover, choose the existing backup file on **Control Backup and Access** tab of the DB instance detail screen and click on the **Export Backup to Object Storage** to upload to the object storage designated by the user.
+* Backup files are uploaded onto the object storage designated by the user in the form of a multi-part object.
+
+### Restore manually using backup files in object storage
+
+* You can restore MySQL manually using backup files in object storage.
+* Let's suppose that the MySQL for restoration and XtraBackup are installed.
+* Download the object storage file onto the server you wish to restore.
+* Stop the MySQL service.
+* Delete all files in the MySQL data storage path.
+```
+rm -rf {MySQL data storage path}/*
+```  
+
+* Decompress and restore the downloaded backup file.
+* XtraBackup 2.4.20 example
+
+```
+cat {backup file storage path} | xbstream -x -C {MySQL data storage path}
+innobackupex --decompress {MySQL data storage path}
+innobackupex --defaults-file={my.cnf 경로} --apply-log {MySQL data storage path}
+```
+* XtraBackup 8.0.12 example
+
+```
+cat {backup file storage path} | xbstream -x -C {MySQL data storage path}
+xtrabackup --decompress --target-dir={MySQL data storage path}
+xtrabackup --prepare --target-dir={MySQL data storage path}
+xtrabackup --defaults-file={my.cnf path} --copy-back --target-dir={MySQL data storage path}
+```
+
+* Delete unnecessary files after decompression.
+
+```
+find {MySQL data storage path} -name "*.qp" -print0 | xargs -0 rm
+```
+
+* Start MySQL service.
+
+> [Caution] The versions of the backup file in object storage and the MySQL for restoration must be the same.
+
+### Create DB instance using backup file in object storage
+
+* You can restore the backup file in object storage into a RDS for MySQL of a different project in the same region.
+* Click on the **Restore from Backup in Object Storage** in the **Instance** tab on the web console.
+* Enter the information of the object storage with the backup file and the DB instance, and click the **Create** button.
+
+> [Caution] The versions of the backup file in object storage and the RDS for MySQL for restoration must be the same.
+
+## Procedure
+
+* RDS for MySQL provides its own procedures for user convenience that perform several features that are otherwise limited on user accounts.
+
+### tcrds_active_process
+
+* Retrieves queries in ACTIVE status instead of Sleep status from Processlist.
+* Data output is displayed in order of longest performance time to shortest, and the query value (SQL) is displayed up to hundred digits.
+
+```
+mysql> CALL mysql.tcrds_active_process();
+```
+
+### tcrds_process_kill
+
+* Force shutdown a specific process.
+* Process ID to end can be checked in information_schema.processlist, and the process information can be checked using the tcrds_active_process and tcrds_current_lock procedures.
+
+```
+mysql> CALL mysql.tcrds_process_kill(processlist_id );
+```
+
+### tcrds_current_lock
+
+* Checks the information of the process waiting for a lock and the process that holds a lock.
+* (w) Process information where column information waits to acquire a lock.
+* (B) Process information where column information holds a lock.
+* To force shutdown a process that occupies a lock, check the (B)PROCESS column and perform call tcrds_process_kill(process_id).
+
+```
+mysql> CALL mysql.tcrds_current_lock();
+```
+
+### tcrds_repl_changemaster
+
+* Used to bring external MySQL DB to NHN Cloud RDS through replication.
+* Replication configuration of NHN Cloud RDS is done with **Create replication** of the console.
+
+```
+mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
+```
+
+* Explaining parameter
+    * master_instance_ip : IP of replication target (Master) server
+    * master_instance_port : MySQL Port of replication target (Master) server
+    * user_id_for_replication : Account for replication to access the MySQL of replication target (Master) server
+    * password_for_replication_user : Password of account for replication
+    * MASTER_LOG_FILE : Binary log file name of replication target (Master)
+    * MASTER_LOG_POS : Binary log file position of replication target (Master)
+
+```
+ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
+> [Caution] The account for replication must be created in MySQL of the replication target (Master).
+### tcrds_repl_init
+
+* Reset MySQL replication information.
+
+```
+mysql> CALL mysql.tcrds_repl_init();
+```
+
+### tcrds_repl_slave_stop
+
+* Stop MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_stop();
+```
+
+### tcrds_repl_slave_start
+
+* Start MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_start();
+```
+
+### tcrds_repl_skip_repl_error
+
+* Perform SQL_SLAVE_SKIP_COUNTER=1. Resolve replication error by performing tcrds_repl_skip_repl_error procedure when Duplicate key error occurs as shown below.
+* MySQL error code 1062: 'Duplicate entry ? for key ?'
+
+```
+mysql> CALL mysql. tcrds_repl_skip_repl_error();
+```
+
+### tcrds_repl_next_changemaster
+
+* Changes replication information to read the next binary log of master.
+* Resolve replication error by performing tcrds_repl_next_changemaster procedure when replication error occurs as shown below.
+    * e.g. MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
+
+```
+mysql> CALL mysql.tcrds_repl_next_changemaster();
+```

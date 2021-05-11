@@ -21,7 +21,7 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
     * Storage Type: Specify volume type of DB instance.
         * Either HDD or SSD.
     * Storage: Enter volume size of DB instance.
-        * Between 20GB and 2,000GB  
+        * It can be anywhere between 20 GB and 2 TB.  
     * Availability Zone: Select an area where DB instance is to be created.
     * High Availability: To create database instances, the candidate master is created at a different availability zone from the master.
     * Ping Interval: Sets the interval for checking the status of the master instance when using the high availability feature. An error occurs after 4 failed attempts.
@@ -84,6 +84,7 @@ Below is an example of access to MySQL Workbench.
 #### Constraints 
 
 * If user's compute instance lies in the network environment which cannot access DNS server, the instance cannot access RDS instance via domain.
+* The user's ISP may block a well-known port for security purposes. In such cases, the user cannot access NHN Cloud's RDS and must use a different port number.
 
 ## DB Instances
 
@@ -283,10 +284,10 @@ Below is an example of access to MySQL Workbench.
 
 ![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_en.png)
 
-### Log Files 
+## Log Files 
 
 * View or download log files without accessing DB instances. 
-* Select **DB Instances** and click **Events & Logs**, to find error.log, slow_query.log, and general.log files. 
+* Select **DB Instances** then click **Events & Logs** tab to see error.log, slow_query.log, general.log, and server_audit.log files depending on the settings. 
 
 ![rds_13_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_13_20210112_en.png)
 
@@ -305,6 +306,14 @@ Below is an example of access to MySQL Workbench.
 * Log files are uploaded to temporary object storage, and remain to be downloaded for the maximum 5 minutes. 
 > [Note] For the 5 minutes while it is uploaded to object storage and deleted, object storage may be charged. 
 
+### Audit Log
+
+* Can leave an audit log using the DB Configuration settings.
+* Generated audit log file can be checked or downloaded from the Event & Log tab.
+* For detailed settings, please check the website below.
+  * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
+
+> [Caution] MySQL 5.7.15, 8.0.18 version is not supported.
 
 ## Events 
 
@@ -341,6 +350,14 @@ Now, when conditions are met as configured, notifications are sent via mail addr
 ![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112_en.png)
 
 > [Note] Unless receivers are checked to select, mail or SMS messages cannot be sent.  
+
+## Separating user permission
+
+* Project members can be granted separate permissions either as RDS for MySQL ADMIN / RDS for MySQL MEMBER.
+* RDS for MySQL ADMIN permission holders can use all available features as before.
+* RDS for MySQL MEMBER permission holders can use read-only feature.
+  * Cannot use any features aimed at instances or create, modify, or delete any instance.
+  * Can use alarm-related features on the Notification tab.
 
 ## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 

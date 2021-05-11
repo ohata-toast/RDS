@@ -22,7 +22,7 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
     * Storageタイプ：DBインスタンスボリュームのタイプを指定します。
         * HDDおよびSSDを選択できます。
     * Storage：DBインスタンスボリュームのサイズを入力します。 
-        * 20GB～2,000GBのサイズで作成できます。
+        * 20GB～2TBのサイズで作成できます。
     * Availabillity Zone：DBインスタンスが作成される領域を選択します。
     * 高可用性：DBインスタンスを作成する時、Masterとは異なるAvailability ZoneにCandidate Masterを作成します。
     * Ping Interval：高可用性使用時、 Masterインスタンスの状態を確認する時間間隔を設定します。4回失敗すると障害と判断します。
@@ -290,10 +290,10 @@ DB Configuration画面で設定値を変更できます。
 
 ![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_jp.png)
 
-### ログファイル
+## ログファイル
 
 * DBインスタンスに接続しなくても、ログファイルの閲覧やダウンロードができます。
-* **DB Instance**を選択した後、**Events & Log** タブをクリックすると、error.log、slow_query.log, general.logファイルを閲覧できます。
+* **DB Instance**を選択した後、**Events & Log**タブを押すと、設定に応じてerror.log、slow_query.log、general.log、server_audit.logファイルを確認できます。
 
 ![rds_13_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_13_20210112_jp.png)
 
@@ -312,6 +312,14 @@ DB Configuration画面で設定値を変更できます。
 * ログファイルは臨時Object Storageにアップロードされ、最大5分間ダウンロードできるようになります。
 > [参考] Object Storageにアップロードされ、削除される5分間にObject Storage使用料金がかかることがあります。
 
+### Audit Log
+
+* DB Configurationの設定を行ってaudit logを残すことができます。
+* 作成されたaudit logファイルは、Event & Logタブで確認、ダウンロードできます。
+* 詳細な設定値は、次のサイトで確認できます。
+  * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
+
+> [注意] MySQL 5.7.15, 8.0.18バージョンはサポートしません。
 
 ## イベント
 
@@ -348,6 +356,14 @@ RDSは、希望するリソースで発生する特定イベント通知を受�
 ![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112_jp.png)
 
 > [参考]受信グループでチェックボックスを選択していない対象には、メール/SMSが送信されません。
+
+## ユーザー権限の分離
+
+* プロジェクトメンバーの権限をRDS for MySQL ADMIN / RDS for MySQL MEMBERに区分して付与できます。
+* RDS for MySQL ADMIN権限は、従来と同じように、すべての機能を使用できます。
+* RDS for MySQL MEMBER権限は、情報を照会する機能のみ使用できます。
+  * インスタンスの作成、修正、削除など、インスタンスを対象に行うあらゆる機能を使用できません。
+  * ただし、Notificationタブでアラームに関連する機能は使用できます。
 
 ## 付録1. ハイパーバイザメンテナンスのためのDBインスタンスマイグレーションガイド
 
