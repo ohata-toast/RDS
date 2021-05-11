@@ -1,5 +1,21 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2021. 05. 11.
+
+#### More Features
+
+* Exporting and importing backup using object storage provided
+* Force restart provided
+
+#### Feature Updates
+
+* Improved feature to check and download xtrabackup log file
+
+#### Bug Fixes
+
+* Fixed the bug where intermittently instances would not be created when multiple instances are created simultaneously after the service is enabled
+* Fixed the bug where changes would fail when changing the high-availability instance port and instance type at the same time
+
 ### April 13, 2021
 
 #### More Features
