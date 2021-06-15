@@ -214,32 +214,6 @@
 * DB 파일 암호화 기능을 사용하지 않는 인스턴스로부터 복원이나 복제 시, DB 파일 암호화 기능을 켤 수 없습니다.
 * DB 파일 암호화 기능을 사용하는 인스턴스로부터 복원이나 복제 시, DB 파일 암호화 기능을 끌 수 없습니다.
 
-## Monitoring
-
-* RDS 는 DB 운영 및 사용에 필요한 모니터링 항목을 주기적으로 수집하고, 차트로 보여줍니다.
-* 특정 DB 인스턴스의 모니터링 항목이 보고 싶을 경우, **DB Instance** 목록에서 특정 DB 인스턴스를 선택 한 후, **Monitoring** 탭을 선택합니다.
-
-![rds_10_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_10_20210112.png)
-
-* 전체 DB 인스턴스의 모니터링 항목이 보고 싶은 경우에는, Monitoring 탭으로 들어가신 후 보고자 하는 DB 인스턴스를 선택 후 **추가** 버튼을 누릅니다.
-* 차트 범위, 간격, 종류 및 항목을 변경 시, 변경 사항이 추가된 모든 DB 인스턴스에 영향을 줍니다.
-
-![rds_11_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_11_20210112.png)
-
-* 차트의 범위를 쉽게 조정할 수 있게 유틸성 버튼을 제공합니다.
-* 1시간, 6시간 등의 버튼을 누를 때마다, 현재 시각을 기준으로 자동으로 from~to 를 계산하여 갱신합니다.
-<br/>
-* 차트 범위에 따라 선택할 수 있는 차트 간격이 달라집니다.
-    * 2시간 이내: 1분, 10분
-    * 12시간 이내: 10분, 1시간
-    * 4일 이내: 1시간, 6시간
-    * 2주 이내: 6시간, 하루
-    * 그외: 하루
-* 차트 종류는 최대값과 평균값을 지원합니다.
-
-> [참고] RDS DB 인스턴스별 모니터링 데이터는 사용자 DB 인스턴스의 'rds_maintenance'라는 database에 임시 저장 및 삭제됩니다. 따라서 생성한 뒤 아무 동작도 하지 않은 인스턴스임에도 몇몇 모니터링 항목들이 규칙적으로 움직이는 그래프 형태를 가질 수 있습니다. 
-> [참고] 만약 rds_maintenance database의 데이터를 조작할 경우, 정확하지 않은 모니터링 데이터가 수집될 수 있습니다.
-
 ### DB 스키마 & DB User 관리
 
 * DB 스키마와 DB User를 웹 콘솔에서 관리할 수 있습니다.
@@ -313,41 +287,188 @@
   
 > [주의] MySQL 5.7.15 8.0.18 버전은 지원하지 않습니다.
 
-## Event
+## 이벤트
 
-* RDS 는 DB 인스턴스에서 발생한 의미 있는 이벤트를 자동으로 남깁니다.
-* 특정 DB 인스턴스에서 발생한 이벤트를 보고 싶으면, DB 인스턴스를 선택한 후, 상세 설정 레이어의 Event & Log 탭에서 확인할 수 있습니다.
-* 내가 가진 모든 DB 인스턴스에서 발생한 이벤트를 한꺼번에 보려면, **Event** 탭으로 이동하여 조회할 수 있습니다.
+![event_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_list_0_ko.png)
 
-![rds_16_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_16_20210112.png)
+DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및 알림 그룹의 감시 설정 결과를 확인할 수 있습니다.
 
-* 이벤트 타입은 어떤 리소스에서 발생한 이벤트인지를 지칭합니다.
-    * INSTANCE: DB 인스턴스와 관련된 이벤트 입니다.
-    * BACKUP: 백업과 관련된 이벤트 입니다.
-* Identifier 는 이벤트가 발생한 리소스를 지칭합니다.
-    * 이벤트 타입이 INSTANCE 일 경우 DB 인스턴스 이름이 표시됩니다.
-    * 이벤트 타입이 BACKUP일 경우 백업 ID가 표시됩니다.
+* ❶ 이벤트 유형을 선택하여 조회 할 수 있습니다.
+* ❷ 이벤트 소스 혹은 메시지를 검색할 수 있습니다.
+* ❸ 이벤트 발생 기간을 선택할 수 있습니다.
 
-## Notification
+### 이벤트 구독
 
-* RDS 는 원하는 리소스에서 발생하는 특정 이벤트에 대한 Notification을 수신그룹에 전달할 수 있습니다.
+![event_sub_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_list_0_ko.png)
 
-![rds_17_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_17_20210112.png)
+이벤트 구독 현황을 조회할 수 있습니다.
 
-1. 원하는 Notification을 설정하기 위하여 **Notification** 탭을 선택한 후, **생성** 버튼을 클릭합니다.
-2. 원하는 Notification의 이름을 입력하고, 알림 설정을 통해 설정하고자하는 이벤트와 리소스를 선택합니다.
-    * 설정 후 **추가** 버튼을 클릭합니다.
-3. 알림을 받은 수신 그룹을 생성하기 위해서 **생성** 버튼을 클릭합니다.
-4. [수신 대상] 창이 나타나면 수신 그룹 이름을 입력합니다. 프로젝트 멤버 중 알림 메시지를 수신할 멤버를 클릭해 수신 대상 프로젝트 멤버로 선택합니다.
-    * 입력 후 **추가** 버튼을 클릭합니다.
-5. 수신 대상 팝업창의 **생성** 버튼을 클릭합니다.
-6. 알림 설정 완료 후 **생성** 버튼을 클릭합니다. 
+* ❶ **구독 이름** 혹은 **이벤트 소스** 로 검색할 수 있습니다.
+* ❷ 이벤트 구독을 신규로 생성 할 수 있습니다.
+* ❸ 수정 하고자 하는 구독을 선택하여 구독 내용을 수정할 수 있습니다.
+* ❹ 삭제 하고자 하는 구독을 선택하여 삭제할 수 있습니다.
 
-설정한 조건을 만족 시 수신 대상에 입력한 메일주소와 전화번호로 알림을 받을 수 있습니다.
+### 이벤트 구독 등록 및 수정
 
-![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112.png)
+![event_sub_popup_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_popup_0_ko.png)
 
-> [참고] 수신그룹에서 원하는 대상에 체크박스를 선택하지 않으면 메일이나 SMS가 전달되지 않습니다.
+* ❶ 이벤트 구독 이름을 입력합니다.
+* ❷ 이벤트 구독을 원하는 유형을 선택합니다. 유형에 따라 선택할 수 있는 이벤트 코드 및 이벤트 소스가 제한됩니다.
+* ❸ 이벤트 구독을 원하는 코드를 선택합니다.
+* ❹ 이벤트 구독을 원하는 소스를 선택합니다.
+* ❺ 알림이 발송될 사용자 그룹을 선택합니다. 아무 그룹도 선택하지 않으면 알림 발송이 되지 않습니다.
+* ❻ 활성화 여부를 선택합니다.
+
+## 서버 대시보드
+
+![server_dashboard_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_0_ko.png)
+
+각종 성능 지표를 차트 형태로 확인할 수 있습니다.
+
+* ❶ 인스턴스 이름 혹은 IP 주소로 검색할 수 있습니다.
+* ❷ 조건에 맞는 서버가 표시됩니다. 서버의 상태에 따라 우측 상단의 아이콘 색상이 변경됩니다.
+  * 초록색: 정상 상태
+  * 빨간색: 에러 상태
+  * 회색: 삭제된 서버
+* ❸ 레이아웃을 선택 할 수 있습니다.
+* ❹ 레이아웃을 수정하거나 삭제 할 수 있습니다. 
+* ❺ 레이아웃을 생성하는 팝업이 노출됩니다.
+* ❻ 레이아웃에 차트를 추가할 수 있습니다.
+* ❼ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
+* ❽ 조회 기간을 변경 할 수 있습니다.
+* ❾ 차트가 표시됩니다.
+
+### 차트 추가
+
+![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
+
+* ❶ 차트를 추가하기 원하는 레이아웃을 먼저 선택합니다.
+* ❷ 차트 추가 버튼을 클릭하면 아래와 같이 차트 추가 팝업이 노출됩니다.
+
+![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
+
+* ❶ 추가하고자 하는 차트가 노출됩니다.
+* ❷ 추가하고자 하는 차트를 선택할 수 있습니다.
+
+### 차트 수정
+
+![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_1_ko.png)
+
+* ❶ 차트의 상단 영역을 마우스로 드래그하여 차트를 이동시킬 수 있습니다.
+* ❷ 차트를 삭제 할 수 있습니다.
+* ❸ 차트 우측 하단을 마우스로 드래그하여 차트의 크기를 변경할 수 있습니다.
+
+### 레이아웃 추가
+
+![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
+
+* ❶ 레이아웃 만들기 버튼을 클릭합니다.
+* ❷ 레이아웃 이름을 입력합니다.
+
+### 레이아웃 수정 및 삭제
+
+![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
+
+* ❶ 관리 버튼을 클릭합니다.
+* ❷ 해당 레이아웃을 수정할 수 있는 편집화면으로 변경됩니다.
+* ❸ 해당 레이아웃을 삭제할 수 있습니다.
+
+![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
+
+* ❶ 확인 버튼을 클릭하면 변경사항이 저장됩니다.
+* ❷ 취소 버튼을 클릭하면 변경사항이 취소됩니다.
+
+## 사용자 그룹
+
+알림 그룹 및 이벤트 구독을 통해 알림을 받을 사용자를 그룹으로 관리할 수 있습니다.
+
+### 사용자 그룹 생성
+
+![user_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_0_ko.png)
+
+* ❶ 사용자 그룹 생성 버튼을 클릭하면 사용자 그룹을 생성할 수 있는 팝업이 노출됩니다.
+
+![user_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_1_ko.png)  
+
+* ❷ 그룹이름을 입력합니다.
+* ❸ 통보 대상 사용자가 표시됩니다. **x** 버튼을 클릭하면 통보 대상에서 제외됩니다.
+* ❹ 통보 대상에 사용자를 추가합니다.
+* ❺ 사용자 목록의 모든 사용자를 통보 대상에 추가합니다.
+
+### 사용자 그룹 수정
+
+![user_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_0_ko.png)
+
+* ❶ 수정하려고 하는 사용자 그룹의 편집 버튼을 클릭하면 사용자 그룹을 수정할 수 있는 팝업이 노출됩니다.
+
+![user_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_1_ko.png)
+
+* ❷ 수정하려는 항목을 수정 후, 확인 버튼을 클릭하면 사용자 그룹이 수정됩니다.
+
+### 사용자 그룹 삭제
+
+![user_group_delete_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_delete_0_ko.png)
+
+* ❶ 삭제하려는 사용자 그룹의 삭제 버튼을 클릭합니다.
+
+## 알림 그룹
+
+인스턴스의 성능 지표에 감시 설정을 추가하여 알림을 받을 수 있습니다.
+
+### 알림 그룹 생성
+
+![notification_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_0_ko.png)
+
+* ❶ 그룹 만들기 버튼을 클릭합니다.
+
+![notification_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_1_ko.png)
+
+* ❷ 알림 그룹 이름을 입력합니다.
+* ❸ 알림 유형을 선택합니다. 다중 선택이 가능합니다.
+* ❹ 활성화 여부를 설정합니다.
+* ❺ 감시 대상 인스턴스를 선택합니다.
+* ❻ 사용자 그룹을 선택합니다.
+
+### 알림 그룹 수정
+
+![notification_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_0_ko.png)
+
+* ❶ 수정 하고자 하는 알림 그룹의 편집 버튼을 클릭합니다.
+
+![notification_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_1_ko.png)
+
+* ❷ 수정 하려는 항목을 수정 한후 확인 버튼을 클릭합니다.
+
+### 알림 그룹 삭제
+
+![notification_group_modify_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_2_ko.png)
+
+* ❶ 삭제 버튼을 클릭하면 등록된 알림 그룹을 삭제할 수 있습니다.
+
+### 감시 설정 추가
+
+![notification_group_watchdog_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_0_ko.png)
+
+* ❶ 감시 설정을 수정하려고 하는 알림 그룹의 감시 설정 버튼을 클릭합니다.
+
+![notification_group_watchdog_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_1_ko.png)
+
+* ❷ 감시 설정 버튼을 클릭합니다.
+
+![notification_group_watchdog_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_2_ko.png)
+
+* ❸ 감시할 항목을 선택합니다.
+* ❹ 비교 방법을 선택합니다.
+* ❺ 임곗값을 입력합니다. 항목에 따라 입력할 수 있는 최댓값이 다릅니다.
+* ❻ 지속 시간을 입력합니다.
+* ❼ 추가 버튼을 클릭하면 감시 설정이 등록됩니다. 취소 버튼을 클릭하면 감시 설정이 등록되지 않습니다.
+
+### 감시 설정 수정 및 삭제
+
+![notification_group_watchdog_3_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_3_ko.png)
+
+* ❶ 편집 버튼을 클릭하면 해당 감시 설정을 수정할 수 있습니다.
+* ❷ 삭제 버튼을 클릭하면 해당 감시 설정을 삭제할 수 있습니다.
 
 ## 사용자 권한 분리
 
