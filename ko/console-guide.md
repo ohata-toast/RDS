@@ -330,12 +330,12 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
   * 초록색: 정상 상태
   * 빨간색: 에러 상태
   * 회색: 삭제된 서버
-* ❸ 레이아웃을 선택 할 수 있습니다.
-* ❹ 레이아웃을 수정하거나 삭제 할 수 있습니다. 
-* ❺ 레이아웃을 생성하는 팝업이 노출됩니다.
+* ❸ 레이아웃을 선택할 수 있습니다.
+* ❹ 레이아웃을 수정하거나 삭제할 수 있습니다. 
+* ❺ **레이아웃 만들기** 창이 나타납니다.
 * ❻ 레이아웃에 차트를 추가할 수 있습니다.
 * ❼ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
-* ❽ 조회 기간을 변경 할 수 있습니다.
+* ❽ 조회 기간을 변경할 수 있습니다.
 * ❾ 차트가 표시됩니다.
 
 ### 차트 추가
@@ -343,11 +343,11 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 ![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
 
 * ❶ 차트를 추가하기 원하는 레이아웃을 먼저 선택합니다.
-* ❷ 차트 추가 버튼을 클릭하면 아래와 같이 차트 추가 팝업이 노출됩니다.
+* ❷ **차트 추가** 버튼을 클릭하면 아래와 같이 **차트 추가** 창이 나타납니다.
 
 ![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
 
-* ❶ 추가하고자 하는 차트가 노출됩니다.
+* ❶ 추가할 차트가 표시됩니다.
 * ❷ 추가하고자 하는 차트를 선택할 수 있습니다.
 
 ### 차트 수정
@@ -355,28 +355,28 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 ![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_1_ko.png)
 
 * ❶ 차트의 상단 영역을 마우스로 드래그하여 차트를 이동시킬 수 있습니다.
-* ❷ 차트를 삭제 할 수 있습니다.
+* ❷ 차트를 삭제할 수 있습니다.
 * ❸ 차트 우측 하단을 마우스로 드래그하여 차트의 크기를 변경할 수 있습니다.
 
 ### 레이아웃 추가
 
 ![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
 
-* ❶ 레이아웃 만들기 버튼을 클릭합니다.
+* ❶ **레이아웃 만들기** 버튼을 클릭합니다.
 * ❷ 레이아웃 이름을 입력합니다.
 
 ### 레이아웃 수정 및 삭제
 
 ![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
 
-* ❶ 관리 버튼을 클릭합니다.
-* ❷ 해당 레이아웃을 수정할 수 있는 편집화면으로 변경됩니다.
+* ❶ **관리** 버튼을 클릭합니다.
+* ❷ 해당 레이아웃을 수정할 수 있는 편집 화면으로 변경됩니다.
 * ❸ 해당 레이아웃을 삭제할 수 있습니다.
 
 ![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
 
-* ❶ 확인 버튼을 클릭하면 변경사항이 저장됩니다.
-* ❷ 취소 버튼을 클릭하면 변경사항이 취소됩니다.
+* ❶ **확인** 버튼을 클릭하면 변경 사항이 저장됩니다.
+* ❷ **취소** 버튼을 클릭하면 변경 사항이 취소됩니다.
 
 ## 사용자 그룹
 
@@ -386,7 +386,7 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 ![user_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_0_ko.png)
 
-* ❶ 사용자 그룹 생성 버튼을 클릭하면 사용자 그룹을 생성할 수 있는 팝업이 노출됩니다.
+* ❶ **사용자 그룹 생성** 버튼을 클릭하면 **사용자 그룹 생성** 창이 나타납니다.
 
 ![user_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_1_ko.png)  
 
@@ -399,17 +399,17 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 ![user_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_0_ko.png)
 
-* ❶ 수정하려고 하는 사용자 그룹의 편집 버튼을 클릭하면 사용자 그룹을 수정할 수 있는 팝업이 노출됩니다.
+* ❶ 수정하려고 하는 사용자 그룹의 **편집** 버튼을 클릭하면 **사용자 그룹 수정** 창이 나타납니다.
 
 ![user_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_1_ko.png)
 
-* ❷ 수정하려는 항목을 수정 후, 확인 버튼을 클릭하면 사용자 그룹이 수정됩니다.
+* ❷ 수정하려는 항목을 수정 후, **확인** 버튼을 클릭하면 사용자 그룹이 수정됩니다.
 
 ### 사용자 그룹 삭제
 
 ![user_group_delete_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_delete_0_ko.png)
 
-* ❶ 삭제하려는 사용자 그룹의 삭제 버튼을 클릭합니다.
+* ❶ 삭제하려는 사용자 그룹의 **삭제** 버튼을 클릭합니다.
 
 ## 알림 그룹
 
@@ -419,7 +419,7 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 ![notification_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_0_ko.png)
 
-* ❶ 그룹 만들기 버튼을 클릭합니다.
+* ❶ **그룹 만들기** 버튼을 클릭합니다.
 
 ![notification_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_1_ko.png)
 
@@ -433,27 +433,27 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 ![notification_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_0_ko.png)
 
-* ❶ 수정 하고자 하는 알림 그룹의 편집 버튼을 클릭합니다.
+* ❶ 수정 하고자 하는 알림 그룹의 **편집** 버튼을 클릭합니다.
 
 ![notification_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_1_ko.png)
 
-* ❷ 수정 하려는 항목을 수정 한후 확인 버튼을 클릭합니다.
+* ❷ 수정 하려는 항목을 수정 한후 **확인** 버튼을 클릭합니다.
 
 ### 알림 그룹 삭제
 
 ![notification_group_modify_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_2_ko.png)
 
-* ❶ 삭제 버튼을 클릭하면 등록된 알림 그룹을 삭제할 수 있습니다.
+* ❶ **삭제** 버튼을 클릭하면 등록된 알림 그룹을 삭제할 수 있습니다.
 
 ### 감시 설정 추가
 
 ![notification_group_watchdog_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_0_ko.png)
 
-* ❶ 감시 설정을 수정하려고 하는 알림 그룹의 감시 설정 버튼을 클릭합니다.
+* ❶ 감시 설정을 수정하려고 하는 알림 그룹의 **감시 설정** 버튼을 클릭합니다.
 
 ![notification_group_watchdog_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_1_ko.png)
 
-* ❷ 감시 설정 버튼을 클릭합니다.
+* ❷ **감시 설정** 버튼을 클릭합니다.
 
 ![notification_group_watchdog_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_2_ko.png)
 
@@ -467,8 +467,8 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 ![notification_group_watchdog_3_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_3_ko.png)
 
-* ❶ 편집 버튼을 클릭하면 해당 감시 설정을 수정할 수 있습니다.
-* ❷ 삭제 버튼을 클릭하면 해당 감시 설정을 삭제할 수 있습니다.
+* ❶ **편집** 버튼을 클릭하면 해당 감시 설정을 수정할 수 있습니다.
+* ❷ **삭제** 버튼을 클릭하면 해당 감시 설정을 삭제할 수 있습니다.
 
 ## 사용자 권한 분리
 
