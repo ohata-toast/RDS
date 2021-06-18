@@ -220,32 +220,6 @@ DB Configuration画面で設定値を変更できます。
 * DBファイルの暗号化機能を使用しないインスタンスから復元または複製をした時、DBファイルの暗号化機能を有効にできません。
 * DBファイルの暗号化機能を使用するインスタンスから復元また複製をした時、DBファイルの暗号化機能を無効にできません。
 
-## モニタリング
-
-* RDSはDB運営および使用に必要なモニタリング項目を周期的に収集し、チャートで表示します。
-* 特定DBインスタンスのモニタリング項目を見たい場合は、**DB Instance** リストから特定DBインスタンスを選択し、 **Monitoring** タブを選択します。
-
-![rds_10_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_10_20210112_jp.png)
-
-* 特定DBインスタンスのモニタリング項目を見たい場合は、**Monitoring** タブで希望するDBインスタンスを選択し、 **追加** ボタンをクリックします。
-* チャート範囲、間隔、種類および項目を変更すると、変更事項が追加されたすべてのDBインスタンスに影響を与えます。
-
-![rds_11_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_11_20210112_jp.png)
-
-* チャートの範囲を簡単に調整できるボタンを使用できます。
-* 1時間、6時間などのボタンを押すと、現在の時刻を基準に自動でfrom～toを計算してアップデートします。
-<br/>
-* チャート範囲よって選択できるチャート間隔が異なります。
-    * 2時間以内：1分、10分
-    * 12時間以内：10分、 1時間
-    * 4日以内：1時間、 6時間
-    * 2週以内：6時間、1日
-    * それ以外：1日
-* チャート種類は、最大値と平均値をサポートします。
-
-> [参考] RDS DBインスタンス別モニタリングデータは、ユーザーDBインスタンスの'rds_maintenance'というデータベースに臨時で保存されて削除されます。したがって作成した後、何も動作していないインスタンスでも、いくつかのモニタリング項目が規則的に動くグラフ形式が現れることがあります。
-> [参考] rds_maintenance databaseのデータを操作すると、正確ではないモニタリングデータが収集されることがあります。
-
 ### DBスキーマ& DB User管理
 
 * DBスキーマとDB UserをWebコンソールで管理できます。
@@ -324,39 +298,186 @@ DB Configuration画面で設定値を変更できます。
 
 ## イベント
 
-* RDSはDBインスタンスで発生した意味あるイベントを自動的に残します。
-* 特定DBインスタンスで発生したイベントを確認したい場合、DBインスタンスを選択した後、 **詳細設定** 画面の **Event & Log** タブで確認できます。
-* マイDBインスタンスで発生したイベントを一度に確認するには、 **Event** タブに移動して確認できます。
+![event_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_list_0_ko.png)
 
-![rds_16_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_16_20210112_jp.png)
+DBインスタンスに関連するさまざまな作業中に発生する各種イベントおよび通知グループの監視設定結果を確認できます。
 
-* **タイプ**は、どのリソースで発生したイベントかを指します。
-    * INSTANCE：DBインスタンスに関連するイベントです。
-    * BACKUP：バックアップに関連するイベントです。
-* **Identifier**は、イベントが発生したリソースを指します。
-    * イベントタイプがINSTANCEの場合、DBインスタンス名が表示されます。
-    * イベントタイプがBACKUPの場合、バックアップIDが表示されます。
+* ❶イベントタイプを選択して照会できます。
+* ❷イベントソースまたはメッセージを検索できます。
+* ❸イベント発生期間を選択できます。
 
-## Notification
+### イベント購読
 
-RDSは、希望するリソースで発生する特定イベント通知を受信グループに伝達できます。
+![event_sub_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_list_0_ko.png)
 
-1. 希望する通知を設定するには、 **Notification** タブで **作成** ボタンをクリックします。
-2. 希望する通知の名前を入力し、 **通知設定**で設定するイベントとリソースを選択します。
- 設定後、 **追加** ボタンをクリックします。
-3. 通知を受ける受信グループを作成するには **作成** ボタンをクリックします。
-4. [受信対象]ウィンドウが表示されたら受信グループ名を入力します。プロジェクトメンバーのうち、通知メッセージを受信するメンバーをクリックし、受信対象プロジェクトメンバーに選択します。
- **追加** ボタンをクリックします。
-5. 受信対象ウィンドウで **作成** ボタンをクリックします。
-6. 通知設定を完了した後、 **作成** ボタンをクリックします。 
+イベント購読状況を照会できます。
 
-![rds_17_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_17_20210112_jp.png)
+* ❶ **購読名**または**イベントソース**で検索できます。
+* ❷イベント購読を新規で作成できます。
+* ❸修正したい購読を選択して購読内容を修正できます。
+* ❹削除したい購読を選択して削除できます。
 
-設定した条件を満たすと、受信対象に入力したメールアドレスと電話番号で通知を受け取ることができます。
+### イベント購読の登録および修正
 
-![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112_jp.png)
+![event_sub_popup_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_popup_0_ko.png)
 
-> [参考]受信グループでチェックボックスを選択していない対象には、メール/SMSが送信されません。
+* ❶イベント購読名を入力します。
+* ❷イベント購読を行いたいタイプを選択します。タイプによって選択できるイベントコードおよびイベントソースが制限されます。
+* ❸イベント購読を行いたいコードを選択します。
+* ❹イベント購読を行いたいソースを選択します。
+* ❺通知が送信されるユーザーグループを選択します。グループを選択しない場合は通知が送信されません。
+* ❻有効/無効を選択します。
+
+## サーバーダッシュボード
+
+![server_dashboard_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_0_ko.png)
+
+各種性能指標をチャート形式で確認できます。
+
+* ❶インスタンス名またはIPアドレスで検索できます。
+* ❷条件にマッチするサーバーが表示されます。サーバーの状態に応じて右上のアイコンの色が変更されます。
+  * 緑色：正常状態
+  * 赤色：エラー状態
+  * 灰色：削除されたサーバー
+* ❸レイアウトを選択できます。
+* ❹レイアウトを修正、削除できます。 
+* ❺レイアウトを作成するポップアップが表示されます。
+* ❻レイアウトにチャートを追加できます。
+* ❼照会期間を現在時刻に設定した後、チャートを更新します。
+* ❽照会期間を変更できます。
+* ❾チャートが表示されます。
+
+### チャート追加
+
+![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
+
+* ❶チャートを追加したいレイアウトを先に選択します。
+* ❷チャート追加ボタンをクリックすると、以下のようにチャート追加ポップアップが表示されます。
+
+![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
+
+* ❶追加しようとしているチャートが表示されます。
+* ❷追加しようとしているチャートを選択できます。
+
+### チャート修正
+
+![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_1_ko.png)
+
+* ❶チャートの上部領域をマウスでドラッグしてチャートを移動させることができます。
+* ❷チャートを削除できます。
+* ❸チャート右下をマウスでドラッグしてチャートのサイズを変更できます。
+
+### レイアウト追加
+
+![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
+
+* ❶レイアウト作成ボタンをクリックします。
+* ❷レイアウト名を入力します。
+
+### レイアウトの修正および削除
+
+![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
+
+* ❶管理ボタンをクリックします。
+* ❷レイアウトを修正することができる編集画面に変更されます。
+* ❸レイアウトを削除できます。
+
+![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
+
+* ❶確認ボタンをクリックすると変更事項が保存されます。
+* ❷キャンセルボタンをクリックすると変更事項がキャンセルされます。
+
+## ユーザーグループ
+
+通知グループおよびイベント購読を通して通知を受けるユーザーをグループで管理できます。
+
+### ユーザーグループ作成
+
+![user_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_0_ko.png)
+
+* ❶ユーザーグループ作成ボタンをクリックするとユーザーグループを作成することができるポップアップが表示されます。
+
+![user_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_1_ko.png)  
+
+* ❷グループ名を入力します。
+* ❸通知対象ユーザーが表示されます。**x**ボタンをクリックすると通知対象から除外されます。
+* ❹通知対象にユーザーを追加します。
+* ❺ユーザーリストのすべてのユーザーを通知対象に追加します。
+
+### ユーザーグループ修正
+
+![user_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_0_ko.png)
+
+* ❶修正したいユーザーグループの編集ボタンをクリックすると、ユーザーグループを修正することができるポップアップが表示されます。
+
+![user_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_1_ko.png)
+
+* ❷修正したい項目を修正した後、確認ボタンをクリックするとユーザーグループが修正されます。
+
+### ユーザーグループ削除
+
+![user_group_delete_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_delete_0_ko.png)
+
+* ❶削除したいユーザーグループの削除ボタンをクリックします。
+
+## 通知グループ
+
+インスタンスの性能指標に監視設定を追加して通知を受け取ることができます。
+
+### 通知グループ作成
+
+![notification_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_0_ko.png)
+
+* ❶グループ作成ボタンをクリックします。
+
+![notification_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_1_ko.png)
+
+* ❷通知グループ名を入力します。
+* ❸通知タイプを選択します。複数選択できます。
+* ❹有効/無効を設定します。
+* ❺監視対象インスタンスを選択します。
+* ❻ユーザーグループを選択します。
+
+### 通知グループ修正
+
+![notification_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_0_ko.png)
+
+* ❶修正したい通知グループの編集ボタンをクリックします。
+
+![notification_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_1_ko.png)
+
+* ❷修正したい項目を修正した後、確認ボタンをクリックします。
+
+### 通知グループ削除
+
+![notification_group_modify_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_2_ko.png)
+
+* ❶削除ボタンをクリックすると、登録された通知グループを削除できます。
+
+### 監視設定を追加
+
+![notification_group_watchdog_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_0_ko.png)
+
+* ❶監視設定を修正したい通知グループの監視設定ボタンをクリックします。
+
+![notification_group_watchdog_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_1_ko.png)
+
+* ❷監視設定ボタンをクリックします。
+
+![notification_group_watchdog_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_2_ko.png)
+
+* ❸監視する項目を選択します。
+* ❹比較方法を選択します。
+* ❺しきい値を入力します。項目によって入力できる最大値が異なります。
+* ❻持続時間を入力します。
+* ❼追加ボタンをクリックすると監視設定が登録されます。キャンセルボタンをクリックすると監視設定が登録されません。
+
+### 監視設定の修正および削除
+
+![notification_group_watchdog_3_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_3_ko.png)
+
+* ❶編集ボタンをクリックすると監視設定を修正できます。
+* ❷削除ボタンをクリックすると監視設定を削除できます。
 
 ## ユーザー権限の分離
 
