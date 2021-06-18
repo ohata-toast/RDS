@@ -58,7 +58,7 @@ GET /rds/api/v2.0/metric-statistics
 | 이름 | 종류 | 형식 | 필수 | 설명 | 제약 사항 |
 |---|---|---|---|---|---|
 | instanceId | Query | Array | O | DB 인스턴스 ID 목록 | Min:1, Max: 20 |
-| metricName | Query | Array | O | 조회 지표(metric) 목록 | Min:1 |
+| measureName | Query | Array | O | 조회 지표(metric) 목록 | Min:1 |
 | from | Query | Datetime | O | 시작 일시 | yyyy-MM-dd HH:mm:ss |
 | to | Query | Datetime | O | 종료 일시 | yyyy-MM-dd HH:mm:ss |
 | interval | Query | Integer | X | 조회 간격 | 1, 5, 30, 120, 1440 (분) |
