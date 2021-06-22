@@ -352,7 +352,7 @@ Various performance indicators can be checked in charts.
 * ❶ The chart to be added is displayed.
 * ❷ Select the desired chart to add.
 
-### 차트 수정
+### Modify Chart
 
 ![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_1_ko.png)
 
