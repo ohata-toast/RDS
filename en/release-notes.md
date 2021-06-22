@@ -1,5 +1,16 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2021. 06. 15.
+
+#### Feature Improvements
+
+* Monitoring system reorganized
+
+#### Bug Fixes
+
+* Fixed a problem where restoration was not possible when restoring a backup with a size close to the storage size
+* Fixed a problem where it did not properly operate when there is Korean in the container or path when exporting or importing the backup to object storage
+
 ### 2021. 05. 11.
 
 #### More Features
