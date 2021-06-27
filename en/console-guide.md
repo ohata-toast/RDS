@@ -459,11 +459,11 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ![notification_group_watchdog_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_2_ko.png)
 
-* ❸ 감시할 항목을 선택합니다.
-* ❹ 비교 방법을 선택합니다.
-* ❺ 임곗값을 입력합니다. 항목에 따라 입력할 수 있는 최댓값이 다릅니다.
-* ❻ 지속 시간을 입력합니다.
-* ❼ 추가 버튼을 클릭하면 감시 설정이 등록됩니다. 취소 버튼을 클릭하면 감시 설정이 등록되지 않습니다.
+* ❸ Select the item to monitor.
+* ❹ Select the comparison method.
+* ❺ Enter the threshold. The max allowed value is different depending on the item.
+* ❻ Enter the duration.
+* ❼ Clicking the Add button registers the monitoring setting. If you click the Cancel button, the monitoring setting won't register.
 
 ### Modify and Delete Monitoring Settings
 
