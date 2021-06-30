@@ -59,8 +59,8 @@ GET /rds/api/v2.0/metric-statistics
 |---|---|---|---|---|---|
 | instanceId | Query | Array | O | DB 인스턴스 ID 목록 | Min:1, Max: 20 |
 | measureName | Query | Array | O | 조회 지표(metric) 목록 | Min:1 |
-| from | Query | Datetime | O | 시작 일시 | yyyy-MM-dd HH:mm:ss |
-| to | Query | Datetime | O | 종료 일시 | yyyy-MM-dd HH:mm:ss |
+| from | Query | Datetime | O | 시작 일시 | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| to | Query | Datetime | O | 종료 일시 | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
 | interval | Query | Integer | X | 조회 간격 | 1, 5, 30, 120, 1440 (분) |
 
 - interval : 기본값 사용 시 from/to 값에 따라 적절한 값을 자동 선택함
@@ -69,6 +69,9 @@ GET /rds/api/v2.0/metric-statistics
     - 날짜 범위가 30일 이하 and 시작 날짜가 186일 경과 전 - 30분 단위 평균 데이터
     - 날짜 범위가 180일 이하 and 시작 날짜가 730일 경과 전 - 2시간 단위 평균 데이터
     - 그 외 - 1일 단위 평균 데이터
+- from, to : ISO Datetime 형식 예시
+    - UTC : 2021-01-01T00:00:00.000Z (URL 인코딩 필요 없음)
+    - KST, JST : 2021-01-01T00:00:00.000+09:00 (URL 인코딩 필요)
 
 #### 응답
 
