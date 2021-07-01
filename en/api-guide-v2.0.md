@@ -59,8 +59,8 @@ GET /rds/api/v2.0/metric-statistics
 |---|---|---|---|---|---|
 | instanceId | Query | Array | O | List of DB instance IDs | Min:1, Max: 20 |
 | measureName | Query | Array | O | Metric list | Min:1 |
-| from | Query | Datetime | O | Start date | yyyy-MM-dd HH:mm:ss |
-| to | Query | Datetime | O | End date | yyyy-MM-dd HH:mm:ss |
+| from | Query | Datetime | O | Start date | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| to | Query | Datetime | O | End date | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
 | interval | Query | Integer | X | View interval | 1, 5, 30, 120, 1440 (minutes) |
 
 - interval : when default is used, it automatically selects a value appropriate for the from/to value
@@ -69,6 +69,9 @@ GET /rds/api/v2.0/metric-statistics
     - Date range is 30 days or less, and Start date has not exceeded 186 days yet - Average data for every 30 minutes
     - Date range is 180 days or less, and Start date has not exceeded 730 days yet - Average data for every 2 hours
     - Other - Average daily data
+- from, to : ISO Datetime 형식 예시
+    - UTC : 2021-01-01T00:00:00.000Z
+    - KST, JST : 2021-01-01T00:00:00.000+09:00
 
 #### Response
 
