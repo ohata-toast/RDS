@@ -1,6 +1,8 @@
 
 ## Database > RDS for MySQL > APIガイド
 
+> [주의] 2021년 6월 15일 이후 모니터링 데이터는 v2.0 API를 호출해야 합니다.
+
 | リージョン | エンドポイント |
 |---|---|
 | 韓国(パンギョ)リージョン | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
