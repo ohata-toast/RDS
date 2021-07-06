@@ -1,7 +1,7 @@
 
 ## Database > RDS for MySQL > API 가이드
 
-> [주의] 2021년 6월 15일 이후 모니터링 데이터는 v2.0 API를 호출해야 합니다.
+> [Caution] For data that has been monitored after June 15, 2021, v2.0 API must be called.
 
 | 리전 | 엔드포인트 |
 |---|---|
