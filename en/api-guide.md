@@ -1,31 +1,31 @@
 
-## Database > RDS for MySQL > API 가이드
+## Database > RDS for MySQL > API Guide
 
 > [Caution] For data that has been monitored after June 15, 2021, v2.0 API must be called.
 
-| 리전 | 엔드포인트 |
+| Region | Endpoint |
 |---|---|
-| 한국(판교) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
-| 한국(평촌) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
-| 일본 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
+| Korea (Pangyo) region | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
+| Korea (Pyeongchon) region | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
+| Japan region | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
 
 ## Monitoring
 
-### Metric 조회
+### View metric
 
-- 통계 정보 조회에 필요한 통계 항목(metric)을 조회합니다.
+- View the (metrics) necessary for viewing statistical information.
 
 ```
 GET /rds/api/v1.0/appkeys/{appkey}/monitoring/metrics
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| appkey | URL | String | O | 상품 Appkey 또는 프로젝트 통합 Appkey |
+| appkey | URL | String | O | Product Appkey or integrated Appkey for project |
 
-#### 응답
+#### Request
 
 ```json
 {
@@ -42,44 +42,44 @@ GET /rds/api/v1.0/appkeys/{appkey}/monitoring/metrics
 }
 ```
 
-### 통계 정보 조회
+### View stats
 
-- 일정 주기마다 수집된 통계 정보들을 조회합니다.
+- Views the statistical information collected on a regular basis.
 
 ```
 GET /rds/api/v1.0/appkeys/{appkey}/monitoring/metric-statistics
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 | 제약 사항 |
+| Name | Type | Format | Required | Description | Constraints |
 |---|---|---|---|---|---|
-| appkey | URL | String | O | 상품 Appkey 또는 프로젝트 통합 Appkey | |
-| instanceId | Query | Array | O | DB 인스턴스 ID 목록 | Min:1, Max: 20 |
-| metricName | Query | Enum | O | 통계 항목(metric) 이름 | |
-| period | Query | Enum | O | 조회 주기 | |
-| statisticsType | Query | Enum | O | 통계 타입 | |
-| from | Query | Datetime | O | 시작 일시 | yyyy-MM-dd HH:mm:ss |
-| to | Query | Datetime | O | 종료 일시 | yyyy-MM-dd HH:mm:ss |
+| appkey | URL | String | O | Product Appkey or integrated Appkey for project | |
+| instanceId | Query | Array | O | List of DB instance IDs | Min:1, Max: 20 |
+| metricName | Query | Enum | O | Statistics item(metric) name | |
+| period | Query | Enum | O | View cycle | |
+| statisticsType | Query | Enum | O | Statistics type | |
+| from | Query | Datetime | O | Start date | yyyy-MM-dd HH:mm:ss |
+| to | Query | Datetime | O | End date | yyyy-MM-dd HH:mm:ss |
 
 - period
 
-| Period | 조회 주기 | 데이터 보관 주기 |
+| Period | View cycle | Data retention period |
 |---|---| --- |
-| `ONE_MINUTE` | 1분 | 7일 |
-| `TEN_MINUTES` | 10분 | 60일 |
-| `ONE_HOUR` | 1시간 | 1년 |
-| `SIX_HOURS` | 6시간 | 5년 |
-| `ONE_DAY` | 1일 | 5년 |
+| `ONE_MINUTE` | 1 minute | 7 days |
+| `TEN_MINUTES` | 10 minutes | 60 days |
+| `ONE_HOUR` | 1 hour | 1 year |
+| `SIX_HOURS` | 6 hours | 5 years |
+| `ONE_DAY` | 1 day | 5 years |
 
 - statisticsType
 
-| StatisticsType | 설명 |
+| StatisticsType | Description |
 |---|---|
-| `MAX` | 조회 주기 내 최댓값 |
-| `AVERAGE` | 조회 주기 내 평균값 |
+| `MAX` | Maximum value within view cycle |
+| `AVERAGE` | Average value within view cycle |
 
-#### 응답
+#### Response
 
 ```json
 {

@@ -2,17 +2,17 @@
 
 ### 2021. 07. 13.
 
-#### 기능 개선
+#### Feature Updates
 
-* MySQL 8.0.23 버전 추가 지원
-* 이벤트 구독 리스트에서 활성화 여부를 확인할 수 있게 개선
-* 생성한 인스턴스가 없을 때 대시보드에 '생성한 인스턴스가 없다'는 문구가 나타나도록 개선
+* Additional MySQL 8.0.23 version support
+* Improved to allow checking the Enable status in the event subscription list
+* Improved to display the notification that there are no instances created in the dashboard when no instances are created
 
-#### 버그 수정
+#### Bug Fixes
 
-* 일부 모니터링 데이터 미수집 버그 수정
-* 사용자 그룹명이 길 경우, 이벤트 구독 등록, 알림 그룹 추가 시 화면에 그룹명이 모두 표시되지 않던 문제 수정
-* 대시보드 드롭다운 메뉴 선택 시 메뉴가 사라지지 않고 남는 문제 수정
+* Fixed a bug in which some monitoring data was not being collected
+* Fixed a bug in which long user group names extend beyond the UI when the event subscription registration and notification groups are added
+* Fixed a bug in which the menu remains visible when the dashboard dropdown is selected
 
 ### 2021. 06. 15.
 
