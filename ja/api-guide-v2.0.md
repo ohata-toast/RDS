@@ -59,8 +59,8 @@ GET /rds/api/v2.0/metric-statistics
 |---|---|---|---|---|---|
 | instanceId | Query | Array | O | DBインスタンスIDリスト | Min:1, Max: 20 |
 | metricName | Query | Array | O | 照会指標(metric)リスト | Min:1 |
-| from | Query | Datetime | O | 開始日時 | yyyy-MM-dd HH:mm:ss |
-| to | Query | Datetime | O | 終了日時 | yyyy-MM-dd HH:mm:ss |
+| from | Query | Datetime | O | 開始日時 | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| to | Query | Datetime | O | 終了日時 | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
 | interval | Query | Integer | X | 照会間隔 | 1、5、30、120、1440 (分) |
 
 - interval ：デフォルト値を使用する時、from/to値に応じて適切な値を自動選択する
@@ -69,6 +69,9 @@ GET /rds/api/v2.0/metric-statistics
     - 日範囲が30日以下かつ開始日が186日経過前 - 30分単位平均データ
     - 日範囲が180日以下かつ開始日が730日経過前 - 2時間単位平均データ
     - その他 - 1日単位平均データ
+- from, to : ISO Datetime 형식 예시
+    - UTC : 2021-01-01T00:00:00.000Z
+    - KST, JST : 2021-01-01T00:00:00.000+09:00
 
 #### レスポンス
 
