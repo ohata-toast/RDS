@@ -2,17 +2,64 @@
 
 ### 2021. 07. 13.
 
-#### 기능 개선
+#### Feature Updates
 
-* MySQL 8.0.23 버전 추가 지원
-* 이벤트 구독 리스트에서 활성화 여부를 확인할 수 있게 개선
-* 생성한 인스턴스가 없을 때 대시보드에 '생성한 인스턴스가 없다'는 문구가 나타나도록 개선
+* Additional MySQL 8.0.23 version support
+* Improved to allow checking the Enable status in the event subscription list
+* Improved to display the notification that there are no instances created in the dashboard when no instances are created
 
-#### 버그 수정
+#### Bug Fixes
 
-* 일부 모니터링 데이터 미수집 버그 수정
-* 사용자 그룹명이 길 경우, 이벤트 구독 등록, 알림 그룹 추가 시 화면에 그룹명이 모두 표시되지 않던 문제 수정
-* 대시보드 드롭다운 메뉴 선택 시 메뉴가 사라지지 않고 남는 문제 수정
+* Fixed a bug in which some monitoring data was not being collected
+* Fixed a bug in which long user group names extend beyond the UI when the event subscription registration and notification groups are added
+* Fixed a bug in which the menu remains visible when the dashboard dropdown is selected
+
+### 2021. 06. 15.
+
+#### Feature Improvements
+
+* Monitoring system reorganized
+
+#### Bug Fixes
+
+* Fixed a problem where restoration was not possible when restoring a backup with a size close to the storage size
+* Fixed a problem where it did not properly operate when there is Korean in the container or path when exporting or importing the backup to object storage
+
+### 2021. 05. 11.
+
+#### More Features
+
+* Exporting and importing backup using object storage provided
+* Force restart provided
+
+#### Feature Updates
+
+* Improved feature to check and download xtrabackup log file
+
+#### Bug Fixes
+
+* Fixed the bug where intermittently instances would not be created when multiple instances are created simultaneously after the service is enabled
+* Fixed the bug where changes would fail when changing the high-availability instance port and instance type at the same time
+
+### April 13, 2021
+
+#### More Features
+
+* Provides audit log function for MySQL versions 5.6.33 to 5.7.26
+
+#### Feature Updates
+
+* Permission of project members subdivided into RDS for MySQL ADMIN / RDS for MySQL MEMBER
+* Modified the system to allow restart during MySQL down
+* Modified system to allow users to select any availability areas
+* Modified quarter limit text displayed when setting alarms
+* Added user guide for procedures provided from RDS
+
+#### Bug Fixes  
+
+* Fixed an issue where status of instance with a completed failover intermittently becomes normalized
+* Fixed an issue where some features of master instance does not work due to failed Read Only Slave
+* Fixed an issue where MySQL cannot run properly when data encryption instance is forced to reboot
 
 ### 2021. 03. 09.
 
@@ -22,20 +69,20 @@
 #### 버그 수정
 - 특정한 경우에서 인스턴스 재시작이 정상적으로 이루어지지 않는 버그 수정
 
-### 2021. 02. 16.
+### February 16, 2021
 
-#### 기능 추가
+#### More Features
 
-- DB User와 DB 스키마를 웹 콘솔을 통해서 제어할 수 있는 기능 추가
+- Added a feature that controls DB User and DB Schema through web console
 
-#### 기능 개선
+#### Feature Updates
 
-- DB 파일 암호화 기능 선택 시 툴팁 제공
-- 쿼리 지연 대기 시간의 값이 이상한 경우 검증 메시지 노출
+- Tooltip provided when the DB file encryption feature is selected
+- Verification message displayed if query latency value is abnormal
 
-#### 버그 수정
+#### Bug Fixes
 
-- 프로젝트 멤버가 20명 이상인 경우 Notification 멤버로 등록할 수 없는 버그 수정
+-  Fixed a bug where project members cannot be registered as a Notification member if there are 20 or more project members
 
 ### 2021. 01. 19.
 
@@ -92,13 +139,13 @@
 
 - Further supports MySQL 8.0.18  
 
-### Dec. 10, 2019
+### December 10, 2019
 
 #### More Features
 
 - Added the feature of database file encryption (Korea Region)
 
-### Nov. 12, 2019 
+### November 12, 2019 
 
 #### Feature Updates
 
@@ -108,7 +155,7 @@
 
 - Fixed infrequent backup failures 
 
-### Sept. 24, 2019 
+### September 24, 2019 
 
 #### Feature Updates 
 
@@ -160,121 +207,121 @@
 
 ### May 14, 2019
 
-#### Updates 
+#### Updates
 
-- Stronger authentication when instance is created or modified   
-- Added UX to select/unselect all notification events 
+- Stronger authentication when instance is created or modified
+- Added UX to select/unselect all notification events
+
+#### Bug Fixes
+
+- Fixed instances, which were sometimes unavailable to be deleted while they were being created
+- Fixed the issue in which data volume was not properly changed when data storage was full
+
+### March 12, 2019 
+
+#### Feature Updates 
+
+- Updated error messages that are vague with unpleasant looks. 
+- Updated to allow modifying transaction-isolation on the console 
+
+#### Bug Fixes
+
+- Removed the probability of long backup time which may take more than a day for 1TB database
+
+### February 26, 2019 
+
+#### More Features 
+
+- Added the feature of SSD volume as storage for instance data  
+
+#### Feature Updates 
+
+- Updated to set recipients of notification from project members 
+- Updated features for x1, u2 flavor 
+
+### January 29, 2019
+
+#### Feature Updates
+
+- Changed the maximum instance volume to 1000G 
+
+### December 14, 2018
 
 #### Bug Fixes 
 
-- Fixed instances, which were sometimes unavailable to be deleted while they were being created  
-- Fixed the issue in which data volume was not properly changed when data storage was full 
+- Fixed failed exposure of r2.c8m64  
+- Fixed general logs that are not visible 
+- Fixed bugs in the VPC subnet selection 
 
-### 2019.03.12
+### December 11, 2018 
 
-#### 기능 개선
+#### Feature Updates 
 
-- 의미가 모호하고 보기 불편한 에러 메시지 개선
-- 콘솔에서 transaction-isolation 값을 수정 할 수 있도록 개선
+- Removed the peering feature 
+- Feature updated to the method of network communication by using user VPC subnet  
 
-#### 버그 수정
+### October 23, 2018 
 
-- 1TB 의 DB 의 백업 시간이 하루 이상 걸릴 수 있는 가능성 제거
+#### Feature Updates 
 
-### 2019.02.26
+- Shows description message for input items when instance is created/restored/replicated 
+- Shows the mysql transaction_isolation option 
 
-#### 기능 추가
+### October 16, 2018 
 
-- 인스턴스 데이터 저장소로 SSD 볼륨 사용 기능 추가.
+#### More Features 
 
-#### 기능 개선
+- Added the feature of changing instance flavor 
+- Added the feature of extending instance storage 
 
-- Notification 수신 대상을 프로젝트 멤버로 설정하도록 기능 개선.
-- x1, u2 flavor 사용 가능 기능 개선.
+### August 28, 2018
 
-### 2019.01.29
+#### More Features 
 
-#### 기능 개선
+- Allows to secure instance volume by deleting binary log files 
 
-- 인스턴스 볼륨 사이즈 최대값 1000G으로 변경
+### July 24, 2018
 
-### 2018.12.14
+#### More Features
 
-#### 버그 수정
+- Also supports MySQL 5.7.15 
 
-- r2.c8m64 flavor 미노출 수정
-- general log 안보이는 현상 수정
-- VPC Subnet 선택 버그 수정
+#### Bug Fixes
 
-### 2018.12.11
+- Fixed an issue in which an instance of the MySQL 5.7.19 version cannot be created, without floating IP 
+- Fixed auto backups at particular situations, in which it takes twice the usual time 
 
-#### 기능 개선
+### May 29, 2018
 
-- Peering 기능 제거
-- 사용자 VPC Subnet을 이용한 네트워크 통신 방식으로 기능 개선
+#### More Features
 
-### 2018.10.23
+- Newly supports MySQL 5.7 
 
-#### 기능 개선
+### April 24, 2018
 
-- 인스턴스 생성/복원/복제 시 입력 항목 설명문구 노출
-- mysql transaction_isolation 옵션 노출
+#### Feature Updates
 
-### 2018.10.16
+- With port change of the master, the master access information is automatically changed for read only slave
+- Delete unnecessary logs after backup 
 
-#### 기능 추가
+#### Bug Fixes
 
-- 인스턴스 Flavor 변경 기능 추가
-- 인스턴스 Storage 확장 기능 추가
+- Fixed pagination, in which Search Result > Create instance takes you to the search result page 
+- Fixed the missing of a warning sign when it is tried to create an instance with Confirm Password left in blank 
 
-### 2018.08.28
+### March 22, 2018 
 
-#### 기능 추가
+#### Bug Fixes
 
-- Binary Log 파일 삭제을 통한 인스턴스 용량 확보 기능 추가
+- Fixed an issue in which backup retention period remains on the list, even after it was changed to 'N/A'
+- Fixed the bug in which instance status shows Changing, even without instance setting updated 
+- Fixed an issue in which QPS shows as negative number when an instance restarts 
+- Fixed the bug in which only data is updated without date or time updates, at the click of Period Setting on the Monitoring page 
 
-### 2018.07.24
+### February 22, 2018 
 
-#### 기능 추가
+#### New Releases 
 
-- MySQL 5.7.15 버전을 추가 지원
-
-#### 버그 수정
-
-- MySQL 5.7.19 버전 인스턴스 생성 시, floating ip 를 붙이지 않으면 생성하지 못하는 현상 수정
-- 특정 상황에서 자동 백업의 시간이 평소의 2배 소요되는 현상 수정
-
-### 2018.05.29
-
-#### 기능 추가
-
-- MySQL 5.7 버전 신규 지원
-
-### 2018.04.24
-
-#### 기능 개선
-
-- master의 port 변경 시, read only slave의 master 접속 정보 자동 변경
-- 백업 후, 불필요하게 남는 로그 삭제
-
-#### 버그 수정
-
-- 검색결과 페이지 > 인스턴스 생성 후 페이지 이동 시도 시, 검색 결과 페이지로 이동되는 현상 수정
-- 비밀번호 확인란을 공백으로 인스턴스 생성 시도 시 경고문구가 뜨지 않는 현상 수정
-
-### 2018.03.22
-
-#### 버그 수정
-
-- 백업 보관 기관 '없음'으로 변경 시, 일정 시간동안 리스트에서 보이는 현상 수정
-- 인스턴스 설정 수정을 하지 않았음에도 인스턴스의 상태가 변경 중으로 보이는 버그 수정
-- 인스턴스 재시작 시, QPS 가 음수로 보이는 현상 수정
-- Monitoring 화면에서 기간 설정 버튼 클릭 시, 화면의 날짜 및 시각의 갱신 없이 데이터만 갱신 되는 버그 수정
-
-### 2018.02.22
-
-#### 신규 상품 출시
-
-- TOAST Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
-- 복잡한 설정 없이 Relational Database 사용할 수 있습니다.
-- MySQL 5.6.33 버전을 제공합니다.
+- TOAST Relational Database Service (RDS) provides Relational Database in the cloud environment. 
+- No complicated configuration is required to enable relational database. 
+- Supports MySQL 5.6.33.  
