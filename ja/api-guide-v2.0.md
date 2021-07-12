@@ -1,28 +1,28 @@
-## Database > RDS for MySQL > API 가이드
+## Database > RDS for MySQL > APIガイド
 
-| 리전 | 엔드포인트 |
+| リージョン | エンドポイント |
 |---|---|
-| 한국(판교) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
-| 한국(평촌) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
-| 일본 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
+| 韓国(パンギョ)リージョン | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
+| 韓国(坪村)リージョン | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
+| 日本リージョン | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
 
 ## Monitoring
 
-### Metric 조회
+### Metric照会
 
-- 통계 정보 조회에 필요한 통계 항목(metric)을 조회합니다.
+- 統計情報照会に必要な統計項目(metric)を照会します。
 
 ```
 GET /rds/api/v2.0/metrics
 ```
 
-#### 요청 헤더
+#### リクエストヘッダ
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| X-TC-APP-KEY | URL | String | O | 상품 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY | URL | String | O | 商品Appkeyまたはプロジェクト統合Appkey |
 
-#### 응답
+#### レスポンス
 
 ```json
 {
@@ -39,38 +39,41 @@ GET /rds/api/v2.0/metrics
 }
 ```
 
-### 통계 정보 조회
+### 統計情報照会
 
-- 일정 주기마다 수집된 통계 정보들을 조회합니다.
+- 一定周期ごとに収集された統計情報を照会します。
 
 ```
 GET /rds/api/v2.0/metric-statistics
 ```
 
-#### 요청 헤더
+#### リクエストヘッダ
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| X-TC-APP-KEY | URL | String | O | 상품 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY | URL | String | O | 商品Appkeyまたはプロジェクト統合Appkey |
 
-#### 요청
+#### リクエスト
 
-| 이름 | 종류 | 형식 | 필수 | 설명 | 제약 사항 |
+| 名前 | 種類 | 形式 | 必須 | 説明 | 制約事項 |
 |---|---|---|---|---|---|
-| instanceId | Query | Array | O | DB 인스턴스 ID 목록 | Min:1, Max: 20 |
-| measureName | Query | Array | O | 조회 지표(metric) 목록 | Min:1 |
-| from | Query | Datetime | O | 시작 일시 | yyyy-MM-dd HH:mm:ss |
-| to | Query | Datetime | O | 종료 일시 | yyyy-MM-dd HH:mm:ss |
-| interval | Query | Integer | X | 조회 간격 | 1, 5, 30, 120, 1440 (분) |
+| instanceId | Query | Array | O | DBインスタンスIDリスト | Min:1, Max: 20 |
+| metricName | Query | Array | O | 照会指標(metric)リスト | Min:1 |
+| from | Query | Datetime | O | 開始日時 | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| to | Query | Datetime | O | 終了日時 | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| interval | Query | Integer | X | 照会間隔 | 1、5、30、120、1440 (分) |
 
-- interval : 기본값 사용 시 from/to 값에 따라 적절한 값을 자동 선택함
-    - 날짜 범위가 1일 이하 and 시작 날짜가 8일 경과 전 - 1분 단위 raw 데이터
-    - 날짜 범위가 7일 이하 and 시작 날짜가 40일 경과 전 - 5분 단위 평균 데이터
-    - 날짜 범위가 30일 이하 and 시작 날짜가 186일 경과 전 - 30분 단위 평균 데이터
-    - 날짜 범위가 180일 이하 and 시작 날짜가 730일 경과 전 - 2시간 단위 평균 데이터
-    - 그 외 - 1일 단위 평균 데이터
+- interval ：デフォルト値を使用する時、from/to値に応じて適切な値を自動選択する
+    - 日範囲が1日以下かつ開始日が8日経過前 - 1分単位rawデータ
+    - 日範囲が7日以下かつ開始日が40日経過前 - 5分単位平均データ
+    - 日範囲が30日以下かつ開始日が186日経過前 - 30分単位平均データ
+    - 日範囲が180日以下かつ開始日が730日経過前 - 2時間単位平均データ
+    - その他 - 1日単位平均データ
+- from, to : ISO Datetime 형식 예시
+    - UTC : 2021-01-01T00:00:00.000Z
+    - KST, JST : 2021-01-01T00:00:00.000+09:00
 
-#### 응답
+#### レスポンス
 
 ```json
 {

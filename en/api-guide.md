@@ -1,9 +1,12 @@
 
 ## Database > RDS for MySQL > API 가이드
 
+> [Caution] For data that has been monitored after June 15, 2021, v2.0 API must be called.
+
 | 리전 | 엔드포인트 |
 |---|---|
 | 한국(판교) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
+| 한국(평촌) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
 | 일본 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
 
 ## Monitoring

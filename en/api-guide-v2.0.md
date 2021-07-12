@@ -1,28 +1,28 @@
-## Database > RDS for MySQL > API 가이드
+## Database > RDS for MySQL > API Guide
 
-| 리전 | 엔드포인트 |
+| Region | Endpoint |
 |---|---|
-| 한국(판교) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
-| 한국(평촌) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
-| 일본 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
+| Korea (Pangyo) region | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
+| Korea (Pyeongchon) region | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
+| Japan region | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
 
 ## Monitoring
 
-### Metric 조회
+### View metric
 
-- 통계 정보 조회에 필요한 통계 항목(metric)을 조회합니다.
+- View the metrics necessary for viewing statistical information.
 
 ```
 GET /rds/api/v2.0/metrics
 ```
 
-#### 요청 헤더
+#### Request header
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| X-TC-APP-KEY | URL | String | O | 상품 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY | URL | String | O | Product Appkey or integrated Appkey for project |
 
-#### 응답
+#### Response
 
 ```json
 {
@@ -39,38 +39,41 @@ GET /rds/api/v2.0/metrics
 }
 ```
 
-### 통계 정보 조회
+### View stats
 
-- 일정 주기마다 수집된 통계 정보들을 조회합니다.
+- Views the statistical information collected on a regular basis.
 
 ```
 GET /rds/api/v2.0/metric-statistics
 ```
 
-#### 요청 헤더
+#### Request header
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| X-TC-APP-KEY | URL | String | O | 상품 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY | URL | String | O | Product Appkey or integrated Appkey for project |
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 | 제약 사항 |
+| Name | Type | Format | Required | Description | Constraints |
 |---|---|---|---|---|---|
-| instanceId | Query | Array | O | DB 인스턴스 ID 목록 | Min:1, Max: 20 |
-| measureName | Query | Array | O | 조회 지표(metric) 목록 | Min:1 |
-| from | Query | Datetime | O | 시작 일시 | yyyy-MM-dd HH:mm:ss |
-| to | Query | Datetime | O | 종료 일시 | yyyy-MM-dd HH:mm:ss |
-| interval | Query | Integer | X | 조회 간격 | 1, 5, 30, 120, 1440 (분) |
+| instanceId | Query | Array | O | List of DB instance IDs | Min:1, Max: 20 |
+| measureName | Query | Array | O | Metric list | Min:1 |
+| from | Query | Datetime | O | Start date | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| to | Query | Datetime | O | End date | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| interval | Query | Integer | X | View interval | 1, 5, 30, 120, 1440 (minutes) |
 
-- interval : 기본값 사용 시 from/to 값에 따라 적절한 값을 자동 선택함
-    - 날짜 범위가 1일 이하 and 시작 날짜가 8일 경과 전 - 1분 단위 raw 데이터
-    - 날짜 범위가 7일 이하 and 시작 날짜가 40일 경과 전 - 5분 단위 평균 데이터
-    - 날짜 범위가 30일 이하 and 시작 날짜가 186일 경과 전 - 30분 단위 평균 데이터
-    - 날짜 범위가 180일 이하 and 시작 날짜가 730일 경과 전 - 2시간 단위 평균 데이터
-    - 그 외 - 1일 단위 평균 데이터
+- interval : when default is used, it automatically selects a value appropriate for the from/to value
+    - Date range is 1 day or less, and Start date has not exceeded 8 days yet - Raw data for every minute
+    - Date range is 7 days or less, and Start date has not exceeded 40 days yet - Average data for every 5 minutes
+    - Date range is 30 days or less, and Start date has not exceeded 186 days yet - Average data for every 30 minutes
+    - Date range is 180 days or less, and Start date has not exceeded 730 days yet - Average data for every 2 hours
+    - Other - Average daily data
+- from, to : ISO Datetime 형식 예시
+    - UTC : 2021-01-01T00:00:00.000Z
+    - KST, JST : 2021-01-01T00:00:00.000+09:00
 
-#### 응답
+#### Response
 
 ```json
 {

@@ -217,32 +217,6 @@ Below is an example of access to MySQL Workbench.
 * Database file encryption cannot be enabled for the restoration or replication of instances, for which database file encryption is not enabled.
 * Database file encryption cannot be disabled for the restoration or replication of instances, for which database file encryption is enabled.
 
-## Monitor 
-
-* RDS periodically collects monitoring items required for database operations and usage, and shows them on a chart. 
-* To check monitoring items of a particular DB instance, select a particular DB instance from the **DB Instance List** and select **Monitoring**. 
-
-![rds_10_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_10_20210112_en.png)
-
-* To check monitoring items of all DB instances, select a DB instance on the **Monitoring** tab and click **Add**. 
-* Any change in chart range, interval, type and item affects all DB instances where changes are added.  
-
-![rds_11_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_11_20210112_en.png)
-
-* Buttons are available to easily adjust chart ranges. 
-* At each press of the button, like 1 hour or 6 hours, it is automatically calculated and updated as of the current time.
-<br/>
-* Chart intervals become available depending on the chart range: 
-    * Within 2 hours: 1 minute, 10 minutes
-    * Within 12 hours: 10 minutes, 1 hour
-    * Within 4 days: 1 hour, 6 hours
-    * Within 2 weeks: 6 hours, 1 day
-    * Others: 1 day
-* Chart type supports values at the maximum and on average.
-
-> [Note] Monitoring Data for Each RDS DB are temporarily saved and in a database called 'rds_maintenace' of user DB instance, and then deleted. Hence, even if such instance shows no sign of operations after created, its graph may show periodic movement by some monitoring items. 
-> [Note] If data on rds_maintenance database is manipulated, collected monitoring data may not be precise. 
-
 ### DB Schema & DB User Management
 
 * Web console can manage DB Schema and DB User.
@@ -315,41 +289,188 @@ Below is an example of access to MySQL Workbench.
 
 > [Caution] MySQL 5.7.15, 8.0.18 version is not supported.
 
-## Events 
+## Event
 
-* RDS automatically leaves significant events that occur in DB instances. 
-* To check events that occur at a particular database instance, select a DB instance and go to **Events & Logs** on **Detail Setting**.  
-* To look through all events that occur in my DB instances, check on the **Event** tab. 
+![event_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_list_0_ko.png)
 
-![rds_16_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_16_20210112_en.png)
+The results of monitoring settings can be checked for various events and notification groups that occur during various tasks related to DB instances.
 
-* **Type** shows the resource an event is occurred.  
-    * INSTANCE: An event related to DB instances. 
-    * BACKUP: An event related to backups. 
-* **Identifier**refers to a resource where an event occurs. 
-    * If the type is INSTANCE, DB instance name shows.
-    * If the type is BACKUP, backup ID shows. 
+* ❶ Retrieve by selecting the event type.
+* ❷ Search the event source or message.
+* ❸ Select the event period.
 
-## Notification
+### Event Subscription
 
-RDS delivers notifications on particular events occurring  at a resource to group of receivers. 
+![event_sub_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_list_0_ko.png)
 
-1. To set a notification, click **Create** on the **Notification** tab. 
-2. Enter name of notification and select events and resources to set from **Notification Setting**. 
-   * After setting is done, click **Add**. 
-3. To create a group of receivers, click **Create**. 
-4. On the pop-up of [Receiving Target], enter name of a recipient group. Click and select a project member to receive notification messages.
-   * After adding is done, click **Add**. 
-5. Then, click **Create** at the bottom. 
-6. After setting is completed, click **Create**.  
+The event subscription status can be checked..
 
-![rds_17_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_17_20210112_en.png)
+* ❶ Search by the **subscription name** or **event source**.
+* ❷ Create new event subscription.
+* ❸ Modify the subscription by selecting the subscription to be modified.
+* ❹ Delete the subscription by selecting the subscription to be deleted.
 
-Now, when conditions are met as configured, notifications are sent via mail addresses and phone numbers of the receivers. 
+### Register and Modify Event Subscription
 
-![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112_en.png)
+![event_sub_popup_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_popup_0_ko.png)
 
-> [Note] Unless receivers are checked to select, mail or SMS messages cannot be sent.  
+* ❶ Enter the event subscription name.
+* ❷ Select the type of event to subscribe to. Depending on the type, the event code and event source available are limited.
+* ❸ Select the event code to subscribe.
+* ❹ Select the event source to subscribe.
+* ❺ Select the user group to send the notification to. No notification will be sent if no group is selected.
+* ❻ Choose whether or not to enable.
+
+## Server Dashboard
+
+![server_dashboard_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_0_ko.png)
+
+Various performance indicators can be checked in charts.
+
+* ❶ * Search by instance name or IP address.
+* ❷ Servers that meet the criteria are displayed. The color of the icon in the upper right corner changes depending on the server status.
+  * Green: Normal
+  * Red: Error
+  * Gray: Server deleted
+* ❸ Select the layout.
+* ❹ Modify or delete the layout. 
+* ❺ Popup that **generates the layout** is displayed.
+* ❻ Add chart in layout.
+* ❼ Chart is updated after setting the search period to the current time.
+* ❽ The search period can be modified.
+* ❾ The chart is displayed.
+
+### Add Chart
+
+![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
+
+* ❶ First, select the desired layout to add a chart.
+* ❷ Click the **Add Chart** button and a popup is displayed to **add the chart** as shown below.
+
+![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
+
+* ❶ The chart to be added is displayed.
+* ❷ Select the desired chart to add.
+
+### Modify Chart
+
+![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_1_ko.png)
+
+* ❶ *Move the chart by dragging the top area of the chart with the mouse.
+* ❷ The chart can be deleted.
+* ❸ Change the chart size by dragging the lower right corner of the chart with the mouse. 
+
+### Add Layout
+
+![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
+
+* ❶ Click the **Create Layout** button.
+* ❷ Enter the layout name.
+
+### Modify and Delete Layout
+
+![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
+
+* ❶ Click the **Manage** button.
+* ❷ Changes to the edit screen where the layout can be modified.
+* ❸ The layout can be deleted
+
+![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
+
+* ❶ Click the **OK** button to save the modifications.
+* ❷ Click the **Cancel** button to cancel the modifications.
+
+## User Group
+
+The users who receive notifications through notification groups and event subscriptions can be managed in groups.
+
+### Create User Group
+
+![user_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_0_ko.png)
+
+* ❶ Click the **Create User Group** to display a popup to **create a user group**.
+
+![user_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_1_ko.png)  
+
+* ❷ Enter the group name.
+* ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
+* ❹ Add users to notified users.
+* ❺ All users in the user list are added to the notified users.
+
+### Modify User Group
+
+![user_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_0_ko.png)
+
+* ❶ Click the **Edit** button of the user group to be modified and a popup will appear to **modify the user group**.
+
+![user_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_1_ko.png)
+
+* ❷ After modifying the items, click the **OK** button to modify the user group.
+
+### Delete User Group
+
+![user_group_delete_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_delete_0_ko.png)
+
+* ❶ Click the **Delete** button of the user group to be deleted.
+
+## Notification Group
+
+Notifications can be received by adding the monitoring settings to the performance indicators of the instance.
+
+### Create Notification Group
+
+![notification_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_0_ko.png)
+
+* ❶ Click the **Create Group** button.
+
+![notification_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_1_ko.png)
+
+* ❷ Enter the notification group name.
+* ❸ Select the notification type. Multiple selections can be made.
+* ❹ Set whether or not to enable.
+* ❺ Select the instance to be monitored.
+* ❻ Select the user group.
+
+### Modify Notification Group
+
+![notification_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_0_ko.png)
+
+* ❶ 수Click the **Edit** button of the notification group to be modified.
+
+![notification_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_1_ko.png)
+
+* ❷  After modifications, click the **OK** button.
+
+### Delete Notification Group
+
+![notification_group_modify_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_2_ko.png)
+
+* ❶ The registered notification group can be deleted by clicking the **Delete** button.
+
+### Add Monitoring Setting
+
+![notification_group_watchdog_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_0_ko.png)
+
+* ❶ Click the Monitoring Settings button of the notification group to modify the **monitoring settings**.
+
+![notification_group_watchdog_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_1_ko.png)
+
+* ❷ Click the **Monitoring Settings** button.
+
+![notification_group_watchdog_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_2_ko.png)
+
+* ❸ Select the item to monitor.
+* ❹ Select the comparison method.
+* ❺ Enter the threshold. The max allowed value is different depending on the item.
+* ❻ Enter the duration.
+* ❼ Clicking the Add button registers the monitoring setting. If you click the Cancel button, the monitoring setting won't register.
+
+### Modify and Delete Monitoring Settings
+
+![notification_group_watchdog_3_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_3_ko.png)
+
+* ❶ The Monitoring Settings can be modified by clicking the **Edit** button.
+* ❷ Clicking the **Delete** button will delete the monitoring setting.
 
 ## Separating user permission
 
