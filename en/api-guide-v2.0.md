@@ -53,7 +53,7 @@ GET /rds/api/v2.0/metric-statistics
 |---|---|---|---|---|
 | X-TC-APP-KEY | URL | String | O | Product Appkey or integrated Appkey for project |
 
-#### 요청
+#### Request
 
 | Name | Type | Format | Required | Description | Constraints |
 |---|---|---|---|---|---|

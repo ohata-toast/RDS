@@ -19,11 +19,11 @@
 GET /rds/api/v1.0/appkeys/{appkey}/monitoring/metrics
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| appkey | URL | String | O | 상품 Appkey 또는 프로젝트 통합 Appkey |
+| appkey | URL | String | O | Product Appkey or integrated Appkey for project |
 
 #### Request
 
