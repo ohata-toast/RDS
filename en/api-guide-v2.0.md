@@ -69,7 +69,7 @@ GET /rds/api/v2.0/metric-statistics
     - Date range is 30 days or less, and Start date has not exceeded 186 days yet - Average data for every 30 minutes
     - Date range is 180 days or less, and Start date has not exceeded 730 days yet - Average data for every 2 hours
     - Other - Average daily data
-- from, to : ISO Datetime 형식 예시
+- from, to : ISO Datetime format example
     - UTC : 2021-01-01T00:00:00.000Z
     - KST, JST : 2021-01-01T00:00:00.000+09:00
 
