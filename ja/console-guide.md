@@ -294,7 +294,7 @@ DB Configuration画面で設定値を変更できます。
 * 詳細な設定値は、次のサイトで確認できます。
   * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
 
-> [注意] MySQL 5.7.15, 8.0.18バージョンはサポートしません。
+> [注意] MySQL 5.7.15, 8.0.18, 8.0.23 バージョンはサポートしません。
 
 ## イベント
 

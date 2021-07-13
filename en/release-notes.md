@@ -1,5 +1,30 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2021. 07. 13.
+
+#### Feature Updates
+
+* Additional MySQL 8.0.23 version support
+* Improved to allow checking the Enable status in the event subscription list
+* Improved to display the notification that there are no instances created in the dashboard when no instances are created
+
+#### Bug Fixes
+
+* Fixed a bug in which some monitoring data was not being collected
+* Fixed a bug in which long user group names extend beyond the UI when the event subscription registration and notification groups are added
+* Fixed a bug in which the menu remains visible when the dashboard dropdown is selected
+
+### 2021. 06. 15.
+
+#### Feature Improvements
+
+* Monitoring system reorganized
+
+#### Bug Fixes
+
+* Fixed a problem where restoration was not possible when restoring a backup with a size close to the storage size
+* Fixed a problem where it did not properly operate when there is Korean in the container or path when exporting or importing the backup to object storage
+
 ### 2021. 05. 11.
 
 #### More Features
