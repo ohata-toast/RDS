@@ -2,16 +2,16 @@
 
 ### 2021. 08. 10.
 
-#### 기능 개선
+#### Feature Updates
 
-* 백업을 위한 볼륨 디스크 사용 방법 변경 및 성능 개선
-* 서비스 활성화 시 리전 별 정보 동기화 개선
+* Changed the way of using a volume disk for backup and improved the performance
+* Improved the information synchronization per region when the service is enabled
 
-#### 버그 수정
+#### Bug Fixes
 
-* 동작과 관련 없는 잘못된 유형의 이벤트를 기록하는 버그 수정
-* 고가용성 인스턴스의 장애조치 진행중에 인스턴스의 상태와 맞지 않는 이벤트를 기록하는 버그 수정
-* Database Activity 차트에 insert 항목이 없는 버그 수정
+* Fixed the bug of recording a wrong event type that is irrelevant to the behavior
+* Fixed the bug of recording an event that does not match with the status of an instance during failover of the high-availability instance
+* Fixed the bug of Database Activity chart having no insert field
 
 ### 2021. 07. 13.
 
