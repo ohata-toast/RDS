@@ -244,7 +244,6 @@ DB Configuration画面で設定値を変更できます。
 > CLIによる操作を希望の場合、カスタマーサポートまでお問い合わせください。
 
 > また、2021.2.16以前のインスタンスではCLIによる操作も可能ですが、Read Only Slaveを持っていたり、高可用性インスタンスを有効化している場合、
-> CREATE USER、 ALTER USER、 GRANTに関わる作業後にflush privilegesを実行することで上述のバグによる中断が回避されます。
 * 下記のDB Userはポリシー上使用できません。
   * mysql.session
   * mysql.sys

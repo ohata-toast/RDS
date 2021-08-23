@@ -170,7 +170,9 @@ mysql> call mysql.tcrds_repl_init();
 | 5.7.15 | 2.4.20 |
 | 5.7.19 | 2.4.20 |
 | 5.7.26 | 2.4.20 |
+| 5.7.33 | 2.4.20 |
 | 8.0.18 | 8.0.12 |
+| 8.0.22 | 8.0.12 |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -178,6 +180,7 @@ mysql> call mysql.tcrds_repl_init();
 
 > [주의] 권장하는 XtraBackup 이외의 버전을 사용하면, 정상으로 동작하지 않을 수 있습니다.
 > [주의] DB 파일 암호화 기능을 사용할 경우 백업을 오브젝트 스토리지로 내보낼 수 없습니다.
+> [주의] 오브젝트 스토리지의 백업 파일과 복원하려는 MySQL의 버전은 동일해야 합니다.
 
 ### 오브젝트 스토리지에 백업 내보내기
 
@@ -223,15 +226,38 @@ find {MySQL 데이터 저장 경로} -name "*.qp" -print0 | xargs -0 rm
 
 * MySQL 서비스를 시작합니다.
 
-> [주의] 오브젝트 스토리지의 백업 파일과 복원하려는 MySQL의 버전은 동일해야 합니다.
+### 오브젝트 스토리지의 RDS for MySQL 백업 파일을 이용하여 DB 인스턴스 생성
 
-### 오브젝트 스토리지의 백업 파일을 이용하여 DB 인스턴스 생성
-
-* 오브젝트 스토리지의 백업 파일을 이용하여 동일 리전 다른 프로젝트의 RDS for MySQL로 복원할 수 있습니다.
-* 웹 콘솔의 **Instance** 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
+* 오브젝트 스토리지의 RDS for MySQL 백업 파일을 이용하여 동일 리전 다른 프로젝트의 RDS for MySQL로 복원할 수 있습니다.
+* [오브젝트 스토리지에 백업 내보내기](./developer-guide/#_5 )를 참고하여 백업 파일을 오브젝트 스토리지로 내보냅니다. 
+* 복원하고자 하는 프로젝트의 웹 콘솔에 접속한 후, **Instance** 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
 * 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
 
-> [주의] 오브젝트 스토리지의 백업 파일과 복원하려는 RDS for MySQL의 버전은 동일해야 합니다.
+### 오브젝트 스토리지의 외부 MySQL 백업 파일을 이용하여 DB 인스턴스 생성
+
+* 일반 MySQL 백업 파일을 이용하여 RDS for MySQL의 DB 인스턴스로 복원 할 수 있습니다.
+
+> [주의] `innodb_data_file_path` 의 설정값이 `ibdata1:12M:autoextend` 가 아니면 RDS for MySQL의 DB 인스턴스로 복원할 수 없습니다.
+
+* MySQL이 설치된 서버에서 아래의 명령어를 이용하여 백업을 수행합니다.
+* XtraBackup 2.4.20 예제
+
+```
+innobackupex --defaults-file={my.cnf 경로} --user {사용자} --password '{비밀번호}' --socket {MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
+```
+* XtraBackup 8.0.12 예제
+
+```
+xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비밀번호}' --socket={MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream --backup {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
+```
+* 백업 로그 파일의 마지막 줄에 `completed OK!` 가 있는지 확인합니다.
+  * 만약 `completed OK!` 가 없다면 백업이 정상적으로 종료되지 않았으므로, 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
+* 완료된 백업 파일을 오브젝트 스토리지에 업로드 합니다.
+  * NHN Cloud의 오브젝트 스토리지는 한 번에 올릴수 있는 최대 파일 크기가 5GB 입니다.
+  * 만약 백업 파일의 크기가 5GB 보다 크다면, `split` 같은 유틸리티를 이용하여 백업 파일의 크기를 5GB 이하로 잘라서 멀티 파트로 올려야 합니다.
+  * 자세한 사항은 https://docs.toast.com/ko/Storage/Object%20Storage/ko/api-guide/#_43를 참고합니다.
+* 복원하고자 하는 프로젝트의 웹 콘솔에 접속한 후, 웹 콘솔의 **Instance** 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
+* 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
 
 ## Procedure
 

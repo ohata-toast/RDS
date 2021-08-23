@@ -81,6 +81,8 @@ DB 인스턴스의 각종 성능 지표와 DB 인스턴스와 관련된 여러 �
 | INSTANCE | INSTC_50_00 | 백업 내보내기 시작 |
 | INSTANCE | INSTC_50_01 | 백업 내보내기 완료 |
 | INSTANCE | INSTC_50_04 | 백업 내보내기 실패 |
+| INSTANCE | INSTC_51_01 | 사용자 쿼리 지연으로 인한 백업 실패 |
+| INSTANCE | INSTC_52_01 | 사용자 쿼리 지연으로 인한 백업 및 내보내기 실패 |
 | BACKUP | BACUP_02_01 | 백업 삭제 완료 |
 | BACKUP | BACUP_04_00 | Object Storage 업로드 시작 |
 | BACKUP | BACUP_04_01 | Object Storage 업로드 완료 |
@@ -88,6 +90,7 @@ DB 인스턴스의 각종 성능 지표와 DB 인스턴스와 관련된 여러 �
 | BACKUP | BACUP_05_00 | 백업 내보내기 시작 |
 | BACKUP | BACUP_05_01 | 백업 내보내기 완료 |
 | BACKUP | BACUP_05_04 | 백업 내보내기 실패 |
+| BACKUP | BACUP_06_01 | 사용자 쿼리 지연으로 인한 백업 실패 |
 | TENANT | TENAT_01_04 | CPU 코어 수 제한 |
 | TENANT | TENAT_02_04 | RAM 용량 제한 |
 | TENANT | TENAT_03_04 | 개별 볼륨 크기 제한 |
