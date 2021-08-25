@@ -1,5 +1,18 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2021. 08. 10.
+
+#### Feature Updates
+
+* Changed the way of using a volume disk for backup and improved the performance
+* Improved the information synchronization per region when the service is enabled
+
+#### Bug Fixes
+
+* Fixed the bug of recording a wrong event type that is irrelevant to the behavior
+* Fixed the bug of recording an event that does not match with the status of an instance during failover of the high-availability instance
+* Fixed the bug of Database Activity chart having no insert field
+
 ### 2021. 07. 13.
 
 #### Feature Updates
