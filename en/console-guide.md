@@ -235,9 +235,6 @@ Below is an example of access to MySQL Workbench.
   * CRUD: In addition to READ permission, DML can be inquired.
   * DDL: In addition to CRUD permission, DDL can be inquired.
   * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
-
-> [Caution] If you have Read Only Slave, or in the case of a high availability instance, if you have done a task related to `CREATE USER`, `ALTER USER`, or `GRANT` with an existing DB User, you must execute `flush privileges` syntax. Otherwise, backup could fail. This is a known MySQL bug.
-
 * The DB User shown below cannot be used due to the policy:
   * mysql.session
   * mysql.sys
