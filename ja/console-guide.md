@@ -40,7 +40,7 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
 
 **バックアップ&アクセス制御** 画面でバックアップ情報を指定します。
 
-![rds_02_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_02_20210112_jp.png)
+![backup_and_access_0_ko](https://static.toastoven.net/prod_rds/21.09.14/backup_and_access_0_ko.png)
 
 * 自動バックアップおよびアクセス制御を設定した後、 **次へ** ボタンをクリックします。
 * クエリー遅延待機時間：バックアップ遂行時にFLUSH TABLES WITH READ LOCK遅延待機時間を設定できます。 
@@ -56,7 +56,7 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
 
 DB Configuration画面で設定値を変更できます。
 
-![rds_03_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_03_20210112_jp.png)
+![db_configuration_0_jp](https://static.toastoven.net/prod_rds/21.09.14/db_configuration_0_jp.png)
 
 * 設定値を変更した後、 **作成** ボタンをクリックします。
 * 最後に **確認** ボタンをクリックすると、DBインスタンスが作成されます。
@@ -73,11 +73,11 @@ DB Configuration画面で設定値を変更できます。
 2. Floating IP項目を **使用する**に修正します。
 3. **確認** ボタンをクリックすると、修正事項が反映されます。
 
-![rds_04_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_04_20210112_jp.png)
+![instance_detail_0_jp](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_jp.png)
 
 * 設定後、Floating IPが作成され、外部からアクセスできることを確認できます。
 
-![rds_05_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_05_20210112_jp.png)
+![instance_detail_1_jp](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_jp.png)
 
 * 次はMySQL Workbenchの接続例です。
 
@@ -165,7 +165,7 @@ DB Configuration画面で設定値を変更できます。
 * 読み取り性能高めるには、MySQLがサポートするRead Only Slaveを作成します。
 * Read Only Slaveを作成するには、原本DBインスタンスを選択した後、 **追加機能 > コピー作成**を選択します。
 
-![rds_07_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_07_20210112_jp.png)
+![additional_function_0_jp](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_jp.png)
 
 * コピー作成のための詳細設定を入力し、 **コピー** ボタンをクリックすると、コピーが作成されます。
 * コピー元DBインスタンスと同じタイプまたはさらにスペックの高いタイプでの作成を推奨します。スペックの低いタイプで作成した場合、コピー作成処理に遅延が発生することがあります。
@@ -257,12 +257,6 @@ DB Configuration画面で設定値を変更できます。
   * rds_repl
 
 * DBスキーマとDB User項目の**同期化**ボタンを押すと、 DBインスタンスに作成されたDBスキーマとDB User情報をそれぞれ取得できます。
-
-### モニタリング項目
-
-* RDSでサポートするモニタリング項目は次のとおりです。
-
-![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_jp.png)
 
 ## ログファイル
 

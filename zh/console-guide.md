@@ -40,7 +40,7 @@
 
 在**备份&Access控制**界面中指定备份信息。
 
-![rds_02_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_02_20210112_zh.png)
+![backup_and_access_0_ko](https://static.toastoven.net/prod_rds/21.09.14/backup_and_access_0_ko.png)
 
 * 设置自动备份及访问控制后，单击**下一步**按钮。
 * 쿼리 지연 대기 시간: 백업 수행 시에 FLUSH TABLES WITH READ LOCK 지연 대기 시간을 설정할 수 있습니다. 
@@ -55,7 +55,7 @@
 
 可在DB Configuration界面中更改设置值。
 
-![rds_03_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_03_20210112_zh.png)
+![db_configuration_0_zh](https://static.toastoven.net/prod_rds/21.09.14/db_configuration_0_zh.png)
 
 * 更改所需设置值后，单击**创建**按钮。
 * 最后单击**确认**按钮，创建DB实例。
@@ -71,11 +71,11 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 2.将浮动IP项目修改为**使用**。
 3.单击**确定**按钮，反映修改项。
 
-![rds_04_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_04_20210112_zh.png)
+![instance_detail_0_zh](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_zh.png)
 
 设置后浮动IP生成，可确认是否能从外部连接。
 
-![rds_05_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_05_20210112_zh.png)
+![instance_detail_1_zh](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_zh.png)
 
 以下为MySQL Workbench连接示例。
 
@@ -152,7 +152,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 若欲提高读取性能，可以创建支持MySQL的Read Only Slave。
 * 若欲创建Read Only Slave，选择原始DB实例后单击**附加功能>创建副本**。
 
-![rds_07_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_07_20210112_zh.png)
+![additional_function_0_zh](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_zh.png)
 
 * 输入创建副本所需的设置，单击**复制**按钮，创建副本。
 * 建议创建为与原始DB实例相同的类型或更高的类型，创建为较低的类型时，有可能发生复制延迟。
@@ -233,44 +233,37 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 >[参考] 各RDS DB实例的监控数据临时保存在用户DB实例的名为“rds_maintenance”的数据库中，然后删除。因此，即使创建后未进行任何操作的实例，也会显示几个监控项目规则移动的图表状态。 
 >[参考] 若操作rds_maintenance database的数据，可能会收集到错误的监控数据。
 
-### DB 스키마 & DB User 관리
+### DB Schema & DB User Management
 
-* DB 스키마와 DB User를 웹 콘솔에서 관리할 수 있습니다.
+* Web console can manage DB Schema and DB User.
 
-> [참고] 더이상 DB 스키마와 DB User를 쿼리를 통해 생성, 수정, 삭제할 수 없습니다.
+> [Note] You can no longer create, modify, or delete DB Schema or DB User with a query.
+> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_en.png)
 
-![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_zh.png)
+* Clicking the **Change**  button enables it so that DB Schema and User can be changed.
 
-* **변경** 버튼 클릭 시, DB 스키마와 사용자를 변경할 수 있게 활성화됩니다.
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_en.png)
 
-![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_zh.png)
+* Clicking the **Add**  button applies the changes in DB Schema and DB User all at once.
+* Renaming of DB Schema is not supported.
+* DB User is given four permissions.
+    * READ: Can read data.
+    * CRUD: In addition to READ permission, DML can be inquired.
+    * DDL: In addition to CRUD permission, DDL can be inquired.
+    * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
+* The DB User shown below cannot be used due to the policy:
+    * mysql.session
+    * mysql.sys
+    * sqlgw
+    * admin
+    * etladm
+    * alertman
+    * prom
+    * rds_admin
+    * rds_mha
+    * rds_repl
 
-* **추가** 버튼 클릭 시, DB 스키마와 DB User의 변경 사항이 한꺼번에 적용됩니다.
-* DB 스키마의 이름 변경은 지원하지 않습니다.
-* DB User의 권한은 4개의 권한으로 구성됩니다.
-  * READ: 데이터를 조회할 수 있습니다.
-  * CRUD: READ 권한에 더해 DML 질의를 실행할 수 있습니다.
-  * DDL: CRUD 권한에 더해 DDL 질의를 실행할 수 있습니다.
-  * CUSTOM: 기존에 사용 중이던 사용자의 권한입니다. CUSTOM 권한으로 변경할 수는 없으며, CUSTOM 권한인 사용자는 오직 삭제만 가능합니다.
-* 아래의 DB User는 정책상 사용할 수 없습니다.
-  * mysql.session
-  * mysql.sys
-  * sqlgw
-  * admin
-  * etladm
-  * alertman
-  * prom
-  * rds_admin
-  * rds_mha
-  * rds_repl
-
-* DB 스키마와 DB User 항목의 **동기화** 버튼 클릭 시, DB 인스턴스에 생성된 DB 스키마와 DB User 정보들을 각각 가져올 수 있습니다.
-
-### 监控项目
-
-* RDS支持的监控项目如下。
-
-![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_zh.png)
+* If you click the **Synchronize** button for DB schema and DB User, you can get the information of DB schema and DB User created in the DB instance.
 
 ### 日志文件
 
@@ -294,76 +287,239 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 日志文件临时上传到Object Storage，最长保留5分钟以供下载。
 >[参考] 可能收取上传到Object Storage至删除的5分钟内的Object Storage使用费用。
 
+### Audit Log
 
-## 事件
+* Can leave an audit log using the DB Configuration settings.
+* Generated audit log file can be checked or downloaded from the Event & Log tab.
+* For detailed settings, please check the website below.
+    * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
 
-* RDS自动保留DB实例中发生的有意义的事件。
-* 若欲查看特定DB实例中发生的事件，选择DB实例后，可在**具体设置**界面的**Event & Log**标签中确认。
-* 若欲一次性查看DB实例中发生的事件，可跳转至**Event**标签确认。
+> [Caution] MySQL 5.7.15, 8.0.18, 8.0.23 version is not supported.
 
-![rds_16_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_16_20210112_zh.png)
+## Event
 
-* **类型**指的是在何种资源中发生的事件。
-    * INSTANCE:与DB实例相关的事件。
-    * BACKUP:与备份相关的事件。
-* **Identifier**指发生事件的资源。
-    * 若事件类型为INSTANCE，则显示DB实例名。
-    * 若事件类型为BACKUP，则显示备份ID。
+![event_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_list_0_ko.png)
 
-## Notification
+The results of monitoring settings can be checked for various events and notification groups that occur during various tasks related to DB instances.
 
-RDS可将在所需资源中发生的特定事件警报传达给接收组。
+* ❶ Retrieve by selecting the event type.
+* ❷ Search the event source or message.
+* ❸ Select the event period.
 
-1.若欲设置所需警报，在**Notification**标签中单击**创建**按钮。
-2.输入需要的警报名，在**警报设置**中选择要设置的时间和资源。
-   设置后单击**添加**按钮。
-3.若欲创建接收警报的接收组，单击**创建**按钮。
-4.[接收对象] 弹出窗口后，输入接收组名称。在项目成员中单击要接收警报信息的成员，选定为接收对象项目成员。
-5.在接收对象窗口中单击**创建**按钮。
-6.警报设置完成后，单击**创建**按钮。 
+### Event Subscription
 
-![rds_17_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_17_20210112_zh.png)
+![event_sub_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_list_0_ko.png)
 
-若满足设置的条件，可通过接收对象中输入的邮箱地址和电话接收警报。
+The event subscription status can be checked..
 
-![rds_18_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_18_20210112_zh.png)
+* ❶ Search by the **subscription name** or **event source**.
+* ❷ Create new event subscription.
+* ❸ Modify the subscription by selecting the subscription to be modified.
+* ❹ Delete the subscription by selecting the subscription to be deleted.
 
->[参考] 若在接收组中不勾选所需对象的复选框，则不发送邮件或SMS。
+### Register and Modify Event Subscription
 
-## 부록1. 하이퍼바이저 점검을 위한 DB 인스턴스 마이그레이션 가이드
+![event_sub_popup_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_popup_0_ko.png)
 
-NHN Cloud는 주기적으로 DB 인스턴스의 하이퍼바이저 소프트웨어를 업데이트하여 보안과 안정성을 향상시키고 있습니다.
-점검 대상 하이퍼바이저에서 구동 중인 DB 인스턴스는 마이그레이션을 통해 점검이 완료된 하이퍼바이저로 이동해야 합니다.
+* ❶ Enter the event subscription name.
+* ❷ Select the type of event to subscribe to. Depending on the type, the event code and event source available are limited.
+* ❸ Select the event code to subscribe.
+* ❹ Select the event source to subscribe.
+* ❺ Select the user group to send the notification to. No notification will be sent if no group is selected.
+* ❻ Choose whether or not to enable.
 
-DB 인스턴스 마이그레이션은 NHN Cloud 콘솔에서 시작할 수 있습니다.
-DB 구성에 따라 특정 DB 인스턴스를 선택하여 마이그레이션 시, 연관된 DB 인스턴스(예를 들면 Slave 인스턴스)도 점검 대상이면 같이 마이그레이션을 진행합니다.
-아래 가이드에 따라 콘솔에 있는 마이그레이션 기능을 이용하시기 바랍니다.
-점검 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
+## Server Dashboard
 
-### 1. 점검 대상 DB 인스턴스를 확인 합니다.
+![server_dashboard_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_0_ko.png)
 
-이름 옆에 마이그레이션 버튼이 있는 DB 인스턴스가 점검 대상 인스턴스입니다.
+Various performance indicators can be checked in charts.
 
-![rds_planed_migration_0](https://static.toastoven.net/prod_rds/planned_migration_alarm/image0_zh.png)
+* ❶ * Search by instance name or IP address.
+* ❷ Servers that meet the criteria are displayed. The color of the icon in the upper right corner changes depending on the server status.
+    * Green: Normal
+    * Red: Error
+    * Gray: Server deleted
+* ❸ Select the layout.
+* ❹ Modify or delete the layout.
+* ❺ Popup that **generates the layout** is displayed.
+* ❻ Add chart in layout.
+* ❼ Chart is updated after setting the search period to the current time.
+* ❽ The search period can be modified.
+* ❾ The chart is displayed.
 
-마이그레이션 버튼 위에 마우스 커서를 올리면 자세한 점검 일정을 확인할 수 있습니다.
+### Add Chart
 
-![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_zh.png)
+![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
 
-### 2. 점검 대상 DB 인스턴스에 접속 중인 응용 프로그램을 종료해야 합니다.
+* ❶ First, select the desired layout to add a chart.
+* ❷ Click the **Add Chart** button and a popup is displayed to **add the chart** as shown below.
 
-DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취하시길 바랍니다.
-서비스에 영향을 줄 수밖에 없을 때는 NHN Cloud 고객 센터로 연락해 주시면 적합한 조치를 안내해 드리겠습니다.
+![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
 
-### 3. 점검 대상 DB 인스턴스를 선택하고 마이그레이션 버튼을 클릭한 후 DB 인스턴스 마이그레이션 확인을 묻는 창이 나타나면 확인 버튼을 클릭합니다.
+* ❶ The chart to be added is displayed.
+* ❷ Select the desired chart to add.
 
-![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_zh.png)
+### Modify Chart
 
-### 4. DB 인스턴스 마이그레이션이 끝날 때까지 대기합니다.
+![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_1_ko.png)
 
-DB 인스턴스 상태가 변경되지 않는다면 '새로 고침'을 해보시기 바랍니다.
+* ❶ *Move the chart by dragging the top area of the chart with the mouse.
+* ❷ The chart can be deleted.
+* ❸ Change the chart size by dragging the lower right corner of the chart with the mouse.
 
-![rds_planed_migration_3](https://static.toastoven.net/prod_rds/planned_migration_alarm/image3_zh.png)
+### Add Layout
 
-DB 인스턴스가 마이그레이션되는 동안에는 아무런 조작을 할 수 없습니다.
-DB 인스턴스 마이그레이션이 정상적으로 완료되지 않으면 자동으로 관리자에게 보고되며, NHN Cloud에서 별도로 연락을 드립니다.
+![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
+
+* ❶ Click the **Create Layout** button.
+* ❷ Enter the layout name.
+
+### Modify and Delete Layout
+
+![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
+
+* ❶ Click the **Manage** button.
+* ❷ Changes to the edit screen where the layout can be modified.
+* ❸ The layout can be deleted
+
+![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
+
+* ❶ Click the **OK** button to save the modifications.
+* ❷ Click the **Cancel** button to cancel the modifications.
+
+## User Group
+
+The users who receive notifications through notification groups and event subscriptions can be managed in groups.
+
+### Create User Group
+
+![user_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_0_ko.png)
+
+* ❶ Click the **Create User Group** to display a popup to **create a user group**.
+
+![user_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_1_ko.png)
+
+* ❷ Enter the group name.
+* ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
+* ❹ Add users to notified users.
+* ❺ All users in the user list are added to the notified users.
+
+### Modify User Group
+
+![user_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_0_ko.png)
+
+* ❶ Click the **Edit** button of the user group to be modified and a popup will appear to **modify the user group**.
+
+![user_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_1_ko.png)
+
+* ❷ After modifying the items, click the **OK** button to modify the user group.
+
+### Delete User Group
+
+![user_group_delete_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_delete_0_ko.png)
+
+* ❶ Click the **Delete** button of the user group to be deleted.
+
+## Notification Group
+
+Notifications can be received by adding the monitoring settings to the performance indicators of the instance.
+
+### Create Notification Group
+
+![notification_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_0_ko.png)
+
+* ❶ Click the **Create Group** button.
+
+![notification_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_1_ko.png)
+
+* ❷ Enter the notification group name.
+* ❸ Select the notification type. Multiple selections can be made.
+* ❹ Set whether or not to enable.
+* ❺ Select the instance to be monitored.
+* ❻ Select the user group.
+
+### Modify Notification Group
+
+![notification_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_0_ko.png)
+
+* ❶ 수Click the **Edit** button of the notification group to be modified.
+
+![notification_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_1_ko.png)
+
+* ❷  After modifications, click the **OK** button.
+
+### Delete Notification Group
+
+![notification_group_modify_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_2_ko.png)
+
+* ❶ The registered notification group can be deleted by clicking the **Delete** button.
+
+### Add Monitoring Setting
+
+![notification_group_watchdog_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_0_ko.png)
+
+* ❶ Click the Monitoring Settings button of the notification group to modify the **monitoring settings**.
+
+![notification_group_watchdog_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_1_ko.png)
+
+* ❷ Click the **Monitoring Settings** button.
+
+![notification_group_watchdog_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_2_ko.png)
+
+* ❸ Select the item to monitor.
+* ❹ Select the comparison method.
+* ❺ Enter the threshold. The max allowed value is different depending on the item.
+* ❻ Enter the duration.
+* ❼ Clicking the Add button registers the monitoring setting. If you click the Cancel button, the monitoring setting won't register.
+
+### Modify and Delete Monitoring Settings
+
+![notification_group_watchdog_3_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_3_ko.png)
+
+* ❶ The Monitoring Settings can be modified by clicking the **Edit** button.
+* ❷ Clicking the **Delete** button will delete the monitoring setting.
+
+## Separating user permission
+
+* Project members can be granted separate permissions either as RDS for MySQL ADMIN / RDS for MySQL MEMBER.
+* RDS for MySQL ADMIN permission holders can use all available features as before.
+* RDS for MySQL MEMBER permission holders can use read-only feature.
+    * Cannot use any features aimed at instances or create, modify, or delete any instance.
+    * Can use alarm-related features on the Notification tab.
+
+## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
+
+NHN Cloud updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. Instances that are running on a target hypervisor for maintenance must be migrated to a hypervisor which is completed with maintenance.
+
+Migration of database instance can start on a NHN Cloud console.
+Depending on database configuration, select a particular instance to migrate it as well, if its relevant database instance (e.g. slave instance) is also the target of maintenance.
+Follow the guide as below, to use the migration service on console.
+Go to the project in which a database instance for maintenance is located.
+
+### 1. Check database instances which are the maintenance targets.
+
+Those with the migration button next to name are the maintenance targets.
+
+![rds_planed_migration_0](https://static.toastoven.net/prod_rds/planned_migration_alarm/image0_en.png)
+
+Put a cursor on the migration button, and you can find its maintenance schedule.
+
+![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_en.png)
+
+### 2. Make sure to close any application programs that are running on the database instance.
+
+It is recommended to take appropriate measures so as impact on relevant services can be limited.
+Nevertheless, if impact on service is inevitable, contact NHN Cloud Customer Center to be guided further.
+
+### 3. Select a database instance for maintenance, click migration, and click OK on window asking of migration.
+
+![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_en.png)
+
+### 4. Wait until database migration is over.
+
+If instance status remains the same, try ‘Refresh’.
+
+![rds_planed_migration_3](https://static.toastoven.net/prod_rds/planned_migration_alarm/image3_en.png)
+
+While migration is underway, operation is not permitted.
+An abnormal closure of database instance migration shall be automatically reported to administrator, and it such case, you’ll be contacted by NHN Cloud.
