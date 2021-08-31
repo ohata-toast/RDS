@@ -37,7 +37,7 @@
 > [참고] DB 파일 암호화 기능을 사용하면 성능이 다소 감소할 수 있습니다.
 > [참고] 기본 알람 사용 시 해당 인스턴스에 대한 알람이 자동 등록되며, 이름은 "{인스턴스 이름}-default"로 설정됩니다. 등록되는 알람은 변경 및 삭제할 수 있으며, 적용되는 인스턴스도 변경할 수 있습니다.
 
-![rds_02_20210112](https://static.toastoven.net/prod_rds/21.09.14/rds_01_20210914.png)
+![backup_and_access_0_ko](https://static.toastoven.net/prod_rds/21.09.14/backup_and_access_0_ko.png)
 
 * 자동 백업 및 접근 제어 설정을 한 후, **다음** 버튼을 누릅니다.
 * 쿼리 지연 대기 시간: 백업 수행 시에 FLUSH TABLES WITH READ LOCK 지연 대기 시간을 설정할 수 있습니다. 
@@ -56,7 +56,7 @@
     * 사용자 접근 제어에 등록되지 않은 IP 는 접속이 불가능합니다.
     * 접근 제어 시, 방향 설정에서 `수신/송신`에 대해 각각 허용 여부를 선택합니다.
 
-![rds_03_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_03_20210112.png)
+![db_configuration_0_ko](https://static.toastoven.net/prod_rds/21.09.14/db_configuration_0_ko.png)
 
 * 변경 하고자 하는 설정 값을 변경 후, **생성** 버튼을 누릅니다.
 * 최종적으로 **확인** 버튼을 누르면, DB 인스턴스가 생성됩니다.
@@ -68,13 +68,13 @@
 * 인스턴스 [상세 설정]의 [접속 정보]에서 접속 가능한 도메인 정보를 확인할 수 있습니다.
 * Floating IP 를 ‘사용’으로 설정하지 않은 DB 인스턴스는 외부에서 접근할 수 없습니다.
 
-![rds_04_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_04_20210112.png)
+![instance_detail_0_ko](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_ko.png)
 
 * 외부에서 접속을 테스트하기 위해 우측 상단의 **변경** 버튼을 누릅니다.
 * Floating IP 항목을 **사용함**으로 수정합니다.
 * **확인** 버튼을 눌러 수정 사항을 반영합니다.
 
-![rds_05_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_05_20210112.png)
+![instance_detail_1_ko](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_ko.png)
 
 * 설정 후 Floating IP가 생성되어 외부에서 접근이 가능해진것을 확인할 수 있습니다.
 
@@ -168,7 +168,7 @@
 * 읽기 성능을 높이기 위해서 MySQL 이 지원하는 Read Only Slave 를 만들 수 있습니다.
 * Read Only Slave 를 만들기 위해서 원본 DB 인스턴스를 선택한 후 **추가기능 > 복제본 생성**을 누릅니다.
 
-![rds_07_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_07_20210112.png)
+![additional_function_0_ko](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_ko.png)
 
 * 복제본 생성을 위한 설정을 입력한 후, **복제** 버튼을 누르면 복제본이 생성됩니다.
 * 원본 DB 인스턴스와 동일한 사양 혹은 더 높은 사양으로 만드는 것을 권장하며, 낮은 사양으로 생성 시 복제 지연이 발생할 수 있습니다.
@@ -258,12 +258,6 @@
   * rds_repl
 
 * DB 스키마와 DB User 항목의 **동기화** 버튼 클릭 시, DB 인스턴스에 생성된 DB 스키마와 DB User 정보들을 각각 가져올 수 있습니다.
-
-### 모니터링 항목
-
-* RDS 에서 지원하는 모니터링 항목은 다음과 같습니다.
-
-![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112.png)
 
 ## 로그 파일
 
