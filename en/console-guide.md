@@ -38,7 +38,7 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
 
 Specify backup information on the **Backup & Access Control** page. 
 
-![rds_02_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_02_20210112_en.png)
+![backup_and_access_0_ko](https://static.toastoven.net/prod_rds/21.09.14/backup_and_access_0_ko.png)
 
 * Set auto backup and access control, and click **Next**. 
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
@@ -53,7 +53,7 @@ Specify backup information on the **Backup & Access Control** page.
 
 Values can be changed on DB Configuration. 
 
-![rds_03_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_03_20210112_en.png)
+![db_configuration_0_en](https://static.toastoven.net/prod_rds/21.09.14/db_configuration_0_en.png)
 
 * Change values, and click **Create**. 
 * Click **Confirm**, and a DB instance is created. 
@@ -65,21 +65,19 @@ Values can be changed on DB Configuration.
 * Go to [Detail Settings] and [Access Information] of an instance to check accessible domain information.
 * Database instances of which floating IP is not ‘Enabled’ cannot be accessed from outside.
 
-![rds_04_20191008](https://static.toastoven.net/prod_rds/19.10.08/rds_04_20191008.png)
+![instance_detail_0_en](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_en.png)
 
-* To test external access, click **Change** on top right.  
+* To test external access, click **Edit** on top right.  
 * Modify to **Enable** for floating IP. 
 * Click **Confirm** to apply changes. 
 
-![rds_04_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_04_20210112_en.png)
+![instance_detail_1_en](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_en.png)
 
 After setting, you can find a floating IP is created to allow external access.  
 
-![rds_05_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_05_20210112_en.png)
+![rds_06_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_06_20210112_en.png)
 
 Below is an example of access to MySQL Workbench. 
-
-![rds_06_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_06_20210112_en.png)
 
 #### Constraints 
 
@@ -163,7 +161,7 @@ Below is an example of access to MySQL Workbench.
 * For better read performances, create Read Only Slave supported by MySQL. 
 * To create Read Only Slave, select an original DB instance and click **Additional Functions > Create Replica**. 
 
-![rds_07_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_07_20210112_en.png)
+![additional_function_0_en](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_en.png)
 
 * Fill out settings to create replica, and click **Replicate**, and its replication is created. 
 * It is recommended to create the same or higher type than an original database instance, since using a lower type may cause delays in replication. 
@@ -235,9 +233,6 @@ Below is an example of access to MySQL Workbench.
   * CRUD: In addition to READ permission, DML can be inquired.
   * DDL: In addition to CRUD permission, DDL can be inquired.
   * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
-
-> [Caution] If you have Read Only Slave, or in the case of a high availability instance, if you have done a task related to `CREATE USER`, `ALTER USER`, or `GRANT` with an existing DB User, you must execute `flush privileges` syntax. Otherwise, backup could fail. This is a known MySQL bug.
-
 * The DB User shown below cannot be used due to the policy:
   * mysql.session
   * mysql.sys
@@ -251,12 +246,6 @@ Below is an example of access to MySQL Workbench.
   * rds_repl
 
 * If you click the **Synchronize** button for DB schema and DB User, you can get the information of DB schema and DB User created in the DB instance.
-  
-### Monitoring Items 
-
-* RDS supports the monitoring items as follows: 
-
-![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_en.png)
 
 ## Log Files 
 
