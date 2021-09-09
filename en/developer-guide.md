@@ -179,7 +179,6 @@ mysql> call mysql.tcrds_repl_init();
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 > [주의] 현재 5.7.33 버전의 경우 오브젝트 스토리지의 백업파일로 복원이 제한됩니다.
 
-
 > [Caution] It might now work properly if you use an XtraBackup version other than the ones recommended.
 > [Caution] When using DB file encryption feature, backup cannot be exported to object storage.
 
