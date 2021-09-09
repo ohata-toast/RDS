@@ -228,16 +228,16 @@ find {MySQL 데이터 저장 경로} -name "*.qp" -print0 | xargs -0 rm
 
 ### 오브젝트 스토리지의 RDS for MySQL 백업 파일을 이용하여 DB 인스턴스 생성
 
-* 오브젝트 스토리지의 RDS for MySQL 백업 파일을 이용하여 동일 리전 다른 프로젝트의 RDS for MySQL로 복원할 수 있습니다.
+* 오브젝트 스토리지의 RDS for MySQL 백업 파일을 이용해 동일 리전, 다른 프로젝트의 RDS for MySQL로 복원할 수 있습니다.
 * [오브젝트 스토리지에 백업 내보내기](./developer-guide/#_5 )를 참고하여 백업 파일을 오브젝트 스토리지로 내보냅니다. 
-* 복원하고자 하는 프로젝트의 웹 콘솔에 접속한 후, **Instance** 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
+* 복원할 프로젝트의 웹 콘솔에 접속한 후, Instance 탭에서 오브젝트 스토리지에 있는 백업으로 복원 버튼을 클릭합니다.
 * 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
 
 ### 오브젝트 스토리지의 외부 MySQL 백업 파일을 이용하여 DB 인스턴스 생성
 
-* 일반 MySQL 백업 파일을 이용하여 RDS for MySQL의 DB 인스턴스로 복원 할 수 있습니다.
+* 일반 MySQL 백업 파일을 이용하여 RDS for MySQL의 DB 인스턴스로 복원할 수 있습니다.
 
-> [주의] `innodb_data_file_path` 의 설정값이 `ibdata1:12M:autoextend` 가 아니면 RDS for MySQL의 DB 인스턴스로 복원할 수 없습니다.
+> [주의] innodb_data_file_path의 설정값이 ibdata1:12M:autoextend가 아니면 RDS for MySQL의 DB 인스턴스로 복원할 수 없습니다.
 
 * MySQL이 설치된 서버에서 아래의 명령어를 이용하여 백업을 수행합니다.
 * XtraBackup 2.4.20 예제
@@ -250,13 +250,13 @@ innobackupex --defaults-file={my.cnf 경로} --user {사용자} --password '{비
 ```
 xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비밀번호}' --socket={MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream --backup {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
 ```
-* 백업 로그 파일의 마지막 줄에 `completed OK!` 가 있는지 확인합니다.
-  * 만약 `completed OK!` 가 없다면 백업이 정상적으로 종료되지 않았으므로, 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
-* 완료된 백업 파일을 오브젝트 스토리지에 업로드 합니다.
-  * NHN Cloud의 오브젝트 스토리지는 한 번에 올릴수 있는 최대 파일 크기가 5GB 입니다.
-  * 만약 백업 파일의 크기가 5GB 보다 크다면, `split` 같은 유틸리티를 이용하여 백업 파일의 크기를 5GB 이하로 잘라서 멀티 파트로 올려야 합니다.
+* 백업 로그 파일의 마지막 줄에 `completed OK!`가 있는지 확인합니다.
+  * completed OK!가 없다면 백업이 정상적으로 종료되지 않았으므로, 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
+* 완료된 백업 파일을 오브젝트 스토리지에 업로드합니다.
+  * 한 번에 업로드할 수 있는 최대 파일 크기는 5GB입니다.
+  * 백업 파일의 크기가 5GB보다 크면, split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 잘라 멀티 파트로 업로드해야 합니다.
   * 자세한 사항은 https://docs.toast.com/ko/Storage/Object%20Storage/ko/api-guide/#_43를 참고합니다.
-* 복원하고자 하는 프로젝트의 웹 콘솔에 접속한 후, 웹 콘솔의 **Instance** 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
+* 복원할 프로젝트의 웹 콘솔에 접속한 후, Instance 탭에서 오브젝트 스토리지에 있는 백업으로 복원 버튼을 클릭합니다.
 * 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
 
 ## Procedure
