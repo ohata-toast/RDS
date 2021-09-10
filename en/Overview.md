@@ -1,16 +1,24 @@
 ## Database > RDS for MySQL > Overview
 
 NHN Cloud RDS for MySQL provides relational database in the cloud environment. 
-No complicated setting is required to use highly available relational database. 
+You can use a highly available relational database without complex setting. 
 
-RDS for MySQL is available only when user enables Compute & Network. 
+## Characteristics and Features
 
-## Main Features 
+* RDS for MySQL is available only when you enable the Compute & Network product.
 
-* Immediately creates DB instances as wanted. 
-* Conducts auto-backup of DB instances when needed. 
-* Controls access of DB instances. 
-* Monitors hardware and database status of DB instances, with no additional installation. By setting notifications for abnormalities, you can respond fast to an issue.
+### DB Instance
+
+* A database server that can be created instantly when you want.
+
+### Management
+
+* Backup is automatically performed at the time you want.
+* Multiple management tasks can be performed at the time that does not affect your service.
+
+### Monitoring
+
+* You can monitor the status of DB instance's hardware and database without extra installation process. By setting notifications for anomalies, you can respond to issues quickly.
 
 ## Glossary 
 
@@ -32,10 +40,6 @@ RDS for MySQL is available only when user enables Compute & Network.
 ### Availability Zone
 
 * Logical area where DB instance is to be created. 
-
-### High Availability
-
-* High availability is ensured for the master instance.
 
 ### Floating IP 
 

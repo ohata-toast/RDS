@@ -1,5 +1,17 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2021. 09. 14.
+
+#### Feature Updates
+* Improved backup event start, success, failure cases
+* Additional MySQL 5.7.33 version support
+* Added a feature to scale up the volume of a highly available instance without using failover
+
+#### Bug Fixes 
+* Fixed a bug where recovery is not performed properly when performing recovery using backup in the object storage
+* Fixed a logic bug where it checks whether the file and directory exist when exporting backup to the object storage
+* Fixed a bug where an unknown error window shows up intermittently when selecting an instance
+
 ### 2021. 08. 25.
 
 #### Feature Updates
@@ -76,11 +88,11 @@
 
 ### 2021. 03. 09.
 
-#### 기능 개선
-- 프로젝트 별 리소스 쿼터 제한 기능 개선
+#### Feature Updates
+- Improved the feature to limit the resource quota per project
 
-#### 버그 수정
-- 특정한 경우에서 인스턴스 재시작이 정상적으로 이루어지지 않는 버그 수정
+#### Bug Fixes 
+- Fixed a bug where instance restart is not performed properly in certain situations
 
 ### February 16, 2021
 
@@ -95,30 +107,30 @@
 
 #### Bug Fixes
 
--  Fixed a bug where project members cannot be registered as a Notification member if there are 20 or more project members
+- Fixed a bug where project members cannot be registered as a Notification member if there are 20 or more project members
 
 ### 2021. 01. 19.
 
-#### 기능 추가
+#### Added Features
 
-- 고가용성(HA) 기능 사용 시, Ping Interval(Master 인스턴스 상태를 확인하는 시간 간격)을 설정할 수 있도록 기능 추가
-- 고가용성(HA) 일시 중지/다시 시작 기능 추가
-- **Access 제어 설정** 대화 상자에서, 접근 제어 방향(수신/송신)을 설정할 수 있도록 기능 추가
-- t2.c1m1 Flavor 인스턴스 생성 불가 변경.
-- t2.c1m1 Flavor로 기존에 생성한 일반 인스턴스의 경우, 고가용성으로 변경하지 못하도록 변경.
+- Added a feature to set Ping Interval (an interval to check the status of master instance) when using the high availability (HA) feature
+- Added HA suspend/resume features
+- Added a feature to set access control direction (inbound/outbound) in the **Access Control Settings** dialog box
+- Changed so that t2.c1m1 Flavor instance cannot be created anymore.
+- Changed so that the normal instances created with t2.c1m1 Flavor can no longer be switched to HA instances
 
 ### 2020. 12. 15.
 
-#### 기능 추가
+#### Added Features
 
-- --ftwrl-wait-timeout 옵션 값을 사용자가 설정할 수 있도록 기능 추가
+- Added a feature that enables users to set the --ftwrl-wait-timeout option value
 
 ### 2020. 11. 10.
 
-#### 버그 수정
+#### Bug Fixes
 
-- 간헐적으로 자동 백업 생성에 실패하는 현상 수정
-- 간헐적으로 기간이 만료된 자동 백업 삭제에 실패하는 현상 수정
+- Fixed an issue where automatic backup generation occasionally failed
+- Fixed an issue where automatic deletion of expired backup occasionally failed
 
 ### October 13, 2020
 
