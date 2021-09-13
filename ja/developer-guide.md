@@ -172,10 +172,12 @@ mysql> call mysql.tcrds_repl_init();
 | 5.7.19 | 2.4.20 |
 | 5.7.26 | 2.4.20 |
 | 8.0.18 | 8.0.12 |
+| 8.0.22 | 8.0.12 |
 
 * XtraBackupのインストール方法についてはPercona Webサイトを参照してください。
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+> [주의] 현재 5.7.33 버전에서는, 오브젝트 스토리지의 백업 파일을 이용한 DB 인스턴스 복원은 제한됩니다.
 
 > [注意]推奨するXtraBackup以外のバージョンを使用した場合、正常に動作しない場合があります。
 > [注意] DBファイルの暗号化機能を使用する場合、バックアップをオブジェクトストレージへエクスポートできません。
