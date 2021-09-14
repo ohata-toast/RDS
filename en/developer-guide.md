@@ -170,15 +170,14 @@ mysql> call mysql.tcrds_repl_init();
 | 5.7.15 | 2.4.20 |
 | 5.7.19 | 2.4.20 |
 | 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
 | 8.0.18 | 8.0.12 |
 | 8.0.22 | 8.0.12 |
 
 * Refer to the Percona's website for detailed descriptions on installing XtraBackup
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
     * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
-
 > [Caution] In MySQL 5.7.33, restoring DB instances using the backup file of object storage is limited.
+
 > [Caution] It might not work properly if you use an XtraBackup version other than the ones recommended.
 > [Caution] When using DB file encryption feature, backup cannot be exported to object storage.
 > [Caution] The backup file of the object storage and the MySQL to restore must have the same version.
