@@ -2,8 +2,7 @@
 
 ## Getting Started 
 
-To use RDS for MySQL, a DB instance must be created first, in the following method. 
-
+* To use RDS for MySQL, a DB instance must be created first, in the following method.
 * Go to **Console > Database > RDS for MySQL** and **DB Instance**, and click **+ Create** on top left, and the screen shows at the bottom of the page.   
 
 ![rds_01_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_01_20210112_en.png)
@@ -12,14 +11,15 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
     * DB Instance: Enter name of a DB instance. 
     * Description: Enter description of DB instance.  
     * DB Engine: Select engine version of the database to create. 
-    * DB Port: Enter port number of database, between 10000 and 12000. 
+    * DB Port: Enter port number of database.
+        * It can be set to a value between 10000 and 12000. 
     * DB User ID: Enter account ID for administrator to create when database is created.  
     * DB Password: Enter account password for administrator to create when database is created.  
     * VPC Subnet: Select a subnet of Compute & Network to communicate with DB instance to create, via private network.
     * Floating IP: Enable Floating IP, to connect with external networks of NHN Cloud. 
     * Flavor: Select a type of DB instance. 
     * Storage Type: Specify volume type of DB instance.
-        * Either HDD or SSD.
+        * Either HDD or SSD can be selected.
     * Storage: Enter volume size of DB instance.
         * It can be anywhere between 20 GB and 2 TB.  
     * Availability Zone: Select an area where DB instance is to be created.
@@ -28,7 +28,8 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
         * It can be anywhere between 1 and 600 seconds.
     * Database File Encryption: User data files and backup files are encrypted.
     * Default Alarm: Register alarms for pre-defined events of a database instance.
-      * To enable default alarm, a recipient group must be selected.
+        * To enable default alarm, a recipient group must be selected.
+
 > [Note] Unless a selected VPC subnet of Compute & Network is connected with internet gateway, floating IP is not available.  
 > [Note] VPC subnet, once selected, cannot be changed.
 > [Note] The candidate master instance is created at a different availability zone from the master, and it does not show on the list.
@@ -36,24 +37,26 @@ To use RDS for MySQL, a DB instance must be created first, in the following meth
 > [Note] By enabling database file encryption, performance may be degraded more or less.
 > [Note] With default alarm setting, alarms for the instance are automatically registered, in the name of "{instance name}-default". Registered alarms can be changed or deleted, and applied instances can also be changed.
 
-Specify backup information on the **Backup & Access Control** page. 
-
-![rds_02_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_02_20210112_en.png)
+![backup_and_access_0_ko](https://static.toastoven.net/prod_rds/21.09.14/backup_and_access_0_ko.png)
 
 * Set auto backup and access control, and click **Next**. 
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
-  * It can be anywhere between 0 and 21,600.
+    * It can be anywhere between 0 and 21,600.
 * Backup Retention Period: Select more than a day, to allow auto backups. 
-    Select **N/A**, and auto backup is not enabled. 
+    * Select **N/A**, and auto backup is not enabled. 
 * Backup Start Time: Auto backup starts at some point between start time and duration.  
-    Duration refers to time when backup starts: but, not that backup ends within duration.  
+    * Duration refers to time when backup starts.
+    * It does not mean that backup ends within the duration.  
+* Use Table Locking: Set whether to lock the table with the FLUSH TABLES WITH READ LOCK statement when performing backup.
+* Backup Retry Count: Set the number of retries to make when backup fails.
+    * Retry is performed when you enter 1 or higher.
+    * Retry is performed only when performing auto backup.
+* Backup Retry Expiration Time: If backup fails, attempts are made as many times as the retry count, but only until the configured time so that it does not affect the next backup time.
 * User Access Control: Enter accessible users to DB instance in the CIDR format. 
-    Unregistered IPs for user access control are not accessible. 
-    Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
+    * Unregistered IPs for user access control are not accessible. 
+    * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
 
-Values can be changed on DB Configuration. 
-
-![rds_03_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_03_20210112_en.png)
+![db_configuration_0_en](https://static.toastoven.net/prod_rds/21.09.14/db_configuration_0_en.png)
 
 * Change values, and click **Create**. 
 * Click **Confirm**, and a DB instance is created. 
@@ -65,21 +68,19 @@ Values can be changed on DB Configuration.
 * Go to [Detail Settings] and [Access Information] of an instance to check accessible domain information.
 * Database instances of which floating IP is not ‘Enabled’ cannot be accessed from outside.
 
-![rds_04_20191008](https://static.toastoven.net/prod_rds/19.10.08/rds_04_20191008.png)
+![instance_detail_0_en](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_en.png)
 
-* To test external access, click **Change** on top right.  
+* To test external access, click **Edit** on top right.  
 * Modify to **Enable** for floating IP. 
 * Click **Confirm** to apply changes. 
 
-![rds_04_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_04_20210112_en.png)
+![instance_detail_1_en](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_en.png)
 
-After setting, you can find a floating IP is created to allow external access.  
-
-![rds_05_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_05_20210112_en.png)
-
-Below is an example of access to MySQL Workbench. 
+* After setting, you can find a floating IP is created to allow external access.  
 
 ![rds_06_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_06_20210112_en.png)
+
+* Below is an example of access to MySQL Workbench. 
 
 #### Constraints 
 
@@ -92,6 +93,8 @@ Below is an example of access to MySQL Workbench.
 
 * Measures can be taken against failure which occurs when a candidate master is created at a different availability zone.
 * To restart a highly available instance, select [Restart by Taking Measures against Failure] to replace the master with the candidate master.
+    * If the master is replaced, all binary log files are deleted and it becomes impossible to perform point-in-time recovery to a time before replacement.
+    * If there is a lock on the master or replication latency is long, failover does not occur or takes a lot of time, so make sure that all transactions are finished and there is no replication latency.
 * For those instances using high availability, access information does not change with partial changes in option, but the master and the candidate master instances may be interchanged.
 * With a failover for high availability instance, the new master instance does not inherit the backup of the existing master instance.
 
@@ -113,12 +116,11 @@ Below is an example of access to MySQL Workbench.
 * For the existing master instance in which failure measure was taken, restarting may be attempted by using Restart Instances. However, restarting may not work or properly operate due to reasons, including data loss out of failure.
 * The Read Only Slave instance is not provided with the high availability feature.
 * While restarting or changing options are underway for instances with high availability, the Read Only Slave is not operational. 
-* The high-availability feature is based on each domain. Therefore, if a user instance for Compute cannot access a dns serer, the instance cannot access RDS intances via domain, which may cause trouble in accessing for a failover. 
+* The high-availability feature is based on each domain. Therefore, if a user instance for Compute cannot access a dns serer, the instance cannot access RDS instances via domain, which may cause trouble in accessing for a failover. 
 
+### Flavors
 
-### Instance Type 
-
-* DB instances can be created in all types provided by NHN Cloud Compute & Network.  
+* DB instances can be created in some of specifications provided by NHN Cloud Compute & Network.  
 
 ### Backups 
 
@@ -128,7 +130,7 @@ Below is an example of access to MySQL Workbench.
 * Performance may be degraded during backups. 
 * It is recommended to back up during when service load is low. 
 * NHN Cloud RDS supports restoration at a specified point of time. 
-    If the size of binary logs and retention period is too short, restoring to a specific time may be difficult. 
+    * If the size of binary logs and retention period is too short, restoring to a specific time may be difficult. 
 * DB instances under restoration cannot be backed up. 
 
 #### Auto Backups
@@ -138,9 +140,11 @@ Below is an example of access to MySQL Workbench.
     * Deleted backups cannot be restored. 
 * Backup files are retained as much as configured backup cycle. 
 * Auto backups start at some point between backup start time and duration. 
-* Duration refers to time when backup starts: not that a backup is completed within it. 
-    Even if a backup is not complete within duration, the backup is not closed. 
+* Duration refers to time when backup starts.
+    * It does not mean that backup is completed within the duration. 
+    * Even if a backup is not complete within duration, the backup is not closed. 
 * Auto backups are deleted along with the original instances.
+* When backup fails, if Backup Retry Count is set to a value of 1 or higher, attempts are made as many times as the specified value.
 
 > [Note] For MySQL 5.7 or higher, creating or building an index again during backup causes failure in the backup.   
 
@@ -155,15 +159,16 @@ Below is an example of access to MySQL Workbench.
 * For a restoration, a new DB instance is created, without changing original DB instances. 
 * It takes more time if the location to save backups is object storage. 
 * Cannot restore by using DB instances that are currently under backup. 
+
 > [Note] While restoration is underway, object storage volume may be incurred as much as the size of a binary log file.
-> [Caution] Restoring to a point in time is not available when there is no binary log file.
+> [Note] Restoring to a point in time is not available when there is no binary log file.
 
 ### Replication 
 
 * For better read performances, create Read Only Slave supported by MySQL. 
 * To create Read Only Slave, select an original DB instance and click **Additional Functions > Create Replica**. 
 
-![rds_07_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_07_20210112_en.png)
+![additional_function_0_en](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_en.png)
 
 * Fill out settings to create replica, and click **Replicate**, and its replication is created. 
 * It is recommended to create the same or higher type than an original database instance, since using a lower type may cause delays in replication. 
@@ -192,7 +197,7 @@ Below is an example of access to MySQL Workbench.
 
 ![rds_08_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_08_20210112_en.png)
 
-* Delete a binary log file to secure more disk space. 
+* Delete binary log files to secure more disk space. 
 
 > [Caution] Selected binary log files and previously-created log files are all deleted. 
 > [Caution] Depending on the binary log files that are deleted, restoration may not be available to a certain point in time.
@@ -205,6 +210,10 @@ Below is an example of access to MySQL Workbench.
 * Scale up storage of a DB instance. 
 * If Read Only Slave exists, the storage is scaled to the same size of Master. 
 * DB instance is restarted. 
+* A high availability instance can be restarted using failover.
+    * When you scale up storage using failover, the master is replaced. This reduces downtime, but overall operations can take longer.
+    * If the master is replaced, all binary log files are deleted and it becomes impossible to perform point-in-time recovery to a time before replacement.
+    * If there is a lock on the master or replication latency is long, failover does not occur or takes a lot of time, so make sure that all transactions are finished and there is no replication delay.
 
 ### Database File Encryption 
 
@@ -222,7 +231,8 @@ Below is an example of access to MySQL Workbench.
 * Web console can manage DB Schema and DB User.
 
 > [Note] You can no longer create, modify, or delete DB Schema or DB User with a query.
-> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_en.png)
+
+![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_en.png)
 
 * Clicking the **Change**  button enables it so that DB Schema and User can be changed.
 
@@ -231,32 +241,23 @@ Below is an example of access to MySQL Workbench.
 * Clicking the **Add**  button applies the changes in DB Schema and DB User all at once.
 * Renaming of DB Schema is not supported.
 * DB User is given four permissions.
-  * READ: Can read data.
-  * CRUD: In addition to READ permission, DML can be inquired.
-  * DDL: In addition to CRUD permission, DDL can be inquired.
-  * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
-
-> [Caution] If you have Read Only Slave, or in the case of a high availability instance, if you have done a task related to `CREATE USER`, `ALTER USER`, or `GRANT` with an existing DB User, you must execute `flush privileges` syntax. Otherwise, backup could fail. This is a known MySQL bug.
-
+    * READ: Can read data.
+    * CRUD: In addition to READ permission, DML can be inquired.
+    * DDL: In addition to CRUD permission, DDL can be inquired.
+    * CUSTOM: The permissions for existing users already in use. Cannot be changed to CUSTOM permissions, and users with CUSTOM permissions can delete only.
 * The DB User shown below cannot be used due to the policy:
-  * mysql.session
-  * mysql.sys
-  * sqlgw
-  * admin
-  * etladm
-  * alertman
-  * prom
-  * rds_admin
-  * rds_mha
-  * rds_repl
+    * mysql.session
+    * mysql.sys
+    * sqlgw
+    * admin
+    * etladm
+    * alertman
+    * prom
+    * rds_admin
+    * rds_mha
+    * rds_repl
 
 * If you click the **Synchronize** button for DB schema and DB User, you can get the information of DB schema and DB User created in the DB instance.
-  
-### Monitoring Items 
-
-* RDS supports the monitoring items as follows: 
-
-![rds_12_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_12_20210112_en.png)
 
 ## Log Files 
 
@@ -265,9 +266,9 @@ Below is an example of access to MySQL Workbench.
 
 ![rds_13_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_13_20210112_en.png)
 
-* Make sure, though, to leave logs by configuring in **DB Configuration**.  
-* Click **View** to find log files on a new window. 
-* You can find as many lines as entered for a log length, and logs as big as 1MB are available.  (*원문 의미 확인요망: '끌에서부터')
+* Make sure, though, to leave logs by configuring in DB Configuration.  
+* Click **View** to view log files on a pop-up window. 
+* You can view as many lines as entered for a log length, and logs of 512KB size from the end are available.
 
 ![rds_14_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_14_20210112_en.png)
 
@@ -275,7 +276,7 @@ Below is an example of access to MySQL Workbench.
 
 ![rds_15_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_15_20210112_en.png)
 
-* Click **Download** and a new window pops up. 
+* Click **Download** and a pop-up will show up. 
 * Click **Import** and wait, then the **Download** button is enabled.  
 * Log files are uploaded to temporary object storage, and remain to be downloaded for the maximum 5 minutes. 
 > [Note] For the 5 minutes while it is uploaded to object storage and deleted, object storage may be charged. 
@@ -285,7 +286,7 @@ Below is an example of access to MySQL Workbench.
 * Can leave an audit log using the DB Configuration settings.
 * Generated audit log file can be checked or downloaded from the Event & Log tab.
 * For detailed settings, please check the website below.
-  * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
+    * https://mariadb.com/kb/en/mariadb-audit-plugin-options-and-system-variables
 
 > [Caution] MySQL 5.7.15, 8.0.18, 8.0.23 version is not supported.
 
@@ -329,9 +330,9 @@ Various performance indicators can be checked in charts.
 
 * ❶ * Search by instance name or IP address.
 * ❷ Servers that meet the criteria are displayed. The color of the icon in the upper right corner changes depending on the server status.
-  * Green: Normal
-  * Red: Error
-  * Gray: Server deleted
+    * Green: Normal
+    * Red: Error
+    * Gray: Server deleted
 * ❸ Select the layout.
 * ❹ Modify or delete the layout. 
 * ❺ Popup that **generates the layout** is displayed.
@@ -435,7 +436,7 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ![notification_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_0_ko.png)
 
-* ❶ 수Click the **Edit** button of the notification group to be modified.
+* ❶ Click the **Edit** button of the notification group to be modified.
 
 ![notification_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_1_ko.png)
 
@@ -477,12 +478,13 @@ Notifications can be received by adding the monitoring settings to the performan
 * Project members can be granted separate permissions either as RDS for MySQL ADMIN / RDS for MySQL MEMBER.
 * RDS for MySQL ADMIN permission holders can use all available features as before.
 * RDS for MySQL MEMBER permission holders can use read-only feature.
-  * Cannot use any features aimed at instances or create, modify, or delete any instance.
-  * Can use alarm-related features on the Notification tab.
+    * Cannot use any features aimed at instances or create, modify, or delete any instance.
+    * Can use alarm-related features on the Notification tab.
 
 ## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 
-NHN Cloud updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. Instances that are running on a target hypervisor for maintenance must be migrated to a hypervisor which is completed with maintenance.
+NHN Cloud updates hypervisor software on a regular basis to enhance security and stability of its infrastructure services.
+Instances that are running on a target hypervisor for maintenance must be migrated to a hypervisor which is completed with maintenance.
 
 Migration of database instance can start on a NHN Cloud console.
 Depending on database configuration, select a particular instance to migrate it as well, if its relevant database instance (e.g. slave instance) is also the target of maintenance.
