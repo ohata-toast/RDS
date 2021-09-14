@@ -81,6 +81,8 @@ DBインスタンスの各種性能指標とDBインスタンスに関連する�
 | INSTANCE | INSTC_50_00 | バックアップのエクスポート開始 |
 | INSTANCE | INSTC_50_01 | バックアップのエクスポート完了 |
 | INSTANCE | INSTC_50_04 | バックアップのエクスポート失敗 |
+| INSTANCE | INSTC_51_01 | ユーザークエリ遅延によるバックアップ失敗 |
+| INSTANCE | INSTC_52_01 | ユーザークエリ遅延によるバックアップおよびエクスポート失敗 |
 | BACKUP | BACUP_02_01 | バックアップ削除完了 |
 | BACKUP | BACUP_04_00 | Object Storageアップロード開始 |
 | BACKUP | BACUP_04_01 | Object Storageアップロード完了 |
@@ -88,6 +90,7 @@ DBインスタンスの各種性能指標とDBインスタンスに関連する�
 | BACKUP | BACUP_05_00 | バックアップのエクスポート開始 |
 | BACKUP | BACUP_05_01 | バックアップのエクスポート完了 |
 | BACKUP | BACUP_05_04 | バックアップのエクスポート失敗 |
+| BACKUP | BACUP_06_01 | ユーザークエリ遅延によるバックアップ失敗 |
 | TENANT | TENAT_01_04 | CPUコア数制限 |
 | TENANT | TENAT_02_04 | RAM容量制限 |
 | TENANT | TENAT_03_04 | 個別ボリュームサイズ制限 |
