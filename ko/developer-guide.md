@@ -176,6 +176,7 @@ mysql> call mysql.tcrds_repl_init();
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+
 > [주의] 현재 5.7.33 버전에서는, 오브젝트 스토리지의 백업 파일을 이용한 DB 인스턴스 복원은 제한됩니다.
 
 > [주의] 권장하는 XtraBackup 이외의 버전을 사용하면, 정상으로 동작하지 않을 수 있습니다.
