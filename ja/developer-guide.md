@@ -171,7 +171,6 @@ mysql> call mysql.tcrds_repl_init();
 | 5.7.15 | 2.4.20 |
 | 5.7.19 | 2.4.20 |
 | 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
 | 8.0.18 | 8.0.12 |
 | 8.0.22 | 8.0.12 |
 
@@ -179,6 +178,7 @@ mysql> call mysql.tcrds_repl_init();
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
+> [注意]現在5.7.33バージョンの場合はオブジェクトストレージのバックアップファイルで復元が制限されます。
 > [注意]推奨するXtraBackup以外のバージョンを使用した場合、正常に動作しない場合があります。
 > [注意] DBファイルの暗号化機能を使用する場合、バックアップをオブジェクトストレージへエクスポートできません。
 > [注意]オブジェクトストレージのバックアップファイルと復元しようとしているMySQLのバージョンは同じである必要があります。
