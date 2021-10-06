@@ -1,18 +1,31 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2021. 09. 14.
+### October 12, 2021
 
 #### Feature Updates
+
+* Changed to not expose a period for which point-in-time restoration is impossible
+
+#### Bug Fixes
+
+* Fixed an issue where restoration intermittently fails when creating a high availability instance using data encryption immediately after service activation
+* Fixed an issue where the page is not updated after storage scale-up
+
+### September 14, 2021
+
+#### Feature Updates
+
 * Improved backup event start, success, failure cases
 * Additional MySQL 5.7.33 version support
-* Added a feature to scale up the volume of a highly available instance without using failover
+* Added a feature to scale up the volume of a high availability instance without using failover
 
 #### Bug Fixes 
-* Fixed a bug where recovery is not performed properly when performing recovery using backup in the object storage
+
+* Fixed a bug where restoration is not performed properly when performing restoration using backup in the object storage
 * Fixed a logic bug where it checks whether the file and directory exist when exporting backup to the object storage
 * Fixed a bug where an unknown error window shows up intermittently when selecting an instance
 
-### 2021. 08. 25.
+### August 25, 2021
 
 #### Feature Updates
 
@@ -22,10 +35,10 @@
 #### Bug Fixes
 
 * Fixed the bug of recording a wrong event type that is irrelevant to the behavior
-* Fixed the bug of recording an event that does not match with the status of an instance during failover of the high-availability instance
+* Fixed the bug of recording an event that does not match the status of an instance during failover of the high availability instance
 * Fixed the bug of Database Activity chart having no insert field
 
-### 2021. 07. 13.
+### July 13, 2021
 
 #### Feature Updates
 
@@ -39,7 +52,7 @@
 * Fixed a bug in which long user group names extend beyond the UI when the event subscription registration and notification groups are added
 * Fixed a bug in which the menu remains visible when the dashboard dropdown is selected
 
-### 2021. 06. 15.
+### June 15, 2021
 
 #### Feature Improvements
 
@@ -50,7 +63,7 @@
 * Fixed a problem where restoration was not possible when restoring a backup with a size close to the storage size
 * Fixed a problem where it did not properly operate when there is Korean in the container or path when exporting or importing the backup to object storage
 
-### 2021. 05. 11.
+### May 11, 2021
 
 #### More Features
 
@@ -64,7 +77,7 @@
 #### Bug Fixes
 
 * Fixed the bug where intermittently instances would not be created when multiple instances are created simultaneously after the service is enabled
-* Fixed the bug where changes would fail when changing the high-availability instance port and instance type at the same time
+* Fixed the bug where changes would fail when changing the high availability instance port and instance type at the same time
 
 ### April 13, 2021
 
@@ -76,7 +89,7 @@
 
 * Permission of project members subdivided into RDS for MySQL ADMIN / RDS for MySQL MEMBER
 * Modified the system to allow restart during MySQL down
-* Modified system to allow users to select any availability areas
+* Modified system to allow users to select any availability zones
 * Modified quarter limit text displayed when setting alarms
 * Added user guide for procedures provided from RDS
 
@@ -86,7 +99,7 @@
 * Fixed an issue where some features of master instance does not work due to failed Read Only Slave
 * Fixed an issue where MySQL cannot run properly when data encryption instance is forced to reboot
 
-### 2021. 03. 09.
+### March 9, 2021
 
 #### Feature Updates
 - Improved the feature to limit the resource quota per project
@@ -109,7 +122,7 @@
 
 - Fixed a bug where project members cannot be registered as a Notification member if there are 20 or more project members
 
-### 2021. 01. 19.
+### January 19, 2021
 
 #### Added Features
 
@@ -119,13 +132,13 @@
 - Changed so that t2.c1m1 Flavor instance cannot be created anymore.
 - Changed so that the normal instances created with t2.c1m1 Flavor can no longer be switched to HA instances
 
-### 2020. 12. 15.
+### December 15, 2020
 
 #### Added Features
 
 - Added a feature that enables users to set the --ftwrl-wait-timeout option value
 
-### 2020. 11. 10.
+### November 10, 2020
 
 #### Bug Fixes
 
@@ -185,7 +198,7 @@
 #### Feature Updates 
 
 - Improved speed for creating an instance (About 28 minutes -> 13 minutes, for HA instances)
-- Updated UX to allow new backups for time restoration, at the restart by using failover 
+- Updated UX to allow new backups for point-in-time restoration, at the restart by using failover 
 - Changed UI for enabling default alarm 
 
 ### August 13, 2019
@@ -228,7 +241,7 @@
 
 #### Bug Fixes
 
-- Point-in-time recovery is available from when restoration is possible.
+- Fixed so that, when performing point-in-time restoration, the restoration can be performed from the time that can be recovered.
 
 ### May 14, 2019
 
