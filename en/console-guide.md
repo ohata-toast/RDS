@@ -94,7 +94,7 @@
 * Measures can be taken against failure which occurs when a candidate master is created at a different availability zone.
 * To restart a high availability instance, select [Restart by Taking Measures against Failure] to replace the master with the candidate master.
     * If the master is replaced, all binary log files are deleted and it becomes impossible to perform point-in-time restoration to a time before replacement.
-    * If there is a lock on the master or replication latency is long, failover does not occur or takes a lot of time, so make sure that all transactions are finished and there is no replication latency.
+    * If there is a lock on the master or replication latency is long, failover does not work properly or takes a lot of time, so make sure that all transactions are finished and there is no replication latency.
 * For those instances using high availability, access information does not change with partial changes in option, but the master and the candidate master instances may be interchanged.
 * With a failover for high availability instance, the new master instance does not inherit the backup of the existing master instance.
 
@@ -171,10 +171,10 @@
 
 ![additional_function_0_en](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_en.png)
 
-* Fill out settings to create replica, and click **Replicate**, and its replication is created. 
-* It is recommended to create the same or higher type than an original database instance, since using a lower type may cause delays in replication. 
+* Fill out settings to create a replica, and click **Replicate**, and the replica is created. 
+* It is recommended to create a replica whose specification is the same as or higher than that of the original database instance, because using a lower specification may result in replication latency. 
 * When a replica is created, the I/O performance of the original database instance may be lower than usual. 
-* It make take more time to create a replica, in proportion of the size of original DB instance. 
+* Replica creation time may increase in proportion to the size of the original DB instance. 
 > [Note] While replication is underway, object storage volume may be incurred as much as the size of a binary log file.
 > [Note] When replication is completed, the Read Only Slave rule is added to the access rule of the master instance.
 
@@ -188,7 +188,7 @@
 * Promotion refers to upgrading Read Only Slave to Master, ceasing replication relations. 
 * Promoted replicas do not automatically reflect modifications of DB instances, any more. 
 * A promoted replica operates as a standalone DB instance. 
-* If a delay occurs between a promoting replica and original DB instance, it cannot be promoted until such delay is resolved. 
+* If replication latency exists between a replica to promote and the original DB instance, it cannot be promoted until such latency is resolved. 
 
 ### Secure Capacity 
 
@@ -214,7 +214,7 @@
 * A high availability instance can be restarted using failover.
     * When you scale up storage using failover, the master is replaced. This reduces downtime, but overall operations can take longer.
     * If the master is replaced, all binary log files are deleted and it becomes impossible to perform point-in-time restoration to a time before replacement.
-    * If there is a lock on the master or replication latency is long, failover does not occur or takes a lot of time, so make sure that all transactions are finished and there is no replication delay.
+    * If there is a lock on the master or replication latency is long, failover does not work properly or takes a lot of time, so make sure that all transactions are finished and there is no replication latency.
 
 ### Database File Encryption 
 
