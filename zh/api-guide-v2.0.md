@@ -2,9 +2,9 @@
 
 | Region | Endpoint |
 |---|---|
-| Korea (Pangyo) region | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
-| Korea (Pyeongchon) region | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
-| Japan region | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
+| Korea (Pangyo) region | https://kr1-mysql.api.nhncloudservice.com |
+| Korea (Pyeongchon) region | https://kr2-mysql.api.nhncloudservice.com |
+| Japan region | https://jp1-mysql.api.nhncloudservice.com |
 
 ## Monitoring
 

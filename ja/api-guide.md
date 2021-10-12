@@ -5,9 +5,9 @@
 
 | リージョン | エンドポイント |
 |---|---|
-| 韓国(パンギョ)リージョン | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
-| 韓国(坪村)リージョン | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
-| 日本リージョン | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
+| 韓国(パンギョ)リージョン | https://kr1-mysql.api.nhncloudservice.com |
+| 韓国(坪村)リージョン | https://kr2-mysql.api.nhncloudservice.com |
+| 日本リージョン | https://jp1-mysql.api.nhncloudservice.com |
 
 ## Monitoring
 

@@ -2,9 +2,9 @@
 
 | 리전 | 엔드포인트 |
 |---|---|
-| 한국(판교) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr1 |
-| 한국(평촌) 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-kr2 |
-| 일본 리전 | https://api-gw.cloud.toast.com/rds-for-mysql-jp1 |
+| 한국(판교) 리전 | https://kr1-mysql.api.nhncloudservice.com |
+| 한국(평촌) 리전 | https://kr2-mysql.api.nhncloudservice.com |
+| 일본 리전 | https://jp1-mysql.api.nhncloudservice.com |
 
 ## Monitoring
 
