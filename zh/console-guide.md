@@ -40,18 +40,18 @@
 
 在**备份&Access控制**界面中指定备份信息。
 
-![backup_and_access_0_ko](https://static.toastoven.net/prod_rds/21.09.14/backup_and_access_0_ko.png)
+![backup_and_access_ko](https://static.toastoven.net/prod_rds/21.11.09/backup_and_access_ko.png)
 
 * 设置自动备份及访问控制后，单击**下一步**按钮。
-* 쿼리 지연 대기 시간: 백업 수행 시에 FLUSH TABLES WITH READ LOCK 지연 대기 시간을 설정할 수 있습니다. 
-  * 0~21600 사이 값으로 설정할 수 있습니다.
+* Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
+  * It can be anywhere between 0 and 21,600.
 * 备份保存期限：若欲进行自动备份，请选择1天以上。
-    若选择**无**，则不进行自动备份。
+  * 若选择**无**，则不进行自动备份。
 * 备份开始时间：自动备份从备份开始时间至Duration之间任意的时间开始。
-    Duration指开始备份的时间。不意味着在Duration中备份结束。
+  * Duration指开始备份的时间。不意味着在Duration中备份结束。
 * 用户访问控制：以CIDR格式输入可访问DB实例的用户。
-    未注册于用户访问控制中的IP无法连接。
-    접근 제어 시, 방향 설정에서 `수신/송신`에 대해 각각 허용 여부를 선택합니다.
+  * 未注册于用户访问控制中的IP无法连接。
+  * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
 
 可在DB Configuration界面中更改设置值。
 
@@ -118,7 +118,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 备份执行期间，性能有可能降低。
 * 若不希望影响服务，最好在服务负载较低的时间备份。
 * NHN Cloud RDS支持时间点还原。
-    若二进制日志（binary log）大小和存储周期过短，则可能难以还原至所需时间点。
+  * 若二进制日志（binary log）大小和存储周期过短，则可能难以还原至所需时间点。
 * 正在还原的DB实例无法备份。
 
 #### 自动备份
@@ -129,7 +129,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 按照设置的备份周期保留备份文件。
 * 自动备份从备份开始时间至Duration之间任意的时间开始。
 * Duration指开始备份的时间。不意味着在Duration中完成备份。
-    即使在Duration中无法完成备份，备份也不会结束。
+  * 即使在Duration中无法完成备份，备份也不会结束。
 * 自动备份在删除所有原始实例时一同删除。
 
 #### 手动备份

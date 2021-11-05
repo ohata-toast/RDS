@@ -37,7 +37,7 @@
 > [Note] By enabling database file encryption, performance may be degraded more or less.
 > [Note] With default alarm setting, alarms for the instance are automatically registered, in the name of "{instance name}-default". Registered alarms can be changed or deleted, and applied instances can also be changed.
 
-![backup_and_access_0_ko](https://static.toastoven.net/prod_rds/21.09.14/backup_and_access_0_ko.png)
+![backup_and_access_ko](https://static.toastoven.net/prod_rds/21.11.09/backup_and_access_ko.png)
 
 * Set auto backup and access control, and click **Next**. 
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.

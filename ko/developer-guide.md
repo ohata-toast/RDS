@@ -12,7 +12,7 @@
 * NHN Cloud의 외부로 데이터를 내보내야할 경우, Floating IP를 생성하여 데이터를 내보낼 RDS 인스턴스에 연결합니다.
 * 아래의 mysqldump 명령어를 통하여 외부로 데이터를 내보냅니다.
 
-####  파일로 내보낼 경우.
+#### 파일로 내보낼 경우
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
@@ -30,8 +30,19 @@ mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
 * 아래의 mysqldump 명령어를 통하여 외부로부터 데이터를 가져옵니다.
 
 ```
-mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} 
+mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --set-gtid-purged=off --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
 ```
+
+#### 데이터 가져오는 도중 `ERROR 1227` 오류가 발생할 경우
+
+* `ERROR 1227` 오류는 mysqldump 파일의 저장된 객체(트리거, 뷰, 함수 또는 이벤트)에 DEFINER 정의가 되어 있을 때 발생합니다.
+* 이를 해결하기 위해서는 mysqldump 파일에서 `DEFINER`부분을 삭제 후 진행합니다.
+
+#### 데이터 가져오는 도중 `ERROR 1418` 오류가 발생할 경우
+
+* `ERROR 1418` 오류는 mysqldump 파일의 함수 선언에 NO SQL, READS SQL DATA, DETERMINISTIC이 없으며 바이너리 로그가 활성화된 상태일 때 발생합니다.
+    * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL 문서를 참고합니다.
+* 이를 해결하기 위해서는 mysqldump 파일을 적용할 DB 인스턴스의 `log_bin_trust_function_creators` 파라미터의 값을 `1`로 변경해야 합니다.
 
 ### 복제를 이용하여 내보내기
 
@@ -199,7 +210,7 @@ mysql> call mysql.tcrds_repl_init();
 
 ```
 rm -rf {MySQL 데이터 저장 경로}/*
-```  
+```
 
 * 다운로드한 백업 파일의 압축을 해제하고 복원합니다.
 * XtraBackup 2.4.20 예제
@@ -229,7 +240,7 @@ find {MySQL 데이터 저장 경로} -name "*.qp" -print0 | xargs -0 rm
 ### 오브젝트 스토리지의 RDS for MySQL 백업 파일을 이용하여 DB 인스턴스 생성
 
 * 오브젝트 스토리지의 RDS for MySQL 백업 파일을 이용해 동일 리전, 다른 프로젝트의 RDS for MySQL로 복원할 수 있습니다.
-* [오브젝트 스토리지에 백업 내보내기](./developer-guide/#_5 )를 참고하여 백업 파일을 오브젝트 스토리지로 내보냅니다. 
+* [오브젝트 스토리지에 백업 내보내기](./developer-guide/#_5 )를 참고하여 백업 파일을 오브젝트 스토리지로 내보냅니다.
 * 복원할 프로젝트의 웹 콘솔에 접속한 후, Instance 탭에서 오브젝트 스토리지에 있는 백업으로 복원 버튼을 클릭합니다.
 * 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
 
@@ -251,11 +262,11 @@ innobackupex --defaults-file={my.cnf 경로} --user {사용자} --password '{비
 xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비밀번호}' --socket={MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream --backup {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
 ```
 * 백업 로그 파일의 마지막 줄에 `completed OK!`가 있는지 확인합니다.
-  * completed OK!가 없다면 백업이 정상적으로 종료되지 않았으므로, 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
+    * completed OK!가 없다면 백업이 정상적으로 종료되지 않았으므로, 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
 * 완료된 백업 파일을 오브젝트 스토리지에 업로드합니다.
-  * 한 번에 업로드할 수 있는 최대 파일 크기는 5GB입니다.
-  * 백업 파일의 크기가 5GB보다 크면, split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 잘라 멀티 파트로 업로드해야 합니다.
-  * 자세한 사항은 https://docs.toast.com/ko/Storage/Object%20Storage/ko/api-guide/#_43를 참고합니다.
+    * 한 번에 업로드할 수 있는 최대 파일 크기는 5GB입니다.
+    * 백업 파일의 크기가 5GB보다 크면, split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 잘라 멀티 파트로 업로드해야 합니다.
+    * 자세한 사항은 https://docs.toast.com/ko/Storage/Object%20Storage/ko/api-guide/#_43를 참고합니다.
 * 복원할 프로젝트의 웹 콘솔에 접속한 후, Instance 탭에서 오브젝트 스토리지에 있는 백업으로 복원 버튼을 클릭합니다.
 * 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
 
