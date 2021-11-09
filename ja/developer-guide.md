@@ -30,8 +30,19 @@ mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
 * 下記のmysqldumpコマンドを使用して外部からデータをインポートします。
 
 ```
-mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} 
+mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --set-gtid-purged=off --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
 ```
+
+#### データのインポート中に`ERROR 1227`エラーが発生する場合
+
+* `ERROR 1227`エラーは、mysqldumpファイルの保存されたオブジェクト(トリガー、ビュー、関数またはイベント)にDEFINERが定義されている時に発生します。
+* これを解決するには、mysqldumpファイルから`DEFINER`部分を削除します。
+
+#### データのインポート中に`ERROR 1418`エラーが発生する場合
+
+* `ERROR 1418`エラーはmysqldumpファイルの関数宣言にNO SQL、READS SQL DATA、DETERMINISTICがなく、バイナリログが有効になっている時に発生します。
+    * 詳しい説明は[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
+* これを解決するには、mysqldumpファイルを適用するDBインスタンスの`log_bin_trust_function_creators`パラメータの値を`1`に変更する必要があります。
 
 ### コピーを利用してエクスポート
 
@@ -200,7 +211,7 @@ mysql> call mysql.tcrds_repl_init();
 
 ```
 rm -rf {MySQLデータ保存パス}/*
-```  
+```
 
 * ダウンロードしたバックアップファイルを解凍し、復元します。
 * XtraBackup 2.4.20例
@@ -251,11 +262,11 @@ innobackupex --defaults-file={my.cnfパス} --user {ユーザー} --password '{�
 xtrabackup --defaults-file={my.cnfパス} --user={ユーザー} --password='{パスワード}' --socket={MySQLソケットファイルパス} --compress --compress-threads=1 --stream=xbstream --backup {バックアップファイルが作成されるディレクトリ} 2>>{バックアップログファイルパス} > {バックアップファイルパス}
 ```
 * バックアップログファイルの最後の行に`completed OK!`があるかを確認します。
-  * completed OK!がない場合、バックアップが正常に終了していないので、ログファイルにあるエラーメッセージを参考にしてバックアップを再度行います。
+    * completed OK!がない場合、バックアップが正常に終了していないので、ログファイルにあるエラーメッセージを参考にしてバックアップを再度行います。
 * 完了したバックアップファイルをオブジェクトストレージにアップロードします。
-  * 一度にアップロードできる最大ファイルサイズは5GBです。
-  * バックアップファイルのサイズが5GBより大きい場合、splitなどのユーティリティを利用してバックアップファイルを5GB以下に分割してマルチパートでアップロードする必要があります。
-  * 詳細はhttps://docs.toast.com/ko/Storage/Object%20Storage/ko/api-guide/#_43を参照してください。
+    * 一度にアップロードできる最大ファイルサイズは5GBです。
+    * バックアップファイルのサイズが5GBより大きい場合、splitなどのユーティリティを利用してバックアップファイルを5GB以下に分割してマルチパートでアップロードする必要があります。
+    * 詳細はhttps://docs.toast.com/ko/Storage/Object%20Storage/ko/api-guide/#_43を参照してください。
 * 復元するプロジェクトのWebコンソールに接続した後、Instanceタブでオブジェクトストレージにあるバックアップから復元ボタンをクリックします。
 * バックアップファイルが保存されたオブジェクトストレージの情報と、DBインスタンスの情報を入力した後、**作成**ボタンをクリックします。
 
