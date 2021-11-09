@@ -40,7 +40,7 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
 
 **バックアップ&アクセス制御** 画面でバックアップ情報を指定します。
 
-![backup_and_access_0_ko](https://static.toastoven.net/prod_rds/21.09.14/backup_and_access_0_ko.png)
+![backup_and_access_ko](https://static.toastoven.net/prod_rds/21.11.09/backup_and_access_ko.png)
 
 * 自動バックアップおよびアクセス制御を設定した後、 **次へ** ボタンをクリックします。
 * クエリー遅延待機時間：バックアップ遂行時にFLUSH TABLES WITH READ LOCK遅延待機時間を設定できます。 
