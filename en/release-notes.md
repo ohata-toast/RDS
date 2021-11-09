@@ -1,5 +1,24 @@
 ## Database > RDS for MySQL > Release Notes
 
+### November 9, 2021
+
+#### Added Features
+
+* Added a feature to enable performing of automatic backups multiple times a day
+* Added a feature to restore to a specific binlog position when restoring to a point in time
+* Added a feature to stop normal instances for 90 days
+
+#### Feature Updates
+
+* Improved a feature to enable modifying instances even in the status of insufficient capacity
+* Mitigated an issue where MySQL does not run properly intermittently when a force restart is performed
+* Modified so that MySQL is restarted when it is terminated due to out of memory
+
+#### Bug Fixes
+
+* Improved an issue where instance creation fails intermittently because the file required for instance creation was not downloaded
+* Fixed a bug where, in case of a long-running backup, an event is logged as a general backup failure even if the backup failed due to user query latency
+
 ### October 12, 2021
 
 #### Feature Updates
@@ -93,7 +112,7 @@
 * Modified quarter limit text displayed when setting alarms
 * Added user guide for procedures provided from RDS
 
-#### Bug Fixes  
+#### Bug Fixes
 
 * Fixed an issue where status of instance with a completed failover intermittently becomes normalized
 * Fixed an issue where some features of master instance does not work due to failed Read Only Slave
