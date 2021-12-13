@@ -26,7 +26,6 @@
     * High Availability: When creating a database instance, create a candidate master in a different availability zone from the master.
     * Ping Interval: Sets the interval for checking the status of the master instance when using the high availability feature. An error occurs after 4 failed attempts.
         * It can be set to a value between 1 and 600 seconds.
-    * Database File Encryption: User data files and backup files are encrypted.
     * Default Alarm: Register alarms for pre-defined events of a database instance.
         * To enable default alarm, a recipient group must be selected.
 
@@ -34,7 +33,6 @@
 > [Note] VPC subnet, once selected, cannot be changed.
 > [Note] The candidate master instance is created at a different availability zone from the master, and it does not show on the list.
 > [Note] The instance list is sorted in the order of creation. The order may change after failover, since the candidate master is created when the high availability option is enabled for the master.
-> [Note] By enabling database file encryption, performance may be degraded more or less.
 > [Note] With default alarm setting, alarms for the instance are automatically registered, in the name of "{instance name}-default". Registered alarms can be changed or deleted, and applied instances can also be changed.
 
 ![backup_and_access_ko](https://static.toastoven.net/prod_rds/21.11.09/backup_and_access_ko.png)
@@ -293,17 +291,6 @@
     * When you scale up storage using failover, the master is replaced. This reduces downtime, but overall operations can take longer.
     * If the master is replaced, all binary log files are deleted and it becomes impossible to perform point-in-time restoration to a time before replacement.
     * If there is a lock on the master or replication latency is long, failover does not work properly or takes a lot of time, so make sure that all transactions are finished and there is no replication latency.
-
-### Database File Encryption
-
-* Files for database where user data is saved, as well as backup files, are encrypted.
-
-> [For Reference] Since encryption is performed in real time, performance may be degraded for database instances.
-
-#### Constraints
-
-* Database file encryption cannot be enabled for the restoration or replication of instances, for which database file encryption is not enabled.
-* Database file encryption cannot be disabled for the restoration or replication of instances, for which database file encryption is enabled.
 
 ### DB Schema & DB User Management
 

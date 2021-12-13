@@ -190,7 +190,6 @@ mysql> call mysql.tcrds_repl_init();
 
 > [Caution] In MySQL 5.7.33, restoring DB instances using the backup file of object storage is limited.
 > [Caution] It might not work properly if you use an XtraBackup version other than the ones recommended.
-> [Caution] When using DB file encryption feature, backup cannot be exported to object storage.
 > [Caution] The backup file of the object storage and the MySQL to restore must have the same version.
 
 ### Export backup to object storage
