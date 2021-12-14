@@ -1,5 +1,20 @@
 ## Database > RDS for MySQL > Release Notes
 
+### December 14, 2021
+
+#### Feature Updates
+
+* Stopped providing monitoring query API v1
+* Stopped providing data encryption feature
+
+#### Bug Fixes
+
+* Fixes an issue where a replication stop event is logged immediately after completion of instance replication
+* Fixed a bug that caused items in the monitoring settings to be covered when the mouse pointer hovers over the notification group
+* Fixed an issue where, when subscribing to an event, notifications of internal event codes that cannot be subscribed were received if the event code is 'Select all'
+* Fixed a bug where an unknown error occurred when selecting the created instance immediately after instance creation
+* Modified so that an event is logged when the DB instance is stopped
+
 ### November 9, 2021
 
 #### Added Features
