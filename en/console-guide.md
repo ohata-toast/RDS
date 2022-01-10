@@ -564,7 +564,7 @@ The chart shows the count of items collected over time, and you can check the de
     * The search period must be set within the range of 1 hour.
 * ❺ The collected process list information is displayed after being sorted in descending order of time.
 * ❻ The collected InnoDB status information is displayed after being sorted in descending order of time.
-* ❼ Clicking the **Details** button lets you check the detailed information of the corresponding line.
+* ❼ Clicking the **Show Details** button lets you check the detailed information of the corresponding line.
 
 ## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 
