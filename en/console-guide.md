@@ -370,7 +370,7 @@ The results of monitoring settings can be checked for various events and notific
 
 ![event_sub_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_list_0_ko.png)
 
-The event subscription status can be checked..
+The event subscription status can be checked.
 
 * ❶ Search by the **subscription name** or **event source**.
 * ❷ Create new event subscription.
@@ -394,16 +394,16 @@ The event subscription status can be checked..
 
 Various performance indicators can be checked in charts.
 
-* ❶ * Search by instance name or IP address.
-* ❷ Servers that meet the criteria are displayed. The color of the icon in the upper right corner changes depending on the server status.
+* ❶ Search by the instance name or IP address.
+* ❷ Servers that meet the criteria are displayed. The color of the icon on the right changes depending on the server status.
     * Green: Normal
     * Red: Error
-    * Gray: Server deleted
+    * Gray: Deleted server
 * ❸ Select the layout.
 * ❹ Modify or delete the layout.
-* ❺ Popup that **generates the layout** is displayed.
-* ❻ Add chart in layout.
-* ❼ Chart is updated after setting the search period to the current time.
+* ❺ The **Create Layout** window is displayed.
+* ❻ Add a chart to the layout.
+* ❼ The chart is updated after setting the search period to the current time.
 * ❽ The search period can be modified.
 * ❾ The chart is displayed.
 
@@ -546,6 +546,25 @@ Notifications can be received by adding the monitoring settings to the performan
 * RDS for MySQL MEMBER permission holders can use read-only feature.
     * Cannot use any features aimed at instances or create, modify, or delete any instance.
     * Can use alarm-related features on the Notification tab.
+
+## Processlist
+
+![processlist_1_ko](https://static.toastoven.net/prod_rds/22.01.11/processlist_1_ko.png)
+
+You can check the process list and InnoDB status collected from the DB in the form of chart and table.
+The chart shows the count of items collected over time, and you can check the details in the table.
+
+* ❶ Search by the instance name or IP address.
+* ❷ Servers that meet the criteria are displayed. The color of the icon on the right changes depending on the server status.
+    * Green: Normal
+    * Red: Error
+    * Gray: Deleted server
+* ❸ The chart is updated after setting the search period to the current time.
+* ❹ The search period can be modified.
+    * The search period must be set within the range of 1 hour.
+* ❺ The collected process list information is displayed after being sorted in descending order of time.
+* ❻ The collected InnoDB status information is displayed after being sorted in descending order of time.
+* ❼ Clicking the **Details** button lets you check the detailed information of the corresponding line.
 
 ## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 
