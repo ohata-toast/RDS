@@ -40,7 +40,7 @@
 
 在**备份&Access控制**界面中指定备份信息。
 
-![backup_and_access_ko](https://static.toastoven.net/prod_rds/21.11.09/backup_and_access_ko.png)
+![backup_and_access_zh](https://static.toastoven.net/prod_rds/22.03.15/backup_and_access_zh.png)
 
 * 设置自动备份及访问控制后，单击**下一步**按钮。
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
@@ -55,9 +55,22 @@
 
 可在DB Configuration界面中更改设置值。
 
-![db_configuration_0_zh](https://static.toastoven.net/prod_rds/21.09.14/db_configuration_0_zh.png)
+![db_configuration_0_zh](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_zh.png)
 
 * 更改所需设置值后，单击**创建**按钮。
+  * **수식 사용** 값이 **Y**로 표기된 항목에 대하여 **파라미터 값**에 수식을 입력할 수 있습니다.
+  * 수식에 사용 가능한 변수는 다음과 같습니다. (대소문자 구분)
+    * ramSizeByte : DB 인스턴스에 할당된 메모리 (바이트 단위)
+    * storageSizeByte : DB 인스턴스 볼륨의 크기 (바이트 단위)
+    * vCPU : cpu 개수
+    * dbPort
+  * 수식에 사용 가능한 연산자는 다음과 같습니다.
+    * \* \/ + - , ( ) [ ]
+  * 수식에 사용 가능한 함수는 다음과 같습니다. (대소문자 구분)
+    * min([a, b, ..., z])
+    * max([a, b, ..., z])
+    * sum([a, b, ..., z])
+  * 수식을 계산한 값의 소수점 이하를 버림한 결과가 DB 인스턴스에 적용됩니다.
 * 最后单击**确认**按钮，创建DB实例。
 * 创建需要几到几十分钟的时间。
 
@@ -238,11 +251,11 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * Web console can manage DB Schema and DB User.
 
 > [Note] You can no longer create, modify, or delete DB Schema or DB User with a query.
-> ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_en.png)
+> ![db_schema_and_user_list_20210209_zh](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_zh.png)
 
 * Clicking the **Change**  button enables it so that DB Schema and User can be changed.
 
-![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_en.png)
+![db_schema_and_user_modify_20210209_zh](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_zh.png)
 
 * Clicking the **Add**  button applies the changes in DB Schema and DB User all at once.
 * Renaming of DB Schema is not supported.
@@ -298,7 +311,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 ## Event
 
-![event_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_list_0_ko.png)
+![event_list_0_zh](https://static.toastoven.net/prod_rds/22.03.15/event_list_0_zh.png)
 
 The results of monitoring settings can be checked for various events and notification groups that occur during various tasks related to DB instances.
 
@@ -308,7 +321,7 @@ The results of monitoring settings can be checked for various events and notific
 
 ### Event Subscription
 
-![event_sub_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_list_0_ko.png)
+![event_sub_list_0_zh](https://static.toastoven.net/prod_rds/22.03.15/event_sub_list_0_zh.png)
 
 The event subscription status can be checked..
 
@@ -319,7 +332,7 @@ The event subscription status can be checked..
 
 ### Register and Modify Event Subscription
 
-![event_sub_popup_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_popup_0_ko.png)
+![event_sub_popup_0_zh](https://static.toastoven.net/prod_rds/22.03.15/event_sub_popup_0_zh.png)
 
 * ❶ Enter the event subscription name.
 * ❷ Select the type of event to subscribe to. Depending on the type, the event code and event source available are limited.
@@ -330,7 +343,7 @@ The event subscription status can be checked..
 
 ## Server Dashboard
 
-![server_dashboard_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_0_ko.png)
+![server_dashboard_0_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_0_zh.png)
 
 Various performance indicators can be checked in charts.
 
@@ -349,19 +362,19 @@ Various performance indicators can be checked in charts.
 
 ### Add Chart
 
-![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
+![server_dashboard_chart_add_1_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_1_zh.png)
 
 * ❶ First, select the desired layout to add a chart.
 * ❷ Click the **Add Chart** button and a popup is displayed to **add the chart** as shown below.
 
-![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
+![server_dashboard_chart_add_2_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_2_zh.png)
 
 * ❶ The chart to be added is displayed.
 * ❷ Select the desired chart to add.
 
 ### Modify Chart
 
-![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_1_ko.png)
+![server_dashboard_1_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_1_zh.png)
 
 * ❶ *Move the chart by dragging the top area of the chart with the mouse.
 * ❷ The chart can be deleted.
@@ -369,20 +382,20 @@ Various performance indicators can be checked in charts.
 
 ### Add Layout
 
-![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
+![server_dashboard_layout_create_0_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_create_0_zh.png)
 
 * ❶ Click the **Create Layout** button.
 * ❷ Enter the layout name.
 
 ### Modify and Delete Layout
 
-![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
+![server_dashboard_layout_modify_0_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_0_zh.png)
 
 * ❶ Click the **Manage** button.
 * ❷ Changes to the edit screen where the layout can be modified.
 * ❸ The layout can be deleted
 
-![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
+![server_dashboard_layout_modify_1_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_1_zh.png)
 
 * ❶ Click the **OK** button to save the modifications.
 * ❷ Click the **Cancel** button to cancel the modifications.
@@ -393,11 +406,11 @@ The users who receive notifications through notification groups and event subscr
 
 ### Create User Group
 
-![user_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_0_ko.png)
+![user_group_create_0_zh](https://static.toastoven.net/prod_rds/22.03.15/user_group_create_0_zh.png)
 
 * ❶ Click the **Create User Group** to display a popup to **create a user group**.
 
-![user_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_1_ko.png)
+![user_group_create_1_zh](https://static.toastoven.net/prod_rds/22.03.15/user_group_create_1_zh.png)
 
 * ❷ Enter the group name.
 * ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
@@ -406,17 +419,17 @@ The users who receive notifications through notification groups and event subscr
 
 ### Modify User Group
 
-![user_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_0_ko.png)
+![user_group_modify_0_zh](https://static.toastoven.net/prod_rds/22.03.15/user_group_modify_0_zh.png)
 
 * ❶ Click the **Edit** button of the user group to be modified and a popup will appear to **modify the user group**.
 
-![user_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_1_ko.png)
+![user_group_modify_1_zh](https://static.toastoven.net/prod_rds/22.03.15/user_group_modify_1_zh.png)
 
 * ❷ After modifying the items, click the **OK** button to modify the user group.
 
 ### Delete User Group
 
-![user_group_delete_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_delete_0_ko.png)
+![user_group_delete_0_zh](https://static.toastoven.net/prod_rds/22.03.15/user_group_delete_0_zh.png)
 
 * ❶ Click the **Delete** button of the user group to be deleted.
 
@@ -426,11 +439,11 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ### Create Notification Group
 
-![notification_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_0_ko.png)
+![notification_group_create_0_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_create_0_zh.png)
 
 * ❶ Click the **Create Group** button.
 
-![notification_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_1_ko.png)
+![notification_group_create_1_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_create_1_zh.png)
 
 * ❷ Enter the notification group name.
 * ❸ Select the notification type. Multiple selections can be made.
@@ -440,31 +453,31 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ### Modify Notification Group
 
-![notification_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_0_ko.png)
+![notification_group_modify_0_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_modify_0_zh.png)
 
 * ❶ 수Click the **Edit** button of the notification group to be modified.
 
-![notification_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_1_ko.png)
+![notification_group_modify_1_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_modify_1_zh.png)
 
 * ❷  After modifications, click the **OK** button.
 
 ### Delete Notification Group
 
-![notification_group_modify_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_2_ko.png)
+![notification_group_delete_0_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_delete_0_zh.png)
 
 * ❶ The registered notification group can be deleted by clicking the **Delete** button.
 
 ### Add Monitoring Setting
 
-![notification_group_watchdog_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_0_ko.png)
+![notification_group_watchdog_0_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_watchdog_0_zh.png)
 
 * ❶ Click the Monitoring Settings button of the notification group to modify the **monitoring settings**.
 
-![notification_group_watchdog_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_1_ko.png)
+![notification_group_watchdog_1_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_watchdog_1_zh.png)
 
 * ❷ Click the **Monitoring Settings** button.
 
-![notification_group_watchdog_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_2_ko.png)
+![notification_group_watchdog_2_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_watchdog_2_zh.png)
 
 * ❸ Select the item to monitor.
 * ❹ Select the comparison method.
@@ -474,7 +487,7 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ### Modify and Delete Monitoring Settings
 
-![notification_group_watchdog_3_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_3_ko.png)
+![notification_group_watchdog_3_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_watchdog_3_zh.png)
 
 * ❶ The Monitoring Settings can be modified by clicking the **Edit** button.
 * ❷ Clicking the **Delete** button will delete the monitoring setting.
