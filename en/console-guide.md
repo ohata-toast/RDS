@@ -73,7 +73,8 @@
     * min([a, b, ..., z])
     * max([a, b, ..., z])
     * sum([a, b, ..., z])
-  * 수식을 계산한 값의 소수점 이하를 버림한 결과가 DB 인스턴스에 적용됩니다.
+  * 수식을 계산한 값의 소수점 이하 9번째 자리에서 반올림한 결과가 DB 인스턴스에 적용됩니다.
+  * 소수가 지원되지 않는 파라미터의 경우, 수식을 계산한 값의 소수점 이하를 버림한 결과가 DB 인스턴스에 적용됩니다.
 * Click **Confirm**, and a DB instance is created.
 * It takes minutes to complete creation.
 
