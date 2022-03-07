@@ -60,23 +60,23 @@
 
 ![db_configuration_0_en](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_en.png)
 
-* Change values, and click **Create**.
-  * **수식 사용** 값이 **Y**로 표기된 항목에 대하여 **파라미터 값**에 수식을 입력할 수 있습니다.
-  * 수식에 사용 가능한 변수는 다음과 같습니다. (대소문자 구분)
-    * ramSizeByte : DB 인스턴스에 할당된 메모리 (바이트 단위)
-    * storageSizeByte : DB 인스턴스 볼륨의 크기 (바이트 단위)
-    * vCPU : cpu 개수
-    * dbPort
-  * 수식에 사용 가능한 연산자는 다음과 같습니다.
-    * \* \/ + - , ( ) [ ]
-  * 수식에 사용 가능한 함수는 다음과 같습니다. (대소문자 구분)
-    * min([a, b, ..., z])
-    * max([a, b, ..., z])
-    * sum([a, b, ..., z])
-  * 수식을 계산한 값의 소수점 이하 9번째 자리에서 반올림한 결과가 DB 인스턴스에 적용됩니다.
-  * 소수가 지원되지 않는 파라미터의 경우, 수식을 계산한 값의 소수점 이하를 버림한 결과가 DB 인스턴스에 적용됩니다.
+* Change the setting values, and click **Create**.
+    * For items whose **Use Expression** is set to **Y**, you can enter an expression in **Parameter Value**.
+    * Variables that can be used in expressions are as follows. (case sensitive)
+        * ramSizeByte: Memory allocated to the DB instance (in bytes)
+        * storageSizeByte: Size of the DB instance volume (in bytes)
+        * vCPU: Number of CPUs
+        * dbPort
+    * Operators that can be used in expressions are as follows.
+        * \* \/ + - , ( ) [ ]
+    * Functions that can be used in expressions are as follows. (case sensitive)
+        * min([a, b, ..., z])
+        * max([a, b, ..., z])
+        * sum([a, b, ..., z])
+    * The result of rounding up to 8 decimal places of the value calculated by the expression is applied to the DB instance.
+    * For parameters that do not support fractions, the result of truncating the decimal point of the value calculated by the expression is applied to the DB instance.
 * Click **Confirm**, and a DB instance is created.
-* It takes minutes to complete creation.
+* It takes minutes to tens of minutes to complete creation.
 
 ### Access to DB Instances
 
