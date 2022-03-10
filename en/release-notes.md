@@ -1,5 +1,20 @@
 ## Database > RDS for MySQL > Release Notes
 
+### March 15, 2022
+
+#### Added Features
+
+* Added a feature to use variables in **DB configuration**
+
+#### Bug Fixes
+
+* Fixed an issue where monitoring data is not collected under certain conditions
+* Fixed an issue where an automatic backup of failed-over instance is not deleted
+* Fixed an issue where an automatic backup that has failed to be created is not deleted when it reaches its expiration date
+* Fixed an issue where restoration fails when there are too many users registered in MySQL
+* Fixed an issue where a backup settings modification event is logged even when the access rule is modified
+
+
 ### January 11, 2022
 
 #### Added Features
