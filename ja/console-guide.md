@@ -38,7 +38,7 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
 
 **バックアップ&アクセス制御** 画面でバックアップ情報を指定します。
 
-![backup_and_access_ja](https://static.toastoven.net/prod_rds/22.03.15/backup_and_access_ja.png)
+![backup_and_access_ko](https://static.toastoven.net/prod_rds/21.11.09/backup_and_access_ko.png)
 
 * 自動バックアップおよびアクセス制御を設定した後、 **次へ** ボタンをクリックします。
 * クエリー遅延待機時間：バックアップ遂行時にFLUSH TABLES WITH READ LOCK遅延待機時間を設定できます。
@@ -61,25 +61,23 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
     * ユーザーアクセス制御に登録されていないIPは接続できません。
     * アクセス制御を行う時、方向設定で`受信/送信`を許可するかどうかを選択します。
 
-DB Configuration画面で設定値を変更できます。
+![db_configuration_0_ko](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_ko.png)
 
-![db_configuration_0_ja](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_ja.png)
-
-* 設定値を変更した後、 **作成** ボタンをクリックします。
-  * **수식 사용** 값이 **Y**로 표기된 항목에 대하여 **파라미터 값**에 수식을 입력할 수 있습니다.
-  * 수식에 사용 가능한 변수는 다음과 같습니다. (대소문자 구분)
-    * ramSizeByte : DB 인스턴스에 할당된 메모리 (바이트 단위)
-    * storageSizeByte : DB 인스턴스 볼륨의 크기 (바이트 단위)
-    * vCPU : cpu 개수
-    * dbPort
-  * 수식에 사용 가능한 연산자는 다음과 같습니다.
-    * \* \/ + - , ( ) [ ]
-  * 수식에 사용 가능한 함수는 다음과 같습니다. (대소문자 구분)
-    * min([a, b, ..., z])
-    * max([a, b, ..., z])
-    * sum([a, b, ..., z])
-  * 수식을 계산한 값의 소수점 이하 9번째 자리에서 반올림한 결과가 DB 인스턴스에 적용됩니다.
-  * 소수가 지원되지 않는 파라미터의 경우, 수식을 계산한 값의 소수점 이하를 버림한 결과가 DB 인스턴스에 적용됩니다.
+* 設定値を変更した後、**作成**ボタンを押します。
+    * **数式使用**値が**Y**と表記されている項目は**パラメータ値**に数式を入力できます。
+    * 数式に使用できる変数は次のとおりです(大文字/小文字区分)。
+        * ramSizeByte：DBインスタンスに割り当てられたメモリ(バイト単位)
+        * storageSizeByte：DBインスタンスボリュームのサイズ(バイト単位)
+        * vCPU：CPU数
+        * dbPort
+    * 数式に使用可能な演算子は次のとおりです。
+        * \* \/ + - , ( ) [ ]
+    * 数式に使用可能な関数は次のとおりです(大文字/小文字区分)。
+        * min([a, b, ..., z])
+        * max([a, b, ..., z])
+        * sum([a, b, ..., z])
+    * 数式を計算した値の小数点以下9桁目を四捨五入した結果がDBインスタンスに適用されます。
+    * 小数がサポートされていないパラメータの場合、 数式を計算した値の小数点以下を四捨五入した結果がDBインスタンスに適用されます。
 * 最後に **確認** ボタンをクリックすると、DBインスタンスが作成されます。
 * 作成されるまで、数分から数十分かかります。
 
@@ -94,11 +92,11 @@ DB Configuration画面で設定値を変更できます。
 2. Floating IP項目を **使用する**に修正します。
 3. **確認** ボタンをクリックすると、修正事項が反映されます。
 
-![instance_detail_0_jp](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_jp.png)
+![instance_detail_0_ko](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_ko.png)
 
 * 設定後、Floating IPが作成され、外部からアクセスできることを確認できます。
 
-![instance_detail_1_jp](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_jp.png)
+![instance_detail_1_ko](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_ko.png)
 
 * 次はMySQL Workbenchの接続例です。
 
@@ -154,7 +152,7 @@ DB Configuration画面で設定値を変更できます。
 
 * 高可用性DBインスタンスの場合、通常のインスタンスでは提供しない2つのオプションを提供します。
 
-![restart_ha_instance_ja](https://static.toastoven.net/prod_rds/21.11.09/restart_ha_instance_ja.png)
+![restart_ha_instance_ko](https://static.toastoven.net/prod_rds/21.11.09/restart_ha_instance_ko.png)
 
 * ❶ [フェイルオーバーを利用した再起動]オプションを選択すると、瞬断時間を最小限に抑えて再起動を行うことができます。
     * Masterインスタンスが置き換えられ、バイナリログ(binary log)が全て削除されるため、再起動を行う前の時刻に時点復元ができません。
@@ -231,11 +229,11 @@ DB Configuration画面で設定値を変更できます。
 * 手動バックアップまたは自動バックアップを利用してバックアップ時点に復元できます。
 * 復元するバックアップを実行したDBインスタンスを選択した後、**追加機能 > 復元**をクリックします。
 
-![restore_menu_ja](https://static.toastoven.net/prod_rds/22.03.15/restore_menu_ja.png)
+![restore_menu_ko](https://static.toastoven.net/prod_rds/21.11.09/restore_menu_ko.png)
 
 * 復元するDBインスタンスの情報を入力します。
 
-![restore_by_snapshot_ja](https://static.toastoven.net/prod_rds/22.03.15/restore_by_snapshot_ja.png)
+![restore_by_snapshot_ko](https://static.toastoven.net/prod_rds/21.11.09/restore_by_snapshot_ko.png)
 
 * ❶ [スナップショット復元]を選択します。
 * ❷復元する手動バックアップまたは自動バックアップを選択します。
@@ -245,12 +243,12 @@ DB Configuration画面で設定値を変更できます。
 * 手動バックアップまたは自動バックアップとバイナリログファイルを利用して特定時点に復元できます。
 * 復元する時刻またはバイナリログファイルのpositionを利用して復元する時点を特定できます。
 
-![restore_by_time_ja](https://static.toastoven.net/prod_rds/22.03.15/restore_by_time_ja.png)
+![restore_by_time_ko](https://static.toastoven.net/prod_rds/21.11.09/restore_by_time_ko.png)
 
 * ❶ [時点復元(by timestamp)]を選択します。
 * ❷復元する時刻を選択します。
 
-![restore_by_position_ja](https://static.toastoven.net/prod_rds/22.03.15/restore_by_position_ja.png)
+![restore_by_position_ko](https://static.toastoven.net/prod_rds/21.11.09/restore_by_position_ko.png)
 
 * ❶ [時点復元(by binlog)]を選択します。
 * ❷復元に使用するバックアップファイルを選択します。
@@ -265,7 +263,7 @@ DB Configuration画面で設定値を変更できます。
 * 読み取り性能高めるには、MySQLがサポートするRead Only Slaveを作成します。
 * Read Only Slaveを作成するには、原本DBインスタンスを選択した後、 **追加機能 > コピー作成**を選択します。
 
-![additional_function_0_jp](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_jp.png)
+![additional_function_0_ko](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_ko.png)
 
 * コピー作成のための詳細設定を入力し、 **コピー** ボタンをクリックすると、コピーが作成されます。
 * コピー元DBインスタンスと同じタイプまたはさらにスペックの高いタイプでの作成を推奨します。スペックの低いタイプで作成した場合、コピー作成処理に遅延が発生することがあります。
@@ -318,11 +316,11 @@ DB Configuration画面で設定値を変更できます。
 * DBスキーマとDB UserをWebコンソールで管理できます。
 
 > [参考] DBスキーマとDB Userをクエリーで作成、修正、削除できません。
-![db_schema_and_user_list_20210209_ja](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_jp.png)
+![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_01_20210309_jp.png)
 
 * **変更**ボタンを押すと、DBスキーマとユーザーを変更できるようになります。
 
-![db_schema_and_user_modify_20210209_ja](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_jp.png)
+![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.03.09/rds_02_20210309_jp.png)
 
 * **追加**ボタンを押すと、DBスキーマとDB Userの変更事項が一度に適用されます。
 * DBスキーマの名前変更はサポートしません。
@@ -385,7 +383,7 @@ DB Configuration画面で設定値を変更できます。
 
 ## イベント
 
-![event_list_0_ja](https://static.toastoven.net/prod_rds/22.03.15/event_list_0_ja.png)
+![event_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_list_0_ko.png)
 
 DBインスタンスに関連するさまざまな作業中に発生する各種イベントおよび通知グループの監視設定結果を確認できます。
 
@@ -395,7 +393,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### イベント購読
 
-![event_sub_list_0_ja](https://static.toastoven.net/prod_rds/22.03.15/event_sub_list_0_ja.png)
+![event_sub_list_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_list_0_ko.png)
 
 イベント購読状況を照会できます。
 
@@ -406,7 +404,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### イベント購読の登録および修正
 
-![event_sub_popup_0_ja](https://static.toastoven.net/prod_rds/22.03.15/event_sub_popup_0_ja.png)
+![event_sub_popup_0_ko](https://static.toastoven.net/prod_rds/210615/event_sub_popup_0_ko.png)
 
 * ❶イベント購読名を入力します。
 * ❷イベント購読を行いたいタイプを選択します。タイプによって選択できるイベントコードおよびイベントソースが制限されます。
@@ -417,7 +415,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ## サーバーダッシュボード
 
-![server_dashboard_0_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_0_ja.png)
+![server_dashboard_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_0_ko.png)
 
 各種性能指標をチャート形式で確認できます。
 
@@ -436,19 +434,19 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### チャート追加
 
-![server_dashboard_chart_add_1_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_1_ja.png)
+![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
 
 * ❶チャートを追加したいレイアウトを先に選択します。
 * ❷チャート追加ボタンをクリックすると、以下のようにチャート追加ポップアップが表示されます。
 
-![server_dashboard_chart_add_2_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_2_ja.png)
+![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
 
 * ❶追加しようとしているチャートが表示されます。
 * ❷追加しようとしているチャートを選択できます。
 
 ### チャート修正
 
-![server_dashboard_1_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_1_ja.png)
+![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_1_ko.png)
 
 * ❶チャートの上部領域をマウスでドラッグしてチャートを移動させることができます。
 * ❷チャートを削除できます。
@@ -456,20 +454,20 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### レイアウト追加
 
-![server_dashboard_layout_create_0_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_create_0_ja.png)
+![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
 
 * ❶レイアウト作成ボタンをクリックします。
 * ❷レイアウト名を入力します。
 
 ### レイアウトの修正および削除
 
-![server_dashboard_layout_modify_0_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_0_ja.png)
+![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
 
 * ❶管理ボタンをクリックします。
 * ❷レイアウトを修正することができる編集画面に変更されます。
 * ❸レイアウトを削除できます。
 
-![server_dashboard_layout_modify_1_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_1_ja.png)
+![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
 
 * ❶確認ボタンをクリックすると変更事項が保存されます。
 * ❷キャンセルボタンをクリックすると変更事項がキャンセルされます。
@@ -480,11 +478,11 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### ユーザーグループ作成
 
-![user_group_create_0_ja](https://static.toastoven.net/prod_rds/22.03.15/user_group_create_0_ja.png)
+![user_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_0_ko.png)
 
 * ❶ユーザーグループ作成ボタンをクリックするとユーザーグループを作成することができるポップアップが表示されます。
 
-![user_group_create_1_ja](https://static.toastoven.net/prod_rds/22.03.15/user_group_create_1_ja.png)  
+![user_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_1_ko.png)  
 
 * ❷グループ名を入力します。
 * ❸通知対象ユーザーが表示されます。**x**ボタンをクリックすると通知対象から除外されます。
@@ -493,17 +491,17 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### ユーザーグループ修正
 
-![user_group_modify_0_ja](https://static.toastoven.net/prod_rds/22.03.15/user_group_modify_0_ja.png)
+![user_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_0_ko.png)
 
 * ❶修正したいユーザーグループの編集ボタンをクリックすると、ユーザーグループを修正することができるポップアップが表示されます。
 
-![user_group_modify_1_ja](https://static.toastoven.net/prod_rds/22.03.15/user_group_modify_1_ja.png)
+![user_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_modify_1_ko.png)
 
 * ❷修正したい項目を修正した後、確認ボタンをクリックするとユーザーグループが修正されます。
 
 ### ユーザーグループ削除
 
-![user_group_delete_0_ja](https://static.toastoven.net/prod_rds/22.03.15/user_group_delete_0_ja.png)
+![user_group_delete_0_ko](https://static.toastoven.net/prod_rds/210615/user_group_delete_0_ko.png)
 
 * ❶削除したいユーザーグループの削除ボタンをクリックします。
 
@@ -513,11 +511,11 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### 通知グループ作成
 
-![notification_group_create_0_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_create_0_ja.png)
+![notification_group_create_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_0_ko.png)
 
 * ❶グループ作成ボタンをクリックします。
 
-![notification_group_create_1_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_create_1_ja.png)
+![notification_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_create_1_ko.png)
 
 * ❷通知グループ名を入力します。
 * ❸通知タイプを選択します。複数選択できます。
@@ -527,31 +525,31 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### 通知グループ修正
 
-![notification_group_modify_0_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_modify_0_ja.png)
+![notification_group_modify_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_0_ko.png)
 
 * ❶修正したい通知グループの編集ボタンをクリックします。
 
-![notification_group_modify_1_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_modify_1_ja.png)
+![notification_group_modify_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_1_ko.png)
 
 * ❷修正したい項目を修正した後、確認ボタンをクリックします。
 
 ### 通知グループ削除
 
-![notification_group_delete_0_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_delete_0_ja.png)
+![notification_group_modify_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_modify_2_ko.png)
 
 * ❶削除ボタンをクリックすると、登録された通知グループを削除できます。
 
 ### 監視設定を追加
 
-![notification_group_watchdog_0_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_watchdog_0_ja.png)
+![notification_group_watchdog_0_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_0_ko.png)
 
 * ❶監視設定を修正したい通知グループの監視設定ボタンをクリックします。
 
-![notification_group_watchdog_1_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_watchdog_1_ja.png)
+![notification_group_watchdog_1_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_1_ko.png)
 
 * ❷監視設定ボタンをクリックします。
 
-![notification_group_watchdog_2_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_watchdog_2_ja.png)
+![notification_group_watchdog_2_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_2_ko.png)
 
 * ❸監視する項目を選択します。
 * ❹比較方法を選択します。
@@ -561,7 +559,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### 監視設定の修正および削除
 
-![notification_group_watchdog_3_ja](https://static.toastoven.net/prod_rds/22.03.15/notification_group_watchdog_3_ja.png)
+![notification_group_watchdog_3_ko](https://static.toastoven.net/prod_rds/210615/notification_group_watchdog_3_ko.png)
 
 * ❶編集ボタンをクリックすると監視設定を修正できます。
 * ❷削除ボタンをクリックすると監視設定を削除できます。
@@ -576,7 +574,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 # Processlist
 
-![processlist_1_ja](https://static.toastoven.net/prod_rds/22.03.15/processlist_1_ja.png)
+![processlist_1_ko](https://static.toastoven.net/prod_rds/22.01.11/processlist_1_ko.png)
 
 DBから収集されたプロセスのリストとInnoDBの状態をチャートと表形式で確認できます。
 チャートでは時間帯別に収集された数を表示し、表で詳細情報を確認できます。
