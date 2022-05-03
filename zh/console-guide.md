@@ -44,34 +44,34 @@
 
 * 设置自动备份及访问控制后，单击**下一步**按钮。
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
-  * It can be anywhere between 0 and 21,600.
+    * It can be anywhere between 0 and 21,600.
 * 备份保存期限：若欲进行自动备份，请选择1天以上。
-  * 若选择**无**，则不进行自动备份。
+    * 若选择**无**，则不进行自动备份。
 * 备份开始时间：自动备份从备份开始时间至Duration之间任意的时间开始。
-  * Duration指开始备份的时间。不意味着在Duration中备份结束。
+    * Duration指开始备份的时间。不意味着在Duration中备份结束。
 * 用户访问控制：以CIDR格式输入可访问DB实例的用户。
-  * 未注册于用户访问控制中的IP无法连接。
-  * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
+    * 未注册于用户访问控制中的IP无法连接。
+    * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
 
 可在DB Configuration界面中更改设置值。
 
 ![db_configuration_0_zh](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_zh.png)
 
 * 更改所需设置值后，单击**创建**按钮。
-  * **수식 사용** 값이 **Y**로 표기된 항목에 대하여 **파라미터 값**에 수식을 입력할 수 있습니다.
-  * 수식에 사용 가능한 변수는 다음과 같습니다. (대소문자 구분)
-    * ramSizeByte : DB 인스턴스에 할당된 메모리 (바이트 단위)
-    * storageSizeByte : DB 인스턴스 볼륨의 크기 (바이트 단위)
-    * vCPU : cpu 개수
-    * dbPort
-  * 수식에 사용 가능한 연산자는 다음과 같습니다.
-    * \* \/ + - , ( ) [ ]
-  * 수식에 사용 가능한 함수는 다음과 같습니다. (대소문자 구분)
-    * min([a, b, ..., z])
-    * max([a, b, ..., z])
-    * sum([a, b, ..., z])
-  * 수식을 계산한 값의 소수점 이하 9번째 자리에서 반올림한 결과가 DB 인스턴스에 적용됩니다.
-  * 소수가 지원되지 않는 파라미터의 경우, 수식을 계산한 값의 소수점 이하를 버림한 결과가 DB 인스턴스에 적용됩니다.
+    * **수식 사용** 값이 **Y**로 표기된 항목에 대하여 **파라미터 값**에 수식을 입력할 수 있습니다.
+    * 수식에 사용 가능한 변수는 다음과 같습니다. (대소문자 구분)
+        * ramSizeByte : DB 인스턴스에 할당된 메모리 (바이트 단위)
+        * storageSizeByte : DB 인스턴스 볼륨의 크기 (바이트 단위)
+        * vCPU : cpu 개수
+        * dbPort
+    * 수식에 사용 가능한 연산자는 다음과 같습니다.
+        * \* \/ + - , ( ) [ ]
+    * 수식에 사용 가능한 함수는 다음과 같습니다. (대소문자 구분)
+        * min([a, b, ..., z])
+        * max([a, b, ..., z])
+        * sum([a, b, ..., z])
+    * 수식을 계산한 값의 소수점 이하 9번째 자리에서 반올림한 결과가 DB 인스턴스에 적용됩니다.
+    * 소수가 지원되지 않는 파라미터의 경우, 수식을 계산한 값의 소수점 이하를 버림한 결과가 DB 인스턴스에 적용됩니다.
 * 最后单击**确认**按钮，创建DB实例。
 * 创建需要几到几十分钟的时间。
 
@@ -105,7 +105,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 * 在不同Availability Zone创建Candidate Master，发生故障时可进行故障处理。
 * 重启高可用性实例时，选择[利用故障处理重启]选项，可置换Master与Candidate Master。
-* 对于使用高可用性的实例，更改部分选项时访问信息不变，但Master与Candidate Master实例可能互换。 
+* 对于使用高可用性的实例，更改部分选项时访问信息不变，但Master与Candidate Master实例可能互换。
 * 发生故障，对高可用性实例执行故障处理时，更改的新Master实例不继承原有Master实例的备份。
 
 #### 限制事项
@@ -132,7 +132,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 备份执行期间，性能有可能降低。
 * 若不希望影响服务，最好在服务负载较低的时间备份。
 * NHN Cloud RDS支持时间点还原。
-  * 若二进制日志（binary log）大小和存储周期过短，则可能难以还原至所需时间点。
+    * 若二进制日志（binary log）大小和存储周期过短，则可能难以还原至所需时间点。
 * 正在还原的DB实例无法备份。
 
 #### 自动备份
@@ -143,7 +143,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 按照设置的备份周期保留备份文件。
 * 自动备份从备份开始时间至Duration之间任意的时间开始。
 * Duration指开始备份的时间。不意味着在Duration中完成备份。
-  * 即使在Duration中无法完成备份，备份也不会结束。
+    * 即使在Duration中无法完成备份，备份也不会结束。
 * 自动备份在删除所有原始实例时一同删除。
 
 #### 手动备份
@@ -174,7 +174,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 根据原始DB实例的大小，创建副本的时间可能有所延长。
 
 >[参考] 复制进行过程中，Object Storage使用量可能达到与二进制日志文件相同的大小。
->[参考] 复制完成后，Read Only Slave的规则添加至Master实例的访问规则(access rule)项目。 
+>[参考] 复制完成后，Read Only Slave的规则添加至Master实例的访问规则(access rule)项目。
 
 #### 限制事项
 
@@ -199,7 +199,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 删除二进制日志文件，确保磁盘空间。
 
 >[注意] 所选对象二进制日志文件与之前创建的二进制文件全部删除。
->[注意] 删除二进制日志文件时，根据删除的二进制日志文件，也可能无法恢复至特定时间。 
+>[注意] 删除二进制日志文件时，根据删除的二进制日志文件，也可能无法恢复至特定时间。
 >[注意] 二进制日志文件全部删除时，无法使用时间恢复。
 
 ### 扩展存储
@@ -235,7 +235,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 * 可以使用能够轻松调整图表范围的按钮。
 * 每按一次1小时、6小时等按钮，以当前时间为准自动计算from~to并更新。
-<br/>
+  <br/>
 * 根据图表范围，可选图表的间距有所不同。
     * 2小时以内：1分钟、10分钟
     * 12小时以内：10分钟、1小时
@@ -244,7 +244,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
     * 其他：一天
 * 图表类型支持最大值和平均值。
 
->[参考] 各RDS DB实例的监控数据临时保存在用户DB实例的名为“rds_maintenance”的数据库中，然后删除。因此，即使创建后未进行任何操作的实例，也会显示几个监控项目规则移动的图表状态。 
+>[参考] 各RDS DB实例的监控数据临时保存在用户DB实例的名为“rds_maintenance”的数据库中，然后删除。因此，即使创建后未进行任何操作的实例，也会显示几个监控项目规则移动的图表状态。
 >[参考] 若操作rds_maintenance database的数据，可能会收集到错误的监控数据。
 
 ### DB Schema & DB User Management
@@ -500,6 +500,64 @@ Notifications can be received by adding the monitoring settings to the performan
 * RDS for MySQL MEMBER permission holders can use read-only feature.
     * Cannot use any features aimed at instances or create, modify, or delete any instance.
     * Can use alarm-related features on the Notification tab.
+
+## Processlist
+
+### 기본 데이터 조회
+
+![processlist_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_0_ko.png)
+
+DB에서 수집된 프로세스 리스트와 InnoDB 상태를 차트와 표 형태로 확인할 수 있습니다.
+차트에서는 시간대별로 수집된 개수를 나타내며 표에서 상세정보를 확인할 수 있습니다.
+
+* ❶ 인스턴스 이름 혹은 IP 주소로 검색할 수 있습니다.
+* ❷ 조건에 맞는 서버가 표시됩니다. 서버의 상태에 따라 우측의 아이콘 색상이 변경됩니다.
+    * 초록색: 정상 상태
+    * 빨간색: 에러 상태
+    * 회색: 삭제된 서버
+* ❸ Process List와 InnoDB Status 정보를 탭으로 선택해서 조회합니다.
+* ❹ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
+* ❺ 조회 기간을 변경할 수 있습니다.
+    * 조회 기간은 최대 1시간 이내로 설정해야 합니다.
+* ❻ 검색 키워드를 입력해 조회 기간 내의 데이터를 검색합니다.
+* ❼ 한 페이지내에 조회할 데이터 개수를 지정합니다. (기본값: 20개)
+* ❽ **CSV 저장** 버튼을 클릭하면 전체 조회 데이터를 CSV 파일 형식으로 저장합니다.
+* ❾ 수집된 프로세스 리스트 정보를 최신순으로 정렬하여 출력합니다.
+* ➓ **상세보기** 버튼을 클릭하면 해당하는 줄의 상세정보를 확인할 수 있습니다.
+* ⓫ **보기** 버튼을 클릭하면 해당하는 시간의 InnoDB Status 정보를 확인할 수 있습니다.
+
+### 키워드 검색
+
+![processlist_search_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_search_0_ko.png)
+
+* ❶ 검색 키워드를 입력해 데이터 필드 전체를 탐색합니다.
+    * 검색 키워드는 대소문자를 구분하지 않으며 띄어쓰기로 여러 키워드를 구분해서 입력할 수 있습니다.
+    * 문장 검색이 필요한 경우 따옴표("",'')로 감싸서 입력합니다.
+        * 예시) "for semi-sync" slave
+* ❷ 검색 기간은 최신순으로 자동 설정되며 10분 단위로 조회하거나 수집된 데이터가 많은 경우 1,000건 이상 되는 시점으로 제한해서 제한된 단위로 조회합니다.
+* ❸ **추가검색** 버튼을 클릭하면 위와 동일한 단위로 추가 조회합니다.
+* ❹ **초기화** 버튼을 클릭하면 입력된 검색 키워드, 검색 기간 등이 모두 초기화 됩니다.
+* ❺ **CSV 저장** 버튼을 클릭하면 자동 설정된 검색 기간과 상관없이 전체 기간을 조회해서 저장합니다.
+
+### 차트 조회 범위 설정
+
+![processlist_zoom_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_0_ko.png)
+
+* ❶ 차트를 드래그해서 조회 범위를 설정할 수 있습니다.
+
+![processlist_zoom_1_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_1_ko.png)
+
+* ❶ 확대 상태를 초기화 할 수 있습니다.
+* ❷ 확대된 상태에서 검색시 확대 범위 내에서만 검색합니다.
+* ❸ **CSV 저장** 버튼을 클릭하면 확대 범위 내 전체 데이터를 저장합니다.
+
+### 차트 시점 조회
+
+![processlist_select_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_select_0_ko.png)
+
+* ❶ 차트 데이터를 선택하면 해당 시점의 데이터만 조회합니다.
+* ❷ 차트 데이터가 선택된 상태에서 검색시 선택된 시점 내에서만 검색합니다.
+* ❸ **CSV 저장** 버튼을 클릭하면 선택된 시점 내 전체 데이터를 저장합니다.
 
 ## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 

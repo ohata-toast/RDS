@@ -563,22 +563,61 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ## Processlist
 
-![processlist_1_en](https://static.toastoven.net/prod_rds/22.03.15/processlist_1_en.png)
+### 기본 데이터 조회
 
-You can check the process list and InnoDB status collected from the DB in the form of chart and table.
-The chart shows the count of items collected over time, and you can check the details in the table.
+![processlist_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_0_ko.png)
 
-* ❶ Search by the instance name or IP address.
-* ❷ Servers that meet the criteria are displayed. The color of the icon on the right changes depending on the server status.
-    * Green: Normal
-    * Red: Error
-    * Gray: Deleted server
-* ❸ The chart is updated after setting the search period to the current time.
-* ❹ The search period can be modified.
-    * The search period must be set within the range of 1 hour.
-* ❺ The collected process list information is displayed after being sorted in descending order of time.
-* ❻ The collected InnoDB status information is displayed after being sorted in descending order of time.
-* ❼ Clicking the **Show Details** button lets you check the detailed information of the corresponding line.
+DB에서 수집된 프로세스 리스트와 InnoDB 상태를 차트와 표 형태로 확인할 수 있습니다.
+차트에서는 시간대별로 수집된 개수를 나타내며 표에서 상세정보를 확인할 수 있습니다.
+
+* ❶ 인스턴스 이름 혹은 IP 주소로 검색할 수 있습니다.
+* ❷ 조건에 맞는 서버가 표시됩니다. 서버의 상태에 따라 우측의 아이콘 색상이 변경됩니다.
+    * 초록색: 정상 상태
+    * 빨간색: 에러 상태
+    * 회색: 삭제된 서버
+* ❸ Process List와 InnoDB Status 정보를 탭으로 선택해서 조회합니다.
+* ❹ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
+* ❺ 조회 기간을 변경할 수 있습니다.
+    * 조회 기간은 최대 1시간 이내로 설정해야 합니다.
+* ❻ 검색 키워드를 입력해 조회 기간 내의 데이터를 검색합니다.
+* ❼ 한 페이지내에 조회할 데이터 개수를 지정합니다. (기본값: 20개)
+* ❽ **CSV 저장** 버튼을 클릭하면 전체 조회 데이터를 CSV 파일 형식으로 저장합니다.
+* ❾ 수집된 프로세스 리스트 정보를 최신순으로 정렬하여 출력합니다.
+* ➓ **상세보기** 버튼을 클릭하면 해당하는 줄의 상세정보를 확인할 수 있습니다.
+* ⓫ **보기** 버튼을 클릭하면 해당하는 시간의 InnoDB Status 정보를 확인할 수 있습니다.
+
+### 키워드 검색
+
+![processlist_search_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_search_0_ko.png)
+
+* ❶ 검색 키워드를 입력해 데이터 필드 전체를 탐색합니다.
+    * 검색 키워드는 대소문자를 구분하지 않으며 띄어쓰기로 여러 키워드를 구분해서 입력할 수 있습니다.
+    * 문장 검색이 필요한 경우 따옴표("",'')로 감싸서 입력합니다.
+        * 예시) "for semi-sync" slave
+* ❷ 검색 기간은 최신순으로 자동 설정되며 10분 단위로 조회하거나 수집된 데이터가 많은 경우 1,000건 이상 되는 시점으로 제한해서 제한된 단위로 조회합니다.
+* ❸ **추가검색** 버튼을 클릭하면 위와 동일한 단위로 추가 조회합니다.
+* ❹ **초기화** 버튼을 클릭하면 입력된 검색 키워드, 검색 기간 등이 모두 초기화 됩니다.
+* ❺ **CSV 저장** 버튼을 클릭하면 자동 설정된 검색 기간과 상관없이 전체 기간을 조회해서 저장합니다.
+
+### 차트 조회 범위 설정
+
+![processlist_zoom_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_0_ko.png)
+
+* ❶ 차트를 드래그해서 조회 범위를 설정할 수 있습니다.
+
+![processlist_zoom_1_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_1_ko.png)
+
+* ❶ 확대 상태를 초기화 할 수 있습니다.
+* ❷ 확대된 상태에서 검색시 확대 범위 내에서만 검색합니다.
+* ❸ **CSV 저장** 버튼을 클릭하면 확대 범위 내 전체 데이터를 저장합니다.
+
+### 차트 시점 조회
+
+![processlist_select_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_select_0_ko.png)
+
+* ❶ 차트 데이터를 선택하면 해당 시점의 데이터만 조회합니다.
+* ❷ 차트 데이터가 선택된 상태에서 검색시 선택된 시점 내에서만 검색합니다.
+* ❸ **CSV 저장** 버튼을 클릭하면 선택된 시점 내 전체 데이터를 저장합니다.
 
 ## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 
