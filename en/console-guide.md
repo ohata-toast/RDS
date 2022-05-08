@@ -43,6 +43,7 @@
 * Backup Retention Period: Select more than a day, to allow auto backups.
     * Select **N/A**, and auto backup is not enabled.
 * Use Table Locking: Set whether to lock the table with the FLUSH TABLES WITH READ LOCK statement when performing backup.
+* Backup Replication Region: Set to replicate backup files to another region when automatic backup is executed.
 * Backup Retry Count: Set the number of retries to make when backup fails.
     * Retry is performed when you enter 1 or higher.
     * Retry is performed only when performing auto backup.
@@ -563,61 +564,61 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ## Processlist
 
-### 기본 데이터 조회
+### Basic Data Retrieval
 
 ![processlist_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_0_ko.png)
 
-DB에서 수집된 프로세스 리스트와 InnoDB 상태를 차트와 표 형태로 확인할 수 있습니다.
-차트에서는 시간대별로 수집된 개수를 나타내며 표에서 상세정보를 확인할 수 있습니다.
+You can view the process list and InnoDB status collected from the DB in the form of chart and table.
+The chart shows the count of items collected over time, and you can check the details in the table.
 
-* ❶ 인스턴스 이름 혹은 IP 주소로 검색할 수 있습니다.
-* ❷ 조건에 맞는 서버가 표시됩니다. 서버의 상태에 따라 우측의 아이콘 색상이 변경됩니다.
-    * 초록색: 정상 상태
-    * 빨간색: 에러 상태
-    * 회색: 삭제된 서버
-* ❸ Process List와 InnoDB Status 정보를 탭으로 선택해서 조회합니다.
-* ❹ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
-* ❺ 조회 기간을 변경할 수 있습니다.
-    * 조회 기간은 최대 1시간 이내로 설정해야 합니다.
-* ❻ 검색 키워드를 입력해 조회 기간 내의 데이터를 검색합니다.
-* ❼ 한 페이지내에 조회할 데이터 개수를 지정합니다. (기본값: 20개)
-* ❽ **CSV 저장** 버튼을 클릭하면 전체 조회 데이터를 CSV 파일 형식으로 저장합니다.
-* ❾ 수집된 프로세스 리스트 정보를 최신순으로 정렬하여 출력합니다.
-* ➓ **상세보기** 버튼을 클릭하면 해당하는 줄의 상세정보를 확인할 수 있습니다.
-* ⓫ **보기** 버튼을 클릭하면 해당하는 시간의 InnoDB Status 정보를 확인할 수 있습니다.
+* ❶ Search by the instance name or IP address.
+* ❷ Servers that meet the criteria are displayed. The color of the icon on the right changes depending on the server status.
+    * Green: Normal
+    * Red: Error
+    * Gray: Deleted server
+* ❸ Select the Process List or InnoDB Status tab to retrieve the information.
+* ❹ The chart is updated after setting the retrieval period to the current time.
+* ❺ The retrieval period can be modified.
+    * The retrieval period must be set within the range of 1 hour.
+* ❻ Enter search keywords to search for data within the retrieval period.
+* ❼ Set the number of data to retrieve in one page (default: 20).
+* ❽ Click **Save CSV** to save all the retrieved data in CSV file format.
+* ❾ The collected process list information is displayed after being sorted in descending order of time.
+* ➓ Click **Show Details** to check the details for the line.
+* ⓫ Click **View** to check the InnoDB Status information for the time.
 
-### 키워드 검색
+### Keyword Search
 
 ![processlist_search_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_search_0_ko.png)
 
-* ❶ 검색 키워드를 입력해 데이터 필드 전체를 탐색합니다.
-    * 검색 키워드는 대소문자를 구분하지 않으며 띄어쓰기로 여러 키워드를 구분해서 입력할 수 있습니다.
-    * 문장 검색이 필요한 경우 따옴표("",'')로 감싸서 입력합니다.
-        * 예시) "for semi-sync" slave
-* ❷ 검색 기간은 최신순으로 자동 설정되며 10분 단위로 조회하거나 수집된 데이터가 많은 경우 1,000건 이상 되는 시점으로 제한해서 제한된 단위로 조회합니다.
-* ❸ **추가검색** 버튼을 클릭하면 위와 동일한 단위로 추가 조회합니다.
-* ❹ **초기화** 버튼을 클릭하면 입력된 검색 키워드, 검색 기간 등이 모두 초기화 됩니다.
-* ❺ **CSV 저장** 버튼을 클릭하면 자동 설정된 검색 기간과 상관없이 전체 기간을 조회해서 저장합니다.
+* ❶ Enter search keywords to browse through the data fields.
+    * Search keywords are not case-sensitive, and multiple keywords can be entered by separating them with a space.
+    * If you need to search for a phrase, enclose it in quotation marks ("",'').
+        * Example: "for semi-sync" slave
+* ❷ The search period is automatically set in the order of the most recent time. The period is set in the unit of 10 minutes, or if there is a lot of collected data, set in a limited unit by limiting to the point in time with more than 1,000 items.
+* ❸ Click **Search More** to retrieve additional data with the same unit as above.
+* ❹ Click **Reset** to reset all entered search keywords and search period.
+* ❺ If you click **Save CSV**, the retrieved result for the entire period is saved regardless of the automatically set search period.
 
-### 차트 조회 범위 설정
+### Chart Retrieval Range Setting
 
 ![processlist_zoom_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_0_ko.png)
 
-* ❶ 차트를 드래그해서 조회 범위를 설정할 수 있습니다.
+* ❶ You can set the retrieval range by dragging the chart.
 
 ![processlist_zoom_1_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_1_ko.png)
 
-* ❶ 확대 상태를 초기화 할 수 있습니다.
-* ❷ 확대된 상태에서 검색시 확대 범위 내에서만 검색합니다.
-* ❸ **CSV 저장** 버튼을 클릭하면 확대 범위 내 전체 데이터를 저장합니다.
+* ❶ You can reset the zoom state.
+* ❷ When searching in a zoomed-in state, the search is performed only in the zoomed-in range.
+* ❸ Click **Save CSV** to save all data in the zoomed-in range.
 
-### 차트 시점 조회
+### Chart Point-in-Time Retrieval
 
 ![processlist_select_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_select_0_ko.png)
 
-* ❶ 차트 데이터를 선택하면 해당 시점의 데이터만 조회합니다.
-* ❷ 차트 데이터가 선택된 상태에서 검색시 선택된 시점 내에서만 검색합니다.
-* ❸ **CSV 저장** 버튼을 클릭하면 선택된 시점 내 전체 데이터를 저장합니다.
+* ❶ If you select chart data, only the data at that point in time is retrieved.
+* ❷ When searching with chart data selected, the search is performed only in the selected point in time.
+* ❸ Click **Save CSV** to save all data in the selected point in time.
 
 ## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 
