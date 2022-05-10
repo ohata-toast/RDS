@@ -1,10 +1,35 @@
 ## Database > RDS for MySQL > Release Notes
 
+### May 10, 2022
+
+#### Added Features
+
+* For automatic backup, added a feature to prepare for failures of a region by replicating the backup files to another region.
+
+#### Feature Updates
+
+* Changed the error log storage location to the data volume
+* Made changes so that error logs are rotated up to 10 logs with a size of 100 MB
+* Made modifications so that, when a forced restart is executed, the web console cannot be operated until it can be used again
+* Made modifications so that, after failover starts, the target instance cannot be manipulated in the web console
+* Improved usability so that you can view the innodb status in the processlist
+* Made improvements so that you can move to other pages by numbers in the processlist
+* Made improvements so that you can zoom in the chart in the processlist to view only the corresponding section
+* Made improvements so that you can search by keywords in the processlist
+* Made improvements so that you can download the results searched in the processlist in CSV format
+
+#### Bug Fixes
+
+* Fixed an issue where, when performing point-in-time restoration with a backup of a read replica, a wrong restoration available time could be selected
+* Fixed an issue where the monitoring graph was not visible in Safari
+* Fixed an issue where, after changing the parameters of the master instance, changing the parameters of a read replica failed
+* Fixed an issue where, when repeatedly creating or deleting read replicas in version 5.6.33, creating a read replica failed intermittently
+
 ### April 12, 2022
 
 #### Feature Updates
 
-* Improved so that, when changing a read replica or normal instance to a high availability instance, replication is configured without additional backup if there is an existing backup available
+* Made improvements so that, when changing a read replica or normal instance to a high availability instance, replication is configured without additional backup if there is an existing backup available
 
 #### Bug Fixes
 
@@ -51,7 +76,7 @@
 * Fixed a bug that caused items in the monitoring settings to be covered when the mouse pointer hovers over the notification group
 * Fixed an issue where, when subscribing to an event, notifications of internal event codes that cannot be subscribed were received if the event code is 'Select all'
 * Fixed a bug where an unknown error occurred when selecting the created instance immediately after instance creation
-* Modified so that an event is logged when the DB instance is stopped
+* Made modifications so that an event is logged when the DB instance is stopped
 
 ### November 9, 2021
 
@@ -65,7 +90,7 @@
 
 * Improved a feature to enable modifying instances even in the status of insufficient capacity
 * Mitigated an issue where MySQL does not run properly intermittently when a force restart is performed
-* Modified so that MySQL is restarted when it is terminated due to out of memory
+* Made modifications so that MySQL is restarted when it is terminated due to out of memory
 
 #### Bug Fixes
 
