@@ -35,7 +35,7 @@
 > [Note] The instance list is sorted in the order of creation. The order may change after failover, since the candidate master is created when the high availability option is enabled for the master.
 > [Note] With default alarm setting, alarms for the instance are automatically registered, in the name of "{instance name}-default". Registered alarms can be changed or deleted, and applied instances can also be changed.
 
-![backup_and_access_en](https://static.toastoven.net/prod_rds/22.03.15/backup_and_access_en.png)
+![backup_and_access_en](https://static.toastoven.net/prod_rds/22.05.10/backup_and_access_en.png)
 
 * Set auto backup and access control, and click **Next**.
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.

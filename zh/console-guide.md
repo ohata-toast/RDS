@@ -40,7 +40,7 @@
 
 在**备份&Access控制**界面中指定备份信息。
 
-![backup_and_access_zh](https://static.toastoven.net/prod_rds/22.03.15/backup_and_access_zh.png)
+![backup_and_access_zh](https://static.toastoven.net/prod_rds/22.05.10/backup_and_access_zh.png)
 
 * 设置自动备份及访问控制后，单击**下一步**按钮。
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
