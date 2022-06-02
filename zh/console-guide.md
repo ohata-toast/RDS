@@ -85,11 +85,11 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 2.将浮动IP项目修改为**使用**。
 3.单击**确定**按钮，反映修改项。
 
-![instance_detail_0_zh](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_zh.png)
+![instance_detail_0_zh](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_0_zh.png)
 
 设置后浮动IP生成，可确认是否能从外部连接。
 
-![instance_detail_1_zh](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_zh.png)
+![instance_detail_1_zh](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_1_zh.png)
 
 以下为MySQL Workbench连接示例。
 
@@ -166,7 +166,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 * 若欲提高读取性能，可以创建支持MySQL的Read Only Slave。
 * 若欲创建Read Only Slave，选择原始DB实例后单击**附加功能>创建副本**。
 
-![additional_function_0_zh](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_zh.png)
+![additional_function_0_zh](https://static.toastoven.net/prod_rds/22.06.14/additional_function_0_zh.png)
 
 * 输入创建副本所需的设置，单击**复制**按钮，创建副本。
 * 建议创建为与原始DB实例相同的类型或更高的类型，创建为较低的类型时，有可能发生复制延迟。
@@ -194,7 +194,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 #### 删除二进制日志
 
-![rds_08_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_08_20210112_zh.png)
+![rds_08_20220614](https://static.toastoven.net/prod_rds/22.06.14/rds_08_20220614_zh.png)
 
 * 删除二进制日志文件，确保磁盘空间。
 
@@ -204,7 +204,7 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 ### 扩展存储
 
-![rds_09_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_09_20210112_zh.png)
+![rds_09_20220614](https://static.toastoven.net/prod_rds/22.06.14/rds_09_20220614_zh.png)
 
 * 扩展DB实例的存储大小。
 * 若存在Read Only Slave，则一同扩展为与Master相同的存储大小。

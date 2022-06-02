@@ -95,11 +95,11 @@ DB Configuration画面で設定値を変更できます。
 2. Floating IP項目を **使用する**に修正します。
 3. **確認** ボタンをクリックすると、修正事項が反映されます。
 
-![instance_detail_0_jp](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_jp.png)
+![instance_detail_0_jp](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_0_jp.png)
 
 * 設定後、Floating IPが作成され、外部からアクセスできることを確認できます。
 
-![instance_detail_1_jp](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_jp.png)
+![instance_detail_1_jp](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_1_jp.png)
 
 * 次はMySQL Workbenchの接続例です。
 
@@ -266,7 +266,7 @@ DB Configuration画面で設定値を変更できます。
 * 読み取り性能高めるには、MySQLがサポートするRead Only Slaveを作成します。
 * Read Only Slaveを作成するには、原本DBインスタンスを選択した後、 **追加機能 > コピー作成**を選択します。
 
-![additional_function_0_jp](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_jp.png)
+![additional_function_0_jp](https://static.toastoven.net/prod_rds/22.06.14/additional_function_0_jp.png)
 
 * コピー作成のための詳細設定を入力し、 **コピー** ボタンをクリックすると、コピーが作成されます。
 * コピー元DBインスタンスと同じタイプまたはさらにスペックの高いタイプでの作成を推奨します。スペックの低いタイプで作成した場合、コピー作成処理に遅延が発生することがあります。
@@ -293,7 +293,7 @@ DB Configuration画面で設定値を変更できます。
 
 #### バイナリログ削除
 
-![rds_08_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_08_20210112_jp.png)
+![rds_08_20220614](https://static.toastoven.net/prod_rds/22.06.14/rds_08_20220614_jp.png)
 
 * バイナリログファイルを削除してディスクスペースを確保します。
 
@@ -304,7 +304,7 @@ DB Configuration画面で設定値を変更できます。
 
 ### ストレージ拡張
 
-![rds_09_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_09_20210112_jp.png)
+![rds_09_20220614](https://static.toastoven.net/prod_rds/22.06.14/rds_09_20220614_jp.png)
 
 * DBインスタンスのストレージサイズを拡張します。
 * Read Only Slaveが存在する場合、Masterと同じストレージサイズに拡張されます。

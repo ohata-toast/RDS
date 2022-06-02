@@ -85,13 +85,13 @@
 * Go to [Detail Settings] and [Access Information] of an instance to check accessible domain information.
 * Database instances of which floating IP is not ‘Enabled’ cannot be accessed from outside.
 
-![instance_detail_0_en](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_en.png)
+![instance_detail_0_en](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_0_en.png)
 
 * To test external access, click **Edit** on top right.
 * Modify to **Enable** for floating IP.
 * Click **Confirm** to apply changes.
 
-![instance_detail_1_en](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_en.png)
+![instance_detail_1_en](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_1_en.png)
 
 * After setting, you can find a floating IP is created to allow external access.
 
@@ -260,7 +260,7 @@
 * For better read performances, create Read Only Slave supported by MySQL.
 * To create Read Only Slave, select an original DB instance and click **Additional Functions > Create Replica**.
 
-![additional_function_0_en](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_en.png)
+![additional_function_0_en](https://static.toastoven.net/prod_rds/22.06.14/additional_function_0_en.png)
 
 * Fill out settings to create a replica, and click **Replicate**, and the replica is created.
 * It is recommended to create a replica whose specification is the same as or higher than that of the original database instance, because using a lower specification may result in replication latency.
@@ -287,7 +287,7 @@
 
 #### Deleting Binary Logs
 
-![rds_08_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_08_20210112_en.png)
+![rds_08_20220614](https://static.toastoven.net/prod_rds/22.06.14/rds_08_20220614_en.png)
 
 * Delete binary log files to secure more disk space.
 
@@ -297,7 +297,7 @@
 
 ### Scaling Storage
 
-![rds_09_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_09_20210112_en.png)
+![rds_09_20220614](https://static.toastoven.net/prod_rds/22.06.14/rds_09_20220614_en.png)
 
 * Scale up storage of a DB instance.
 * If Read Only Slave exists, the storage is scaled to the same size of Master.
