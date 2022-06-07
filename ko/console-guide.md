@@ -85,13 +85,13 @@
 * 인스턴스 [상세 설정]의 [접속 정보]에서 접속 가능한 도메인 정보를 확인할 수 있습니다.
 * Floating IP 를 ‘사용’으로 설정하지 않은 DB 인스턴스는 외부에서 접근할 수 없습니다.
 
-![instance_detail_0_ko](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_0_ko.png)
+![instance_detail_0_ko](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_0_ko.png)
 
 * 외부에서 접속을 테스트하기 위해 우측 상단의 **변경** 버튼을 누릅니다.
 * Floating IP 항목을 **사용함**으로 수정합니다.
 * **확인** 버튼을 눌러 수정 사항을 반영합니다.
 
-![instance_detail_1_ko](https://static.toastoven.net/prod_rds/21.09.14/instance_detail_1_ko.png)
+![instance_detail_1_ko](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_1_ko.png)
 
 * 설정 후 Floating IP가 생성되어 외부에서 접근이 가능해진것을 확인할 수 있습니다.
 
@@ -260,7 +260,7 @@
 * 읽기 성능을 높이기 위해서 MySQL 이 지원하는 Read Only Slave 를 만들 수 있습니다.
 * Read Only Slave 를 만들기 위해서 원본 DB 인스턴스를 선택한 후 **추가기능 > 복제본 생성**을 누릅니다.
 
-![additional_function_0_ko](https://static.toastoven.net/prod_rds/21.09.14/additional_function_0_ko.png)
+![additional_function_0_ko](https://static.toastoven.net/prod_rds/22.06.14/additional_function_0_ko.png)
 
 * 복제본 생성을 위한 설정을 입력한 후, **복제** 버튼을 누르면 복제본이 생성됩니다.
 * 원본 DB 인스턴스와 동일한 사양 혹은 더 높은 사양으로 만드는 것을 권장하며, 낮은 사양으로 생성 시 복제 지연이 발생할 수 있습니다.
@@ -287,7 +287,7 @@
 
 #### 바이너리 로그 삭제
 
-![rds_08_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_08_20210112.png)
+![rds_08_20220614_ko](https://static.toastoven.net/prod_rds/22.06.14/rds_08_20220614_ko.png)
 
 * 바이너리 로그 파일을 삭제하여 디스크 공간을 확보합니다.
 
@@ -297,7 +297,7 @@
 
 ### Storage 확장
 
-![rds_09_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_09_20210112.png)
+![rds_09_20220614_ko](https://static.toastoven.net/prod_rds/22.06.14/rds_09_20220614_ko.png)
 
 * DB 인스턴스의 Storage 크기를 확장합니다.
 * Read Only Slave 가 존재하는 경우, Master 와 같은 Storage 크기로 함께 확장됩니다.
