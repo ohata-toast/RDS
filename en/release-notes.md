@@ -319,8 +319,8 @@
 
 #### Bug Fixes
 
-- Fixed the occasional failure in creating or restoring database instances
-- Fixed failed delivery of mails, notifying the deletion of database instances
+- Fixed the occasional failure in creating or restoring DB instances
+- Fixed failed delivery of mails, notifying the deletion of DB instances
 
 ### July 23, 2019
 
