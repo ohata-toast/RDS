@@ -23,10 +23,10 @@
     * Storage: Enter volume size of DB instance.
         * It can be set to a value between 20 GB and 2 TB.
     * Availability Zone: Select an area where DB instance is to be created.
-    * High Availability: When creating a database instance, create a candidate master in a different availability zone from the master.
+    * High Availability: When creating a DB instance, create a candidate master in a different availability zone from the master.
     * Ping Interval: Sets the interval for checking the status of the master instance when using the high availability feature. An error occurs after 4 failed attempts.
         * It can be set to a value between 1 and 600 seconds.
-    * Default Alarm: Register alarms for pre-defined events of a database instance.
+    * Default Alarm: Register alarms for pre-defined events of a DB instance.
         * To enable default alarm, a recipient group must be selected.
 
 > [Note] Unless a selected VPC subnet of Compute & Network is connected with internet gateway, floating IP is not available.
@@ -83,7 +83,7 @@
 
 * Select a DB instance which is created, to find its detail setting. Instances that are not associated with floating IP are not allowed for external access.
 * Go to [Detail Settings] and [Access Information] of an instance to check accessible domain information.
-* Database instances of which floating IP is not ‘Enabled’ cannot be accessed from outside.
+* DB instances of which floating IP is not ‘Enabled’ cannot be accessed from outside.
 
 ![instance_detail_0_en](https://static.toastoven.net/prod_rds/22.06.14/instance_detail_0_en.png)
 
@@ -97,7 +97,7 @@
 
 ![rds_06_20210112](https://static.toastoven.net/prod_rds/21.01.12/rds_06_20210112_en.png)
 
-* Below is an example of access to MySQL Workbench.
+* Below is an example of connecting to MySQL Workbench.
 
 #### Constraints
 
@@ -263,8 +263,8 @@
 ![additional_function_0_en](https://static.toastoven.net/prod_rds/22.06.14/additional_function_0_en.png)
 
 * Fill out settings to create a replica, and click **Replicate**, and the replica is created.
-* It is recommended to create a replica whose specification is the same as or higher than that of the original database instance, because using a lower specification may result in replication latency.
-* When a replica is created, the I/O performance of the original database instance may be lower than usual.
+* It is recommended to create a replica whose specification is the same as or higher than that of the original DB instance, because using a lower specification may result in replication latency.
+* When a replica is created, the I/O performance of the original DB instance may be lower than usual.
 * Replica creation time may increase in proportion to the size of the original DB instance.
 > [Note] While replication is underway, object storage volume may be incurred as much as the size of a binary log file.
 > [Note] When replication is completed, the Read Only Slave rule is added to the access rule of the master instance.
@@ -438,7 +438,7 @@ Various performance indicators can be checked in charts.
 
 ![server_dashboard_1_en](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_1_en.png)
 
-* ❶ *Move the chart by dragging the top area of the chart with the mouse.
+* ❶ Move the chart by dragging the top area of the chart with the mouse.
 * ❷ The chart can be deleted.
 * ❸ Change the chart size by dragging the lower right corner of the chart with the mouse.
 
@@ -620,17 +620,17 @@ The chart shows the count of items collected over time, and you can check the de
 * ❷ When searching with chart data selected, the search is performed only in the selected point in time.
 * ❸ Click **Save CSV** to save all data in the selected point in time.
 
-## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
+## Appendix 1. Guide for DB instance Migration for Hypervisor Maintenance
 
 NHN Cloud updates hypervisor software on a regular basis to enhance security and stability of its infrastructure services.
 Instances that are running on a target hypervisor for maintenance must be migrated to a hypervisor which is completed with maintenance.
 
-Migration of database instance can start on a NHN Cloud console.
-Depending on database configuration, select a particular instance to migrate it as well, if its relevant database instance (e.g. slave instance) is also the target of maintenance.
+Migration of DB instance can start on a NHN Cloud console.
+Depending on database configuration, select a particular instance to migrate it as well, if its relevant DB instance (e.g. slave instance) is also the target of maintenance.
 Follow the guide as below, to use the migration service on console.
-Go to the project in which a database instance for maintenance is located.
+Go to the project in which a DB instance for maintenance is located.
 
-### 1. Check database instances which are the maintenance targets.
+### 1. Check DB instances which are the maintenance targets.
 
 Those with the migration button next to name are the maintenance targets.
 
@@ -640,12 +640,12 @@ Put a cursor on the migration button, and you can find its maintenance schedule.
 
 ![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_en.png)
 
-### 2. Make sure you close any application programs that are running on the database instance.
+### 2. Make sure you close any application programs that are running on the DB instance.
 
 It is recommended to take appropriate measures so as impact on relevant services can be limited.
 Nevertheless, if impact on service is inevitable, contact NHN Cloud Customer Center to be guided further.
 
-### 3. Select a database instance for maintenance, click migration, and click OK on window asking of migration.
+### 3. Select a DB instance for maintenance, click migration, and click OK on window asking of migration.
 
 ![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_en.png)
 
@@ -656,4 +656,4 @@ If instance status remains the same, try 'Refresh'.
 ![rds_planed_migration_3](https://static.toastoven.net/prod_rds/planned_migration_alarm/image3_en.png)
 
 While migration is underway, operation is not permitted.
-An abnormal closure of database instance migration shall be automatically reported to administrator, and it such case, you'll be contacted by NHN Cloud.
+An abnormal closure of DB instance migration shall be automatically reported to administrator, and it such case, you'll be contacted by NHN Cloud.
