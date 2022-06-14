@@ -1,5 +1,17 @@
 ## Database > RDS for MySQL > Release Notes
 
+### June 14, 2022
+
+#### Feature Updates
+
+* Made improvements so that an event is logged when restart fails due to replication delay
+* Changed the access information domain from cloud.toast.com to nhncloudservice.com
+
+#### Bug Fixes
+
+* Fixed an issue where high availability configuration was not possible when the validate password plugin is used
+* Fixed an issue where, even though the type change of the high availability instance has failed, the type of the candidate master is displayed as the type after the change
+
 ### May 10, 2022
 
 #### Added Features
@@ -116,11 +128,12 @@
 * Additional MySQL 5.7.33 version support
 * Added a feature to scale up the volume of a high availability instance without using failover
 
-#### Bug Fixes 
+#### Bug Fixes
 
 * Fixed a bug where restoration is not performed properly when performing restoration using backup in the object storage
 * Fixed a logic bug where it checks whether the file and directory exist when exporting backup to the object storage
 * Fixed a bug where an unknown error window shows up intermittently when selecting an instance
+
 
 ### August 25, 2021
 
@@ -151,7 +164,7 @@
 
 ### June 15, 2021
 
-#### Feature Improvements
+#### Feature Updates
 
 * Monitoring system reorganized
 
@@ -162,7 +175,7 @@
 
 ### May 11, 2021
 
-#### More Features
+#### Added Features
 
 * Exporting and importing backup using object storage provided
 * Force restart provided
@@ -178,7 +191,7 @@
 
 ### April 13, 2021
 
-#### More Features
+#### Added Features
 
 * Provides audit log function for MySQL versions 5.6.33 to 5.7.26
 
@@ -201,12 +214,12 @@
 #### Feature Updates
 - Improved the feature to limit the resource quota per project
 
-#### Bug Fixes 
+#### Bug Fixes
 - Fixed a bug where instance restart is not performed properly in certain situations
 
 ### February 16, 2021
 
-#### More Features
+#### Added Features
 
 - Added a feature that controls DB User and DB Schema through web console
 
@@ -244,7 +257,7 @@
 
 ### October 13, 2020
 
-#### Bug Fixes 
+#### Bug Fixes
 
 - Fixed an issue in which innodb_buffer_pool_size cannot be modified as intended
 - Fixed failed copy of the ha candidate master instance, when the require_secure_transport is on
@@ -252,87 +265,87 @@
 
 ### September 22, 2020
 
-#### More Features
+#### Added Features
 
-- New region opened in Korea (Pyeongchon) 
+- New region opened in Korea (Pyeongchon)
 
 ### September 15, 2020
 
-#### More Features 
+#### Added Features
 
-- Supports Monitoring API 
+- Supports Monitoring API
 
 ### August 11, 2020
 
 #### Bug Fixes
 
-- Fixed an issue in which an invalid subnet appears on the list when user VPC subnet is unavailable 
+- Fixed an issue in which an invalid subnet appears on the list when user VPC subnet is unavailable
 
 ### July 14, 2020
 
-#### More Features 
+#### Added Features
 
-- Further supports MySQL 8.0.18  
+- Further supports MySQL 8.0.18
 
 ### December 10, 2019
 
-#### More Features
+#### Added Features
 
 - Added the feature of database file encryption (Korea Region)
 
-### November 12, 2019 
+### November 12, 2019
 
 #### Feature Updates
 
-- Updated failure detection and restoration of candidate master 
+- Updated failure detection and restoration of candidate master
 
 #### Bug Fixes
 
-- Fixed infrequent backup failures 
+- Fixed infrequent backup failures
 
-### September 24, 2019 
+### September 24, 2019
 
-#### Feature Updates 
+#### Feature Updates
 
 - Improved speed for creating an instance (About 28 minutes -> 13 minutes, for HA instances)
-- Updated UX to allow new backups for point-in-time restoration, at the restart by using failover 
-- Changed UI for enabling default alarm 
+- Updated UX to allow new backups for point-in-time restoration, at the restart by using failover
+- Changed UI for enabling default alarm
 
 ### August 13, 2019
 
 #### Feature Updates
 
-- Allowed to view event logs related to high availability more intuitively 
+- Allowed to view event logs related to high availability more intuitively
 
 #### Bug Fixes
 
-- Fixed the occasional failure in creating or restoring database instances
-- Fixed failed delivery of mails, notifying the deletion of database instances 
+- Fixed the occasional failure in creating or restoring DB instances
+- Fixed failed delivery of mails, notifying the deletion of DB instances
 
 ### July 23, 2019
 
-#### More Features
+#### Added Features
 
 - Default Alarm added
 - Monitoring Item added
 
-#### Updates
+#### Feature Updates
 
 - Backup-related events no longer support alarms.
 
 ### June 27, 2019
 
-#### More Features
+#### Added Features
 
 - Japan Region added
 
 ### June 25, 2019
 
-#### More Features
+#### Added Features
 
 - High Availability added
 
-#### Updates
+#### Feature Updates
 
 - Event period exposed on the page of instance details changed from 1 day to 7 days
 
@@ -342,7 +355,7 @@
 
 ### May 14, 2019
 
-#### Updates
+#### Feature Updates
 
 - Stronger authentication when instance is created or modified
 - Added UX to select/unselect all notification events
@@ -352,111 +365,111 @@
 - Fixed instances, which were sometimes unavailable to be deleted while they were being created
 - Fixed the issue in which data volume was not properly changed when data storage was full
 
-### March 12, 2019 
+### March 12, 2019
 
-#### Feature Updates 
+#### Feature Updates
 
-- Updated error messages that are vague with unpleasant looks. 
-- Updated to allow modifying transaction-isolation on the console 
+- Updated error messages that are vague with unpleasant looks.
+- Updated to allow modifying transaction-isolation on the console
 
 #### Bug Fixes
 
 - Removed the probability of long backup time which may take more than a day for 1TB database
 
-### February 26, 2019 
+### February 26, 2019
 
-#### More Features 
+#### Added Features
 
-- Added the feature of SSD volume as storage for instance data  
+- Added the feature of SSD volume as storage for instance data
 
-#### Feature Updates 
+#### Feature Updates
 
-- Updated to set recipients of notification from project members 
-- Updated features for x1, u2 flavor 
+- Updated to set recipients of notification from project members
+- Updated features for x1, u2 flavor
 
 ### January 29, 2019
 
 #### Feature Updates
 
-- Changed the maximum instance volume to 1000G 
+- Changed the maximum instance volume to 1000G
 
 ### December 14, 2018
 
-#### Bug Fixes 
+#### Bug Fixes
 
-- Fixed failed exposure of r2.c8m64  
-- Fixed general logs that are not visible 
-- Fixed bugs in the VPC subnet selection 
+- Fixed failed exposure of r2.c8m64
+- Fixed general logs that are not visible
+- Fixed bugs in the VPC subnet selection
 
-### December 11, 2018 
+### December 11, 2018
 
-#### Feature Updates 
+#### Feature Updates
 
-- Removed the peering feature 
-- Feature updated to the method of network communication by using user VPC subnet  
+- Removed the peering feature
+- Feature updated to the method of network communication by using user VPC subnet
 
-### October 23, 2018 
+### October 23, 2018
 
-#### Feature Updates 
+#### Feature Updates
 
-- Shows description message for input items when instance is created/restored/replicated 
-- Shows the mysql transaction_isolation option 
+- Shows description message for input items when instance is created/restored/replicated
+- Shows the mysql transaction_isolation option
 
-### October 16, 2018 
+### October 16, 2018
 
-#### More Features 
+#### Added Features
 
-- Added the feature of changing instance flavor 
-- Added the feature of extending instance storage 
+- Added the feature of changing instance flavor
+- Added the feature of extending instance storage
 
 ### August 28, 2018
 
-#### More Features 
+#### Added Features
 
-- Allows to secure instance volume by deleting binary log files 
+- Allows to secure instance volume by deleting binary log files
 
 ### July 24, 2018
 
-#### More Features
+#### Added Features
 
-- Also supports MySQL 5.7.15 
+- Also supports MySQL 5.7.15
 
 #### Bug Fixes
 
-- Fixed an issue in which an instance of the MySQL 5.7.19 version cannot be created, without floating IP 
-- Fixed auto backups at particular situations, in which it takes twice the usual time 
+- Fixed an issue in which an instance of the MySQL 5.7.19 version cannot be created, without floating IP
+- Fixed auto backups at particular situations, in which it takes twice the usual time
 
 ### May 29, 2018
 
-#### More Features
+#### Added Features
 
-- Newly supports MySQL 5.7 
+- Newly supports MySQL 5.7
 
 ### April 24, 2018
 
 #### Feature Updates
 
 - With port change of the master, the master access information is automatically changed for read only slave
-- Delete unnecessary logs after backup 
+- Delete unnecessary logs after backup
 
 #### Bug Fixes
 
-- Fixed pagination, in which Search Result > Create instance takes you to the search result page 
-- Fixed the missing of a warning sign when it is tried to create an instance with Confirm Password left in blank 
+- Fixed pagination, in which Search Result > Create instance takes you to the search result page
+- Fixed the missing of a warning sign when it is tried to create an instance with Confirm Password left in blank
 
-### March 22, 2018 
+### March 22, 2018
 
 #### Bug Fixes
 
 - Fixed an issue in which backup retention period remains on the list, even after it was changed to 'N/A'
-- Fixed the bug in which instance status shows Changing, even without instance setting updated 
-- Fixed an issue in which QPS shows as negative number when an instance restarts 
-- Fixed the bug in which only data is updated without date or time updates, at the click of Period Setting on the Monitoring page 
+- Fixed the bug in which instance status shows Changing, even without instance setting updated
+- Fixed an issue in which QPS shows as negative number when an instance restarts
+- Fixed the bug in which only data is updated without date or time updates, at the click of Period Setting on the Monitoring page
 
-### February 22, 2018 
+### February 22, 2018
 
-#### New Releases 
+#### New Releases
 
-- TOAST Relational Database Service (RDS) provides Relational Database in the cloud environment. 
-- No complicated configuration is required to enable relational database. 
-- Supports MySQL 5.6.33.  
+- TOAST Relational Database Service (RDS) provides Relational Database in the cloud environment.
+- No complicated configuration is required to enable relational database.
+- Supports MySQL 5.6.33.
