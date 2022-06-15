@@ -559,7 +559,8 @@ DB에서 수집된 프로세스 리스트와 InnoDB 상태를 차트와 표 형�
 * ❷ 차트 데이터가 선택된 상태에서 검색시 선택된 시점 내에서만 검색합니다.
 * ❸ **CSV 저장** 버튼을 클릭하면 선택된 시점 내 전체 데이터를 저장합니다.
 
-## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
+## Appendix
+### Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 
 NHN Cloud updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. Instances that are running on a target hypervisor for maintenance must be migrated to a hypervisor which is completed with maintenance.
 
@@ -568,7 +569,7 @@ Depending on database configuration, select a particular instance to migrate it 
 Follow the guide as below, to use the migration service on console.
 Go to the project in which a database instance for maintenance is located.
 
-### 1. Check database instances which are the maintenance targets.
+#### 1. Check database instances which are the maintenance targets.
 
 Those with the migration button next to name are the maintenance targets.
 
@@ -578,16 +579,16 @@ Put a cursor on the migration button, and you can find its maintenance schedule.
 
 ![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_en.png)
 
-### 2. Make sure to close any application programs that are running on the database instance.
+#### 2. Make sure to close any application programs that are running on the database instance.
 
 It is recommended to take appropriate measures so as impact on relevant services can be limited.
 Nevertheless, if impact on service is inevitable, contact NHN Cloud Customer Center to be guided further.
 
-### 3. Select a database instance for maintenance, click migration, and click OK on window asking of migration.
+#### 3. Select a database instance for maintenance, click migration, and click OK on window asking of migration.
 
 ![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_en.png)
 
-### 4. Wait until database migration is over.
+#### 4. Wait until database migration is over.
 
 If instance status remains the same, try ‘Refresh’.
 
@@ -595,3 +596,24 @@ If instance status remains the same, try ‘Refresh’.
 
 While migration is underway, operation is not permitted.
 An abnormal closure of database instance migration shall be automatically reported to administrator, and it such case, you’ll be contacted by NHN Cloud.
+
+### 부록2. RDS를 이용하여 Federated Engine 사용하는 구성 시 가이드
+
+Federated engine을 사용하는 경우 다음을 고려해야 합니다.
+
+#### Local node로 RDS를 사용하는 구성 시
+
+* remote node로의 송신을 허용하는 설정이 필요합니다.
+  * 인스턴스 상세 설정의 백업 & Access 제어 탭에서 설정이 가능합니다.
+  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
+* 만약 Local node 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우, db configuration의 replicate-ignore-table에 federated 설정 된 테이블을 명시하여야 합니다.
+  * Read Only Slave를 구성하게 될 경우, federated table 또한 복제되어 Master와 Read Only Slave가 remote node를 함께 바라보게 됩니다.
+  * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 remote node에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 duplicated key 에러 등으로 인한 복제 중단이 발생할 수 있습니다.
+  * Read Only Slave가 federated table은 복제하지 않도록 replicate-ignore-table 에 설정이 필요합니다.
+  * 인스턴스 상세 설정의 DB Configuration 탭에서 설정이 가능합니다.
+
+#### Remote node로 RDS를 사용하는 구성 시
+
+* local node에서의 수신을 허용하는 설정이 필요합니다.
+  * 인스턴스 상세 설정의 백업 & Access 제어 탭에서 설정이 가능합니다.
+  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
