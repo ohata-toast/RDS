@@ -356,7 +356,7 @@ mysql> CALL mysql.tcrds_repl_slave_start();
 * MySQL error code 1062: 'Duplicate entry ? for key ?'
 
 ```
-mysql> CALL mysql. tcrds_repl_skip_repl_error();
+mysql> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
 ### tcrds_repl_next_changemaster
