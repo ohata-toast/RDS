@@ -659,23 +659,23 @@ If instance status remains the same, try 'Refresh'.
 While migration is underway, operation is not permitted.
 An abnormal closure of DB instance migration shall be automatically reported to administrator, and it such case, you'll be contacted by NHN Cloud.
 
-### 부록2. RDS를 이용하여 Federated Storage Engine 사용 시 구성 가이드
+### Appendix 2. Configuration guide for using Federated Storage Engine with RDS
 
-Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다.
+When using Federated Storage Engine, make sure you consider the following.
 
-#### 로컬 노드로써 RDS를 이용하는 구성의 경우
+#### For configuration using RDS as a local node
 
-* 리모트 노드로의 송신을 허용하는 설정이 필요합니다.
-  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
-  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
-* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우, DB Configuration의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
-  * Read Only Slave를 구성하게 될 경우, federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
-  * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 에러 등으로 인한 복제 중단이 발생할 수 있습니다.
-  * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table 에 설정이 필요합니다.
-  * 인스턴스 상세 설정의 DB Configuration 탭에서 설정이 가능합니다.
+* Make sure you need to allow the outbound direction to remote nodes.
+  * It can be set in the **Backup and Access Control** tab of the DB instance detailed configuration.
+  * Please refer to ‘User Access Control’ in ‘#Getting Started’.
+* When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of DB Configuration.
+  * When configuring Read Only Slave, the federated table is also replicated so that Master and Read Only Slave look at the remote nodes together.
+  * In this case, the data input performed in Master is performed in the remote nodes according to the federated settings, and the same input is also performed in Read Only Slave, so replication may be suspended due to a duplicate key error, etc.
+  * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
+  * It can be set in the DB Configuration tab of the DB instance detailed configuration.
 
-#### 리모트 노드로써 RDS를 이용하는 구성의 경우
+#### For configuration using RDS as a remote node
 
-* 로컬 노드에서의 수신을 허용하는 설정이 필요합니다.
-  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
-  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
+* Make sure you need to allow the inbound direction to local nodes.
+  * It can be set in the **Backup and Access Control** tab of the DB instance detailed configuration.
+  * Please refer to 'User Access Control' in '#Getting Started'.
