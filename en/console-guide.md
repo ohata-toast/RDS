@@ -405,7 +405,7 @@ The event subscription status can be checked.
 
 ## Server Dashboard
 
-![server_dashboard_0_en](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_0_en.png)
+![server_dashboard_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_1_en.png)
 
 Various performance indicators can be checked in charts.
 
@@ -422,14 +422,34 @@ Various performance indicators can be checked in charts.
 * ❽ The search period can be modified.
 * ❾ The chart is displayed.
 
+### Add Layout
+
+![server_dashboard_layout_create_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_create_1_en.png)
+
+* ❶ Click the **Create Layout** button.
+* ❷ Enter the layout name.
+
+### Modify and Delete Layout
+
+![server_dashboard_layout_modify_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_1_en.png)
+
+* ❶ Click the **Manage** button.
+* ❷ Changes to the edit screen where the layout can be modified.
+* ❸ The layout can be deleted
+
+![server_dashboard_layout_modify_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_2_en.png)
+
+* ❶ Click the **OK** button to save the modifications.
+* ❷ Click the **Cancel** button to cancel the modifications.
+
 ### Add Chart
 
-![server_dashboard_chart_add_1_en](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_1_en.png)
+![server_dashboard_chart_add_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_1_en.png)
 
 * ❶ First, select the desired layout to add a chart.
 * ❷ Click the **Add Chart** button and a popup is displayed to **add the chart** as shown below.
 
-![server_dashboard_chart_add_2_en](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_2_en.png)
+![server_dashboard_chart_add_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_2_en.png)
 
 * ❶ The chart to be added is displayed.
 * ❷ Select the desired chart to add.
@@ -442,25 +462,48 @@ Various performance indicators can be checked in charts.
 * ❷ The chart can be deleted.
 * ❸ Change the chart size by dragging the lower right corner of the chart with the mouse.
 
-### Add Layout
+### 그룹 추가
 
-![server_dashboard_layout_create_0_en](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_create_0_en.png)
+![server_dashboard_chart_group_add_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_1_en.png)
 
-* ❶ Click the **Create Layout** button.
-* ❷ Enter the layout name.
+* ❶ 그룹을 추가하기 위해 원하는 레이아웃을 먼저 선택합니다.
+* ❷ **그룹 추가** 버튼을 클릭하면 아래와 같이 **그룹 추가** 창이 나타납니다.
 
-### Modify and Delete Layout
+![server_dashboard_chart_group_add_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_2_en.png)
 
-![server_dashboard_layout_modify_0_en](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_0_en.png)
+* ❶ 그룹 이름을 입력합니다.
+* ❷ 차트에 표기할 조회 대상 인스턴스를 선택합니다.
 
-* ❶ Click the **Manage** button.
-* ❷ Changes to the edit screen where the layout can be modified.
-* ❸ The layout can be deleted
+### 그룹 수정 및 삭제
 
-![server_dashboard_layout_modify_1_en](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_1_en.png)
+![server_dashboard_chart_group_modify_delete_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_1_en.png)
 
-* ❶ Click the **OK** button to save the modifications.
-* ❷ Click the **Cancel** button to cancel the modifications.
+* ❶ 수정할 그룹의 **케밥 메뉴** 버튼을 클릭하면 아래와 같이 드롭다운 메뉴가 나타납니다.
+* ❷ **편집** 버튼을 클릭하면 **그룹 편집** 창이 나타납니다.
+* ❸ **삭제** 버튼을 클릭하면 그룹을 삭제할 수 있습니다.
+
+![server_dashboard_chart_group_modify_delete_2_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_en.png)
+
+* ❶ 수정하려는 항목을 수정한 후 확인 버튼을 클릭합니다.
+
+### 그룹 차트 추가
+
+![server_dashboard_chart_group_add_chart_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_chart_1_en.png)
+
+* ❶ 추가하고자 하는 차트를 체크박스로 여러 개를 선택해서 추가할 수 있습니다.
+* ❷ 텍스트 영역을 클릭 시 추가하고자 하는 차트를 미리 볼 수 있습니다.
+
+### 그룹 차트 라인 색상 변경
+
+![server_dashboard_chart_group_modify_series_color_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_series_color_1_en.png)
+
+* ❶ 색상을 변경하려는 서버를 목록에서 클릭하면 색상 변경 창이 나타납니다.
+* ❷ 상단 색상표에서 원하는 색상을 클릭해서 변경할 수 있습니다.
+  * 기본 색상은 해당 색상표에 나타나는 순서대로 지정됩니다.
+* ❸ 색상 코드를 직접 입력해서 변경할 수 있습니다.
+  * 색상 코드를 직접 입력 시에는 색상 코드 3자리 혹은 6자리 코드를 지원합니다.
+  * 예) #000 혹은 #000000
+* ❹ 색상 선택기에서 원하는 색상을 선택해서 변경할 수 있습니다.
 
 ## User Group
 
