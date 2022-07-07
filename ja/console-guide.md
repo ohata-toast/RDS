@@ -672,23 +672,23 @@ DBインスタンスの状態が変更されない場合は「更新」を行っ
 DBインスタンスのマイグレーション中は何も操作ができません。
 DBインスタンスのマイグレーションが正常に完了しなかった場合、自動的に管理者に報告され、NHN Cloudから別途連絡いたします。
 
-### 부록2. RDS를 이용하여 Federated Storage Engine 사용 시 구성 가이드
+### 付録2. RDSを利用してFederated Storage Engine使用するときの構成ガイド
 
-Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다.
+Federated Storage Engineを使用する場合、次を考慮する必要があります。
 
-#### 로컬 노드로써 RDS를 이용하는 구성의 경우
+#### ローカルノードとしてRDSを利用する構成の場合
 
-* 리모트 노드로의 송신을 허용하는 설정이 필요합니다.
-  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
-  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
-* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우, DB Configuration의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
-  * Read Only Slave를 구성하게 될 경우, federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
-  * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 에러 등으로 인한 복제 중단이 발생할 수 있습니다.
-  * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table 에 설정이 필요합니다.
-  * 인스턴스 상세 설정의 DB Configuration 탭에서 설정이 가능합니다.
+* リモートノードへの送信を許可する設定が必要です。
+  * インスタンス詳細設定の**バックアップ& Access制御** タブで設定が可能です。
+  * 「#簡単に始める」の「ユーザーアクセス制御」を参照してください。
+* ローカルノード役割のRDSにRead Only Slaveを追加した構成で使用する場合は、 DB Configurationのreplicate-ignore-tableにfederated設定されたテーブル名を指定する必要があります。
+  * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
+  * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
+  * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
+  * インスタンス詳細設定のDB Configurationタブで設定できます。
 
-#### 리모트 노드로써 RDS를 이용하는 구성의 경우
+#### リモートノードとしてRDSを利用する構成の場合
 
-* 로컬 노드에서의 수신을 허용하는 설정이 필요합니다.
-  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
-  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
+* ローカルノードでの受信を許可する設定が必要です。
+  * インスタンス詳細設定の**バックアップ& Access制御**タブで設定できます。
+  * 「#簡単に始める」の「ユーザーアクセス制御」を参照してください。
