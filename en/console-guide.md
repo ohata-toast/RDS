@@ -418,9 +418,12 @@ Various performance indicators can be checked in charts.
 * ❹ Modify or delete the layout.
 * ❺ The **Create Layout** window is displayed.
 * ❻ Add a chart to the layout.
-* ❼ The chart is updated after setting the search period to the current time.
-* ❽ The search period can be modified.
-* ❾ The chart is displayed.
+* ❼ 레이아웃에 여러 대의 서버를 비교해 볼 수 있는 그룹을 추가할 수 있습니다.
+    * 그룹 차트는 서버 간 데이터 비교를 위해 라인 차트로 통일됩니다.
+    * 그룹 차트는 기존에 저장된 차트 정보를 공유하지 않기 때문에 차트를 별도로 추가해 주셔야 합니다.
+* ❽ The chart is updated after setting the search period to the current time.
+* ❾ The search period can be modified.
+* ➓ The chart is displayed.
 
 ### Add Layout
 
@@ -478,7 +481,7 @@ Various performance indicators can be checked in charts.
 
 ![server_dashboard_chart_group_modify_delete_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_1_en.png)
 
-* ❶ 수정할 그룹의 **케밥 메뉴** 버튼을 클릭하면 아래와 같이 드롭다운 메뉴가 나타납니다.
+* ❶ 수정할 그룹의 **더보기 메뉴** 버튼을 클릭하면 아래와 같이 드롭다운 메뉴가 나타납니다.
 * ❷ **편집** 버튼을 클릭하면 **그룹 편집** 창이 나타납니다.
 * ❸ **삭제** 버튼을 클릭하면 그룹을 삭제할 수 있습니다.
 
@@ -499,11 +502,11 @@ Various performance indicators can be checked in charts.
 
 * ❶ 색상을 변경하려는 서버를 목록에서 클릭하면 색상 변경 창이 나타납니다.
 * ❷ 상단 색상표에서 원하는 색상을 클릭해서 변경할 수 있습니다.
-  * 기본 색상은 해당 색상표에 나타나는 순서대로 지정됩니다.
+    * 기본 색상은 해당 색상표에 나타나는 순서대로 지정됩니다.
 * ❸ 색상 코드를 직접 입력해서 변경할 수 있습니다.
-  * 색상 코드를 직접 입력 시에는 색상 코드 3자리 혹은 6자리 코드를 지원합니다.
-  * 예) #000 혹은 #000000
-* ❹ 색상 선택기에서 원하는 색상을 선택해서 변경할 수 있습니다.
+    * 직접 입력 시에는 3자리 또는 6자리 색상 코드를 지원합니다.
+    * 예) #000 또는 #000000
+* ❹ 색상 선택기에서 원하는 색상을 선택하여 변경할 수 있습니다.
 
 ## User Group
 
@@ -564,7 +567,7 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ![notification_group_modify_1_en](https://static.toastoven.net/prod_rds/22.03.15/notification_group_modify_1_en.png)
 
-* ❷  After modifications, click the **OK** button.
+* ❷ After modifications, click the **OK** button.
 
 ### Delete Notification Group
 
