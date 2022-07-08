@@ -405,7 +405,7 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 ## 서버 대시보드
 
-![server_dashboard_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_0_ko.png)
+![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_1_ko.png)
 
 각종 성능 지표를 차트 형태로 확인할 수 있습니다.
 
@@ -418,21 +418,44 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 * ❹ 레이아웃을 수정하거나 삭제할 수 있습니다.
 * ❺ **레이아웃 만들기** 창이 나타납니다.
 * ❻ 레이아웃에 차트를 추가할 수 있습니다.
-* ❼ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
-* ❽ 조회 기간을 변경할 수 있습니다.
-* ❾ 차트가 표시됩니다.
+* ❼ 레이아웃에 여러 대의 서버를 비교해 볼 수 있는 그룹을 추가할 수 있습니다.
+    * 그룹 차트는 서버 간 데이터 비교를 위해 라인 차트로 통일됩니다.
+    * 그룹 차트는 기존에 저장된 차트 정보를 공유하지 않기 때문에 차트를 별도로 추가해 주셔야 합니다.
+* ❽ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
+* ❾ 조회 기간을 변경할 수 있습니다.
+* ➓ 차트가 표시됩니다. 
+
+### 레이아웃 추가
+
+![server_dashboard_layout_create_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_create_1_ko.png)
+
+* ❶ **레이아웃 만들기** 버튼을 클릭합니다.
+* ❷ 레이아웃 이름을 입력합니다.
+
+### 레이아웃 수정 및 삭제
+
+![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_1_ko.png)
+
+* ❶ **관리** 버튼을 클릭합니다.
+* ❷ 해당 레이아웃을 수정할 수 있는 편집 화면으로 변경됩니다.
+* ❸ 해당 레이아웃을 삭제할 수 있습니다.
+
+![server_dashboard_layout_modify_2_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_2_ko.png)
+
+* ❶ **확인** 버튼을 클릭하면 변경 사항이 저장됩니다.
+* ❷ **취소** 버튼을 클릭하면 변경 사항이 취소됩니다.
 
 ### 차트 추가
 
-![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
+![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_1_ko.png)
 
-* ❶ 차트를 추가하기 원하는 레이아웃을 먼저 선택합니다.
+* ❶ 차트를 추가하기 위해 원하는 레이아웃을 먼저 선택합니다.
 * ❷ **차트 추가** 버튼을 클릭하면 아래와 같이 **차트 추가** 창이 나타납니다.
 
-![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
+![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_2_ko.png)
 
-* ❶ 추가할 차트가 표시됩니다.
-* ❷ 추가하고자 하는 차트를 선택할 수 있습니다.
+* ❶ 추가하고자 하는 차트를 체크박스로 여러 개를 선택해서 추가할 수 있습니다.
+* ❷ 텍스트 영역을 클릭 시 추가하고자 하는 차트를 미리 볼 수 있습니다.
 
 ### 차트 수정
 
@@ -442,25 +465,48 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 * ❷ 차트를 삭제할 수 있습니다.
 * ❸ 차트 우측 하단을 마우스로 드래그하여 차트의 크기를 변경할 수 있습니다.
 
-### 레이아웃 추가
+### 그룹 추가
 
-![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
+![server_dashboard_chart_group_add_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_1_ko.png)
 
-* ❶ **레이아웃 만들기** 버튼을 클릭합니다.
-* ❷ 레이아웃 이름을 입력합니다.
+* ❶ 그룹을 추가하기 위해 원하는 레이아웃을 먼저 선택합니다.
+* ❷ **그룹 추가** 버튼을 클릭하면 아래와 같이 **그룹 추가** 창이 나타납니다.
+  
+![server_dashboard_chart_group_add_2_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_2_ko.png)
 
-### 레이아웃 수정 및 삭제
+* ❶ 그룹 이름을 입력합니다.
+* ❷ 차트에 표기할 조회 대상 인스턴스를 선택합니다.
 
-![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
+### 그룹 수정 및 삭제
 
-* ❶ **관리** 버튼을 클릭합니다.
-* ❷ 해당 레이아웃을 수정할 수 있는 편집 화면으로 변경됩니다.
-* ❸ 해당 레이아웃을 삭제할 수 있습니다.
+![server_dashboard_chart_group_modify_delete_1_ko.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_1_ko.png)
 
-![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
+* ❶ 수정 혹은 삭제할 그룹의 **더보기 메뉴** 버튼을 클릭하면 드롭다운 메뉴가 나타납니다.
+* ❷ **편집** 버튼을 클릭하면 **그룹 편집** 창이 나타납니다.
+* ❸ **삭제** 버튼을 클릭하면 그룹을 삭제할 수 있습니다.
+  
+![server_dashboard_chart_group_modify_delete_2_ko.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_ko.png)
 
-* ❶ **확인** 버튼을 클릭하면 변경 사항이 저장됩니다.
-* ❷ **취소** 버튼을 클릭하면 변경 사항이 취소됩니다.
+* ❶ 수정하려는 항목을 수정한 후 확인 버튼을 클릭합니다.
+
+### 그룹 차트 추가
+
+![server_dashboard_chart_group_add_chart_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_chart_1_ko.png)
+
+* ❶ 추가하고자 하는 차트를 체크박스로 여러 개를 선택해서 추가할 수 있습니다.
+* ❷ 텍스트 영역을 클릭 시 추가하고자 하는 차트를 미리 볼 수 있습니다.
+
+### 그룹 차트 라인 색상 변경
+
+![server_dashboard_chart_group_modify_series_color_1_ko.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_series_color_1_ko.png)
+
+* ❶ 색상을 변경하려는 서버를 목록에서 클릭하면 색상 변경 창이 나타납니다.
+* ❷ 상단 색상표에서 원하는 색상을 클릭해서 변경할 수 있습니다.
+    * 기본 색상은 해당 색상표에 나타나는 순서대로 지정됩니다.
+* ❸ 색상 코드를 직접 입력해서 변경할 수 있습니다.
+    * 직접 입력 시에는 3자리 또는 6자리 색상 코드를 지원합니다.
+    * 예) #000 또는 #000000
+* ❹ 색상 선택기에서 원하는 색상을 선택하여 변경할 수 있습니다.
 
 ## 사용자 그룹
 
