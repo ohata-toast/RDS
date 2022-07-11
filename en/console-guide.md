@@ -476,6 +476,7 @@ Various performance indicators can be checked in charts.
 
 * ❶ Enter the group name.
 * ❷ Select the instance to be viewed on the chart.
+    * 조회 대상 인스턴스는 10개까지만 등록할 수 있습니다.
 
 ### Modify and Delete Group
 

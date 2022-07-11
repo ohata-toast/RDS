@@ -471,11 +471,12 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 * ❶ 그룹을 추가하기 위해 원하는 레이아웃을 먼저 선택합니다.
 * ❷ **그룹 추가** 버튼을 클릭하면 아래와 같이 **그룹 추가** 창이 나타납니다.
-  
+
 ![server_dashboard_chart_group_add_2_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_2_ko.png)
 
 * ❶ 그룹 이름을 입력합니다.
 * ❷ 차트에 표기할 조회 대상 인스턴스를 선택합니다.
+    * 조회 대상 인스턴스는 10개까지만 등록할 수 있습니다.
 
 ### 그룹 수정 및 삭제
 
