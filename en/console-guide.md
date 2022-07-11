@@ -487,7 +487,7 @@ Various performance indicators can be checked in charts.
   
 ![server_dashboard_chart_group_modify_delete_2_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_en.png)
 
-* ❷  After modifications, click the OK button.
+* ❶ After modifications, click the OK button.
 
 ### Add Group Chart
 
