@@ -418,9 +418,9 @@ Various performance indicators can be checked in charts.
 * ❹ Modify or delete the layout.
 * ❺ The **Create Layout** window is displayed.
 * ❻ Add a chart to the layout.
-* ❼ 레이아웃에 여러 대의 서버를 비교해 볼 수 있는 그룹을 추가할 수 있습니다.
-    * 그룹 차트는 서버 간 데이터 비교를 위해 라인 차트로 통일됩니다.
-    * 그룹 차트는 기존에 저장된 차트 정보를 공유하지 않기 때문에 차트를 별도로 추가해 주셔야 합니다.
+* ❼ Add a group to compare multiple servers to the layout.
+    * Group charts are unified as line charts for data comparison between servers.
+    * Make sure you add group charts separately because they do not share the existing chart information previously saved.
 * ❽ The chart is updated after setting the search period to the current time.
 * ❾ The search period can be modified.
 * ➓ The chart is displayed.
@@ -438,7 +438,7 @@ Various performance indicators can be checked in charts.
 
 * ❶ Click the **Manage** button.
 * ❷ Changes to the edit screen where the layout can be modified.
-* ❸ The layout can be deleted
+* ❸ The layout can be deleted.
 
 ![server_dashboard_layout_modify_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_2_en.png)
 
@@ -465,48 +465,48 @@ Various performance indicators can be checked in charts.
 * ❷ The chart can be deleted.
 * ❸ Change the chart size by dragging the lower right corner of the chart with the mouse.
 
-### 그룹 추가
+### Add Group
 
 ![server_dashboard_chart_group_add_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_1_en.png)
 
-* ❶ 그룹을 추가하기 위해 원하는 레이아웃을 먼저 선택합니다.
-* ❷ **그룹 추가** 버튼을 클릭하면 아래와 같이 **그룹 추가** 창이 나타납니다.
+* ❶ First, select the desired layout to add a group.
+* ❷ Click the **Add Group** button and a popup is displayed to **add the group** as shown below.
 
 ![server_dashboard_chart_group_add_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_2_en.png)
 
-* ❶ 그룹 이름을 입력합니다.
-* ❷ 차트에 표기할 조회 대상 인스턴스를 선택합니다.
+* ❶ Enter the group name.
+* ❷ Select the instance to be viewed on the chart.
 
-### 그룹 수정 및 삭제
+### Modify and Delete Group
 
 ![server_dashboard_chart_group_modify_delete_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_1_en.png)
 
-* ❶ 수정할 그룹의 **더보기 메뉴** 버튼을 클릭하면 아래와 같이 드롭다운 메뉴가 나타납니다.
-* ❷ **편집** 버튼을 클릭하면 **그룹 편집** 창이 나타납니다.
-* ❸ **삭제** 버튼을 클릭하면 그룹을 삭제할 수 있습니다.
-
+* ❶ Click **View More** of the group to modify or delete, a drop-down menu is displayed.
+* ❷ Click **Edit**, the**Modify Group** window is displayed.
+* ❸ Click **Delete** to delete a group.
+  
 ![server_dashboard_chart_group_modify_delete_2_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_en.png)
 
-* ❶ 수정하려는 항목을 수정한 후 확인 버튼을 클릭합니다.
+* ❷  After modifications, click the OK button.
 
-### 그룹 차트 추가
+### Add Group Chart
 
 ![server_dashboard_chart_group_add_chart_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_chart_1_en.png)
 
-* ❶ 추가하고자 하는 차트를 체크박스로 여러 개를 선택해서 추가할 수 있습니다.
-* ❷ 텍스트 영역을 클릭 시 추가하고자 하는 차트를 미리 볼 수 있습니다.
+* ❶ Add multiple charts by selecting them with the checkbox.
+* ❷ Preview the chart you want to add by clicking the text area.
 
-### 그룹 차트 라인 색상 변경
+### Change Group Chart Line Color
 
 ![server_dashboard_chart_group_modify_series_color_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_series_color_1_en.png)
 
-* ❶ 색상을 변경하려는 서버를 목록에서 클릭하면 색상 변경 창이 나타납니다.
-* ❷ 상단 색상표에서 원하는 색상을 클릭해서 변경할 수 있습니다.
-    * 기본 색상은 해당 색상표에 나타나는 순서대로 지정됩니다.
-* ❸ 색상 코드를 직접 입력해서 변경할 수 있습니다.
-    * 직접 입력 시에는 3자리 또는 6자리 색상 코드를 지원합니다.
-    * 예) #000 또는 #000000
-* ❹ 색상 선택기에서 원하는 색상을 선택하여 변경할 수 있습니다.
+* ❶ Click the server whose color you want to change from the list, the color change window is displayed.
+* ❷ Change the color by clicking the color you want in the color palette at the top.
+    * Default colors are specified in the order of the color palette.
+* ❸ Change the color by manually entering the color code.
+    * 3-digit or 6-digit color codes are supported for manual input.
+    * Example) #000 or #000000
+* ❹ Change the color by selecting the color you want from the color picker.
 
 ## User Group
 
