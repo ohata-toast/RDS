@@ -421,9 +421,9 @@ Various performance indicators can be checked in charts.
 * ❼ Add a group to compare multiple servers to the layout.
     * Group charts are unified as line charts for data comparison between servers.
     * Make sure you add group charts separately because they do not share the existing chart information previously saved.
-* ❽ The chart is updated after setting the retrieval period to the current time.
-* ❾ The search period can be modified
-* ➓ The chart is displayed 
+* ❽ The chart is updated after setting the search period to the current time.
+* ❾ The search period can be modified.
+* ➓ The chart is displayed.
 
 ### Add Layout
 
@@ -438,7 +438,7 @@ Various performance indicators can be checked in charts.
 
 * ❶ Click the **Manage** button.
 * ❷ Changes to the edit screen where the layout can be modified.
-* ❸ The layout can be deleted
+* ❸ The layout can be deleted.
 
 ![server_dashboard_layout_modify_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_2_en.png)
 
@@ -501,7 +501,7 @@ Various performance indicators can be checked in charts.
 ![server_dashboard_chart_group_modify_series_color_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_series_color_1_en.png)
 
 * ❶ Click the server whose color you want to change from the list, the color change window is displayed.
-* ❷ Change the color by clicking the color you want in the color palette at the top
+* ❷ Change the color by clicking the color you want in the color palette at the top.
     * Default colors are specified in the order of the color palette.
 * ❸ Change the color by manually entering the color code.
     * 3-digit or 6-digit color codes are supported for manual input.
