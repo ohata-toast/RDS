@@ -1,5 +1,21 @@
 ## Database > RDS for MySQL > Release Notes
 
+### July 12, 2022
+
+#### Added Features
+
+* Added a feature to view charts by grouping them per server on Server Dashboard
+
+#### Feature Updates
+
+* Made modifications so that the DB Configuration of a read replica in a **replication stopped** status can be changed
+
+#### Bug Fixes
+
+* Fixed an issue where DB instances in a **connection failed** status are displayed as **normal** intermittently
+* Fixed an issue where, when creating a read replica, backup execution is left in event logs even if the execution is not performed
+* Fixed an issue where volume scaling fails intermittently
+
 ### June 14, 2022
 
 #### Feature Updates

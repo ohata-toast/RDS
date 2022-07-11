@@ -344,62 +344,108 @@ The event subscription status can be checked..
 
 ## Server Dashboard
 
-![server_dashboard_0_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_0_zh.png)
+![server_dashboard_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_1_en.png)
 
 Various performance indicators can be checked in charts.
 
-* ❶ * Search by instance name or IP address.
-* ❷ Servers that meet the criteria are displayed. The color of the icon in the upper right corner changes depending on the server status.
+* ❶ Search by the instance name or IP address.
+* ❷ Servers that meet the criteria are displayed. The color of the icon on the right changes depending on the server status.
     * Green: Normal
     * Red: Error
-    * Gray: Server deleted
+    * Gray: Deleted server
 * ❸ Select the layout.
 * ❹ Modify or delete the layout.
-* ❺ Popup that **generates the layout** is displayed.
-* ❻ Add chart in layout.
-* ❼ Chart is updated after setting the search period to the current time.
-* ❽ The search period can be modified.
-* ❾ The chart is displayed.
-
-### Add Chart
-
-![server_dashboard_chart_add_1_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_1_zh.png)
-
-* ❶ First, select the desired layout to add a chart.
-* ❷ Click the **Add Chart** button and a popup is displayed to **add the chart** as shown below.
-
-![server_dashboard_chart_add_2_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_2_zh.png)
-
-* ❶ The chart to be added is displayed.
-* ❷ Select the desired chart to add.
-
-### Modify Chart
-
-![server_dashboard_1_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_1_zh.png)
-
-* ❶ *Move the chart by dragging the top area of the chart with the mouse.
-* ❷ The chart can be deleted.
-* ❸ Change the chart size by dragging the lower right corner of the chart with the mouse.
+* ❺ The **Create Layout** window is displayed.
+* ❻ Add a chart to the layout.
+* ❼ Add a group to compare multiple servers to the layout.
+    * Group charts are unified as line charts for data comparison between servers.
+    * Make sure you add group charts separately because they do not share the existing chart information previously saved.
+* ❽ The chart is updated after setting the search period to the current time.
+* ❾ The search period can be modified.
+* ➓ The chart is displayed.
 
 ### Add Layout
 
-![server_dashboard_layout_create_0_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_create_0_zh.png)
+![server_dashboard_layout_create_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_create_1_en.png)
 
 * ❶ Click the **Create Layout** button.
 * ❷ Enter the layout name.
 
 ### Modify and Delete Layout
 
-![server_dashboard_layout_modify_0_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_0_zh.png)
+![server_dashboard_layout_modify_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_1_en.png)
 
 * ❶ Click the **Manage** button.
 * ❷ Changes to the edit screen where the layout can be modified.
-* ❸ The layout can be deleted
+* ❸ The layout can be deleted.
 
-![server_dashboard_layout_modify_1_zh](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_1_zh.png)
+![server_dashboard_layout_modify_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_2_en.png)
 
 * ❶ Click the **OK** button to save the modifications.
 * ❷ Click the **Cancel** button to cancel the modifications.
+
+### Add Chart
+
+![server_dashboard_chart_add_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_1_en.png)
+
+* ❶ First, select the desired layout to add a chart.
+* ❷ Click the **Add Chart** button and a popup is displayed to **add the chart** as shown below.
+
+![server_dashboard_chart_add_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_2_en.png)
+
+* ❶ The chart to be added is displayed.
+* ❷ Select the desired chart to add.
+
+### Modify Chart
+
+![server_dashboard_1_en](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_1_en.png)
+
+* ❶ Move the chart by dragging the top area of the chart with the mouse.
+* ❷ The chart can be deleted.
+* ❸ Change the chart size by dragging the lower right corner of the chart with the mouse.
+
+### Add Group
+
+![server_dashboard_chart_group_add_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_1_en.png)
+
+* ❶ First, select the desired layout to add a group.
+* ❷ Click the **Add Group** button and a popup is displayed to **add the group** as shown below.
+
+![server_dashboard_chart_group_add_2_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_2_en.png)
+
+* ❶ Enter the group name.
+* ❷ Select the instance to be viewed on the chart.
+
+### Modify and Delete Group
+
+![server_dashboard_chart_group_modify_delete_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_1_en.png)
+
+* ❶ Click **View More** of the group to modify or delete, a drop-down menu is displayed.
+* ❷ Click **Edit**, the**Modify Group** window is displayed.
+* ❸ Click **Delete** to delete a group.
+
+![server_dashboard_chart_group_modify_delete_2_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_en.png)
+
+* ❶ After modifications, click the OK button.
+
+### Add Group Chart
+
+![server_dashboard_chart_group_add_chart_1_en](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_chart_1_en.png)
+
+* ❶ Add multiple charts by selecting them with the checkbox.
+* ❷ Preview the chart you want to add by clicking the text area.
+
+### Change Group Chart Line Color
+
+![server_dashboard_chart_group_modify_series_color_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_series_color_1_en.png)
+
+* ❶ Click the server whose color you want to change from the list, the color change window is displayed.
+* ❷ Change the color by clicking the color you want in the color palette at the top.
+    * Default colors are specified in the order of the color palette.
+* ❸ Change the color by manually entering the color code.
+    * 3-digit or 6-digit color codes are supported for manual input.
+    * Example) #000 or #000000
+* ❹ Change the color by selecting the color you want from the color picker.
 
 ## User Group
 
@@ -456,11 +502,11 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ![notification_group_modify_0_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_modify_0_zh.png)
 
-* ❶ 수Click the **Edit** button of the notification group to be modified.
+* ❶ Click the **Edit** button of the notification group to be modified.
 
 ![notification_group_modify_1_zh](https://static.toastoven.net/prod_rds/22.03.15/notification_group_modify_1_zh.png)
 
-* ❷  After modifications, click the **OK** button.
+* ❷ After modifications, click the **OK** button.
 
 ### Delete Notification Group
 
@@ -503,63 +549,64 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ## Processlist
 
-### 기본 데이터 조회
+### Basic Data Retrieval
 
 ![processlist_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_0_ko.png)
 
-DB에서 수집된 프로세스 리스트와 InnoDB 상태를 차트와 표 형태로 확인할 수 있습니다.
-차트에서는 시간대별로 수집된 개수를 나타내며 표에서 상세정보를 확인할 수 있습니다.
+You can view the process list and InnoDB status collected from the DB in the form of chart and table.
+The chart shows the count of items collected over time, and you can check the details in the table.
 
-* ❶ 인스턴스 이름 혹은 IP 주소로 검색할 수 있습니다.
-* ❷ 조건에 맞는 서버가 표시됩니다. 서버의 상태에 따라 우측의 아이콘 색상이 변경됩니다.
-    * 초록색: 정상 상태
-    * 빨간색: 에러 상태
-    * 회색: 삭제된 서버
-* ❸ Process List와 InnoDB Status 정보를 탭으로 선택해서 조회합니다.
-* ❹ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
-* ❺ 조회 기간을 변경할 수 있습니다.
-    * 조회 기간은 최대 1시간 이내로 설정해야 합니다.
-* ❻ 검색 키워드를 입력해 조회 기간 내의 데이터를 검색합니다.
-* ❼ 한 페이지내에 조회할 데이터 개수를 지정합니다. (기본값: 20개)
-* ❽ **CSV 저장** 버튼을 클릭하면 전체 조회 데이터를 CSV 파일 형식으로 저장합니다.
-* ❾ 수집된 프로세스 리스트 정보를 최신순으로 정렬하여 출력합니다.
-* ➓ **상세보기** 버튼을 클릭하면 해당하는 줄의 상세정보를 확인할 수 있습니다.
-* ⓫ **보기** 버튼을 클릭하면 해당하는 시간의 InnoDB Status 정보를 확인할 수 있습니다.
+* ❶ Search by the instance name or IP address.
+* ❷ Servers that meet the criteria are displayed. The color of the icon on the right changes depending on the server status.
+  * Green: Normal
+  * Red: Error
+  * Gray: Deleted server
+* ❸ Select the Process List or InnoDB Status tab to retrieve the information.
+* ❹ The chart is updated after setting the retrieval period to the current time.
+* ❺ The retrieval period can be modified.
+  * The retrieval period must be set within the range of 1 hour.
+* ❻ Enter search keywords to search for data within the retrieval period.
+* ❼ Set the number of data to retrieve in one page (default: 20).
+* ❽ Click **Save CSV** to save all the retrieved data in CSV file format.
+* ❾ The collected process list information is displayed after being sorted in descending order of time.
+* ➓ Click **Show Details** to check the details for the line.
+* ⓫ Click **View** to check the InnoDB Status information for the time.
 
-### 키워드 검색
+### Keyword Search
 
 ![processlist_search_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_search_0_ko.png)
 
-* ❶ 검색 키워드를 입력해 데이터 필드 전체를 탐색합니다.
-    * 검색 키워드는 대소문자를 구분하지 않으며 띄어쓰기로 여러 키워드를 구분해서 입력할 수 있습니다.
-    * 문장 검색이 필요한 경우 따옴표("",'')로 감싸서 입력합니다.
-        * 예시) "for semi-sync" slave
-* ❷ 검색 기간은 최신순으로 자동 설정되며 10분 단위로 조회하거나 수집된 데이터가 많은 경우 1,000건 이상 되는 시점으로 제한해서 제한된 단위로 조회합니다.
-* ❸ **추가검색** 버튼을 클릭하면 위와 동일한 단위로 추가 조회합니다.
-* ❹ **초기화** 버튼을 클릭하면 입력된 검색 키워드, 검색 기간 등이 모두 초기화 됩니다.
-* ❺ **CSV 저장** 버튼을 클릭하면 자동 설정된 검색 기간과 상관없이 전체 기간을 조회해서 저장합니다.
+* ❶ Enter search keywords to browse through the data fields.
+  * Search keywords are not case-sensitive, and multiple keywords can be entered by separating them with a space.
+  * If you need to search for a phrase, enclose it in quotation marks ("",'').
+    * Example: "for semi-sync" slave
+* ❷ The search period is automatically set in the order of the most recent time. The period is set in the unit of 10 minutes, or if there is a lot of collected data, set in a limited unit by limiting to the point in time with more than 1,000 items.
+* ❸ Click **Search More** to retrieve additional data with the same unit as above.
+* ❹ Click **Reset** to reset all entered search keywords and search period.
+* ❺ If you click **Save CSV**, the retrieved result for the entire period is saved regardless of the automatically set search period.
 
-### 차트 조회 범위 설정
+### Chart Retrieval Range Setting
 
 ![processlist_zoom_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_0_ko.png)
 
-* ❶ 차트를 드래그해서 조회 범위를 설정할 수 있습니다.
+* ❶ You can set the retrieval range by dragging the chart.
 
 ![processlist_zoom_1_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_1_ko.png)
 
-* ❶ 확대 상태를 초기화 할 수 있습니다.
-* ❷ 확대된 상태에서 검색시 확대 범위 내에서만 검색합니다.
-* ❸ **CSV 저장** 버튼을 클릭하면 확대 범위 내 전체 데이터를 저장합니다.
+* ❶ You can reset the zoom state.
+* ❷ When searching in a zoomed-in state, the search is performed only in the zoomed-in range.
+* ❸ Click **Save CSV** to save all data in the zoomed-in range.
 
-### 차트 시점 조회
+### Chart Point-in-Time Retrieval
 
 ![processlist_select_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_select_0_ko.png)
 
-* ❶ 차트 데이터를 선택하면 해당 시점의 데이터만 조회합니다.
-* ❷ 차트 데이터가 선택된 상태에서 검색시 선택된 시점 내에서만 검색합니다.
-* ❸ **CSV 저장** 버튼을 클릭하면 선택된 시점 내 전체 데이터를 저장합니다.
+* ❶ If you select chart data, only the data at that point in time is retrieved.
+* ❷ When searching with chart data selected, the search is performed only in the selected point in time.
+* ❸ Click **Save CSV** to save all data in the selected point in time.
 
-## Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
+## Appendix
+### Appendix 1. Guide for Database Instance Migration for Hypervisor Maintenance
 
 NHN Cloud updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. Instances that are running on a target hypervisor for maintenance must be migrated to a hypervisor which is completed with maintenance.
 
@@ -568,7 +615,7 @@ Depending on database configuration, select a particular instance to migrate it 
 Follow the guide as below, to use the migration service on console.
 Go to the project in which a database instance for maintenance is located.
 
-### 1. Check database instances which are the maintenance targets.
+#### 1. Check database instances which are the maintenance targets.
 
 Those with the migration button next to name are the maintenance targets.
 
@@ -578,16 +625,16 @@ Put a cursor on the migration button, and you can find its maintenance schedule.
 
 ![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_en.png)
 
-### 2. Make sure to close any application programs that are running on the database instance.
+#### 2. Make sure to close any application programs that are running on the database instance.
 
 It is recommended to take appropriate measures so as impact on relevant services can be limited.
 Nevertheless, if impact on service is inevitable, contact NHN Cloud Customer Center to be guided further.
 
-### 3. Select a database instance for maintenance, click migration, and click OK on window asking of migration.
+#### 3. Select a database instance for maintenance, click migration, and click OK on window asking of migration.
 
 ![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_en.png)
 
-### 4. Wait until database migration is over.
+#### 4. Wait until database migration is over.
 
 If instance status remains the same, try ‘Refresh’.
 
@@ -595,3 +642,24 @@ If instance status remains the same, try ‘Refresh’.
 
 While migration is underway, operation is not permitted.
 An abnormal closure of database instance migration shall be automatically reported to administrator, and it such case, you’ll be contacted by NHN Cloud.
+
+### 부록2. RDS를 이용하여 Federated Storage Engine 사용 시 구성 가이드
+
+Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다.
+
+#### 로컬 노드로써 RDS를 이용하는 구성의 경우
+
+* 리모트 노드로의 송신을 허용하는 설정이 필요합니다.
+  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
+  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
+* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우, DB Configuration의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
+  * Read Only Slave를 구성하게 될 경우, federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
+  * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 에러 등으로 인한 복제 중단이 발생할 수 있습니다.
+  * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table 에 설정이 필요합니다.
+  * 인스턴스 상세 설정의 DB Configuration 탭에서 설정이 가능합니다.
+
+#### 리모트 노드로써 RDS를 이용하는 구성의 경우
+
+* 로컬 노드에서의 수신을 허용하는 설정이 필요합니다.
+  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
+  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.

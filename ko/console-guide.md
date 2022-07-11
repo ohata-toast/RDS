@@ -405,7 +405,7 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 ## 서버 대시보드
 
-![server_dashboard_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_0_ko.png)
+![server_dashboard_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_1_ko.png)
 
 각종 성능 지표를 차트 형태로 확인할 수 있습니다.
 
@@ -418,21 +418,44 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 * ❹ 레이아웃을 수정하거나 삭제할 수 있습니다.
 * ❺ **레이아웃 만들기** 창이 나타납니다.
 * ❻ 레이아웃에 차트를 추가할 수 있습니다.
-* ❼ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
-* ❽ 조회 기간을 변경할 수 있습니다.
-* ❾ 차트가 표시됩니다.
+* ❼ 레이아웃에 여러 대의 서버를 비교해 볼 수 있는 그룹을 추가할 수 있습니다.
+    * 그룹 차트는 서버 간 데이터 비교를 위해 라인 차트로 통일됩니다.
+    * 그룹 차트는 기존에 저장된 차트 정보를 공유하지 않기 때문에 차트를 별도로 추가해 주셔야 합니다.
+* ❽ 조회 기간을 현재 시각으로 설정 후, 차트를 갱신합니다.
+* ❾ 조회 기간을 변경할 수 있습니다.
+* ➓ 차트가 표시됩니다. 
+
+### 레이아웃 추가
+
+![server_dashboard_layout_create_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_create_1_ko.png)
+
+* ❶ **레이아웃 만들기** 버튼을 클릭합니다.
+* ❷ 레이아웃 이름을 입력합니다.
+
+### 레이아웃 수정 및 삭제
+
+![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_1_ko.png)
+
+* ❶ **관리** 버튼을 클릭합니다.
+* ❷ 해당 레이아웃을 수정할 수 있는 편집 화면으로 변경됩니다.
+* ❸ 해당 레이아웃을 삭제할 수 있습니다.
+
+![server_dashboard_layout_modify_2_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_2_ko.png)
+
+* ❶ **확인** 버튼을 클릭하면 변경 사항이 저장됩니다.
+* ❷ **취소** 버튼을 클릭하면 변경 사항이 취소됩니다.
 
 ### 차트 추가
 
-![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_1_ko.png)
+![server_dashboard_chart_add_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_1_ko.png)
 
-* ❶ 차트를 추가하기 원하는 레이아웃을 먼저 선택합니다.
+* ❶ 차트를 추가하기 위해 원하는 레이아웃을 먼저 선택합니다.
 * ❷ **차트 추가** 버튼을 클릭하면 아래와 같이 **차트 추가** 창이 나타납니다.
 
-![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_chart_add_2_ko.png)
+![server_dashboard_chart_add_2_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_2_ko.png)
 
-* ❶ 추가할 차트가 표시됩니다.
-* ❷ 추가하고자 하는 차트를 선택할 수 있습니다.
+* ❶ 추가하고자 하는 차트를 체크박스로 여러 개를 선택해서 추가할 수 있습니다.
+* ❷ 텍스트 영역을 클릭 시 추가하고자 하는 차트를 미리 볼 수 있습니다.
 
 ### 차트 수정
 
@@ -442,25 +465,48 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 * ❷ 차트를 삭제할 수 있습니다.
 * ❸ 차트 우측 하단을 마우스로 드래그하여 차트의 크기를 변경할 수 있습니다.
 
-### 레이아웃 추가
+### 그룹 추가
 
-![server_dashboard_layout_create_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_create_0_ko.png)
+![server_dashboard_chart_group_add_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_1_ko.png)
 
-* ❶ **레이아웃 만들기** 버튼을 클릭합니다.
-* ❷ 레이아웃 이름을 입력합니다.
+* ❶ 그룹을 추가하기 위해 원하는 레이아웃을 먼저 선택합니다.
+* ❷ **그룹 추가** 버튼을 클릭하면 아래와 같이 **그룹 추가** 창이 나타납니다.
+  
+![server_dashboard_chart_group_add_2_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_2_ko.png)
 
-### 레이아웃 수정 및 삭제
+* ❶ 그룹 이름을 입력합니다.
+* ❷ 차트에 표기할 조회 대상 인스턴스를 선택합니다.
 
-![server_dashboard_layout_modify_0_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_0_ko.png)
+### 그룹 수정 및 삭제
 
-* ❶ **관리** 버튼을 클릭합니다.
-* ❷ 해당 레이아웃을 수정할 수 있는 편집 화면으로 변경됩니다.
-* ❸ 해당 레이아웃을 삭제할 수 있습니다.
+![server_dashboard_chart_group_modify_delete_1_ko.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_1_ko.png)
 
-![server_dashboard_layout_modify_1_ko](https://static.toastoven.net/prod_rds/210615/server_dashboard_layout_modify_1_ko.png)
+* ❶ 수정 혹은 삭제할 그룹의 **더보기 메뉴** 버튼을 클릭하면 드롭다운 메뉴가 나타납니다.
+* ❷ **편집** 버튼을 클릭하면 **그룹 편집** 창이 나타납니다.
+* ❸ **삭제** 버튼을 클릭하면 그룹을 삭제할 수 있습니다.
+  
+![server_dashboard_chart_group_modify_delete_2_ko.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_ko.png)
 
-* ❶ **확인** 버튼을 클릭하면 변경 사항이 저장됩니다.
-* ❷ **취소** 버튼을 클릭하면 변경 사항이 취소됩니다.
+* ❶ 수정하려는 항목을 수정한 후 확인 버튼을 클릭합니다.
+
+### 그룹 차트 추가
+
+![server_dashboard_chart_group_add_chart_1_ko](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_chart_1_ko.png)
+
+* ❶ 추가하고자 하는 차트를 체크박스로 여러 개를 선택해서 추가할 수 있습니다.
+* ❷ 텍스트 영역을 클릭 시 추가하고자 하는 차트를 미리 볼 수 있습니다.
+
+### 그룹 차트 라인 색상 변경
+
+![server_dashboard_chart_group_modify_series_color_1_ko.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_series_color_1_ko.png)
+
+* ❶ 색상을 변경하려는 서버를 목록에서 클릭하면 색상 변경 창이 나타납니다.
+* ❷ 상단 색상표에서 원하는 색상을 클릭해서 변경할 수 있습니다.
+    * 기본 색상은 해당 색상표에 나타나는 순서대로 지정됩니다.
+* ❸ 색상 코드를 직접 입력해서 변경할 수 있습니다.
+    * 직접 입력 시에는 3자리 또는 6자리 색상 코드를 지원합니다.
+    * 예) #000 또는 #000000
+* ❹ 색상 선택기에서 원하는 색상을 선택하여 변경할 수 있습니다.
 
 ## 사용자 그룹
 
@@ -620,7 +666,8 @@ DB에서 수집된 프로세스 리스트와 InnoDB 상태를 차트와 표 형�
 * ❷ 차트 데이터가 선택된 상태에서 검색 시 선택된 시점 내에서만 검색합니다.
 * ❸ **CSV 저장** 버튼을 클릭하면 선택된 시점 내 전체 데이터를 저장합니다.
 
-## 부록1. 하이퍼바이저 점검을 위한 DB 인스턴스 마이그레이션 가이드
+## 부록
+### 부록1. 하이퍼바이저 점검을 위한 DB 인스턴스 마이그레이션 가이드
 
 NHN Cloud는 주기적으로 DB 인스턴스의 하이퍼바이저 소프트웨어를 업데이트하여 보안과 안정성을 향상시키고 있습니다.
 점검 대상 하이퍼바이저에서 구동 중인 DB 인스턴스는 마이그레이션을 통해 점검이 완료된 하이퍼바이저로 이동해야 합니다.
@@ -630,7 +677,7 @@ DB 구성에 따라 특정 DB 인스턴스를 선택하여 마이그레이션 �
 아래 가이드에 따라 콘솔에 있는 마이그레이션 기능을 이용하시기 바랍니다.
 점검 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
 
-### 1. 점검 대상 DB 인스턴스를 확인 합니다.
+#### 1. 점검 대상 DB 인스턴스를 확인 합니다.
 
 이름 옆에 마이그레이션 버튼이 있는 DB 인스턴스가 점검 대상 인스턴스입니다.
 
@@ -640,16 +687,16 @@ DB 구성에 따라 특정 DB 인스턴스를 선택하여 마이그레이션 �
 
 ![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_kr.png)
 
-### 2. 점검 대상 DB 인스턴스에 접속 중인 응용 프로그램을 종료해야 합니다.
+#### 2. 점검 대상 DB 인스턴스에 접속 중인 응용 프로그램을 종료해야 합니다.
 
 DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취하시길 바랍니다.
 서비스에 영향을 줄 수밖에 없을 때는 NHN Cloud 고객 센터로 연락해 주시면 적합한 조치를 안내해 드리겠습니다.
 
-### 3. 점검 대상 DB 인스턴스를 선택하고 마이그레이션 버튼을 클릭한 후 DB 인스턴스 마이그레이션 확인을 묻는 창이 나타나면 확인 버튼을 클릭합니다.
+#### 3. 점검 대상 DB 인스턴스를 선택하고 마이그레이션 버튼을 클릭한 후 DB 인스턴스 마이그레이션 확인을 묻는 창이 나타나면 확인 버튼을 클릭합니다.
 
 ![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_kr.png)
 
-### 4. DB 인스턴스 마이그레이션이 끝날 때까지 대기합니다.
+#### 4. DB 인스턴스 마이그레이션이 끝날 때까지 대기합니다.
 
 DB 인스턴스 상태가 변경되지 않는다면 '새로 고침'을 해보시기 바랍니다.
 
@@ -657,3 +704,24 @@ DB 인스턴스 상태가 변경되지 않는다면 '새로 고침'을 해보시
 
 DB 인스턴스가 마이그레이션되는 동안에는 아무런 조작을 할 수 없습니다.
 DB 인스턴스 마이그레이션이 정상적으로 완료되지 않으면 자동으로 관리자에게 보고되며, NHN Cloud에서 별도로 연락을 드립니다.
+
+### 부록2. RDS를 이용하여 Federated Storage Engine 사용 시 구성 가이드
+
+Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다.
+
+#### 로컬 노드로써 RDS를 이용하는 구성의 경우
+
+* 리모트 노드로의 송신을 허용하는 설정이 필요합니다.
+  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
+  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
+* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우, DB Configuration의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
+  * Read Only Slave를 구성하게 될 경우, federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
+  * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 에러 등으로 인한 복제 중단이 발생할 수 있습니다.
+  * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table에 설정이 필요합니다.
+  * 인스턴스 상세 설정의 DB Configuration 탭에서 설정이 가능합니다.
+
+#### 리모트 노드로써 RDS를 이용하는 구성의 경우
+
+* 로컬 노드에서의 수신을 허용하는 설정이 필요합니다.
+  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
+  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
