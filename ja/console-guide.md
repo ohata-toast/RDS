@@ -489,7 +489,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 * ❶グループ名を入力します。
 * ❷チャートに表示する照会対象インスタンスを選択します。
-    * 조회 대상 인스턴스는 10개까지만 등록할 수 있습니다.
+    * 照会対象インスタンスは10個まで登録できます。
 
 ### グループの修正および削除
 
@@ -626,7 +626,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ### 基本データ照会
 
-![processlist_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_0_ko.png)
+![processlist_1_ja](https://static.toastoven.net/prod_rds/22.07.12/processlist_1_ja.png)
 
 DBから収集されたプロセスリストとInnoDB状態をチャートと表形式で確認できます。
 チャートでは時間帯別に収集された数を表し、表で詳細情報を確認できます。
@@ -649,7 +649,7 @@ DBから収集されたプロセスリストとInnoDB状態をチャートと表
 
 ### キーワード検索
 
-![processlist_search_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_search_0_ko.png)
+![processlist_search_1_ja](https://static.toastoven.net/prod_rds/22.07.12/processlist_search_1_ja.png)
 
 * ❶検索キーワードを入力してデータフィールド全体を検索します。
     * 検索キーワードは大文字/小文字を区別せず、スペースを入力して複数のキーワードを入力できます。
@@ -662,11 +662,11 @@ DBから収集されたプロセスリストとInnoDB状態をチャートと表
 
 ### チャート照会範囲設定
 
-![processlist_zoom_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_0_ko.png)
+![processlist_zoom_1_ja](https://static.toastoven.net/prod_rds/22.07.12/processlist_zoom_1_ja.png)
 
 * ❶チャートをドラッグして照会範囲を設定できます。
 
-![processlist_zoom_1_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_1_ko.png)
+![processlist_zoom_2_ja](https://static.toastoven.net/prod_rds/22.07.12/processlist_zoom_2_ja.png)
 
 * ❶拡大状態を初期化できます。
 * ❷拡大された状態で検索すると、拡大範囲内でのみ検索します。
@@ -674,7 +674,7 @@ DBから収集されたプロセスリストとInnoDB状態をチャートと表
 
 ### チャート時点照会
 
-![processlist_select_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_select_0_ko.png)
+![processlist_select_1_ja](https://static.toastoven.net/prod_rds/22.07.12/processlist_select_1_ja.png)
 
 * ❶チャートデータを選択すると、該当時点のデータだけを照会します。
 * ❷チャートデータが選択された状態で検索すると、選択された時点内でのみ検索します。
