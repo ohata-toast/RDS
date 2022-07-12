@@ -415,13 +415,14 @@ Various performance indicators can be checked in charts.
 
 * ❶ Enter the group name.
 * ❷ Select the instance to be viewed on the chart.
+    * Up to 10 instances can be registered to be viewed.
 
 ### Modify and Delete Group
 
 ![server_dashboard_chart_group_modify_delete_1_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_1_en.png)
 
 * ❶ Click **View More** of the group to modify or delete, a drop-down menu is displayed.
-* ❷ Click **Edit**, the**Modify Group** window is displayed.
+* ❷ Click **Edit**, the **Modify Group** window is displayed.
 * ❸ Click **Delete** to delete a group.
 
 ![server_dashboard_chart_group_modify_delete_2_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_en.png)
