@@ -552,20 +552,20 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ### Basic Data Retrieval
 
-![processlist_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_0_ko.png)
+![processlist_1_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_1_en.png)
 
 You can view the process list and InnoDB status collected from the DB in the form of chart and table.
 The chart shows the count of items collected over time, and you can check the details in the table.
 
 * ❶ Search by the instance name or IP address.
 * ❷ Servers that meet the criteria are displayed. The color of the icon on the right changes depending on the server status.
-  * Green: Normal
-  * Red: Error
-  * Gray: Deleted server
+    * Green: Normal
+    * Red: Error
+    * Gray: Deleted server
 * ❸ Select the Process List or InnoDB Status tab to retrieve the information.
 * ❹ The chart is updated after setting the retrieval period to the current time.
 * ❺ The retrieval period can be modified.
-  * The retrieval period must be set within the range of 1 hour.
+    * The retrieval period must be set within the range of 1 hour.
 * ❻ Enter search keywords to search for data within the retrieval period.
 * ❼ Set the number of data to retrieve in one page (default: 20).
 * ❽ Click **Save CSV** to save all the retrieved data in CSV file format.
@@ -575,12 +575,12 @@ The chart shows the count of items collected over time, and you can check the de
 
 ### Keyword Search
 
-![processlist_search_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_search_0_ko.png)
+![processlist_search_1_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_search_1_en.png)
 
 * ❶ Enter search keywords to browse through the data fields.
-  * Search keywords are not case-sensitive, and multiple keywords can be entered by separating them with a space.
-  * If you need to search for a phrase, enclose it in quotation marks ("",'').
-    * Example: "for semi-sync" slave
+    * Search keywords are not case-sensitive, and multiple keywords can be entered by separating them with a space.
+    * If you need to search for a phrase, enclose it in quotation marks ("",'').
+        * Example: "for semi-sync" slave
 * ❷ The search period is automatically set in the order of the most recent time. The period is set in the unit of 10 minutes, or if there is a lot of collected data, set in a limited unit by limiting to the point in time with more than 1,000 items.
 * ❸ Click **Search More** to retrieve additional data with the same unit as above.
 * ❹ Click **Reset** to reset all entered search keywords and search period.
@@ -588,11 +588,11 @@ The chart shows the count of items collected over time, and you can check the de
 
 ### Chart Retrieval Range Setting
 
-![processlist_zoom_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_0_ko.png)
+![processlist_zoom_1_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_zoom_1_en.png)
 
 * ❶ You can set the retrieval range by dragging the chart.
 
-![processlist_zoom_1_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_1_ko.png)
+![processlist_zoom_2_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_zoom_2_en.png)
 
 * ❶ You can reset the zoom state.
 * ❷ When searching in a zoomed-in state, the search is performed only in the zoomed-in range.
@@ -600,7 +600,7 @@ The chart shows the count of items collected over time, and you can check the de
 
 ### Chart Point-in-Time Retrieval
 
-![processlist_select_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_select_0_ko.png)
+![processlist_select_1_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_select_1_en.png)
 
 * ❶ If you select chart data, only the data at that point in time is retrieved.
 * ❷ When searching with chart data selected, the search is performed only in the selected point in time.
