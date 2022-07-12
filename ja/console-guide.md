@@ -418,7 +418,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 ## サーバーダッシュボード
 
-![server_dashboard_0_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_0_ja.png)
+![server_dashboard_1_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_1_ja.png)
 
 各種性能指標をチャート形式で確認できます。
 
@@ -431,18 +431,41 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 * ❹レイアウトを修正、削除できます。
 * ❺レイアウトを作成するポップアップが表示されます。
 * ❻レイアウトにチャートを追加できます。
-* ❼照会期間を現在時刻に設定した後、チャートを更新します。
-* ❽照会期間を変更できます。
-* ❾チャートが表示されます。
+* ❼レイアウトに複数台のサーバーを比較できるグループを追加できます。
+  * グループチャートはサーバー間のデータ比較のためラインチャートに統一されます。
+  * グループチャートは既に保存されているチャート情報を共有しないため、チャートを別途追加する必要があります。
+* ❽照会期間を現在時刻に設定した後、チャートを更新します。
+* ❾照会期間を変更できます。
+* ➓チャートが表示されます。
+
+### レイアウト追加
+
+![server_dashboard_layout_create_1_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_create_1_ja.png)
+
+* ❶レイアウト作成ボタンをクリックします。
+* ❷レイアウト名を入力します。
+
+### レイアウトの修正および削除
+
+![server_dashboard_layout_modify_1_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_1_ja.png)
+
+* ❶管理ボタンをクリックします。
+* ❷レイアウトを修正することができる編集画面に変更されます。
+* ❸レイアウトを削除できます。
+
+![server_dashboard_layout_modify_2_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_layout_modify_2_ja.png)
+
+* ❶確認ボタンをクリックすると変更事項が保存されます。
+* ❷キャンセルボタンをクリックすると変更事項がキャンセルされます。
 
 ### チャート追加
 
-![server_dashboard_chart_add_1_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_1_ja.png)
+![server_dashboard_chart_add_1_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_1_ja.png)
 
 * ❶チャートを追加したいレイアウトを先に選択します。
 * ❷チャート追加ボタンをクリックすると、以下のようにチャート追加ポップアップが表示されます。
 
-![server_dashboard_chart_add_2_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_chart_add_2_ja.png)
+![server_dashboard_chart_add_2_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_add_2_ja.png)
 
 * ❶追加しようとしているチャートが表示されます。
 * ❷追加しようとしているチャートを選択できます。
@@ -455,25 +478,49 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 * ❷チャートを削除できます。
 * ❸チャート右下をマウスでドラッグしてチャートのサイズを変更できます。
 
-### レイアウト追加
+### グループ追加
 
-![server_dashboard_layout_create_0_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_create_0_ja.png)
+![server_dashboard_chart_group_add_1_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_1_ja.png)
 
-* ❶レイアウト作成ボタンをクリックします。
-* ❷レイアウト名を入力します。
+* ❶グループを追加するために先にレイアウトを選択します。
+* ❷ **グループ追加** ボタンをクリックすると、以下のように**グループ追加**ウィンドウが表示されます。
 
-### レイアウトの修正および削除
+![server_dashboard_chart_group_add_2_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_2_ja.png)
 
-![server_dashboard_layout_modify_0_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_0_ja.png)
+* ❶グループ名を入力します。
+* ❷チャートに表示する照会対象インスタンスを選択します。
+    * 조회 대상 인스턴스는 10개까지만 등록할 수 있습니다.
 
-* ❶管理ボタンをクリックします。
-* ❷レイアウトを修正することができる編集画面に変更されます。
-* ❸レイアウトを削除できます。
+### グループの修正および削除
 
-![server_dashboard_layout_modify_1_ja](https://static.toastoven.net/prod_rds/22.03.15/server_dashboard_layout_modify_1_ja.png)
+![server_dashboard_chart_group_modify_delete_1_ja.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_1_ja.png)
 
-* ❶確認ボタンをクリックすると変更事項が保存されます。
-* ❷キャンセルボタンをクリックすると変更事項がキャンセルされます。
+* ❶修正するグループの**さらに表示メニュー** ボタンをクリックすると、以下のようにドロップダウンメニューが表示されます。
+* ❷ **編集**ボタンをクリックすると**グループ編集**ウィンドウが表示されます。
+* ❸ **削除**ボタンをクリックするとグループを削除できます。
+
+![server_dashboard_chart_group_modify_delete_2_ja.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_ja.png)
+
+* ❶修正したい項目を修正した後、確認ボタンをクリックします。
+
+### グループチャートの追加
+
+![server_dashboard_chart_group_add_chart_1_ja](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_add_chart_1_ja.png)
+
+* ❶追加したいチャートをチェックボックスで複数選択して追加できます。
+* ❷テキスト領域をクリックすると、追加するチャートをプレビューできます。
+
+### グループチャートの線の色を変更
+
+![server_dashboard_chart_group_modify_series_color_1_ja.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_series_color_1_ja.png)
+
+* ❶色を変更したいサーバーを一覧からクリックすると、色変更ウィンドウが表示されます。
+* ❷上部のカラーチャートから好きな色をクリックして変更できます。
+    * 基本色は、カラーチャートに表示される順序で指定されます。
+* ❸色コードを直接入力して変更できます。
+    * 直接入力するときは、3桁または6桁の色コードをサポートします。
+    * 例) #000または #000000
+* ❹色選択ツールで好きな色を選択して変更できます。
 
 ## ユーザーグループ
 
@@ -633,7 +680,8 @@ DBから収集されたプロセスリストとInnoDB状態をチャートと表
 * ❷チャートデータが選択された状態で検索すると、選択された時点内でのみ検索します。
 * ❸ **CSV保存**ボタンをクリックすると、選択された時点内のすべてのデータを保存します。
 
-## 付録1. ハイパーバイザメンテナンスのためのDBインスタンスマイグレーションガイド
+## 付録
+### 付録1. ハイパーバイザメンテナンスのためのDBインスタンスマイグレーションガイド
 
 NHN Cloudは周期的にDBインスタンスのハイパーバイザソフトウェアをアップデートしてセキュリティと安定性を向上させています。
 メンテナンス対象ハイパーバイザで起動中のDBインスタンスは、マイグレーションを通してメンテナンスが完了したハイパーバイザに移動する必要があります。
@@ -643,7 +691,7 @@ DB構成に応じて特定DBインスタンスを選択してマイグレーシ�
 下記のガイドに従ってコンソールにあるマイグレーション機能を利用してください。
 メンテナンス対象に指定されたDBインスタンスがあるプロジェクトに移動します。
 
-### 1. メンテナンス対象DBインスタンスを確認します。
+#### 1. メンテナンス対象DBインスタンスを確認します。
 
 名前の横にマイグレーションボタンがあるDBインスタンスがメンテナンス対象のインスタンスです。
 
@@ -653,16 +701,16 @@ DB構成に応じて特定DBインスタンスを選択してマイグレーシ�
 
 ![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_ja.png)
 
-### 2. メンテナンス対象DBインスタンスに接続中のアプリケーションソフトウェアを終了する必要があります。
+#### 2. メンテナンス対象DBインスタンスに接続中のアプリケーションソフトウェアを終了する必要があります。
 
 DBに接続しているサービスに影響を与えないように、適切な措置を取ってください。
 やむを得ずサービスに影響を与えてしまう時は、NHN Cloudサポートに連絡してくだされば、適切な措置を案内いたします。
 
-### 3. メンテナンス対象DBインスタンスを選択してマイグレーションボタンをクリックし、DBインスタンスマイグレーションの確認ウィンドウが表示されたら確認ボタンをクリックします。
+#### 3. メンテナンス対象DBインスタンスを選択してマイグレーションボタンをクリックし、DBインスタンスマイグレーションの確認ウィンドウが表示されたら確認ボタンをクリックします。
 
 ![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_ja.png)
 
-### 4. DBインスタンスのマイグレーションが終わるまで待機します。
+#### 4. DBインスタンスのマイグレーションが終わるまで待機します。
 
 DBインスタンスの状態が変更されない場合は「更新」を行ってください。
 
@@ -670,3 +718,24 @@ DBインスタンスの状態が変更されない場合は「更新」を行っ
 
 DBインスタンスのマイグレーション中は何も操作ができません。
 DBインスタンスのマイグレーションが正常に完了しなかった場合、自動的に管理者に報告され、NHN Cloudから別途連絡いたします。
+
+### 付録2. RDSを利用してFederated Storage Engine使用するときの構成ガイド
+
+Federated Storage Engineを使用する場合、次を考慮する必要があります。
+
+#### ローカルノードとしてRDSを利用する構成の場合
+
+* リモートノードへの送信を許可する設定が必要です。
+  * インスタンス詳細設定の**バックアップ& Access制御** タブで設定が可能です。
+  * 「#簡単に始める」の「ユーザーアクセス制御」を参照してください。
+* ローカルノード役割のRDSにRead Only Slaveを追加した構成で使用する場合は、 DB Configurationのreplicate-ignore-tableにfederated設定されたテーブル名を指定する必要があります。
+  * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
+  * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
+  * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
+  * インスタンス詳細設定のDB Configurationタブで設定できます。
+
+#### リモートノードとしてRDSを利用する構成の場合
+
+* ローカルノードでの受信を許可する設定が必要です。
+  * インスタンス詳細設定の**バックアップ& Access制御**タブで設定できます。
+  * 「#簡単に始める」の「ユーザーアクセス制御」を参照してください。
