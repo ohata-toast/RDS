@@ -613,7 +613,7 @@ Notifications can be received by adding the monitoring settings to the performan
 
 ### Basic Data Retrieval
 
-![processlist_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_0_ko.png)
+![processlist_1_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_1_en.png)
 
 You can view the process list and InnoDB status collected from the DB in the form of chart and table.
 The chart shows the count of items collected over time, and you can check the details in the table.
@@ -636,7 +636,7 @@ The chart shows the count of items collected over time, and you can check the de
 
 ### Keyword Search
 
-![processlist_search_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_search_0_ko.png)
+![processlist_search_1_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_search_1_en.png)
 
 * ❶ Enter search keywords to browse through the data fields.
     * Search keywords are not case-sensitive, and multiple keywords can be entered by separating them with a space.
@@ -649,11 +649,11 @@ The chart shows the count of items collected over time, and you can check the de
 
 ### Chart Retrieval Range Setting
 
-![processlist_zoom_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_0_ko.png)
+![processlist_zoom_1_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_zoom_1_en.png)
 
 * ❶ You can set the retrieval range by dragging the chart.
 
-![processlist_zoom_1_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_zoom_1_ko.png)
+![processlist_zoom_2_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_zoom_2_en.png)
 
 * ❶ You can reset the zoom state.
 * ❷ When searching in a zoomed-in state, the search is performed only in the zoomed-in range.
@@ -661,7 +661,7 @@ The chart shows the count of items collected over time, and you can check the de
 
 ### Chart Point-in-Time Retrieval
 
-![processlist_select_0_ko](https://static.toastoven.net/prod_rds/22.05.10/processlist_select_0_ko.png)
+![processlist_select_1_en](https://static.toastoven.net/prod_rds/22.07.12/processlist_select_1_en.png)
 
 * ❶ If you select chart data, only the data at that point in time is retrieved.
 * ❷ When searching with chart data selected, the search is performed only in the selected point in time.
