@@ -1,5 +1,21 @@
 ## Database > RDS for MySQL > Release Notes
 
+### August 9, 2022
+
+#### Added Features
+
+* Added a feature to export event lists to Excel
+
+#### Feature Updates
+
+* Made modifications so that the DB Configuration of an instance where high availability is paused can be changed
+* Changed the maximum backup retention period from 30 days to 2 years
+* Made improvements so that, when backup fails due to DDL execution, the cause is left in the event message
+
+#### Bug Fixes
+
+* Fixed an issue where backup fails intermittently due to communication issues with internal agents 
+
 ### July 12, 2022
 
 #### Added Features
@@ -25,7 +41,7 @@
 
 #### Bug Fixes
 
-* Fixed an issue where high availability configuration was not possible when the validate password plugin is used
+* Fixed an issue where high availability configuration is not possible when the validate password plugin is used
 * Fixed an issue where, even though the type change of the high availability instance has failed, the type of the candidate master is displayed as the type after the change
 
 ### May 10, 2022
@@ -49,7 +65,7 @@
 #### Bug Fixes
 
 * Fixed an issue where, when performing point-in-time restoration with a backup of a read replica, a wrong restoration available time could be selected
-* Fixed an issue where the monitoring graph was not visible in Safari
+* Fixed an issue where the monitoring graph is not visible in Safari
 * Fixed an issue where, after changing the parameters of the master instance, changing the parameters of a read replica failed
 * Fixed an issue where, when repeatedly creating or deleting read replicas in version 5.6.33, creating a read replica failed intermittently
 
@@ -102,7 +118,7 @@
 
 * Fixes an issue where a replication stop event is logged immediately after completion of instance replication
 * Fixed a bug that caused items in the monitoring settings to be covered when the mouse pointer hovers over the notification group
-* Fixed an issue where, when subscribing to an event, notifications of internal event codes that cannot be subscribed were received if the event code is 'Select all'
+* Fixed an issue where, when subscribing to an event, notifications of internal event codes that cannot be subscribed are received if the event code is 'Select all'
 * Fixed a bug where an unknown error occurred when selecting the created instance immediately after instance creation
 * Made modifications so that an event is logged when the DB instance is stopped
 
@@ -122,7 +138,7 @@
 
 #### Bug Fixes
 
-* Improved an issue where instance creation fails intermittently because the file required for instance creation was not downloaded
+* Improved an issue where instance creation fails intermittently because the file required for instance creation cannot be downloaded
 * Fixed a bug where, in case of a long-running backup, an event is logged as a general backup failure even if the backup failed due to user query latency
 
 ### October 12, 2021
@@ -174,7 +190,7 @@
 
 #### Bug Fixes
 
-* Fixed a bug in which some monitoring data was not being collected
+* Fixed a bug in which some monitoring data is not being collected
 * Fixed a bug in which long user group names extend beyond the UI when the event subscription registration and notification groups are added
 * Fixed a bug in which the menu remains visible when the dashboard dropdown is selected
 
@@ -186,7 +202,7 @@
 
 #### Bug Fixes
 
-* Fixed a problem where restoration was not possible when restoring a backup with a size close to the storage size
+* Fixed a problem where restoration is not possible when restoring a backup with a size close to the storage size
 * Fixed a problem where it did not properly operate when there is Korean in the container or path when exporting or importing the backup to object storage
 
 ### May 11, 2021
@@ -378,8 +394,8 @@
 
 #### Bug Fixes
 
-- Fixed instances, which were sometimes unavailable to be deleted while they were being created
-- Fixed the issue in which data volume was not properly changed when data storage was full
+- Fixed an issue where instances cannot be deleted intermittently when they are being created
+- Fixed an issue in which data volume is not properly changed when data storage is full
 
 ### March 12, 2019
 
@@ -477,7 +493,7 @@
 
 #### Bug Fixes
 
-- Fixed an issue in which backup retention period remains on the list, even after it was changed to 'N/A'
+- Fixed an issue in which backup retention period remains on the list, even after it is changed to 'N/A'
 - Fixed the bug in which instance status shows Changing, even without instance setting updated
 - Fixed an issue in which QPS shows as negative number when an instance restarts
 - Fixed the bug in which only data is updated without date or time updates, at the click of Period Setting on the Monitoring page
