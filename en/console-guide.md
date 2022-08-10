@@ -120,7 +120,7 @@
 
 * High Availability can be temporarily stopped if disconnection or a massive volume of workload is expected due to temporary work in the Master instance.
 * If High Availability is paused, failure won't be detected; therefore, no failover will take place.
-* If the instance is changed or restarted while High Availability is paused, the paused High Availability function will resume.
+* 고가용성 기능이 일시 중지된 상태에서 재시작이 필요한 작업을 수행하여도 일시 중지된 고가용성 기능이 재개되지 않습니다.
 * Even if High Availability is paused, data replication works fine. However, since no failure will be detected during the pause, it is not recommended to keep the paused state for a long time.
 
 #### Constraints
