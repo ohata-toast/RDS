@@ -60,6 +60,8 @@
     * Unregistered IPs for user access control are not accessible.
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
 
+> [참고] 금융망에서는 백업 복제 리전 기능이 제공되지 않습니다.
+
 ![db_configuration_0_en](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_en.png)
 
 * Change the setting values, and click **Create**.

@@ -54,6 +54,8 @@
     * 未注册于用户访问控制中的IP无法连接。
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
 
+> [참고] 금융망에서는 백업 복제 리전 기능이 제공되지 않습니다.
+
 可在DB Configuration界面中更改设置值。
 
 ![db_configuration_0_zh](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_zh.png)
