@@ -38,13 +38,14 @@ RDS for MysQLを使用するには、先にDBインスタンスを作成する�
 
 **バックアップ&アクセス制御** 画面でバックアップ情報を指定します。
 
-![backup_and_access_ja](https://static.toastoven.net/prod_rds/22.05.10/backup_and_access_ja.png)
+![backup_and_access_ja](https://static.toastoven.net/prod_rds/22.08.09/backup_and_access_ja.png)
 
 * 自動バックアップおよびアクセス制御を設定した後、 **次へ** ボタンをクリックします。
 * クエリー遅延待機時間：バックアップ遂行時にFLUSH TABLES WITH READ LOCK遅延待機時間を設定できます。
     * 0～21600の間の値に設定できます。
 * バックアップ保管期間：自動バックアップをするには、1日以上を選択します。
-  **なし**を選択すると、自動バックアップが行われません。
+    * 0 ~ 730 사이 값으로 설정할 수 있습니다.
+    * 0 입력 시, 자동으로 백업을 하지 않습니다.
 * テーブルロック使用：バックアップを行う時、FLUSH TABLES WITH READ LOCK構文でテーブルをロックするかどうかを設定します。
 * バックアップ複製リージョン：自動バックアップ時に他のリージョンにバックアップファイルが複製されるように設定します。
 * バックアップ再試行回数：バックアップが失敗した時、再試行する回数を指定できます。
@@ -386,13 +387,14 @@ DB Configuration画面で設定値を変更できます。
 
 ## イベント
 
-![event_list_0_ja](https://static.toastoven.net/prod_rds/22.03.15/event_list_0_ja.png)
+![event_list_0_ja](https://static.toastoven.net/prod_rds/22.08.09/event_list_0_ja.png)
 
 DBインスタンスに関連するさまざまな作業中に発生する各種イベントおよび通知グループの監視設定結果を確認できます。
 
 * ❶イベントタイプを選択して照会できます。
 * ❷イベントソースまたはメッセージを検索できます。
 * ❸イベント発生期間を選択できます。
+* ❹ 검색 조건에 맞는 이벤트를 CSV 파일로 저장할 수 있습니다.
 
 ### イベント購読
 

@@ -40,13 +40,14 @@
 
 在**备份&Access控制**界面中指定备份信息。
 
-![backup_and_access_zh](https://static.toastoven.net/prod_rds/22.05.10/backup_and_access_zh.png)
+![backup_and_access_zh](https://static.toastoven.net/prod_rds/22.08.09/backup_and_access_zh.png)
 
 * 设置自动备份及访问控制后，单击**下一步**按钮。
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
     * It can be anywhere between 0 and 21,600.
 * 备份保存期限：若欲进行自动备份，请选择1天以上。
-    * 若选择**无**，则不进行自动备份。
+    * 0 ~ 730 사이 값으로 설정할 수 있습니다.
+    * 0 입력 시, 자동으로 백업을 하지 않습니다.
 * 备份开始时间：自动备份从备份开始时间至Duration之间任意的时间开始。
     * Duration指开始备份的时间。不意味着在Duration中备份结束。
 * 用户访问控制：以CIDR格式输入可访问DB实例的用户。
@@ -312,13 +313,14 @@ Floating IP未设置为“使用”的DB实例无法从外部访问。
 
 ## Event
 
-![event_list_0_zh](https://static.toastoven.net/prod_rds/22.03.15/event_list_0_zh.png)
+![event_list_0_zh](https://static.toastoven.net/prod_rds/22.08.09/event_list_0_zh.png)
 
 The results of monitoring settings can be checked for various events and notification groups that occur during various tasks related to DB instances.
 
 * ❶ Retrieve by selecting the event type.
 * ❷ Search the event source or message.
 * ❸ Select the event period.
+* ❹ 검색 조건에 맞는 이벤트를 CSV 파일로 저장할 수 있습니다.
 
 ### Event Subscription
 
