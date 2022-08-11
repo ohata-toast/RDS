@@ -41,8 +41,8 @@
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
     * It can be set to a value between 0 and 21,600.
 * Backup Retention Period: Select more than a day, to allow auto backups.
-    * 0 ~ 730 사이 값으로 설정할 수 있습니다.
-    * 0 입력 시, 자동으로 백업을 하지 않습니다.
+    * 0~730 사이 값으로 설정할 수 있습니다.
+    * 0 입력 시 자동으로 백업을 하지 않습니다.
 * Use Table Locking: Set whether to lock the table with the FLUSH TABLES WITH READ LOCK statement when performing backup.
 * Backup Replication Region: Set to replicate backup files to another region when automatic backup is executed.
 * Backup Retry Count: Set the number of retries to make when backup fails.

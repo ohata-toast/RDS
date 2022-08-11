@@ -46,8 +46,8 @@
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
     * It can be anywhere between 0 and 21,600.
 * 备份保存期限：若欲进行自动备份，请选择1天以上。
-    * 0 ~ 730 사이 값으로 설정할 수 있습니다.
-    * 0 입력 시, 자동으로 백업을 하지 않습니다.
+    * 0~730 사이 값으로 설정할 수 있습니다.
+    * 0 입력 시 자동으로 백업을 하지 않습니다.
 * 备份开始时间：自动备份从备份开始时间至Duration之间任意的时间开始。
     * Duration指开始备份的时间。不意味着在Duration中备份结束。
 * 用户访问控制：以CIDR格式输入可访问DB实例的用户。
