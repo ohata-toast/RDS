@@ -35,13 +35,14 @@
 > [Note] The instance list is sorted in the order of creation. The order may change after failover, since the candidate master is created when the high availability option is enabled for the master.
 > [Note] With default alarm setting, alarms for the instance are automatically registered, in the name of "{instance name}-default". Registered alarms can be changed or deleted, and applied instances can also be changed.
 
-![backup_and_access_en](https://static.toastoven.net/prod_rds/22.05.10/backup_and_access_en.png)
+![backup_and_access_en](https://static.toastoven.net/prod_rds/22.08.09/backup_and_access_en.png)
 
 * Set auto backup and access control, and click **Next**.
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
     * It can be set to a value between 0 and 21,600.
 * Backup Retention Period: Select more than a day, to allow auto backups.
-    * Select **N/A**, and auto backup is not enabled.
+    * 0~730 사이 값으로 설정할 수 있습니다.
+    * 0 입력 시 자동으로 백업을 하지 않습니다.
 * Use Table Locking: Set whether to lock the table with the FLUSH TABLES WITH READ LOCK statement when performing backup.
 * Backup Replication Region: Set to replicate backup files to another region when automatic backup is executed.
 * Backup Retry Count: Set the number of retries to make when backup fails.
@@ -58,6 +59,8 @@
 * User Access Control: Enter accessible users to DB instance in the CIDR format.
     * Unregistered IPs for user access control are not accessible.
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
+
+> [참고] 금융망에서는 백업 복제 리전 기능이 제공되지 않습니다.
 
 ![db_configuration_0_en](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_en.png)
 
@@ -119,7 +122,7 @@
 
 * High Availability can be temporarily stopped if disconnection or a massive volume of workload is expected due to temporary work in the Master instance.
 * If High Availability is paused, failure won't be detected; therefore, no failover will take place.
-* If the instance is changed or restarted while High Availability is paused, the paused High Availability function will resume.
+* 고가용성 기능이 일시 중지된 상태에서 재시작이 필요한 작업을 수행하여도 일시 중지된 고가용성 기능이 재개되지 않습니다.
 * Even if High Availability is paused, data replication works fine. However, since no failure will be detected during the pause, it is not recommended to keep the paused state for a long time.
 
 #### Constraints
@@ -373,13 +376,14 @@
 
 ## Event
 
-![event_list_0_en](https://static.toastoven.net/prod_rds/22.03.15/event_list_0_en.png)
+![event_list_0_en](https://static.toastoven.net/prod_rds/22.08.09/event_list_0_en.png)
 
 The results of monitoring settings can be checked for various events and notification groups that occur during various tasks related to DB instances.
 
 * ❶ Retrieve by selecting the event type.
 * ❷ Search the event source or message.
 * ❸ Select the event period.
+* ❹ 검색 조건에 맞는 이벤트를 CSV 파일로 저장할 수 있습니다.
 
 ### Event Subscription
 
