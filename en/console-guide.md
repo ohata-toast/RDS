@@ -44,7 +44,7 @@
     * It can be set to a value between 0 and 730.
     * If you enter 0, auto backup is not executed.
 * Use Table Locking: Set whether to lock the table with the FLUSH TABLES WITH READ LOCK statement when performing backup.
-* Backup Replication Region: Set to replicate backup files to another region when automatic backup is executed.
+* Backup Replication Region: Set to replicate backup files to another region when auto backup is executed.
 * Backup Retry Count: Set the number of retries to make when backup fails.
     * Retry is performed when you enter 1 or higher.
     * Retry is performed only when performing auto backup.
