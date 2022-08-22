@@ -46,35 +46,35 @@
 * Query Latency: FLUSH TABLES WITH READ LOCK latency can be set when performing a backup.
     * It can be anywhere between 0 and 21,600.
 * 备份保存期限：若欲进行自动备份，请选择1天以上。
-    * 0~730 사이 값으로 설정할 수 있습니다.
-    * 0 입력 시 자동으로 백업을 하지 않습니다.
+    * It can be set to a value between 0 and 730.
+    * If you enter 0, auto backup is not executed.
 * 备份开始时间：自动备份从备份开始时间至Duration之间任意的时间开始。
     * Duration指开始备份的时间。不意味着在Duration中备份结束。
 * 用户访问控制：以CIDR格式输入可访问DB实例的用户。
     * 未注册于用户访问控制中的IP无法连接。
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
 
-> [참고] 금융망에서는 백업 복제 리전 기능이 제공되지 않습니다.
+> [Note] The Backup Replication Region feature is not provided for banking networks.
 
 可在DB Configuration界面中更改设置值。
 
 ![db_configuration_0_zh](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_zh.png)
 
 * 更改所需设置值后，单击**创建**按钮。
-    * **수식 사용** 값이 **Y**로 표기된 항목에 대하여 **파라미터 값**에 수식을 입력할 수 있습니다.
-    * 수식에 사용 가능한 변수는 다음과 같습니다. (대소문자 구분)
-        * ramSizeByte : DB 인스턴스에 할당된 메모리 (바이트 단위)
-        * storageSizeByte : DB 인스턴스 볼륨의 크기 (바이트 단위)
-        * vCPU : cpu 개수
+    * For items whose **Use Expression** is set to **Y**, you can enter an expression in **Parameter Value**.
+    * Variables that can be used in expressions are as follows. (case sensitive)
+        * ramSizeByte: Memory allocated to the DB instance (in bytes)
+        * storageSizeByte: Size of the DB instance volume (in bytes)
+        * vCPU: Number of CPUs
         * dbPort
-    * 수식에 사용 가능한 연산자는 다음과 같습니다.
+    * Operators that can be used in expressions are as follows.
         * \* \/ + - , ( ) [ ]
-    * 수식에 사용 가능한 함수는 다음과 같습니다. (대소문자 구분)
+    * Functions that can be used in expressions are as follows. (case sensitive)
         * min([a, b, ..., z])
         * max([a, b, ..., z])
         * sum([a, b, ..., z])
-    * 수식을 계산한 값의 소수점 이하 9번째 자리에서 반올림한 결과가 DB 인스턴스에 적용됩니다.
-    * 소수가 지원되지 않는 파라미터의 경우, 수식을 계산한 값의 소수점 이하를 버림한 결과가 DB 인스턴스에 적용됩니다.
+    * The result of rounding up to 8 decimal places of the value calculated by the expression is applied to the DB instance.
+    * For parameters that do not support fractions, the result of truncating the decimal point of the value calculated by the expression is applied to the DB instance.
 * 最后单击**确认**按钮，创建DB实例。
 * 创建需要几到几十分钟的时间。
 
@@ -322,7 +322,7 @@ The results of monitoring settings can be checked for various events and notific
 * ❶ Retrieve by selecting the event type.
 * ❷ Search the event source or message.
 * ❸ Select the event period.
-* ❹ 검색 조건에 맞는 이벤트를 CSV 파일로 저장할 수 있습니다.
+* ❹ Save the filtered events to a CSV file.
 
 ### Event Subscription
 
@@ -648,23 +648,23 @@ If instance status remains the same, try ‘Refresh’.
 While migration is underway, operation is not permitted.
 An abnormal closure of database instance migration shall be automatically reported to administrator, and it such case, you’ll be contacted by NHN Cloud.
 
-### 부록2. RDS를 이용하여 Federated Storage Engine 사용 시 구성 가이드
+### Appendix 2. Configuration guide for using Federated Storage Engine with RDS
 
-Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다.
+When using Federated Storage Engine, make sure you consider the following.
 
-#### 로컬 노드로써 RDS를 이용하는 구성의 경우
+#### For configuration using RDS as a local node
 
-* 리모트 노드로의 송신을 허용하는 설정이 필요합니다.
-  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
-  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
-* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우, DB Configuration의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
-  * Read Only Slave를 구성하게 될 경우, federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
-  * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 에러 등으로 인한 복제 중단이 발생할 수 있습니다.
-  * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table 에 설정이 필요합니다.
-  * 인스턴스 상세 설정의 DB Configuration 탭에서 설정이 가능합니다.
+* Make sure you need to allow the outbound direction to remote nodes.
+  * It can be set in the **Backup and Access Control** tab of the DB instance detailed configuration.
+  * Please refer to ‘User Access Control’ in ‘#Getting Started’.
+* When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of DB Configuration.
+  * When configuring Read Only Slave, the federated table is also replicated so that Master and Read Only Slave look at the remote nodes together.
+  * In this case, the data input performed in Master is performed in the remote nodes according to the federated settings, and the same input is also performed in Read Only Slave, so replication may be suspended due to a duplicate key error, etc.
+  * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
+  * It can be set in the DB Configuration tab of the DB instance detailed configuration.
 
-#### 리모트 노드로써 RDS를 이용하는 구성의 경우
+#### For configuration using RDS as a remote node
 
-* 로컬 노드에서의 수신을 허용하는 설정이 필요합니다.
-  * 인스턴스 상세 설정의 **백업 & Access 제어** 탭에서 설정이 가능합니다.
-  * '#간단히 시작하기'의 '사용자 접근 제어'를 참고 바랍니다.
+* Make sure you need to allow the inbound direction to local nodes.
+  * It can be set in the **Backup and Access Control** tab of the DB instance detailed configuration.
+  * Please refer to 'User Access Control' in '#Getting Started'.
