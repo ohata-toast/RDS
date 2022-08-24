@@ -181,8 +181,11 @@ mysql> call mysql.tcrds_repl_init();
 | 5.7.15 | 2.4.20 |
 | 5.7.19 | 2.4.20 |
 | 5.7.26 | 2.4.20 |
-| 8.0.18 | 8.0.12 |
-| 8.0.22 | 8.0.12 |
+| 5.7.33 | 2.4.20 |
+| 5.7.37 | 2.4.20 |
+| 8.0.18 | 8.0.26 |
+| 8.0.23 | 8.0.26 |
+| 8.0.28 | 8.0.28 |
 
 * Refer to the Percona's website for detailed descriptions on installing XtraBackup
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
