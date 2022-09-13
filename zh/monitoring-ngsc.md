@@ -81,6 +81,8 @@ An event refers to important incident incurred by RDS for MySQL or the user. An 
 | INSTANCE | INSTC_50_00 | Backup export started |
 | INSTANCE | INSTC_50_01 | Backup exported |
 | INSTANCE | INSTC_50_04 | Backup export failed |
+| INSTANCE | INSTC_51_01 | Backup failed due to user query latency |
+| INSTANCE | INSTC_52_01 | Backup and export failed due to user query latency |
 | BACKUP | BACUP_02_01 | Backup deleted |
 | BACKUP | BACUP_04_00 | Object storage upload started |
 | BACKUP | BACUP_04_01 | Object storage uploaded |
@@ -88,6 +90,7 @@ An event refers to important incident incurred by RDS for MySQL or the user. An 
 | BACKUP | BACUP_05_00 | Backup export started |
 | BACKUP | BACUP_05_01 | Backup exported |
 | BACKUP | BACUP_05_04 | Backup export failed |
+| BACKUP | BACUP_06_01 | Backup failed due to user query latency |
 | TENANT | TENAT_01_04 | CPU cores limit |
 | TENANT | TENAT_02_04 | RAM capacity limit |
 | TENANT | TENAT_03_04 | Individual volume limit |
