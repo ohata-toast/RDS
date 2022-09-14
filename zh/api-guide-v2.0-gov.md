@@ -13,7 +13,7 @@
 - View the metrics necessary for viewing statistical information.
 
 ```
-GET /rds/api/v2.0/metrics
+GET /v2.0/metrics
 ```
 
 #### Request header
@@ -44,7 +44,7 @@ GET /rds/api/v2.0/metrics
 - Views the statistical information collected on a regular basis.
 
 ```
-GET /rds/api/v2.0/metric-statistics
+GET /v2.0/metric-statistics
 ```
 
 #### Request header

@@ -1,5 +1,16 @@
 ## Database > RDS for MySQL > Release Notes
 
+### September 14, 2022
+
+#### Added Features
+
+* Added MySQL 5.7.37, MySQL 8.0.28 versions
+
+#### Bug Fixes
+
+* Fixed an issue where an error message is left on the browser’s developer console
+* Fixed an issue where backup fails when a single instance in a **Not Use** status for **Use table locking** is changed to a high availability instance
+
 ### August 9, 2022
 
 #### Added Features
