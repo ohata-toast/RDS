@@ -1,507 +1,518 @@
-## Database > RDS for MySQL > 릴리스 노트
+## Database > RDS for MySQL > Release Notes
 
-### 2022. 08. 09.
+### September 14, 2022
 
-#### 기능 추가
+#### Added Features
 
-* 이벤트 목록을 엑셀로 내보내는 기능 추가
+* Added MySQL 5.7.37, MySQL 8.0.28 versions
 
-#### 기능 개선
+#### Bug Fixes
 
-* 고가용성 중지된 인스턴스도 DB Configuration를 변경할 수 있도록 수정
-* 백업 보관 주기를 최대 30일에서 최대 2년으로 수정
-* DDL 수행으로 인한 백업 실패 시 이벤트 메시지에 원인을 남기도록 개선
+* Fixed an issue where an error message is left on the browser’s developer console
+* Fixed an issue where backup fails when a single instance in a **Not Use** status for **Use table locking** is changed to a high availability instance
 
-#### 버그 수정
+### August 9, 2022
 
-* 간헐적으로 내부 에이전트와의 통신 문제로 인해 백업에 실패하는 문제 수정
+#### Added Features
 
-### 2022. 07. 12.
+* Added a feature to export event lists to Excel
 
-#### 기능 추가
+#### Feature Updates
 
-* 서버 대시보드에서 차트를 서버별로 그룹화하여 볼 수 있는 기능 추가
+* Made modifications so that the DB Configuration of an instance where high availability is paused can be changed
+* Changed the maximum backup retention period from 30 days to 2 years
+* Made improvements so that, when backup fails due to DDL execution, the cause is left in the event message
 
-#### 기능 개선
+#### Bug Fixes
 
-* **복제 중단** 상태의 읽기 복제본의 DB Configuration 변경이 가능하도록 수정
+* Fixed an issue where backup fails intermittently due to communication issues with internal agents
 
-#### 버그 수정
+### July 12, 2022
 
-* 간헐적으로 **접속 실패** 상태인 DB 인스턴스의 상태가 **정상**으로 노출되는 문제 수정
-* 읽기 복제본 생성 시, 백업을 수행하지 않았음에도 이벤트 로그에 백업 수행이 남는 문제 수정
-* 간헐적으로 볼륨 확장이 실패하는 문제 수정
+#### Added Features
 
-### 2022. 06. 14.
+* Added a feature to view charts by grouping them per server on Server Dashboard
 
-#### 기능 개선
+#### Feature Updates
 
-* 복제 딜레이로 인하여 재시작이 실패할 경우 이벤트를 남기도록 개선
-* 접속 정보 도메인이 cloud.toast.com에서 nhncloudservice.com으로 변경
+* Made modifications so that the DB Configuration of a read replica in a **replication stopped** status can be changed
 
-#### 버그 수정
+#### Bug Fixes
 
-* validate password 플러그인 사용 시, 고가용성 구성이 안되는 문제 수정
-* 고가용성 인스턴스의 타입 변경이 실패하였음에도, candidate master의 타입이 변경 후 타입으로 보이는 문제 수정
+* Fixed an issue where DB instances in a **connection failed** status are displayed as **normal** intermittently
+* Fixed an issue where, when creating a read replica, backup execution is left in event logs even if the execution is not performed
+* Fixed an issue where volume scaling fails intermittently
 
-### 2022. 05. 10.
+### June 14, 2022
 
-#### 기능 추가
+#### Feature Updates
 
-* 자동 백업의 경우, 다른 리전으로 백업 파일을 복제하여 리전의 장애에 대비할 수 있는 기능 제공
+* Made improvements so that an event is logged when restart fails due to replication delay
+* Changed the access information domain from cloud.toast.com to nhncloudservice.com
 
-#### 기능 개선
+#### Bug Fixes
 
-* 오류 로그 저장 위치를 데이터 볼륨으로 변경
-* 오류 로그가 100MB 크기로 최대 10개까지 순환되도록 변경
-* 강제 재시작 실행 시, 다시 사용할 수 있는 시점까지 웹 콘솔을 조작하지 못하도록 수정
-* 장애 조치 시작 시점부터 웹 콘솔에서 대상 인스턴스를 조작하지 못하도록 수정
-* processlist에서 innodb status를 함께 볼 수 있도록 사용성 개선
-* processlist에서 숫자로 페이지를 이동할 수 있도록 개선
-* processlist에서 차트를 확대하여 해당 구간만 볼 수 있도록 개선
-* processlist에서 키워드로 검색할 수 있도록 개선
-* processlist에서 조회한 내역을 CSV 형식으로 다운로드할 수 있도록 개선
+* Fixed an issue where high availability configuration is not possible when the validate password plugin is used
+* Fixed an issue where, even though the type change of the high availability instance has failed, the type of the candidate master is displayed as the type after the change
 
-#### 버그 수정
+### May 10, 2022
 
-* 읽기 복제본의 백업으로 시점 복원 시, 잘못된 복원 가능 시간을 선택할 수 있던 문제 수정
-* Safari에서 모니터링 그래프가 보이지 않던 문제 수정
-* 마스터 인스턴스의 파라미터 변경 이후, 읽기 복제본의 파라미터 변경에 실패하는 문제 수정
-* 5.6.33 버전에서 읽기 복제본을 반복적으로 생성 또는 삭제할 경우, 간헐적으로 읽기 복제본 생성에 실패하는 문제 수정
+#### Added Features
 
-### 2022. 04. 12.
+* For automatic backup, added a feature to prepare for failures of a region by replicating the backup files to another region.
 
-#### 기능 개선
+#### Feature Updates
 
-* 읽기 복제본 혹은 일반 인스턴스를 고가용성 인스턴스로 변경 시, 사용 가능한 기존 백업이 있을 경우 추가적인 백업 없이 복제 구성하도록 개선
+* Changed the error log storage location to the data volume
+* Made changes so that error logs are rotated up to 10 logs with a size of 100 MB
+* Made modifications so that, when a forced restart is executed, the web console cannot be operated until it can be used again
+* Made modifications so that, after failover starts, the target instance cannot be manipulated in the web console
+* Improved usability so that you can view the innodb status in the processlist
+* Made improvements so that you can move to other pages by numbers in the processlist
+* Made improvements so that you can zoom in the chart in the processlist to view only the corresponding section
+* Made improvements so that you can search by keywords in the processlist
+* Made improvements so that you can download the results searched in the processlist in CSV format
 
-#### 버그 수정
+#### Bug Fixes
 
-* 인스턴스 정지와 인스턴스 볼륨 확장을 동시에 할 경우, 인스턴스 볼륨 확장 작업이 무한히 끝나지 않는 현상 수정
-* 5.6.33 버전에서 간헐적으로 읽기 복제본의 승격이 실패하는 현상 수정
-* 데이터 볼륨의 남은 공간이 1% 미만일 경우, 재시작할 때 오류가 발생하는 현상 수정
-* 간헐적으로 백업이 성공했음에도 백업 실패로 이벤트가 남는 현상 수정
+* Fixed an issue where, when performing point-in-time restoration with a backup of a read replica, a wrong restoration available time could be selected
+* Fixed an issue where the monitoring graph is not visible in Safari
+* Fixed an issue where, after changing the parameters of the master instance, changing the parameters of a read replica failed
+* Fixed an issue where, when repeatedly creating or deleting read replicas in version 5.6.33, creating a read replica failed intermittently
 
-### 2022. 03. 15.
+### April 12, 2022
 
-#### 기능 추가
+#### Feature Updates
 
-* **DB Configuration**에 변수 사용 기능 도입
+* Made improvements so that, when changing a read replica or normal instance to a high availability instance, replication is configured without additional backup if there is an existing backup available
 
-#### 버그 수정
+#### Bug Fixes
 
-* 특정 조건에서 모니터링 데이터가 수집되지 않는 현상 수정
-* 장애 조치가 발생한 인스턴스의 자동 백업이 삭제되지 않는 현상 수정
-* 생성 실패한 자동 백업이 기간 만료되었을 때 삭제되지 않는 현상 수정
-* MySQL에 등록된 사용자가 너무 많을 경우 복원에 실패하는 현상 수정
-* access rule을 수정해도 백업 설정 변경 이벤트가 기록되는 현상 수정
+* Fixed an issue where, if instance stop and instance volume scaling are performed at the same time, the instance volume scaling operation does not end indefinitely
+* Fixed an issue where the promotion of read replicas fails intermittently in version 5.6.33
+* Fixed an issue where an error occurs while restarting when the remaining space of the data volume is less than 1%
+* Fixed an issue where an event of backup failure is logged intermittently even after successful backup
 
+### March 15, 2022
 
-### 2022. 01. 11.
+#### Added Features
 
-#### 기능 추가
+* Added a feature to use variables in **DB configuration**
 
-* MySQL에서 실행 중인 프로세스 리스트 및 InnoDB 상태를 확인할 수 있는 기능 추가
+#### Bug Fixes
 
-#### 기능 개선
+* Fixed an issue where monitoring data is not collected under certain conditions
+* Fixed an issue where an automatic backup of failed-over instance is not deleted
+* Fixed an issue where an automatic backup that has failed to be created is not deleted when it reaches its expiration date
+* Fixed an issue where restoration fails when there are too many users registered in MySQL
+* Fixed an issue where a backup settings modification event is logged even when the access rule is modified
 
-* 웹 콘솔에서 DB 스키마 생성 시, 입력 가능한 이름의 최소 길이를 MySQL과 동일하게 한 글자로 수정
+### January 11, 2022
 
-### 2021. 12. 14.
+#### Added Features
 
-#### 기능 개선
+* Added a feature to check the running process list and InnoDB status in MySQL
 
-* 모니터링 조회 API v1 제공 중단
-* 데이터 암호화 기능 제공 중단
+#### Feature Updates
 
-#### 버그 수정
+* Changed the minimum length of the name that can be entered when creating a DB schema in the web console to 1 character, which is the same as that of MySQL
 
-* 인스턴스 복제 완료 직후, 복제 중단 이벤트가 남는 현상 수정
-* 알림 그룹 위에 마우스 포인터를 올려 놓았을 때 감시 설정의 항목이 가려지는 버그 수정
-* 이벤트 구독 시, 이벤트 코드가 '전체 선택'이면, 구독이 불가능한 내부 이벤트 코드의 알림을 받는 문제 수정
-* 인스턴스 생성 직후, 생성한 인스턴스 선택 시 알 수 없는 오류가 발생하는 버그 수정
-* DB 인스턴스 중지 시 이벤트를 남기도록 수정
+### December 14, 2021
 
-### 2021. 11. 09.
+#### Feature Updates
 
-#### 기능 추가
+* Stopped providing monitoring query API v1
+* Stopped providing data encryption feature
 
-* 자동 백업을 하루에 여러 차례 수행할 수 있도록 기능 추가
-* 시점 복원 시, 특정 binlog position으로 복원할 수 있는 기능 추가
-* 일반 인스턴스를 90일간 정지할 수 있는 기능 추가
+#### Bug Fixes
 
-#### 기능 개선
+* Fixes an issue where a replication stop event is logged immediately after completion of instance replication
+* Fixed a bug that caused items in the monitoring settings to be covered when the mouse pointer hovers over the notification group
+* Fixed an issue where, when subscribing to an event, notifications of internal event codes that cannot be subscribed are received if the event code is 'Select all'
+* Fixed a bug where an unknown error occurred when selecting the created instance immediately after instance creation
+* Made modifications so that an event is logged when the DB instance is stopped
 
-* 용량 부족 상태에서도 인스턴스를 수정할 수 있도록 기능 개선
-* 강제 재시작 시 간헐적으로 MySQL이 정상적으로 구동되지 않는 현상 완화
-* Out Of Memory로 MySQL이 종료되었을 경우 재시작되도록 수정
+### November 9, 2021
 
-#### 버그 수정
+#### Added Features
 
-* 인스턴스 생성에 필요한 파일을 다운로드받지 못해 간헐적으로 인스턴스 생성에 실패하는 문제 개선
-* 장기간 수행되는 백업의 경우, 사용자 쿼리 지연으로 인한 백업 실패임에도 일반 백업 실패로 이벤트가 남는 버그 수정
+* Added a feature to enable performing of automatic backups multiple times a day
+* Added a feature to restore to a specific binlog position when restoring to a point in time
+* Added a feature to stop normal instances for 90 days
 
-### 2021. 10. 12.
+#### Feature Updates
 
-#### 기능 개선
+* Improved a feature to enable modifying instances even in the status of insufficient capacity
+* Mitigated an issue where MySQL does not run properly intermittently when a force restart is performed
+* Made modifications so that MySQL is restarted when it is terminated due to out of memory
 
-* 시점 복원이 불가능한 기간을 노출하지 않도록 수정
+#### Bug Fixes
 
-#### 버그 수정
+* Improved an issue where instance creation fails intermittently because the file required for instance creation cannot be downloaded
+* Fixed a bug where, in case of a long-running backup, an event is logged as a general backup failure even if the backup failed due to user query latency
 
-* 서비스 활성화 직후, 데이터 암호화를 사용하는 고가용성 인스턴스를 만들 때, 간헐적으로 복원이 안 되는 문제 수정
-* 스토리지 확장 후 페이지 갱신되지 않는 현상 수정
+### October 12, 2021
 
-### 2021. 09. 14.
+#### Feature Updates
 
-#### 기능 개선
+* Changed to not expose a period for which point-in-time restoration is impossible
 
-* 백업 이벤트 시작, 성공, 실패 케이스 개선
-* MySQL 5.7.33 버전을 추가 지원
-* 장애 조치를 이용하지 않고 고가용성 인스턴스의 볼륨을 확장할 수 있는 기능 추가
+#### Bug Fixes
 
-#### 버그 수정
+* Fixed an issue where restoration intermittently fails when creating a high availability instance using data encryption immediately after service activation
+* Fixed an issue where the page is not updated after storage scale-up
 
-* 오브젝트 스토리지에 있는 백업을 이용해 복원할 때, 제대로 복원되지 않던 버그 수정
-* 오브젝트 스토리지로 백업을 내보낼 때, 파일 및 디렉터리 존재 유무를 확인하던 로직 버그 수정
-* 인스턴스 선택 시, 간헐적으로 알 수 없는 오류 창이 나타나던 버그 수정
+### September 14, 2021
 
+#### Feature Updates
 
-### 2021. 08. 25.
+* Improved backup event start, success, failure cases
+* Additional MySQL 5.7.33 version support
+* Added a feature to scale up the volume of a high availability instance without using failover
 
-#### 기능 개선
+#### Bug Fixes
 
-* 백업을 위한 볼륨 디스크 사용 방법 변경 및 성능 개선
-* 서비스 활성화 시 리전별 정보 동기화 개선
+* Fixed a bug where restoration is not performed properly when performing restoration using backup in the object storage
+* Fixed a logic bug where it checks whether the file and directory exist when exporting backup to the object storage
+* Fixed a bug where an unknown error window shows up intermittently when selecting an instance
 
-#### 버그 수정
+### August 25, 2021
 
-* 동작과 관련 없는 잘못된 유형의 이벤트를 기록하는 버그 수정
-* 고가용성 인스턴스의 장애 조치 진행 중에 인스턴스의 상태와 맞지 않는 이벤트를 기록하는 버그 수정
-* Database Activity 차트에 insert 항목이 없는 버그 수정
+#### Feature Updates
 
-### 2021. 07. 13.
+* Changed the way of using a volume disk for backup and improved the performance
+* Improved the information synchronization per region when the service is enabled
 
-#### 기능 개선
+#### Bug Fixes
 
-* MySQL 8.0.23 버전 추가 지원
-* 이벤트 구독 리스트에서 활성화 여부를 확인할 수 있게 개선
-* 생성한 인스턴스가 없을 때 대시보드에 '생성한 인스턴스가 없다'는 문구가 나타나도록 개선
+* Fixed the bug of recording a wrong event type that is irrelevant to the behavior
+* Fixed the bug of recording an event that does not match the status of an instance during failover of the high availability instance
+* Fixed the bug of Database Activity chart having no insert field
 
-#### 버그 수정
+### July 13, 2021
 
-* 일부 모니터링 데이터 미수집 버그 수정
-* 사용자 그룹명이 길 경우, 이벤트 구독 등록, 알림 그룹 추가 시 화면에 그룹명이 모두 표시되지 않던 문제 수정
-* 대시보드 드롭다운 메뉴 선택 시 메뉴가 사라지지 않고 남는 문제 수정
+#### Feature Updates
 
-### 2021. 06. 15.
+* Additional MySQL 8.0.23 version support
+* Improved to allow checking the Enable status in the event subscription list
+* Improved to display the notification that there are no instances created in the dashboard when no instances are created
 
-#### 기능 개선
+#### Bug Fixes
 
-* 모니터링 시스템 개편
+* Fixed a bug in which some monitoring data is not being collected
+* Fixed a bug in which long user group names extend beyond the UI when the event subscription registration and notification groups are added
+* Fixed a bug in which the menu remains visible when the dashboard dropdown is selected
 
-#### 버그 수정
+### June 15, 2021
 
-* 스토리지 크기에 근접한 크기의 백업으로 복원 시, 복원이 안 되는 현상 수정
-* 오브젝트 스토리지로 백업을 내보내거나, 가져올 때 컨테이너 혹은 경로에 한글이 있을 경우 정상 동작하지 않는 현상 수정
+#### Feature Updates
 
-### 2021. 05. 11.
+* Monitoring system reorganized
 
-#### 기능 추가
+#### Bug Fixes
 
-* 오브젝트 스토리지를 이용한 백업 내보내기 및 가져오기 기능 제공
-* 강제 재시작 기능 제공
+* Fixed a problem where restoration is not possible when restoring a backup with a size close to the storage size
+* Fixed a problem where it did not properly operate when there is Korean in the container or path when exporting or importing the backup to object storage
 
-#### 기능 개선
+### May 11, 2021
 
-* xtrabackup 로그 파일을 확인하고 다운로드할 수 있도록 기능 개선
+#### Added Features
 
-#### 버그 수정
+* Exporting and importing backup using object storage provided
+* Force restart provided
 
-* 서비스 활성화 직후, 인스턴스를 동시에 만들 경우 인스턴스가 간헐적으로 생성되지 않은 버그 수정
-* 고가용성 인스턴스의 포트와 인스턴스 타입을 동시에 변경 할 경우 변경이 실패하는 현상 수정
+#### Feature Updates
 
-### 2021. 04. 13.
+* Improved feature to check and download xtrabackup log file
 
-#### 기능 추가
+#### Bug Fixes
 
-* MySQL 버전 5.6.33, 5.7.19~5.7.26에 대해 감사 로그(audit log) 기능 제공
+* Fixed the bug where intermittently instances would not be created when multiple instances are created simultaneously after the service is enabled
+* Fixed the bug where changes would fail when changing the high availability instance port and instance type at the same time
 
-#### 기능 개선
+### April 13, 2021
 
-* 프로젝트 멤버의 권한을 RDS for MySQL ADMIN / RDS for MySQL MEMBER로 세분화
-* MySQL이 다운된 상태에서 재시작이 가능하도록 수정
-* 임의의 가용성 영역을 선택할 수 있도록 수정
-* 알람 설정 시, 노출되는 쿼터 제한 문구 수정
-* RDS에서 제공하는 프로시저 사용법 가이드 추가
+#### Added Features
 
-#### 버그 수정
+* Provides audit log function for MySQL versions 5.6.33 to 5.7.26
 
-* 장애 조치 완료된 인스턴스의 상태가 간헐적으로 정상화되는 문제 수정
-* 생성에 실패한 Read Only Slave 때문에 마스터 인스턴스의 일부 기능이 동작하지 않는 문제 수정
-* 데이터 암호화 인스턴스가 강제 재부팅될 때, MySQL이 정상적으로 실행되지 않는 문제 수정
+#### Feature Updates
 
-### 2021. 03. 09.
+* Permission of project members subdivided into RDS for MySQL ADMIN / RDS for MySQL MEMBER
+* Modified the system to allow restart during MySQL down
+* Modified system to allow users to select any availability zones
+* Modified quarter limit text displayed when setting alarms
+* Added user guide for procedures provided from RDS
 
-#### 기능 개선
-- 프로젝트 별 리소스 쿼터 제한 기능 개선
+#### Bug Fixes
 
-#### 버그 수정
-- 특정한 경우에서 인스턴스 재시작이 정상적으로 이루어지지 않는 버그 수정
+* Fixed an issue where status of instance with a completed failover intermittently becomes normalized
+* Fixed an issue where some features of master instance does not work due to failed Read Only Slave
+* Fixed an issue where MySQL cannot run properly when data encryption instance is forced to reboot
 
-### 2021. 02. 16.
+### March 9, 2021
 
-#### 기능 추가
+#### Feature Updates
 
-- DB User와 DB 스키마를 웹 콘솔을 통해서 제어할 수 있는 기능 추가
+- Improved the feature to limit the resource quota per project
 
-#### 기능 개선
+#### Bug Fixes
 
-- DB 파일 암호화 기능 선택 시 툴팁 제공
-- 쿼리 지연 대기 시간의 값이 이상한 경우 검증 메시지 노출
+- Fixed a bug where instance restart is not performed properly in certain situations
 
-#### 버그 수정
+### February 16, 2021
 
-- 프로젝트 멤버가 20명 이상인 경우 Notification 멤버로 등록할 수 없는 버그 수정
+#### Added Features
 
-### 2021. 01. 19.
+- Added a feature that controls DB User and DB Schema through web console
 
-#### 기능 추가
+#### Feature Updates
 
-- 고가용성(HA) 기능 사용 시, Ping Interval(Master 인스턴스 상태를 확인하는 시간 간격)을 설정할 수 있도록 기능 추가
-- 고가용성(HA) 일시 중지/다시 시작 기능 추가
-- **Access 제어 설정** 대화 상자에서, 접근 제어 방향(수신/송신)을 설정할 수 있도록 기능 추가
-- t2.c1m1 Flavor 인스턴스 생성 불가 변경.
-- t2.c1m1 Flavor로 기존에 생성한 일반 인스턴스의 경우, 고가용성으로 변경하지 못하도록 변경.
+- Tooltip provided when the DB file encryption feature is selected
+- Verification message displayed if query latency value is abnormal
 
-### 2020. 12. 15.
+#### Bug Fixes
 
-#### 기능 추가
+- Fixed a bug where project members cannot be registered as a Notification member if there are 20 or more project members
 
-- --ftwrl-wait-timeout 옵션 값을 사용자가 설정할 수 있도록 기능 추가
+### January 19, 2021
 
-### 2020. 11. 10.
+#### Added Features
 
-#### 버그 수정
+- Added a feature to set Ping Interval (an interval to check the status of master instance) when using the high availability (HA) feature
+- Added HA suspend/resume features
+- Added a feature to set access control direction (inbound/outbound) in the **Access Control Settings** dialog box
+- Changed so that t2.c1m1 Flavor instance cannot be created anymore.
+- Changed so that the normal instances created with t2.c1m1 Flavor can no longer be switched to HA instances
 
-- 간헐적으로 자동 백업 생성에 실패하는 현상 수정
-- 간헐적으로 기간이 만료된 자동 백업 삭제에 실패하는 현상 수정
+### December 15, 2020
 
-### 2020. 10. 13.
+#### Added Features
 
-#### 버그 수정
+- Added a feature that enables users to set the --ftwrl-wait-timeout option value
 
-- innodb_buffer_pool_size 값이 의도한 값으로 수정되지 않는 현상 수정
-- require_secure_transport 값이 on일 경우 ha candidate master 인스턴스의 복제 실패 현상 수정
-- 대용량 인스턴스 백업 시 과도한 시간 지연 현상 수정
+### November 10, 2020
 
-### 2020. 09. 22.
+#### Bug Fixes
 
-#### 기능 추가
+- Fixed an issue where automatic backup generation occasionally failed
+- Fixed an issue where automatic deletion of expired backup occasionally failed
 
-- 한국(평촌) 리전 오픈
+### October 13, 2020
 
-### 2020. 09. 15.
+#### Bug Fixes
 
-#### 기능 추가
+- Fixed an issue in which innodb_buffer_pool_size cannot be modified as intended
+- Fixed failed copy of the ha candidate master instance, when the require_secure_transport is on
+- Fixed delays in the backup of large-scale instance
 
-- 모니터링 API 지원
+### September 22, 2020
 
-### 2020. 08. 11.
+#### Added Features
 
-#### 버그 수정
+- New region opened in Korea (Pyeongchon)
 
-- 사용자 VPC 서브넷이 없을 경우, 이상한 서브넷이 목록에 나타나는 현상 수정
+### September 15, 2020
 
-### 2020. 07. 14.
+#### Added Features
 
-#### 기능 추가
+- Supports Monitoring API
 
-- MySQL 8.0.18 버전을 추가 지원
+### August 11, 2020
 
-### 2019. 12. 10.
+#### Bug Fixes
 
-#### 기능 추가
+- Fixed an issue in which an invalid subnet appears on the list when user VPC subnet is unavailable
 
-- DB 파일 암호화 기능 추가 (한국 리전)
+### July 14, 2020
 
-### 2019. 11. 12.
+#### Added Features
 
-#### 기능 개선
+- Further supports MySQL 8.0.18
 
-- Candidate Master의 장애 탐지 및 복구 기능 고도화
+### December 10, 2019
 
-#### 버그 수정
+#### Added Features
 
-- 간헐적으로 백업이 되지 않았던 문제 수정
+- Added the feature of database file encryption (Korea Region)
 
-### 2019. 09. 24.
+### November 12, 2019
 
-#### 기능 개선
+#### Feature Updates
 
-- 인스턴스 생성 속도 개선 (HA 인스턴스 기준 약 28분 -> 약 13분)
-- 장애 조치를 이용한 재시작 시, 시점 복원을 위한 신규 백업을 진행할 수 있도록 UX 개선
-- 기본 알람 사용 여부 UI 변경
+- Updated failure detection and restoration of candidate master
 
-### 2019. 08. 13.
+#### Bug Fixes
 
-#### 기능 개선
+- Fixed infrequent backup failures
 
-- 고가용성(HA)에 관련된 이벤트 로그를 좀 더 직관적으로 볼 수 있도록 수정
+### September 24, 2019
 
-#### 버그 수정
+#### Feature Updates
 
-- 간헐적으로 DB 인스턴스의 생성, 복원이 안 되는 문제 수정
-- DB 인스턴스의 삭제 알람 메일이 발송되지 않는 문제 수정
+- Improved speed for creating an instance (About 28 minutes -> 13 minutes, for HA instances)
+- Updated UX to allow new backups for point-in-time restoration, at the restart by using failover
+- Changed UI for enabling default alarm
 
-### 2019. 07. 23.
+### August 13, 2019
 
-#### 기능 추가
+#### Feature Updates
 
-- 기본 알람 기능 추가
-- 모니터링 항목 추가
+- Allowed to view event logs related to high availability more intuitively
 
-#### 기능 개선
+#### Bug Fixes
 
-- 백업 관련 이벤트는 더 이상 알람을 지원하지 않음.
+- Fixed the occasional failure in creating or restoring DB instances
+- Fixed failed delivery of mails, notifying the deletion of DB instances
 
-### 2019. 06. 27.
+### July 23, 2019
 
-#### 기능 추가
+#### Added Features
 
-- 일본 리전 추가
+- Default Alarm added
+- Monitoring Item added
 
-### 2019. 06. 25.
+#### Feature Updates
 
-#### 기능 추가
+- Backup-related events no longer support alarms.
 
-- 고가용성(HA) 기능 추가
+### June 27, 2019
 
-#### 기능 개선
+#### Added Features
 
-- 인스턴스 상세 보기 화면에 노출되는 이벤트 기간을 1일에서 7일로 변경
+- Japan Region added
 
-#### 버그 수정
+### June 25, 2019
 
-- 시점 복원 시, 복구 가능한 시간부터 복원할 수 있도록 수정
+#### Added Features
 
-### 2019. 05. 14.
+- High Availability added
 
-#### 기능 개선
+#### Feature Updates
 
-- 인스턴스 생성 및 수정 시, 검증 기능 강화
-- Notification 알림 이벤트를 전체 선택/해제할 수 있는 UX 추가
+- Event period exposed on the page of instance details changed from 1 day to 7 days
 
-#### 버그 수정
+#### Bug Fixes
 
-- 생성 중인 인스턴스 삭제 시, 간헐적으로 삭제가 되지 않았던 문제 수정
-- 데이터 저장소가 가득찼을 때, 간헐적으로 데이터 볼륨이 변경되지 않았던 문제 수정
+- Fixed so that, when performing point-in-time restoration, the restoration can be performed from the time that can be recovered.
 
-### 2019.03.12
+### May 14, 2019
 
-#### 기능 개선
+#### Feature Updates
 
-- 의미가 모호하고 보기 불편한 에러 메시지 개선
-- 콘솔에서 transaction-isolation 값을 수정 할 수 있도록 개선
+- Stronger authentication when instance is created or modified
+- Added UX to select/unselect all notification events
 
-#### 버그 수정
+#### Bug Fixes
 
-- 1TB 의 DB 의 백업 시간이 하루 이상 걸릴 수 있는 가능성 제거
+- Fixed an issue where instances cannot be deleted intermittently when they are being created
+- Fixed an issue in which data volume is not properly changed when data storage is full
 
-### 2019.02.26
+### March 12, 2019
 
-#### 기능 추가
+#### Feature Updates
 
-- 인스턴스 데이터 저장소로 SSD 볼륨 사용 기능 추가.
+- Updated error messages that are vague with unpleasant looks.
+- Updated to allow modifying transaction-isolation on the console
 
-#### 기능 개선
+#### Bug Fixes
 
-- Notification 수신 대상을 프로젝트 멤버로 설정하도록 기능 개선.
-- x1, u2 flavor 사용 가능 기능 개선.
+- Removed the probability of long backup time which may take more than a day for 1TB database
 
-### 2019.01.29
+### February 26, 2019
 
-#### 기능 개선
+#### Added Features
 
-- 인스턴스 볼륨 사이즈 최대값 1000G으로 변경
+- Added the feature of SSD volume as storage for instance data
 
-### 2018.12.14
+#### Feature Updates
 
-#### 버그 수정
+- Updated to set recipients of notification from project members
+- Updated features for x1, u2 flavor
 
-- r2.c8m64 flavor 미노출 수정
-- general log 안보이는 현상 수정
-- VPC Subnet 선택 버그 수정
+### January 29, 2019
 
-### 2018.12.11
+#### Feature Updates
 
-#### 기능 개선
+- Changed the maximum instance volume to 1000G
 
-- Peering 기능 제거
-- 사용자 VPC Subnet을 이용한 네트워크 통신 방식으로 기능 개선
+### December 14, 2018
 
-### 2018.10.23
+#### Bug Fixes
 
-#### 기능 개선
+- Fixed failed exposure of r2.c8m64
+- Fixed general logs that are not visible
+- Fixed bugs in the VPC subnet selection
 
-- 인스턴스 생성/복원/복제 시 입력 항목 설명문구 노출
-- mysql transaction_isolation 옵션 노출
+### December 11, 2018
 
-### 2018.10.16
+#### Feature Updates
 
-#### 기능 추가
+- Removed the peering feature
+- Feature updated to the method of network communication by using user VPC subnet
 
-- 인스턴스 Flavor 변경 기능 추가
-- 인스턴스 Storage 확장 기능 추가
+### October 23, 2018
 
-### 2018.08.28
+#### Feature Updates
 
-#### 기능 추가
+- Shows description message for input items when instance is created/restored/replicated
+- Shows the mysql transaction_isolation option
 
-- Binary Log 파일 삭제을 통한 인스턴스 용량 확보 기능 추가
+### October 16, 2018
 
-### 2018.07.24
+#### Added Features
 
-#### 기능 추가
+- Added the feature of changing instance flavor
+- Added the feature of extending instance storage
 
-- MySQL 5.7.15 버전을 추가 지원
+### August 28, 2018
 
-#### 버그 수정
+#### Added Features
 
-- MySQL 5.7.19 버전 인스턴스 생성 시, floating ip 를 붙이지 않으면 생성하지 못하는 현상 수정
-- 특정 상황에서 자동 백업의 시간이 평소의 2배 소요되는 현상 수정
+- Allows to secure instance volume by deleting binary log files
 
-### 2018.05.29
+### July 24, 2018
 
-#### 기능 추가
+#### Added Features
 
-- MySQL 5.7 버전 신규 지원
+- Also supports MySQL 5.7.15
 
-### 2018.04.24
+#### Bug Fixes
 
-#### 기능 개선
+- Fixed an issue in which an instance of the MySQL 5.7.19 version cannot be created, without floating IP
+- Fixed auto backups at particular situations, in which it takes twice the usual time
 
-- master의 port 변경 시, read only slave의 master 접속 정보 자동 변경
-- 백업 후, 불필요하게 남는 로그 삭제
+### May 29, 2018
 
-#### 버그 수정
+#### Added Features
 
-- 검색결과 페이지 > 인스턴스 생성 후 페이지 이동 시도 시, 검색 결과 페이지로 이동되는 현상 수정
-- 비밀번호 확인란을 공백으로 인스턴스 생성 시도 시 경고문구가 뜨지 않는 현상 수정
+- Newly supports MySQL 5.7
 
-### 2018.03.22
+### April 24, 2018
 
-#### 버그 수정
+#### Feature Updates
 
-- 백업 보관 기관 '없음'으로 변경 시, 일정 시간동안 리스트에서 보이는 현상 수정
-- 인스턴스 설정 수정을 하지 않았음에도 인스턴스의 상태가 변경 중으로 보이는 버그 수정
-- 인스턴스 재시작 시, QPS 가 음수로 보이는 현상 수정
-- Monitoring 화면에서 기간 설정 버튼 클릭 시, 화면의 날짜 및 시각의 갱신 없이 데이터만 갱신 되는 버그 수정
+- With port change of the master, the master access information is automatically changed for read only slave
+- Delete unnecessary logs after backup
 
-### 2018.02.22
+#### Bug Fixes
 
-#### 신규 상품 출시
+- Fixed pagination, in which Search Result > Create instance takes you to the search result page
+- Fixed the missing of a warning sign when it is tried to create an instance with Confirm Password left in blank
 
-- TOAST Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
-- 복잡한 설정 없이 Relational Database 사용할 수 있습니다.
-- MySQL 5.6.33 버전을 제공합니다.
+### March 22, 2018
+
+#### Bug Fixes
+
+- Fixed an issue in which backup retention period remains on the list, even after it is changed to 'N/A'
+- Fixed the bug in which instance status shows Changing, even without instance setting updated
+- Fixed an issue in which QPS shows as negative number when an instance restarts
+- Fixed the bug in which only data is updated without date or time updates, at the click of Period Setting on the Monitoring page
+
+### February 22, 2018
+
+#### New Releases
+
+- TOAST Relational Database Service (RDS) provides Relational Database in the cloud environment.
+- No complicated configuration is required to enable relational database.
+- Supports MySQL 5.6.33.

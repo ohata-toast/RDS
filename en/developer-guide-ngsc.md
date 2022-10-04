@@ -177,7 +177,6 @@ mysql> call mysql.tcrds_repl_init();
 
 | MySQL version | XtraBackup version |
 | --- | --- |
-| 5.6.33 | 2.4.20 |
 | 5.7.15 | 2.4.20 |
 | 5.7.19 | 2.4.20 |
 | 5.7.26 | 2.4.20 |
