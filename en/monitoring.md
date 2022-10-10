@@ -84,9 +84,6 @@ An event refers to important incident incurred by RDS for MySQL or the user. An 
 | INSTANCE | INSTC_51_01 | Backup failed due to user query latency |
 | INSTANCE | INSTC_52_01 | Backup and export failed due to user query latency |
 | BACKUP | BACUP_02_01 | Backup deleted |
-| BACKUP | BACUP_04_00 | Object storage upload started |
-| BACKUP | BACUP_04_01 | Object storage uploaded |
-| BACKUP | BACUP_04_04 | Object storage upload failed |
 | BACKUP | BACUP_05_00 | Backup export started |
 | BACKUP | BACUP_05_01 | Backup exported |
 | BACKUP | BACUP_05_04 | Backup export failed |
