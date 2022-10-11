@@ -1,5 +1,21 @@
 ## Database > RDS for MySQL > Release Notes
 
+### October 11, 2022
+
+#### Feature Updates
+
+* Changed the version displayed by default when creating a DB instance to version 8.0.28
+* Changed the domain change tooltip displayed on the instance details screen
+
+#### Bug Fixes
+
+* Removed no longer used event codes
+* Fixed an issue where a read replica cannot be deleted intermittently under certain conditions
+
+#### Others
+
+* Made modifications so that instances can no longer be created in version 5.6.33
+
 ### September 14, 2022
 
 #### Added Features
