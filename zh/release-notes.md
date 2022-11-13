@@ -1,5 +1,27 @@
 ## Database > RDS for MySQL > Release Notes
 
+### November 15, 2022
+
+#### Bug Fixes
+
+* Fixed an issue where, when `sha256_password` is set under the `default_authentication_plugin` parameter, high availability configuration is turned off.
+
+### October 11, 2022
+
+#### Feature Updates
+
+* Changed the version displayed by default when creating a DB instance to version 8.0.28
+* Changed the domain change tooltip displayed on the instance details screen
+
+#### Bug Fixes
+
+* Removed no longer used event codes
+* Fixed an issue where a read replica cannot be deleted intermittently under certain conditions
+
+#### Others
+
+* Made modifications so that instances can no longer be created in version 5.6.33
+
 ### September 14, 2022
 
 #### Added Features
@@ -25,7 +47,7 @@
 
 #### Bug Fixes
 
-* Fixed an issue where backup fails intermittently due to communication issues with internal agents 
+* Fixed an issue where backup fails intermittently due to communication issues with internal agents
 
 ### July 12, 2022
 
