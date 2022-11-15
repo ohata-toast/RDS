@@ -1,5 +1,11 @@
 ## Database > RDS for MySQL > リリースノート
 
+### 2022. 11. 15.
+
+#### バグ修正
+
+* `default_authentication_plugin`パラメータを`sha256_password`に設定すると、高可用性構成が解除される問題を修正
+
 ### 2022. 10. 11.
 
 #### 機能改善

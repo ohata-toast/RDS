@@ -1,5 +1,11 @@
 ## Database > RDS for MySQL > Release Notes
 
+### November 15, 2022
+
+#### Bug Fixes
+
+* Fixed an issue where, when `sha256_password` is set under the `default_authentication_plugin` parameter, high availability configuration is turned off.
+
 ### October 11, 2022
 
 #### Feature Updates
