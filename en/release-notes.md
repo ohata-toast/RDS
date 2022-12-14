@@ -1,5 +1,17 @@
 ## Database > RDS for MySQL > Release Notes
 
+### December 13, 2022
+
+#### Feature Updates
+
+* Made modifications so that, when backup fails due to DML overload, the cause is left in the event message
+
+#### Bug Fixes
+
+* Fixed an issue where, when synchronizing DB schemas, schemas that cannot be deleted are intermittently registered 
+* Fixed an issue where another host with the same name as the deleted account cannot be added
+* Fixed an issue where, when restarting an existing failed-over master, user access control cannot be modified
+
 ### November 15, 2022
 
 #### Bug Fixes
