@@ -132,7 +132,7 @@ RDS for MySQL에서 지원하는 차트는 아래와 같습니다.
 | Database Activity | select<br> insert<br> update<br> delete<br> replace<br> call<br> |
 | Buffer Pool | buffer pool total (bytes)<br> buffer pool used (%) |
 | Slow Query | counts |
-| 복제 딜레이 | sec (초) |
+| 복제 지연 | sec (초) |
 | Row Access | index<br> full scan |
 
 ## 알림 그룹
