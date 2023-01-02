@@ -9,7 +9,7 @@ When configuring the monitoring settings of the notification group, notification
 An event refers to important incident incurred by RDS for MySQL or the user. An event is comprised of a type, date of occurrence, event source, and message. It can be checked on the web console, and notification can be received via email and SMS through subscription. The event types and event occurrences are as follows.
 
 | Event Type | Event Code | Event Message |
-| --- | --- | --- |
+| --- |-------------| --- |
 | INSTANCE | INSTC_02_01 | DB instance started |
 | INSTANCE | INSTC_03_01 | DB instance stopped |
 | INSTANCE | INSTC_04_00 | DB instance deletion started |
@@ -83,6 +83,10 @@ An event refers to important incident incurred by RDS for MySQL or the user. An 
 | INSTANCE | INSTC_50_04 | Backup export failed |
 | INSTANCE | INSTC_51_01 | Backup failed due to user query latency |
 | INSTANCE | INSTC_52_01 | Backup and export failed due to user query latency |
+| INSTANCE | INSTC_53_00 | Stopping DB instance started |
+| INSTANCE | INSTC_53_01 | Stopping DB instance completed |
+| INSTANCE | INSTC_53_04 | Stopping DB instance failed |
+| INSTANCE | INSTC_55_01 | Failover restart failed due to replication delay |
 | BACKUP | BACUP_02_01 | Backup deleted |
 | BACKUP | BACUP_05_00 | Backup export started |
 | BACKUP | BACUP_05_01 | Backup exported |
@@ -112,25 +116,25 @@ RDS for MySQL provides two default layouts: **default system index** and **defau
 Various performance indicators of DB instances can be viewed as charts. Each performance indicators consists of different chart forms.
 Below are the charts supported by RDS for MySQL.
 
-| Chart | Indicators (unit) |
-| --- | --- |
-| CPU usage | cpu used (%) |
-| CPU details | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%) |
-| Memory usage | memory used (%) |
-| Memory details | memory used (bytes)<br> memory buffers (bytes)<br> memory cached (bytes)<br> memory free (bytes) |
-| Swap usage | swap used (bytes)<br> swap total (bytes) |
-| Storage usage | storage used (%) |
-| Storage IO | disk read (bytes)<br> disk write (bytes) |
-| Network data transfer | nic incoming (bytes)<br> nic outgoing (bytes) |
-| CPU load average | 1m<br> 5m<br> 15m |
+| Chart                 | Indicators (unit) |
+|--------------------| --- |
+| CPU usage          | cpu used (%) |
+| CPU details         | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%) |
+| Memory usage         | memory used (%) |
+| Memory details         | memory used (bytes)<br> memory buffers (bytes)<br> memory cached (bytes)<br> memory free (bytes) |
+| Swap usage         | swap used (bytes)<br> swap total (bytes) |
+| Storage usage         | storage used (%) |
+| Storage IO         | disk read (bytes)<br> disk write (bytes) |
+| Network data transfer         | nic incoming (bytes)<br> nic outgoing (bytes) |
+| CPU load average         | 1m<br> 5m<br> 15m |
 | Queries Per Second | qps |
-| Connection | total<br> running<br> cached |
-| Connection Ratio | ratio (%) |
-| Database Activity | select<br> insert<br> update<br> delete<br> replace<br> call<br> |
-| Buffer Pool | buffer pool total (bytes)<br> buffer pool used (%) |
-| Slow Query | counts |
-| Replication delay | sec (seconds) |
-| Row Access | index<br> full scan |
+| Connection         | total<br> running<br> cached |
+| Connection Ratio    | ratio (%) |
+| Database Activity   | select<br> insert<br> update<br> delete<br> replace<br> call<br> |
+| Buffer Pool         | buffer pool total (bytes)<br> buffer pool used (%) |
+| Slow Query         | counts |
+| Replication delay         | sec (seconds) |
+| Row Access         | index<br> full scan |
 
 ## Notification Group
 
