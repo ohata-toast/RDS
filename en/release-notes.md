@@ -1,5 +1,17 @@
 ## Database > RDS for MySQL > Release Notes
 
+### January 10, 2023
+
+#### Feature Updates
+
+* Made modifications not to allow duplicate notification group names
+
+#### Bug Fixes
+
+* Fixed an issue where, when continuously modifying the monitoring setting popup, the modifications are applied abnormally
+* Fixed an issue where the refresh setting does not work in the server dashboard page
+* Fixed an issue where an event of backup failure caused by DDL query execution is not logged properly
+
 ### December 13, 2022
 
 #### Feature Updates
