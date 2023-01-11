@@ -8,8 +8,8 @@ DBインスタンスの各種性能指標とDBインスタンスに関連する�
 
 イベントはRDS for MySQLやユーザーによって発生した重要な出来事を意味します。イベントはイベントタイプ、発生日時、イベントソースとメッセージで構成されます。イベントはWebコンソールで照会可能で、購読することでメール、SMSでイベント発生通知を受け取ることができます。イベントのタイプと発生するイベントは以下の通りです。
 
-| イベントタイプ | イベントコード | イベントメッセージ |
-| --- | --- | --- |
+| イベントタイプ | イベントコード    | イベントメッセージ |
+| --- |-------------| --- |
 | INSTANCE | INSTC_02_01 | DB Instance起動 |
 | INSTANCE | INSTC_03_01 | DB Instance終了 |
 | INSTANCE | INSTC_04_00 | DB Instance削除開始 |
@@ -83,6 +83,10 @@ DBインスタンスの各種性能指標とDBインスタンスに関連する�
 | INSTANCE | INSTC_50_04 | バックアップのエクスポート失敗 |
 | INSTANCE | INSTC_51_01 | ユーザークエリ遅延によるバックアップ失敗 |
 | INSTANCE | INSTC_52_01 | ユーザークエリ遅延によるバックアップおよびエクスポート失敗 |
+| INSTANCE | INSTC_53_00 | DBインスタンス停止開始 |
+| INSTANCE | INSTC_53_01 | DBインスタンス停止完了 |
+| INSTANCE | INSTC_53_04 | DBインスタンス停止失敗 |
+| INSTANCE | INSTC_55_01 | 複製遅延による障害措置再起動失敗 |
 | BACKUP | BACUP_02_01 | バックアップ削除完了 |
 | BACKUP | BACUP_04_00 | Object Storageアップロード開始 |
 | BACKUP | BACUP_04_01 | Object Storageアップロード完了 |
@@ -115,25 +119,25 @@ RDS for MySQLは**基本システム指標**、**基本MySQL指標**2個の基�
 DBインスタンスの各種性能指標をチャート形式で確認できます。性能指標ごとに異なる形式のチャートで構成されています。
 RDS for MySQLでサポートするチャートは以下の通りです。
 
-| チャート | 指標(単位) |
-| --- | --- |
-| CPU使用率 | cpu used (%) |
-| CPU詳細 | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%) |
-| メモリ使用量 | memory used (%) |
-| メモリ詳細 | memory used (bytes)<br> memory buffers (bytes)<br> memory cached (bytes)<br> memory free (bytes) |
-| スワップ使用量 | swap used (bytes)<br> swap total (bytes) |
-| Storage使用量 | storage used (%) |
-| Storage IO | disk read (bytes)<br> disk write (bytes) |
-| ネットワークデータ送受信 | nic incoming (bytes)<br> nic outgoing (bytes) |
-| CPU平均負荷 | 1m<br> 5m<br> 15m |
+| チャート               | 指標(単位) |
+|--------------------| --- |
+| CPU使用率           | cpu used (%) |
+| CPU詳細           | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%) |
+| メモリ使用量           | memory used (%) |
+| メモリ詳細           | memory used (bytes)<br> memory buffers (bytes)<br> memory cached (bytes)<br> memory free (bytes) |
+| スワップ使用量            | swap used (bytes)<br> swap total (bytes) |
+| Storage使用量       | storage used (%) |
+| Storage IO         | disk read (bytes)<br> disk write (bytes) |
+| ネットワークデータ送受信     | nic incoming (bytes)<br> nic outgoing (bytes) |
+| CPU平均負荷        | 1m<br> 5m<br> 15m |
 | Queries Per Second | qps |
-| Connection | total<br> running<br> cached |
-| Connection Ratio | ratio (%) |
-| Database Activity | select<br> insert<br> update<br> delete<br> replace<br> call<br> |
-| Buffer Pool | buffer pool total (bytes)<br> buffer pool used (%) |
-| Slow Query | counts |
-| 複製ディレイ | sec (秒) |
-| Row Access | index<br> full scan |
+| Connection         | total<br> running<br> cached |
+| Connection Ratio   | ratio (%) |
+| Database Activity  | select<br> insert<br> update<br> delete<br> replace<br> call<br> |
+| Buffer Pool        | buffer pool total (bytes)<br> buffer pool used (%) |
+| Slow Query         | counts |
+| 複製遅延            | sec (秒) |
+| Row Access         | index<br> full scan |
 
 ## 通知グループ
 
