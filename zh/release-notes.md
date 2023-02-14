@@ -1,5 +1,16 @@
 ## Database > RDS for MySQL > Release Notes
 
+### February 14, 2023
+
+#### Feature Updates
+
+* Made modifications so that the Max Connection value is displayed on the Connection chart in MySQL metrics of the server dashboard
+
+#### Bug Fixes
+
+* Fixed an issue where, when an error occurs in the IAM console, the page is not moved to an appropirate error page
+* Fixed an issue where, when changing the DB instance type or expanding storage using failover, the Ping interval is set to default
+
 ### December 13, 2022
 
 #### Feature Updates
