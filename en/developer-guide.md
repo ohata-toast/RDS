@@ -267,7 +267,7 @@ xtrabackup --defaults-file={my.cnf path} --user={username} --password='{password
 * Update completed backup file to object storage.
     * The maximum file size that can be uploaded at a time is 5 GB.
     * If the size of backup file is larger than 5 GB, use a utility such as split to split the backup file to a size below 5 GB and perform multipart uploading.
-    * For more details, see https://docs.toast.com/ko/Storage/Object%20Storage/ko/api-guide/#_43.
+    * For more details, see https://docs.nhncloud.com/en/Storage/Object%20Storage/en/api-guide/#multipart-upload.
 * Access the web console of the project to restore, and click the Restore from Backup in Object Storage button in the Instance tab.
 * Enter the information of the object storage where the backup file is stored and the DB instance, and click the **Create** button.
 
