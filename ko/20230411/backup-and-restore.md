@@ -128,7 +128,7 @@ xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비�
 
 RDS for MySQL의 백업 파일을 이용하여 직접 MySQL의 데이터베이스를 복원할 수 있습니다. RDS for MySQL 백업 파일을 복원할 때 [백업](./#_1) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
 
-(1) [백업 내보내기](./) 항목을 참고하여 RDS for MySQL의 백업을 오브젝트 스토리지로 내보냅니다.
+(1) [백업 내보내기](./#_5) 항목을 참고하여 RDS for MySQL의 백업을 오브젝트 스토리지로 내보냅니다.
 
 (2) 오브젝트 스토리지의 백업을 복원하고자 하는 서버에 다운로드합니다.
 
