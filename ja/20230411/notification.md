@@ -188,6 +188,53 @@
 
 감시 설정은 감시 항목, 비교 방법, 임겟값 및 지속 시간으로 구성됩니다. 감시 항목의 성능 지푯값과 임겟값을 비교하여 조건이 충족하는지 판단합니다. 조건이 지속시간 이상 연속해서 충족한다면 알림을 발송합니다. 예를 들어, CPU 사용률의 임겟값이 90% 이상이고 지속 시간이 5분이라면, 해당 알림 그룹과 연동된 DB 인스턴스의 CPU 사용률이 90% 이상인 상태가 5분 이상 지속되었을 때 사용자 그룹에 정의된 사용자들에게 알림을 보냅니다. 만약 CPU 사용률이 90% 이상이 되어도, 5분 이내에 90% 미만으로 떨어지면 알림이 발생하지 않습니다.
 
+### 감시 설정 항목
+
+감시 가능한 성능 지표 항목은 다음과 같습니다.
+
+| 힝목                         | 단위                 |
+|----------------------------|--------------------|
+| CPU 사용률                    | %                  |
+| CPU 사용량(IO Wait)           | %                  |
+| CPU 사용량(Nice)              | %                  |
+| CPU 사용량(System)            | %                  |
+| CPU 사용량(User)              | %                  |
+| Load Average 1M            |                    |
+| Load Average 5M            |                    |
+| Load Average 15M           |                    |
+| 메모리 사용량                    | %                  |
+| 메모리 사용량(바이트)               | MB                 |
+| 메모리 여유량(바이트)               | MB                 |
+| 메모리 버퍼(바이트)                | MB                 |
+| 캐시된 메모리(바이트)               | MB                 |
+| 스왑 사용량                     | MB                 |
+| 스왑 전체 크기                   | MB                 |
+| Storage 사용량                | %                  |
+| Storage 남은 사용량             | MB                 |
+| Storage IO Read            | KB/sec             |
+| Storage IO Write           | KB/sec             |
+| 스토리지 결함                    | 비정상: 0, 정상: 1      |
+| Network in BPS             | KB/sec             |
+| Network out BPS            | KB/sec             |
+| Database Connection Status | 접속 불가: 0, 접속 가능: 1 |
+| Queries Per Second         | counts/sec         |
+| Connection Total           | counts             |
+| Connection Running         | counts             |
+| Connection Cached          | counts             |
+| Connection Ratio           | counts             |
+| Database Activity Select   | counts/sec         |
+| Database Activity Insert   | counts/sec         |
+| Database Activity Update   | counts/sec         |
+| Database Activity Delete   | counts/sec         |
+| Database Activity Replace  | counts/sec         |
+| Database Activity Call     | counts/sec         |
+| Buffer Pool Total          | MB                 |
+| Buffer Pool Used           | MB                 |
+| Slow Query                 | counts/min         |
+| 복제 딜레이                     | sec                |
+| Row Access Index           | counts/min         |
+| Row Access Full scan       | counts/min         |
+
 ### 감시 설정 추가
 
 ![notification_group_02_ja.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_02_ja.png)

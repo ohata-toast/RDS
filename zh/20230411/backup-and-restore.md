@@ -20,6 +20,10 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 | 8.0.23 | 8.0.26 |
 | 8.0.28 | 8.0.28 |
 
+* XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+
 ### 자동 백업
 
 DB 인스턴스의 백업 보관 기간을 1일 이상으로 설정하면 자동 백업이 활성화되며, 지정된 백업 수행 시간에 백업이 수행됩니다. 자동 백업은 DB 인스턴스와 생명 주기가 동일합니다. DB 인스턴스가 삭제되면 보관된 자동 백업은 모두 삭제됩니다. DB 인스턴스를 생성할 때 자동 백업에 대한 설정을 할 수 있으며, 이미 생성된 DB 인스턴스의 백업 설정도 변경할 수 있습니다. 자동 백업에서 지원하는 설정 항목은 아래와 같습니다.
@@ -123,6 +127,11 @@ xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비�
 * 자세한 사항은 https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/api-guide/#_44를 참고합니다.
 
 (4) 복원할 프로젝트의 웹 콘솔에 접속한 후, DB 인스턴스 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
+
+> [주의] 
+> 현재 5.7.33 버전에서는, 오브젝트 스토리지의 백업 파일을 이용한 DB 인스턴스 복원은 제한됩니다.
+> 권장하는 XtraBackup 이외의 버전을 사용하면, 정상으로 동작하지 않을 수 있습니다.
+> 오브젝트 스토리지의 백업 파일과 복원하려는 MySQL의 버전은 동일해야 합니다.
 
 ### RDS for MySQL 백업을 이용한 복원
 

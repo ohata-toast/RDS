@@ -181,6 +181,18 @@ DB 인스턴스를 일정 시간 동안 사용하지는 않지만, 삭제를 원
 
 마스터와의 복제 관계를 끊고 읽기 복제본을 마스터로 변경하는 것을 승격이라 부릅니다. 승격된 마스터는 독립된 DB 인스턴스로서 동작하게 됩니다. 승격하려는 읽기 복제본과 마스터 사이에 복제 지연이 있는 경우, 해당 지연이 없어질 때까지 승격되지 않습니다.
 
+### 읽기 복제본의 복제 중단
+
+읽기 복제본은 여러 이유로 복제가 중단될 수 있습니다. 읽기 복제본의 상태가 `복제 중단`인 경우 빠르게 원인을 확인하여 정상화해야 합니다. `복제 중단` 상태가 장시간 지속될 경우, 복제 딜레이가 늘어나게 됩니다. 정상화에 필요한 바이너리 로그(binary log)가 없는 경우 읽기 복제본을 재구축해야 합니다. 복제가 중단된 원인은 읽기 복제본에서 `SHOW SLAVE STATUS` 명령어를 통해 확인할 수 있습니다. `Last_Errno` 값이 1062인 경우 아래 Procedure를 에러가 사라질 때까지 호출할 수 있습니다.
+
+```
+mysql> CALL mysql.tcrds_repl_skip_repl_error();
+```
+
+### 읽기 복제본 재구축
+
+읽기 복제본의 복제 중단을 해결할 수 없는 상황이면 재구축을 통해 정상화할 수 있습니다. 읽기 복제본 재구축시 읽기 복제본의 데이터베이스를 모두 제거하고, 마스터의 데이터베이스를 토대로 재구축합니다. 이 과정에서 재구축에 필요한 백업 파일이 마스터에 존재하지 않는다면 마스터에서 백업이 수행되게 되며, 백업으로 인한 성능 저하가 발생할 수 있습니다.
+
 ### 강제 재시작
 
 DB 인스턴스의 MySQL이 정상 동작하지 않는 경우 강제로 재시작할 수 있습니다. 강제 재시작의 경우 MySQL에 SIGTERM 명령을 내려 정상 종료되기를 10분간 기다립니다. 10분 안에 MySQL이 정상 종료되면 이후 가상 머신을 재부팅합니다. 10분 안에 정상 종료되지 않으면 가상 머신을 강제로 재부팅합니다. 가상 머신이 강제로 재부팅되면 작업 중인 일부 트랜잭션이 유실될 수 있으며, 데이터 볼륨이 손상되어 복구가 불가능해질 수 있습니다. 강제 재시작 이후 DB 인스턴스의 상태가 사용 가능 상태로 돌아오지 않을 수 있습니다. 해당 상황 발생 시 고객 센터로 문의해 주세요.
@@ -271,3 +283,273 @@ DB 인스턴스에 연결된 파라미터 그룹의 파라미터가 수정된 �
 ### 고가용성 일시 중지
 
 일시적인 작업으로 인한 연결 중단 혹은 대량의 부하가 예상되는 상황에서 일시적으로 고가용성 기능을 중지할 수 있습니다. 고가용성 기능이 일시 중지되면 장애를 감지하지 않으며, 따라서 장애 조치가 되지 않습니다. 고가용성 기능이 일시 중지된 상태에서 재시작이 필요한 작업을 수행하여도 일시 중지된 고가용성 기능이 재개되지 않습니다. 고가용성 기능이 일시 중지되어도 데이터 복제는 정상적으로 이루어지나, 장애가 감지되지 않기 때문에 장시간 일시 중지 상태로 유지하는 것을 권장하지 않습니다.
+
+## MySQL Procedure
+
+RDS for MySQL은 사용자의 편의를 제공하기 위하여 사용자 계정에서 제한되는 몇몇 기능들을 수행하는 프로시저들을 자체적으로 제공하고 있습니다.
+
+### tcrds_active_process
+
+* Processlist에서 Sleep 상태가 아닌 ACTIVE 상태의 쿼리를 조회합니다.
+* 수행 시간이 오래된 순서로 출력되며 쿼리 내용(SQL)은 100자리까지만 출력됩니다.
+
+```
+mysql> CALL mysql.tcrds_active_process();
+```
+
+### tcrds_process_kill
+
+* 특정 프로세스를 강제 종료합니다.
+* 종료할 프로세스 아이디는 information_schema.processlist에서 확인할 수 있으며 tcrds_active_process와 tcrds_current_lock 프로시저를 이용해서 프로세스의 정보를 확인할 수 있습니다.
+
+```
+mysql> CALL mysql.tcrds_process_kill(processlist_id );
+```
+
+### tcrds_current_lock
+
+* 현재 락을 기다리고 있는 프로세스와 락을 점유하고 있는 프로세스 정보를 확인합니다.
+* (w) 칼럼 정보가 락을 획득하기 위해 대기하는 프로세스 정보
+* (B) 칼럼 정보가 락을 점유하고 있는 프로세스 정보
+* 락을 점유하는 프로세스를 강제로 종료하려면 (B)PROCESS 칼럼을 확인한 후, call tcrds_process_kill(process_id)를 수행합니다.
+
+```
+mysql> CALL mysql.tcrds_current_lock();
+```
+
+### tcrds_repl_changemaster
+
+* 복제를 이용해 외부 MySQL DB를 NHN Cloud RDS로 가져올 때 사용합니다.
+* NHN Cloud RDS의 복제 구성은 콘솔의 **복제본 생성**으로 할 수 있습니다.
+
+```
+mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
+```
+
+* 파라미터 설명
+ * master_instance_ip : 복제 대상(Master) 서버의 IP
+ * master_instance_port : 복제 대상(Master) 서버의 MySQL Port
+ * user_id_for_replication : 복제 대상(Master) 서버의 MySQL 에 접속 할 복제용 계정
+ * password_for_replication_user : 복제용 계정 패스워드
+ * MASTER_LOG_FILE : 복제 대상(Master) 의 binary log 파일명
+ * MASTER_LOG_POS : 복제 대상(Master) 의 binary log 포지션
+
+```
+ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
+> [주의] 복제용 계정이 복제 대상(Master) MySQL에 생성되어 있어야 합니다.
+
+### tcrds_repl_init
+
+* MySQL 복제 정보를 초기화합니다.
+
+```
+mysql> CALL mysql.tcrds_repl_init();
+```
+
+### tcrds_repl_slave_stop
+
+* MySQL 복제를 멈춥니다.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_stop();
+```
+
+### tcrds_repl_slave_start
+
+* MySQL 복제를 시작합니다.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_start();
+
+```
+
+### tcrds_repl_skip_repl_error
+
+* SQL_SLAVE_SKIP_COUNTER=1를 수행합니다. 다음과 같은 Duplicate key 에러 발생 시 tcrds_repl_skip_repl_error 프로시저를 실행하면 복제 에러를 해결할 수 있습니다.
+* `MySQL error code 1062: 'Duplicate entry ? for key ?'`
+
+```
+mysql> CALL mysql.tcrds_repl_skip_repl_error();
+```
+
+### tcrds_repl_next_changemaster
+
+* Master의 다음 바이너리(binary log) 로그를 읽을 수 있도록 복제 정보를 변경합니다.
+* 다음과 같은 복제 에러 발생 시 tcrds_repl_next_changemaster 프로시저를 실행하면 복제 에러를 해결할 수 있습니다.
+ * 예) MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
+
+```
+mysql> CALL mysql.tcrds_repl_next_changemaster();
+```
+
+## 데이터 마이그레이션
+
+* RDS는 mysqldump를 이용하여 NHN Cloud RDS 의 외부로 데이터로 내보내거나 외부로부터 가져올 수 있습니다.
+* mysqldump 유틸리티는 mysql을 설치했을 때 기본으로 제공됩니다.
+
+### mysqldump를 이용하여 내보내기
+
+* NHN Cloud RDS의 인스턴스를 준비하여 사용합니다.
+* 내보낼 데이터를 저장하게 될 외부 인스턴스, 혹은 로컬 클라이언트가 설치된 컴퓨터의 용량이 충분히 확보되어있는지 확인합니다.
+* NHN Cloud의 외부로 데이터를 내보내야할 경우, Floating IP를 생성하여 데이터를 내보낼 RDS 인스턴스에 연결합니다.
+* 아래의 mysqldump 명령어를 통하여 외부로 데이터를 내보냅니다.
+
+#### 파일로 내보낼 경우
+```
+mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
+```
+
+#### NHN Cloud RDS 외부의 mysql db로 내보낼 경우.
+```
+mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
+```
+
+### mysqldump를 이용하여 가져오기
+
+* 데이터를 가져올 NHN Cloud RDS 외부의 db를 준비합니다.
+* 가져올 NHN Cloud RDS 인스턴스의 용량이 충분한지 확인합니다.
+* Floating IP를 생성하여 NHN Cloud RDS 인스턴스에 연결합니다.
+* 아래의 mysqldump 명령어를 통하여 외부로부터 데이터를 가져옵니다.
+
+```
+mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --set-gtid-purged=off --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
+```
+
+#### 데이터 가져오는 도중 `ERROR 1227` 오류가 발생할 경우
+
+* `ERROR 1227` 오류는 mysqldump 파일의 저장된 객체(트리거, 뷰, 함수 또는 이벤트)에 DEFINER 정의가 되어 있을 때 발생합니다.
+* 이를 해결하기 위해서는 mysqldump 파일에서 `DEFINER`부분을 삭제 후 진행합니다.
+
+#### 데이터 가져오는 도중 `ERROR 1418` 오류가 발생할 경우
+
+* `ERROR 1418` 오류는 mysqldump 파일의 함수 선언에 NO SQL, READS SQL DATA, DETERMINISTIC이 없으며 바이너리 로그가 활성화된 상태일 때 발생합니다.
+  * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL 문서를 참고합니다.
+* 이를 해결하기 위해서는 mysqldump 파일을 적용할 DB 인스턴스의 `log_bin_trust_function_creators` 파라미터의 값을 `1`로 변경해야 합니다.
+
+### 복제를 이용하여 내보내기
+
+* 복제를 이용하여 NHN Cloud RDS의 데이터를 외부의 DB로 내보낼 수 있습니다.
+* 외부의 db 버전은 NHN Cloud RDS의 버전과 같거나 그보다 최신 버전이어야합니다.
+* 데이터를 내보낼 NHN Cloud RDS Master 혹은 Read Only Slave 인스턴스를 준비합니다.
+* Floating IP를 생성하여 데이터를 내보낼 NHN Cloud RDS 인스턴스들에 연결합니다.
+* 아래의 명령어를 통해 NHN Cloud RDS 인스턴스로부터 데이터를 파일로 내보냅니다.
+* Master RDS 인스턴스로부터 내보낼 경우.
+
+```
+mysqldump -h{rds_master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --master-data=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
+```
+
+* Read Only Slave RDS 인스턴스로부터 내보낼 경우.
+
+```
+mysqldump -h{rds_read_only_slave_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --dump-slave=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
+```
+
+* 백업된 파일을 열어 주석에 쓰여진 MASTER_LOG_FILE 및 MASTER_LOG_POS를 따로 기록합니다.
+* NHN Cloud RDS 인스턴스로부터 데이터를 백업받을 외부 로컬 클라이언트 혹은 db가 설치된 컴퓨터의 용량이 충분한지 확인합니다.
+* 외부 DB에 my.cnf (winodws의 경우 my.ini) 파일에 아래와 같은 옵션을 추가합니다.
+* server-id의 경우 NHN Cloud RDS 인스턴스의 DB Configuration 항목의 server-id와 다른 값으로 입력합니다.
+
+```
+...
+[mysqld]
+...
+server-id={server_id}
+replicate-ignore-db=rds_maintenance
+...
+```
+
+* 외부 DB를 재시작합니다.
+* 백업된 파일을 아래의 명령어를 통해 외부의 DB에 입력합니다.
+
+```
+mysql -h{external_db_host} -u{exteranl_db_id} -p{external_db_password} --port={exteranl_db_port} < {local_path_and_file_name}
+```
+
+* NHN Cloud RDS 인스턴스에서 복제에 사용할 계정을 생성합니다.
+* 새롭게 복제를 설정하기에 앞서 혹시 존재할 수도 있는 기존 복제 정보를 초기화하기 위하여 아래의 쿼리를 실행합니다. 이 때, RESET SLAVE를 실행할 경우 기존 복제 정보가 초기화됩니다.
+
+```
+STOP SLAVE;
+
+RESET SLAVE;
+```
+
+* 복제에 사용할 계정 정보와 아까 따로 기록해 두었던 MASTER_LOG_FILE과 MSATER_LOG_POS를 이용하여 외부 DB에 아래와 같이 쿼리를 실행합니다.
+
+```
+CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
+
+START SLAVE;
+```
+
+* 외부 DB와 NHN Cloud RDS 인스턴스의 원본 데이터가 같아지면, 외부 DB에 STOP SLAVE 명령을 이용해 복제를 종료합니다
+
+### 복제를 이용하여 가져오기
+
+* 복제를 이용해 외부 DB를 NHN Cloud RDS로 가져올 수 있습니다.
+* NHN Cloud RDS 버전은 외부 DB 버전과 같거나 그보다 최신 버전이어야 합니다.
+* 데이터를 내보낼 외부 MySQL 인스턴스에 연결합니다.
+* 아래의 명령어를 통해 외부 MySQL 인스턴스로부터 데이터를 백업합니다.
+* 외부 MySQL 인스턴스(마스터)로부터 가져올 경우
+
+```
+mysqldump -h{master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --master-data=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
+```
+
+* 외부 MySQL 인스턴스(슬레이브)로부터 가져올 경우
+
+```
+mysqldump -h{slave_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --dump-slave=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
+```
+
+* 백업된 파일을 열어 주석의 MASTER_LOG_FILE 및 MASTER_LOG_POS를 따로 기록합니다.
+* NHN Cloud RDS 인스턴스로부터 데이터를 백업받을 클라이언트나 컴퓨터의 용량이 충분한지 확인합니다.
+* 외부 DB의 my.cnf(Winodws의 경우 my.ini) 파일에 아래 옵션을 추가합니다.
+* server-id의 경우 NHN Cloud RDS 인스턴스의 DB Configuration 항목의 server-id와 다른 값으로 입력합니다.
+
+```
+...
+[mysqld]
+...
+server-id={server_id}
+replicate-ignore-db=rds_maintenance
+...
+```
+
+* 외부 DB를 재시작합니다.
+* 외부 네트워크를 통해 가져오면(import) 오래 걸릴 수 있기 때문에,
+* 내부 NHN Cloud Image를 생성하고 백업 파일을 복사한 후, NHN Cloud로 가져오기를 권장합니다.
+* 백업된 파일을 아래의 명령어로 NHN Cloud RDS에 입력합니다.
+* 복제 구성은 DNS를 지원하지 않으므로, IP로 변환해 실행합니다.
+
+```
+mysql -h{rds_master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} < {local_path_and_file_name}
+```
+
+* 외부 MySQL 인스턴스에서 복제에 사용할 계정을 생성합니다.
+
+```
+mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
+mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
+```
+
+* 복제에 사용할 계정 정보와 앞에서 따로 기록해 두었던 MASTER_LOG_FILE, MSATER_LOG_POS를 이용하여 NHN Cloud RDS에 다음과 같이 쿼리를 실행합니다.
+
+```
+mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
+```
+
+* 복제를 시작하려면 아래 프로시저를 실행합니다.
+
+```
+mysql> call mysql.tcrds_repl_slave_start;
+```
+
+* 외부 DB와 NHN Cloud RDS 인스턴스의 원본 데이터가 같아지면, 아래 명령을 이용해 복제를 종료합니다.
+
+```
+mysql> call mysql.tcrds_repl_init();
+```
