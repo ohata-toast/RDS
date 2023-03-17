@@ -21,8 +21,8 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 | 8.0.28 | 8.0.28 |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 ### 자동 백업
 
@@ -34,7 +34,7 @@ DB 인스턴스의 백업 보관 기간을 1일 이상으로 설정하면 자동
 
 **테이블 잠금 사용**
 
-* `FLUSH TABLES WITH READ LOCK` 구문의 실행 여부를 설정합니다. 
+* `FLUSH TABLES WITH READ LOCK` 구문의 실행 여부를 설정합니다.
 * 테이블 잠금을 사용하면 백업 데이터의 일관성을 보장하기 위해 백업 시 주기적으로 `FLUSH TABLES WITH READ LOCK` 구문을 실행합니다. `FLUSH TABLES WITH READ LOCK` 구문의 실행에 실패할 경우 백업에 실패하게 됩니다.
 * 백업이 수행되는 동안 DML 쿼리 부하가 많은 경우 테이블 잠금을 사용하지 않도록 설정할 수 있습니다. 테이블 잠금을 사용하지 않으면 `FLUSH TABLES WITH READ LOCK` 구문을 실행하지 않기 때문에 DML 부하가 많아도 백업이 실패하지 않습니다. 하지만 테이블 잠금을 사용하지 않은 백업은 백업 데이터의 일관성이 보장되지 않을 수 있으며, 시점 복원을 지원하지 않습니다.
 
@@ -57,7 +57,7 @@ DB 인스턴스의 백업 보관 기간을 1일 이상으로 설정하면 자동
 자동 백업의 이름은 `{DB 인스턴스의 이름}_yyyy-MM-dd-HH-mm` 형태로 부여됩니다.
 
 > [주의]
-> 앞선 백업이 종료되지 않는 등 백업을 수행할 수 없는 상황이면 백업이 수행되지 않을 수 있습니다. 
+> 앞선 백업이 종료되지 않는 등 백업을 수행할 수 없는 상황이면 백업이 수행되지 않을 수 있습니다.
 
 ### 수동 백업
 
@@ -128,7 +128,7 @@ xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비�
 
 (4) 복원할 프로젝트의 웹 콘솔에 접속한 후, DB 인스턴스 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
 
-> [주의] 
+> [주의]
 > 현재 5.7.33 버전에서는, 오브젝트 스토리지의 백업 파일을 이용한 DB 인스턴스 복원은 제한됩니다.
 > 권장하는 XtraBackup 이외의 버전을 사용하면, 정상으로 동작하지 않을 수 있습니다.
 > 오브젝트 스토리지의 백업 파일과 복원하려는 MySQL의 버전은 동일해야 합니다.
@@ -149,7 +149,7 @@ RDS for MySQL의 백업 파일을 이용하여 직접 MySQL의 데이터베이�
 rm -rf {MySQL 데이터 저장 경로}/*
 ```
 
-(5) 다운로드한 백업 파일의 압축을 해제하고 복원합니다. 
+(5) 다운로드한 백업 파일의 압축을 해제하고 복원합니다.
 
 **XtraBackup 2.4.20 예제**
 
