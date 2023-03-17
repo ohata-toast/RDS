@@ -1,5 +1,14 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2023. 04. 11.
+
+#### 기능 개선
+
+* UI / UX 개편
+* 파라미터 그룹, DB 보안 그룹 기능 추가
+* DB 인스턴스가 삭제되도 수동 백업은 삭제되지 않도록 수정
+* Open API 3.0 추가
+
 ### February 14, 2023
 
 #### Feature Updates
@@ -9,7 +18,19 @@
 #### Bug Fixes
 
 * Fixed an issue where, when an error occurs in the IAM console, the page is not moved to an appropirate error page
-* Fixed an issue where, when changing the DB instance type or expanding storage using failover, the Ping interval is set to default
+* Fixed an issue where, when changing the DB instance type or expanding storage using failover, the Ping interval is set to default  
+
+### January 10, 2023
+
+#### Feature Updates
+
+* Made modifications not to allow duplicate notification group names
+
+#### Bug Fixes
+
+* Fixed an issue where, when continuously modifying the monitoring setting popup, the modifications are applied abnormally
+* Fixed an issue where the refresh setting does not work in the server dashboard page
+* Fixed an issue where an event of backup failure caused by DDL query execution is not logged properly
 
 ### December 13, 2022
 
@@ -19,7 +40,7 @@
 
 #### Bug Fixes
 
-* Fixed an issue where, when synchronizing DB schemas, schemas that cannot be deleted are intermittently registered
+* Fixed an issue where, when synchronizing DB schemas, schemas that cannot be deleted are intermittently registered 
 * Fixed an issue where another host with the same name as the deleted account cannot be added
 * Fixed an issue where, when restarting an existing failed-over master, user access control cannot be modified
 
@@ -70,7 +91,7 @@
 
 #### Bug Fixes
 
-* Fixed an issue where backup fails intermittently due to communication issues with internal agents
+* Fixed an issue where backup fails intermittently due to communication issues with internal agents 
 
 ### July 12, 2022
 

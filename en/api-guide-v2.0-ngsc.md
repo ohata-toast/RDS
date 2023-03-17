@@ -1,10 +1,10 @@
 ## Database > RDS for MySQL > API Guide
 
-| Region | Endpoint |
-|---|---|
-| Korea (Pangyo) region | https://kr1-mysql.api.nhncloudservice.com |
+| Region                    | Endpoint                                  |
+|---------------------------|-------------------------------------------|
+| Korea (Pangyo) region     | https://kr1-mysql.api.nhncloudservice.com |
 | Korea (Pyeongchon) region | https://kr2-mysql.api.nhncloudservice.com |
-| Japan region | https://jp1-mysql.api.nhncloudservice.com |
+| Japan region              | https://jp1-mysql.api.nhncloudservice.com |
 
 ## Monitoring
 
@@ -13,14 +13,14 @@
 - View the metrics necessary for viewing statistical information.
 
 ```
-GET /rds/api/v2.0/metrics
+GET /v2.0/metrics
 ```
 
 #### Request header
 
-| Name | Type | Format | Required | Description |
-|---|---|---|---|---|
-| X-TC-APP-KEY | URL | String | O | Product Appkey or integrated Appkey for project |
+| Name         | Type | Format | Required | Description                                     |
+|--------------|------|--------|----------|-------------------------------------------------|
+| X-TC-APP-KEY | URL  | String | O        | Product Appkey or integrated Appkey for project |
 
 #### Response
 
@@ -44,24 +44,24 @@ GET /rds/api/v2.0/metrics
 - Views the statistical information collected on a regular basis.
 
 ```
-GET /rds/api/v2.0/metric-statistics
+GET /v2.0/metric-statistics
 ```
 
 #### Request header
 
-| Name | Type | Format | Required | Description |
-|---|---|---|---|---|
-| X-TC-APP-KEY | URL | String | O | Product Appkey or integrated Appkey for project |
+| Name         | Type | Format | Required | Description                                     |
+|--------------|------|--------|----------|-------------------------------------------------|
+| X-TC-APP-KEY | URL  | String | O        | Product Appkey or integrated Appkey for project |
 
 #### Request
 
-| Name | Type | Format | Required | Description | Constraints |
-|---|---|---|---|---|---|
-| instanceId | Query | Array | O | List of DB instance IDs | Min:1, Max: 20 |
-| measureName | Query | Array | O | Metric list | Min:1 |
-| from | Query | Datetime | O | Start date | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
-| to | Query | Datetime | O | End date | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
-| interval | Query | Integer | X | View interval | 1, 5, 30, 120, 1440 (minutes) |
+| Name        | Type  | Format   | Required | Description             | Constraints                                 |
+|-------------|-------|----------|----------|-------------------------|---------------------------------------------|
+| instanceId  | Query | Array    | O        | List of DB instance IDs | Min:1, Max: 20                              |
+| measureName | Query | Array    | O        | Metric list             | Min:1                                       |
+| from        | Query | Datetime | O        | Start date              | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| to          | Query | Datetime | O        | End date                | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| interval    | Query | Integer  | X        | View interval           | 1, 5, 30, 120, 1440 (minutes)               |
 
 - interval : when default is used, it automatically selects a value appropriate for the from/to value
     - Date range is 1 day or less, and Start date has not exceeded 8 days yet - Raw data for every minute
