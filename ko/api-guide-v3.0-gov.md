@@ -325,7 +325,7 @@ X-TC-APP-KEY: {appkey}
 
 ### 작업 상태
 
-| 상태 명 | 설명 |
+| 상태 | 설명 |
 |--|--|
 |`READY`| 작업이 준비 중인 경우|
 |`RUNNING`| 작업이 진행 중인 경우|
@@ -515,7 +515,7 @@ X-TC-APP-KEY: {appkey}
 
 ### DB 인스턴스 상태
 
-| 상태 명 | 설명 |
+| 상태 | 설명 |
 |--|--|
 | `AVAILABLE` | DB 인스턴스가 사용 가능한 경우 |
 | `BEFORE_CREATE` | DB 인스턴스가 생성 전인 경우 |
@@ -530,7 +530,7 @@ X-TC-APP-KEY: {appkey}
 
 ### DB 인스턴스 진행 상태
 
-| 상태 명 | 설명 |
+| 상태 | 설명 |
 |--|--|
 | `APPLYING_PARAMETER_GROUP` | 파라미터 그룹 적용 중 |
 | `BACKING_UP`               | 백업 중         |
@@ -707,14 +707,14 @@ X-TC-APP-KEY: {appkey}
 | description|Body|String|X|DB 인스턴스에 대한 추가 정보|
 | dbFlavorId | Body | UUID | O | DB 인스턴스 사양의 식별자 |
 | dbEngine|Body|Enum|O|DB 엔진 유형|
-|dbPort|Body|Number|O|DB 포트<br/>- 최소값: `3306`<br/>- 최대값: `43306`|
+|dbPort|Body|Number|O|DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`|
 |dbUserName|Body|String|O|DB 사용자 계정명|
 |dbPassword|Body|String|O|DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`|
 | parameterGroupId|Body|UUID|O|파라미터 그룹의 식별자|
 |dbSecurityGroupIds|Body|Array|X|DB 보안 그룹의 식별자 목록||network|Body|Object|O|네트워크 정보 객체|
 |userGroupIds|Body|Array|X|사용자 그룹의 식별자 목록|
 |useHighAvailability|Body|Boolean|X|고가용성 사용 여부<br/>- 기본값: `false`|
-|pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최소값: `1`<br/>- 최대값: `600`|
+|pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`|
 |useDefaultUserNotification|Body|Boolean|X|기본 알람 사용 여부<br/>- 기본값: `false`|
 | network|Body|Object|O|네트워크 정보 객체|
 | network.vpcSubnetId|Body|UUID|O|VPC 서브넷의 식별자|
@@ -722,14 +722,14 @@ X-TC-APP-KEY: {appkey}
 | network.availabilityZone| Body|Enum|O|DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`|
 |storage|Body|Object|O|스토리지 정보 객체|    
 |storage.storageType|Body|Enum|O|데이터 스토리지 타입<br/>- 예시: `General SSD`|
-|storage.storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최소값: `20`<br/>- 최대값: `2048`|
+|storage.storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`|
 |backup|Body|Object|O|백업 정보 객체|
-|backup.backupPeriod|Body|Number|O|백업 보관 기간(일)<br/>- 최소값: `0`<br/>- 최대값: `730`|
-|backup.ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최소값: `0`<br/>- 최대값: `21600`|
-|backup.backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최소값: `0`<br/>- 최대값: `10`|
+|backup.backupPeriod|Body|Number|O|백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`|
+|backup.ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`|
+|backup.backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`|
 |backup.replicationRegion|Body|Enum|X|백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)|
 |backup.useBackupNoLock|Body|Boolean|X|테이블 잠금 사용 여부<br/>- 기본값: `false`|
-|backup.backupSchedules|Body|Array|O|백업 스케쥴 목록|
+|backup.backupSchedules|Body|Array|O|백업 스케줄 목록|
 |backup.backupSchedules.backupWndBgnTime|Body|String|O|백업 시작 시각<br/>- 예시: `00:00:00`|
 |backup.backupSchedules.backupWndDuration|Body|Enum|O|백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간|
 |backup.backupSchedules.backupRetryExpireTime|Body|String|O|백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`|
@@ -802,7 +802,7 @@ X-TC-APP-KEY: {appkey}
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 | dbInstanceName | Body | String | X | DB 인스턴스를 식별할 수 있는 이름 |
 | description|Body|String|X|DB 인스턴스에 대한 추가 정보|
-|dbPort|Body|Number|X|DB 포트<br/>- 최소값: `3306`<br/>- 최대값: `43306`|
+|dbPort|Body|Number|X|DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`|
 | dbFlavorId | Body | UUID | X | DB 인스턴스 사양의 식별자 |
 | parameterGroupId|Body|UUID|X|파라미터 그룹의 식별자|
 |dbSecurityGroupIds|Body|Array|X|DB 보안 그룹의 식별자 목록|
@@ -974,7 +974,7 @@ X-TC-APP-KEY: {appkey}
 | dbInstanceName | Body | String | O | DB 인스턴스를 식별할 수 있는 이름 |
 | description|Body|String|X|DB 인스턴스에 대한 추가 정보|
 | dbFlavorId | Body | UUID | X | DB 인스턴스 사양의 식별자<br/>- 기본값: 원본 DB 인스턴스 값 |
-|dbPort|Body|Number|X|DB 포트<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최소값: `3306`<br/>- 최대값: `43306`|
+|dbPort|Body|Number|X|DB 포트<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`|
 | parameterGroupId|Body|UUID|X|파라미터 그룹의 식별자<br/>- 기본값: 원본 DB 인스턴스 값|
 |dbSecurityGroupIds|Body|Array|X|DB 보안 그룹의 식별자 목록<br/>- 기본값: 원본 DB 인스턴스 값|
 |userGroupIds|Body|Array|X|사용자 그룹의 식별자 목록|
@@ -983,14 +983,14 @@ X-TC-APP-KEY: {appkey}
 |network.usePublicAccess|Body|Boolean|X|외부 접속 가능  여부<br/>- 기본값: 원본 DB 인스턴스 값|
 | network.availabilityZone| Body|Enum|O|DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`|
 |storage|Body|Object|X|스토리지 정보 객체|    
-|storage.storageSize|Body|Number|X|데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최소값: `20`<br/>- 최대값: `2048`|
+|storage.storageSize|Body|Number|X|데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `20`<br/>- 최댓값: `2048`|
 |backup|Body|Object|X|백업 정보 객체|
-|backup.backupPeriod|Body|Number|X|백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최소값: `0`<br/>- 최대값: `730`|
-|backup.ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최소값: `0`<br/>- 최대값: `21600`|
-|backup.backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최소값: `0`<br/>- 최대값: `10`|
+|backup.backupPeriod|Body|Number|X|백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`|
+|backup.ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `21600`|
+|backup.backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `10`|
 |backup.replicationRegion|Body|Enum|X|백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)<br/>- 기본값: 원본 DB 인스턴스 값|
 |backup.useBackupNoLock|Body|Boolean|X|테이블 잠금 사용 여부<br/>- 기본값: 원본 DB 인스턴스 값|
-|backup.backupSchedules|Body|Array|X|백업 스케쥴 목록|
+|backup.backupSchedules|Body|Array|X|백업 스케줄 목록|
 |backup.backupSchedules.backupWndBgnTime|Body|String|X|백업 시작 시각<br/>- 예시: `00:00:00`<br/>- 기본값: 원본 DB 인스턴스 값|
 |backup.backupSchedules.backupWndDuration|Body|Enum|X|백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간<br/>- 기본값: 원본 DB 인스턴스 값|
 |backup.backupSchedules.backupRetryExpireTime|Body|String|X|백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`<br/>- 기본값: 원본 DB 인스턴스 값|
@@ -1066,7 +1066,7 @@ X-TC-APP-KEY: {appkey}
 | appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |useHighAvailability|Body|Boolean|O|고가용성 사용 여부|
-|pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 최소값: `1`<br/>- 최대값: `600`|
+|pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600`|
 
 #### 응답
 
@@ -1239,7 +1239,7 @@ X-TC-APP-KEY: {appkey}
 |---|---|---|---|---|
 | appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최소값: 현재값<br/>- 최대값: `2048`|
+|storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최솟값: 현재값<br/>- 최댓값: `2048`|
 |useOnlineFailover|Body|Boolean|X|장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`|
 
 #### 응답
@@ -1277,7 +1277,7 @@ X-TC-APP-KEY: {appkey}
 |backupRetryCount|Body|Number|백업 재시도 횟수|
 |replicationRegion|Body|Enum|백업 복제 리전|
 |useBackupNoLock|Body|Boolean|테이블 잠금 사용 여부|
-|backupSchedules|Body|Array|백업 스케쥴 목록|
+|backupSchedules|Body|Array|백업 스케줄 목록|
 |backupSchedules.backupWndBgnTime|Body|String|백업 시작 시각|
 |backupSchedules.backupWndDuration|Body|Enum|백업 Duration|
 |backupSchedules.backupRetryExpireTime|Body|String|백업 재시도 만료 시각|
@@ -1328,12 +1328,12 @@ X-TC-APP-KEY: {appkey}
 |---|---|---|---|---|
 | appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|backupPeriod|Body|Number|X|백업 보관 기간(일)<br/>- 최소값: `0`<br/>- 최대값: `730`|
-|ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 최소값: `0`<br/>- 최대값: `21600`|
-|backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 최소값: `0`<br/>- 최대값: `10`|
+|backupPeriod|Body|Number|X|백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`|
+|ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600`|
+|backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10`|
 |replicationRegion|Body|Enum|X|백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)|
 |useBackupNoLock|Body|Boolean|X|테이블 잠금 사용 여부|
-|backupSchedules|Body|Array|X|백업 스케쥴 목록|
+|backupSchedules|Body|Array|X|백업 스케줄 목록|
 |backupSchedules.backupWndBgnTime|Body|String|O|백업 시작 시각<br/>- 예시: `00:00:00`|
 |backupSchedules.backupWndDuration|Body|Enum|O|백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간|
 |backupSchedules.backupRetryExpireTime|Body|String|O|백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`|
@@ -1708,7 +1708,7 @@ X-TC-APP-KEY: {appkey}
 
 ### 백업 상태
 
-| 상태 명 | 설명 |
+| 상태 | 설명 |
 |--|--|
 | `BACKING_UP` | 백업 중인 경우 |
 | `COMPLETED` | 백업이 완료된 경우 |
@@ -1731,8 +1731,8 @@ X-TC-APP-KEY: {appkey}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
 | appkey | Header | String | O | Appkey |
-| page | Query | Number | O | 조회할 목록의 페이지<br/>- 최소값: `1` |
-| size | Query | Number | O | 조회할 목록의 페이지 크기<br/>- 최소값: `1`<br/>- 최대값: `100` |
+| page | Query | Number | O | 조회할 목록의 페이지<br/>- 최솟값: `1` |
+| size | Query | Number | O | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 | backupType | Query | Enum | X | 백업 유형<br/>- `AUTO`: 자동<br/>- `MANUAL`:  수동<br/>- 기본값: 전체|
 | dbInstanceId | Query | UUID | X | 원본 DB 인스턴스의 식별자 |
 |dbEngine|Query|Enum|X|DB 엔진 유형 |
@@ -1799,7 +1799,7 @@ X-TC-APP-KEY: {appkey}
 | appkey | Header | String | O | Appkey |
 |backupId|URL|UUID|O|백업의 식별자|
 |tenantId|Body|String|O|백업이 저장될 오브젝트 스토리지의 테넌트 ID|
-|user|Body|String|O|NHN Cloud 계정 혹은 IAM 회원 ID|
+|user|Body|String|O|NHN Cloud 계정 혹은 IAM 멤버 ID|
 |apiPassword|Body|String|O|백업이 저장될 오브젝트 스토리지의 API 비밀번호|
 |targetContainer|Body|String|O|백업이 저장될 오브젝트 스토리지의 컨테이너|
 |objectPath|Body|String|O|컨테이너에 저장될 백업의 경로|
@@ -1812,7 +1812,7 @@ X-TC-APP-KEY: {appkey}
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "user": "gildong.hong@nhn.com",
     "apiPassword": "password",
-    "targetContainer": "/container",
+    "targetContainer": "/container",버
     "objectPath": "/backups/backup_file"
 }
 ```
@@ -1844,12 +1844,12 @@ X-TC-APP-KEY: {appkey}
 | dbInstanceName | Body | String | O | DB 인스턴스를 식별할 수 있는 이름 |
 | description|Body|String|X|DB 인스턴스에 대한 추가 정보|
 | dbFlavorId | Body | UUID | O | DB 인스턴스 사양의 식별자 |
-|dbPort|Body|Integer|O|DB 포트<br/>- 최소값: `3306`<br/>- 최대값: `43306`|
+|dbPort|Body|Integer|O|DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`|
 | parameterGroupId|Body|UUID|O|파라미터 그룹의 식별자|
 |dbSecurityGroupIds|Body|Array|X|DB 보안 그룹의 식별자 목록||network|Body|Object|O|네트워크 정보 객체|
 |userGroupIds|Body|Array|X|사용자 그룹의 식별자 목록|
 |useHighAvailability|Body|Boolean|X|고가용성 사용 여부<br/>- 기본값: `false`|
-|pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최소값: `1`<br/>- 최대값: `600`|
+|pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`|
 |useDefaultNotification|Body|Boolean|X|기본 알림 사용 여부<br/>- 기본값: `false`|
 | network|Body|Object|O|네트워크 정보 객체|
 | network.vpcSubnetId|Body|UUID|O|VPC 서브넷의 식별자|
@@ -1857,14 +1857,14 @@ X-TC-APP-KEY: {appkey}
 | network.availabilityZone| Body|Enum|O|DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`|
 |storage|Body|Object|O|스토리지 정보 객체|    
 |storage.storageType|Body|Enum|O|데이터 스토리지 타입<br/>- 예시: `General SSD`|
-|storage.storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최소값: `20`<br/>- 최대값: `2048`|
+|storage.storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`|
 |backup|Body|Object|O|백업 정보 객체|
-|backup.backupPeriod|Body|Number|O|백업 보관 기간(일)<br/>- 최소값: `0`<br/>- 최대값: `730`|
-|backup.ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최소값: `0`<br/>- 최대값: `21600`|
-|backup.backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최소값: `0`<br/>- 최대값: `10`|
+|backup.backupPeriod|Body|Number|O|백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`|
+|backup.ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`|
+|backup.backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`|
 |backup.replicationRegion|Body|Enum|X|백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)|
 |backup.useBackupNoLock|Body|Boolean|X|테이블 잠금 사용 여부<br/>- 기본값: `false`|
-|backup.backupSchedules|Body|Array|O|백업 스케쥴 목록|
+|backup.backupSchedules|Body|Array|O|백업 스케줄 목록|
 |backup.backupSchedules.backupWndBgnTime|Body|String|O|백업 시작 시각<br/>- 예시: `00:00:00`|
 |backup.backupSchedules.backupWndDuration|Body|Enum|O|백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간|
 |backup.backupSchedules.backupRetryExpireTime|Body|String|O|백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`|
@@ -1941,7 +1941,7 @@ X-TC-APP-KEY: {appkey}
 
 ### DB 보안 그룹 진행 상태
 
-| 상태 명 | 설명 |
+| 상태 | 설명 |
 |--|--|
 | `NONE` | 진행 중인 작업이 없음 |
 | `CREATING_RULE` | 규칙 정책 생성 중 |
@@ -2109,8 +2109,8 @@ X-TC-APP-KEY: {appkey}
 |rules.cidr|Body|String|O|허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`|
 |rules.port|Body|Object|O|포트 객체|
 |rules.port.portType|Body|Enum|O|포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다.|
-|rules.port.minPort|Body|Number|X|최소 포트 범위<br/>- 최소값: 1|
-|rules.port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최대값: 65535|
+|rules.port.minPort|Body|Number|X|최소 포트 범위<br/>- 최솟값: 1|
+|rules.port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최댓값: 65535|
 
 <details><summary>예시</summary>
 <p>
@@ -2226,8 +2226,8 @@ X-TC-APP-KEY: {appkey}
 |etherType|Body|Enum|O|Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6|
 |port|Body|Object|O|포트 객체|
 |port.portType|Body|Enum|O|포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다.|
-|port.minPort|Body|Number|X|최소 포트 범위<br/>- 최소값: 1|
-|port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최대값: 65535|
+|port.minPort|Body|Number|X|최소 포트 범위<br/>- 최솟값: 1|
+|port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최댓값: 65535|
 |cidr|Body|String|O|허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`|
 
 <details><summary>예시</summary>
@@ -2277,8 +2277,8 @@ X-TC-APP-KEY: {appkey}
 |etherType|Body|Enum|O|Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6|
 |port|Body|Object|O|포트 객체|
 |port.portType|Body|Enum|O|포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다.|
-|port.minPort|Body|Number|X|최소 포트 범위<br/>- 최소값: 1|
-|port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최대값: 65535|
+|port.minPort|Body|Number|X|최소 포트 범위<br/>- 최솟값: 1|
+|port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최댓값: 65535|
 |cidr|Body|String|O|허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`|
 
 <details><summary>예시</summary>
@@ -3232,14 +3232,14 @@ X-TC-APP-KEY: {appkey}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
 | appkey | Header | String | O | Appkey |
-| page | Query | Number | O | 조회할 목록의 페이지<br/>- 최소값: `1` |
-| size | Query | Number | O | 조회할 목록의 페이지 크기<br/>- 최소값: `1`<br/>- 최대값: `100`  |
+| page | Query | Number | O | 조회할 목록의 페이지<br/>- 최솟값: `1` |
+| size | Query | Number | O | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100`  |
 | from | Query | Datetime | O| 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | to | Query | Datetime | O| 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 |eventCategoryType|Query|Enum|O|조회할 이벤트 카테고리 유형<br/>- `ALL`: 전체<br/>- `INSTANCE`: DB 인스턴스<br/>- `BACKUP`: 백업<br/>- `DB_SECURITY_GROUP`: DB 보안 그룹<br/>- `TENANT`: 테넌트|
 |sourceId|Query|String|X|이벤트가 발생한 대상 리소스의 식별자|
-|keyword|Query|String|X|이벤트 메세지에 포함된 문자열 검색어|
-|ascendingOrder|Query|Enum|X|이벤트 메세지 정렬 순서<br/>- `ASC`: 오름차순<br/>- `DESC`: 내림차순<br/>- 기본값: `DESC`|
+|keyword|Query|String|X|이벤트 메시지에 포함된 문자열 검색어|
+|ascendingOrder|Query|Enum|X|이벤트 메시지 정렬 순서<br/>- `ASC`: 오름차순<br/>- `DESC`: 내림차순<br/>- 기본값: `DESC`|
 
 
 #### 응답
@@ -3252,9 +3252,9 @@ X-TC-APP-KEY: {appkey}
 |events.eventCode|Body|Enum|발생한 이벤트의 유형|
 |events.sourceId|Body|String|이벤트 소스의 식별자|
 |events.sourceName|Body|String|이벤트 소스를 식별할 수 있는 이름|
-|events.messages|Body|Array|이벤트 메세지 목록|
+|events.messages|Body|Array|이벤트 메시지 목록|
 |events.messages.langCode|Body|String|언어 코드|
-|events.messages.message|Body|String|이벤트 메세지|
+|events.messages.message|Body|String|이벤트 메시지|
 |events.eventYmdt|Body|DateTime | 이벤트 발생 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>

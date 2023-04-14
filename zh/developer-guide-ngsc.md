@@ -314,7 +314,7 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * Explaining parameter
-  * master_instance_ip : IP of replication target (Master) server
+  * master_instance_ip: IP of replication target (Master) server
   * master_instance_port : MySQL Port of replication target (Master) server
   * user_id_for_replication : Account for replication to access the MySQL of replication target (Master) server
   * password_for_replication_user : Password of account for replication
