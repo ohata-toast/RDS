@@ -1,5 +1,14 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2023. 04. 11.
+
+#### 기능 개선
+
+* UI / UX 개편
+* 파라미터 그룹, DB 보안 그룹 기능 추가
+* DB 인스턴스가 삭제되도 수동 백업은 삭제되지 않도록 수정
+* Open API 3.0 추가
+
 ### February 14, 2023
 
 #### Feature Updates

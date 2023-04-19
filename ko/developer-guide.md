@@ -2,14 +2,14 @@
 
 ## Migration
 
-* RDS는 mysqldump를 이용하여 NHN Cloud RDS 의 외부로 데이터로 내보내거나 외부로부터 가져올 수 있습니다.
-* mysqldump 유틸리티는 mysql을 설치했을 때 기본으로 제공됩니다.
+* RDS는 mysqldump를 이용하여 NHN Cloud RDS의 외부로 데이터로 내보내거나 외부로부터 가져올 수 있습니다.
+* mysqldump 유틸리티는 MySQL을 설치했을 때 기본으로 제공됩니다.
 
 ### mysqldump를 이용하여 내보내기
 
 * NHN Cloud RDS의 인스턴스를 준비하여 사용합니다.
-* 내보낼 데이터를 저장하게 될 외부 인스턴스, 혹은 로컬 클라이언트가 설치된 컴퓨터의 용량이 충분히 확보되어있는지 확인합니다.
-* NHN Cloud의 외부로 데이터를 내보내야할 경우, Floating IP를 생성하여 데이터를 내보낼 RDS 인스턴스에 연결합니다.
+* 내보낼 데이터를 저장하게 될 외부 인스턴스, 혹은 로컬 클라이언트가 설치된 컴퓨터의 용량이 충분히 확보되어 있는지 확인합니다.
+* NHN Cloud의 외부로 데이터를 내보내야 할 경우 Floating IP를 생성하여 데이터를 내보낼 RDS 인스턴스에 연결합니다.
 * 아래의 mysqldump 명령어를 통하여 외부로 데이터를 내보냅니다.
 
 #### 파일로 내보낼 경우
@@ -17,14 +17,14 @@
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
-#### NHN Cloud RDS 외부의 mysql db로 내보낼 경우.
+#### NHN Cloud RDS 외부의 MySQL DB로 내보낼 경우
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
 ```
 
 ### mysqldump를 이용하여 가져오기
 
-* 데이터를 가져올 NHN Cloud RDS 외부의 db를 준비합니다.
+* 데이터를 가져올 NHN Cloud RDS 외부의 DB를 준비합니다.
 * 가져올 NHN Cloud RDS 인스턴스의 용량이 충분한지 확인합니다.
 * Floating IP를 생성하여 NHN Cloud RDS 인스턴스에 연결합니다.
 * 아래의 mysqldump 명령어를 통하여 외부로부터 데이터를 가져옵니다.
@@ -47,7 +47,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 ### 복제를 이용하여 내보내기
 
 * 복제를 이용하여 NHN Cloud RDS의 데이터를 외부의 DB로 내보낼 수 있습니다.
-* 외부의 db 버전은 NHN Cloud RDS의 버전과 같거나 그보다 최신 버전이어야합니다.
+* 외부의 DB 버전은 NHN Cloud RDS의 버전과 같거나 그보다 최신 버전이어야합니다.
 * 데이터를 내보낼 NHN Cloud RDS Master 혹은 Read Only Slave 인스턴스를 준비합니다.
 * Floating IP를 생성하여 데이터를 내보낼 NHN Cloud RDS 인스턴스들에 연결합니다.
 * 아래의 명령어를 통해 NHN Cloud RDS 인스턴스로부터 데이터를 파일로 내보냅니다.
@@ -64,8 +64,8 @@ mysqldump -h{rds_read_only_slave_insance_floating_ip} -u{db_id} -p{db_password} 
 ```
 
 * 백업된 파일을 열어 주석에 쓰여진 MASTER_LOG_FILE 및 MASTER_LOG_POS를 따로 기록합니다.
-* NHN Cloud RDS 인스턴스로부터 데이터를 백업받을 외부 로컬 클라이언트 혹은 db가 설치된 컴퓨터의 용량이 충분한지 확인합니다.
-* 외부 DB에 my.cnf (winodws의 경우 my.ini) 파일에 아래와 같은 옵션을 추가합니다.
+* NHN Cloud RDS 인스턴스로부터 데이터를 백업할 외부 로컬 클라이언트 혹은 DB가 설치된 컴퓨터의 용량이 충분한지 확인합니다.
+* 외부 DB의 my.cnf(Windows의 경우 my.ini) 파일에 아래와 같은 옵션을 추가합니다.
 * server-id의 경우 NHN Cloud RDS 인스턴스의 DB Configuration 항목의 server-id와 다른 값으로 입력합니다.
 
 ```
@@ -101,7 +101,7 @@ CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user=
 START SLAVE;
 ```
 
-* 외부 DB와 NHN Cloud RDS 인스턴스의 원본 데이터가 같아지면, 외부 DB에 STOP SLAVE 명령을 이용해 복제를 종료합니다
+* 외부 DB와 NHN Cloud RDS 인스턴스의 원본 데이터가 같아지면 외부 DB에 STOP SLAVE 명령을 이용해 복제를 종료합니다.
 
 ### 복제를 이용하여 가져오기
 
@@ -122,7 +122,7 @@ mysqldump -h{slave_insance_floating_ip} -u{db_id} -p{db_password} --port={db_por
 ```
 
 * 백업된 파일을 열어 주석의 MASTER_LOG_FILE 및 MASTER_LOG_POS를 따로 기록합니다.
-* NHN Cloud RDS 인스턴스로부터 데이터를 백업받을 클라이언트나 컴퓨터의 용량이 충분한지 확인합니다.
+* NHN Cloud RDS 인스턴스로부터 데이터를 백업할 클라이언트나 컴퓨터의 용량이 충분한지 확인합니다.
 * 외부 DB의 my.cnf(Winodws의 경우 my.ini) 파일에 아래 옵션을 추가합니다.
 * server-id의 경우 NHN Cloud RDS 인스턴스의 DB Configuration 항목의 server-id와 다른 값으로 입력합니다.
 
@@ -139,7 +139,7 @@ replicate-ignore-db=rds_maintenance
 * 외부 네트워크를 통해 가져오면(import) 오래 걸릴 수 있기 때문에,
 * 내부 NHN Cloud Image를 생성하고 백업 파일을 복사한 후, NHN Cloud로 가져오기를 권장합니다.
 * 백업된 파일을 아래의 명령어로 NHN Cloud RDS에 입력합니다.
-* 복제 구성은 DNS를 지원하지 않으므로, IP로 변환해 실행합니다.
+* 복제 구성은 DNS를 지원하지 않으므로 IP로 변환해 실행합니다.
 
 ```
 mysql -h{rds_master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} < {local_path_and_file_name}
@@ -164,7 +164,7 @@ mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds
 mysql> call mysql.tcrds_repl_slave_start;
 ```
 
-* 외부 DB와 NHN Cloud RDS 인스턴스의 원본 데이터가 같아지면, 아래 명령을 이용해 복제를 종료합니다.
+* 외부 DB와 NHN Cloud RDS 인스턴스의 원본 데이터가 같아지면 아래 명령을 이용해 복제를 종료합니다.
 
 ```
 mysql> call mysql.tcrds_repl_init();
@@ -190,8 +190,8 @@ mysql> call mysql.tcrds_repl_init();
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
-> [주의] 현재 5.7.33 버전에서는, 오브젝트 스토리지의 백업 파일을 이용한 DB 인스턴스 복원은 제한됩니다.
-> [주의] 권장하는 XtraBackup 이외의 버전을 사용하면, 정상으로 동작하지 않을 수 있습니다.
+> [주의] 현재 5.7.33 버전에서는 오브젝트 스토리지의 백업 파일을 이용한 DB 인스턴스 복원은 제한됩니다.
+> [주의] 권장하는 XtraBackup 이외의 버전을 사용하면 정상으로 동작하지 않을 수 있습니다.
 > [주의] 오브젝트 스토리지의 백업 파일과 복원하려는 MySQL의 버전은 동일해야 합니다.
 
 ### 오브젝트 스토리지에 백업 내보내기
@@ -242,7 +242,7 @@ find {MySQL 데이터 저장 경로} -name "*.qp" -print0 | xargs -0 rm
 
 * 오브젝트 스토리지의 RDS for MySQL 백업 파일을 이용해 동일 리전, 다른 프로젝트의 RDS for MySQL로 복원할 수 있습니다.
 * [오브젝트 스토리지에 백업 내보내기](./developer-guide/#_5 )를 참고하여 백업 파일을 오브젝트 스토리지로 내보냅니다.
-* 복원할 프로젝트의 웹 콘솔에 접속한 후, Instance 탭에서 오브젝트 스토리지에 있는 백업으로 복원 버튼을 클릭합니다.
+* 복원할 프로젝트의 웹 콘솔에 접속한 뒤 Instance 탭에서 오브젝트 스토리지에 있는 백업으로 복원 버튼을 클릭합니다.
 * 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
 
 ### 오브젝트 스토리지의 외부 MySQL 백업 파일을 이용하여 DB 인스턴스 생성
@@ -263,12 +263,12 @@ innobackupex --defaults-file={my.cnf 경로} --user {사용자} --password '{비
 xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비밀번호}' --socket={MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream --backup {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
 ```
 * 백업 로그 파일의 마지막 줄에 `completed OK!`가 있는지 확인합니다.
-    * completed OK!가 없다면 백업이 정상적으로 종료되지 않았으므로, 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
+    * completed OK!가 없다면 백업이 정상적으로 종료되지 않은 것이므로 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
 * 완료된 백업 파일을 오브젝트 스토리지에 업로드합니다.
     * 한 번에 업로드할 수 있는 최대 파일 크기는 5GB입니다.
-    * 백업 파일의 크기가 5GB보다 크면, split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 잘라 멀티 파트로 업로드해야 합니다.
+    * 백업 파일의 크기가 5GB보다 클 경우 split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 자른 뒤 멀티 파트로 업로드해야 합니다.
     * 자세한 사항은 https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/api-guide/#_44를 참고합니다.
-* 복원할 프로젝트의 웹 콘솔에 접속한 후, Instance 탭에서 오브젝트 스토리지에 있는 백업으로 복원 버튼을 클릭합니다.
+* 복원할 프로젝트의 웹 콘솔에 접속한 뒤 Instance 탭에서 오브젝트 스토리지에 있는 백업으로 복원 버튼을 클릭합니다.
 * 백업 파일이 저장된 오브젝트 스토리지의 정보 및 DB 인스턴스의 정보를 입력한 후 **생성** 버튼을 클릭합니다.
 
 ## Procedure
@@ -314,12 +314,12 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * 파라미터 설명
-    * master_instance_ip : 복제 대상(Master) 서버의 IP
-    * master_instance_port : 복제 대상(Master) 서버의 MySQL Port
-    * user_id_for_replication : 복제 대상(Master) 서버의 MySQL 에 접속 할 복제용 계정
-    * password_for_replication_user : 복제용 계정 패스워드
-    * MASTER_LOG_FILE : 복제 대상(Master) 의 binary log 파일명
-    * MASTER_LOG_POS : 복제 대상(Master) 의 binary log 포지션
+    * master_instance_ip: 복제 대상(Master) 서버의 IP
+    * master_instance_port : 복제 대상(Master) 서버의 MySQL 포트
+    * user_id_for_replication: 복제 대상(Master) 서버의 MySQL에 접속할 복제용 계정
+    * password_for_replication_user: 복제용 계정 패스워드
+    * MASTER_LOG_FILE: 복제 대상(Master)의 binary log 파일명
+    * MASTER_LOG_POS: 복제 대상(Master)의 binary log 포지션
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
