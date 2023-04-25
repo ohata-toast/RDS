@@ -191,14 +191,14 @@ GET /rds/api/public/external/v3.0/network/subnets
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|subnets|Body|Array| 서브넷 목록 |
-|subnets.subnetId|Body|UUID|서브넷의 식별자|
-|subnets.subnetName|Body|String|서브넷을 식별할 수 있는 이름|
-|subnets.cidr|Body|String|CIDR|
-|subnets.usingGateway|Body|Boolean|게이트웨이 사용 여부|
-|subnets.availableIpCount|Body|Number|사용 가능한 IP 수|
+| 이름                       | 종류 | 형식 | 설명               |
+|--------------------------|---|---|------------------|
+| subnets                  |Body|Array| 서브넷 목록           |
+| subnets.subnetId         |Body|UUID| 서브넷의 식별자         |
+| subnets.subnetName       |Body|String| 서브넷을 식별할 수 있는 이름 |
+| subnets.subnetCidr       |Body|String| 서브넷의 CIDR        |
+| subnets.usingGateway     |Body|Boolean| 게이트웨이 사용 여부      |
+| subnets.availableIpCount |Body|Number| 사용 가능한 IP 수      |
 
 <details><summary>예시</summary>
 <p>
@@ -214,7 +214,7 @@ GET /rds/api/public/external/v3.0/network/subnets
         {
             "subnetId": "1b2a9b23-0725-4b92-8c78-35db66b8ad9f",
             "subnetName": "Default Network",
-            "cidr": "192.168.0.0/24",
+            "subnetCidr": "192.168.0.0/24",
             "usingGateway": true,
             "availableIpCount": 240
         }
