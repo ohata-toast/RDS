@@ -1,13 +1,35 @@
 ## Database > RDS for MySQL > API 가이드
 
-| 리전 | 엔드포인트 |
-|---|---|
-| 한국(판교) 리전 | https://kr1-mysql.api.nhncloudservice.com |
-| 한국(평촌) 리전 | https://kr2-mysql.api.nhncloudservice.com |
-| 일본 리전 | https://jp1-mysql.api.nhncloudservice.com |
+| 리전 | 엔드포인트                                         |
+|---|-----------------------------------------------|
+| 한국(판교) 리전 | https://kr1-rds-mysql.api.nhncloudservice.com |
+| 한국(평촌) 리전 | https://kr2-rds-mysql.api.nhncloudservice.com     |
+| 일본 리전 | https://jp1-rds-mysql.api.nhncloudservice.com     |
 
+## 인증 및 권한
 
+API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. <b>회원 정보 > API 보안 설정</b>에서 생성할 수 있습니다.
+생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
 
+| 이름                     | 종류     | 형식     | 필수  | 설명                               |
+|------------------------|--------|--------|-----|----------------------------------|
+| X-TC-APP-KEY           | Header | String | O   | RDS for MySQL 서비스의 Appkey        |
+| X-TC-AUTHENTICATION-ID | Header | String | O   | API 보안 설정 메뉴의 User Access Key ID |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O   | API 보안 설정 메뉴의 Secret Access Key  |
+
+또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER`로 구분하여 권한을 부여할 수 있습니다.
+
+* `RDS for MySQL ADMIN` 권한은 모든 기능을 사용 가능합니다.
+* `RDS for MySQL VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
+  * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
+  * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
+
+API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 오류가 발생합니다.
+
+| resultCode | resultMessage | 설명          |
+|------------|---------------|-------------|
+| 80401      | Unauthorized  | 인증에 실패했습니다. |
+| 80403      | Forbidden     | 권한이 없습니다.   |
 
 ## 프로젝트 정보
 
@@ -15,16 +37,11 @@
 
 ```
 GET /rds/api/public/external/v3.0/project/regions
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름     | 종류     | 형식     | 필수  | 설명     |
-|--------|--------|--------|-----|--------|
-| appkey | Header | String | O   | Appkey |
 
 #### 응답
 
@@ -68,16 +85,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/project/members
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름     | 종류     | 형식     | 필수  | 설명     |
-|--------|--------|--------|-----|--------|
-| appkey | Header | String | O   | Appkey |
 
 #### 응답
 
@@ -122,15 +134,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-flavors
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
@@ -174,17 +182,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/network/subnets
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
@@ -230,15 +233,10 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-engines
-X-TC-APP-KEY: {appkey}
 ```
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 
 #### 응답
@@ -282,16 +280,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/storages
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
@@ -325,7 +318,7 @@ X-TC-APP-KEY: {appkey}
 
 ### 작업 상태
 
-| 상태 | 설명 |
+| 상태명 | 설명 |
 |--|--|
 |`READY`| 작업이 준비 중인 경우|
 |`RUNNING`| 작업이 진행 중인 경우|
@@ -335,7 +328,7 @@ X-TC-APP-KEY: {appkey}
 |`INTERRUPTED`| 작업 진행 중 인터럽트가 발생한 경우|
 |`CANCELED`| 작업이 취소된 경우 |
 |`FAILED`| 작업이 실패한 경우 |
-|`ERROR`| 작업 진행 중 에러가 발생한 경우|
+|`ERROR`| 작업 진행 중 오류가 발생한 경우|
 |`DELETED`| 작업이 삭제된 경우 |
 |`FAIL_TO_READY`| 작업 준비에 실패한 경우|
 
@@ -345,7 +338,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/jobs/{jobId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -354,7 +346,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | jobId | URL  | UUID | O | 작업의 식별자 |
 
 #### 응답
@@ -404,16 +395,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instance-groups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
@@ -455,7 +441,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instance-groups/{dbInstanceGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -464,7 +449,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceGroupId | URL | UUID | O | DB 인스턴스 그룹의 식별자 |
 
 #### 응답
@@ -563,16 +547,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instances
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
@@ -628,7 +607,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -637,7 +615,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -695,14 +672,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceName | Body | String | O | DB 인스턴스를 식별할 수 있는 이름 |
 | description|Body|String|X|DB 인스턴스에 대한 추가 정보|
 | dbFlavorId | Body | UUID | O | DB 인스턴스 사양의 식별자 |
@@ -791,14 +766,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 | dbInstanceName | Body | String | X | DB 인스턴스를 식별할 수 있는 이름 |
 | description|Body|String|X|DB 인스턴스에 대한 추가 정보|
@@ -838,7 +811,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -847,7 +819,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -863,14 +834,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/restart
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |useOnlineFailover|Body|Boolean|X|장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`|
 |executeBackup|Body|Boolean|X|현재 시점 백업 진행 여부<br/>- 기본값: `false`|
@@ -888,7 +857,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/start
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -897,7 +865,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -913,7 +880,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/stop
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -922,7 +888,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -938,14 +903,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 | backupName | Body | String | O | 백업을 식별할 수 있는 이름 |
 
@@ -962,14 +925,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/replicate
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 | dbInstanceName | Body | String | O | DB 인스턴스를 식별할 수 있는 이름 |
 | description|Body|String|X|DB 인스턴스에 대한 추가 정보|
@@ -980,7 +941,7 @@ X-TC-APP-KEY: {appkey}
 |userGroupIds|Body|Array|X|사용자 그룹의 식별자 목록|
 |useDefaultUserNotification|Body|Boolean|X|기본 알람 사용 여부<br/>- 기본값: `false`|
 | network|Body|Object|O|네트워크 정보 객체|
-|network.usePublicAccess|Body|Boolean|X|외부 접속 가능  여부<br/>- 기본값: 원본 DB 인스턴스 값|
+|network.usePublicAccess|Body|Boolean|X|외부 접속 가능 여부<br/>- 기본값: 원본 DB 인스턴스 값|
 | network.availabilityZone| Body|Enum|O|DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`|
 |storage|Body|Object|X|스토리지 정보 객체|    
 |storage.storageSize|Body|Number|X|데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `20`<br/>- 최댓값: `2048`|
@@ -1030,7 +991,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/promote
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1039,7 +999,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1055,7 +1014,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1063,7 +1021,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |useHighAvailability|Body|Boolean|O|고가용성 사용 여부|
 |pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600`|
@@ -1081,7 +1038,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/resume
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1090,7 +1046,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1106,7 +1061,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/pause
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1115,7 +1069,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1131,7 +1084,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/repair
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1140,7 +1092,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1156,7 +1107,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/split
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1165,7 +1115,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1181,7 +1130,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/storage-info
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1190,7 +1138,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1230,14 +1177,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/storage-info
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최솟값: 현재값<br/>- 최댓값: `2048`|
 |useOnlineFailover|Body|Boolean|X|장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`|
@@ -1255,7 +1200,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup-info
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1264,7 +1208,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1319,14 +1262,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup-info
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |backupPeriod|Body|Number|X|백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`|
 |ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600`|
@@ -1373,7 +1314,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/network-info
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1383,7 +1323,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1419,14 +1358,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/network-info
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |usePublicAccess|Body|Boolean|O|외부 접속 가능  여부|
 
@@ -1443,7 +1380,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1452,7 +1388,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1502,14 +1437,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |dbUserName|Body|String|O|DB 사용자 계정 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `32`|
 |dbPassword|Body|String|O|DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`|
@@ -1544,14 +1477,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 | dbUserId | URL | UUID | O | DB 사용자의 식별자 |
 |dbPassword|Body|String|X|DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`|
@@ -1582,7 +1513,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1591,7 +1521,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 | dbUserId | URL | UUID | O | DB 사용자의 식별자 |
 
@@ -1607,7 +1536,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1616,7 +1544,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 
 #### 응답
@@ -1660,14 +1587,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |dbSchemaName|Body|String|O|DB 스키마 이름|
 
@@ -1683,7 +1608,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1692,7 +1616,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
 |dbSchemaId|URL|UUID|O|DB 스키마의 식별자 |
 
@@ -1714,14 +1637,13 @@ X-TC-APP-KEY: {appkey}
 | `COMPLETED` | 백업이 완료된 경우 |
 | `DELETING`| 백업이 삭제 중인 경우 |
 | `DELETED`| 백업이 삭제된 경우 |
-| `ERROR`| 에러가 발생한 경우 |
+| `ERROR`| 오류가 발생한 경우 |
 
 
 ### 백업 목록 조회
 
 ```
 GET /rds/api/public/external/v3.0/backups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1730,7 +1652,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | page | Query | Number | O | 조회할 목록의 페이지<br/>- 최솟값: `1` |
 | size | Query | Number | O | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 | backupType | Query | Enum | X | 백업 유형<br/>- `AUTO`: 자동<br/>- `MANUAL`:  수동<br/>- 기본값: 전체|
@@ -1789,14 +1710,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/backups/{backupId}/export
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |backupId|URL|UUID|O|백업의 식별자|
 |tenantId|Body|String|O|백업이 저장될 오브젝트 스토리지의 테넌트 ID|
 |user|Body|String|O|NHN Cloud 계정 혹은 IAM 멤버 ID|
@@ -1832,42 +1751,40 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/backups/{backupId}/restore
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-|backupId|URL|UUID|O|백업의 식별자|
-| dbInstanceName | Body | String | O | DB 인스턴스를 식별할 수 있는 이름 |
-| description|Body|String|X|DB 인스턴스에 대한 추가 정보|
-| dbFlavorId | Body | UUID | O | DB 인스턴스 사양의 식별자 |
-|dbPort|Body|Integer|O|DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`|
-| parameterGroupId|Body|UUID|O|파라미터 그룹의 식별자|
-|dbSecurityGroupIds|Body|Array|X|DB 보안 그룹의 식별자 목록||network|Body|Object|O|네트워크 정보 객체|
-|userGroupIds|Body|Array|X|사용자 그룹의 식별자 목록|
-|useHighAvailability|Body|Boolean|X|고가용성 사용 여부<br/>- 기본값: `false`|
-|pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`|
-|useDefaultNotification|Body|Boolean|X|기본 알림 사용 여부<br/>- 기본값: `false`|
-| network|Body|Object|O|네트워크 정보 객체|
-| network.vpcSubnetId|Body|UUID|O|VPC 서브넷의 식별자|
-|network.usePublicAccess|Body|Boolean|X|외부 접속 가능  여부<br/>- 기본값: `false`|
-| network.availabilityZone| Body|Enum|O|DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`|
-|storage|Body|Object|O|스토리지 정보 객체|    
-|storage.storageType|Body|Enum|O|데이터 스토리지 타입<br/>- 예시: `General SSD`|
-|storage.storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`|
-|backup|Body|Object|O|백업 정보 객체|
-|backup.backupPeriod|Body|Number|O|백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`|
-|backup.ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`|
-|backup.backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`|
-|backup.replicationRegion|Body|Enum|X|백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)|
-|backup.useBackupNoLock|Body|Boolean|X|테이블 잠금 사용 여부<br/>- 기본값: `false`|
-|backup.backupSchedules|Body|Array|O|백업 스케줄 목록|
-|backup.backupSchedules.backupWndBgnTime|Body|String|O|백업 시작 시각<br/>- 예시: `00:00:00`|
-|backup.backupSchedules.backupWndDuration|Body|Enum|O|백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간|
-|backup.backupSchedules.backupRetryExpireTime|Body|String|O|백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`|
+| 이름                                           | 종류     | 형식      | 필수 | 설명                                                                                                                                                                                                                          |
+|----------------------------------------------|--------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| backupId                                     | URL    | UUID    | O  | 백업의 식별자                                                                                                                                                                                                                     |
+| dbInstanceName                               | Body   | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                                                                                                                                                                        |
+| description                                  | Body   | String  | X  | DB 인스턴스에 대한 추가 정보                                                                                                                                                                                                           |
+| dbFlavorId                                   | Body   | UUID    | O  | DB 인스턴스 사양의 식별자                                                                                                                                                                                                             |
+| dbPort                                       | Body   | Integer | O  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                                                                                                                                                                  |
+| parameterGroupId                             | Body   | UUID    | O  | 파라미터 그룹의 식별자                                                                                                                                                                                                                |
+| dbSecurityGroupIds                           | Body   | Array   | X  | DB 보안 그룹의 식별자 목록                                                                                                                                                                                                            ||network|Body|Object|O|네트워크 정보 객체|
+| userGroupIds                                 | Body   | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                              |
+| useHighAvailability                          | Body   | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                               |
+| pingInterval                                 | Body   | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                                                                                         |
+| useDefaultNotification                       | Body   | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
+| network                                      | Body   | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
+| network.vpcSubnetId                          | Body   | UUID    | O  | VPC 서브넷의 식별자                                                                                                                                                                                                                |
+| network.usePublicAccess                      | Body   | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
+| network.availabilityZone                     | Body   | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                    |
+| storage                                      | Body   | Object  | O  | 스토리지 정보 객체                                                                                                                                                                                                                  |    
+| storage.storageType                          | Body   | Enum    | O  | 데이터 스토리지 타입<br/>- 예시: `General SSD`                                                                                                                                                                                         |
+| storage.storageSize                          | Body   | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                                                                                           |
+| backup                                       | Body   | Object  | O  | 백업 정보 객체                                                                                                                                                                                                                    |
+| backup.backupPeriod                          | Body   | Number  | O  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
+| backup.ftwrlWaitTimeout                      | Body   | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                          |
+| backup.backupRetryCount                      | Body   | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                     |
+| backup.replicationRegion                     | Body   | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
+| backup.useBackupNoLock                       | Body   | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                             |
+| backup.backupSchedules                       | Body   | Array   | O  | 백업 스케줄 목록                                                                                                                                                                                                                   |
+| backup.backupSchedules.backupWndBgnTime      | Body   | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
+| backup.backupSchedules.backupWndDuration     | Body   | Enum    | O  | 백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
+| backup.backupSchedules.backupRetryExpireTime | Body   | String  | O  | 백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`                                                                                                                                              |
 
 <details><summary>예시</summary>
 <p>
@@ -1915,7 +1832,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/backups/{backupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -1924,7 +1840,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |backupId|URL|UUID|O|백업의 식별자|
 
 #### 응답
@@ -1953,16 +1868,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-security-groups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
@@ -2009,7 +1919,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2018,7 +1927,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
 
 #### 응답
@@ -2092,14 +2000,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-security-groups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupName|Body|String|O|DB 보안 그룹을 식별할 수 있는 이름|
 |description|Body|String|X|DB 보안 그룹에 대한 추가 정보|
 |rules|Body|Array|O|DB 보안 그룹 규칙 목록|
@@ -2151,14 +2057,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
 |dbSecurityGroupName|Body|String|X|DB 보안 그룹을 식별할 수 있는 이름|
 |description|Body|String|X|DB 보안 그룹에 대한 추가 정보|
@@ -2190,7 +2094,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2199,7 +2102,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
 
 #### 응답
@@ -2212,14 +2114,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
 |description|Body|String|X|DB 보안 그룹 규칙에 대한 추가 정보|
 |direction|Body|Enum|O|통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신
@@ -2262,14 +2162,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
 |ruleId|URL|UUID|O|DB 보안 그룹 규칙의 식별자|
 |description|Body|String|X|DB 보안 그룹 규칙에 대한 추가 정보|
@@ -2311,7 +2209,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2320,7 +2217,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
 |ruleIds|Query|Array|O|DB 보안 그룹 규칙의 식별자 목록|
 
@@ -2339,7 +2235,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/parameter-groups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2348,7 +2243,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbEngine|Query|Enum|X|DB 엔진 유형|
 
 
@@ -2399,7 +2293,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2408,7 +2301,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
 
 #### 응답
@@ -2476,14 +2368,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/parameter-groups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupName|Body|String|O|파라미터 그룹을 식별할 수 있는 이름|
 |description|Body|String|X|파라미터 그룹에 대한 추가 정보|
 |dbEngine|Body|Enum|O|DB 엔진 유형|
@@ -2514,14 +2404,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/copy
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
 |parameterGroupName|Body|String|O|파라미터 그룹을 식별할 수 있는 이름|
 |description|Body|String|X|파라미터 그룹에 대한 추가 정보|
@@ -2553,7 +2441,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2561,7 +2448,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
 |parameterGroupName|Body|String|X|파라미터 그룹을 식별할 수 있는 이름|
 |description|Body|String|X|파라미터 그룹에 대한 추가 정보|
@@ -2589,7 +2475,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/parameters
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2597,7 +2482,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
 |modifiedParameters|Body|Array|O|변경할 파라미터 목록|
 |modifiedParameters.parameterId|Body|UUID|O|파라미터의 식별자|
@@ -2631,14 +2515,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/reset
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
 
 #### 응답
@@ -2651,7 +2533,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2660,7 +2541,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
 
 #### 응답
@@ -2675,16 +2555,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/user-groups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
@@ -2727,7 +2602,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/user-groups/{userGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
@@ -2736,7 +2610,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | userGroupId | URL | UUID | O | 사용자 그룹의 식별자|
 
 #### 응답
@@ -2781,14 +2654,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/user-groups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |userGroupName|Body|String|O|사용자 그룹을 식별할 수 있는 이름|
 |memberIds|Body|Array|O|프로젝트 멤버의 식별자 목록|
 
@@ -2817,14 +2688,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/user-groups/{userGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | userGroupId | URL | UUID | O | 사용자 그룹의 식별자|
 |userGroupName|Body|String|X|사용자 그룹을 식별할 수 있는 이름|
 |memberIds|Body|Array|X|프로젝트 멤버의 식별자 목록|
@@ -2852,14 +2721,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/user-groups/{userGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | userGroupId | URL | UUID | O | 사용자 그룹의 식별자|
 #### 응답
 
@@ -2874,16 +2741,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/notification-groups
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
@@ -2932,7 +2795,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 #### 요청
 
@@ -2940,7 +2802,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |notificationGroupId|URL|UUID|O|알림 그룹의 식별자|
 
 #### 응답
@@ -3001,13 +2862,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 POST /rds/api/public/external/v3.0/notification-groups
-X-TC-APP-KEY: {appkey}
 ```
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |notificationGroupName|Body|String|O|알림 그룹을 식별할 수 있는 이름|
 |notifyEmail|Body|Boolean|X|이메일 알림 여부<br/>- 기본값: `true`|
 |notifySms|Body|Boolean|X|SMS 알림 여부<br/>- 기본값: `true`|
@@ -3043,14 +2902,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 PUT /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |notificationGroupId|URL|UUID|O|알림 그룹의 식별자|
 |notificationGroupName|Body|String|X|알림 그룹을 식별할 수 있는 이름|
 |notifyEmail|Body|Boolean|X|이메일 알림 여부|
@@ -3083,7 +2940,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 DELETE /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
-X-TC-APP-KEY: {appkey}
 ```
 #### 요청
 
@@ -3091,7 +2947,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |notificationGroupId|URL|UUID|O|알림 그룹의 식별자|
 
 #### 응답
@@ -3106,17 +2961,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/metrics
-X-TC-APP-KEY: {appkey}
 ```
 
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 
 #### 응답
@@ -3155,14 +3005,12 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/metric-statistics
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | Query | UUID| O | DB 인스턴스의 식별자|
 | measureNames | Query | Array | O | 조회 지표 목록<br/>- 최소 크기: `1` |
 | from | Query | Datetime | O| 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -3221,7 +3069,6 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/events
-X-TC-APP-KEY: {appkey}
 ```
 
 
@@ -3231,7 +3078,6 @@ X-TC-APP-KEY: {appkey}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | page | Query | Number | O | 조회할 목록의 페이지<br/>- 최솟값: `1` |
 | size | Query | Number | O | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100`  |
 | from | Query | Datetime | O| 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -3309,16 +3155,11 @@ X-TC-APP-KEY: {appkey}
 
 ```
 GET /rds/api/public/external/v3.0/event-codes
-X-TC-APP-KEY: {appkey}
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### 응답
 
