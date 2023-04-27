@@ -21,8 +21,8 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 | 8.0.28 | 8.0.28 |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
-    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 ### 자동 백업
 
@@ -124,7 +124,7 @@ xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비�
 
 * 한 번에 업로드할 수 있는 최대 파일 크기는 5GB입니다.
 * 백업 파일의 크기가 5GB보다 클 경우 split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 자른 뒤 멀티 파트로 업로드해야 합니다.
-* 자세한 사항은 https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/api-guide/#_44를 참고합니다.
+* 자세한 사항은 [멀티파트 업로드](/ko/Storage/Object%20Storage/ko/api-guide/#_44)를 참고합니다.
 
 (4) 복원할 프로젝트의 웹 콘솔에 접속한 뒤 DB 인스턴스 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
 
@@ -135,9 +135,9 @@ xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비�
 
 ### RDS for MySQL 백업을 이용한 복원
 
-RDS for MySQL의 백업 파일을 이용하여 직접 MySQL의 데이터베이스를 복원할 수 있습니다. RDS for MySQL 백업 파일을 복원할 때 [백업](./#_1) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
+RDS for MySQL의 백업 파일을 이용하여 직접 MySQL의 데이터베이스를 복원할 수 있습니다. RDS for MySQL 백업 파일을 복원할 때 [백업](ko/Database/RDS%20for%20MySQL/ko/backup-and-restore/#_1) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
 
-(1) [백업 내보내기](./#_5) 항목을 참고하여 RDS for MySQL의 백업을 오브젝트 스토리지로 내보냅니다.
+(1) [백업 내보내기](ko/Database/RDS%20for%20MySQL/ko/backup-and-restore/#_5) 항목을 참고하여 RDS for MySQL의 백업을 오브젝트 스토리지로 내보냅니다.
 
 (2) 오브젝트 스토리지의 백업을 복원하고자 하는 서버에 다운로드합니다.
 
