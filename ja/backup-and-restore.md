@@ -99,7 +99,7 @@ DBインスタンスのバックアップ保管期間を1日以上に設定す�
 
 ### 外部MySQLバックアップを利用した復元
 
-外部MySQLバックアップファイルを利用してDBインスタンスを作成できます。外部MySQLバックアップファイルを作成する時、[バックアップ](./#_1)項目を参照してRDS for MySQLで使用するPercona XtraBackupと同じバージョンを使用する必要があります。
+外部MySQLバックアップファイルを利用してDBインスタンスを作成できます。外部MySQLバックアップファイルを作成する時、[バックアップ](backup-and-restore/#_1)項目を参照してRDS for MySQLで使用するPercona XtraBackupと同じバージョンを使用する必要があります。
 
 > [注意]
 > innodb_data_file_pathの設定値がibdata1:12M:autoextendでない場合、RDS for MySQLのDBインスタンスに復元できません。
@@ -124,7 +124,7 @@ xtrabackup --defaults-file={my.cnfパス} --user={ユーザー} --password='{パ
 
 * 一度にアップロードできる最大ファイルサイズは5GBです。
 * バックアップファイルのサイズが5GBより大きい場合、splitのようなユーティリティを利用してバックアップファイルを5GB以下に分割した後、マルチパートでアップロードする必要があります。
-* 詳細については、 https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/api-guide/#_44を参照してください。
+* 詳細については、 [マルチパートアップロード](/Storage/Object%20Storage/ko/api-guide/#_44)を参照してください。
 
 (4)復元するプロジェクトのWebコンソールに接続した後、DBインスタンスタブで**オブジェクトストレージにあるバックアップで復元**ボタンをクリックします。
 
@@ -135,9 +135,9 @@ xtrabackup --defaults-file={my.cnfパス} --user={ユーザー} --password='{パ
 
 ### RDS for MySQLのバックアップを利用した復元
 
-RDS for MySQLのバックアップファイルを利用して直接MySQLのデータベースを復元することができます。RDS for MySQLのバックアップファイルを復元する時、[バックアップ](./#_1)項目を参照してRDS for MySQLで使用するPercona XtraBackupと同じバージョンを使用する必要があります。
+RDS for MySQLのバックアップファイルを利用して直接MySQLのデータベースを復元することができます。RDS for MySQLのバックアップファイルを復元する時、[バックアップ](backup-and-restore/#_1)項目を参照してRDS for MySQLで使用するPercona XtraBackupと同じバージョンを使用する必要があります。
 
-(1) [バックアップのエクスポート](./#_5)の項目を参照して、RDS for MySQLのバックアップをオブジェクトストレージにエクスポートします。
+(1) [バックアップのエクスポート](backup-and-restore/#_5)の項目を参照して、RDS for MySQLのバックアップをオブジェクトストレージにエクスポートします。
 
 (2)オブジェクトストレージのバックアップを復元したいサーバーにダウンロードします。
 
