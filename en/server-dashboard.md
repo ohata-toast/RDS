@@ -8,9 +8,9 @@ You can visualize performance metrics in chart form on the server dashboard. Cha
 |-------|-------| 
 | 1 minute | 7 days |
 | 5 minutes | 1 month |
-| 30 minutes || 6 months |
+| 30 minutes | 6 months |
 | 2 hours | 2 years |
-| 1 day | 5 years ||
+| 1 day | 5 years |
 
 ## Layout
 
@@ -45,26 +45,27 @@ Use a layout to show the size and position of charts. When the service is enable
 
 You can view various performance metrics for DB instance in chart form. Each performance metric consists of a different type of chart. In addition to default system metrics, MySQL provides various performance metrics in chart form. Metrics that can be found for each chart are as follows.
 
-| Chart | Metrics (Unit) | Description |
-| |----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------| 
-| CPU Usage Rate | cpu used (%) | 
-| CPU Details | cpu user (%)<br/>cpu system (%)<br/>cpu nice (%)<br/>cpu IO wait (%) | | 
-| Memory usage| memory used (%) | | 
-| Memory Details | memory used (bytes)<br/>memory free (bytes) | | | 
-| Swap Usage | swap used (bytes)<br> swap total (bytes) | | 
-| Storage Usage | storage used (%) | | 
-| Storage Remaining Usage| storage free (%) | | 
-| Storage IO | disk read (bytes)<br> disk write (bytes) | |
-| Network Data Transfer | nic incoming (bytes)<br> nic outgoing (bytes) | Default network transfer used by MySQL occurs. | 
-| CPU Average Load | 1 m<br/>5m<br/>15m | | 
-| Queries Per Second | qps (count/sec) | | 
-| Database Activity | select (count/sec)<br/>insert (count/sec)<br/>update (count/sec)<br/>delete (count/sec)<br/>replace (count/sec)<br/>call (count/sec) | | 
-| Buffer Pool | Buffer Pool Total (MB)<br/>Buffer Pool Used (MB) | | 
-| Slow Query | counts/min | | 
-| Replication Delay | sec | | 
-| Row Access | index (counts/sec)<br/>full scan (counts/sec) | | 
-| Database Connection Status | mysql status | Unable to access: 0, Able to access: 1 | 
-| Storage Defect | disk fault status | Abnormal: 0, Normal: 1 |
+| Chart                         | Metrics(Unit)                                                                                                                              | Description                                |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| CPU Usage Rate                    | cpu used (%)                                                                                                                         |                                   |
+| CPU Details                     | cpu user (%)<br/>cpu system (%)<br/>cpu nice (%)<br/>cpu IO wait (%)                                                                 |                                   |
+| Memory Usage                    | memory used (%)                                                                                                                      |                                   |
+| Memory Details                     | memory used (bytes)<br/>memory free (bytes)                                                                                          |                                   |
+| Swap Usage                     | swap used (bytes)<br> swap total (bytes)                                                                                             |                                   |
+| Storage Usage                | storage used (%)                                                                                                                     |                                   |
+| Remaining Storage Usage             | storage free (%)                                                                                                                     |                                   |
+| Storage IO                 | disk read (bytes)<br> disk write (bytes)                                                                                             |                                   |
+| Network Data Transfer               | nic incoming (bytes)<br> nic outgoing (bytes)                                                                                        | Default network transfer used by MySQL occurs. |
+| CPU Average Load                  | 1m<br/>5m<br/>15m                                                                                                                    |                                   |
+| Queries Per Second         | qps (count/sec)                                                                                                                      |                                   |
+| Database Activity          | select (count/sec)<br/>insert (count/sec)<br/>update (count/sec)<br/>delete (count/sec)<br/>replace (count/sec)<br/>call (count/sec) |                                   |
+| Buffer Pool                | Buffer Pool Total (MB)<br/>Buffer Pool Used (MB)                                                                                     |                                   |
+| Slow Query                 | counts/min                                                                                                                           |                                   |
+| Replication Delay                     | sec                                                                                                                                  |                                   |
+| Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                                   |
+| Database Connection Status | mysql status                                                                                                                         | Unable to access: 0, Able to access: 1                |
+| Storage Defect                    | disk fault status                                                                                                                    | Abnormal: 0, Normal: 1                     |
+
 
 ## Server Group
 
