@@ -1,177 +1,178 @@
-## Database > RDS for MySQL > 백업 및 복원
+## Database > RDS for MySQL > Back up and Restoration
 
-## 백업
+## Backup
 
-장애 상황에 대비하여 DB 인스턴스의 데이터베이스를 복구할 수 있도록 미리 준비할 수 있습니다 . 필요할 때마다 웹 콘솔에서 백업을 수행하거나, 주기적으로 백업이 수행되도록 설정할 수 있습니다. 백업이 수행되는 동안에는 해당 DB 인스턴스의 스토리지의 성능 저하가 발생할 수 있습니다. 서비스에 영향을 주지 않기 위해 서비스의 부하가 적은 시간에 백업할 것을 권장합니다. 백업으로 인한 성능 저하를 원치 않을 경우 고가용성 구성을 사용하거나 읽기 복제본에서 백업을 수행할 수도 있습니다.
+You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica.
 
-> [참고]
-> 고가용성 DB 인스턴스는 예비 마스터에서 백업이 수행되어 마스터의 스토리지 성능 저하가 발생하지 않습니다.
+> [Note] 
+> High availability DB instances are backed up on the extra master without compromising the master's storage performance.
 
-RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 백업합니다. 외부 MySQL의 백업으로 복원하거나 RDS for MySQL의 백업으로 복원하기 위해서는 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다. DB 엔진 버전에 따른 Percona XtraBackup 버전은 아래와 같습니다.
+RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
 
-| MySQL 버전 | XtraBackup 버전 |
-| --- | --- |
-| 5.7.15 | 2.4.20 |
-| 5.7.19 | 2.4.20 |
-| 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
-| 5.7.37 | 2.4.20 |
-| 8.0.18 | 8.0.26 |
-| 8.0.23 | 8.0.26 |
-| 8.0.28 | 8.0.28 |
+| MySQL version | XtraBackup version |
+|----------|---------------|
+| 5.7.15   | 2.4.20        |
+| 5.7.19   | 2.4.20        |
+| 5.7.26   | 2.4.20        |
+| 5.7.33   | 2.4.20        |
+| 5.7.37   | 2.4.20        |
+| 8.0.18   | 8.0.26        |
+| 8.0.23   | 8.0.26        |
+| 8.0.28   | 8.0.28        |
+| 8.0.32   | 8.0.28        |
 
-* XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
+* For detailed information about installing XtraBackup, visit the Percona home page.
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
     * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
-### 자동 백업
+### Auto Backup
 
-DB 인스턴스의 백업 보관 기간을 1일 이상으로 설정하면 자동 백업이 활성화되며, 지정된 시간에 백업이 수행됩니다. 자동 백업은 DB 인스턴스와 생명 주기가 동일합니다. DB 인스턴스가 삭제되면 보관된 자동 백업은 모두 삭제됩니다. DB 인스턴스를 생성할 때 자동 백업을 설정할 수 있으며, 이미 생성된 DB 인스턴스의 백업 설정도 변경할 수 있습니다. 자동 백업에서 지원하는 설정 항목은 아래와 같습니다.
+If you set the backup archive period for a DB instance to 1 or more days, automatic backups are enabled, and backups are performed at the specified backup run time. Automatic backups have the same life cycle as DB instances. When DB instance is deleted, all archived automatic backups are deleted. When you create DB instance, you can set the settings for automatic backups, and you can also change the backup settings for the DB instance that is already created. Automatic Backup supports the following settings.
 
-**백업 보관 기간**
+**Backup Retention Period**
 
-* 백업을 스토리지에 저장하는 기간을 설정합니다. 최대 730일까지 보관할 수 있으며, 백업 보관 기간이 변경되면 보관 기간이 지난 자동 백업 파일은 바로 삭제됩니다.
+* Sets the time period for storing backups on storage. It can be kept for up to 730 days, and if the backup archive period changes, the expired automatic backup files will be deleted immediately.
 
-**테이블 잠금 사용**
+**Use Table  Lock**
 
-* `FLUSH TABLES WITH READ LOCK` 구문의 실행 여부를 설정합니다.
-* 테이블 잠금을 사용하면 백업 데이터의 일관성을 보장하기 위해 백업 시 주기적으로 `FLUSH TABLES WITH READ LOCK` 구문을 실행합니다. `FLUSH TABLES WITH READ LOCK` 구문의 실행에 실패할 경우 백업에 실패하게 됩니다.
-* 백업이 수행되는 동안 DML 쿼리 부하가 많은 경우 테이블 잠금을 사용하지 않도록 설정할 수 있습니다. 테이블 잠금을 사용하지 않으면 `FLUSH TABLES WITH READ LOCK` 구문을 실행하지 않기 때문에 DML 부하가 많아도 백업이 실패하지 않습니다. 하지만 테이블 잠금을 사용하지 않은 백업은 백업 데이터의 일관성이 보장되지 않을 수 있으며, 시점 복원을 지원하지 않습니다.
+* `FLUSH TABLES WITH READ LOCK` ets whether the syntax is enabled or disabled.
+* Table lock enables the `FLUSH TABLES WITH READ LOCK` syntax periodically during backups to ensure consistency in backup data. If `FLUSH TABLES WITH READ LOCK` syntax fails to run, the backup will fail.
+* You can disable table locking if the DML query load is high during a backup. If you do not use table lock, `FLUSH TABLES WITH READ LOCK` syntax will not run, so a high DML load does not cause the backup to fail. However, backups without table lock may not ensure consistency of backup data and do not support point-in-time restoration.
 
-**쿼리 지연 대기 시간(초)**
+** Query Latency Dash Time (second)**
 
-* 테이블 잠금 사용 시 `FLUSH TABLES WITH READ LOCK` 구문의 대기 시간을 설정합니다. 쿼리 지연 대기 시간만큼 `FLUSH TABLES WITH READ LOCK` 구문이 대기하게 됩니다. 0~21,600초까지 설정 가능합니다. 길게 설정할 수록 DML 쿼리 부하로 인한 백업 실패 가능성을 줄일 수 있으나, 전체 백업 시간이 길어질 수 있습니다.
+* When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
-**백업 복제 리전**
+**Backup Replication Region**
 
-* 백업 파일을 다른 리전의 오브젝트 스토리지로 복제되도록 설정합니다. 백업 복제 리전은 재해 복구(disaster recovery)를 위한 기능으로 원본 리전의 백업 파일을 대상 리전으로 동일하게 복제하고 관리합니다. 복제는 백그라운드에서 일정 주기마다 진행됩니다. 백업 복제 리전을 설정하면 리전 간 복제 트래픽 과금이 청구되며, 대상 리전에 오브젝트 스토리지 사용량에 대한 과금이 추가로 청구됩니다.
+* Set the backup file to be replicated to object storage in another region. Backup replication regions are features for disaster recovery that replicate and manage backup files from the original region equally to the destination region. Replication occurs in the background at regular intervals. When you set up a backup replication region, you are charged with inter-regional replication traffic, and the destination region is charged additionally for object storage usage.
 
-**백업 재시도 횟수**
+**Back Retry Times**
 
-* DML 쿼리 부하 또는 여러 다양한 이유로 백업이 실패한 경우 재시도하도록 설정할 수 있습니다. 최대 10회까지 재시도할 수 있습니다. 재시도 횟수가 남아 있더라도 백업 수행 시간 설정에 따라 재시도하지 않을 수 있습니다.
+* You can set the backup to retry if it fails due to DML query load or for other various reasons. You can retry maximum 10 times. Depending on the backup run time setting, you might not try again because there are still more retries.
 
-**백업 수행 시간**
+**Backup Run Time**
 
-* 백업이 수행되는 시간을 설정할 수 있습니다. 백업 시작 시각과 백업 윈도우, 백업 재시도 만료 시각으로 구성됩니다. 백업 수행 시간은 겹치지 않게 여러 번 설정할 수 있습니다. 백업 시작 시각을 기준으로 백업 윈도우 안의 어느 시점에서 백업을 수행합니다. 백업 윈도우는 백업의 총 수행 시간과는 관련이 없습니다. 백업에 걸리는 시간은 데이터베이스 크기에 비례하며, 서비스 부하에 따라 달라집니다. 백업이 실패할 경우 백업 재시도 만료 시각을 넘지 않았다면 백업 재시도 횟수에 따라 백업을 다시 시도합니다.
+* Allows you set the time that the backup takes place. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the backup based on the number of backups retries if it does not exceed the backup retries times.
 
-자동 백업의 이름은 `{DB 인스턴스의 이름}_yyyy-MM-dd-HH-mm` 형태로 부여됩니다.
+Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
 
-> [주의]
-> 앞선 백업이 종료되지 않는 등 백업을 수행할 수 없는 상황이면 백업이 수행되지 않을 수 있습니다.
+> [Caution] 
+> If you are unable to perform backup, for example, if the previous backup does not end, the backup may not be performed.
 
-### 수동 백업
+### Manual Backup
 
-특정 시점의 데이터베이스를 영구히 저장하려면 웹 콘솔에서 수동으로 백업을 수행할 수 있습니다. 수동 백업은 자동 백업과 달리 명시적으로 백업을 삭제하지 않는 한 DB 인스턴스가 삭제될 때 같이 삭제되지 않습니다. 수동 백업 시 백업의 이름을 입력해야 하며 아래와 같은 제약 사항이 있습니다.
+If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike automatic backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted  Manual backups require you to enter a name for the backup and have the following limitations.
 
-* 백업 이름은 리전별로 고유해야 합니다.
-* 백업 이름은 1~100 사이의 영문자, 숫자, 일부 기호(-, _, .)만 사용할 수 있으며, 첫 번째 글자는 영문자만 사용할 수 있습니다.
+* Backup name has to be unique for each region.
+* Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
 
-### 백업 스토리지 및 과금
+### Backup Storage and Pricing
 
-모든 백업 파일은 내부 오브젝트 스토리지에 업로드하여 저장합니다. 수동 백업의 경우 별도로 삭제하기 전까지 영구히 저장되며 백업 용량에 따라 오브젝트 스토리지 과금이 발생합니다. 자동 백업의 경우 설정한 보관 기간만큼 저장되며 자동 백업 파일의 전체 크기 중 DB 인스턴스의 스토리지 크기를 초과한 용량에 대해서 과금합니다. 백업 파일이 저장된 내부 오브젝트 스토리지에 직접 접근할 수 없으며, 백업 파일이 필요한 경우 NHN Cloud의 오브젝트 스토리지로 백업 파일을 내보낼 수 있습니다.
+All backup files are uploaded to the internal object storage and stored. For manual backups, they are stored permanently until you delete them separately, and object storage charges are incurred depending on the backup capacity. For automatic backups, it is stored for the set retention period and charges for the full size of the automatic backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal object storage where the backup file is stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
 
-### 백업 내보내기
+### Export Backup
 
-내부 오브젝트 스토리지에 저장된 백업 파일을 NHN Cloud의 사용자 오브젝트 스토리지로 내보낼 수 있습니다. 수동 백업 혹은 자동 백업 파일을 내보내거나, 백업을 수행함과 동시에 백업 파일을 사용자 오브젝트 스토리지로 내보낼 수 도 있습니다. 백업을 내보내는 동안 원본 DB 인스턴스의 네트워크 성능 하락이 발생할 수 있습니다.
+You can export backup files stored on internal object storage to user object storage on NHN Cloud. You can also export a manual or automatic backup file, or export the backup file to user object storage at the same time as you perform the backup. While exporting backups, network performance of the source DB instance may degrade.
 
-> [참고]
-> 수동 백업의 경우 백업을 수행한 원본 DB 인스턴스가 삭제되었다면 백업을 내보낼 수 없습니다.
+> [Note] 
+> For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
 
-## 복원
+## Restoration
 
-백업을 이용하여 원하는 시점으로 데이터를 복원할 수 있습니다. 복원 시 항상 새로운 DB 인스턴스가 생성되며, 기존 DB 인스턴스에 복원할 수 없습니다. 백업을 수행한 원본 DB 인스턴스와 동일한 DB 엔진 버전으로만 복원할 수 있습니다. 백업이 생성된 시점으로 복원하는 스냅숏 복원, 원하는 특정 시점으로 복원하는 시점 복원을 지원합니다. RDS for MySQL에서 생성한 백업뿐만 아니라 외부 MySQL의 백업으로도 복원할 수 있습니다.
+Backups allow you to restore data to any point in time. Restoration always creates new DB instance and cannot be restored to the existing DB instance. You can restore only to the same DB engine version as the source DB instance from which you performed the backup. Supports restoring snapshots to the point in time when the backup was created, and restoring point in time to a specific point in time. You can restore it as backup of external MySQL as well as backup that you created in RDS for MySQL.
 
-> [주의]
-> 복원할 DB 인스턴스의 스토리지 크기가 백업을 수행한 원본 DB 인스턴스의 스토리지 크기보다 작거나, 원본 DB 인스턴스의 파라미터 그룹과 다른 파라미터 그룹을 사용할 경우 복원에 실패할 수 있습니다.
+> [Caution] 
+> Restoration might fail if the storage size of the DB instance that you want to restore is smaller than the storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
 
-### 스냅샷 복원
+### Snapshot Restoration
 
-스냅샷 복원은 백업을 수행한 시점으로 복원합니다. 백업 파일만으로 복원을 진행하여, 백업을 수행한 원본 DB 인스턴스가 필요하지 않습니다.
+Restoring a backup to a point in time is called snapshot restoration. Restoration is done with only backup files, you do not need the source DB instance from which you performed the backup.
 
-### 시점 복원
+### Point-in-time Restoration
 
-시점 복원을 이용하여 원하는 특정 시점 또는 바이너리 로그(binary log)의 특정 포지션으로 복원할 수 있습니다. 시점 복원을 하기 위해서는 백업 파일과 백업을 수행한 시점으로부터 복원을 원하는 시점까지의 바이너리 로그(binary log)가 필요합니다. 바이너리 로그(binary log)는 백업이 수행되는 원본 DB 인스턴스의 스토리지에 저장됩니다. 바이너리 로그(binary log) 보관 기간이 짧으면 스토리지 용량을 더 많이 사용할 수 있지만, 원하는 시점으로 복원이 어려울 수 있습니다. 아래 나열된 경우 시점 복원에 필요한 바이너리 로그(binary log)가 없기 때문에 원하는 시점으로 복원하지 못할 수 있습니다.
+Restoring to a particular point in time is called point-in-time restoration. You can restore to a specific position in the binary log, as well as to restore to a specific time. Point-in-time restoration requires backup file and binary log from the time you performed the backup to the time you wanted the restore. Binary logs are stored in the storage of the source DB instance where the backup is performed. Shorter binary log retention period allows you to use more storage capacity, but it may be difficult to restore to the desired point in time. For the cases listed below, you may not be able to restore to the desired point in time because there is no binary log required for point-in-time restoration.
 
-* 용량 확보를 위해 원본 DB 인스턴스의 바이너리 로그(binary log)를 삭제한 경우
-* 바이너리 로그(binary log) 보관 기간에 따라 MySQL에 의해 자동으로 바이너리 로그(binary log)가 삭제된 경우
-* 고가용성 DB 인스턴스의 장애 조치로 인해 바이너리 로그(binary log)가 삭제된 경우
-* 기타 다양한 이유로 바이너리 로그(binary log)가 손상되거나 삭제된 경우
+* When you have deleted the binary log of the source DB instance for securing capacity
+* When the binary log is automatically deleted by MySQL based on the Binary log retention period
+* When a binary log is deleted due to a failover of a high availability DB instance
+* When binary logs are corrupted or deleted for various other reasons
 
-### 외부 MySQL 백업을 이용한 복원
+### Restoration with External MySQL Backup
 
-외부 MySQL 백업 파일을 이용하여 DB 인스턴스를 생성할 수 있습니다. 외부 MySQL 백업 파일을 생성할 때 [백업](backup-and-restore/#_1) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
+You can use an external MySQL backup file to create a DB instance. When creating an external MySQL backup file, refer to [Backup](./#_1) and use the same version as the Percona XtraBackup used by RDS for MySQL.
 
-> [주의]
-> innodb_data_file_path의 설정값이 ibdata1:12M:autoextend가 아니면 RDS for MySQL의 DB 인스턴스로 복원할 수 없습니다.
+> [Caution] 
+> If the setting value of innodb\_data\_file\_path is not  ibdata1:12M:autoextend, it is unable to restore to DB instance of RDS for MySQL.
 
-(1) MySQL이 설치된 서버에서 아래의 명령어를 이용하여 백업을 수행합니다.
+(1) Use the command below to perform a backup on the server where MySQL is installed.
 
-**XtraBackup 2.4.20 예제**
+**XtraBackup 2.4.20 Example**
 
-```
-innobackupex --defaults-file={my.cnf 경로} --user {사용자} --password '{비밀번호}' --socket {MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
-```
-
-**XtraBackup 8.0.12 예제**
-
-```
-xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비밀번호}' --socket={MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream --backup {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
+``` 
+innobackupex --defaults-file={my.cnf path} --user {user} --password '{password}' --socket {MySQL socket file path} --compress --compress-threads=1 --stream=xbstream {directory where create backup file} 2>>{backup log file path} > {backup file path} 
 ```
 
-(2) 백업 로그 파일의 마지막 줄에 `completed OK!`가 있는지 확인합니다. `completed OK!`가 없다면 백업이 정상적으로 종료되지 않은 것이므로 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
-
-(3) 완료된 백업 파일을 오브젝트 스토리지에 업로드합니다.
-
-* 한 번에 업로드할 수 있는 최대 파일 크기는 5GB입니다.
-* 백업 파일의 크기가 5GB보다 클 경우 split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 자른 뒤 멀티 파트로 업로드해야 합니다.
-* 자세한 사항은 [멀티파트 업로드](/Storage/Object%20Storage/en/api-guide/#_44)를 참고합니다.
-
-(4) 복원할 프로젝트의 웹 콘솔에 접속한 뒤 DB 인스턴스 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
-
-> [주의]
-> 현재 5.7.33 버전에서는 오브젝트 스토리지의 백업 파일을 이용한 DB 인스턴스 복원은 제한됩니다.
-> 권장하는 XtraBackup 이외의 버전을 사용하면 정상으로 동작하지 않을 수 있습니다.
-> 오브젝트 스토리지의 백업 파일과 복원하려는 MySQL의 버전은 동일해야 합니다.
-
-### RDS for MySQL 백업을 이용한 복원
-
-RDS for MySQL의 백업 파일을 이용하여 직접 MySQL의 데이터베이스를 복원할 수 있습니다. RDS for MySQL 백업 파일을 복원할 때 [백업](backup-and-restore/#_1) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
-
-(1) [백업 내보내기](backup-and-restore/#_5) 항목을 참고하여 RDS for MySQL의 백업을 오브젝트 스토리지로 내보냅니다.
-
-(2) 오브젝트 스토리지의 백업을 복원하고자 하는 서버에 다운로드합니다.
-
-(3) MySQL 서비스를 정지합니다.
-
-(4) MySQL 데이터 저장 경로의 모든 파일을 삭제합니다.
+**XtraBackup 8.0.12 Example**
 
 ```
-rm -rf {MySQL 데이터 저장 경로}/*
+xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password }' --socket={MySQL socket file path } --compress --compress-threads=1 --stream=xbstream --backup { directory where create backup file } 2>>{ backup log file path } > { backup file path } 
 ```
 
-(5) 다운로드한 백업 파일의 압축을 해제하고 복원합니다.
+(2) Check that `completed OK!` is in the last line of the backup log file. If there is no `completed OK!`, the backup did not end successfully, so refer to the error message in the log file to proceed with the backup again.
 
-**XtraBackup 2.4.20 예제**
+(3) Upload the completed backup file to the object storage.
 
+* The maximum file size that can be uploaded at a time is 5GB.
+* If the backup file is larger than 5GB, you have to use a utility such as split to cut the backup file to less than 5GB and upload it in multi-part.
+* For detailed information, refer to https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/api-guide/#\_44.
+
+(4) After accessing the web console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
+
+> [Caution] 
+> In the current version of 5.7.33, restoring DB instances using backup files on object storage is restricted. 
+> If use a version other than the recommended XtraBackup, it may not work properly. 
+> The backup file on the object storage has to be the same version of MySQL that you want to restore.
+
+### Restoration by Using RDS for MySQL Backup
+
+You can use the backup file in RDS for MySQL to restore the database in MySQL directly. When restoring a RDS for MySQL backup file, refer to the [Backup](./#_1) and use the same version as Percona XtraBackup used by RDS for MySQL.
+
+(1) Export backup of RDS for MySQL to object storage with reference to the [Export Backup](./#_5).
+
+(2) Download the backup of the object storage to the server on which you want to restore it.
+
+(3) Stop the MySQL service.
+
+(4) Delete all files in the MySQL data storage path.
+
+``` 
+rm -rf {MySQL data storage path}/* 
 ```
-cat {백업 파일 저장 경로} | xbstream -x -C {MySQL 데이터 저장 경로}
-innobackupex --decompress {MySQL 데이터 저장 경로}
-innobackupex --defaults-file={my.cnf 경로} --apply-log {MySQL 데이터 저장 경로}
+
+(5) Unzip and restore the downloaded backup files.
+
+**XtraBackup 2.4.20 Example**
+
+``` 
+cat {backup file storage path} | xbstream -x -C {MySQL data storage  path} 
+innobackupex --decompress {MySQL data storage path} 
+innobackupex --defaults-file={my.cnf path} --apply-log {MySQL data storage path} 
 ```
 
-**XtraBackup 8.0.12 예제**
+**XtraBackup 8.0.12 Example**
 
-```
-cat {백업 파일 저장 경로} | xbstream -x -C {MySQL 데이터 저장 경로}
-xtrabackup --decompress --target-dir={MySQL 데이터 저장 경로}
-xtrabackup --prepare --target-dir={MySQL 데이터 저장 경로}
-xtrabackup --defaults-file={my.cnf 경로} --copy-back --target-dir={MySQL 데이터 저장 경로}
-```
-
-(6) 압축 해제 후 불필요한 파일을 제거합니다.
-
-```
-find {MySQL 데이터 저장 경로} -name "*.qp" -print0 | xargs -0 rm
+``` 
+cat { backup file storage path } | xbstream -x -C {MySQL data storage  path } 
+xtrabackup --decompress --target-dir={MySQL data storage  path } 
+xtrabackup --prepare --target-dir={MySQL data storage  path } 
+xtrabackup --defaults-file={my.cnf path} --copy-back --target-dir={MySQL data storage  path } 
 ```
 
-(7) MySQL 서비스를 시작합니다.
+(6) Delete unnecessary files after unzipping files. 
+
+``` 
+find {MySQL data storage  path } -name "*.qp" -print0 | xargs -0 rm 
+```
+
+(7) Start MySQL service. 
