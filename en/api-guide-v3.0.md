@@ -36,7 +36,7 @@ If an API request fails to authenticate or is not authorized, the following erro
 ### List Regions
 
 ```
-GET /rds/api/public/external/v3.0/project/regions
+GET /v3.0/project/regions
 ```
 
 #### Request
@@ -58,7 +58,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "regions": [
@@ -84,7 +84,7 @@ This API does not require a request body.
 ### List Project Members
 
 ```
-GET /rds/api/public/external/v3.0/project/members
+GET /v3.0/project/members
 ```
 
 #### Request
@@ -109,7 +109,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "members": [
@@ -133,7 +133,7 @@ This API does not require a request body.
 ### List DB Instance Specifications
 
 ```
-GET /rds/api/public/external/v3.0/db-flavors
+GET /v3.0/db-flavors
 ```
 
 #### Request
@@ -157,7 +157,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbFlavors": [
@@ -181,7 +181,7 @@ This API does not require a request body.
 ### List Subnets
 
 ```
-GET /rds/api/public/external/v3.0/network/subnets
+GET /v3.0/network/subnets
 ```
 
 #### Request
@@ -207,7 +207,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "subnets": [
@@ -232,7 +232,7 @@ This API does not require a request body.
 ### List DB Engines
 
 ```
-GET /rds/api/public/external/v3.0/db-versions
+GET /v3.0/db-versions
 ```
 #### Request
 
@@ -255,7 +255,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbVersions": [
@@ -279,7 +279,7 @@ This API does not require a request body.
 
 
 ```
-GET /rds/api/public/external/v3.0/storages
+GET /v3.0/storages
 ```
 
 #### Request
@@ -299,7 +299,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "storages": [
@@ -337,7 +337,7 @@ This API does not require a request body.
 
 
 ```
-GET /rds/api/public/external/v3.0/jobs/{jobId}
+GET /v3.0/jobs/{jobId}
 ```
 
 #### Request
@@ -368,7 +368,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "jobId": "0ddb042c-5af6-43fb-a914-f4dd0540eb7c",
@@ -394,7 +394,7 @@ This API does not require a request body.
 ### List DB Instances
 
 ```
-GET /rds/api/public/external/v3.0/db-instance-groups
+GET /v3.0/db-instance-groups
 ```
 
 #### Request
@@ -418,7 +418,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbInstanceGroups": [
@@ -440,7 +440,7 @@ This API does not require a request body.
 ### List DB Instance Group Details
 
 ```
-GET /rds/api/public/external/v3.0/db-instance-groups/{dbInstanceGroupId}
+GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
 #### Request
@@ -471,7 +471,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbInstanceGroupId": "36617a8e-0df8-4b16-b6ea-6306019e95da",
@@ -546,7 +546,7 @@ This API does not require a request body.
 ### List DB instances
 
 ```
-GET /rds/api/public/external/v3.0/db-instances
+GET /v3.0/db-instances
 ```
 
 #### Request
@@ -577,7 +577,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbInstances": [
@@ -606,7 +606,7 @@ This API does not require a request body.
 ### List DB Instance Details
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
+GET /v3.0/db-instances/{dbInstanceId}
 ```
 
 #### Request
@@ -643,7 +643,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
@@ -671,7 +671,7 @@ This API does not require a request body.
 ### Create DB Instance
 
 ```
-POST /rds/api/public/external/v3.0/db-instances
+POST /v3.0/db-instances
 ```
 
 #### Request
@@ -765,7 +765,7 @@ POST /rds/api/public/external/v3.0/db-instances
 ### Modify DB Instance
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
+PUT /v3.0/db-instances/{dbInstanceId}
 ```
 
 #### Request
@@ -810,7 +810,7 @@ PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
 ### Delete DB instance
 
 ```
-DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
+DELETE /v3.0/db-instances/{dbInstanceId}
 ```
 
 #### Request
@@ -833,7 +833,7 @@ This API does not require a request body.
 ### Restart DB Instance
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/restart
+POST /v3.0/db-instances/{dbInstanceId}/restart
 ```
 
 #### Request
@@ -856,7 +856,7 @@ POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/restart
 ### Start DB Instance
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/start
+POST /v3.0/db-instances/{dbInstanceId}/start
 ```
 
 #### Request
@@ -879,7 +879,7 @@ This API does not require a request body.
 ### Stop DB Instance
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/stop
+POST /v3.0/db-instances/{dbInstanceId}/stop
 ```
 
 #### Request
@@ -902,7 +902,7 @@ This API does not require a request body.
 ### Backup DB Instance
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup
+POST /v3.0/db-instances/{dbInstanceId}/backup
 ```
 
 #### Request
@@ -924,7 +924,7 @@ POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup
 ### Replicate DB Instance
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/replicate
+POST /v3.0/db-instances/{dbInstanceId}/replicate
 ```
 
 #### Request
@@ -990,7 +990,7 @@ POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/replicate
 ### Promote DB Instance
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/promote
+POST /v3.0/db-instances/{dbInstanceId}/promote
 ```
 
 #### Request
@@ -1013,7 +1013,7 @@ This API does not require a request body.
 ### Modify High Availability
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability
+PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 ```
 
 #### Request
@@ -1037,7 +1037,7 @@ PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability
 ### Restart High Availability
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/resume
+POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
 #### Request
@@ -1060,7 +1060,7 @@ This API does not require a request body.
 ### Pause High Availability
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/pause
+POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
 #### Request
@@ -1083,7 +1083,7 @@ This API does not require a request body.
 ### Recover High Availability
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/repair
+POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
 #### Request
@@ -1106,7 +1106,7 @@ This API does not require a request body.
 ### Separate High Availability
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/split
+POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
 #### Request
@@ -1129,7 +1129,7 @@ This API does not require a request body.
 ### View Storage Information
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/storage-info
+GET /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
 #### Request
@@ -1156,7 +1156,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "storageType": "General SSD",
@@ -1176,7 +1176,7 @@ This API does not require a request body.
 ### Modify Storage Information
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/storage-info
+PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
 #### Request
@@ -1199,7 +1199,7 @@ PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/storage-info
 ### View Backup Information
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup-info
+GET /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
 #### Request
@@ -1232,7 +1232,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "backupPeriod": 1,
@@ -1261,7 +1261,7 @@ This API does not require a request body.
 ### Modify Backup Information
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup-info
+PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
 #### Request
@@ -1285,7 +1285,7 @@ PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup-info
 ```json
 {
 "backupPeriod": 5,
-"userBackupNoLock": true,
+"useBackupLock": true,
 "backupSchedules": [
     {
         "backupWndBgnTime": "01:00:00",
@@ -1313,7 +1313,7 @@ PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup-info
 ### List Network Information
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/network-info
+GET /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
 #### Request
@@ -1346,6 +1346,24 @@ This API does not require a request body.
 
 ```json
 {
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "availabilityZone": "kr-pub-a",
+    "subnet": {
+        "subnetId": "bd453789-34ae-416c-9f78-05b9e43a46be",
+        "subnetName": "Default Network",
+        "subnetCidr": "192.168.0.0/16"
+    },
+    "endPoints": [
+        {
+            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
+            "ipAddress": "192.168.0.2",
+            "endPointType": "INTERNAL"
+        }
+    ]
 }
 ```
 
@@ -1357,7 +1375,7 @@ This API does not require a request body.
 ### Modify Network Information
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/network-info
+PUT /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
 #### Request
@@ -1379,7 +1397,7 @@ PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/network-info
 ### List DB Users
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users
+GET /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
 #### Request
@@ -1410,7 +1428,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbUsers": [
@@ -1436,7 +1454,7 @@ This API does not require a request body.
 ### Create DB User
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users
+POST /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
 #### Request
@@ -1476,7 +1494,7 @@ POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users
 ### Modify DB User
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
 #### Request
@@ -1512,7 +1530,7 @@ PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId
 ### Delete DB User
 
 ```
-DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
 #### Request
@@ -1535,7 +1553,7 @@ This API does not require a request body.
 ### List DB Schema
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas
+GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
 #### Request
@@ -1563,7 +1581,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbSchemas": [
@@ -1586,7 +1604,7 @@ This API does not require a request body.
 ### Create DB Schema
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas
+POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
 #### Request
@@ -1607,7 +1625,7 @@ POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas
 ### Delete DB Schema
 
 ```
-DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
+DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
 #### Request
@@ -1643,7 +1661,7 @@ This API does not require a request body.
 ### Retrieve Backup List
 
 ```
-GET /rds/api/public/external/v3.0/backups
+GET /v3.0/backups
 ```
 
 #### Request
@@ -1681,7 +1699,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "totalCounts": 1,
@@ -1709,7 +1727,7 @@ This API does not require a request body.
 ### Export Backup
 
 ```
-POST /rds/api/public/external/v3.0/backups/{backupId}/export
+POST /v3.0/backups/{backupId}/export
 ```
 
 #### Request
@@ -1750,7 +1768,7 @@ POST /rds/api/public/external/v3.0/backups/{backupId}/export
 ### Restore Backup
 
 ```
-POST /rds/api/public/external/v3.0/backups/{backupId}/restore
+POST /v3.0/backups/{backupId}/restore
 ```
 
 #### Request
@@ -1831,7 +1849,7 @@ POST /rds/api/public/external/v3.0/backups/{backupId}/restore
 ### Delete Backup
 
 ```
-DELETE /rds/api/public/external/v3.0/backups/{backupId}
+DELETE /v3.0/backups/{backupId}
 ```
 
 #### Request
@@ -1867,7 +1885,7 @@ This API does not require a request body.
 ### List DB Security Groups
 
 ```
-GET /rds/api/public/external/v3.0/db-security-groups
+GET /v3.0/db-security-groups
 ```
 
 #### Request
@@ -1894,7 +1912,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbSecurityGroups": [
@@ -1918,7 +1936,7 @@ This API does not require a request body.
 ### List DB Security Group Details
 
 ```
-GET /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
+GET /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
 #### Request
@@ -1961,7 +1979,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbSecurityGroup": {
@@ -1999,7 +2017,7 @@ This API does not require a request body.
 ### Create DB Security Group
 
 ```
-POST /rds/api/public/external/v3.0/db-security-groups
+POST /v3.0/db-security-groups
 ```
 
 #### Request
@@ -2056,7 +2074,7 @@ POST /rds/api/public/external/v3.0/db-security-groups
 ### Modify DB Security Group
 
 ```
-PUT /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
+PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
 #### Request
@@ -2093,7 +2111,7 @@ This API does not return a response body.
 ### Delete DB Security Group
 
 ```
-DELETE /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
+DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
 #### Request
@@ -2113,7 +2131,7 @@ This API does not return a response body.
 ### Create DB Security Group
 
 ```
-POST /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules
+POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
 #### Request
@@ -2161,7 +2179,7 @@ POST /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ### Modify DB Security Group Rule
 
 ```
-PUT /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
+PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
 #### Request
@@ -2208,7 +2226,7 @@ PUT /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules/{
 ### Delete DB Security Group Rule
 
 ```
-DELETE /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules
+DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
 #### Request
@@ -2234,7 +2252,7 @@ This API does not require a request body.
 ### List Parameter Groups
 
 ```
-GET /rds/api/public/external/v3.0/parameter-groups
+GET /v3.0/parameter-groups
 ```
 
 #### Request
@@ -2266,7 +2284,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "parameterGroups": [
@@ -2292,7 +2310,7 @@ This API does not require a request body.
 ### List Parameter Group Details
 
 ```
-GET /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
+GET /v3.0/parameter-groups/{parameterGroupId}
 ```
 
 #### Request
@@ -2332,7 +2350,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
@@ -2367,7 +2385,7 @@ This API does not require a request body.
 ### Create Parameter Group
 
 ```
-POST /rds/api/public/external/v3.0/parameter-groups
+POST /v3.0/parameter-groups
 ```
 
 #### Request
@@ -2403,7 +2421,7 @@ POST /rds/api/public/external/v3.0/parameter-groups
 ### Copy Parameter Group
 
 ```
-POST /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/copy
+POST /v3.0/parameter-groups/{parameterGroupId}/copy
 ```
 
 #### Request
@@ -2440,7 +2458,7 @@ POST /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/copy
 ### Modify Parameter Group
 
 ```
-PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
+PUT /v3.0/parameter-groups/{parameterGroupId}
 ```
 
 #### Request
@@ -2474,7 +2492,7 @@ This API does not return a response body.
 ### Modify Parameter
 
 ```
-PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/parameters
+PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
 #### Request
@@ -2514,7 +2532,7 @@ This API does not return a response body.
 ### Reset Parameter Group
 
 ```
-PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/reset
+PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 ```
 
 #### Request
@@ -2532,7 +2550,7 @@ This API does not return a response body.
 ### Delete Parameter Group
 
 ```
-DELETE /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
+DELETE /v3.0/parameter-groups/{parameterGroupId}
 ```
 
 #### Request
@@ -2554,7 +2572,7 @@ This API does not return a response body.
 ### List User Groups
 
 ```
-GET /rds/api/public/external/v3.0/user-groups
+GET /v3.0/user-groups
 ```
 
 #### Request
@@ -2579,7 +2597,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "userGroups": [
@@ -2601,7 +2619,7 @@ This API does not require a request body.
 ### List User Group Details
 
 ```
-GET /rds/api/public/external/v3.0/user-groups/{userGroupId}
+GET /v3.0/user-groups/{userGroupId}
 ```
 
 #### Request
@@ -2630,7 +2648,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
@@ -2653,7 +2671,7 @@ This API does not require a request body.
 ### Create User Group
 
 ```
-POST /rds/api/public/external/v3.0/user-groups
+POST /v3.0/user-groups
 ```
 
 #### Request
@@ -2687,7 +2705,7 @@ POST /rds/api/public/external/v3.0/user-groups
 ### Modify User Group
 
 ```
-PUT /rds/api/public/external/v3.0/user-groups/{userGroupId}
+PUT /v3.0/user-groups/{userGroupId}
 ```
 
 #### Request
@@ -2720,7 +2738,7 @@ This API does not return a response body.
 ### Delete User Group
 
 ```
-DELETE /rds/api/public/external/v3.0/user-groups/{userGroupId}
+DELETE /v3.0/user-groups/{userGroupId}
 ```
 
 #### Request
@@ -2740,7 +2758,7 @@ This API does not return a response body.
 ### List Notification Groups
 
 ```
-GET /rds/api/public/external/v3.0/notification-groups
+GET /v3.0/notification-groups
 ```
 
 #### Request
@@ -2769,7 +2787,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "notificationGroups": [
@@ -2794,7 +2812,7 @@ This API does not require a request body.
 
 
 ```
-GET /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
+GET /v3.0/notification-groups/{notificationGroupId}
 ```
 #### Request
 
@@ -2830,7 +2848,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "notificationGroupId": "b3901f17-9971-4d1e-8a81-8448cf533dc7",
@@ -2861,7 +2879,7 @@ This API does not require a request body.
 ### Create Notification Group
 
 ```
-POST /rds/api/public/external/v3.0/notification-groups
+POST /v3.0/notification-groups
 ```
 #### Request
 
@@ -2901,7 +2919,7 @@ POST /rds/api/public/external/v3.0/notification-groups
 ### Modify Notification Group
 
 ```
-PUT /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
+PUT /v3.0/notification-groups/{notificationGroupId}
 ```
 
 #### Request
@@ -2939,7 +2957,7 @@ This API does not return a response body.
 ### Delete Notification Group
 
 ```
-DELETE /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
+DELETE /v3.0/notification-groups/{notificationGroupId}
 ```
 #### Request
 
@@ -2960,7 +2978,7 @@ This API does not return a response body.
 ### List Metric List
 
 ```
-GET /rds/api/public/external/v3.0/metrics
+GET /v3.0/metrics
 ```
 
 
@@ -2984,7 +3002,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "metrics": [
@@ -3004,7 +3022,7 @@ This API does not require a request body.
 ### View stats
 
 ```
-GET /rds/api/public/external/v3.0/metric-statistics
+GET /v3.0/metric-statistics
 ```
 
 #### Request
@@ -3068,7 +3086,7 @@ GET /rds/api/public/external/v3.0/metric-statistics
 
 
 ```
-GET /rds/api/public/external/v3.0/events
+GET /v3.0/events
 ```
 
 
@@ -3110,7 +3128,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "totalCounts": 28,
@@ -3154,7 +3172,7 @@ This API does not require a request body.
 ### List Event Codes
 
 ```
-GET /rds/api/public/external/v3.0/event-codes
+GET /v3.0/event-codes
 ```
 
 #### Request
@@ -3176,7 +3194,7 @@ This API does not require a request body.
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "eventCodes": [

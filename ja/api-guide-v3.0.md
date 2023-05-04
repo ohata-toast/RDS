@@ -6,7 +6,30 @@
 | 韓国(ピョンチョン)リージョン | https://kr2-mysql.api.nhncloudservice.com |
 | 日本リージョン | https://jp1-mysql.api.nhncloudservice.com |
 
+## 인증 및 권한
 
+API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. <b>회원 정보 > API 보안 설정</b>에서 생성할 수 있습니다.
+생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
+
+| 이름                     | 종류     | 형식     | 필수  | 설명                               |
+|------------------------|--------|--------|-----|----------------------------------|
+| X-TC-APP-KEY           | Header | String | O   | RDS for MySQL 서비스의 Appkey        |
+| X-TC-AUTHENTICATION-ID | Header | String | O   | API 보안 설정 메뉴의 User Access Key ID |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O   | API 보안 설정 메뉴의 Secret Access Key  |
+
+또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER`로 구분하여 권한을 부여할 수 있습니다.
+
+* `RDS for MySQL ADMIN` 권한은 모든 기능을 사용 가능합니다.
+* `RDS for MySQL VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
+    * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
+    * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
+
+API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 오류가 발생합니다.
+
+| resultCode | resultMessage | 설명          |
+|------------|---------------|-------------|
+| 80401      | Unauthorized  | 인증에 실패했습니다. |
+| 80403      | Forbidden     | 권한이 없습니다.   |
 
 
 ## プロジェクト情報
@@ -14,8 +37,7 @@
 ### リージョンリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/project/regions
-X-TC-APP-KEY: {appkey}
+GET /v3.0/project/regions
 ```
 
 #### リクエスト
@@ -41,7 +63,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "regions": [
@@ -67,8 +89,7 @@ X-TC-APP-KEY: {appkey}
 ### プロジェクトメンバーリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/project/members
-X-TC-APP-KEY: {appkey}
+GET /v3.0/project/members
 ```
 
 #### リクエスト
@@ -97,7 +118,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "members": [
@@ -121,8 +142,7 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンス仕様リストを表示
 
 ```
-GET /rds/api/public/external/v3.0/db-flavors
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-flavors
 ```
 
 #### リクエスト
@@ -149,7 +169,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbFlavors": [
@@ -173,8 +193,7 @@ X-TC-APP-KEY: {appkey}
 ### サブネットリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/network/subnets
-X-TC-APP-KEY: {appkey}
+GET /v3.0/network/subnets
 ```
 
 #### リクエスト
@@ -188,14 +207,14 @@ X-TC-APP-KEY: {appkey}
 
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-|subnets|Body|Array| サブネットリスト |
-|subnets.subnetId|Body|UUID|サブネットの識別子|
-|subnets.subnetName|Body|String|サブネットを識別できる名前|
-|subnets.cidr|Body|String|CIDR|
-|subnets.usingGateway|Body|Boolean|ゲートウェイを使用するかどうか|
-|subnets.availableIpCount|Body|Number|使用可能なIP数|
+| 名前                       | 種類 | 形式 | 説明 |
+|--------------------------|---|---|---|
+| subnets                  |Body|Array| サブネットリスト |
+| subnets.subnetId         |Body|UUID|サブネットの識別子|
+| subnets.subnetName       |Body|String|サブネットを識別できる名前|
+| subnets.subnetCidr       |Body|String|サブネットのCIDR|
+| subnets.usingGateway     |Body|Boolean|ゲートウェイを使用するかどうか|
+| subnets.availableIpCount |Body|Number|使用可能なIP数|
 
 <details><summary>例</summary>
 <p>
@@ -204,14 +223,14 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "subnets": [
         {
-            "subentId": "1b2a9b23-0725-4b92-8c78-35db66b8ad9f",
+            "subnetId": "1b2a9b23-0725-4b92-8c78-35db66b8ad9f",
             "subnetName": "Default Network",
-            "cidr": "192.168.0.0/24",
+            "subnetCidr": "192.168.0.0/24",
             "usingGateway": true,
             "availableIpCount": 240
         }
@@ -229,26 +248,21 @@ X-TC-APP-KEY: {appkey}
 ### DBエンジンリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/db-engines
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-versions
 ```
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-
 
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-|dbEngines|Body|Array| DBエンジンリスト |
-|dbEngines.dbEngine|Body|String|DBエンジンタイプ|
-|dbEngines.dbEngineName|Body|String|DBエンジン名前|
-|dbEngines.restorableFromObs|Body|Boolean|オブジェクトストレージから復元可能かどうか|
+| 名前                                       | 種類 | 形式 | 説明 |
+|------------------------------------------|---|---|---|
+| dbVersions                               |Body|Array| DBエンジンリスト |
+| dbVersiondbEngines.dbVersiondbEngine     |Body|String|DBエンジンタイプ|
+| dbVersiondbEngines.dbVersiondbEngineName |Body|String|DBエンジン名前|
+| dbVersiondbEngines.restorableFromObs     |Body|Boolean|オブジェクトストレージから復元可能かどうか|
 
 <details><summary>例</summary>
 <p>
@@ -257,13 +271,13 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "dbEngines": [
+    "dbVersions": [
         {
-            "dbEngine": "MYSQL_V8028",
-            "dbEngineName": "MySQL 8.0.28",
+            "dbVersion": "MYSQL_V8028",
+            "dbVersionName": "MySQL 8.0.28",
             "restorableFromObs": true
         }
     ]
@@ -281,17 +295,12 @@ X-TC-APP-KEY: {appkey}
 
 
 ```
-GET /rds/api/public/external/v3.0/storages
-X-TC-APP-KEY: {appkey}
+GET /v3.0/storages
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### レスポンス
 
@@ -306,7 +315,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "storages": [
@@ -344,8 +353,7 @@ X-TC-APP-KEY: {appkey}
 
 
 ```
-GET /rds/api/public/external/v3.0/jobs/{jobId}
-X-TC-APP-KEY: {appkey}
+GET /v3.0/jobs/{jobId}
 ```
 
 #### リクエスト
@@ -354,7 +362,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | jobId | URL  | UUID | O | 作業の識別子 |
 
 #### レスポンス
@@ -377,7 +384,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "jobId": "0ddb042c-5af6-43fb-a914-f4dd0540eb7c",
@@ -403,17 +410,12 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスグループリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instance-groups
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instance-groups
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### レスポンス
 
@@ -432,7 +434,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbInstanceGroups": [
@@ -454,8 +456,7 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスグループの詳細を表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instance-groups/{dbInstanceGroupId}
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
 #### リクエスト
@@ -464,7 +465,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceGroupId | URL | UUID | O | DBインスタンスグループの識別子 |
 
 #### レスポンス
@@ -487,7 +487,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbInstanceGroupId": "36617a8e-0df8-4b16-b6ea-6306019e95da",
@@ -562,34 +562,29 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instances
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instances
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-|dbInstances|Body|Array| DBインスタンスリスト |
-|dbInstances.dbInstanceId|Body|UUID|DBインスタンスの識別子|
-|dbInstances.dbInstanceGroupId|Body|UUID|DBインスタンスグループの識別子|
-|dbInstances.dbInstanceName|Body|String|DBインスタンスを識別できる名前|
-|dbInstances.description|Body|String|DBインスタンスの追加情報|
-|dbInstances.dbEngine|Body|Enum|DBエンジンタイプ |
-|dbInstances.dbPort|Body|Number|DBポート|
-|dbInstances.dbInstanceType|Body|Enum|DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ|
-|dbInstances.dbInstanceStatus|Body|Enum|DBインスタンスの現在状態|
-|dbInstances.progressStatus|Body|Enum|DBインスタンスの現在進行状態|
-|dbInstances.createdYmdt|Body|DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|dbInstances.updatedYmdt|Body|DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前                            | 種類 | 形式 | 説明 |
+|-------------------------------|---|---|---|
+| dbInstances                   |Body|Array| DBインスタンスリスト |
+| dbInstances.dbInstanceId      |Body|UUID|DBインスタンスの識別子|
+| dbInstances.dbInstanceGroupId |Body|UUID|DBインスタンスグループの識別子|
+| dbInstances.dbInstanceName    |Body|String|DBインスタンスを識別できる名前|
+| dbInstances.description       |Body|String|DBインスタンスの追加情報|
+| dbInstances.dbVersion         |Body|Enum|DBエンジンタイプ |
+| dbInstances.dbPort            |Body|Number|DBポート|
+| dbInstances.dbInstanceType    |Body|Enum|DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ|
+| dbInstances.dbInstanceStatus  |Body|Enum|DBインスタンスの現在状態|
+| dbInstances.progressStatus    |Body|Enum|DBインスタンスの現在進行状態|
+| dbInstances.createdYmdt       |Body|DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| dbInstances.updatedYmdt       |Body|DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>例</summary>
 <p>
@@ -598,7 +593,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbInstances": [
@@ -607,7 +602,7 @@ X-TC-APP-KEY: {appkey}
             "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
             "dbInstanceName": "db-instance",
             "description": null,
-            "dbEngine": "MYSQL_V8028",
+            "dbVersion": "MYSQL_V8028",
             "dbPort": 10000,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -627,8 +622,7 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスの詳細を表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instances/{dbInstanceId}
 ```
 
 #### リクエスト
@@ -637,27 +631,26 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-|dbInstanceId|Body|UUID|DBインスタンスの識別子|
-|dbInstanceGroupId|Body|UUID|DBインスタンスグループの識別子|
-|dbInstanceName|Body|String|DBインスタンスを識別できる名前|
-|description|Body|String|DBインスタンスの追加情報|
-|dbEngine|Body|Enum|DBエンジンタイプ |
-|dbPort|Body|Number|DBポート|
-|dbInstanceType|Body|Enum|DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ|
-|dbInstanceStatus|Body|Enum|DBインスタンスの現在状態|
-|progressStatus|Body|Enum|DBインスタンスの現在作業進行状態|
-|dbFlavorId|Body|UUID|DBインスタンス仕様の識別子 |
-|parameterGroupId|Body|UUID|DBインスタンスに適用されたパラメータグループの識別子|
-|dbSecurityGroupIds|Body|Array|DBインスタンスに適用されたDBセキュリティグループの識別子リスト|
-|createdYmdt|Body|DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|updatedYmdt|Body|DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前                 | 種類 | 形式 | 説明 |
+|--------------------|---|---|---|
+| dbInstanceId       |Body|UUID|DBインスタンスの識別子|
+| dbInstanceGroupId  |Body|UUID|DBインスタンスグループの識別子|
+| dbInstanceName     |Body|String|DBインスタンスを識別できる名前|
+| description        |Body|String|DBインスタンスの追加情報|
+| dbVersion          |Body|Enum|DBエンジンタイプ |
+| dbPort             |Body|Number|DBポート|
+| dbInstanceType     |Body|Enum|DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ|
+| dbInstanceStatus   |Body|Enum|DBインスタンスの現在状態|
+| progressStatus     |Body|Enum|DBインスタンスの現在作業進行状態|
+| dbFlavorId         |Body|UUID|DBインスタンス仕様の識別子 |
+| parameterGroupId   |Body|UUID|DBインスタンスに適用されたパラメータグループの識別子|
+| dbSecurityGroupIds |Body|Array|DBインスタンスに適用されたDBセキュリティグループの識別子リスト|
+| createdYmdt        |Body|DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt        |Body|DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>例</summary>
 <p>
@@ -666,14 +659,14 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
     "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
     "dbInstanceName": "db-instance",
     "description": null,
-    "dbEngine": "MYSQL_V8028",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -694,45 +687,43 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスを作成する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances
 ```
 
 #### リクエスト
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-| dbInstanceName | Body | String | O | DBインスタンスを識別できる名前 |
-| description|Body|String|X|DBインスタンスの追加情報|
-| dbFlavorId | Body | UUID | O | DBインスタンス仕様の識別子 |
-| dbEngine|Body|Enum|O|DBエンジンタイプ|
-|dbPort|Body|Number|O|DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`|
-|dbUserName|Body|String|O|DBユーザーアカウント名|
-|dbPassword|Body|String|O|DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`|
-| parameterGroupId|Body|UUID|O|パラメータグループの識別子|
-|dbSecurityGroupIds|Body|Array|X|DBセキュリティグループの識別子リスト||network|Body|Object|O|ネットワーク情報オブジェクト|
-|userGroupIds|Body|Array|X|ユーザーグループの識別子リスト|
-|useHighAvailability|Body|Boolean|X|高可用性を使用するかどうか<br/>- デフォルト値: `false`|
-|pingInterval|Body|Number|X|高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`|
-|useDefaultUserNotification|Body|Boolean|X|基本アラームを使用するかどうか<br/>- デフォルト値: `false`|
-| network|Body|Object|O|ネットワーク情報オブジェクト|
-| network.vpcSubnetId|Body|UUID|O|VPCサブネットの識別子|
-|network.usePublicAccess|Body|Boolean|X|外部接続可否<br/>- デフォルト値: `false`|
-| network.availabilityZone| Body|Enum|O|DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`|
-|storage|Body|Object|O|ストレージ情報オブジェクト|    
-|storage.storageType|Body|Enum|O|データストレージタイプ<br/>- 例: `General SSD`|
-|storage.storageSize|Body|Number|O|データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`|
-|backup|Body|Object|O|バックアップ情報オブジェクト|
-|backup.backupPeriod|Body|Number|O|バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`|
-|backup.ftwrlWaitTimeout|Body|Number|X|クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`|
-|backup.backupRetryCount|Body|Number|X|バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`|
-|backup.replicationRegion|Body|Enum|X|バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)|
-|backup.useBackupNoLock|Body|Boolean|X|テーブルロックを使用するかどうか<br/>- デフォルト値: `false`|
-|backup.backupSchedules|Body|Array|O|バックアップスケジュールリスト|
-|backup.backupSchedules.backupWndBgnTime|Body|String|O|バックアップ開始時刻<br/>- 例: `00:00:00`|
-|backup.backupSchedules.backupWndDuration|Body|Enum|O|バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間|
-|backup.backupSchedules.backupRetryExpireTime|Body|String|O|バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`|
+| 名前                                         | 種類 | 形式 | 必須 | 説明                                                                                                                                                                                                                             |
+|--------------------------------------------|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceName                             | Body | String | O | DBインスタンスを識別できる名前                                                                                                                                                                                                               |
+| description                                |Body|String|X| DBインスタンスの追加情報                                                                                                                                                                                                                  |
+| dbFlavorId                                 | Body | UUID | O | DBインスタンス仕様の識別子                                                                                                                                                                                                                 |
+| dbVersion                                  |Body|Enum|O| DBエンジンタイプ                                                                                                                                                                                                                      |
+| dbPort                                     |Body|Number|O| DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                                                                                                     |
+| dbUserName                                 |Body|String|O| DBユーザーアカウント名                                                                                                                                                                                                                   |
+| dbPassword                                 |Body|String|O| DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                                                                                                                             |
+| parameterGroupId                           |Body|UUID|O| パラメータグループの識別子                                                                                                                                                                                                                  |
+| dbSecurityGroupIds                         |Body|Array|X| DBセキュリティグループの識別子リスト                                                                                                                                                                                                            ||network|Body|Object|O|ネットワーク情報オブジェクト|
+| userGroupIds                               |Body|Array|X| ユーザーグループの識別子リスト                                                                                                                                                                                                                |
+| useHighAvailability                        |Body|Boolean|X| 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
+| pingInterval                               |Body|Number|X| 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                         |
+| useDefaultUserNotification                 |Body|Boolean|X| 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                          |
+| network                                    |Body|Object|O| ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
+| network.subnetId                           |Body|UUID|O| サブネットの識別子                                                                                                                                                                                                                      |
+| network.usePublicAccess                    |Body|Boolean|X| 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
+| network.availabilityZone                   | Body|Enum|O| DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                   |
+| storage                                    |Body|Object|O| ストレージ情報オブジェクト                                                                                                                                                                                                                  |    
+| storage.storageType                        |Body|Enum|O| データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                             |
+| storage.storageSize                        |Body|Number|O| データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                              |
+| backup                                     |Body|Object|O| バックアップ情報オブジェクト                                                                                                                                                                                                                 |
+| backup.backupPeriod                        |Body|Number|O| バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
+| backup.ftwrlWaitTimeout                    |Body|Number|X| クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                            |
+| backup.backupRetryCount                    |Body|Number|X| バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                   |
+| backup.replicationRegion                   |Body|Enum|X| バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                  |
+| backup.useBackupLock                       |Body|Boolean|X| テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                          |
+| backup.backupSchedules                     |Body|Array|O| バックアップスケジュールリスト                                                                                                                                                                                                                |
+| backup.backupSchedules.backupWndBgnTime    |Body|String|O| バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                 |
+| backup.backupSchedules.backupWndDuration   |Body|Enum|O| バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
+| backup.backupSchedules.backupRetryExpireTime |Body|String|O| バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`                                                                                                                                               |
 
 
 <details><summary>例</summary>
@@ -743,7 +734,7 @@ X-TC-APP-KEY: {appkey}
     "dbInstanceName": "db-instance",
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbEngine": "MYSQL_V8028",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbUserName": "db-user",
     "dbPassword": "password",
@@ -753,7 +744,7 @@ X-TC-APP-KEY: {appkey}
     ],
     "userGroupIds": [],
     "network": {
-        "vpcSubnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
+        "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
         "availabilityZone": "kr-pub-a"
     },
     "storage": {
@@ -790,15 +781,13 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスを修正する
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/db-instances/{dbInstanceId}
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 | dbInstanceName | Body | String | X | DBインスタンスを識別できる名前 |
 | description|Body|String|X|DBインスタンスの追加情報|
@@ -837,8 +826,7 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/db-instances/{dbInstanceId}
 ```
 
 #### リクエスト
@@ -847,7 +835,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -862,15 +849,13 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスを再起動する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/restart
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/restart
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 |useOnlineFailover|Body|Boolean|X|フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false`|
 |executeBackup|Body|Boolean|X|現時点でバックアップを行うかどうか<br/>- デフォルト値: `false`|
@@ -887,8 +872,7 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスを起動する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/start
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/start
 ```
 
 #### リクエスト
@@ -897,7 +881,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -912,8 +895,7 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスを停止する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/stop
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/stop
 ```
 
 #### リクエスト
@@ -922,7 +904,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -937,15 +918,13 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスをバックアップする
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/backup
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 | backupName | Body | String | O | バックアップを識別できる名前 |
 
@@ -961,39 +940,37 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスを複製する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/replicate
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/replicate
 ```
 
 #### リクエスト
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
-| dbInstanceName | Body | String | O | DBインスタンスを識別できる名前 |
-| description|Body|String|X|DBインスタンスの追加情報|
-| dbFlavorId | Body | UUID | X | DBインスタンス仕様の識別子<br/>- デフォルト値:原本DBインスタンス値 |
-|dbPort|Body|Number|X|DBポート<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `3306`<br/>- 最大値: `43306`|
-| parameterGroupId|Body|UUID|X|パラメータグループの識別子<br/>- デフォルト値:原本DBインスタンス値|
-|dbSecurityGroupIds|Body|Array|X|DBセキュリティグループの識別子リスト<br/>- デフォルト値:原本DBインスタンス値|
-|userGroupIds|Body|Array|X|ユーザーグループの識別子リスト|
-|useDefaultUserNotification|Body|Boolean|X|基本アラームを使用するかどうか<br/>- デフォルト値: `false`|
-| network|Body|Object|O|ネットワーク情報オブジェクト|
-|network.usePublicAccess|Body|Boolean|X|外部接続可否<br/>- デフォルト値:原本DBインスタンス値|
-| network.availabilityZone| Body|Enum|O|DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`|
-|storage|Body|Object|X|ストレージ情報オブジェクト|    
-|storage.storageSize|Body|Number|X|データストレージサイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `20`<br/>- 最大値: `2048`|
-|backup|Body|Object|X|バックアップ情報オブジェクト|
-|backup.backupPeriod|Body|Number|X|バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`|
-|backup.ftwrlWaitTimeout|Body|Number|X|クエリ遅延待機時間(秒)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `21600`|
-|backup.backupRetryCount|Body|Number|X|バックアップ再試行回数<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `10`|
-|backup.replicationRegion|Body|Enum|X|バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)<br/>- デフォルト値:原本DBインスタンス値|
-|backup.useBackupNoLock|Body|Boolean|X|テーブルロックを使用するかどうか<br/>- デフォルト値:原本DBインスタンス値|
-|backup.backupSchedules|Body|Array|X|バックアップスケジュールリスト|
-|backup.backupSchedules.backupWndBgnTime|Body|String|X|バックアップ開始時刻<br/>- 例: `00:00:00`<br/>- デフォルト値:原本DBインスタンス値|
-|backup.backupSchedules.backupWndDuration|Body|Enum|X|バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間<br/>- デフォルト値:原本DBインスタンス値|
-|backup.backupSchedules.backupRetryExpireTime|Body|String|X||バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`<br/>- デフォルト値:原本DBインスタンス値|
+| 名前                                           | 種類 | 形式 | 必須 | 説明 |
+|----------------------------------------------|---|---|---|---|
+| dbInstanceId                                 | URL | UUID | O | DBインスタンスの識別子 |
+| dbInstanceName                               | Body | String | O | DBインスタンスを識別できる名前 |
+| description                                  |Body|String|X|DBインスタンスの追加情報|
+| dbFlavorId                                   | Body | UUID | X | DBインスタンス仕様の識別子<br/>- デフォルト値:原本DBインスタンス値 |
+| dbPort                                       |Body|Number|X|DBポート<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `3306`<br/>- 最大値: `43306`|
+| parameterGroupId                             |Body|UUID|X|パラメータグループの識別子<br/>- デフォルト値:原本DBインスタンス値|
+| dbSecurityGroupIds                           |Body|Array|X|DBセキュリティグループの識別子リスト<br/>- デフォルト値:原本DBインスタンス値|
+| userGroupIds                                 |Body|Array|X|ユーザーグループの識別子リスト|
+| useDefaultUserNotification                   |Body|Boolean|X|基本アラームを使用するかどうか<br/>- デフォルト値: `false`|
+| network                                      |Body|Object|O|ネットワーク情報オブジェクト|
+| network.usePublicAccess                      |Body|Boolean|X|外部接続可否<br/>- デフォルト値:原本DBインスタンス値|
+| network.availabilityZone                     | Body|Enum|O|DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`|
+| storage                                      |Body|Object|X|ストレージ情報オブジェクト|    
+| storage.storageSize                          |Body|Number|X|データストレージサイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `20`<br/>- 最大値: `2048`|
+| backup                                       |Body|Object|X|バックアップ情報オブジェクト|
+| backup.backupPeriod                          |Body|Number|X|バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`|
+| backup.ftwrlWaitTimeout                      |Body|Number|X|クエリ遅延待機時間(秒)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `21600`|
+| backup.backupRetryCount                      |Body|Number|X|バックアップ再試行回数<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `10`|
+| backup.replicationRegion                     |Body|Enum|X|バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)<br/>- デフォルト値:原本DBインスタンス値|
+| backup.useBackupLock                         |Body|Boolean|X|テーブルロックを使用するかどうか<br/>- デフォルト値:原本DBインスタンス値|
+| backup.backupSchedules                       |Body|Array|X|バックアップスケジュールリスト|
+| backup.backupSchedules.backupWndBgnTime      |Body|String|X|バックアップ開始時刻<br/>- 例: `00:00:00`<br/>- デフォルト値:原本DBインスタンス値|
+| backup.backupSchedules.backupWndDuration     |Body|Enum|X|バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間<br/>- デフォルト値:原本DBインスタンス値|
+| backup.backupSchedules.backupRetryExpireTime |Body|String|X||バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`<br/>- デフォルト値:原本DBインスタンス値|
 
 
 <details><summary>例</summary>
@@ -1029,8 +1006,7 @@ X-TC-APP-KEY: {appkey}
 ### DBインスタンスを昇格する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/promote
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/promote
 ```
 
 #### リクエスト
@@ -1039,7 +1015,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1054,8 +1029,7 @@ X-TC-APP-KEY: {appkey}
 ### 高可用性を修正する
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 ```
 
 #### リクエスト
@@ -1063,7 +1037,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 |useHighAvailability|Body|Boolean|O|高可用性を使用するかどうか|
 |pingInterval|Body|Number|X|高可用性を使用する時、Ping間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600`|
@@ -1080,8 +1053,7 @@ X-TC-APP-KEY: {appkey}
 ### 高可用性を再開する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/resume
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
 #### リクエスト
@@ -1090,7 +1062,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1105,8 +1076,7 @@ X-TC-APP-KEY: {appkey}
 ### 高可用性を一時停止する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/pause
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
 #### リクエスト
@@ -1115,7 +1085,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1130,8 +1099,7 @@ X-TC-APP-KEY: {appkey}
 ### 高可用性を復旧する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/repair
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
 #### リクエスト
@@ -1140,7 +1108,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1155,8 +1122,7 @@ X-TC-APP-KEY: {appkey}
 ### 高可用性を分離する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/high-availability/split
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
 #### リクエスト
@@ -1165,7 +1131,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1180,8 +1145,7 @@ X-TC-APP-KEY: {appkey}
 ### ストレージ情報を表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/storage-info
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
 #### リクエスト
@@ -1190,7 +1154,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1209,7 +1172,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "storageType": "General SSD",
@@ -1229,15 +1192,13 @@ X-TC-APP-KEY: {appkey}
 ### ストレージ情報を修正する
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/storage-info
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 |storageSize|Body|Number|O|データストレージサイズ(GB)<br/>- 最小値:現在値<br/>- 最大値: `2048`|
 |useOnlineFailover|Body|Boolean|X|フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false`|
@@ -1254,8 +1215,7 @@ X-TC-APP-KEY: {appkey}
 ### バックアップ情報を表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup-info
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
 #### リクエスト
@@ -1264,7 +1224,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1276,7 +1235,7 @@ X-TC-APP-KEY: {appkey}
 |ftwrlWaitTimeout|Body|Number|クエリ遅延待機時間(秒)|
 |backupRetryCount|Body|Number|バックアップ再試行回数|
 |replicationRegion|Body|Enum|バックアップ複製リージョン|
-|useBackupNoLock|Body|Boolean|テーブルロックを使用するかどうか|
+|useBackupLock|Body|Boolean|テーブルロックを使用するかどうか|
 |backupSchedules|Body|Array|バックアップスケジュールリスト|
 |backupSchedules.backupWndBgnTime|Body|String|バックアップ開始時刻|
 |backupSchedules.backupWndDuration|Body|Enum|バックアップDuration|
@@ -1289,14 +1248,14 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "backupPeriod": 1,
     "ftwrlWaitTimeout": 1800,
     "backupRetryCount": 0,
     "replicationRegion": null,
-    "useBackupNoLock": false,
+    "useBackupLock": false,
     "backupSchedules": [
         {
             "backupWndBgnTime": "00:00:00",
@@ -1318,21 +1277,19 @@ X-TC-APP-KEY: {appkey}
 ### バックアップ情報を修正する
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/backup-info
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 |backupPeriod|Body|Number|X|バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`|
 |ftwrlWaitTimeout|Body|Number|X|クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600`|
 |backupRetryCount|Body|Number|X|バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10`|
 |replicationRegion|Body|Enum|X|バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)|
-|useBackupNoLock|Body|Boolean|X|テーブルロックを使用するかどうか|
+|useBackupLock|Body|Boolean|X|テーブルロックを使用するかどうか|
 |backupSchedules|Body|Array|X|バックアップスケジュールリスト|
 |backupSchedules.backupWndBgnTime|Body|String|O|バックアップ開始時刻<br/>- 例: `00:00:00`|
 |backupSchedules.backupWndDuration|Body|Enum|O|バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間|
@@ -1344,7 +1301,7 @@ X-TC-APP-KEY: {appkey}
 ```json
 {
 "backupPeriod": 5,
-"userBackupNoLock": true,
+"useBackupLock": true,
 "backupSchedules": [
     {
         "backupWndBgnTime": "01:00:00",
@@ -1372,8 +1329,7 @@ X-TC-APP-KEY: {appkey}
 ### ネットワーク情報を表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/network-info
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
 #### リクエスト
@@ -1383,23 +1339,22 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
 
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-| availabilityZone| Body|Enum|DBインスタンスを作成するアベイラビリティゾーン|
-|vpcSubnet|Body|Object|VPCサブネットオブジェクト|
-| vpcSubnet.vpcSubnetId|Body|UUID|VPCサブネットの識別子|
-| vpcSubnet.vpcSubnetName|Body|UUID|VPCサブネットの識別できる名前|
-| vpcSubnet.vpcSubnetCidr|Body|UUID|VPCサブネットのCIDR|
-|endPoints|Body|Array|接続情報リスト|
-|endPoints.domain|Body|String|ドメイン|
-|endPoints.ipAddress|Body|String|IPアドレス|
-|endPoints.endPointType|Body|Enum|接続情報タイプ<br>-`EXTERNAL`:外部接続ドメイン<br>-`INTERNAL`:内部接続ドメイン<br>-`PUBLIC`: (Deprecated)外部接続ドメイン<br>-`PRIVATE`: (Deprecated)内部接続ドメイン|
+| 名前                      | 種類 | 形式 | 説明 |
+|-------------------------|---|---|---|
+| availabilityZone        | Body|Enum|DBインスタンスを作成するアベイラビリティゾーン|
+| subnet                  |Body|Object|サブネットオブジェクト|
+| subnet.subnetId   |Body|UUID|サブネットの識別子|
+| subnet.subnetName |Body|UUID|サブネットの識別できる名前|
+| subnet.subnetCidr |Body|UUID|サブネットのCIDR|
+| endPoints               |Body|Array|接続情報リスト|
+| endPoints.domain        |Body|String|ドメイン|
+| endPoints.ipAddress     |Body|String|IPアドレス|
+| endPoints.endPointType  |Body|Enum|接続情報タイプ<br>-`EXTERNAL`:外部接続ドメイン<br>-`INTERNAL`:内部接続ドメイン<br>-`PUBLIC`: (Deprecated)外部接続ドメイン<br>-`PRIVATE`: (Deprecated)内部接続ドメイン|
 
 
 <details><summary>例</summary>
@@ -1407,6 +1362,24 @@ X-TC-APP-KEY: {appkey}
 
 ```json
 {
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "availabilityZone": "kr-pub-a",
+    "subnet": {
+        "subnetId": "bd453789-34ae-416c-9f78-05b9e43a46be",
+        "subnetName": "Default Network",
+        "subnetCidr": "192.168.0.0/16"
+    },
+    "endPoints": [
+        {
+            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
+            "ipAddress": "192.168.0.2",
+            "endPointType": "INTERNAL"
+        }
+    ]
 }
 ```
 
@@ -1418,15 +1391,13 @@ X-TC-APP-KEY: {appkey}
 ### ネットワーク情報を修正する
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/network-info
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 |usePublicAccess|Body|Boolean|O|外部接続可否|
 
@@ -1442,8 +1413,7 @@ X-TC-APP-KEY: {appkey}
 ### DBユーザーリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
 #### リクエスト
@@ -1452,7 +1422,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1475,7 +1444,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbUsers": [
@@ -1501,15 +1470,13 @@ X-TC-APP-KEY: {appkey}
 ### DBユーザーを作成する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 |dbUserName|Body|String|O|DBユーザーアカウント名<br/>- 最小長さ: `1`<br/>- 最大長さ: `32`|
 |dbPassword|Body|String|O|DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`|
@@ -1543,15 +1510,13 @@ X-TC-APP-KEY: {appkey}
 ### DBユーザーを修正する
 
 ```
-PUT /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 | dbUserId | URL | UUID | O | DBユーザーの識別子 |
 |dbPassword|Body|String|X|DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`|
@@ -1581,8 +1546,7 @@ X-TC-APP-KEY: {appkey}
 ### DBユーザーを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
 #### リクエスト
@@ -1591,7 +1555,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 | dbUserId | URL | UUID | O | DBユーザーの識別子 |
 
@@ -1606,8 +1569,7 @@ X-TC-APP-KEY: {appkey}
 ### DBスキーマリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
 #### リクエスト
@@ -1616,7 +1578,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
@@ -1636,7 +1597,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbSchemas": [
@@ -1659,15 +1620,13 @@ X-TC-APP-KEY: {appkey}
 ### DBスキーマを作成する
 
 ```
-POST /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 |dbSchemaName|Body|String|O|DBスキーマ名|
 
@@ -1682,8 +1641,7 @@ X-TC-APP-KEY: {appkey}
 ### DBスキーマを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
 #### リクエスト
@@ -1692,7 +1650,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 |dbSchemaId|URL|UUID|O|DBスキーマの識別子 |
 
@@ -1720,38 +1677,36 @@ X-TC-APP-KEY: {appkey}
 ### バックアップリスト照会
 
 ```
-GET /rds/api/public/external/v3.0/backups
-X-TC-APP-KEY: {appkey}
+GET /v3.0/backups
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-| page | Query | Number | O | 照会するリストのページ<br/>- 最小値: `1` |
-| size | Query | Number | O | 照会するリストのページサイズ<br/>- 最小値: `1`<br/>- 最大値: `100` |
-| backupType | Query | Enum | X | バックアップタイプ<br/>- `AUTO`:自動<br/>- `MANUAL`:手動<br/>- デフォルト値:全体|
+| 名前           | 種類 | 形式 | 必須 | 説明 |
+|--------------|---|---|---|---|
+| page         | Query | Number | O | 照会するリストのページ<br/>- 最小値: `1` |
+| size         | Query | Number | O | 照会するリストのページサイズ<br/>- 最小値: `1`<br/>- 最大値: `100` |
+| backupType   | Query | Enum | X | バックアップタイプ<br/>- `AUTO`:自動<br/>- `MANUAL`:手動<br/>- デフォルト値:全体|
 | dbInstanceId | Query | UUID | X | 原本DBインスタンスの識別子 |
-|dbEngine|Query|Enum|X|DBエンジンタイプ |
+| dbVersion    |Query|Enum|X|DBエンジンタイプ |
 
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-|totalCounts|Body|Number| 全バックアップリスト数 |
-|backups|Body|Array|バックアップリスト |
-|backups.backupId|Body|UUID|バックアップの識別子|
-|backups.backupName|Body|String|バックアップを識別できる名前|
-|backups.backupStatus|Body|Enum|バックアップの現在状態|
-|backups.dbInstanceId|Body|UUID|原本DBインスタンスの識別子|
-|backups.dbEngine|Body|Enum|DBエンジンタイプ|
-|backups.backupType|Body|Enum|バックアップタイプ|
-|backups.backupSize|Body|Number|バックアップのサイズ(Byte)|
-|createdYmdt|Body|DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|updatedYmdt|Body|DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前                   | 種類 | 形式 | 説明 |
+|----------------------|---|---|---|
+| totalCounts          |Body|Number| 全バックアップリスト数 |
+| backups              |Body|Array|バックアップリスト |
+| backups.backupId     |Body|UUID|バックアップの識別子|
+| backups.backupName   |Body|String|バックアップを識別できる名前|
+| backups.backupStatus |Body|Enum|バックアップの現在状態|
+| backups.dbInstanceId |Body|UUID|原本DBインスタンスの識別子|
+| backups.dbVersion    |Body|Enum|DBエンジンタイプ|
+| backups.backupType   |Body|Enum|バックアップタイプ|
+| backups.backupSize   |Body|Number|バックアップのサイズ(Byte)|
+| createdYmdt          |Body|DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt          |Body|DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>例</summary>
 <p>
@@ -1760,7 +1715,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "totalCounts": 1,
@@ -1770,7 +1725,7 @@ X-TC-APP-KEY: {appkey}
             "backupName": "backup",
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-            "dbEngine": "MYSQL_V8028",
+            "dbVersion": "MYSQL_V8028",
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",
@@ -1788,21 +1743,19 @@ X-TC-APP-KEY: {appkey}
 ### バックアップのエクスポート
 
 ```
-POST /rds/api/public/external/v3.0/backups/{backupId}/export
-X-TC-APP-KEY: {appkey}
+POST /v3.0/backups/{backupId}/export
 ```
 
 #### リクエスト
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-|backupId|URL|UUID|O|バックアップの識別子|
-|tenantId|Body|String|O|バックアップが保存されるオブジェクトストレージのテナントID|
-|user|Body|String|O|NHN CloudアカウントまたはIAMメンバーID|
-|apiPassword|Body|String|O|バックアップが保存されるオブジェクトストレージのAPIパスワード|
-|targetContainer|Body|String|O|バックアップが保存されるオブジェクトストレージのコンテナ|
-|objectPath|Body|String|O|コンテナに保存されるバックアップのパス|
+| 名前              | 種類 | 形式 | 必須 | 説明 |
+|-----------------|---|---|---|---|
+| backupId        |URL|UUID|O|バックアップの識別子|
+| tenantId        |Body|String|O|バックアップが保存されるオブジェクトストレージのテナントID|
+| username        |Body|String|O|NHN CloudアカウントまたはIAMメンバーID|
+| password        |Body|String|O|バックアップが保存されるオブジェクトストレージのAPIパスワード|
+| targetContainer |Body|String|O|バックアップが保存されるオブジェクトストレージのコンテナ|
+| objectPath      |Body|String|O|コンテナに保存されるバックアップのパス|
 
 <details><summary>例</summary>
 <p>
@@ -1810,8 +1763,8 @@ X-TC-APP-KEY: {appkey}
 ```json
 {
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
-    "user": "gildong.hong@nhn.com",
-    "apiPassword": "password",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
     "targetContainer": "/container",
     "objectPath": "/backups/backup_file"
 }
@@ -1831,43 +1784,41 @@ X-TC-APP-KEY: {appkey}
 ### バックアップを復元する
 
 ```
-POST /rds/api/public/external/v3.0/backups/{backupId}/restore
-X-TC-APP-KEY: {appkey}
+POST /v3.0/backups/{backupId}/restore
 ```
 
 #### リクエスト
 
-| 名前                                         | 種類   | 形式    | 必須 | 説明                                                                                                                                                                                                                        |
+| 名前                                           | 種類   | 形式    | 必須 | 説明                                                                                                                                                                                                                          |
 |----------------------------------------------|--------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| appkey                                       | Header | String  | O  | Appkey                                                                                                                                                                                                                      |
-| backupId                                     | URL    | UUID    | O  | バックアップの識別子                                                                                                                                                                                                                   |
-| dbInstanceName                               | Body   | String  | O  | DBインスタンスを識別できる名前                                                                                                                                                                                                      |
-| description                                  | Body   | String  | X  | DBインスタンスの追加情報                                                                                                                                                                                                         |
-| dbFlavorId                                   | Body   | UUID    | O  | DBインスタンス仕様の識別子                                                                                                                                                                                                           |
+| backupId                                     | URL    | UUID    | O  | バックアップの識別子                                                                                                                                                                                                                  |
+| dbInstanceName                               | Body   | String  | O  | DBインスタンスを識別できる名前                                                                                                                                                                                                            |
+| description                                  | Body   | String  | X  | DBインスタンスの追加情報                                                                                                                                                                                                               |
+| dbFlavorId                                   | Body   | UUID    | O  | DBインスタンス仕様の識別子                                                                                                                                                                                                              |
 | dbPort                                       | Body   | Integer | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                                                                                                  |
-| parameterGroupId                             | Body   | UUID    | O  | パラメータグループの識別子                                                                                                                                                                                                              |
-| dbSecurityGroupIds                           | Body   | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                                                                          ||network|Body|Object|O|ネットワーク情報オブジェクト|
-| userGroupIds                                 | Body   | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                            |
-| useHighAvailability                          | Body   | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                               |
-| pingInterval                                 | Body   | Number  | X  | 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                         |
-| useDefaultNotification                       | Body   | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                              |
-| network                                      | Body   | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                |
-| network.vpcSubnetId                          | Body   | UUID    | O  | VPCサブネットの識別子                                                                                                                                                                                                              |
-| network.usePublicAccess                      | Body   | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                              |
-| network.availabilityZone                     | Body   | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                    |
-| storage                                      | Body   | Object  | O  | ストレージ情報オブジェクト                                                                                                                                                                                                                |    
-| storage.storageType                          | Body   | Enum    | O  | データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                         |
+| parameterGroupId                             | Body   | UUID    | O  | パラメータグループの識別子                                                                                                                                                                                                               |
+| dbSecurityGroupIds                           | Body   | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                                                                         ||network|Body|Object|O|ネットワーク情報オブジェクト|
+| userGroupIds                                 | Body   | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                             |
+| useHighAvailability                          | Body   | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                         |
+| pingInterval                                 | Body   | Number  | X  | 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                      |
+| useDefaultNotification                       | Body   | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                         |
+| network                                      | Body   | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                              |
+| network.subnetId                             | Body   | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                   |
+| network.usePublicAccess                      | Body   | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                |
+| network.availabilityZone                     | Body   | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                |
+| storage                                      | Body   | Object  | O  | ストレージ情報オブジェクト                                                                                                                                                                                                               |    
+| storage.storageType                          | Body   | Enum    | O  | データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                          |
 | storage.storageSize                          | Body   | Number  | O  | データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                           |
-| backup                                       | Body   | Object  | O  | バックアップ情報オブジェクト                                                                                                                                                                                                                  |
-| backup.backupPeriod                          | Body   | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                 |
-| backup.ftwrlWaitTimeout                      | Body   | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                          |
-| backup.backupRetryCount                      | Body   | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                     |
-| backup.replicationRegion                     | Body   | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                       |
-| backup.useBackupNoLock                       | Body   | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                             |
-| backup.backupSchedules                       | Body   | Array   | O  | バックアップスケジュールリスト                                                                                                                                                                                                                 |
-| backup.backupSchedules.backupWndBgnTime      | Body   | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                               |
+| backup                                       | Body   | Object  | O  | バックアップ情報オブジェクト                                                                                                                                                                                                              |
+| backup.backupPeriod                          | Body   | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                               |
+| backup.ftwrlWaitTimeout                      | Body   | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                         |
+| backup.backupRetryCount                      | Body   | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                |
+| backup.replicationRegion                     | Body   | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                               |
+| backup.useBackupLock                         | Body   | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                       |
+| backup.backupSchedules                       | Body   | Array   | O  | バックアップスケジュールリスト                                                                                                                                                                                                             |
+| backup.backupSchedules.backupWndBgnTime      | Body   | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                              |
 | backup.backupSchedules.backupWndDuration     | Body   | Enum    | O  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
-| backup.backupSchedules.backupRetryExpireTime | Body   | String  | O  | バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`                                                                                                                                              |
+| backup.backupSchedules.backupRetryExpireTime | Body   | String  | O  | バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`                                                                                                                                            |
 
 <details><summary>例</summary>
 <p>
@@ -1880,7 +1831,7 @@ X-TC-APP-KEY: {appkey}
 "dbPort" : 10000,
 "parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
 "network": {
-    "vpcSubnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
+    "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
     "availabilityZone": "kr-pub-a"
 },
 "storage": {
@@ -1914,8 +1865,7 @@ X-TC-APP-KEY: {appkey}
 ### バックアップを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/backups/{backupId}
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/backups/{backupId}
 ```
 
 #### リクエスト
@@ -1924,7 +1874,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |backupId|URL|UUID|O|バックアップの識別子|
 
 #### レスポンス
@@ -1952,17 +1901,12 @@ X-TC-APP-KEY: {appkey}
 ### DBセキュリティグループリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/db-security-groups
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-security-groups
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### レスポンス
 
@@ -1984,7 +1928,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbSecurityGroups": [
@@ -2008,8 +1952,7 @@ X-TC-APP-KEY: {appkey}
 ### DBセキュリティグループの詳細を表示
 
 ```
-GET /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
-X-TC-APP-KEY: {appkey}
+GET /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
 #### リクエスト
@@ -2018,7 +1961,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DBセキュリティグループの識別子|
 
 #### レスポンス
@@ -2053,7 +1995,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "dbSecurityGroup": {
@@ -2091,15 +2033,13 @@ X-TC-APP-KEY: {appkey}
 ### DBセキュリティグループを作成する
 
 ```
-POST /rds/api/public/external/v3.0/db-security-groups
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-security-groups
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupName|Body|String|O|DBセキュリティグループを識別できる名前|
 |description|Body|String|X|DBセキュリティグループの追加情報|
 |rules|Body|Array|O|DBセキュリティグループルールリスト|
@@ -2150,15 +2090,13 @@ X-TC-APP-KEY: {appkey}
 ### DBセキュリティグループを修正する
 
 ```
-PUT /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DBセキュリティグループの識別子|
 |dbSecurityGroupName|Body|String|X|DBセキュリティグループを識別できる名前|
 |description|Body|String|X|DBセキュリティグループの追加情報|
@@ -2189,8 +2127,7 @@ X-TC-APP-KEY: {appkey}
 ### DBセキュリティグループを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
 #### リクエスト
@@ -2199,7 +2136,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DBセキュリティグループの識別子|
 
 #### レスポンス
@@ -2211,15 +2147,13 @@ X-TC-APP-KEY: {appkey}
 ### DBセキュリティグループルールを作成する
 
 ```
-POST /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules
-X-TC-APP-KEY: {appkey}
+POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DBセキュリティグループの識別子|
 |description|Body|String|X|DBセキュリティグループルールの追加情報|
 |direction|Body|Enum|O|通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信
@@ -2261,15 +2195,13 @@ X-TC-APP-KEY: {appkey}
 ### DBセキュリティグループルールを修正する
 
 ```
-PUT /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DBセキュリティグループの識別子|
 |ruleId|URL|UUID|O|DBセキュリティグループルールの識別子|
 |description|Body|String|X|DBセキュリティグループルールの追加情報|
@@ -2310,8 +2242,7 @@ X-TC-APP-KEY: {appkey}
 ### DBセキュリティグループルールを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rules
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
 #### リクエスト
@@ -2320,7 +2251,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |dbSecurityGroupId|URL|UUID|O|DBセキュリティグループの識別子|
 |ruleIds|Query|Array|O|DBセキュリティグループルールの識別子リスト|
 
@@ -2338,32 +2268,30 @@ X-TC-APP-KEY: {appkey}
 ### パラメータグループリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/parameter-groups
-X-TC-APP-KEY: {appkey}
+GET /v3.0/parameter-groups
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-|dbEngine|Query|Enum|X|DBエンジンタイプ|
+| 名前        | 種類 | 形式 | 必須 | 説明 |
+|-----------|---|---|---|---|
+| dbVersion |Query|Enum|X|DBエンジンタイプ|
 
 
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-|parameterGroups|Body|Array|パラメータグループリスト|
-|parameterGroups.parameterGroupId|Body|UUID|パラメータグループの識別子|
-|parameterGroups.parameterGroupName|Body|String|パラメータグループを識別できる名前|
-|parameterGroups.description|Body|String|パラメータグループの追加情報|
-|parameterGroups.dbEngine|Body|Enum|DBエンジンタイプ|
-|parameterGroups.parameterGroupStatus|Body|Enum|パラメータグループの現在状態<br/>- `STABLE`:適用完了<br/>- `NEED_TO_APPLY`:適用必要|
-|parameterGroups.createdYmdt|Body|DateTime|作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|parameterGroups.updatedYmdt|Body|DateTime|修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)|
+| 名前                                   | 種類 | 形式 | 説明 |
+|--------------------------------------|---|---|---|
+| parameterGroups                      |Body|Array|パラメータグループリスト|
+| parameterGroups.parameterGroupId     |Body|UUID|パラメータグループの識別子|
+| parameterGroups.parameterGroupName   |Body|String|パラメータグループを識別できる名前|
+| parameterGroups.description          |Body|String|パラメータグループの追加情報|
+| parameterGroups.dbVersion            |Body|Enum|DBエンジンタイプ|
+| parameterGroups.parameterGroupStatus |Body|Enum|パラメータグループの現在状態<br/>- `STABLE`:適用完了<br/>- `NEED_TO_APPLY`:適用必要|
+| parameterGroups.createdYmdt          |Body|DateTime|作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)|
+| parameterGroups.updatedYmdt          |Body|DateTime|修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)|
 
 <details><summary>例</summary>
 <p>
@@ -2372,7 +2300,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "parameterGroups": [
@@ -2380,7 +2308,7 @@ X-TC-APP-KEY: {appkey}
             "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
             "parameterGroupName": "parameter-group",
             "description": null,
-            "dbEngine": "MYSQL_V8023",
+            "dbVersion": "MYSQL_V8023",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-02-31T15:28:17+09:00",
             "updatedYmdt": "2023-02-31T15:28:17+09:00"
@@ -2398,8 +2326,7 @@ X-TC-APP-KEY: {appkey}
 ### パラメータグループの詳細を表示
 
 ```
-GET /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
-X-TC-APP-KEY: {appkey}
+GET /v3.0/parameter-groups/{parameterGroupId}
 ```
 
 #### リクエスト
@@ -2408,30 +2335,29 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|パラメータグループの識別子|
 
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-|parameterGroupId|Body|UUID|パラメータグループの識別子|
-|parameterGroupName|Body|String|パラメータグループを識別できる名前|
-|description|Body|String|パラメータグループの追加情報|
-|dbEngine|Body|Enum|DBエンジンタイプ|
-|parameterGroupStatus|Body|Enum|パラメータグループの現在状態<br/>- `STABLE`:適用完了<br/>- `NEED_TO_APPLY`:適用必要|
-|parameters|Body|Array|パラメータリスト|
-|parameters.parameterId|Body|UUID|パラメータ識別子|
-|parameters.parameterFileGroup|Body|Enum|パラメータファイルグループタイプ<br/>- `CLIENT`: client<br/>- `MYSQL`: mysql<br/>- `MYSQLD`: mysqld|
-|parameters.parameterName|Body|String|パラメータ名|
-|parameters.fileParameterName|Body|String|パラメータファイル名|
-|parameters.value|Body|String|現在設定されている値 |
-|parameters.defaultValue|Body|String|デフォルト値|
-|parameters.allowedValue|Body|String|許可された値|
-|parameters.updateType|Body|Enum|修正タイプ<br/>- `VARIABLE`:いつでも修正可能<br/>- `CONSTANT`:修正不可<br/>- `INIT_VARIABLE`: DBインスタンス作成時にのみ修正可能|
-|parameters.applyType|Body|Enum|適用タイプ<br/>- `SESSION`:セッション適用<br/>- `FILE`:設定ファイル適用(再起動必要)<br/>- `BOTH`:全体(再起動必要)|
-|createdYmdt|Body|DateTime|作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|updatedYmdt|Body|DateTime|修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)|
+| 名前                            | 種類 | 形式 | 説明 |
+|-------------------------------|---|---|---|
+| parameterGroupId              |Body|UUID|パラメータグループの識別子|
+| parameterGroupName            |Body|String|パラメータグループを識別できる名前|
+| description                   |Body|String|パラメータグループの追加情報|
+| dbVersion                     |Body|Enum|DBエンジンタイプ|
+| parameterGroupStatus          |Body|Enum|パラメータグループの現在状態<br/>- `STABLE`:適用完了<br/>- `NEED_TO_APPLY`:適用必要|
+| parameters                    |Body|Array|パラメータリスト|
+| parameters.parameterId        |Body|UUID|パラメータ識別子|
+| parameters.parameterFileGroup |Body|Enum|パラメータファイルグループタイプ<br/>- `CLIENT`: client<br/>- `MYSQL`: mysql<br/>- `MYSQLD`: mysqld|
+| parameters.parameterName      |Body|String|パラメータ名|
+| parameters.fileParameterName  |Body|String|パラメータファイル名|
+| parameters.value              |Body|String|現在設定されている値 |
+| parameters.defaultValue       |Body|String|デフォルト値|
+| parameters.allowedValue       |Body|String|許可された値|
+| parameters.updateType         |Body|Enum|修正タイプ<br/>- `VARIABLE`:いつでも修正可能<br/>- `CONSTANT`:修正不可<br/>- `INIT_VARIABLE`: DBインスタンス作成時にのみ修正可能|
+| parameters.applyType          |Body|Enum|適用タイプ<br/>- `SESSION`:セッション適用<br/>- `FILE`:設定ファイル適用(再起動必要)<br/>- `BOTH`:全体(再起動必要)|
+| createdYmdt                   |Body|DateTime|作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)|
+| updatedYmdt                   |Body|DateTime|修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)|
 
 <details><summary>例</summary>
 <p>
@@ -2440,13 +2366,13 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
     "parameterGroupName": "parameter-group",
     "description": null,
-    "dbEngine": "MYSQL_V8023",
+    "dbVersion": "MYSQL_V8023",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
@@ -2475,18 +2401,16 @@ X-TC-APP-KEY: {appkey}
 ### パラメータグループを作成する
 
 ```
-POST /rds/api/public/external/v3.0/parameter-groups
-X-TC-APP-KEY: {appkey}
+POST /v3.0/parameter-groups
 ```
 
 #### リクエスト
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
-|parameterGroupName|Body|String|O|パラメータグループを識別できる名前|
-|description|Body|String|X|パラメータグループの追加情報|
-|dbEngine|Body|Enum|O|DBエンジンタイプ|
+| 名前                 | 種類 | 形式 | 必須 | 説明 |
+|--------------------|---|---|---|---|
+| parameterGroupName |Body|String|O|パラメータグループを識別できる名前|
+| description        |Body|String|X|パラメータグループの追加情報|
+| dbVersion          |Body|Enum|O|DBエンジンタイプ|
 
 <details><summary>例</summary>
 <p>
@@ -2494,7 +2418,7 @@ X-TC-APP-KEY: {appkey}
 ```json
 {
     "parameterGroupName": "parameter-group",
-    "dbEngine": "MYSQL_V8023"
+    "dbVersion": "MYSQL_V8023"
 }
 ```
 
@@ -2513,15 +2437,13 @@ X-TC-APP-KEY: {appkey}
 ### パラメータグループをコピーする
 
 ```
-POST /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/copy
-X-TC-APP-KEY: {appkey}
+POST /v3.0/parameter-groups/{parameterGroupId}/copy
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|パラメータグループの識別子|
 |parameterGroupName|Body|String|O|パラメータグループを識別できる名前|
 |description|Body|String|X|パラメータグループの追加情報|
@@ -2552,8 +2474,7 @@ X-TC-APP-KEY: {appkey}
 ### パラメータグループを修正する
 
 ```
-PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/parameter-groups/{parameterGroupId}
 ```
 
 #### リクエスト
@@ -2561,7 +2482,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|パラメータグループの識別子|
 |parameterGroupName|Body|String|X|パラメータグループを識別できる名前|
 |description|Body|String|X|パラメータグループの追加情報|
@@ -2588,8 +2508,7 @@ X-TC-APP-KEY: {appkey}
 ### パラメータを修正する
 
 ```
-PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/parameters
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
 #### リクエスト
@@ -2597,7 +2516,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|パラメータグループの識別子|
 |modifiedParameters|Body|Array|O|変更するパラメータリスト|
 |modifiedParameters.parameterId|Body|UUID|O|パラメータの識別子|
@@ -2630,15 +2548,13 @@ X-TC-APP-KEY: {appkey}
 ### パラメータグループを再設定する
 
 ```
-PUT /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}/reset
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|パラメータグループの識別子|
 
 #### レスポンス
@@ -2650,8 +2566,7 @@ X-TC-APP-KEY: {appkey}
 ### パラメータグループを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/parameter-groups/{parameterGroupId}
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/parameter-groups/{parameterGroupId}
 ```
 
 #### リクエスト
@@ -2660,7 +2575,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |parameterGroupId|URL|UUID|O|パラメータグループの識別子|
 
 #### レスポンス
@@ -2674,17 +2588,12 @@ X-TC-APP-KEY: {appkey}
 ### ユーザーグループリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/user-groups
-X-TC-APP-KEY: {appkey}
+GET /v3.0/user-groups
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### レスポンス
 
@@ -2704,7 +2613,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "userGroups": [
@@ -2726,8 +2635,7 @@ X-TC-APP-KEY: {appkey}
 ### ユーザーグループの詳細を表示
 
 ```
-GET /rds/api/public/external/v3.0/user-groups/{userGroupId}
-X-TC-APP-KEY: {appkey}
+GET /v3.0/user-groups/{userGroupId}
 ```
 
 #### リクエスト
@@ -2736,7 +2644,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | userGroupId | URL | UUID | O | ユーザーグループの識別子|
 
 #### レスポンス
@@ -2757,7 +2664,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
@@ -2780,15 +2687,13 @@ X-TC-APP-KEY: {appkey}
 ### ユーザーグループを作成する
 
 ```
-POST /rds/api/public/external/v3.0/user-groups
-X-TC-APP-KEY: {appkey}
+POST /v3.0/user-groups
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |userGroupName|Body|String|O|ユーザーグループを識別できる名前|
 |memberIds|Body|Array|O|プロジェクトメンバーの識別子リスト|
 
@@ -2816,15 +2721,13 @@ X-TC-APP-KEY: {appkey}
 ### ユーザーグループを修正する
 
 ```
-PUT /rds/api/public/external/v3.0/user-groups/{userGroupId}
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/user-groups/{userGroupId}
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | userGroupId | URL | UUID | O | ユーザーグループの識別子|
 |userGroupName|Body|String|X|ユーザーグループを識別できる名前|
 |memberIds|Body|Array|X|プロジェクトメンバーの識別子リスト|
@@ -2851,16 +2754,15 @@ X-TC-APP-KEY: {appkey}
 ### ユーザーグループを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/user-groups/{userGroupId}
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/user-groups/{userGroupId}
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | userGroupId | URL | UUID | O | ユーザーグループの識別子|
+
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
@@ -2873,17 +2775,12 @@ X-TC-APP-KEY: {appkey}
 ### 通知グループリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/notification-groups
-X-TC-APP-KEY: {appkey}
+GET /v3.0/notification-groups
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### レスポンス
 
@@ -2906,7 +2803,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "notificationGroups": [
@@ -2931,8 +2828,7 @@ X-TC-APP-KEY: {appkey}
 
 
 ```
-GET /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
-X-TC-APP-KEY: {appkey}
+GET /v3.0/notification-groups/{notificationGroupId}
 ```
 #### リクエスト
 
@@ -2940,7 +2836,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |notificationGroupId|URL|UUID|O|通知グループの識別子|
 
 #### レスポンス
@@ -2969,7 +2864,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "notificationGroupId": "b3901f17-9971-4d1e-8a81-8448cf533dc7",
@@ -3000,14 +2895,12 @@ X-TC-APP-KEY: {appkey}
 ### アラームグループを作成する
 
 ```
-POST /rds/api/public/external/v3.0/notification-groups
-X-TC-APP-KEY: {appkey}
+POST /v3.0/notification-groups
 ```
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |notificationGroupName|Body|String|O|通知グループを識別できる名前|
 |notifyEmail|Body|Boolean|X|メール通知<br/>- デフォルト値: `true`|
 |notifySms|Body|Boolean|X|SMS通知<br/>- デフォルト値: `true`|
@@ -3042,15 +2935,13 @@ X-TC-APP-KEY: {appkey}
 ### アラームグループを修正する
 
 ```
-PUT /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
-X-TC-APP-KEY: {appkey}
+PUT /v3.0/notification-groups/{notificationGroupId}
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |notificationGroupId|URL|UUID|O|通知グループの識別子|
 |notificationGroupName|Body|String|X|通知グループを識別できる名前|
 |notifyEmail|Body|Boolean|X|メール通知|
@@ -3082,8 +2973,7 @@ X-TC-APP-KEY: {appkey}
 ### アラームグループを削除する
 
 ```
-DELETE /rds/api/public/external/v3.0/notification-groups/{notificationGroupId}
-X-TC-APP-KEY: {appkey}
+DELETE /v3.0/notification-groups/{notificationGroupId}
 ```
 #### リクエスト
 
@@ -3091,7 +2981,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 |notificationGroupId|URL|UUID|O|通知グループの識別子|
 
 #### レスポンス
@@ -3105,18 +2994,13 @@ X-TC-APP-KEY: {appkey}
 ### Metricリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/metrics
-X-TC-APP-KEY: {appkey}
+GET /v3.0/metrics
 ```
 
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 
 #### レスポンス
@@ -3134,7 +3018,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "metrics": [
@@ -3154,15 +3038,13 @@ X-TC-APP-KEY: {appkey}
 ### 統計情報の照会
 
 ```
-GET /rds/api/public/external/v3.0/metric-statistics
-X-TC-APP-KEY: {appkey}
+GET /v3.0/metric-statistics
 ```
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | dbInstanceId | Query | UUID| O | DBインスタンスの識別子|
 | measureNames | Query | Array | O | 照会指標リスト<br/>- 最小サイズ: `1` |
 | from | Query | Datetime | O| 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -3220,8 +3102,7 @@ X-TC-APP-KEY: {appkey}
 
 
 ```
-GET /rds/api/public/external/v3.0/events
-X-TC-APP-KEY: {appkey}
+GET /v3.0/events
 ```
 
 
@@ -3231,7 +3112,6 @@ X-TC-APP-KEY: {appkey}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 | page | Query | Number | O | 照会するリストのページ<br/>- 最小値: `1` |
 | size | Query | Number | O | 照会するリストのページサイズ<br/>- 最小値: `1`<br/>- 最大値: `100`  |
 | from | Query | Datetime | O| 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -3264,7 +3144,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "totalCounts": 28,
@@ -3308,17 +3188,12 @@ X-TC-APP-KEY: {appkey}
 ### イベントコードリストを表示
 
 ```
-GET /rds/api/public/external/v3.0/event-codes
-X-TC-APP-KEY: {appkey}
+GET /v3.0/event-codes
 ```
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| appkey | Header | String | O | Appkey |
 
 #### レスポンス
 
@@ -3336,7 +3211,7 @@ X-TC-APP-KEY: {appkey}
 {
     "header": {
         "resultCode": 0,
-        "resultMessage": "",
+        "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
     "eventCodes": [
