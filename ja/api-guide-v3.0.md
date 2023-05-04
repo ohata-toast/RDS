@@ -242,12 +242,12 @@ GET /v3.0/db-versions
 
 #### レスポンス
 
-| 名前                                       | 種類 | 形式 | 説明 |
-|------------------------------------------|---|---|---|
-| dbVersions                               |Body|Array| DBエンジンリスト |
-| dbVersiondbEngines.dbVersiondbEngine     |Body|String|DBエンジンタイプ|
-| dbVersiondbEngines.dbVersiondbEngineName |Body|String|DBエンジン名前|
-| dbVersiondbEngines.restorableFromObs     |Body|Boolean|オブジェクトストレージから復元可能かどうか|
+| 名前                             | 種類 | 形式 | 説明 |
+|--------------------------------|---|---|---|
+| dbVersions                     |Body|Array| DBエンジンリスト |
+| dbVersions.dbVersion     |Body|String|DBエンジンタイプ|
+| dbVersions.dbVersionName |Body|String|DBエンジン名前|
+| dbVersions.restorableFromObs |Body|Boolean|オブジェクトストレージから復元可能かどうか|
 
 <details><summary>例</summary>
 <p>
