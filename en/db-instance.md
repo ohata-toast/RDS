@@ -132,19 +132,19 @@ To access DB instance from the outside, you must connect the floating IP to DB i
 
 ### DB Security Group
 
-DB security groups are used to restrict access in case of external intrusion. You can allow access to specific port ranges or database ports for incoming and outgoing traffic. You can apply multiple DB security groups to DB instance. For more details on DB security groups, see the [DB security groups](/Database/RDS%20for%20MySQL/en/20230411/db-security-group.md).
+DB security groups are used to restrict access in case of external intrusion. You can allow access to specific port ranges or database ports for incoming and outgoing traffic. You can apply multiple DB security groups to DB instance. For more details on DB security groups, see the [DB security groups](db-security-group/).
 
 ### Backup
 
-You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the web console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](/Database/RDS%20for%20MySQL/en/20230411/backup-and-restore.md)
+You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the web console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
 ### Restoration
 
-You can use a backup to create a new DB instance. If the DB instance and binary log that performed the backup exist, you can restore it to a specific time point or to the desired binary log position. It can also be restored as a backup of external MySQL rather than RDS for MySQL. A new DB instance is always created during restoration, and the database of an existing DB instance cannot be deleted and restored. For more details on restoration, see the [Backup and Restore](/Database/RDS%20for%20MySQL/en/20230411/backup-and-restore.md).
+You can use a backup to create a new DB instance. If the DB instance and binary log that performed the backup exist, you can restore it to a specific time point or to the desired binary log position. It can also be restored as a backup of external MySQL rather than RDS for MySQL. A new DB instance is always created during restoration, and the database of an existing DB instance cannot be deleted and restored. For more details on restoration, see the [Backup and Restore](backup-and-restore/).
 
 ### Default Notification
 
-When you create a DB instance, you can set default notifications. If setting default notifications, it will create a new notification group with the name `{DB instance name}-default` and will automatically set the notification items below. You can freely modify and delete alert groups that are created as default notification. For more details on notification group, see the [ notification group ](/Database/RDS%20for%20MySQL/en/20230411/notification-group.md).
+When you create a DB instance, you can set default notifications. If setting default notifications, it will create a new notification group with the name `{DB instance name}-default` and will automatically set the notification items below. You can freely modify and delete alert groups that are created as default notification. For more details on notification group, see the [ notification group ](notification/).
 
 | Item | How to compare | Threshold value | Duration| 
 |----------------------------|-------|---------------|-------| 
@@ -212,7 +212,7 @@ If your storage is running out of capacity due to sudden heavy loads, you can de
 
 ### Apply Parameter Group Changes
 
-When the parameters of parameter group associated with DB instance are modified, they should be reflected. If restart is required to apply the changed parameters, the DB instance is restarted. For more details on the parameter group, see the [Parameter Group](/Database/RDS%20for%20MySQL/en/20230411/parameter-group.md).
+When the parameters of parameter group associated with DB instance are modified, they should be reflected. If restart is required to apply the changed parameters, the DB instance is restarted. For more details on the parameter group, see the [Parameter Group](parameter-group/).
 
 ## High Availability DB instances
 

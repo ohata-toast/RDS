@@ -100,7 +100,7 @@ Restoring to a particular point in time is called point-in-time restoration. You
 
 ### Restoration with External MySQL Backup
 
-You can use an external MySQL backup file to create a DB instance. When creating an external MySQL backup file, refer to [Backup](./#_1) and use the same version as the Percona XtraBackup used by RDS for MySQL.
+You can use an external MySQL backup file to create a DB instance. When creating an external MySQL backup file, refer to [Backup](backup-and-restore/#_1) and use the same version as the Percona XtraBackup used by RDS for MySQL.
 
 > [Caution] 
 > If the setting value of innodb\_data\_file\_path is not  ibdata1:12M:autoextend, it is unable to restore to DB instance of RDS for MySQL.
@@ -125,7 +125,7 @@ xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password 
 
 * The maximum file size that can be uploaded at a time is 5GB.
 * If the backup file is larger than 5GB, you have to use a utility such as split to cut the backup file to less than 5GB and upload it in multi-part.
-* For detailed information, refer to https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/api-guide/#\_44.
+* For detailed information, refer to [Multipart Upload](/Storage/Object%20Storage/ko/api-guide/#_44).
 
 (4) After accessing the web console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
 
@@ -136,9 +136,9 @@ xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password 
 
 ### Restoration by Using RDS for MySQL Backup
 
-You can use the backup file in RDS for MySQL to restore the database in MySQL directly. When restoring a RDS for MySQL backup file, refer to the [Backup](./#_1) and use the same version as Percona XtraBackup used by RDS for MySQL.
+You can use the backup file in RDS for MySQL to restore the database in MySQL directly. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#_1) and use the same version as Percona XtraBackup used by RDS for MySQL.
 
-(1) Export backup of RDS for MySQL to object storage with reference to the [Export Backup](./#_5).
+(1) Export backup of RDS for MySQL to object storage with reference to the [Export Backup](backup-and-restore/#_5).
 
 (2) Download the backup of the object storage to the server on which you want to restore it.
 
