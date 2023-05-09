@@ -6,30 +6,30 @@
 | 韓国(ピョンチョン)リージョン | https://kr2-rds-mysql.api.nhncloudservice.com |
 | 日本リージョン | https://jp1-rds-mysql.api.nhncloudservice.com |
 
-## 인증 및 권한
+## 認証および権限
 
-API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. <b>회원 정보 > API 보안 설정</b>에서 생성할 수 있습니다.
-생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
+APIを使用するには認証に必要な`User Access Key ID`と`Secret Access Key`が必要です。<b>会員情報 > APIセキュリティ設定</b>で作成できます。
+作成されたKeyはAppkeyと一緒にリクエストHeaderに含める必要があります。
 
-| 이름                     | 종류     | 형식     | 필수  | 설명                               |
+| 名前                   | 種類   | 形式   | 必須 | 説明                             |
 |------------------------|--------|--------|-----|----------------------------------|
-| X-TC-APP-KEY           | Header | String | O   | RDS for MySQL 서비스의 Appkey        |
-| X-TC-AUTHENTICATION-ID | Header | String | O   | API 보안 설정 메뉴의 User Access Key ID |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O   | API 보안 설정 메뉴의 Secret Access Key  |
+| X-TC-APP-KEY           | Header | String | O   | RDS for MySQLサービスのAppkey        |
+| X-TC-AUTHENTICATION-ID | Header | String | O   | APIセキュリティ設定メニューのUser Access Key ID |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O   | APIセキュリティ設定メニューのSecret Access Key  |
 
-또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER`로 구분하여 권한을 부여할 수 있습니다.
+またプロジェクトメンバーのロールによって呼び出すことができるAPIが制限されます。 `RDS for MySQL ADMIN`、`RDS for MySQL VIEWER`に区分して権限を付与できます。
 
-* `RDS for MySQL ADMIN` 권한은 모든 기능을 사용 가능합니다.
-* `RDS for MySQL VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
-    * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
-    * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
+* `RDS for MySQL ADMIN`権限はすべての機能を使用可能です。
+* `RDS for MySQL VIEWER`権限は情報を照会する機能のみ使用可能です。
+    * DBインスタンスを作成、修正、削除したり、DBインスタンスを対象とするいかなる機能も使用できません。
+    * ただし、通知グループとユーザーグループに関連する機能は使用可能です。
 
-API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 오류가 발생합니다.
+APIリクエスト時、認証に失敗したり権限がない場合、次のようなエラーが発生します。
 
-| resultCode | resultMessage | 설명          |
+| resultCode | resultMessage | 説明        |
 |------------|---------------|-------------|
-| 80401      | Unauthorized  | 인증에 실패했습니다. |
-| 80403      | Forbidden     | 권한이 없습니다.   |
+| 80401      | Unauthorized  | 認証に失敗しました。 |
+| 80403      | Forbidden     | 権限がありません。   |
 
 
 ## プロジェクト情報
