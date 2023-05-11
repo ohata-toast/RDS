@@ -114,7 +114,7 @@ Tasks performed on DB instance consist of the following values and are initiated
 
 ### Storage
 
-DB instances support two types of storage: HDD and SSD. As performance and price vary by storage type, you should choose the right storage type for your database workload. You can create at least 20GB to 2,000GB of storage.
+DB instances support two types of storage: HDD and SSD. As performance and price vary by storage type, you should choose the right storage type for your database workload. You can create at least 20GB to 2TB of storage.
 
 ### Scale Storage Size
 
