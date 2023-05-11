@@ -18,9 +18,9 @@ GET /rds/api/v2.0/metrics
 
 #### リクエストヘッダ
 
-| 名前           | 種類  | 形式     | 必須  | 説明                        |
-|--------------|-----|--------|-----|---------------------------|
-| X-TC-APP-KEY | URL | String | O   | 商品Appkeyまたはプロジェクト統合Appkey |
+| 名前           | 種類  | 形式     | 必須 | 説明                        |
+|--------------|-----|--------|----|---------------------------|
+| X-TC-APP-KEY | URL | String | O  | 商品Appkeyまたはプロジェクト統合Appkey |
 
 #### レスポンス
 
@@ -49,19 +49,19 @@ GET /rds/api/v2.0/metric-statistics
 
 #### リクエストヘッダ
 
-| 名前           | 種類  | 形式     | 必須  | 説明                        |
-|--------------|-----|--------|-----|---------------------------|
-| X-TC-APP-KEY | URL | String | O   | 商品Appkeyまたはプロジェクト統合Appkey |
+| 名前           | 種類  | 形式     | 必須 | 説明                        |
+|--------------|-----|--------|----|---------------------------|
+| X-TC-APP-KEY | URL | String | O  | 商品Appkeyまたはプロジェクト統合Appkey |
 
 #### リクエスト
 
-| 名前         | 種類    | 形式       | 必須  | 説明              | 制約事項                                        |
-|------------|-------|----------|-----|-----------------|---------------------------------------------|
-| instanceId | Query | Array    | O   | DBインスタンスIDリスト   | Min:1, Max: 20                              |
-| metricName | Query | Array    | O   | 照会指標(metric)リスト | Min:1                                       |
-| from       | Query | Datetime | O   | 開始日時            | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
-| to         | Query | Datetime | O   | 終了日時            | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
-| interval   | Query | Integer  | X   | 照会間隔            | 1、5、30、120、1440 (分)                         |
+| 名前         | 種類    | 形式       | 必須 | 説明              | 制約事項                                        |
+|------------|-------|----------|----|-----------------|---------------------------------------------|
+| instanceId | Query | Array    | O  | DBインスタンスIDリスト   | Min:1, Max: 20                              |
+| metricName | Query | Array    | O  | 照会指標(metric)リスト | Min:1                                       |
+| from       | Query | Datetime | O  | 開始日時            | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| to         | Query | Datetime | O  | 終了日時            | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
+| interval   | Query | Integer  | X  | 照会間隔            | 1、5、30、120、1440 (分)                         |
 
 - interval ：デフォルト値を使用する時、from/to値に応じて適切な値を自動選択する
     - 日範囲が1日以下かつ開始日が8日経過前 - 1分単位rawデータ

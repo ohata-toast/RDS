@@ -13,11 +13,13 @@
 * Use mysqldump commands as below, to export data.
 
 #### Exporting in Files
+
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
 #### Exporting in mysql db out of NHN Cloud RDS
+
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
 ```
@@ -176,15 +178,15 @@ mysql> call mysql.tcrds_repl_init();
 * RDS for MySQL uses Percona XtraBackup for backup and restoration, so the recommended XtraBackup version for each MySQL version must be used to use the backup files in object storage.
 
 | MySQL version | XtraBackup version |
-| --- | --- |
-| 5.7.15 | 2.4.20 |
-| 5.7.19 | 2.4.20 |
-| 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
-| 5.7.37 | 2.4.20 |
-| 8.0.18 | 8.0.26 |
-| 8.0.23 | 8.0.26 |
-| 8.0.28 | 8.0.28 |
+|---------------|--------------------|
+| 5.7.15        | 2.4.20             |
+| 5.7.19        | 2.4.20             |
+| 5.7.26        | 2.4.20             |
+| 5.7.33        | 2.4.20             |
+| 5.7.37        | 2.4.20             |
+| 8.0.18        | 8.0.26             |
+| 8.0.23        | 8.0.26             |
+| 8.0.28        | 8.0.28             |
 
 * Refer to the Percona's website for detailed descriptions on installing XtraBackup
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -221,6 +223,7 @@ cat {backup file storage path} | xbstream -x -C {MySQL data storage path}
 innobackupex --decompress {MySQL data storage path}
 innobackupex --defaults-file={my.cnf path} --apply-log {MySQL data storage path}
 ```
+
 * XtraBackup 8.0.12 example
 
 ```
@@ -257,11 +260,13 @@ find {MySQL data storage path} -name "*.qp" -print0 | xargs -0 rm
 ```
 innobackupex --defaults-file={my.cnf path} --user {username} --password '{password}' --socket {MySQL socket file path} --compress --compress-threads=1 --stream=xbstream {directory to create a backup file} 2>>{backup log file path} > {backup file path}
 ```
+
 * XtraBackup 8.0.12 example
 
 ```
 xtrabackup --defaults-file={my.cnf path} --user={username} --password='{password}' --socket={MySQL socket file path} --compress --compress-threads=1 --stream=xbstream --backup {directory to create a backup file} 2>>{backup log file path} > {backup file path}
 ```
+
 * Make sure that `completed OK!` exists at the last line of the backup log file.
     * If completed OK! does not exist, it indicates that backup was not properly finished, so proceed with backup again by referring to the error message in the log file.
 * Update completed backup file to object storage.

@@ -13,11 +13,13 @@
 * Use mysqldump commands as below, to export data.
 
 #### Exporting in Files
+
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
 #### Exporting in mysql db out of NHN Cloud RDS
+
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
 ```
@@ -41,7 +43,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### If an error 'ERROR 1418' occurs while importing data
 
 * The `ERROR 1418` error occurs when the function declaration in the mysqldump file does not include NO SQL, READS SQL DATA, and DETERMINISTIC, and binary logging is enabled.
-  * For detailed explanation, refer to the [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
+    * For detailed explanation, refer to the [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
 * To solve this issue, the value of the `log_bin_trust_function_creators` parameter of the DB instance to apply the mysqldump file must be changed to `1`.
 
 ### Export by Replication
@@ -176,19 +178,19 @@ mysql> call mysql.tcrds_repl_init();
 * RDS for MySQL uses Percona XtraBackup for backup and restoration, so the recommended XtraBackup version for each MySQL version must be used to use the backup files in object storage.
 
 | MySQL version | XtraBackup version |
-| --- | --- |
-| 5.7.15 | 2.4.20 |
-| 5.7.19 | 2.4.20 |
-| 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
-| 5.7.37 | 2.4.20 |
-| 8.0.18 | 8.0.26 |
-| 8.0.23 | 8.0.26 |
-| 8.0.28 | 8.0.28 |
+|---------------|--------------------|
+| 5.7.15        | 2.4.20             |
+| 5.7.19        | 2.4.20             |
+| 5.7.26        | 2.4.20             |
+| 5.7.33        | 2.4.20             |
+| 5.7.37        | 2.4.20             |
+| 8.0.18        | 8.0.26             |
+| 8.0.23        | 8.0.26             |
+| 8.0.28        | 8.0.28             |
 
 * Refer to the Percona's website for detailed descriptions on installing XtraBackup
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [Caution] In MySQL 5.7.33, restoring DB instances using the backup file of object storage is limited.
 > [Caution] It might not work properly if you use an XtraBackup version other than the ones recommended.
@@ -221,6 +223,7 @@ cat {backup file storage path} | xbstream -x -C {MySQL data storage path}
 innobackupex --decompress {MySQL data storage path}
 innobackupex --defaults-file={my.cnf path} --apply-log {MySQL data storage path}
 ```
+
 * XtraBackup 8.0.12 example
 
 ```
@@ -257,17 +260,19 @@ find {MySQL data storage path} -name "*.qp" -print0 | xargs -0 rm
 ```
 innobackupex --defaults-file={my.cnf path} --user {username} --password '{password}' --socket {MySQL socket file path} --compress --compress-threads=1 --stream=xbstream {directory to create a backup file} 2>>{backup log file path} > {backup file path}
 ```
+
 * XtraBackup 8.0.12 example
 
 ```
 xtrabackup --defaults-file={my.cnf path} --user={username} --password='{password}' --socket={MySQL socket file path} --compress --compress-threads=1 --stream=xbstream --backup {directory to create a backup file} 2>>{backup log file path} > {backup file path}
 ```
+
 * Make sure that `completed OK!` exists at the last line of the backup log file.
-  * If completed OK! does not exist, it indicates that backup was not properly finished, so proceed with backup again by referring to the error message in the log file.
+    * If completed OK! does not exist, it indicates that backup was not properly finished, so proceed with backup again by referring to the error message in the log file.
 * Update completed backup file to object storage.
-  * The maximum file size that can be uploaded at a time is 5 GB.
-  * If the size of backup file is larger than 5 GB, use a utility such as split to split the backup file to a size below 5 GB and perform multipart uploading.
-  * For more details, see https://docs.nhncloud.com/en/Storage/Object%20Storage/en/api-guide/#multipart-upload.
+    * The maximum file size that can be uploaded at a time is 5 GB.
+    * If the size of backup file is larger than 5 GB, use a utility such as split to split the backup file to a size below 5 GB and perform multipart uploading.
+    * For more details, see https://docs.nhncloud.com/en/Storage/Object%20Storage/en/api-guide/#multipart-upload.
 * Access the web console of the project to restore, and click the Restore from Backup in Object Storage button in the Instance tab.
 * Enter the information of the object storage where the backup file is stored and the DB instance, and click the **Create** button.
 
@@ -314,12 +319,12 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * Explaining parameter
-  * master_instance_ip: IP of replication target (Master) server
-  * master_instance_port : MySQL Port of replication target (Master) server
-  * user_id_for_replication : Account for replication to access the MySQL of replication target (Master) server
-  * password_for_replication_user : Password of account for replication
-  * MASTER_LOG_FILE : Binary log file name of replication target (Master)
-  * MASTER_LOG_POS : Binary log file position of replication target (Master)
+    * master_instance_ip: IP of replication target (Master) server
+    * master_instance_port : MySQL Port of replication target (Master) server
+    * user_id_for_replication : Account for replication to access the MySQL of replication target (Master) server
+    * password_for_replication_user : Password of account for replication
+    * MASTER_LOG_FILE : Binary log file name of replication target (Master)
+    * MASTER_LOG_POS : Binary log file position of replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -364,7 +369,7 @@ mysql> CALL mysql. tcrds_repl_skip_repl_error();
 
 * Changes replication information to read the next binary log of master.
 * Resolve replication error by performing tcrds_repl_next_changemaster procedure when replication error occurs as shown below.
-  * e.g. MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
+    * e.g. MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
 
 ```
 mysql> CALL mysql.tcrds_repl_next_changemaster();

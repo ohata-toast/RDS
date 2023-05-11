@@ -5,12 +5,12 @@
 サーバーダッシュボードでパフォーマンス指標をチャート形式で視覚化できます。チャートはあらかじめ設定されたレイアウトに従って配置されます。指標は1分に1回収集され、最大5年間保管されます。指標データは5分、30分、2時間、1日単位の平均値で集計されます。集計単位別の保管期間は以下の通りです。
 
 | 集計単位 | 保管期間 |
-|-------|-------|
-| 1分  | 7日  |
-| 5分  | 1か月 |
-| 30分 | 6か月 |
-| 2時間 | 2年  |
-| 1日  | 5年  |
+|------|------|
+| 1分   | 7日   |
+| 5分   | 1か月  |
+| 30分  | 6か月  |
+| 2時間  | 2年   |
+| 1日   | 5年   |
 
 ## レイアウト
 
@@ -45,26 +45,26 @@
 
 DBインスタンスの各種性能指標をチャート形式で見ることができます。性能指標ごとにそれぞれ違う形のチャートで構成されています。基本的なシステム指標以外にMySQLで提供する各種性能指標をチャートで提供しています。チャート別に確認できる指標は下記の通りです。
 
-| チャート                       | 指標(単位)                                                                                                                              | 備考                              |
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| CPU使用率                  | cpu used (%)                                                                                                                         |                                   |
-| CPU詳細                   | cpu user (%)<br/>cpu system (%)<br/>cpu nice (%)<br/>cpu IO wait (%)                                                                 |                                   |
-| メモリ使用量                  | memory used (%)                                                                                                                      |                                   |
-| メモリ詳細                   | memory used (bytes)<br/>memory free (bytes)                                                                                          |                                   |
-| スワップ使用量                   | swap used (bytes)<br> swap total (bytes)                                                                                             |                                   |
-| Storage使用量              | storage used (%)                                                                                                                     |                                   |
-| Storageの空き容量           | storage free (%)                                                                                                                     |                                   |
-| Storage IO                 | disk read (bytes)<br> disk write (bytes)                                                                                             |                                   |
-| ネットワークデータ送受信             | nic incoming (bytes)<br> nic outgoing (bytes)                                                                                        | MySQLで使用する基本的なネットワーク転送が発生します。 |
-| CPU平均負荷                | 1m<br/>5m<br/>15m                                                                                                                    |                                   |
-| Queries Per Second         | qps (count/sec)                                                                                                                      |                                   |
-| Database Activity          | select (count/sec)<br/>insert (count/sec)<br/>update (count/sec)<br/>delete (count/sec)<br/>replace (count/sec)<br/>call (count/sec) |                                   |
-| Buffer Pool                | Buffer Pool Total (MB)<br/>Buffer Pool Used (MB)                                                                                     |                                   |
-| Slow Query                 | counts/min                                                                                                                           |                                   |
-| 複製ディレイ                   | sec                                                                                                                                  |                                   |
-| Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                                   |
-| Database Connection Status | mysql status                                                                                                                         | 接続不可: 0、接続可能: 1                |
-| ストレージ障害                   | disk fault status                                                                                                                    | 異常: 0、正常: 1                     |
+| チャート                       | 指標(単位)                                                                                                                               | 備考                            |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|
+| CPU使用率                     | cpu used (%)                                                                                                                         |                               |
+| CPU詳細                      | cpu user (%)<br/>cpu system (%)<br/>cpu nice (%)<br/>cpu IO wait (%)                                                                 |                               |
+| メモリ使用量                     | memory used (%)                                                                                                                      |                               |
+| メモリ詳細                      | memory used (bytes)<br/>memory free (bytes)                                                                                          |                               |
+| スワップ使用量                    | swap used (bytes)<br> swap total (bytes)                                                                                             |                               |
+| Storage使用量                 | storage used (%)                                                                                                                     |                               |
+| Storageの空き容量               | storage free (%)                                                                                                                     |                               |
+| Storage IO                 | disk read (bytes)<br> disk write (bytes)                                                                                             |                               |
+| ネットワークデータ送受信               | nic incoming (bytes)<br> nic outgoing (bytes)                                                                                        | MySQLで使用する基本的なネットワーク転送が発生します。 |
+| CPU平均負荷                    | 1m<br/>5m<br/>15m                                                                                                                    |                               |
+| Queries Per Second         | qps (count/sec)                                                                                                                      |                               |
+| Database Activity          | select (count/sec)<br/>insert (count/sec)<br/>update (count/sec)<br/>delete (count/sec)<br/>replace (count/sec)<br/>call (count/sec) |                               |
+| Buffer Pool                | Buffer Pool Total (MB)<br/>Buffer Pool Used (MB)                                                                                     |                               |
+| Slow Query                 | counts/min                                                                                                                           |                               |
+| 複製ディレイ                     | sec                                                                                                                                  |                               |
+| Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                               |
+| Database Connection Status | mysql status                                                                                                                         | 接続不可: 0、接続可能: 1               |
+| ストレージ障害                    | disk fault status                                                                                                                    | 異常: 0、正常: 1                   |
 
 ## サーバーグループ
 

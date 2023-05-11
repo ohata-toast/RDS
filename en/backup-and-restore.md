@@ -2,24 +2,25 @@
 
 ## Backup
 
-You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica.
+You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
+high-availability configuration or perform backups from read replica.
 
-> [Note] 
+> [Note]
 > High availability DB instances are backed up on the extra master without compromising the master's storage performance.
 
 RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
 
 | MySQL version | XtraBackup version |
-|----------|---------------|
-| 5.7.15   | 2.4.20        |
-| 5.7.19   | 2.4.20        |
-| 5.7.26   | 2.4.20        |
-| 5.7.33   | 2.4.20        |
-| 5.7.37   | 2.4.20        |
-| 8.0.18   | 8.0.26        |
-| 8.0.23   | 8.0.26        |
-| 8.0.28   | 8.0.28        |
-| 8.0.32   | 8.0.28        |
+|---------------|--------------------|
+| 5.7.15        | 2.4.20             |
+| 5.7.19        | 2.4.20             |
+| 5.7.26        | 2.4.20             |
+| 5.7.33        | 2.4.20             |
+| 5.7.37        | 2.4.20             |
+| 8.0.18        | 8.0.26             |
+| 8.0.23        | 8.0.26             |
+| 8.0.28        | 8.0.28             |
+| 8.0.32        | 8.0.28             |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -27,13 +28,14 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 
 ### Auto Backup
 
-If you set the backup archive period for a DB instance to 1 or more days, automatic backups are enabled, and backups are performed at the specified backup run time. Automatic backups have the same life cycle as DB instances. When DB instance is deleted, all archived automatic backups are deleted. When you create DB instance, you can set the settings for automatic backups, and you can also change the backup settings for the DB instance that is already created. Automatic Backup supports the following settings.
+If you set the backup archive period for a DB instance to 1 or more days, automatic backups are enabled, and backups are performed at the specified backup run time. Automatic backups have the same life cycle as DB instances. When DB instance is deleted, all archived automatic backups are deleted. When you create DB instance, you can set the settings for automatic backups, and you can also change the backup settings for the DB instance that is already created. Automatic Backup supports the
+following settings.
 
 **Backup Retention Period**
 
 * Sets the time period for storing backups on storage. It can be kept for up to 730 days, and if the backup archive period changes, the expired automatic backup files will be deleted immediately.
 
-**Use Table  Lock**
+**Use Table Lock**
 
 * `FLUSH TABLES WITH READ LOCK` ets whether the syntax is enabled or disabled.
 * Table lock enables the `FLUSH TABLES WITH READ LOCK` syntax periodically during backups to ensure consistency in backup data. If `FLUSH TABLES WITH READ LOCK` syntax fails to run, the backup will fail.
@@ -53,36 +55,38 @@ If you set the backup archive period for a DB instance to 1 or more days, automa
 
 **Backup Run Time**
 
-* Allows you set the time that the backup takes place. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the backup based on the number of backups retries if it does not exceed the backup retries times.
+* Allows you set the time that the backup takes place. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the
+  backup based on the number of backups retries if it does not exceed the backup retries times.
 
 Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
 
-> [Caution] 
+> [Caution]
 > If you are unable to perform backup, for example, if the previous backup does not end, the backup may not be performed.
 
 ### Manual Backup
 
-If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike automatic backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted  Manual backups require you to enter a name for the backup and have the following limitations.
+If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike automatic backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted Manual backups require you to enter a name for the backup and have the following limitations.
 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
 
 ### Backup Storage and Pricing
 
-All backup files are uploaded to the internal object storage and stored. For manual backups, they are stored permanently until you delete them separately, and object storage charges are incurred depending on the backup capacity. For automatic backups, it is stored for the set retention period and charges for the full size of the automatic backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal object storage where the backup file is stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
+All backup files are uploaded to the internal object storage and stored. For manual backups, they are stored permanently until you delete them separately, and object storage charges are incurred depending on the backup capacity. For automatic backups, it is stored for the set retention period and charges for the full size of the automatic backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal object storage where the backup file is
+stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
 
 ### Export Backup
 
 You can export backup files stored on internal object storage to user object storage on NHN Cloud. You can also export a manual or automatic backup file, or export the backup file to user object storage at the same time as you perform the backup. While exporting backups, network performance of the source DB instance may degrade.
 
-> [Note] 
+> [Note]
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
 
 ## Restoration
 
 Backups allow you to restore data to any point in time. Restoration always creates new DB instance and cannot be restored to the existing DB instance. You can restore only to the same DB engine version as the source DB instance from which you performed the backup. Supports restoring snapshots to the point in time when the backup was created, and restoring point in time to a specific point in time. You can restore it as backup of external MySQL as well as backup that you created in RDS for MySQL.
 
-> [Caution] 
+> [Caution]
 > Restoration might fail if the storage size of the DB instance that you want to restore is smaller than the storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
 
 ### Snapshot Restoration
@@ -91,7 +95,8 @@ Restoring a backup to a point in time is called snapshot restoration. Restoratio
 
 ### Point-in-time Restoration
 
-Restoring to a particular point in time is called point-in-time restoration. You can restore to a specific position in the binary log, as well as to restore to a specific time. Point-in-time restoration requires backup file and binary log from the time you performed the backup to the time you wanted the restore. Binary logs are stored in the storage of the source DB instance where the backup is performed. Shorter binary log retention period allows you to use more storage capacity, but it may be difficult to restore to the desired point in time. For the cases listed below, you may not be able to restore to the desired point in time because there is no binary log required for point-in-time restoration.
+Restoring to a particular point in time is called point-in-time restoration. You can restore to a specific position in the binary log, as well as to restore to a specific time. Point-in-time restoration requires backup file and binary log from the time you performed the backup to the time you wanted the restore. Binary logs are stored in the storage of the source DB instance where the backup is performed. Shorter binary log retention period allows you to use more storage capacity, but it may be
+difficult to restore to the desired point in time. For the cases listed below, you may not be able to restore to the desired point in time because there is no binary log required for point-in-time restoration.
 
 * When you have deleted the binary log of the source DB instance for securing capacity
 * When the binary log is automatically deleted by MySQL based on the Binary log retention period
@@ -102,8 +107,8 @@ Restoring to a particular point in time is called point-in-time restoration. You
 
 You can use an external MySQL backup file to create a DB instance. When creating an external MySQL backup file, refer to [Backup](backup-and-restore/#_1) and use the same version as the Percona XtraBackup used by RDS for MySQL.
 
-> [Caution] 
-> If the setting value of innodb\_data\_file\_path is not  ibdata1:12M:autoextend, it is unable to restore to DB instance of RDS for MySQL.
+> [Caution]
+> If the setting value of innodb\_data\_file\_path is not ibdata1:12M:autoextend, it is unable to restore to DB instance of RDS for MySQL.
 
 (1) Use the command below to perform a backup on the server where MySQL is installed.
 
@@ -129,9 +134,9 @@ xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password 
 
 (4) After accessing the web console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
 
-> [Caution] 
-> In the current version of 5.7.33, restoring DB instances using backup files on object storage is restricted. 
-> If use a version other than the recommended XtraBackup, it may not work properly. 
+> [Caution]
+> In the current version of 5.7.33, restoring DB instances using backup files on object storage is restricted.
+> If use a version other than the recommended XtraBackup, it may not work properly.
 > The backup file on the object storage has to be the same version of MySQL that you want to restore.
 
 ### Restoration by Using RDS for MySQL Backup
@@ -169,7 +174,7 @@ xtrabackup --prepare --target-dir={MySQL data storage  path }
 xtrabackup --defaults-file={my.cnf path} --copy-back --target-dir={MySQL data storage  path } 
 ```
 
-(6) Delete unnecessary files after unzipping files. 
+(6) Delete unnecessary files after unzipping files.
 
 ``` 
 find {MySQL data storage  path } -name "*.qp" -print0 | xargs -0 rm 

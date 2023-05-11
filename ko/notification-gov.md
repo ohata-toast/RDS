@@ -16,7 +16,7 @@
 | BACUP_05_00 | BACKUP            | 예        | 백업 내보내기 시작                           |
 | BACUP_05_01 | BACKUP            | 예        | 백업 내보내기 완료                           |
 | BACUP_05_04 | BACKUP            | 예        | 백업 내보내기 실패                           |
-| BACUP_06_01 | BACKUP            | 아니오      | DB 인스턴스 백업 실패(알려진 원인)               |
+| BACUP_06_01 | BACKUP            | 아니오      | DB 인스턴스 백업 실패(알려진 원인)                |
 | SECGP_01_01 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 생성                          |
 | SECGP_02_00 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 변경 시작                       |
 | SECGP_02_01 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 변경 완료                       |
@@ -62,9 +62,9 @@
 | INSTC_25_00 | INSTANCE          | 예        | Storage 확장 시작                        |
 | INSTC_25_01 | INSTANCE          | 예        | Storage 확장 완료                        |
 | INSTC_25_04 | INSTANCE          | 예        | Storage 확장 실패                        |
-| INSTC_26_00 | INSTANCE          | 예        | DB 인스턴스 장애 조치 발생                      |
-| INSTC_26_01 | INSTANCE          | 예        | DB 인스턴스 장애 조치 완료                      |
-| INSTC_26_04 | INSTANCE          | 예        | DB 인스턴스 장애 조치 실패                      |
+| INSTC_26_00 | INSTANCE          | 예        | DB 인스턴스 장애 조치 발생                     |
+| INSTC_26_01 | INSTANCE          | 예        | DB 인스턴스 장애 조치 완료                     |
+| INSTC_26_04 | INSTANCE          | 예        | DB 인스턴스 장애 조치 실패                     |
 | INSTC_27_01 | INSTANCE          | 예        | DB 인스턴스 용량 확보                        |
 | INSTC_27_04 | INSTANCE          | 예        | DB 인스턴스 용량 확보 실패                     |
 | INSTC_28_01 | INSTANCE          | 예        | 고가용성 DB 인스턴스 시작                      |

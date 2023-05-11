@@ -2,7 +2,8 @@
 
 ## Parameter Group
 
-To apply the settings of MySQL installed on a DB instance, RDS for MySQL provides the parameter group feature. A parameter group is a set of parameters for which you can set MySQL. When the service is enabled, the default parameter group is provided for each DB engine version. The default parameter group is provided by `default.{DB Engine Version Name}` and is configured with the recommended default parameter values for each version. Default parameter group can be modified and deleted the same as other parameter groups.
+To apply the settings of MySQL installed on a DB instance, RDS for MySQL provides the parameter group feature. A parameter group is a set of parameters for which you can set MySQL. When the service is enabled, the default parameter group is provided for each DB engine version. The default parameter group is provided by `default.{DB Engine Version Name}` and is configured with the recommended default parameter values for each version. Default parameter group can be modified and deleted the same
+as other parameter groups.
 
 ### Create Parameter Group
 
@@ -23,7 +24,8 @@ When you group parameters, you change the values of all parameters to the defaul
 
 ### Apply Parameter Group
 
-When creating or modifying a DB instance, you can select the parameter groups to apply to the DB instance. One parameter group is applied to one DB instance, and one parameter group can be applied to multiple DB instances. If a parameter in a parameter group is changed, the change does not immediately apply to the DB instance. If an associated DB instance exists, the parameter group changes to `Need to Apply`. On the DB Instances list screen, select the DB instance associated with the parameter group, and then click **Apply Parameter Group Changes** to reflect the changes in the parameters to the DB instance. When changes to the parameter group are applied to all associated DB instances, the parameter group changes to `Applied `.
+When creating or modifying a DB instance, you can select the parameter groups to apply to the DB instance. One parameter group is applied to one DB instance, and one parameter group can be applied to multiple DB instances. If a parameter in a parameter group is changed, the change does not immediately apply to the DB instance. If an associated DB instance exists, the parameter group changes to `Need to Apply`. On the DB Instances list screen, select the DB instance associated with the parameter
+group, and then click **Apply Parameter Group Changes** to reflect the changes in the parameters to the DB instance. When changes to the parameter group are applied to all associated DB instances, the parameter group changes to `Applied `.
 
 > [Caution] If the parameters that require restart have changed, the DB instance will be restarted during applying changes.
 
@@ -39,15 +41,15 @@ You are free to delete parameter groups except those already applied to the DB i
 
 The parameter contains the following information.
 
-| Item| Description | 
-|--------|----------------------------------------------------------------------------------------------------------------------------------| 
-| Group | Option group of option file (my.cnf). | 
-| Name | Option name of option file (my.cnf).<br/>When the option name and system variables are different (**_- Variable_**: Displayed additionally in the format (- Variable: `System Variables`). | 
-| Value | Value to be applied to parameters. |
-| Allowed values | Range of values applicable to parameters.<br/>                                                                                             | 
+| Item             | Description                                                                                                                                                                                                       | 
+|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| Group            | Option group of option file (my.cnf).                                                                                                                                                                             | 
+| Name             | Option name of option file (my.cnf).<br/>When the option name and system variables are different (**_- Variable_**: Displayed additionally in the format (- Variable: `System Variables`).                        | 
+| Value            | Value to be applied to parameters.                                                                                                                                                                                |
+| Allowed values   | Range of values applicable to parameters.<br/>                                                                                                                                                                    | 
 | Application Type | Either ` Static` or ` Dynamic`.<br/>For `Static`, the DB instance must be restarted to apply the parameter changes.<br/>For `Dynamic`, the parameters are applied immediately without restarting the DB instance. | 
-| Data Format | Format of the parameter value. | |
-| Use Formula | Whether the formula is available to use. |
+| Data Format      | Format of the parameter value.                                                                                                                                                                                    | |
+| Use Formula      | Whether the formula is available to use.                                                                                                                                                                          |
 
 ### Parameter Variables, Formulas, and Functions
 
@@ -78,4 +80,5 @@ ramSizeByte * 6 / 10
 
 ### Change Parameter
 
-You can change the parameters by selecting a parameter group from the web console and pressing the **Edit Parameters** button. For parameters that cannot be changed, the value appears in plain text, and for parameters that can be changed, the INPUT that can be changed appears. When you press the `Preview Changes` button on the edit screen, a separate pop-up screen will be displayed to view the changed parameters, press the `Reset` button to return to the time before the change. All changes made in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#_5).
+You can change the parameters by selecting a parameter group from the web console and pressing the **Edit Parameters** button. For parameters that cannot be changed, the value appears in plain text, and for parameters that can be changed, the INPUT that can be changed appears. When you press the `Preview Changes` button on the edit screen, a separate pop-up screen will be displayed to view the changed parameters, press the `Reset` button to return to the time before the change. All changes made
+in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#_5).

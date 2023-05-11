@@ -13,11 +13,13 @@
 * 아래의 mysqldump 명령어를 통하여 외부로 데이터를 내보냅니다.
 
 #### 파일로 내보낼 경우
+
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
 #### NHN Cloud RDS 외부의 MySQL DB로 내보낼 경우
+
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
 ```
@@ -176,19 +178,19 @@ mysql> call mysql.tcrds_repl_init();
 * RDS for MySQL은 Percona XtraBackup을 이용하여 백업 및 복원을 수행하므로, 오브젝트 스토리지의 백업 파일을 사용하기 위해서는 MySQL 각 버전별 권장하는 XtraBackup을 사용해야 합니다.
 
 | MySQL 버전 | XtraBackup 버전 |
-| --- | --- |
-| 5.7.15 | 2.4.20 |
-| 5.7.19 | 2.4.20 |
-| 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
-| 5.7.37 | 2.4.20 |
-| 8.0.18 | 8.0.26 |
-| 8.0.23 | 8.0.26 |
-| 8.0.28 | 8.0.28 |
+|----------|---------------|
+| 5.7.15   | 2.4.20        |
+| 5.7.19   | 2.4.20        |
+| 5.7.26   | 2.4.20        |
+| 5.7.33   | 2.4.20        |
+| 5.7.37   | 2.4.20        |
+| 8.0.18   | 8.0.26        |
+| 8.0.23   | 8.0.26        |
+| 8.0.28   | 8.0.28        |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [주의] 현재 5.7.33 버전에서는 오브젝트 스토리지의 백업 파일을 이용한 DB 인스턴스 복원은 제한됩니다.
 > [주의] 권장하는 XtraBackup 이외의 버전을 사용하면 정상으로 동작하지 않을 수 있습니다.
@@ -221,6 +223,7 @@ cat {백업 파일 저장 경로} | xbstream -x -C {MySQL 데이터 저장 경�
 innobackupex --decompress {MySQL 데이터 저장 경로}
 innobackupex --defaults-file={my.cnf 경로} --apply-log {MySQL 데이터 저장 경로}
 ```
+
 * XtraBackup 8.0.12 예제
 
 ```
@@ -257,11 +260,13 @@ find {MySQL 데이터 저장 경로} -name "*.qp" -print0 | xargs -0 rm
 ```
 innobackupex --defaults-file={my.cnf 경로} --user {사용자} --password '{비밀번호}' --socket {MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
 ```
+
 * XtraBackup 8.0.12 예제
 
 ```
 xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비밀번호}' --socket={MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream --backup {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
 ```
+
 * 백업 로그 파일의 마지막 줄에 `completed OK!`가 있는지 확인합니다.
     * completed OK!가 없다면 백업이 정상적으로 종료되지 않은 것이므로 로그 파일에 있는 에러 메시지를 참고하여 백업을 다시 진행합니다.
 * 완료된 백업 파일을 오브젝트 스토리지에 업로드합니다.

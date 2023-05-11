@@ -8,95 +8,95 @@ DB 인스턴스의 각종 성능 지표와 DB 인스턴스와 관련된 여러 �
 
 이벤트는 RDS for MySQL이나 사용자에 의해 발생한 중요한 사건을 의미합니다. 이벤트는 이벤트 유형, 발생 일시, 이벤트 소스와 메시지로 구성됩니다. 이벤트는 웹 콘솔에서 조회 가능하며, 구독을 통해 이메일, SMS로 이벤트 발생 알림을 받을 수 있습니다. 이벤트의 유형과 발생 가능한 이벤트는 아래와 같습니다.
 
-| 이벤트 유형 | 이벤트 코드      | 이벤트 메시지                         |
-| --- |-------------|---------------------------------|
-| INSTANCE | INSTC_02_01 | DB Instance 시작                  |
-| INSTANCE | INSTC_03_01 | DB Instance 종료                  |
-| INSTANCE | INSTC_04_00 | DB Instance 삭제 시작               |
-| INSTANCE | INSTC_04_01 | DB Instance 삭제 완료               |
-| INSTANCE | INSTC_04_04 | DB Instance 삭제 실패               |
-| INSTANCE | INSTC_05_00 | DB Instance 백업 시작               |
-| INSTANCE | INSTC_05_01 | DB Instance 백업 완료               |
-| INSTANCE | INSTC_05_04 | DB Instance 백업 실패               |
-| INSTANCE | INSTC_06_00 | DB Instance 복원 시작               |
-| INSTANCE | INSTC_06_01 | DB Instance 복원 완료               |
-| INSTANCE | INSTC_06_04 | DB Instance 복원 실패               |
-| INSTANCE | INSTC_07_01 | 자동 백업 설정 활성화                    |
-| INSTANCE | INSTC_08_01 | 자동 백업 설정 비활성화                   |
-| INSTANCE | INSTC_09_00 | 상세 설정 변경 시작                     |
-| INSTANCE | INSTC_09_01 | 상세 설정 변경 완료                     |
-| INSTANCE | INSTC_09_04 | 상세 설정 변경 실패                     |
-| INSTANCE | INSTC_10_00 | 백업 설정 변경 시작                     |
-| INSTANCE | INSTC_10_01 | 백업 설정 변경 완료                     |
-| INSTANCE | INSTC_10_04 | 백업 설정 변경 실패                     |
-| INSTANCE | INSTC_11_01 | 사용자 접근 제어 변경 완료                 |
-| INSTANCE | INSTC_12_00 | DB 구성 변경 시작                     |
-| INSTANCE | INSTC_12_01 | DB 구성 변경 완료                     |
-| INSTANCE | INSTC_12_04 | DB 구성 변경 실패                     |
-| INSTANCE | INSTC_13_01 | 플로팅 IP 연결                       |
-| INSTANCE | INSTC_14_01 | 플로팅 IP 연결 해제                    |
-| INSTANCE | INSTC_15_00 | DB Instance 복제 시작               |
-| INSTANCE | INSTC_15_01 | DB Instance 복제 완료               |
-| INSTANCE | INSTC_15_04 | DB Instance 복제 실패               |
-| INSTANCE | INSTC_16_00 | DB Instance 승격 시작               |
-| INSTANCE | INSTC_16_01 | DB Instance 승격 완료               |
-| INSTANCE | INSTC_16_04 | DB Instance 승격 실패               |
-| INSTANCE | INSTC_21_01 | DB Instance 정상화                 |
-| INSTANCE | INSTC_22_01 | DB Instance 용량 부족               |
-| INSTANCE | INSTC_23_01 | DB Instance 연결 실패               |
-| INSTANCE | INSTC_24_00 | 인스턴스 타입 변경 시작                   |
-| INSTANCE | INSTC_24_01 | 인스턴스 타입 변경 완료                   |
-| INSTANCE | INSTC_24_04 | 인스턴스 타입 변경 실패                   |
-| INSTANCE | INSTC_25_00 | Storage 확장 시작                   |
-| INSTANCE | INSTC_25_01 | Storage 확장 완료                   |
-| INSTANCE | INSTC_25_04 | Storage 확장 실패                   |
-| INSTANCE | INSTC_26_00 | failover 발생                     |
-| INSTANCE | INSTC_26_01 | failover 완료                     |
-| INSTANCE | INSTC_26_04 | failover 실패                     |
-| INSTANCE | INSTC_27_01 | DB Instance 용량 확보               |
-| INSTANCE | INSTC_28_01 | HA DB Instance 시작               |
-| INSTANCE | INSTC_29_01 | HA DB Instance 종료               |
-| INSTANCE | INSTC_30_01 | 복제 중단                           |
-| INSTANCE | INSTC_34_01 | 고가용성 일시 중지                      |
-| INSTANCE | INSTC_34_04 | 고가용성 일시 중지 실패                   |
-| INSTANCE | INSTC_35_01 | 고가용성 다시 시작                      |
-| INSTANCE | INSTC_35_04 | 고가용성 다시 시작 실패                   |
-| INSTANCE | INSTC_36_01 | 장애 조치를 이용한 인스턴스 재시작 완료          |
-| INSTANCE | INSTC_36_04 | 장애 조치를 이용한 인스턴스 재시작 실패          |
-| INSTANCE | INSTC_37_01 | DB User 생성                      |
-| INSTANCE | INSTC_37_04 | DB User 생성 실패                   |
-| INSTANCE | INSTC_38_01 | DB User 변경                      |
-| INSTANCE | INSTC_38_04 | DB User 변경 실패                   |
-| INSTANCE | INSTC_39_01 | DB User 삭제                      |
-| INSTANCE | INSTC_40_01 | DB 스키마 생성                       |
-| INSTANCE | INSTC_40_04 | DB 스키마 생성 실패                    |
-| INSTANCE | INSTC_41_01 | DB 스키마 삭제                       |
-| INSTANCE | INSTC_47_00 | DB 인스턴스 백업 및 내보내기 시작            |
-| INSTANCE | INSTC_47_01 | DB 인스턴스 백업 및 내보내기 완료            |
-| INSTANCE | INSTC_47_04 | DB 인스턴스 백업 및 내보내기 실패            |
+| 이벤트 유형   | 이벤트 코드      | 이벤트 메시지                          |
+|----------|-------------|----------------------------------|
+| INSTANCE | INSTC_02_01 | DB Instance 시작                   |
+| INSTANCE | INSTC_03_01 | DB Instance 종료                   |
+| INSTANCE | INSTC_04_00 | DB Instance 삭제 시작                |
+| INSTANCE | INSTC_04_01 | DB Instance 삭제 완료                |
+| INSTANCE | INSTC_04_04 | DB Instance 삭제 실패                |
+| INSTANCE | INSTC_05_00 | DB Instance 백업 시작                |
+| INSTANCE | INSTC_05_01 | DB Instance 백업 완료                |
+| INSTANCE | INSTC_05_04 | DB Instance 백업 실패                |
+| INSTANCE | INSTC_06_00 | DB Instance 복원 시작                |
+| INSTANCE | INSTC_06_01 | DB Instance 복원 완료                |
+| INSTANCE | INSTC_06_04 | DB Instance 복원 실패                |
+| INSTANCE | INSTC_07_01 | 자동 백업 설정 활성화                     |
+| INSTANCE | INSTC_08_01 | 자동 백업 설정 비활성화                    |
+| INSTANCE | INSTC_09_00 | 상세 설정 변경 시작                      |
+| INSTANCE | INSTC_09_01 | 상세 설정 변경 완료                      |
+| INSTANCE | INSTC_09_04 | 상세 설정 변경 실패                      |
+| INSTANCE | INSTC_10_00 | 백업 설정 변경 시작                      |
+| INSTANCE | INSTC_10_01 | 백업 설정 변경 완료                      |
+| INSTANCE | INSTC_10_04 | 백업 설정 변경 실패                      |
+| INSTANCE | INSTC_11_01 | 사용자 접근 제어 변경 완료                  |
+| INSTANCE | INSTC_12_00 | DB 구성 변경 시작                      |
+| INSTANCE | INSTC_12_01 | DB 구성 변경 완료                      |
+| INSTANCE | INSTC_12_04 | DB 구성 변경 실패                      |
+| INSTANCE | INSTC_13_01 | 플로팅 IP 연결                        |
+| INSTANCE | INSTC_14_01 | 플로팅 IP 연결 해제                     |
+| INSTANCE | INSTC_15_00 | DB Instance 복제 시작                |
+| INSTANCE | INSTC_15_01 | DB Instance 복제 완료                |
+| INSTANCE | INSTC_15_04 | DB Instance 복제 실패                |
+| INSTANCE | INSTC_16_00 | DB Instance 승격 시작                |
+| INSTANCE | INSTC_16_01 | DB Instance 승격 완료                |
+| INSTANCE | INSTC_16_04 | DB Instance 승격 실패                |
+| INSTANCE | INSTC_21_01 | DB Instance 정상화                  |
+| INSTANCE | INSTC_22_01 | DB Instance 용량 부족                |
+| INSTANCE | INSTC_23_01 | DB Instance 연결 실패                |
+| INSTANCE | INSTC_24_00 | 인스턴스 타입 변경 시작                    |
+| INSTANCE | INSTC_24_01 | 인스턴스 타입 변경 완료                    |
+| INSTANCE | INSTC_24_04 | 인스턴스 타입 변경 실패                    |
+| INSTANCE | INSTC_25_00 | Storage 확장 시작                    |
+| INSTANCE | INSTC_25_01 | Storage 확장 완료                    |
+| INSTANCE | INSTC_25_04 | Storage 확장 실패                    |
+| INSTANCE | INSTC_26_00 | failover 발생                      |
+| INSTANCE | INSTC_26_01 | failover 완료                      |
+| INSTANCE | INSTC_26_04 | failover 실패                      |
+| INSTANCE | INSTC_27_01 | DB Instance 용량 확보                |
+| INSTANCE | INSTC_28_01 | HA DB Instance 시작                |
+| INSTANCE | INSTC_29_01 | HA DB Instance 종료                |
+| INSTANCE | INSTC_30_01 | 복제 중단                            |
+| INSTANCE | INSTC_34_01 | 고가용성 일시 중지                       |
+| INSTANCE | INSTC_34_04 | 고가용성 일시 중지 실패                    |
+| INSTANCE | INSTC_35_01 | 고가용성 다시 시작                       |
+| INSTANCE | INSTC_35_04 | 고가용성 다시 시작 실패                    |
+| INSTANCE | INSTC_36_01 | 장애 조치를 이용한 인스턴스 재시작 완료           |
+| INSTANCE | INSTC_36_04 | 장애 조치를 이용한 인스턴스 재시작 실패           |
+| INSTANCE | INSTC_37_01 | DB User 생성                       |
+| INSTANCE | INSTC_37_04 | DB User 생성 실패                    |
+| INSTANCE | INSTC_38_01 | DB User 변경                       |
+| INSTANCE | INSTC_38_04 | DB User 변경 실패                    |
+| INSTANCE | INSTC_39_01 | DB User 삭제                       |
+| INSTANCE | INSTC_40_01 | DB 스키마 생성                        |
+| INSTANCE | INSTC_40_04 | DB 스키마 생성 실패                     |
+| INSTANCE | INSTC_41_01 | DB 스키마 삭제                        |
+| INSTANCE | INSTC_47_00 | DB 인스턴스 백업 및 내보내기 시작             |
+| INSTANCE | INSTC_47_01 | DB 인스턴스 백업 및 내보내기 완료             |
+| INSTANCE | INSTC_47_04 | DB 인스턴스 백업 및 내보내기 실패             |
 | INSTANCE | INSTC_48_00 | 오브젝트 스토리지에 있는 백업으로 DB 인스턴스 복원 시작 |
 | INSTANCE | INSTC_48_01 | 오브젝트 스토리지에 있는 백업으로 DB 인스턴스 복원 완료 |
 | INSTANCE | INSTC_48_04 | 오브젝트 스토리지에 있는 백업으로 DB 인스턴스 복원 실패 |
-| INSTANCE | INSTC_49_00 | DB 인스턴스 강제 재시작 실행               |
-| INSTANCE | INSTC_50_00 | 백업 내보내기 시작                      |
-| INSTANCE | INSTC_50_01 | 백업 내보내기 완료                      |
-| INSTANCE | INSTC_50_04 | 백업 내보내기 실패                      |
-| INSTANCE | INSTC_51_01 | 사용자 쿼리 지연으로 인한 백업 실패            |
-| INSTANCE | INSTC_52_01 | 사용자 쿼리 지연으로 인한 백업 및 내보내기 실패     |
-| INSTANCE | INSTC_53_00 | DB 인스턴스 중지 시작                   |
-| INSTANCE | INSTC_53_01 | DB 인스턴스 중지 완료                   |
-| INSTANCE | INSTC_53_04 | DB 인스턴스 중지 실패                   |
-| INSTANCE | INSTC_55_01 | 복제 지연으로 인한 장애 조치 재시작 실패         |
-| BACKUP | BACUP_02_01 | 백업 삭제 완료                        |
-| BACKUP | BACUP_05_00 | 백업 내보내기 시작                      |
-| BACKUP | BACUP_05_01 | 백업 내보내기 완료                      |
-| BACKUP | BACUP_05_04 | 백업 내보내기 실패                      |
-| BACKUP | BACUP_06_01 | 사용자 쿼리 지연으로 인한 백업 실패            |
-| TENANT | TENAT_01_04 | CPU 코어 수 제한                     |
-| TENANT | TENAT_02_04 | RAM 용량 제한                       |
-| TENANT | TENAT_03_04 | 개별 볼륨 크기 제한                     |
-| TENANT | TENAT_04_04 | 프로젝트 전체 볼륨 크기 제한                |
-| TENANT | TENAT_05_04 | Read Only Slave 개수 제한           |
+| INSTANCE | INSTC_49_00 | DB 인스턴스 강제 재시작 실행                |
+| INSTANCE | INSTC_50_00 | 백업 내보내기 시작                       |
+| INSTANCE | INSTC_50_01 | 백업 내보내기 완료                       |
+| INSTANCE | INSTC_50_04 | 백업 내보내기 실패                       |
+| INSTANCE | INSTC_51_01 | 사용자 쿼리 지연으로 인한 백업 실패             |
+| INSTANCE | INSTC_52_01 | 사용자 쿼리 지연으로 인한 백업 및 내보내기 실패      |
+| INSTANCE | INSTC_53_00 | DB 인스턴스 중지 시작                    |
+| INSTANCE | INSTC_53_01 | DB 인스턴스 중지 완료                    |
+| INSTANCE | INSTC_53_04 | DB 인스턴스 중지 실패                    |
+| INSTANCE | INSTC_55_01 | 복제 지연으로 인한 장애 조치 재시작 실패          |
+| BACKUP   | BACUP_02_01 | 백업 삭제 완료                         |
+| BACKUP   | BACUP_05_00 | 백업 내보내기 시작                       |
+| BACKUP   | BACUP_05_01 | 백업 내보내기 완료                       |
+| BACKUP   | BACUP_05_04 | 백업 내보내기 실패                       |
+| BACKUP   | BACUP_06_01 | 사용자 쿼리 지연으로 인한 백업 실패             |
+| TENANT   | TENAT_01_04 | CPU 코어 수 제한                      |
+| TENANT   | TENAT_02_04 | RAM 용량 제한                        |
+| TENANT   | TENAT_03_04 | 개별 볼륨 크기 제한                      |
+| TENANT   | TENAT_04_04 | 프로젝트 전체 볼륨 크기 제한                 |
+| TENANT   | TENAT_05_04 | Read Only Slave 개수 제한            |
 
 ### 이벤트 구독
 
@@ -116,25 +116,25 @@ RDS for MySQL은 **기본 시스템 지표**, **기본 MySQL 지표** 2개의 �
 DB 인스턴스의 각종 성능 지표를 차트 형태로 볼 수 있습니다. 성능 지표마다 각기 다른 형태의 차트로 구성되어 있습니다.
 RDS for MySQL에서 지원하는 차트는 아래와 같습니다.
 
-| 차트                 | 지표(단위) |
-|--------------------| --- |
-| CPU 사용률            | cpu used (%) |
-| CPU 상세             | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%) |
-| 메모리 사용량            | memory used (%) |
+| 차트                 | 지표(단위)                                                                                           |
+|--------------------|--------------------------------------------------------------------------------------------------|
+| CPU 사용률            | cpu used (%)                                                                                     |
+| CPU 상세             | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%)                                |
+| 메모리 사용량            | memory used (%)                                                                                  |
 | 메모리 상세             | memory used (bytes)<br> memory buffers (bytes)<br> memory cached (bytes)<br> memory free (bytes) |
-| 스왑 사용량             | swap used (bytes)<br> swap total (bytes) |
-| Storage 사용량        | storage used (%) |
-| Storage IO         | disk read (bytes)<br> disk write (bytes) |
-| 네트워크 데이터 송수신       | nic incoming (bytes)<br> nic outgoing (bytes) |
-| CPU 평균 부하          | 1m<br> 5m<br> 15m |
-| Queries Per Second | qps |
-| Connection         | total<br> running<br> cached |
-| Connection Ratio   | ratio (%) |
-| Database Activity  | select<br> insert<br> update<br> delete<br> replace<br> call<br> |
-| Buffer Pool        | buffer pool total (bytes)<br> buffer pool used (%) |
-| Slow Query         | counts |
-| 복제 지연              | sec (초) |
-| Row Access         | index<br> full scan |
+| 스왑 사용량             | swap used (bytes)<br> swap total (bytes)                                                         |
+| Storage 사용량        | storage used (%)                                                                                 |
+| Storage IO         | disk read (bytes)<br> disk write (bytes)                                                         |
+| 네트워크 데이터 송수신       | nic incoming (bytes)<br> nic outgoing (bytes)                                                    |
+| CPU 평균 부하          | 1m<br> 5m<br> 15m                                                                                |
+| Queries Per Second | qps                                                                                              |
+| Connection         | total<br> running<br> cached                                                                     |
+| Connection Ratio   | ratio (%)                                                                                        |
+| Database Activity  | select<br> insert<br> update<br> delete<br> replace<br> call<br>                                 |
+| Buffer Pool        | buffer pool total (bytes)<br> buffer pool used (%)                                               |
+| Slow Query         | counts                                                                                           |
+| 복제 지연              | sec (초)                                                                                          |
+| Row Access         | index<br> full scan                                                                              |
 
 ## 알림 그룹
 

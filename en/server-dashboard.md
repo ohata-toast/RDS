@@ -5,12 +5,12 @@
 You can visualize performance metrics in chart form on the server dashboard. Charts are arranged according to a preset layout. Metrics s are collected once every minute and kept for up to five years. Metrics data is aggregated as average values over 5 minutes, 30 minutes, 2 hours, and a day. Retention period by aggregation unit is as follows.
 
 | Aggregate Unit | Retention Period |
-|-------|-------| 
-| 1 minute | 7 days |
-| 5 minutes | 1 month |
-| 30 minutes | 6 months |
-| 2 hours | 2 years |
-| 1 day | 5 years |
+|----------------|------------------| 
+| 1 minute       | 7 days           |
+| 5 minutes      | 1 month          |
+| 30 minutes     | 6 months         |
+| 2 hours        | 2 years          |
+| 1 day          | 5 years          |
 
 ## Layout
 
@@ -29,6 +29,7 @@ Use a layout to show the size and position of charts. When the service is enable
 * ❷ When you click **Add Chart**, a pop-up window appears where you can add charts.
 
 ![layout_03_en](https://static.toastoven.net/prod_rds/23.04.11/layout_03_en.png)
+
 * ❶ You can select multiple charts that you want to add by checking the check box.
 * ❷ When you click a chart name, a chart preview appears in the red square area on the left.
 * ❸ Click **Add** to add all selected charts.
@@ -45,27 +46,26 @@ Use a layout to show the size and position of charts. When the service is enable
 
 You can view various performance metrics for DB instance in chart form. Each performance metric consists of a different type of chart. In addition to default system metrics, MySQL provides various performance metrics in chart form. Metrics that can be found for each chart are as follows.
 
-| Chart                         | Metrics(Unit)                                                                                                                              | Description                                |
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| CPU Usage Rate                    | cpu used (%)                                                                                                                         |                                   |
-| CPU Details                     | cpu user (%)<br/>cpu system (%)<br/>cpu nice (%)<br/>cpu IO wait (%)                                                                 |                                   |
-| Memory Usage                    | memory used (%)                                                                                                                      |                                   |
-| Memory Details                     | memory used (bytes)<br/>memory free (bytes)                                                                                          |                                   |
-| Swap Usage                     | swap used (bytes)<br> swap total (bytes)                                                                                             |                                   |
-| Storage Usage                | storage used (%)                                                                                                                     |                                   |
-| Remaining Storage Usage             | storage free (%)                                                                                                                     |                                   |
-| Storage IO                 | disk read (bytes)<br> disk write (bytes)                                                                                             |                                   |
-| Network Data Transfer               | nic incoming (bytes)<br> nic outgoing (bytes)                                                                                        | Default network transfer used by MySQL occurs. |
-| CPU Average Load                  | 1m<br/>5m<br/>15m                                                                                                                    |                                   |
-| Queries Per Second         | qps (count/sec)                                                                                                                      |                                   |
-| Database Activity          | select (count/sec)<br/>insert (count/sec)<br/>update (count/sec)<br/>delete (count/sec)<br/>replace (count/sec)<br/>call (count/sec) |                                   |
-| Buffer Pool                | Buffer Pool Total (MB)<br/>Buffer Pool Used (MB)                                                                                     |                                   |
-| Slow Query                 | counts/min                                                                                                                           |                                   |
-| Replication Delay                     | sec                                                                                                                                  |                                   |
-| Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                                   |
-| Database Connection Status | mysql status                                                                                                                         | Unable to access: 0, Able to access: 1                |
-| Storage Defect                    | disk fault status                                                                                                                    | Abnormal: 0, Normal: 1                     |
-
+| Chart                      | Metrics(Unit)                                                                                                                        | Description                                    |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|
+| CPU Usage Rate             | cpu used (%)                                                                                                                         |                                                |
+| CPU Details                | cpu user (%)<br/>cpu system (%)<br/>cpu nice (%)<br/>cpu IO wait (%)                                                                 |                                                |
+| Memory Usage               | memory used (%)                                                                                                                      |                                                |
+| Memory Details             | memory used (bytes)<br/>memory free (bytes)                                                                                          |                                                |
+| Swap Usage                 | swap used (bytes)<br> swap total (bytes)                                                                                             |                                                |
+| Storage Usage              | storage used (%)                                                                                                                     |                                                |
+| Remaining Storage Usage    | storage free (%)                                                                                                                     |                                                |
+| Storage IO                 | disk read (bytes)<br> disk write (bytes)                                                                                             |                                                |
+| Network Data Transfer      | nic incoming (bytes)<br> nic outgoing (bytes)                                                                                        | Default network transfer used by MySQL occurs. |
+| CPU Average Load           | 1m<br/>5m<br/>15m                                                                                                                    |                                                |
+| Queries Per Second         | qps (count/sec)                                                                                                                      |                                                |
+| Database Activity          | select (count/sec)<br/>insert (count/sec)<br/>update (count/sec)<br/>delete (count/sec)<br/>replace (count/sec)<br/>call (count/sec) |                                                |
+| Buffer Pool                | Buffer Pool Total (MB)<br/>Buffer Pool Used (MB)                                                                                     |                                                |
+| Slow Query                 | counts/min                                                                                                                           |                                                |
+| Replication Delay          | sec                                                                                                                                  |                                                |
+| Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                                                |
+| Database Connection Status | mysql status                                                                                                                         | Unable to access: 0, Able to access: 1         |
+| Storage Defect             | disk fault status                                                                                                                    | Abnormal: 0, Normal: 1                         |
 
 ## Server Group
 
