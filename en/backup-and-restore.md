@@ -1,4 +1,4 @@
-## Database > RDS for MySQL > Back up and Restoration
+## Database > RDS for MySQL > Backup and Restoration
 
 ## Backup
 
