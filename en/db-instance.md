@@ -265,7 +265,7 @@ If the failed over master fails to recover, you can re-enable the high availabil
 
 ### Separate Failed over Master
 
-If no longer use the high availability configuration, you have to separate the failed over master. Separation causes the failed over master to form a new replication group and changes the type of DB instance to master. Any relationship between separated master and promoted master is broken and cannot be tied to a promoted master with high availability. After separation and becoming a new master, all the features that NHN Cloud offers become available again.
+If recovery of a failed over master fails and data correction is required, you can disable the high availability feature by separating that master. The replication relationship between the separated master and the promoted master is broken, and each behaves as a normal DB instance. After separation, you cannot recover to the existing configuration.
 
 ### Manual Failover
 
