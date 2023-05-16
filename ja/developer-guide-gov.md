@@ -13,11 +13,13 @@ mysqldumpを利用してNHN Cloud RDSの外部にデータでエクスポート�
 下記のmysqldumpコマンドを使用して外部にデータをエクスポートします。
 
 #### ファイルでエクスポートする場合
+
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
 #### NHN Cloud RDS外部のmysql dbにエクスポートする場合
+
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
 ```
@@ -41,7 +43,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### データのインポート中に`ERROR 1418`エラーが発生する場合
 
 * `ERROR 1418`エラーはmysqldumpファイルの関数宣言にNO SQL、READS SQL DATA、DETERMINISTICがなく、バイナリログが有効になっている時に発生します。
-  * 詳しい説明は[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
+    * 詳しい説明は[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
 * これを解決するには、mysqldumpファイルを適用するDBインスタンスの`log_bin_trust_function_creators`パラメータの値を`1`に変更する必要があります。
 
 ### コピーを利用してエクスポート
@@ -177,19 +179,19 @@ mysql> call mysql.tcrds_repl_init();
 * RDS for MySQLはPercona XtraBackupを利用してバックアップおよび復元を行うため、オブジェクトストレージのバックアップファイルを使用するにはMySQLの各バージョンで推奨するXtraBackupを使用する必要があります。
 
 | MySQLバージョン | XtraBackupバージョン |
-| --- | --- |
-| 5.7.15 | 2.4.20 |
-| 5.7.19 | 2.4.20 |
-| 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
-| 5.7.37 | 2.4.20 |
-| 8.0.18 | 8.0.26 |
-| 8.0.23 | 8.0.26 |
-| 8.0.28 | 8.0.28 |
+|------------|-----------------|
+| 5.7.15     | 2.4.20          |
+| 5.7.19     | 2.4.20          |
+| 5.7.26     | 2.4.20          |
+| 5.7.33     | 2.4.20          |
+| 5.7.37     | 2.4.20          |
+| 8.0.18     | 8.0.26          |
+| 8.0.23     | 8.0.26          |
+| 8.0.28     | 8.0.28          |
 
 * XtraBackupのインストール方法についてはPercona Webサイトを参照してください。
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [注意]現在5.7.33バージョンの場合はオブジェクトストレージのバックアップファイルで復元が制限されます。
 > [注意]推奨するXtraBackup以外のバージョンを使用した場合、正常に動作しない場合があります。
@@ -222,6 +224,7 @@ cat {バックアップファイル保存パス} | xbstream -x -C {MySQLデー�
 innobackupex --decompress {MySQLデータ保存パス}
 innobackupex --defaults-file={my.cnfパス} --apply-log {MySQLデータ保存パス}
 ```
+
 * XtraBackup 8.0.12例
 
 ```
@@ -251,23 +254,26 @@ find {MySQLデータ保存パス} -name "*.qp" -print0 | xargs -0 rm
 * 一般MySQLバックアップファイルを利用してRDS for MySQLのDBインスタンスに復元できます。
 
 > [注意] innodb_data_file_pathの設定値がibdata1:12M:autoextendではない場合、RDS for MySQLのDBインスタンスに復元できません。
+
 * MySQLがインストールされたサーバーで以下のコマンドを利用してバックアップを行います。
 * XtraBackup 2.4.20例
 
 ```
 innobackupex --defaults-file={my.cnfパス} --user {ユーザー} --password '{パスワード}' --socket {MySQLソケットファイルパス} --compress --compress-threads=1 --stream=xbstream {バックアップファイルが作成されるディレクトリ} 2>>{バックアップログファイルパス} > {バックアップファイルパス}
 ```
+
 * XtraBackup 8.0.12例
 
 ```
 xtrabackup --defaults-file={my.cnfパス} --user={ユーザー} --password='{パスワード}' --socket={MySQLソケットファイルパス} --compress --compress-threads=1 --stream=xbstream --backup {バックアップファイルが作成されるディレクトリ} 2>>{バックアップログファイルパス} > {バックアップファイルパス}
 ```
+
 * バックアップログファイルの最後の行に`completed OK!`があるかを確認します。
-  * completed OK!がない場合、バックアップが正常に終了していないので、ログファイルにあるエラーメッセージを参考にしてバックアップを再度行います。
+    * completed OK!がない場合、バックアップが正常に終了していないので、ログファイルにあるエラーメッセージを参考にしてバックアップを再度行います。
 * 完了したバックアップファイルをオブジェクトストレージにアップロードします。
-  * 一度にアップロードできる最大ファイルサイズは5GBです。
-  * バックアップファイルのサイズが5GBより大きい場合、splitなどのユーティリティを利用してバックアップファイルを5GB以下に分割してマルチパートでアップロードする必要があります。
-  * 詳細はhttps://docs.nhncloud.com/ja/Storage/Object%20Storage/ja/api-guide/#_43を参照してください。
+    * 一度にアップロードできる最大ファイルサイズは5GBです。
+    * バックアップファイルのサイズが5GBより大きい場合、splitなどのユーティリティを利用してバックアップファイルを5GB以下に分割してマルチパートでアップロードする必要があります。
+    * 詳細はhttps://docs.nhncloud.com/ja/Storage/Object%20Storage/ja/api-guide/#_43を参照してください。
 * 復元するプロジェクトのWebコンソールに接続した後、Instanceタブでオブジェクトストレージにあるバックアップから復元ボタンをクリックします。
 * バックアップファイルが保存されたオブジェクトストレージの情報と、DBインスタンスの情報を入力した後、**作成**ボタンをクリックします。
 
@@ -314,18 +320,19 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * パラメータ説明
-  * master_instance_ip：複製対象(Master)サーバーのIP
-  * master_instance_port：複製対象(Master)サーバーのMySQL Port
-  * user_id_for_replication：複製対象(Master)サーバーのMySQLに接続する複製用のアカウント
-  * password_for_replication_user：複製用アカウントのパスワード
-  * MASTER_LOG_FILE：複製対象(Master)のbinary logファイル名
-  * MASTER_LOG_POS：複製対象(Master)のbinary logポジション
+    * master_instance_ip：複製対象(Master)サーバーのIP
+    * master_instance_port：複製対象(Master)サーバーのMySQL Port
+    * user_id_for_replication：複製対象(Master)サーバーのMySQLに接続する複製用のアカウント
+    * password_for_replication_user：複製用アカウントのパスワード
+    * MASTER_LOG_FILE：複製対象(Master)のbinary logファイル名
+    * MASTER_LOG_POS：複製対象(Master)のbinary logポジション
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
 ```
 
 > [注意] 複製用アカウントが複製対象(Master) MySQLに作成されている必要があります。
+
 ### tcrds_repl_init
 
 * MySQL 複製情報を初期化します。
@@ -363,7 +370,7 @@ mysql> CALL mysql. tcrds_repl_skip_repl_error();
 
 * Masterの次のバイナリ(binary log)ログを読み取れるように複製情報を変更します。
 * 次のような複製エラーが発生した時は、tcrds_repl_next_changemasterプロシージャを実行すると複製エラーを解決できます。
-  * 例) MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
+    * 例) MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
 
 ```
 mysql> CALL mysql.tcrds_repl_next_changemaster();

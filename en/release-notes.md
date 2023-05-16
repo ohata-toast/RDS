@@ -1,5 +1,41 @@
 ## Database > RDS for MySQL > Release Notes
 
+### May 16, 2023
+
+#### Added Features and Updates
+
+* Made improvements so that the user interface is consistent with NHN Cloud services
+* Made modifications so that manual backup is not deleted even when DB instances are deleted
+* Added parameter group feature
+    * The database settings of DB instance can be freely changed
+    * Applicable to multiple instances
+    * Changes to settings in an existing DB instance are migrated to a parameter group with the same name as the DB instance
+* Added DB security group feature
+    * The access control of DB instance can be freely set
+    * Applicable to multiple instances
+    * Access control rules set on existing DB instances are migrated to the DB security group named as `{DB instance name}__{DB instance ID}` rule
+* Provided a screen to view DB instances grouped by replication arrangements
+* Displayed candidate master to web console
+    * Available to secure storage by deleting the binary log of candidate master
+    * Various logs of candidate master can be checked and downloaded
+    * Rebuilding candidate master is available when an issue occur
+        * The fixed IP does not change because DB instance of the candidate master remain unchanged
+        * All data in the database is deleted, and recovered with the data of the master
+* Rebuilding read replica is available
+    * The fixed IP address does not change because the DB instance of the read replica remain unchanged
+    * All data in the database is deleted, and recovered with the data of the master
+* Recovery of master with a completed failover
+    * High availability recovery of a new master and a master with a completed failover is available
+    * Recovery can fail, and an unrecoverable master with a completed failover can be rebuilt
+* Rebuilding master with a completed failover
+    * The fixed IP does not change because DB instance of the master with a completed failover remain unchanged
+    * All data in the database is deleted, and recovered with the data of the master
+* Added MySQL 8.0.32 version
+
+#### Bug Fixes
+
+* Fixed an issue where point-in-time recovery is not possible with a read replica backup
+
 ### February 14, 2023
 
 #### Feature Updates
@@ -9,7 +45,7 @@
 #### Bug Fixes
 
 * Fixed an issue where, when an error occurs in the IAM console, the page is not moved to an appropirate error page
-* Fixed an issue where, when changing the DB instance type or expanding storage using failover, the Ping interval is set to default  
+* Fixed an issue where, when changing the DB instance type or expanding storage using failover, the Ping interval is set to default
 
 ### January 10, 2023
 
@@ -31,7 +67,7 @@
 
 #### Bug Fixes
 
-* Fixed an issue where, when synchronizing DB schemas, schemas that cannot be deleted are intermittently registered 
+* Fixed an issue where, when synchronizing DB schemas, schemas that cannot be deleted are intermittently registered
 * Fixed an issue where another host with the same name as the deleted account cannot be added
 * Fixed an issue where, when restarting an existing failed-over master, user access control cannot be modified
 
@@ -82,7 +118,7 @@
 
 #### Bug Fixes
 
-* Fixed an issue where backup fails intermittently due to communication issues with internal agents 
+* Fixed an issue where backup fails intermittently due to communication issues with internal agents
 
 ### July 12, 2022
 
@@ -164,7 +200,6 @@
 * Fixed an issue where restoration fails when there are too many users registered in MySQL
 * Fixed an issue where a backup settings modification event is logged even when the access rule is modified
 
-
 ### January 11, 2022
 
 #### Added Features
@@ -233,7 +268,6 @@
 * Fixed a bug where restoration is not performed properly when performing restoration using backup in the object storage
 * Fixed a logic bug where it checks whether the file and directory exist when exporting backup to the object storage
 * Fixed a bug where an unknown error window shows up intermittently when selecting an instance
-
 
 ### August 25, 2021
 
@@ -312,9 +346,11 @@
 ### March 9, 2021
 
 #### Feature Updates
+
 - Improved the feature to limit the resource quota per project
 
 #### Bug Fixes
+
 - Fixed a bug where instance restart is not performed properly in certain situations
 
 ### February 16, 2021

@@ -13,11 +13,13 @@ mysqldumpを利用してNHN Cloud RDSの外部にデータでエクスポート�
 下記のmysqldumpコマンドを使用して外部にデータをエクスポートします。
 
 #### ファイルでエクスポートする場合
+
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
 #### NHN Cloud RDS外部のmysql dbにエクスポートする場合
+
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
 ```
@@ -177,19 +179,19 @@ mysql> call mysql.tcrds_repl_init();
 * RDS for MySQLはPercona XtraBackupを利用してバックアップおよび復元を行うため、オブジェクトストレージのバックアップファイルを使用するにはMySQLの各バージョンで推奨するXtraBackupを使用する必要があります。
 
 | MySQLバージョン | XtraBackupバージョン |
-| --- | --- |
-| 5.7.15 | 2.4.20 |
-| 5.7.19 | 2.4.20 |
-| 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
-| 5.7.37 | 2.4.20 |
-| 8.0.18 | 8.0.26 |
-| 8.0.23 | 8.0.26 |
-| 8.0.28 | 8.0.28 |
+|------------|-----------------|
+| 5.7.15     | 2.4.20          |
+| 5.7.19     | 2.4.20          |
+| 5.7.26     | 2.4.20          |
+| 5.7.33     | 2.4.20          |
+| 5.7.37     | 2.4.20          |
+| 8.0.18     | 8.0.26          |
+| 8.0.23     | 8.0.26          |
+| 8.0.28     | 8.0.28          |
 
 * XtraBackupのインストール方法についてはPercona Webサイトを参照してください。
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [注意]現在5.7.33バージョンの場合はオブジェクトストレージのバックアップファイルで復元が制限されます。
 > [注意]推奨するXtraBackup以外のバージョンを使用した場合、正常に動作しない場合があります。
@@ -222,6 +224,7 @@ cat {バックアップファイル保存パス} | xbstream -x -C {MySQLデー�
 innobackupex --decompress {MySQLデータ保存パス}
 innobackupex --defaults-file={my.cnfパス} --apply-log {MySQLデータ保存パス}
 ```
+
 * XtraBackup 8.0.12例
 
 ```
@@ -251,17 +254,20 @@ find {MySQLデータ保存パス} -name "*.qp" -print0 | xargs -0 rm
 * 一般MySQLバックアップファイルを利用してRDS for MySQLのDBインスタンスに復元できます。
 
 > [注意] innodb_data_file_pathの設定値がibdata1:12M:autoextendではない場合、RDS for MySQLのDBインスタンスに復元できません。
+
 * MySQLがインストールされたサーバーで以下のコマンドを利用してバックアップを行います。
 * XtraBackup 2.4.20例
 
 ```
 innobackupex --defaults-file={my.cnfパス} --user {ユーザー} --password '{パスワード}' --socket {MySQLソケットファイルパス} --compress --compress-threads=1 --stream=xbstream {バックアップファイルが作成されるディレクトリ} 2>>{バックアップログファイルパス} > {バックアップファイルパス}
 ```
+
 * XtraBackup 8.0.12例
 
 ```
 xtrabackup --defaults-file={my.cnfパス} --user={ユーザー} --password='{パスワード}' --socket={MySQLソケットファイルパス} --compress --compress-threads=1 --stream=xbstream --backup {バックアップファイルが作成されるディレクトリ} 2>>{バックアップログファイルパス} > {バックアップファイルパス}
 ```
+
 * バックアップログファイルの最後の行に`completed OK!`があるかを確認します。
     * completed OK!がない場合、バックアップが正常に終了していないので、ログファイルにあるエラーメッセージを参考にしてバックアップを再度行います。
 * 完了したバックアップファイルをオブジェクトストレージにアップロードします。
@@ -326,6 +332,7 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 ```
 
 > [注意] 複製用アカウントが複製対象(Master) MySQLに作成されている必要があります。
+
 ### tcrds_repl_init
 
 * MySQL 複製情報を初期化します。
