@@ -44,7 +44,6 @@
     * It can be set to a value between 0 and 730.
     * If you enter 0, auto backup is not executed.
 * Use Table Locking: Set whether to lock the table with the FLUSH TABLES WITH READ LOCK statement when performing backup.
-* Backup Replication Region: Set to replicate backup files to another region when auto backup is executed.
 * Backup Retry Count: Set the number of retries to make when backup fails.
     * Retry is performed when you enter 1 or higher.
     * Retry is performed only when performing auto backup.
@@ -59,8 +58,6 @@
 * User Access Control: Enter accessible users to DB instance in the CIDR format.
     * Unregistered IPs for user access control are not accessible.
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
-
-> [Note] The Backup Replication Region feature is not provided for banking networks.
 
 ![db_configuration_0_en](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_en.png)
 
