@@ -2,9 +2,7 @@
 
 | Region                    | Endpoint                                  |
 |---------------------------|-------------------------------------------|
-| Korea (Pangyo) region     | https://kr1-mysql.api.nhncloudservice.com |
-| Korea (Pyeongchon) region | https://kr2-mysql.api.nhncloudservice.com |
-| Japan region              | https://jp1-mysql.api.nhncloudservice.com |
+| Korea (Pangyo) region     | https://kr1-rds-mysql.api.gncloud.go.kr |
 
 ## Monitoring
 
