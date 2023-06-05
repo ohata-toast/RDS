@@ -7,7 +7,7 @@
 * Rebuilding candidate master is available when an issue occur
   * The fixed IP does not change because DB instance of the candidate master remain unchanged
   * All data in the database is deleted, and recovered with the data of the master
-* 유저 그룹에 사용자 추가시, 조직, 프로젝트 안의 모든 사용자를 추가할 수 있도록 개선
+* 유저 그룹에 사용자 추가 시 조직 및 프로젝트의 모든 사용자를 추가할 수 있도록 개선
 
 ### May 16, 2023
 
