@@ -2564,6 +2564,7 @@ This API does not require a request body.
 |------------------|------|----------|-----------------------------------------------------|
 | userGroupId      | Body | UUID     | User group identifier                               |
 | userGroupName    | Body | String   | Name to identify user groups                        |
+| userGroupTypeCode    | Body | Enum   | 사용자 그룹 종류    <br /> `ENTIRE`: 프로젝트 멤버 전체를 포함하는 사용자 그룹 <br /> `INDIVIDUAL_MEMBER`: 특정 프로젝트 멤버를 포함하는 사용자 그룹      |
 | members          | Body | Array    | Project member list                                 |
 | members.memberId | Body | UUID     | Project member identifier                           |
 | createdYmdt      | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)  |
@@ -2607,7 +2608,8 @@ POST /v3.0/user-groups
 | Name          | Type | Format | Required | Description                  |
 |---------------|------|--------|----------|------------------------------|
 | userGroupName | Body | String | O        | Name to identify user groups |
-| memberIds     | Body | Array  | O        | Project member identifiers   |
+| memberIds     | Body | Array  | O        | Project member identifiers   <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨.    |
+|    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
 
 <details><summary>Example</summary>
 <p>
@@ -2643,6 +2645,7 @@ PUT /v3.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID   | O        | User group identifier        |
 | userGroupName | Body | String | X        | Name to identify user groups |
 | memberIds     | Body | Array  | X        | Project member identifiers   |
+|    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
 
 <details><summary>Example</summary>
 <p>

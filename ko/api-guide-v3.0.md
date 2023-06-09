@@ -2569,7 +2569,7 @@ GET /v3.0/user-groups/{userGroupId}
 |------------------|------|----------|-----------------------------------|
 | userGroupId      | Body | UUID     | 사용자 그룹의 식별자                       |
 | userGroupName    | Body | String   | 사용자 그룹을 식별할 수 있는 이름               |
-| userGroupTypeCode    | Body | Enum   | 사용자 그룹 종류    <br /> `ENTIRE`: 프로젝트 멤버 전체를 포함하는 사용자 그룹 <br /> 특정 프로젝트 멤버를 포함하는 사용자 그룹      |
+| userGroupTypeCode    | Body | Enum   | 사용자 그룹 종류    <br /> `ENTIRE`: 프로젝트 멤버 전체를 포함하는 사용자 그룹 <br /> `INDIVIDUAL_MEMBER`: 특정 프로젝트 멤버를 포함하는 사용자 그룹      |
 | members          | Body | Array    | 프로젝트 멤버 목록                        |
 | members.memberId | Body | UUID     | 프로젝트 멤버의 식별자                      |
 | createdYmdt      | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
