@@ -2582,6 +2582,7 @@ This API does not require a request body.
     },
     "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
     "userGroupName": "dev-team",
+	"userGroupTypeCode": "INDIVIDUAL_MEMBER",
     "members": [
         {
             "memberId": "1321e759-2ef3-4b85-9921-b13e918b24b5"
@@ -2620,7 +2621,12 @@ POST /v3.0/user-groups
     "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
 }
 ```
-
+```json
+{
+    "userGroupName": "dev-team",
+    "selectAllYN":true
+}
+```
 </p>
 </details>
 
