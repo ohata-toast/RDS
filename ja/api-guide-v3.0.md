@@ -1907,7 +1907,7 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 | rules               | Body | Array    | DBセキュリティグループルールリスト                                                                                                |
 | rules.ruleId        | Body | UUID     | DBセキュリティグループルールの識別子                                                                                               |
 | rules.description   | Body | String   | DBセキュリティグループルールの追加情報                                                                                              |
-| rules.direction     | Body | Enum     | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                         
+| rules.direction     | Body | Enum     | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                         |
 | rules.etherType     | Body | Enum     | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                    |
 | rules.port          | Body | Object   | ポートオブジェクト                                                                                                         |
 | rules.port.portType | Body | Enum     | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。<br/>- `PORT`:指定されたポート値に設定されます。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
@@ -1975,7 +1975,7 @@ POST /v3.0/db-security-groups
 | description         | Body | String | X  | DBセキュリティグループの追加情報                                                                                                                                                                    |
 | rules               | Body | Array  | O  | DBセキュリティグループルールリスト                                                                                                                                                                   |
 | rules.description   | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                 |
-| rules.direction     | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            
+| rules.direction     | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            |
 | rules.etherType     | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                       |
 | rules.cidr          | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                               |
 | rules.port          | Body | Object | O  | ポートオブジェクト                                                                                                                                                                            |
@@ -2082,7 +2082,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 |-------------------|------|--------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbSecurityGroupId | URL  | UUID   | O  | DBセキュリティグループの識別子                                                                                                                                                                     |
 | description       | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                 |
-| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            
+| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            |
 | etherType         | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                       |
 | port              | Body | Object | O  | ポートオブジェクト                                                                                                                                                                            |
 | port.portType     | Body | Enum   | O  | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。 `minPort`値と`maxPort`値を必要としません。<br/>- `PORT`:指定されたポート値に設定されます。 `minPort`値と`maxPort`値が同じでなければなりません。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
@@ -2130,7 +2130,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | dbSecurityGroupId | URL  | UUID   | O  | DBセキュリティグループの識別子                                                                                                                                                                     |
 | ruleId            | URL  | UUID   | O  | DBセキュリティグループルールの識別子                                                                                                                                                                  |
 | description       | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                 |
-| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            
+| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            |
 | etherType         | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                       |
 | port              | Body | Object | O  | ポートオブジェクト                                                                                                                                                                            |
 | port.portType     | Body | Enum   | O  | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。 `minPort`値と`maxPort`値を必要としません。<br/>- `PORT`:指定されたポート値に設定されます。 `minPort`値と`maxPort`値が同じでなければなりません。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
