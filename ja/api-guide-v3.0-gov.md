@@ -2611,7 +2611,7 @@ POST /v3.0/user-groups
 | 名前            | 種類   | 形式     | 必須 | 説明                |
 |---------------|------|--------|----|-------------------|
 | userGroupName | Body | String | O  | ユーザーグループを識別できる名前  |
-| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨.    |
+| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨    |
 |    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
 
 <details><summary>例</summary>

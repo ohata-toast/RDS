@@ -2609,7 +2609,7 @@ POST /v3.0/user-groups
 | Name          | Type | Format | Required | Description                  |
 |---------------|------|--------|----------|------------------------------|
 | userGroupName | Body | String | O        | Name to identify user groups |
-| memberIds     | Body | Array  | O        | Project member identifiers   <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨.    |
+| memberIds     | Body | Array  | O        | Project member identifiers   <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨    |
 |    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
 
 <details><summary>Example</summary>
