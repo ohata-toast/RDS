@@ -530,7 +530,9 @@ The users who receive notifications through notification groups and event subscr
 * ❷ Enter the group name.
 * ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
 * ❹ Add users to notified users.
-* ❺ All users in the user list are added to the notified users.
+* ❺ `전체 프로젝트 멤버`를 통보 대상에 추가합니다. 
+  * 추가 시 개별 사용자 추가는 취소됩니다.
+  * 해당 사용자 그룹을 이용하여 알람을 전송하게 되는 경우, 당시 전체 프로젝트 멤버 대상으로 알람을 전송합니다.
 
 ### Modify User Group
 
