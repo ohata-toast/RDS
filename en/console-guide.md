@@ -59,6 +59,8 @@
 * User Access Control: Enter accessible users to DB instance in the CIDR format.
     * Unregistered IPs for user access control are not accessible.
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
+        * Inboud: Direction into the instance.
+        * Outbound: Direction out of the instance.
 
 > [Note] The Backup Replication Region feature is not provided for banking networks.
 
@@ -530,7 +532,9 @@ The users who receive notifications through notification groups and event subscr
 * ❷ Enter the group name.
 * ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
 * ❹ Add users to notified users.
-* ❺ All users in the user list are added to the notified users.
+* ❺ Add `all project members` to the notified users.
+  * You cannot add individual users. If you do, it is canceled.
+  * When sending an alrm using the user group, the alarm is sent to all project members at the time.
 
 ### Modify User Group
 

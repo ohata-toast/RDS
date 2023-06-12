@@ -1,5 +1,14 @@
 ## Database > RDS for MySQL > Release Notes
 
+### June 13, 2023
+
+#### Added Features and Updates
+
+* Added rebuild support when a candidate master fails
+  * The DB instance on the candidate master does not change, so the fixed IP address does not change
+  * All data in the database are deleted, and restored with the data of the master
+* Made improvements so that, when adding a user to user groups, all users of organizatons and projects can be added
+
 ### May 16, 2023
 
 #### Added Features and Updates
