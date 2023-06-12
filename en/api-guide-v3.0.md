@@ -2564,7 +2564,7 @@ This API does not require a request body.
 |------------------|------|----------|-----------------------------------------------------|
 | userGroupId      | Body | UUID     | User group identifier                               |
 | userGroupName    | Body | String   | Name to identify user groups                        |
-| userGroupTypeCode    | Body | Enum   | User group type    <br /> `ENTIRE`: User group that includes all project members<br /> `INDIVIDUAL_MEMBER`: User group that includes certain project members      |
+| userGroupTypeCode| Body | Enum   | User group type    <br /> `ENTIRE`: User group that includes all project members<br /> `INDIVIDUAL_MEMBER`: User group that includes certain project members      |
 | members          | Body | Array    | Project member list                                 |
 | members.memberId | Body | UUID     | Project member identifier                           |
 | createdYmdt      | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)  |
@@ -2610,7 +2610,7 @@ POST /v3.0/user-groups
 |---------------|------|--------|----------|------------------------------|
 | userGroupName | Body | String | O        | Name to identify user groups |
 | memberIds     | Body | Array  | O  | Project member identifiers<br /> If `selectAllYN` is true, the field value is ignored    |
-| selectAllYN  | Body | Boolean  | X  | Whether all project members are included <br /> If true, the group is set for all members   |
+| selectAllYN   | Body | Boolean  | X  | Whether all project members are included <br /> If true, the group is set for all members   |
 
 <details><summary>Example</summary>
 <p>
@@ -2653,7 +2653,7 @@ PUT /v3.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID   | O        | User group identifier        |
 | userGroupName | Body | String | X        | Name to identify user groups |
 | memberIds     | Body | Array  | X        | Project member identifiers   |
-| selectAllYN  | Body | Boolean  | X  | Whether all project members are included <br /> If true, the group is set for all members  |
+| selectAllYN   | Body | Boolean  | X  | Whether all project members are included <br /> If true, the group is set for all members  |
 
 <details><summary>Example</summary>
 <p>
