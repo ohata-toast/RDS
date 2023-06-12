@@ -2566,7 +2566,7 @@ GET /v3.0/user-groups/{userGroupId}
 |------------------|------|----------|----------------------------------|
 | userGroupId      | Body | UUID     | ユーザーグループの識別子                     |
 | userGroupName    | Body | String   | ユーザーグループを識別できる名前                 |
-| userGroupTypeCode    | Body | Enum   | 사용자 그룹 종류    <br /> `ENTIRE`: 프로젝트 멤버 전체를 포함하는 사용자 그룹 <br /> `INDIVIDUAL_MEMBER`: 특정 프로젝트 멤버를 포함하는 사용자 그룹      |
+| userGroupTypeCode    | Body | Enum   | ユーザーグループの種類  <br /> `ENTIRE`:プロジェクトメンバー全体を含むユーザーグループ <br /> `INDIVIDUAL_MEMBER`:特定のプロジェクトメンバーをを含むユーザーグループ    |
 | members          | Body | Array    | プロジェクトメンバーリスト                    |
 | members.memberId | Body | UUID     | プロジェクトメンバーの識別子                   |
 | createdYmdt      | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -2611,8 +2611,8 @@ POST /v3.0/user-groups
 | 名前            | 種類   | 形式     | 必須 | 説明                |
 |---------------|------|--------|----|-------------------|
 | userGroupName | Body | String | O  | ユーザーグループを識別できる名前  |
-| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨    |
-|    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
+| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`がtrueの場合、当該フィールドの値は無視されます   |
+|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか <br /> trueの場合、当該グループは全メンバーに対して設定されます  |
 
 <details><summary>例</summary>
 <p>
@@ -2653,7 +2653,7 @@ PUT /v3.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID   | O  | ユーザーグループの識別子      |
 | userGroupName | Body | String | X  | ユーザーグループを識別できる名前  |
 | memberIds     | Body | Array  | X  | プロジェクトメンバーの識別子リスト |
-|    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
+|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか<br /> trueの場合、当該グループは全メンバーに対して設定されます  |
 
 <details><summary>例</summary>
 <p>
@@ -3081,7 +3081,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DB 인스턴스 시작"
+                    "message": "DBインスタンス起動"
                 },
                 {
                     "langCode": "ZH",
