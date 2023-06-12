@@ -2,9 +2,7 @@
 
 | リージョン         | エンドポイント                                   |
 |---------------|-------------------------------------------|
-| 韓国(パンギョ)リージョン | https://kr1-mysql.api.nhncloudservice.com |
-| 韓国(坪村)リージョン   | https://kr2-mysql.api.nhncloudservice.com |
-| 日本リージョン       | https://jp1-mysql.api.nhncloudservice.com |
+| 韓国(パンギョ)リージョン | https://kr1-rds-mysql.api.gncloud.go.kr |
 
 ## Monitoring
 

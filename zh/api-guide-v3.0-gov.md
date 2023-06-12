@@ -2,9 +2,7 @@
 
 | Region                    | Endpoint                                      |
 |---------------------------|-----------------------------------------------|
-| Korea (Pangyo) region     | https://kr1-rds-mysql.api.nhncloudservice.com |
-| Korea (Pyeongchon) region | https://kr2-rds-mysql.api.nhncloudservice.com |
-| Japan region              | https://jp1-rds-mysql.api.nhncloudservice.com |
+| Korea (Pangyo) region     | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
 
 ## Authentication and Authorization
 
@@ -48,7 +46,7 @@ This API does not require a request body.
 | Name               | Type | Format  | Description                                                                                                       |
 |--------------------|------|---------|-------------------------------------------------------------------------------------------------------------------|
 | regions            | Body | Array   | Region list                                                                                                       |
-| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region<br/>`KR2`: Korea (Pyeongchon) Region<br/>`JP1`: Japan (Tokyo) Region |
+| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region |
 | regions.isEnabled  | Body | Boolean | Whether to enable a region                                                                                        |
 
 <details><summary>Example</summary>
@@ -56,25 +54,17 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "regions": [
-        {
-            "regionCode": "KR1",
-            "isEnabled": true
-        },
-        {
-            "regionCode": "KR2",
-            "isEnabled": true
-        },
-        {
-            "regionCode": "JP1",
-            "isEnabled": true
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "regions": [
+    {
+      "regionCode": "KR1",
+      "isEnabled": true
+    }
+  ]
 }
 ```
 
@@ -107,19 +97,19 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "members": [
-        {
-            "memberId": "1b1d3627-507a-49ea-8cb7-c86dfa9caa58",
-            "memberName": "Hong Gil Dong",
-            "emailAddress": "gildong.hong@nhn.com",
-            "phoneNumber": "+821012345678"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "members": [
+    {
+      "memberId": "1b1d3627-507a-49ea-8cb7-c86dfa9caa58",
+      "memberName": "Hong Gil Dong",
+      "emailAddress": "gildong.hong@nhn.com",
+      "phoneNumber": "+821012345678"
+    }
+  ]
 }
 ```
 
@@ -155,19 +145,19 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbFlavors": [
-        {
-            "dbFlavorId": "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
-            "dbFlavorName": "m2.c1m2",
-            "ram": 2048,
-            "vcpus": 1
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbFlavors": [
+    {
+      "dbFlavorId": "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
+      "dbFlavorName": "m2.c1m2",
+      "ram": 2048,
+      "vcpus": 1
+    }
+  ]
 }
 ```
 
@@ -204,20 +194,20 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "subnets": [
-        {
-            "subnetId": "1b2a9b23-0725-4b92-8c78-35db66b8ad9f",
-            "subnetName": "Default Network",
-            "subnetCidr": "192.168.0.0/24",
-            "usingGateway": true,
-            "availableIpCount": 240
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "subnets": [
+    {
+      "subnetId": "1b2a9b23-0725-4b92-8c78-35db66b8ad9f",
+      "subnetName": "Default Network",
+      "subnetCidr": "192.168.0.0/24",
+      "usingGateway": true,
+      "availableIpCount": 240
+    }
+  ]
 }
 ```
 
@@ -252,18 +242,18 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbVersions": [
-        {
-            "dbVersion": "MYSQL_V8028",
-            "dbVersionName": "MySQL 8.0.28",
-            "restorableFromObs": true
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbVersions": [
+    {
+      "dbVersion": "MYSQL_V8028",
+      "dbVersionName": "MySQL 8.0.28",
+      "restorableFromObs": true
+    }
+  ]
 }
 ```
 
@@ -295,15 +285,15 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storages": [
-        "General SSD",
-        "General HDD"
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "storages": [
+    "General SSD",
+    "General HDD"
+  ]
 }
 ```
 
@@ -361,21 +351,21 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "0ddb042c-5af6-43fb-a914-f4dd0540eb7c",
-    "jobStatus": "RUNNING",
-    "resourceRelations": [
-        {
-            "resourceType": "INSTANCE",
-            "resourceId": "56b39dcf-65eb-47ec-9d4f-09f160ba2266"
-        }
-    ],
-    "createdYmdt": "2023-02-22T20:47:12+09:00",
-    "updatedYmdt": "2023-02-22T20:49:46+09:00"
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "jobId": "0ddb042c-5af6-43fb-a914-f4dd0540eb7c",
+  "jobStatus": "RUNNING",
+  "resourceRelations": [
+    {
+      "resourceType": "INSTANCE",
+      "resourceId": "56b39dcf-65eb-47ec-9d4f-09f160ba2266"
+    }
+  ],
+  "createdYmdt": "2023-02-22T20:47:12+09:00",
+  "updatedYmdt": "2023-02-22T20:49:46+09:00"
 }
 ```
 
@@ -411,19 +401,19 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstanceGroups": [
-        {
-            "dbInstanceGroupId": "05de0746-89fd-49c8-94f9-9c5b1df97009",
-            "replicationType": "STANDALONE",
-            "createdYmdt": "2023-02-13T17:35:20+09:00",
-            "updatedYmdt": "2023-02-13T17:35:20+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbInstanceGroups": [
+    {
+      "dbInstanceGroupId": "05de0746-89fd-49c8-94f9-9c5b1df97009",
+      "replicationType": "STANDALONE",
+      "createdYmdt": "2023-02-13T17:35:20+09:00",
+      "updatedYmdt": "2023-02-13T17:35:20+09:00"
+    }
+  ]
 }
 ```
 
@@ -464,22 +454,22 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstanceGroupId": "36617a8e-0df8-4b16-b6ea-6306019e95da",
-    "replicationType": "STANDALONE",
-    "dbInstances": [
-        {
-            "dbInstanceId": "6d2db0ef-fe9b-4ed4-97b1-d97fcb4cf1b8",
-            "dbInstanceType": "MASTER",
-            "dbInstanceStatus": "AVAILABLE"
-        }
-    ],
-    "createdYmdt": "2023-03-03T17:38:14+09:00",
-    "updatedYmdt": "2023-03-03T17:38:14+09:00"
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbInstanceGroupId": "36617a8e-0df8-4b16-b6ea-6306019e95da",
+  "replicationType": "STANDALONE",
+  "dbInstances": [
+    {
+      "dbInstanceId": "6d2db0ef-fe9b-4ed4-97b1-d97fcb4cf1b8",
+      "dbInstanceType": "MASTER",
+      "dbInstanceStatus": "AVAILABLE"
+    }
+  ],
+  "createdYmdt": "2023-03-03T17:38:14+09:00",
+  "updatedYmdt": "2023-03-03T17:38:14+09:00"
 }
 ```
 
@@ -568,26 +558,26 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstances": [
-        {
-            "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
-            "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
-            "dbInstanceName": "db-instance",
-            "description": null,
-            "dbVersion": "MYSQL_V8028",
-            "dbPort": 10000,
-            "dbInstanceType": "MASTER",
-            "dbInstanceStatus": "AVAILABLE",
-            "progressStatus": "NONE",
-            "createdYmdt": "2023-01-23T12:03:13+09:00",
-            "updatedYmdt": "2023-02-02T17:20:17+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbInstances": [
+    {
+      "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
+      "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
+      "dbInstanceName": "db-instance",
+      "description": null,
+      "dbVersion": "MYSQL_V8028",
+      "dbPort": 10000,
+      "dbInstanceType": "MASTER",
+      "dbInstanceStatus": "AVAILABLE",
+      "progressStatus": "NONE",
+      "createdYmdt": "2023-01-23T12:03:13+09:00",
+      "updatedYmdt": "2023-02-02T17:20:17+09:00"
+    }
+  ]
 }
 ```
 
@@ -634,25 +624,25 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
-    "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
-    "dbInstanceName": "db-instance",
-    "description": null,
-    "dbVersion": "MYSQL_V8028",
-    "dbPort": 10000,
-    "dbInstanceType": "MASTER",
-    "dbInstanceStatus": "AVAILABLE",
-    "progressStatus": "NONE",
-    "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
-    "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
-    "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
-    "createdYmdt": "2022-11-23T12:03:13+09:00",
-    "updatedYmdt": "2022-12-02T17:20:17+09:00"
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
+  "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
+  "dbInstanceName": "db-instance",
+  "description": null,
+  "dbVersion": "MYSQL_V8028",
+  "dbPort": 10000,
+  "dbInstanceType": "MASTER",
+  "dbInstanceStatus": "AVAILABLE",
+  "progressStatus": "NONE",
+  "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
+  "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
+  "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
+  "createdYmdt": "2022-11-23T12:03:13+09:00",
+  "updatedYmdt": "2022-12-02T17:20:17+09:00"
 }
 ```
 
@@ -695,7 +685,6 @@ POST /v3.0/db-instances
 | backup.backupPeriod                          | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
-| backup.replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | backup.useBackupLock                         | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                       | Body | Array   | O        | Backup schedules                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -707,36 +696,36 @@ POST /v3.0/db-instances
 
 ```json
 {
-    "dbInstanceName": "db-instance",
-    "description": "description",
-    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbVersion": "MYSQL_V8028",
-    "dbPort": 10000,
-    "dbUserName": "db-user",
-    "dbPassword": "password",
-    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
-    "dbSecurityGroupIds": [
-        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
-    ],
-    "userGroupIds": [],
-    "network": {
-        "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
-        "availabilityZone": "kr-pub-a"
-    },
-    "storage": {
-        "storageType": "General SSD",
-        "storageSize": 20
-    },
-    "backup": {
-        "backupPeriod": 1,
-        "backupSchedules": [
-            {
-                "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "ONE_HOUR",
-                "backupRetryExpireTime": "01:30:00"
-            }
-        ]
-    }
+  "dbInstanceName": "db-instance",
+  "description": "description",
+  "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
+  "dbVersion": "MYSQL_V8028",
+  "dbPort": 10000,
+  "dbUserName": "db-user",
+  "dbPassword": "password",
+  "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
+  "dbSecurityGroupIds": [
+    "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
+  ],
+  "userGroupIds": [],
+  "network": {
+    "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
+    "availabilityZone": "kr-pub-a"
+  },
+  "storage": {
+    "storageType": "General SSD",
+    "storageSize": 20
+  },
+  "backup": {
+    "backupPeriod": 1,
+    "backupSchedules": [
+      {
+        "backupWndBgnTime": "00:00:00",
+        "backupWndDuration": "ONE_HOUR",
+        "backupRetryExpireTime": "01:30:00"
+      }
+    ]
+  }
 }
 ```
 
@@ -776,11 +765,11 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 ```json
 {
-    "dbInstanceName": "db-instance2",
-    "description": "description2",
-    "dbPort": 10001,
-    "dbSecurityGroupIds": [],
-    "executeBackup": true
+  "dbInstanceName": "db-instance2",
+  "description": "description2",
+  "dbPort": 10001,
+  "dbSecurityGroupIds": [],
+  "executeBackup": true
 }
 ```
 
@@ -932,7 +921,6 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
-| backup.replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region<br/>- Default: Original DB instance value                                                                                                                                    |
 | backup.useBackupLock                         | Body | Boolean | X        | Whether to use table lock<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                 |
 | backup.backupSchedules                       | Body | Array   | X        | Backup schedules                                                                                                                                                                                                                                                                                                    |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | X        | Backup started time<br/>- Example: `00:00:00`<br/>- Default: Original DB instance value                                                                                                                                                                                                                             |
@@ -944,15 +932,15 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ```json
 {
-"dbInstanceName": "db-instance-replicate",
-"description": "description",
-"dbPort": 11000,
-"network": {
+  "dbInstanceName": "db-instance-replicate",
+  "description": "description",
+  "dbPort": 11000,
+  "network": {
     "availabilityZone": "kr-pub-a"
-},
-"storage": {
+  },
+  "storage": {
     "stroageSize": 100
-}
+  }
 }
 ```
 
@@ -1126,14 +1114,14 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storageType": "General SSD",
-    "storageSize": 20,
-    "storageStatus": "ATTACHED"
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "storageType": "General SSD",
+  "storageSize": 20,
+  "storageStatus": "ATTACHED"
 }
 ```
 
@@ -1186,7 +1174,6 @@ This API does not require a request body.
 | backupPeriod                          | Body | Number  | Backup retention period      |
 | ftwrlWaitTimeout                      | Body | Number  | Query latency (sec)          |
 | backupRetryCount                      | Body | Number  | Number of backup retries     |
-| replicationRegion                     | Body | Enum    | Backup replication region    |
 | useBackupLock                         | Body | Boolean | Whether to use table lock    |
 | backupSchedules                       | Body | Array   | Backup schedules             |
 | backupSchedules.backupWndBgnTime      | Body | String  | Backup started time          |
@@ -1198,23 +1185,22 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "backupPeriod": 1,
-    "ftwrlWaitTimeout": 1800,
-    "backupRetryCount": 0,
-    "replicationRegion": null,
-    "useBackupLock": false,
-    "backupSchedules": [
-        {
-            "backupWndBgnTime": "00:00:00",
-            "backupWndDuration": "ONE_HOUR_AND_HALF",
-            "backupRetryExpireTime": "01:30:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "backupPeriod": 1,
+  "ftwrlWaitTimeout": 1800,
+  "backupRetryCount": 0,
+  "useBackupLock": false,
+  "backupSchedules": [
+    {
+      "backupWndBgnTime": "00:00:00",
+      "backupWndDuration": "ONE_HOUR_AND_HALF",
+      "backupRetryExpireTime": "01:30:00"
+    }
+  ]
 }
 ```
 
@@ -1238,7 +1224,6 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
 | backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
-| replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | useBackupLock                         | Body | Boolean | X        | Whether to use table lock                                                                                                                                                                                                                                                 |
 | backupSchedules                       | Body | Array   | X        | Backup schedules                                                                                                                                                                                                                                                          |
 | backupSchedules.backupWndBgnTime      | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -1250,15 +1235,15 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ```json
 {
-"backupPeriod": 5,
-"useBackupLock": true,
-"backupSchedules": [
+  "backupPeriod": 5,
+  "useBackupLock": true,
+  "backupSchedules": [
     {
-        "backupWndBgnTime": "01:00:00",
-        "backupWndDuration": "TWO_HOURS",
-        "backupRetryExpireTime": "03:00:00"
+      "backupWndBgnTime": "01:00:00",
+      "backupWndDuration": "TWO_HOURS",
+      "backupRetryExpireTime": "03:00:00"
     }
-]
+  ]
 }
 ```
 
@@ -1306,24 +1291,24 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "availabilityZone": "kr-pub-a",
-    "subnet": {
-        "subnetId": "bd453789-34ae-416c-9f78-05b9e43a46be",
-        "subnetName": "Default Network",
-        "subnetCidr": "192.168.0.0/16"
-    },
-    "endPoints": [
-        {
-            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
-            "ipAddress": "192.168.0.2",
-            "endPointType": "INTERNAL"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "availabilityZone": "kr-pub-a",
+  "subnet": {
+    "subnetId": "bd453789-34ae-416c-9f78-05b9e43a46be",
+    "subnetName": "Default Network",
+    "subnetCidr": "192.168.0.0/16"
+  },
+  "endPoints": [
+    {
+      "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
+      "ipAddress": "192.168.0.2",
+      "endPointType": "INTERNAL"
+    }
+  ]
 }
 ```
 
@@ -1385,22 +1370,22 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbUsers": [
-        {
-            "dbUserId": "4b3d530b-fd02-4d59-a620-83d019a67bbb",
-            "dbUserName": "db-user",
-            "host": "%",
-            "authorityType": "DDL",
-            "dbUserStatus": "STABLE",
-            "createdYmdt": "2023-03-17T14:02:29+09:00",
-            "updatedYmdt": "2023-03-17T14:02:31+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbUsers": [
+    {
+      "dbUserId": "4b3d530b-fd02-4d59-a620-83d019a67bbb",
+      "dbUserName": "db-user",
+      "host": "%",
+      "authorityType": "DDL",
+      "dbUserStatus": "STABLE",
+      "createdYmdt": "2023-03-17T14:02:29+09:00",
+      "updatedYmdt": "2023-03-17T14:02:31+09:00"
+    }
+  ]
 }
 ```
 
@@ -1430,10 +1415,10 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 ```json
 {
-"dbUserName": "db-user",
-"dbPassword": "password",
-"host": "1.1.1.%",
-"authorityType": "CRUD"
+  "dbUserName": "db-user",
+  "dbPassword": "password",
+  "host": "1.1.1.%",
+  "authorityType": "CRUD"
 }
 ```
 
@@ -1468,7 +1453,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ```json
 {
-"authorityType": "DDL"
+  "authorityType": "DDL"
 }
 ```
 
@@ -1535,19 +1520,19 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbSchemas": [
-        {
-            "dbSchemaId": "7c9a94b8-86c1-435d-8af2-82a5e9d53fd4",
-            "dbSchemaName": "schema",
-            "dbSchemaStatus": "STABLE",
-            "createdYmdt": "2023-03-20T13:37:45+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbSchemas": [
+    {
+      "dbSchemaId": "7c9a94b8-86c1-435d-8af2-82a5e9d53fd4",
+      "dbSchemaName": "schema",
+      "dbSchemaStatus": "STABLE",
+      "createdYmdt": "2023-03-20T13:37:45+09:00"
+    }
+  ]
 }
 ```
 
@@ -1651,25 +1636,25 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 1,
-    "backups": [
-        {
-            "backupId": "0017f136-3e01-4530-94aa-20661afe6632",
-            "backupName": "backup",
-            "backupStatus": "COMPLETED",
-            "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-            "dbVersion": "MYSQL_V8028",
-            "backupType": "AUTO",
-            "backupSize": 4996786,
-            "createdYmdt": "2023-02-21T00:35:00+09:00",
-            "updatedYmdt": "2023-02-22T00:35:32+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "totalCounts": 1,
+  "backups": [
+    {
+      "backupId": "0017f136-3e01-4530-94aa-20661afe6632",
+      "backupName": "backup",
+      "backupStatus": "COMPLETED",
+      "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
+      "dbVersion": "MYSQL_V8028",
+      "backupType": "AUTO",
+      "backupSize": 4996786,
+      "createdYmdt": "2023-02-21T00:35:00+09:00",
+      "updatedYmdt": "2023-02-22T00:35:32+09:00"
+    }
+  ]
 }
 ```
 
@@ -1700,11 +1685,11 @@ POST /v3.0/backups/{backupId}/export
 
 ```json
 {
-    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
-    "username": "gildong.hong@nhn.com",
-    "password": "password",
-    "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
+  "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+  "username": "gildong.hong@nhn.com",
+  "password": "password",
+  "targetContainer": "/container",
+  "objectPath": "/backups/backup_file"
 }
 ```
 
@@ -1751,7 +1736,6 @@ POST /v3.0/backups/{backupId}/restore
 | backup.backupPeriod                          | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
-| backup.replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | backup.useBackupLock                         | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                       | Body | Array   | O        | Backup schedules                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -1764,27 +1748,27 @@ POST /v3.0/backups/{backupId}/restore
 ```json
 
 {
-"dbInstanceName" : "db-instance-restore",
-"dbFlavorId" : "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
-"dbPort" : 10000,
-"parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
-"network": {
+  "dbInstanceName" : "db-instance-restore",
+  "dbFlavorId" : "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
+  "dbPort" : 10000,
+  "parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
+  "network": {
     "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
     "availabilityZone": "kr-pub-a"
-},
-"storage": {
+  },
+  "storage": {
     "storageType": "General SSD",
     "storageSize": 20
-},
-"backup": {
+  },
+  "backup": {
     "backupPeriod": 1,
     "backupSchedules": [{
-        "backupWndBgnTime": "00:00:00",
-        "backupWndDuration": "HALF_AN_HOUR",
-        "backupRetryExpireTime": "01:30:00"
+      "backupWndBgnTime": "00:00:00",
+      "backupWndDuration": "HALF_AN_HOUR",
+      "backupRetryExpireTime": "01:30:00"
     }
     ]
-}
+  }
 }
 ```
 
@@ -1859,21 +1843,21 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbSecurityGroups": [
-        {
-            "dbSecurityGroupId": "fe4f2aee-afbb-4c19-a5e9-eb2eab394708",
-            "dbSecurityGroupName": "dbSecurityGroup",
-            "description": "description",
-            "progressStatus": "NONE",
-            "createdYmdt": "2023-02-19T19:18:13+09:00",
-            "updatedYmdt": "2022-02-19T19:18:13+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "dbSecurityGroups": [
+    {
+      "dbSecurityGroupId": "fe4f2aee-afbb-4c19-a5e9-eb2eab394708",
+      "dbSecurityGroupName": "dbSecurityGroup",
+      "description": "description",
+      "progressStatus": "NONE",
+      "createdYmdt": "2023-02-19T19:18:13+09:00",
+      "updatedYmdt": "2022-02-19T19:18:13+09:00"
+    }
+  ]
 }
 ```
 
@@ -1907,7 +1891,7 @@ This API does not require a request body.
 | rules               | Body | Array    | DB security group rules                                                                                                                                  |
 | rules.ruleId        | Body | UUID     | DB security group rule identifier                                                                                                                        |
 | rules.description   | Body | String   | Additional information on DB security group rule                                                                                                         |
-| rules.direction     | Body | Enum     | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                
+| rules.direction     | Body | Enum     | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                |
 | rules.etherType     | Body | Enum     | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                         |
 | rules.port          | Body | Object   | Port object                                                                                                                                              |
 | rules.port.portType | Body | Enum     | Port type<br/>- `DB_PORT`: Sets to DB instance port value.<br/>- `PORT`: Sets to specified port value.<br/>- `PORT_RANGE`: Sets to specified port range. |
@@ -1975,7 +1959,7 @@ POST /v3.0/db-security-groups
 | description         | Body | String | X        | Additional information on DB security group                                                                                                                                                                                      |
 | rules               | Body | Array  | O        | DB security group rules                                                                                                                                                                                                          |
 | rules.description   | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| rules.direction     | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| rules.direction     | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | rules.etherType     | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | rules.cidr          | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 | rules.port          | Body | Object | O        | Port object                                                                                                                                                                                                                      |
@@ -2082,7 +2066,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 |-------------------|------|--------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbSecurityGroupId | URL  | UUID   | O        | DB security group identifier                                                                                                                                                                                                     |
 | description       | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
 | port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
@@ -2130,7 +2114,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | dbSecurityGroupId | URL  | UUID   | O        | DB security group identifier                                                                                                                                                                                                     |
 | ruleId            | URL  | UUID   | O        | DB security group rule identifier                                                                                                                                                                                                |
 | description       | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
 | port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
@@ -2143,12 +2127,12 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 ```json
 {
-    "direction": "INGRESS",
-    "etherType": "IPV4",
-    "port": {
-        "portType": "DB_PORT"
-    },
-    "cidr": "0.0.0.0/0"
+  "direction": "INGRESS",
+  "etherType": "IPV4",
+  "port": {
+    "portType": "DB_PORT"
+  },
+  "cidr": "0.0.0.0/0"
 }
 ```
 
@@ -2220,22 +2204,22 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroups": [
-        {
-            "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
-            "parameterGroupName": "parameter-group",
-            "description": null,
-            "dbVersion": "MYSQL_V8023",
-            "parameterGroupStatus": "STABLE",
-            "createdYmdt": "2023-02-31T15:28:17+09:00",
-            "updatedYmdt": "2023-02-31T15:28:17+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "parameterGroups": [
+    {
+      "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
+      "parameterGroupName": "parameter-group",
+      "description": null,
+      "dbVersion": "MYSQL_V8023",
+      "parameterGroupStatus": "STABLE",
+      "createdYmdt": "2023-02-31T15:28:17+09:00",
+      "updatedYmdt": "2023-02-31T15:28:17+09:00"
+    }
+  ]
 }
 ```
 
@@ -2286,31 +2270,31 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
-    "parameterGroupName": "parameter-group",
-    "description": null,
-    "dbVersion": "MYSQL_V8023",
-    "parameterGroupStatus": "STABLE",
-    "parameters": [
-        {
-            "parameterId": "fa040b5e-f29f-46de-8f0d-bba4cb82887a",
-            "parameterFileGroup": "client",
-            "parameterName": "socket",
-            "fileParameterName": "socket",
-            "value": "/home/tcrds/db/mysql/tmp/mysql.sock",
-            "defaultValue": "/home/tcrds/db/mysql/tmp/mysql.sock",
-            "allowedValue": "",
-            "updateType": "CONSTANT",
-            "applyType": "BOTH"
-        }
-    ],
-    "createdYmdt": "2023-03-13T11:02:28+09:00",
-    "updatedYmdt": "2023-03-13T11:02:28+09:00"
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
+  "parameterGroupName": "parameter-group",
+  "description": null,
+  "dbVersion": "MYSQL_V8023",
+  "parameterGroupStatus": "STABLE",
+  "parameters": [
+    {
+      "parameterId": "fa040b5e-f29f-46de-8f0d-bba4cb82887a",
+      "parameterFileGroup": "client",
+      "parameterName": "socket",
+      "fileParameterName": "socket",
+      "value": "/home/tcrds/db/mysql/tmp/mysql.sock",
+      "defaultValue": "/home/tcrds/db/mysql/tmp/mysql.sock",
+      "allowedValue": "",
+      "updateType": "CONSTANT",
+      "applyType": "BOTH"
+    }
+  ],
+  "createdYmdt": "2023-03-13T11:02:28+09:00",
+  "updatedYmdt": "2023-03-13T11:02:28+09:00"
 }
 ```
 
@@ -2339,8 +2323,8 @@ POST /v3.0/parameter-groups
 
 ```json
 {
-    "parameterGroupName": "parameter-group",
-    "dbVersion": "MYSQL_V8023"
+  "parameterGroupName": "parameter-group",
+  "dbVersion": "MYSQL_V8023"
 }
 ```
 
@@ -2373,8 +2357,8 @@ POST /v3.0/parameter-groups/{parameterGroupId}/copy
 
 ```json
 {
-    "parameterGroupName": "parameter-group-copy",
-    "description": "copy"
+  "parameterGroupName": "parameter-group-copy",
+  "description": "copy"
 }
 ```
 
@@ -2407,7 +2391,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 ```json
 {
-    "parameterGroupName": "parameter-group"
+  "parameterGroupName": "parameter-group"
 }
 ```
 
@@ -2440,12 +2424,12 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 ```json
 {
-   "modifiedParameters": [
-       {
-           "parameterId": "3abac558-7274-44e1-9f4a-f100f53f67ba",
-           "value": "0"
-       }
-   ]
+  "modifiedParameters": [
+    {
+      "parameterId": "3abac558-7274-44e1-9f4a-f100f53f67ba",
+      "value": "0"
+    }
+  ]
 }
 ```
 
@@ -2523,19 +2507,19 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "userGroups": [
-        {
-            "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
-            "userGroupName": "dev-team",
-            "createdYmdt": "2023-02-23T10:07:54+09:00",
-            "updatedYmdt": "2023-02-26T01:15:50+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "userGroups": [
+    {
+      "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
+      "userGroupName": "dev-team",
+      "createdYmdt": "2023-02-23T10:07:54+09:00",
+      "updatedYmdt": "2023-02-26T01:15:50+09:00"
+    }
+  ]
 }
 ```
 
@@ -2617,8 +2601,8 @@ POST /v3.0/user-groups
 
 ```json
 {
-    "userGroupName": "dev-team",
-    "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
+  "userGroupName": "dev-team",
+  "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
 }
 ```
 ```json
@@ -2658,8 +2642,8 @@ PUT /v3.0/user-groups/{userGroupId}
 
 ```json
 {
-    "userGroupName": "dev-team",
-    "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5","f9064b09-2b15-442e-a4b0-3a5a2754555e"]
+  "userGroupName": "dev-team",
+  "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5","f9064b09-2b15-442e-a4b0-3a5a2754555e"]
 }
 ```
 
@@ -2720,22 +2704,22 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "notificationGroups": [
-        {
-            "notificationGroupId": "b3901f17-9971-4d1e-8a81-8448cf533dc7",
-            "notificationGroupName": "dev-team-noti",
-            "notifyEmail": true,
-            "notifySms": false,
-            "isEnabled": true,
-            "createdYmdt": "2023-02-20T13:34:13+09:00",
-            "updatedYmdt": "2023-02-20T13:34:13+09:00"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "notificationGroups": [
+    {
+      "notificationGroupId": "b3901f17-9971-4d1e-8a81-8448cf533dc7",
+      "notificationGroupName": "dev-team-noti",
+      "notifyEmail": true,
+      "notifySms": false,
+      "isEnabled": true,
+      "createdYmdt": "2023-02-20T13:34:13+09:00",
+      "updatedYmdt": "2023-02-20T13:34:13+09:00"
+    }
+  ]
 }
 ```
 
@@ -2781,28 +2765,28 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "notificationGroupId": "b3901f17-9971-4d1e-8a81-8448cf533dc7",
-    "notificationGroupName": "dev-team-noti",
-    "notifyEmail": true,
-    "notifySms": false,
-    "isEnabled": true,
-    "dbInstances": [
-            {
-            "dbInstanceId": "ed5cb985-526f-4c54-9ae0-40288593de65",
-            "dbInstanceName": "database"
-        }],
-    "userGroups": [
-            {
-            "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
-            "userGroupName": "dev-team"
-        }],
-    "createdYmdt": "2023-02-20T13:34:13+09:00",
-    "updatedYmdt": "2023-02-20T13:34:13+09:00"
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "notificationGroupId": "b3901f17-9971-4d1e-8a81-8448cf533dc7",
+  "notificationGroupName": "dev-team-noti",
+  "notifyEmail": true,
+  "notifySms": false,
+  "isEnabled": true,
+  "dbInstances": [
+    {
+      "dbInstanceId": "ed5cb985-526f-4c54-9ae0-40288593de65",
+      "dbInstanceName": "database"
+    }],
+  "userGroups": [
+    {
+      "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
+      "userGroupName": "dev-team"
+    }],
+  "createdYmdt": "2023-02-20T13:34:13+09:00",
+  "updatedYmdt": "2023-02-20T13:34:13+09:00"
 }
 ```
 
@@ -2833,11 +2817,11 @@ POST /v3.0/notification-groups
 
 ```json
 {
-    "notificationGroupName": "dev-team-noti",
-    "notifyEmail": false,
-    "isEnable": true,
-    "dbInstanceIds": ["ed5cb985-526f-4c54-9ae0-40288593de65"],
-    "userGroupIds": ["1aac0437-f32d-4923-ad3c-ac61c1cfdfe0"]
+  "notificationGroupName": "dev-team-noti",
+  "notifyEmail": false,
+  "isEnable": true,
+  "dbInstanceIds": ["ed5cb985-526f-4c54-9ae0-40288593de65"],
+  "userGroupIds": ["1aac0437-f32d-4923-ad3c-ac61c1cfdfe0"]
 }
 ```
 
@@ -2875,8 +2859,8 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 ```json
 {
-    "notifyEmail": true,
-    "dbInstanceIds": ["ed5cb985-526f-4c54-9ae0-40288593de65", "d51b7da0-682f-47ff-b588-b739f6adc740"]
+  "notifyEmail": true,
+  "dbInstanceIds": ["ed5cb985-526f-4c54-9ae0-40288593de65", "d51b7da0-682f-47ff-b588-b739f6adc740"]
 }
 ```
 
@@ -2934,17 +2918,17 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "metrics": [
-        {
-            "measureName": "CPU_USAGE",
-            "unit": "%"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "metrics": [
+    {
+      "measureName": "CPU_USAGE",
+      "unit": "%"
+    }
+  ]
 }
 ```
 
@@ -2985,26 +2969,26 @@ GET /v3.0/metric-statistics
 
 ```json
 {
-    "metricStatistics": [
-        {
-            "measureName": "MYSQL_STATUS",
-            "unit": "",
-            "values": [
-                [
-                    1679298540,
-                    "1"
-                ],
-                [
-                    1679298600,
-                    "1"
-                ],
-                [
-                    1679298660,
-                    "1"
-                ]
-            ]
-        }
-    ]
+  "metricStatistics": [
+    {
+      "measureName": "MYSQL_STATUS",
+      "unit": "",
+      "values": [
+        [
+          1679298540,
+          "1"
+        ],
+        [
+          1679298600,
+          "1"
+        ],
+        [
+          1679298660,
+          "1"
+        ]
+      ]
+    }
+  ]
 }
 ```
 
@@ -3056,39 +3040,39 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 28,
-    "events": [
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "totalCounts": 28,
+  "events": [
+    {
+      "eventCategoryType": "INSTANCE",
+      "eventCode": "INSTC_02_01",
+      "sourceId": "76f00947-356e-4a20-8922-428368cc45ed",
+      "sourceName": "db-instance",
+      "messages": [
         {
-            "eventCategoryType": "INSTANCE",
-            "eventCode": "INSTC_02_01",
-            "sourceId": "76f00947-356e-4a20-8922-428368cc45ed",
-            "sourceName": "db-instance",
-            "messages": [
-                {
-                    "langCode": "EN",
-                    "message": "DB instance started"
-                },
-                {
-                    "langCode": "JA",
-                    "message": "DBインスタンスの起動"
-                },
-                {
-                    "langCode": "KO",
-                    "message": "DB 인스턴스 시작"
-                },
-                {
-                    "langCode": "ZH",
-                    "message": "DB instance started"
-                }
-            ],
-            "eventYmdt": "2023-03-20T16:31:59+09:00"
+          "langCode": "EN",
+          "message": "DB instance started"
+        },
+        {
+          "langCode": "JA",
+          "message": "DBインスタンスの起動"
+        },
+        {
+          "langCode": "KO",
+          "message": "DB 인스턴스 시작"
+        },
+        {
+          "langCode": "ZH",
+          "message": "DB instance started"
         }
-    ]
+      ],
+      "eventYmdt": "2023-03-20T16:31:59+09:00"
+    }
+  ]
 }
 ```
 
@@ -3120,17 +3104,17 @@ This API does not require a request body.
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "eventCodes": [
-        {
-            "eventCode": "INSTC_05_01",
-            "eventCategoryType": "INSTANCE"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "eventCodes": [
+    {
+      "eventCode": "INSTC_05_01",
+      "eventCategoryType": "INSTANCE"
+    }
+  ]
 }
 ```
 

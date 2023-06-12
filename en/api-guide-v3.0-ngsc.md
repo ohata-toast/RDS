@@ -2,9 +2,7 @@
 
 | Region                    | Endpoint                                      |
 |---------------------------|-----------------------------------------------|
-| Korea (Pangyo) region     | https://kr1-rds-mysql.api.nhncloudservice.com |
-| Korea (Pyeongchon) region | https://kr2-rds-mysql.api.nhncloudservice.com |
-| Japan region              | https://jp1-rds-mysql.api.nhncloudservice.com |
+| Korea (Pangyo) region     | https://kr1-rds-mysql.api.gncloud.go.kr |
 
 ## Authentication and Authorization
 
@@ -48,7 +46,7 @@ This API does not require a request body.
 | Name               | Type | Format  | Description                                                                                                       |
 |--------------------|------|---------|-------------------------------------------------------------------------------------------------------------------|
 | regions            | Body | Array   | Region list                                                                                                       |
-| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region<br/>`KR2`: Korea (Pyeongchon) Region<br/>`JP1`: Japan (Tokyo) Region |
+| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region |
 | regions.isEnabled  | Body | Boolean | Whether to enable a region                                                                                        |
 
 <details><summary>Example</summary>
@@ -64,14 +62,6 @@ This API does not require a request body.
     "regions": [
         {
             "regionCode": "KR1",
-            "isEnabled": true
-        },
-        {
-            "regionCode": "KR2",
-            "isEnabled": true
-        },
-        {
-            "regionCode": "JP1",
             "isEnabled": true
         }
     ]
@@ -695,7 +685,6 @@ POST /v3.0/db-instances
 | backup.backupPeriod                          | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
-| backup.replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | backup.useBackupLock                         | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                       | Body | Array   | O        | Backup schedules                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -932,7 +921,6 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
-| backup.replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region<br/>- Default: Original DB instance value                                                                                                                                    |
 | backup.useBackupLock                         | Body | Boolean | X        | Whether to use table lock<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                 |
 | backup.backupSchedules                       | Body | Array   | X        | Backup schedules                                                                                                                                                                                                                                                                                                    |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | X        | Backup started time<br/>- Example: `00:00:00`<br/>- Default: Original DB instance value                                                                                                                                                                                                                             |
@@ -1186,7 +1174,6 @@ This API does not require a request body.
 | backupPeriod                          | Body | Number  | Backup retention period      |
 | ftwrlWaitTimeout                      | Body | Number  | Query latency (sec)          |
 | backupRetryCount                      | Body | Number  | Number of backup retries     |
-| replicationRegion                     | Body | Enum    | Backup replication region    |
 | useBackupLock                         | Body | Boolean | Whether to use table lock    |
 | backupSchedules                       | Body | Array   | Backup schedules             |
 | backupSchedules.backupWndBgnTime      | Body | String  | Backup started time          |
@@ -1206,7 +1193,6 @@ This API does not require a request body.
     "backupPeriod": 1,
     "ftwrlWaitTimeout": 1800,
     "backupRetryCount": 0,
-    "replicationRegion": null,
     "useBackupLock": false,
     "backupSchedules": [
         {
@@ -1238,7 +1224,6 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
 | backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
-| replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | useBackupLock                         | Body | Boolean | X        | Whether to use table lock                                                                                                                                                                                                                                                 |
 | backupSchedules                       | Body | Array   | X        | Backup schedules                                                                                                                                                                                                                                                          |
 | backupSchedules.backupWndBgnTime      | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -1751,7 +1736,6 @@ POST /v3.0/backups/{backupId}/restore
 | backup.backupPeriod                          | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
-| backup.replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | backup.useBackupLock                         | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                       | Body | Array   | O        | Backup schedules                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -1907,7 +1891,7 @@ This API does not require a request body.
 | rules               | Body | Array    | DB security group rules                                                                                                                                  |
 | rules.ruleId        | Body | UUID     | DB security group rule identifier                                                                                                                        |
 | rules.description   | Body | String   | Additional information on DB security group rule                                                                                                         |
-| rules.direction     | Body | Enum     | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                
+| rules.direction     | Body | Enum     | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                |
 | rules.etherType     | Body | Enum     | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                         |
 | rules.port          | Body | Object   | Port object                                                                                                                                              |
 | rules.port.portType | Body | Enum     | Port type<br/>- `DB_PORT`: Sets to DB instance port value.<br/>- `PORT`: Sets to specified port value.<br/>- `PORT_RANGE`: Sets to specified port range. |
@@ -1975,7 +1959,7 @@ POST /v3.0/db-security-groups
 | description         | Body | String | X        | Additional information on DB security group                                                                                                                                                                                      |
 | rules               | Body | Array  | O        | DB security group rules                                                                                                                                                                                                          |
 | rules.description   | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| rules.direction     | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| rules.direction     | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | rules.etherType     | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | rules.cidr          | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 | rules.port          | Body | Object | O        | Port object                                                                                                                                                                                                                      |
@@ -2082,7 +2066,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 |-------------------|------|--------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbSecurityGroupId | URL  | UUID   | O        | DB security group identifier                                                                                                                                                                                                     |
 | description       | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
 | port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
@@ -2130,7 +2114,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | dbSecurityGroupId | URL  | UUID   | O        | DB security group identifier                                                                                                                                                                                                     |
 | ruleId            | URL  | UUID   | O        | DB security group rule identifier                                                                                                                                                                                                |
 | description       | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
 | port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
