@@ -3065,7 +3065,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DBインスタンス起動"
+                    "message": "DB인스턴스 시작"
                 },
                 {
                     "langCode": "ZH",
