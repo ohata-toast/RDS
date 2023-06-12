@@ -525,7 +525,7 @@ The users who receive notifications through notification groups and event subscr
 
 * ❶ Click the **Create User Group** to display a popup to **create a user group**.
 
-![user_group_create_1_en](https://static.toastoven.net/prod_rds/22.03.15/user_group_create_1_en.png)
+![user_group_create_1_en](https://static.toastoven.net/prod_rds/23.06.13/user_group_create_1_en.png)
 
 * ❷ Enter the group name.
 * ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
@@ -540,7 +540,7 @@ The users who receive notifications through notification groups and event subscr
 
 * ❶ Click the **Edit** button of the user group to be modified and a popup will appear to **modify the user group**.
 
-![user_group_modify_1_en](https://static.toastoven.net/prod_rds/22.03.15/user_group_modify_1_en.png)
+![user_group_modify_1_en](https://static.toastoven.net/prod_rds/23.06.13/user_group_modify_1_en.png)
 
 * ❷ After modifying the items, click the **OK** button to modify the user group.
 

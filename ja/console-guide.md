@@ -537,7 +537,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 * ❶ユーザーグループ作成ボタンをクリックするとユーザーグループを作成することができるポップアップが表示されます。
 
-![user_group_create_1_ja](https://static.toastoven.net/prod_rds/22.03.15/user_group_create_1_ja.png)
+![user_group_create_1_ja](https://static.toastoven.net/prod_rds/23.06.13/user_group_create_1_ja.png)
 
 * ❷グループ名を入力します。
 * ❸通知対象ユーザーが表示されます。**x**ボタンをクリックすると通知対象から除外されます。
@@ -552,7 +552,7 @@ DBインスタンスに関連するさまざまな作業中に発生する各種
 
 * ❶修正したいユーザーグループの編集ボタンをクリックすると、ユーザーグループを修正することができるポップアップが表示されます。
 
-![user_group_modify_1_ja](https://static.toastoven.net/prod_rds/22.03.15/user_group_modify_1_ja.png)
+![user_group_modify_1_ja](https://static.toastoven.net/prod_rds/23.06.13/user_group_modify_1_ja.png)
 
 * ❷修正したい項目を修正した後、確認ボタンをクリックするとユーザーグループが修正されます。
 
