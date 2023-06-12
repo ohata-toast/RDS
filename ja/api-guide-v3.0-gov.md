@@ -2,9 +2,7 @@
 
 | リージョン           | エンドポイント                                       |
 |-----------------|-----------------------------------------------|
-| 韓国(パンギョ)リージョン   | https://kr1-rds-mysql.api.nhncloudservice.com |
-| 韓国(ピョンチョン)リージョン | https://kr2-rds-mysql.api.nhncloudservice.com |
-| 日本リージョン         | https://jp1-rds-mysql.api.nhncloudservice.com |
+| 韓国(パンギョ)リージョン   | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
 
 ## 認証および権限
 
@@ -48,7 +46,7 @@ GET /v3.0/project/regions
 | 名前                 | 種類   | 形式      | 説明                                                                                     |
 |--------------------|------|---------|----------------------------------------------------------------------------------------|
 | regions            | Body | Array   | リージョンリスト                                                                               |
-| regions.regionCode | Body | Enum    | リージョンコード<br/>- `KR1`:韓国(パンギョ)リージョン<br/>- `KR2`:韓国(ピョンチョン)リージョン<br/>- `JP1`:日本(東京)リージョン |
+| regions.regionCode | Body | Enum    | リージョンコード<br/>- `KR1`:韓国(パンギョ)リージョン |
 | regions.isEnabled  | Body | Boolean | リージョンが有効かどうか                                                                           |
 
 <details><summary>例</summary>
@@ -64,14 +62,6 @@ GET /v3.0/project/regions
     "regions": [
         {
             "regionCode": "KR1",
-            "isEnabled": true
-        },
-        {
-            "regionCode": "KR2",
-            "isEnabled": true
-        },
-        {
-            "regionCode": "JP1",
             "isEnabled": true
         }
     ]
@@ -695,7 +685,6 @@ POST /v3.0/db-instances
 | backup.backupPeriod                          | Body | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                            |
 | backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                   |
-| backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                  |
 | backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                          |
 | backup.backupSchedules                       | Body | Array   | O  | バックアップスケジュールリスト                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                 |
@@ -932,7 +921,6 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                                                 |
 | backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                                     |
-| backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                  |
 | backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                               |
 | backup.backupSchedules                       | Body | Array   | X  | バックアップスケジュールリスト                                                                                                                                                                                                                                         |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | X  | バックアップ開始時刻<br/>- 例: `00:00:00`<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                 |
@@ -1186,7 +1174,6 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | バックアップ保管期間(日)    |
 | ftwrlWaitTimeout                      | Body | Number  | クエリ遅延待機時間(秒)     |
 | backupRetryCount                      | Body | Number  | バックアップ再試行回数      |
-| replicationRegion                     | Body | Enum    | バックアップ複製リージョン    |
 | useBackupLock                         | Body | Boolean | テーブルロックを使用するかどうか |
 | backupSchedules                       | Body | Array   | バックアップスケジュールリスト  |
 | backupSchedules.backupWndBgnTime      | Body | String  | バックアップ開始時刻       |
@@ -1206,7 +1193,6 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
     "backupPeriod": 1,
     "ftwrlWaitTimeout": 1800,
     "backupRetryCount": 0,
-    "replicationRegion": null,
     "useBackupLock": false,
     "backupSchedules": [
         {
@@ -1238,7 +1224,6 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
 | ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                                                 |
 | backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                                     |
-| replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                  |
 | useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか                                                                                                                                                                                                               |
 | backupSchedules                       | Body | Array   | X  | バックアップスケジュールリスト                                                                                                                                                                                                                |
 | backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                 |
@@ -1751,7 +1736,6 @@ POST /v3.0/backups/{backupId}/restore
 | backup.backupPeriod                          | Body | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                            |
 | backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                   |
-| backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                  |
 | backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                          |
 | backup.backupSchedules                       | Body | Array   | O  | バックアップスケジュールリスト                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                 |
@@ -2566,6 +2550,7 @@ GET /v3.0/user-groups/{userGroupId}
 |------------------|------|----------|----------------------------------|
 | userGroupId      | Body | UUID     | ユーザーグループの識別子                     |
 | userGroupName    | Body | String   | ユーザーグループを識別できる名前                 |
+| userGroupTypeCode    | Body | Enum   | ユーザーグループの種類  <br /> `ENTIRE`:プロジェクトメンバー全体を含むユーザーグループ <br /> `INDIVIDUAL_MEMBER`:特定のプロジェクトメンバーをを含むユーザーグループ    |
 | members          | Body | Array    | プロジェクトメンバーリスト                    |
 | members.memberId | Body | UUID     | プロジェクトメンバーの識別子                   |
 | createdYmdt      | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -2583,6 +2568,7 @@ GET /v3.0/user-groups/{userGroupId}
     },
     "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
     "userGroupName": "dev-team",
+	"userGroupTypeCode": "INDIVIDUAL_MEMBER",
     "members": [
         {
             "memberId": "1321e759-2ef3-4b85-9921-b13e918b24b5"
@@ -2609,7 +2595,8 @@ POST /v3.0/user-groups
 | 名前            | 種類   | 形式     | 必須 | 説明                |
 |---------------|------|--------|----|-------------------|
 | userGroupName | Body | String | O  | ユーザーグループを識別できる名前  |
-| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト |
+| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`がtrueの場合、当該フィールドの値は無視されます   |
+|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか <br /> trueの場合、当該グループは全メンバーに対して設定されます  |
 
 <details><summary>例</summary>
 <p>
@@ -2620,7 +2607,12 @@ POST /v3.0/user-groups
     "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
 }
 ```
-
+```json
+{
+    "userGroupName": "dev-team",
+    "selectAllYN":true
+}
+```
 </p>
 </details>
 
@@ -2645,6 +2637,7 @@ PUT /v3.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID   | O  | ユーザーグループの識別子      |
 | userGroupName | Body | String | X  | ユーザーグループを識別できる名前  |
 | memberIds     | Body | Array  | X  | プロジェクトメンバーの識別子リスト |
+|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか<br /> trueの場合、当該グループは全メンバーに対して設定されます  |
 
 <details><summary>例</summary>
 <p>
@@ -3072,7 +3065,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DB 인스턴스 시작"
+                    "message": "DBインスタンス起動"
                 },
                 {
                     "langCode": "ZH",

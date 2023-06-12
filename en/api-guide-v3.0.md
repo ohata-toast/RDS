@@ -1907,7 +1907,7 @@ This API does not require a request body.
 | rules               | Body | Array    | DB security group rules                                                                                                                                  |
 | rules.ruleId        | Body | UUID     | DB security group rule identifier                                                                                                                        |
 | rules.description   | Body | String   | Additional information on DB security group rule                                                                                                         |
-| rules.direction     | Body | Enum     | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                
+| rules.direction     | Body | Enum     | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                |
 | rules.etherType     | Body | Enum     | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                         |
 | rules.port          | Body | Object   | Port object                                                                                                                                              |
 | rules.port.portType | Body | Enum     | Port type<br/>- `DB_PORT`: Sets to DB instance port value.<br/>- `PORT`: Sets to specified port value.<br/>- `PORT_RANGE`: Sets to specified port range. |
@@ -1975,7 +1975,7 @@ POST /v3.0/db-security-groups
 | description         | Body | String | X        | Additional information on DB security group                                                                                                                                                                                      |
 | rules               | Body | Array  | O        | DB security group rules                                                                                                                                                                                                          |
 | rules.description   | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| rules.direction     | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| rules.direction     | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | rules.etherType     | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | rules.cidr          | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 | rules.port          | Body | Object | O        | Port object                                                                                                                                                                                                                      |
@@ -2082,7 +2082,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 |-------------------|------|--------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbSecurityGroupId | URL  | UUID   | O        | DB security group identifier                                                                                                                                                                                                     |
 | description       | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
 | port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
@@ -2130,7 +2130,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | dbSecurityGroupId | URL  | UUID   | O        | DB security group identifier                                                                                                                                                                                                     |
 | ruleId            | URL  | UUID   | O        | DB security group rule identifier                                                                                                                                                                                                |
 | description       | Body | String | X        | Additional information on DB security group rule                                                                                                                                                                                 |
-| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        
+| direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
 | port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
@@ -2564,6 +2564,7 @@ This API does not require a request body.
 |------------------|------|----------|-----------------------------------------------------|
 | userGroupId      | Body | UUID     | User group identifier                               |
 | userGroupName    | Body | String   | Name to identify user groups                        |
+| userGroupTypeCode| Body | Enum   | User group type    <br /> `ENTIRE`: User group that includes all project members<br /> `INDIVIDUAL_MEMBER`: User group that includes certain project members      |
 | members          | Body | Array    | Project member list                                 |
 | members.memberId | Body | UUID     | Project member identifier                           |
 | createdYmdt      | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)  |
@@ -2581,6 +2582,7 @@ This API does not require a request body.
     },
     "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
     "userGroupName": "dev-team",
+    	"userGroupTypeCode": "INDIVIDUAL_MEMBER",
     "members": [
         {
             "memberId": "1321e759-2ef3-4b85-9921-b13e918b24b5"
@@ -2607,7 +2609,8 @@ POST /v3.0/user-groups
 | Name          | Type | Format | Required | Description                  |
 |---------------|------|--------|----------|------------------------------|
 | userGroupName | Body | String | O        | Name to identify user groups |
-| memberIds     | Body | Array  | O        | Project member identifiers   |
+| memberIds     | Body | Array  | O  | Project member identifiers<br /> If `selectAllYN` is true, the field value is ignored    |
+| selectAllYN   | Body | Boolean  | X  | Whether all project members are included <br /> If true, the group is set for all members   |
 
 <details><summary>Example</summary>
 <p>
@@ -2616,6 +2619,13 @@ POST /v3.0/user-groups
 {
     "userGroupName": "dev-team",
     "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
+}
+```
+
+```json
+{
+    "userGroupName": "dev-team",
+    "selectAllYN":true
 }
 ```
 
@@ -2643,6 +2653,7 @@ PUT /v3.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID   | O        | User group identifier        |
 | userGroupName | Body | String | X        | Name to identify user groups |
 | memberIds     | Body | Array  | X        | Project member identifiers   |
+| selectAllYN   | Body | Boolean  | X  | Whether all project members are included <br /> If true, the group is set for all members  |
 
 <details><summary>Example</summary>
 <p>

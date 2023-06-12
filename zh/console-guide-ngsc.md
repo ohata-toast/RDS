@@ -44,7 +44,6 @@
     * It can be set to a value between 0 and 730.
     * If you enter 0, auto backup is not executed.
 * Use Table Locking: Set whether to lock the table with the FLUSH TABLES WITH READ LOCK statement when performing backup.
-* Backup Replication Region: Set to replicate backup files to another region when auto backup is executed.
 * Backup Retry Count: Set the number of retries to make when backup fails.
     * Retry is performed when you enter 1 or higher.
     * Retry is performed only when performing auto backup.
@@ -59,8 +58,6 @@
 * User Access Control: Enter accessible users to DB instance in the CIDR format.
     * Unregistered IPs for user access control are not accessible.
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
-
-> [Note] The Backup Replication Region feature is not provided for banking networks.
 
 ![db_configuration_0_en](https://static.toastoven.net/prod_rds/22.03.15/db_configuration_0_en.png)
 
@@ -530,7 +527,9 @@ The users who receive notifications through notification groups and event subscr
 * ❷ Enter the group name.
 * ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
 * ❹ Add users to notified users.
-* ❺ All users in the user list are added to the notified users.
+* ❺ `전체 프로젝트 멤버`를 통보 대상에 추가합니다. 
+  * 추가 시 개별 사용자 추가는 취소됩니다.
+  * 해당 사용자 그룹을 이용하여 알람을 전송하게 되는 경우, 당시 전체 프로젝트 멤버 대상으로 알람을 전송합니다.
 
 ### Modify User Group
 

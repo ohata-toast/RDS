@@ -2,9 +2,7 @@
 
 | 리전        | 엔드포인트                                         |
 |-----------|-----------------------------------------------|
-| 한국(판교) 리전 | https://kr1-rds-mysql.api.nhncloudservice.com |
-| 한국(평촌) 리전 | https://kr2-rds-mysql.api.nhncloudservice.com |
-| 일본 리전     | https://jp1-rds-mysql.api.nhncloudservice.com |
+| 한국(판교) 리전 | https://kr1-rds-mysql.api.gncloud.go.kr |
 
 ## 인증 및 권한
 
@@ -48,7 +46,7 @@ GET /v3.0/project/regions
 | 이름                 | 종류   | 형식      | 설명                                                                         |
 |--------------------|------|---------|----------------------------------------------------------------------------|
 | regions            | Body | Array   | 리전 목록                                                                      |
-| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전 |
+| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전 |
 | regions.isEnabled  | Body | Boolean | 리전의 활성화 여부                                                                 |
 
 <details><summary>예시</summary>
@@ -64,14 +62,6 @@ GET /v3.0/project/regions
     "regions": [
         {
             "regionCode": "KR1",
-            "isEnabled": true
-        },
-        {
-            "regionCode": "KR2",
-            "isEnabled": true
-        },
-        {
-            "regionCode": "JP1",
             "isEnabled": true
         }
     ]
@@ -695,7 +685,6 @@ POST /v3.0/db-instances
 | backup.backupPeriod                          | Body | Number  | O  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                          |
 | backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                     |
-| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | O  | 백업 스케줄 목록                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
@@ -932,7 +921,6 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                                            |
 | backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                                    |
-| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                       |
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                |
 | backup.backupSchedules                       | Body | Array   | X  | 백업 스케줄 목록                                                                                                                                                                                                                                           |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | X  | 백업 시작 시각<br/>- 예시: `00:00:00`<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                               |
@@ -1186,7 +1174,6 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | 백업 보관 기간(일)    |
 | ftwrlWaitTimeout                      | Body | Number  | 쿼리 지연 대기 시간(초) |
 | backupRetryCount                      | Body | Number  | 백업 재시도 횟수      |
-| replicationRegion                     | Body | Enum    | 백업 복제 리전       |
 | useBackupLock                         | Body | Boolean | 테이블 잠금 사용 여부   |
 | backupSchedules                       | Body | Array   | 백업 스케줄 목록      |
 | backupSchedules.backupWndBgnTime      | Body | String  | 백업 시작 시각       |
@@ -1206,7 +1193,6 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
     "backupPeriod": 1,
     "ftwrlWaitTimeout": 1800,
     "backupRetryCount": 0,
-    "replicationRegion": null,
     "useBackupLock": false,
     "backupSchedules": [
         {
@@ -1238,7 +1224,6 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
 | ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                                            |
 | backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                                    |
-| replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
 | useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부                                                                                                                                                                                                                |
 | backupSchedules                       | Body | Array   | X  | 백업 스케줄 목록                                                                                                                                                                                                                   |
 | backupSchedules.backupWndBgnTime      | Body | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
@@ -1751,7 +1736,6 @@ POST /v3.0/backups/{backupId}/restore
 | backup.backupPeriod                          | Body | Number  | O  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                          |
 | backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                     |
-| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | O  | 백업 스케줄 목록                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
@@ -1907,7 +1891,7 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 | rules               | Body | Array    | DB 보안 그룹 규칙 목록                                                                                                     |
 | rules.ruleId        | Body | UUID     | DB 보안 그룹 규칙의 식별자                                                                                                   |
 | rules.description   | Body | String   | DB 보안 그룹 규칙에 대한 추가 정보                                                                                              |
-| rules.direction     | Body | Enum     | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                       
+| rules.direction     | Body | Enum     | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                       |
 | rules.etherType     | Body | Enum     | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                     |
 | rules.port          | Body | Object   | 포트 객체                                                                                                              |
 | rules.port.portType | Body | Enum     | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
@@ -1975,7 +1959,7 @@ POST /v3.0/db-security-groups
 | description         | Body | String | X  | DB 보안 그룹에 대한 추가 정보                                                                                                                                                                       |
 | rules               | Body | Array  | O  | DB 보안 그룹 규칙 목록                                                                                                                                                                           |
 | rules.description   | Body | String | X  | DB 보안 그룹 규칙에 대한 추가 정보                                                                                                                                                                    |
-| rules.direction     | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             
+| rules.direction     | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             |
 | rules.etherType     | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
 | rules.cidr          | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
 | rules.port          | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
@@ -2082,7 +2066,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 |-------------------|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbSecurityGroupId | URL  | UUID   | O  | DB 보안 그룹의 식별자                                                                                                                                                                            |
 | description       | Body | String | X  | DB 보안 그룹 규칙에 대한 추가 정보                                                                                                                                                                    |
-| direction         | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             
+| direction         | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신|                                                                                                                                             
 | etherType         | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
 | port              | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
 | port.portType     | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
@@ -2130,7 +2114,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | dbSecurityGroupId | URL  | UUID   | O  | DB 보안 그룹의 식별자                                                                                                                                                                            |
 | ruleId            | URL  | UUID   | O  | DB 보안 그룹 규칙의 식별자                                                                                                                                                                         |
 | description       | Body | String | X  | DB 보안 그룹 규칙에 대한 추가 정보                                                                                                                                                                    |
-| direction         | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             
+| direction         | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             |
 | etherType         | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
 | port              | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
 | port.portType     | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
@@ -2566,6 +2550,7 @@ GET /v3.0/user-groups/{userGroupId}
 |------------------|------|----------|-----------------------------------|
 | userGroupId      | Body | UUID     | 사용자 그룹의 식별자                       |
 | userGroupName    | Body | String   | 사용자 그룹을 식별할 수 있는 이름               |
+| userGroupTypeCode    | Body | Enum   | 사용자 그룹 종류    <br /> `ENTIRE`: 프로젝트 멤버 전체를 포함하는 사용자 그룹 <br /> `INDIVIDUAL_MEMBER`: 특정 프로젝트 멤버를 포함하는 사용자 그룹      |
 | members          | Body | Array    | 프로젝트 멤버 목록                        |
 | members.memberId | Body | UUID     | 프로젝트 멤버의 식별자                      |
 | createdYmdt      | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -2583,6 +2568,7 @@ GET /v3.0/user-groups/{userGroupId}
     },
     "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
     "userGroupName": "dev-team",
+	"userGroupTypeCode": "INDIVIDUAL_MEMBER",
     "members": [
         {
             "memberId": "1321e759-2ef3-4b85-9921-b13e918b24b5"
@@ -2609,7 +2595,8 @@ POST /v3.0/user-groups
 | 이름            | 종류   | 형식     | 필수 | 설명                  |
 |---------------|------|--------|----|---------------------|
 | userGroupName | Body | String | O  | 사용자 그룹을 식별할 수 있는 이름 |
-| memberIds     | Body | Array  | O  | 프로젝트 멤버의 식별자 목록     |
+| memberIds     | Body | Array  | O  | 프로젝트 멤버의 식별자 목록     <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨    |
+|    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
 
 <details><summary>예시</summary>
 <p>
@@ -2620,7 +2607,12 @@ POST /v3.0/user-groups
     "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
 }
 ```
-
+```json
+{
+    "userGroupName": "dev-team",
+    "selectAllYN":true
+}
+```
 </p>
 </details>
 
@@ -2645,6 +2637,7 @@ PUT /v3.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID   | O  | 사용자 그룹의 식별자         |
 | userGroupName | Body | String | X  | 사용자 그룹을 식별할 수 있는 이름 |
 | memberIds     | Body | Array  | X  | 프로젝트 멤버의 식별자 목록     |
+|    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
 
 <details><summary>예시</summary>
 <p>

@@ -1907,7 +1907,7 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 | rules               | Body | Array    | DBセキュリティグループルールリスト                                                                                                |
 | rules.ruleId        | Body | UUID     | DBセキュリティグループルールの識別子                                                                                               |
 | rules.description   | Body | String   | DBセキュリティグループルールの追加情報                                                                                              |
-| rules.direction     | Body | Enum     | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                         
+| rules.direction     | Body | Enum     | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                         |
 | rules.etherType     | Body | Enum     | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                    |
 | rules.port          | Body | Object   | ポートオブジェクト                                                                                                         |
 | rules.port.portType | Body | Enum     | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。<br/>- `PORT`:指定されたポート値に設定されます。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
@@ -1975,7 +1975,7 @@ POST /v3.0/db-security-groups
 | description         | Body | String | X  | DBセキュリティグループの追加情報                                                                                                                                                                    |
 | rules               | Body | Array  | O  | DBセキュリティグループルールリスト                                                                                                                                                                   |
 | rules.description   | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                 |
-| rules.direction     | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            
+| rules.direction     | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            |
 | rules.etherType     | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                       |
 | rules.cidr          | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                               |
 | rules.port          | Body | Object | O  | ポートオブジェクト                                                                                                                                                                            |
@@ -2082,7 +2082,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 |-------------------|------|--------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbSecurityGroupId | URL  | UUID   | O  | DBセキュリティグループの識別子                                                                                                                                                                     |
 | description       | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                 |
-| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            
+| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            |
 | etherType         | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                       |
 | port              | Body | Object | O  | ポートオブジェクト                                                                                                                                                                            |
 | port.portType     | Body | Enum   | O  | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。 `minPort`値と`maxPort`値を必要としません。<br/>- `PORT`:指定されたポート値に設定されます。 `minPort`値と`maxPort`値が同じでなければなりません。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
@@ -2130,7 +2130,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | dbSecurityGroupId | URL  | UUID   | O  | DBセキュリティグループの識別子                                                                                                                                                                     |
 | ruleId            | URL  | UUID   | O  | DBセキュリティグループルールの識別子                                                                                                                                                                  |
 | description       | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                 |
-| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            
+| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                            |
 | etherType         | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                       |
 | port              | Body | Object | O  | ポートオブジェクト                                                                                                                                                                            |
 | port.portType     | Body | Enum   | O  | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。 `minPort`値と`maxPort`値を必要としません。<br/>- `PORT`:指定されたポート値に設定されます。 `minPort`値と`maxPort`値が同じでなければなりません。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
@@ -2566,6 +2566,7 @@ GET /v3.0/user-groups/{userGroupId}
 |------------------|------|----------|----------------------------------|
 | userGroupId      | Body | UUID     | ユーザーグループの識別子                     |
 | userGroupName    | Body | String   | ユーザーグループを識別できる名前                 |
+| userGroupTypeCode    | Body | Enum   | ユーザーグループの種類  <br /> `ENTIRE`:プロジェクトメンバー全体を含むユーザーグループ <br /> `INDIVIDUAL_MEMBER`:特定のプロジェクトメンバーをを含むユーザーグループ    |
 | members          | Body | Array    | プロジェクトメンバーリスト                    |
 | members.memberId | Body | UUID     | プロジェクトメンバーの識別子                   |
 | createdYmdt      | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -2583,6 +2584,7 @@ GET /v3.0/user-groups/{userGroupId}
     },
     "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
     "userGroupName": "dev-team",
+	"userGroupTypeCode": "INDIVIDUAL_MEMBER",
     "members": [
         {
             "memberId": "1321e759-2ef3-4b85-9921-b13e918b24b5"
@@ -2609,7 +2611,8 @@ POST /v3.0/user-groups
 | 名前            | 種類   | 形式     | 必須 | 説明                |
 |---------------|------|--------|----|-------------------|
 | userGroupName | Body | String | O  | ユーザーグループを識別できる名前  |
-| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト |
+| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`がtrueの場合、当該フィールドの値は無視されます   |
+|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか <br /> trueの場合、当該グループは全メンバーに対して設定されます  |
 
 <details><summary>例</summary>
 <p>
@@ -2620,7 +2623,12 @@ POST /v3.0/user-groups
     "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
 }
 ```
-
+```json
+{
+    "userGroupName": "dev-team",
+    "selectAllYN":true
+}
+```
 </p>
 </details>
 
@@ -2645,6 +2653,7 @@ PUT /v3.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID   | O  | ユーザーグループの識別子      |
 | userGroupName | Body | String | X  | ユーザーグループを識別できる名前  |
 | memberIds     | Body | Array  | X  | プロジェクトメンバーの識別子リスト |
+|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか<br /> trueの場合、当該グループは全メンバーに対して設定されます  |
 
 <details><summary>例</summary>
 <p>
@@ -3072,7 +3081,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DB 인스턴스 시작"
+                    "message": "DBインスタンス起動"
                 },
                 {
                     "langCode": "ZH",

@@ -2,7 +2,7 @@
 
 | 리전        | 엔드포인트                                          |
 |-----------|------------------------------------------------|
-| 한국(판교) 리전 | https://kr1-mysql.api.ngsc-nhncloudservice.com |
+| 한국(판교) 리전 | https://kr1-rds-mysql.api.gncloud.go.kr |
 
 ## Monitoring
 
