@@ -4,11 +4,10 @@
 
 #### Added Features and Updates
 
-* Rebuilding candidate master is available when an issue occur
-    * The fixed IP does not change because DB instance of the candidate master remain unchanged
-    * All data in the database is deleted, and recovered with the data of the master
-* 유저 그룹에 사용자 추가 시 조직 및 프로젝트의 모든 사용자를 추가할 수 있도록 개선
-
+* Added rebuild support when a candidate master fails
+  * The DB instance on the candidate master does not change, so the fixed IP address does not change
+  * All data in the database are deleted, and restored with the data of the master
+* Made improvements so that, when adding a user to user groups, all users of organizatons and projects can be added
 
 ### May 16, 2023
 
