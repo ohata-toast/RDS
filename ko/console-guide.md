@@ -527,7 +527,7 @@ DB 인스턴스와 관련된 여러 작업 중 발생하는 각종 이벤트 및
 
 * ❶ **사용자 그룹 생성** 버튼을 클릭하면 **사용자 그룹 생성** 창이 나타납니다.
 
-![user_group_create_1_ko](https://static.toastoven.net/prod_rds/210615/user_group_create_1_ko.png)
+![user_group_create_1_ko](https://static.toastoven.net/prod_rds/23.06.13/user_group_create_1_ko.png)
 
 * ❷ 그룹이름을 입력합니다.
 * ❸ 통보 대상 사용자가 표시됩니다. **x** 버튼을 클릭하면 통보 대상에서 제외됩니다.
