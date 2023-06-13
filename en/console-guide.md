@@ -532,7 +532,7 @@ The users who receive notifications through notification groups and event subscr
 * ❷ Enter the group name.
 * ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
 * ❹ Add users to notified users.
-* ❺ Add `all project members` to the notified users.
+* ❺ Add **all project members** to the notified users.
   * You cannot add individual users. If you do, it is canceled.
   * When sending an alrm using the user group, the alarm is sent to all project members at the time.
 
