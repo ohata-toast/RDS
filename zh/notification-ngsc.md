@@ -161,7 +161,7 @@
 
 ### 사용자 그룹 생성
 
-![user_group_01_en](https://static.toastoven.net/prod_rds/23.04.11/user_group_01_en.png)
+![user_group_01_en](https://static.toastoven.net/prod_rds/23.06.13/user_group_01_en.png)
 
 * ❶ **사용자 그룹 생성** 버튼을 누르면 사용자 그룹을 생성할 수 있는 팝업이 나타납니다.
 * ❷ 사용자 그룹에 추가된 사용자가 나타납니다.
