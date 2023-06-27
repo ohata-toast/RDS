@@ -59,6 +59,8 @@
 * User Access Control: Enter accessible users to DB instance in the CIDR format.
     * Unregistered IPs for user access control are not accessible.
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
+        * Inboud: Direction into the instance.
+        * Outbound: Direction out of the instance.
 
 > [Note] The Backup Replication Region feature is not provided for banking networks.
 
@@ -525,12 +527,14 @@ The users who receive notifications through notification groups and event subscr
 
 * ❶ Click the **Create User Group** to display a popup to **create a user group**.
 
-![user_group_create_1_en](https://static.toastoven.net/prod_rds/22.03.15/user_group_create_1_en.png)
+![user_group_create_1_en](https://static.toastoven.net/prod_rds/23.06.13/user_group_create_1_en.png)
 
 * ❷ Enter the group name.
 * ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
 * ❹ Add users to notified users.
-* ❺ All users in the user list are added to the notified users.
+* ❺ Add **all project members** to the notified users.
+  * You cannot add individual users. If you do, it is canceled.
+  * When sending an alrm using the user group, the alarm is sent to all project members at the time.
 
 ### Modify User Group
 
@@ -538,7 +542,7 @@ The users who receive notifications through notification groups and event subscr
 
 * ❶ Click the **Edit** button of the user group to be modified and a popup will appear to **modify the user group**.
 
-![user_group_modify_1_en](https://static.toastoven.net/prod_rds/22.03.15/user_group_modify_1_en.png)
+![user_group_modify_1_en](https://static.toastoven.net/prod_rds/23.06.13/user_group_modify_1_en.png)
 
 * ❷ After modifying the items, click the **OK** button to modify the user group.
 

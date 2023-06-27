@@ -160,13 +160,15 @@ You can manage users as groups to receive notifications. Notification target mus
 
 ### Create User Group
 
-![user_group_01_en](https://static.toastoven.net/prod_rds/23.04.11/user_group_01_en.png)
+![user_group_01_en](https://static.toastoven.net/prod_rds/23.06.13/user_group_01_en.png)
 
 * ❶ When you click**Create user group**, a pop-up screen appears where you can create user groups.
 * ❷ Users added to the user group appear.
 * ❸ Press **x** to exclude added users.
 * ❹ If there are many users in the user list, you can limit the results by entering search criteria.
-* ❺ Click **Add All** to add all project members to the user group.
+* ❺ Add **all project members** to the notified users.
+  * You cannot add individual users. If you do, it is canceled.
+  * When sending an alrm using the user group, the alarm is sent to all project members at the time.
 * ❻ Click **Add** to add a user to the user group.
 
 ## Notification Group

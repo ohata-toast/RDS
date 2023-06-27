@@ -143,7 +143,7 @@
 
 イベントタイプ、コード、ソースに分けてイベントを購読できます。イベントタイプで購読すると、イベントタイプに含まれるすべてのイベントコードの通知を受け取ります。通知が広範すぎる場合、イベントコードとソースに細分化して購読できます。プロジェクトメンバーのみ通知を受けるユーザーとして選択できます。基本的にはメールでイベント通知が送信され、実名認証した携帯電話番号が登録された場合のみSMSで追加イベント通知が送信されます。
 
-![event_subscription_01_ko](https://static.toastoven.net/prod_rds/23.04.11/event_subscription_01_ko.png)
+![event_subscription_01_ja](https://static.toastoven.net/prod_rds/23.04.11/event_subscription_01_ja.png)
 
 * ❶ **イベント購読登録**を押すと、イベント購読を登録できるポップアップウィンドウが表示されます。
 * ❷ 購読するイベントタイプを選択します。イベントタイプによって選択できるイベントコードが変更されます。
@@ -161,13 +161,15 @@
 
 ### ユーザーグループの作成
 
-![user_group_01_ko](https://static.toastoven.net/prod_rds/23.04.11/user_group_01_ko.png)
+![user_group_01_ja](https://static.toastoven.net/prod_rds/23.06.13/user_group_01_ja.png)
 
 * ❶ **ユーザーグループ作成**を押すと、ユーザーグループを作成できるポップアップウィンドウが表示されます。
 * ❷ ユーザーグループに追加されたユーザーが表示されます。
 * ❸ **x**を押すと、追加されたユーザーを除外できます。
 * ❹ ユーザーリストにユーザーが多い場合、検索条件を入力して結果を制限できます。
-* ❺ **すべて追加**を押して、プロジェクトメンバーをすべてユーザーグループに追加します。
+* ❺ **全プロジェクトメンバー**を通知対象に追加します。 
+  * 追加 すると、個別ユーザーの追加はキャンセルされます。
+  * 該当ユーザーグループを利用してアラームを送信する場合、その時点で全プロジェクトメンバーを対象にアラームを送信します。
 * ❻ **OK**を押してユーザーグループにユーザーを追加します。
 
 ## 通知グループ
@@ -176,7 +178,7 @@
 
 ### 通知グループの作成
 
-![notification_group_01_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_01_ko.png)
+![notification_group_01_ja.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_01_ja.png)
 
 * ❶ **グループ作成**を押すと、通知グループを作成できるポップアップウィンドウが表示されます。
 * ❷ 通知を受け取る方法を選択します。
@@ -237,7 +239,7 @@
 
 ### 監視設定の追加
 
-![notification_group_02_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_02_ko.png)
+![notification_group_02_ja.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_02_ja.png)
 
 * ❶ **監視設定**を押すと、監視設定を変更できるポップアップウィンドウが表示されます。
 * ❷ **監視設定の追加**を押して新規監視設定を追加します。
@@ -245,7 +247,7 @@
 
 ### 監視設定の変更および削除
 
-![notification_group_03_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_03_ko.png)
+![notification_group_03_ja.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_03_ja.png)
 
 * ❶ ボタンをクリックすると、追加した監視設定を変更できます。
 * ❷ ボタンをクリックすると、追加した監視設定を削除できます。
