@@ -612,22 +612,23 @@ GET /v3.0/db-instances/{dbInstanceId}
 
 #### レスポンス
 
-| 名前                 | 種類   | 形式       | 説明                                                                                                                                      |
-|--------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId       | Body | UUID     | DBインスタンスの識別子                                                                                                                            |
-| dbInstanceGroupId  | Body | UUID     | DBインスタンスグループの識別子                                                                                                                        |
-| dbInstanceName     | Body | String   | DBインスタンスを識別できる名前                                                                                                                        |
-| description        | Body | String   | DBインスタンスの追加情報                                                                                                                           |
-| dbVersion          | Body | Enum     | DBエンジンタイプ                                                                                                                               |
-| dbPort             | Body | Number   | DBポート                                                                                                                                   |
-| dbInstanceType     | Body | Enum     | DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
-| dbInstanceStatus   | Body | Enum     | DBインスタンスの現在状態                                                                                                                           |
-| progressStatus     | Body | Enum     | DBインスタンスの現在作業進行状態                                                                                                                       |
-| dbFlavorId         | Body | UUID     | DBインスタンス仕様の識別子                                                                                                                          |
-| parameterGroupId   | Body | UUID     | DBインスタンスに適用されたパラメータグループの識別子                                                                                                             |
-| dbSecurityGroupIds | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
-| createdYmdt        | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
-| updatedYmdt        | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
+| 名前                    | 種類   | 形式       | 説明                                                                                                                                      |
+|-----------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId          | Body | UUID     | DBインスタンスの識別子                                                                                                                            |
+| dbInstanceGroupId     | Body | UUID     | DBインスタンスグループの識別子                                                                                                                        |
+| dbInstanceName        | Body | String   | DBインスタンスを識別できる名前                                                                                                                        |
+| description           | Body | String   | DBインスタンスの追加情報                                                                                                                           |
+| dbVersion             | Body | Enum     | DBエンジンタイプ                                                                                                                               |
+| dbPort                | Body | Number   | DBポート                                                                                                                                   |
+| dbInstanceType        | Body | Enum     | DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstanceStatus      | Body | Enum     | DBインスタンスの現在状態                                                                                                                           |
+| progressStatus        | Body | Enum     | DBインスタンスの現在作業進行状態                                                                                                                       |
+| dbFlavorId            | Body | UUID     | DBインスタンス仕様の識別子                                                                                                                          |
+| parameterGroupId      | Body | UUID     | DBインスタンスに適用されたパラメータグループの識別子                                                                                                             |
+| dbSecurityGroupIds    | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
+| useDeletionProtection | Body | Boolean  | DB 인스턴스 삭제 보호 여부                                                                                                                        |
+| createdYmdt           | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
+| updatedYmdt           | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 
 <details><summary>例</summary>
 <p>
@@ -651,6 +652,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
     "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
+    "useDeletionProtection": false,
     "createdYmdt": "2022-11-23T12:03:13+09:00",
     "updatedYmdt": "2022-12-02T17:20:17+09:00"
 }
@@ -684,6 +686,7 @@ POST /v3.0/db-instances
 | useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
 | pingInterval                                 | Body | Number  | X  | 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                         |
 | useDefaultUserNotification                   | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                          |
+| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                    |
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
 | network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
@@ -923,6 +926,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                            |
 | userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                                                         |
 | useDefaultUserNotification                   | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                   |
+| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                             |
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                                          |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                                         |
 | network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                                            |
@@ -986,6 +990,25 @@ POST /v3.0/db-instances/{dbInstanceId}/promote
 | 名前    | 種類   | 形式   | 説明            |
 |-------|------|------|---------------|
 | jobId | Body | UUID | リクエストした作業の識別子 |
+
+---
+
+### DB 인스턴스 삭제 보호 설정 변경하기
+
+```
+PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
+```
+
+#### 요청
+
+| 이름                    | 종류   | 형식      | 필수 | 설명           |
+|-----------------------|------|---------|----|--------------|
+| dbInstanceId          | URL  | UUID    | O  | DB 인스턴스의 식별자 |
+| useDeletionProtection | Body | Boolean | O  | 삭제 보호 여부     |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
@@ -1740,6 +1763,7 @@ POST /v3.0/backups/{backupId}/restore
 | useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
 | pingInterval                                 | Body | Number  | X  | 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                         |
 | useDefaultNotification                       | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
+| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                    | 
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
 | network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
@@ -2562,15 +2586,15 @@ GET /v3.0/user-groups/{userGroupId}
 
 #### レスポンス
 
-| 名前               | 種類   | 形式       | 説明                               |
-|------------------|------|----------|----------------------------------|
-| userGroupId      | Body | UUID     | ユーザーグループの識別子                     |
-| userGroupName    | Body | String   | ユーザーグループを識別できる名前                 |
-| userGroupTypeCode    | Body | Enum   | ユーザーグループの種類  <br /> `ENTIRE`:プロジェクトメンバー全体を含むユーザーグループ <br /> `INDIVIDUAL_MEMBER`:特定のプロジェクトメンバーをを含むユーザーグループ    |
-| members          | Body | Array    | プロジェクトメンバーリスト                    |
-| members.memberId | Body | UUID     | プロジェクトメンバーの識別子                   |
-| createdYmdt      | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt      | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前                | 種類   | 形式       | 説明                                                                                                        |
+|-------------------|------|----------|-----------------------------------------------------------------------------------------------------------|
+| userGroupId       | Body | UUID     | ユーザーグループの識別子                                                                                              |
+| userGroupName     | Body | String   | ユーザーグループを識別できる名前                                                                                          |
+| userGroupTypeCode | Body | Enum     | ユーザーグループの種類  <br /> `ENTIRE`:プロジェクトメンバー全体を含むユーザーグループ <br /> `INDIVIDUAL_MEMBER`:特定のプロジェクトメンバーをを含むユーザーグループ |
+| members           | Body | Array    | プロジェクトメンバーリスト                                                                                             |
+| members.memberId  | Body | UUID     | プロジェクトメンバーの識別子                                                                                            |
+| createdYmdt       | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                          |
+| updatedYmdt       | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                          |
 
 <details><summary>例</summary>
 <p>
@@ -2608,11 +2632,11 @@ POST /v3.0/user-groups
 
 #### リクエスト
 
-| 名前            | 種類   | 形式     | 必須 | 説明                |
-|---------------|------|--------|----|-------------------|
-| userGroupName | Body | String | O  | ユーザーグループを識別できる名前  |
-| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`がtrueの場合、当該フィールドの値は無視されます   |
-|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか <br /> trueの場合、当該グループは全メンバーに対して設定されます  |
+| 名前            | 種類   | 形式      | 必須 | 説明                                                              |
+|---------------|------|---------|----|-----------------------------------------------------------------|
+| userGroupName | Body | String  | O  | ユーザーグループを識別できる名前                                                |
+| memberIds     | Body | Array   | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`がtrueの場合、当該フィールドの値は無視されます |
+| selectAllYN   | Body | Boolean | X  | プロジェクトメンバー全体かどうか <br /> trueの場合、当該グループは全メンバーに対して設定されます          |
 
 <details><summary>例</summary>
 <p>
@@ -2623,12 +2647,14 @@ POST /v3.0/user-groups
     "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
 }
 ```
+
 ```json
 {
     "userGroupName": "dev-team",
     "selectAllYN":true
 }
 ```
+
 </p>
 </details>
 
@@ -2648,12 +2674,12 @@ PUT /v3.0/user-groups/{userGroupId}
 
 #### リクエスト
 
-| 名前            | 種類   | 形式     | 必須 | 説明                |
-|---------------|------|--------|----|-------------------|
-| userGroupId   | URL  | UUID   | O  | ユーザーグループの識別子      |
-| userGroupName | Body | String | X  | ユーザーグループを識別できる名前  |
-| memberIds     | Body | Array  | X  | プロジェクトメンバーの識別子リスト |
-|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか<br /> trueの場合、当該グループは全メンバーに対して設定されます  |
+| 名前            | 種類   | 形式      | 必須 | 説明                                                    |
+|---------------|------|---------|----|-------------------------------------------------------|
+| userGroupId   | URL  | UUID    | O  | ユーザーグループの識別子                                          |
+| userGroupName | Body | String  | X  | ユーザーグループを識別できる名前                                      |
+| memberIds     | Body | Array   | X  | プロジェクトメンバーの識別子リスト                                     |
+| selectAllYN   | Body | Boolean | X  | プロジェクトメンバー全体かどうか<br /> trueの場合、当該グループは全メンバーに対して設定されます |
 
 <details><summary>例</summary>
 <p>

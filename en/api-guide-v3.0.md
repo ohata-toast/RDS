@@ -612,22 +612,23 @@ This API does not require a request body.
 
 #### Response
 
-| Name               | Type | Format   | Description                                                                                                                                                             |
-|--------------------|------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId       | Body | UUID     | DB instance identifier                                                                                                                                                  |
-| dbInstanceGroupId  | Body | UUID     | DB instance group identifier                                                                                                                                            |
-| dbInstanceName     | Body | String   | Name to identify DB instances                                                                                                                                           |
-| description        | Body | String   | Additional information on DB instances                                                                                                                                  |
-| dbVersion          | Body | Enum     | DB engine type                                                                                                                                                          |
-| dbPort             | Body | Number   | DB port                                                                                                                                                                 |
-| dbInstanceType     | Body | Enum     | DB instance role type<br/>- `MASTER`: Master<br/>- `FAILED_MASTER`: Failed over master<br/>- `CANDIDATE_MASTER`: Candidate master<br/>- `READ_ONLY_SLAVE`: Read replica |
-| dbInstanceStatus   | Body | Enum     | DB instance current status                                                                                                                                              |
-| progressStatus     | Body | Enum     | Current task status of DB instance                                                                                                                                      |
-| dbFlavorId         | Body | UUID     | Identifier of DB instance specifications                                                                                                                                |
-| parameterGroupId   | Body | UUID     | Parameter group identifier applied to DB instance                                                                                                                       |
-| dbSecurityGroupIds | Body | Array    | DB security group identifiers applied to DB instance                                                                                                                    |
-| createdYmdt        | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
-| updatedYmdt        | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                     |
+| Name                  | Type | Format   | Description                                                                                                                                                             |
+|-----------------------|------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId          | Body | UUID     | DB instance identifier                                                                                                                                                  |
+| dbInstanceGroupId     | Body | UUID     | DB instance group identifier                                                                                                                                            |
+| dbInstanceName        | Body | String   | Name to identify DB instances                                                                                                                                           |
+| description           | Body | String   | Additional information on DB instances                                                                                                                                  |
+| dbVersion             | Body | Enum     | DB engine type                                                                                                                                                          |
+| dbPort                | Body | Number   | DB port                                                                                                                                                                 |
+| dbInstanceType        | Body | Enum     | DB instance role type<br/>- `MASTER`: Master<br/>- `FAILED_MASTER`: Failed over master<br/>- `CANDIDATE_MASTER`: Candidate master<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstanceStatus      | Body | Enum     | DB instance current status                                                                                                                                              |
+| progressStatus        | Body | Enum     | Current task status of DB instance                                                                                                                                      |
+| dbFlavorId            | Body | UUID     | Identifier of DB instance specifications                                                                                                                                |
+| parameterGroupId      | Body | UUID     | Parameter group identifier applied to DB instance                                                                                                                       |
+| dbSecurityGroupIds    | Body | Array    | DB security group identifiers applied to DB instance                                                                                                                    |
+| useDeletionProtection | Body | Boolean  | DB 인스턴스 삭제 보호 여부                                                                                                                                                        |
+| createdYmdt           | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
+| updatedYmdt           | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                     |
 
 <details><summary>Example</summary>
 <p>
@@ -651,6 +652,7 @@ This API does not require a request body.
     "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
     "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
+    "useDeletionProtection": false,
     "createdYmdt": "2022-11-23T12:03:13+09:00",
     "updatedYmdt": "2022-12-02T17:20:17+09:00"
 }
@@ -684,6 +686,7 @@ POST /v3.0/db-instances
 | useHighAvailability                          | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                                                                                                                                                                     |
 | pingInterval                                 | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                                                                                                                                                     |
 | useDefaultUserNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                  |
+| useDeletionProtection                        | Body | Boolean | X        | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                                               |
 | network                                      | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                             | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
 | network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                                                                                                                                                  |
@@ -923,6 +926,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | dbSecurityGroupIds                           | Body | Array   | X        | DB security group identifiers<br/>- Default: Original DB instance value                                                                                                                                                                                                                                             |
 | userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                                                              |
 | useDefaultUserNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                                                            |
+| useDeletionProtection                        | Body | Boolean | X        | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                                                                                         |
 | network                                      | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                                                                         |
 | network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>- Default: Original DB instance value                                                                                                                                                                                                                                       |
 | network.availabilityZone                     | Body | Enum    | O        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                                                                                                                                                                                                                       |
@@ -986,6 +990,25 @@ This API does not require a request body.
 | Name  | Type | Format | Description                  |
 |-------|------|--------|------------------------------|
 | jobId | Body | UUID   | Identifier of requested task |
+
+---
+
+### DB 인스턴스 삭제 보호 설정 변경하기
+
+```
+PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
+```
+
+#### 요청
+
+| 이름                    | 종류   | 형식      | 필수 | 설명           |
+|-----------------------|------|---------|----|--------------|
+| dbInstanceId          | URL  | UUID    | O  | DB 인스턴스의 식별자 |
+| useDeletionProtection | Body | Boolean | O  | 삭제 보호 여부     |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
@@ -1740,6 +1763,7 @@ POST /v3.0/backups/{backupId}/restore
 | useHighAvailability                          | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                                                                                                                                                                     |
 | pingInterval                                 | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                                                                                                                                                     |
 | useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                  |
+| useDeletionProtection                        | Body | Boolean | X        | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                                               | 
 | network                                      | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                             | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
 | network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                                                                                                                                                  |
@@ -2560,15 +2584,15 @@ This API does not require a request body.
 
 #### Response
 
-| Name             | Type | Format   | Description                                         |
-|------------------|------|----------|-----------------------------------------------------|
-| userGroupId      | Body | UUID     | User group identifier                               |
-| userGroupName    | Body | String   | Name to identify user groups                        |
-| userGroupTypeCode| Body | Enum   | User group type    <br /> `ENTIRE`: User group that includes all project members<br /> `INDIVIDUAL_MEMBER`: User group that includes certain project members      |
-| members          | Body | Array    | Project member list                                 |
-| members.memberId | Body | UUID     | Project member identifier                           |
-| createdYmdt      | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)  |
-| updatedYmdt      | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| Name              | Type | Format   | Description                                                                                                                                                  |
+|-------------------|------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| userGroupId       | Body | UUID     | User group identifier                                                                                                                                        |
+| userGroupName     | Body | String   | Name to identify user groups                                                                                                                                 |
+| userGroupTypeCode | Body | Enum     | User group type    <br /> `ENTIRE`: User group that includes all project members<br /> `INDIVIDUAL_MEMBER`: User group that includes certain project members |
+| members           | Body | Array    | Project member list                                                                                                                                          |
+| members.memberId  | Body | UUID     | Project member identifier                                                                                                                                    |
+| createdYmdt       | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                           |
+| updatedYmdt       | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                          |
 
 <details><summary>Example</summary>
 <p>
@@ -2606,11 +2630,11 @@ POST /v3.0/user-groups
 
 #### Request
 
-| Name          | Type | Format | Required | Description                  |
-|---------------|------|--------|----------|------------------------------|
-| userGroupName | Body | String | O        | Name to identify user groups |
-| memberIds     | Body | Array  | O  | Project member identifiers<br /> If `selectAllYN` is true, the field value is ignored    |
-| selectAllYN   | Body | Boolean  | X  | Whether all project members are included <br /> If true, the group is set for all members   |
+| Name          | Type | Format  | Required | Description                                                                               |
+|---------------|------|---------|----------|-------------------------------------------------------------------------------------------|
+| userGroupName | Body | String  | O        | Name to identify user groups                                                              |
+| memberIds     | Body | Array   | O        | Project member identifiers<br /> If `selectAllYN` is true, the field value is ignored     |
+| selectAllYN   | Body | Boolean | X        | Whether all project members are included <br /> If true, the group is set for all members |
 
 <details><summary>Example</summary>
 <p>
@@ -2648,12 +2672,12 @@ PUT /v3.0/user-groups/{userGroupId}
 
 #### Request
 
-| Name          | Type | Format | Required | Description                  |
-|---------------|------|--------|----------|------------------------------|
-| userGroupId   | URL  | UUID   | O        | User group identifier        |
-| userGroupName | Body | String | X        | Name to identify user groups |
-| memberIds     | Body | Array  | X        | Project member identifiers   |
-| selectAllYN   | Body | Boolean  | X  | Whether all project members are included <br /> If true, the group is set for all members  |
+| Name          | Type | Format  | Required | Description                                                                               |
+|---------------|------|---------|----------|-------------------------------------------------------------------------------------------|
+| userGroupId   | URL  | UUID    | O        | User group identifier                                                                     |
+| userGroupName | Body | String  | X        | Name to identify user groups                                                              |
+| memberIds     | Body | Array   | X        | Project member identifiers                                                                |
+| selectAllYN   | Body | Boolean | X        | Whether all project members are included <br /> If true, the group is set for all members |
 
 <details><summary>Example</summary>
 <p>
