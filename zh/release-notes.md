@@ -1,19 +1,19 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2023. 07. 11.
+### July 11, 2023
 
-#### 기능 추가 및 개선
+#### Added Features and Updates
 
-* DB 인스턴스 삭제 보호 기능 추가
+* Added DB instance deletion protection feature
 
 ### June 13, 2023
 
 #### Added Features and Updates
 
-* Rebuilding candidate master is available when an issue occur
-  * The fixed IP does not change because DB instance of the candidate master remain unchanged
-  * All data in the database is deleted, and recovered with the data of the master
-* 유저 그룹에 사용자 추가 시 조직 및 프로젝트의 모든 사용자를 추가할 수 있도록 개선
+* Added rebuild support when a candidate master fails
+  * The DB instance on the candidate master does not change, so the fixed IP address does not change
+  * All data in the database are deleted, and restored with the data of the master
+* Made improvements so that, when adding a user to user groups, all users of organizatons and projects can be added
 
 ### May 16, 2023
 
@@ -22,26 +22,26 @@
 * Made improvements so that the user interface is consistent with NHN Cloud services
 * Made modifications so that manual backup is not deleted even when DB instances are deleted
 * Added parameter group feature
-    * The database settings of DB instance can be freely changed
-    * Applicable to multiple instances
-    * Changes to settings in an existing DB instance are migrated to a parameter group with the same name as the DB instance
+  * The database settings of DB instance can be freely changed
+  * Applicable to multiple instances
+  * Changes to settings in an existing DB instance are migrated to a parameter group with the same name as the DB instance
 * Added DB security group feature
-    * The access control of DB instance can be freely set
-    * Applicable to multiple instances
-    * Access control rules set on existing DB instances are migrated to the DB security group named as `{DB instance name}__{DB instance ID}` rule
+  * The access control of DB instance can be freely set
+  * Applicable to multiple instances
+  * Access control rules set on existing DB instances are migrated to the DB security group named as `{DB instance name}__{DB instance ID}` rule
 * Provided a screen to view DB instances grouped by replication arrangements
 * Displayed candidate master to web console
-    * Available to secure storage by deleting the binary log of candidate master
-    * Various logs of candidate master can be checked and downloaded
+  * Available to secure storage by deleting the binary log of candidate master
+  * Various logs of candidate master can be checked and downloaded
 * Rebuilding read replica is available
-    * The fixed IP address does not change because the DB instance of the read replica remain unchanged
-    * All data in the database is deleted, and recovered with the data of the master
+  * The fixed IP address does not change because the DB instance of the read replica remain unchanged
+  * All data in the database is deleted, and recovered with the data of the master
 * Recovery of master with a completed failover
-    * High availability recovery of a new master and a master with a completed failover is available
-    * Recovery can fail, and an unrecoverable master with a completed failover can be rebuilt
+  * High availability recovery of a new master and a master with a completed failover is available
+  * Recovery can fail, and an unrecoverable master with a completed failover can be rebuilt
 * Rebuilding master with a completed failover
-    * The fixed IP does not change because DB instance of the master with a completed failover remain unchanged
-    * All data in the database is deleted, and recovered with the data of the master
+  * The fixed IP does not change because DB instance of the master with a completed failover remain unchanged
+  * All data in the database is deleted, and recovered with the data of the master
 * Added MySQL 8.0.32 version
 
 #### Bug Fixes
