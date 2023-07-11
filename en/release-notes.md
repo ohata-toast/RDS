@@ -1,5 +1,11 @@
 ## Database > RDS for MySQL > Release Notes
 
+### July 11, 2023
+
+#### Added Features and Updates
+
+* Added DB instance deletion protection feature
+
 ### June 13, 2023
 
 #### Added Features and Updates
