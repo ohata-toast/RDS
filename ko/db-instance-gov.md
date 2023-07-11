@@ -37,10 +37,6 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 | MySQL 8.0.18 |                                                           |
 | MySQL 5.7.37 |                                                           |
 | MySQL 5.7.33 | 외부의 백업본으로 DB 인스턴스를 복원할 수 없습니다.                            |
-| MySQL 5.7.26 |                                                           |
-| MySQL 5.7.19 |                                                           |
-| MySQL 5.7.15 |                                                           |
-| MySQL 5.6.33 | 신규 DB 인스턴스를 생성할 수 없습니다. 기존 DB 인스턴스의 읽기 복제본 생성, 복원만 지원합니다. |
 
 ### DB 인스턴스 타입
 
@@ -333,12 +329,12 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * 파라미터 설명
-    * master_instance_ip: 복제 대상(Master) 서버의 IP
-    * master_instance_port : 복제 대상(Master) 서버의 MySQL 포트
-    * user_id_for_replication: 복제 대상(Master) 서버의 MySQL에 접속할 복제용 계정
-    * password_for_replication_user: 복제용 계정 패스워드
-    * MASTER_LOG_FILE: 복제 대상(Master)의 binary log 파일명
-    * MASTER_LOG_POS: 복제 대상(Master)의 binary log 포지션
+  * master_instance_ip: 복제 대상(Master) 서버의 IP
+  * master_instance_port : 복제 대상(Master) 서버의 MySQL 포트
+  * user_id_for_replication: 복제 대상(Master) 서버의 MySQL에 접속할 복제용 계정
+  * password_for_replication_user: 복제용 계정 패스워드
+  * MASTER_LOG_FILE: 복제 대상(Master)의 binary log 파일명
+  * MASTER_LOG_POS: 복제 대상(Master)의 binary log 포지션
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -433,7 +429,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### 데이터 가져오는 도중 `ERROR 1418` 오류가 발생할 경우
 
 * `ERROR 1418` 오류는 mysqldump 파일의 함수 선언에 NO SQL, READS SQL DATA, DETERMINISTIC이 없으며 바이너리 로그가 활성화된 상태일 때 발생합니다.
-    * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL 문서를 참고합니다.
+  * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL 문서를 참고합니다.
 * 이를 해결하기 위해서는 mysqldump 파일을 적용할 DB 인스턴스의 `log_bin_trust_function_creators` 파라미터의 값을 `1`로 변경해야 합니다.
 
 ### 복제를 이용하여 내보내기
