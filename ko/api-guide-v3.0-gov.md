@@ -19,8 +19,8 @@ API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Acces
 
 * `RDS for MySQL ADMIN` 권한은 모든 기능을 사용 가능합니다.
 * `RDS for MySQL VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
-    * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
-    * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
+  * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
+  * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
 
 API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 오류가 발생합니다.
 
@@ -43,11 +43,11 @@ GET /v3.0/project/regions
 
 #### 응답
 
-| 이름                 | 종류   | 형식      | 설명                           |
-|--------------------|------|---------|------------------------------|
-| regions            | Body | Array   | 리전 목록                        |
-| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전 |
-| regions.isEnabled  | Body | Boolean | 리전의 활성화 여부                   |
+| 이름                 | 종류   | 형식      | 설명                                                                         |
+|--------------------|------|---------|----------------------------------------------------------------------------|
+| regions            | Body | Array   | 리전 목록                                                                      |
+| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전 |
+| regions.isEnabled  | Body | Boolean | 리전의 활성화 여부                                                                 |
 
 <details><summary>예시</summary>
 <p>
@@ -62,6 +62,14 @@ GET /v3.0/project/regions
     "regions": [
         {
             "regionCode": "KR1",
+            "isEnabled": true
+        },
+        {
+            "regionCode": "KR2",
+            "isEnabled": true
+        },
+        {
+            "regionCode": "JP1",
             "isEnabled": true
         }
     ]
@@ -938,15 +946,15 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ```json
 {
-"dbInstanceName": "db-instance-replicate",
-"description": "description",
-"dbPort": 11000,
-"network": {
-    "availabilityZone": "kr-pub-a"
-},
-"storage": {
-    "stroageSize": 100
-}
+    "dbInstanceName": "db-instance-replicate",
+    "description": "description",
+    "dbPort": 11000,
+    "network": {
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "stroageSize": 100
+    }
 }
 ```
 
@@ -1199,6 +1207,7 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | 백업 보관 기간(일)    |
 | ftwrlWaitTimeout                      | Body | Number  | 쿼리 지연 대기 시간(초) |
 | backupRetryCount                      | Body | Number  | 백업 재시도 횟수      |
+| replicationRegion                     | Body | Enum    | 백업 복제 리전       |
 | useBackupLock                         | Body | Boolean | 테이블 잠금 사용 여부   |
 | backupSchedules                       | Body | Array   | 백업 스케줄 목록      |
 | backupSchedules.backupWndBgnTime      | Body | String  | 백업 시작 시각       |
@@ -1218,6 +1227,7 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
     "backupPeriod": 1,
     "ftwrlWaitTimeout": 1800,
     "backupRetryCount": 0,
+    "replicationRegion": null,
     "useBackupLock": false,
     "backupSchedules": [
         {
@@ -1249,6 +1259,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
 | ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                                            |
 | backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                                    |
+| replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
 | useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부                                                                                                                                                                                                                |
 | backupSchedules                       | Body | Array   | X  | 백업 스케줄 목록                                                                                                                                                                                                                   |
 | backupSchedules.backupWndBgnTime      | Body | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
@@ -1260,15 +1271,15 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ```json
 {
-"backupPeriod": 5,
-"useBackupLock": true,
-"backupSchedules": [
-    {
-        "backupWndBgnTime": "01:00:00",
-        "backupWndDuration": "TWO_HOURS",
-        "backupRetryExpireTime": "03:00:00"
-    }
-]
+    "backupPeriod": 5,
+    "useBackupLock": true,
+    "backupSchedules": [
+        {
+            "backupWndBgnTime": "01:00:00",
+            "backupWndDuration": "TWO_HOURS",
+            "backupRetryExpireTime": "03:00:00"
+        }
+    ]
 }
 ```
 
@@ -1440,10 +1451,10 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 ```json
 {
-"dbUserName": "db-user",
-"dbPassword": "password",
-"host": "1.1.1.%",
-"authorityType": "CRUD"
+    "dbUserName": "db-user",
+    "dbPassword": "password",
+    "host": "1.1.1.%",
+    "authorityType": "CRUD"
 }
 ```
 
@@ -1478,7 +1489,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ```json
 {
-"authorityType": "DDL"
+    "authorityType": "DDL"
 }
 ```
 
@@ -1775,27 +1786,28 @@ POST /v3.0/backups/{backupId}/restore
 ```json
 
 {
-"dbInstanceName" : "db-instance-restore",
-"dbFlavorId" : "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
-"dbPort" : 10000,
-"parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
-"network": {
-    "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
-    "availabilityZone": "kr-pub-a"
-},
-"storage": {
-    "storageType": "General SSD",
-    "storageSize": 20
-},
-"backup": {
-    "backupPeriod": 1,
-    "backupSchedules": [{
-        "backupWndBgnTime": "00:00:00",
-        "backupWndDuration": "HALF_AN_HOUR",
-        "backupRetryExpireTime": "01:30:00"
+    "dbInstanceName": "db-instance-restore",
+    "dbFlavorId": "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
+    "dbPort": 10000,
+    "parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
+    "network": {
+        "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20
+    },
+    "backup": {
+        "backupPeriod": 1,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR",
+                "backupRetryExpireTime": "01:30:00"
+            }
+        ]
     }
-    ]
-}
 }
 ```
 
@@ -2453,12 +2465,12 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 ```json
 {
-   "modifiedParameters": [
-       {
-           "parameterId": "3abac558-7274-44e1-9f4a-f100f53f67ba",
-           "value": "0"
-       }
-   ]
+    "modifiedParameters": [
+        {
+            "parameterId": "3abac558-7274-44e1-9f4a-f100f53f67ba",
+            "value": "0"
+        }
+    ]
 }
 ```
 
@@ -2619,11 +2631,11 @@ POST /v3.0/user-groups
 
 #### 요청
 
-| 이름            | 종류   | 형식      | 필수 | 설명                                                              |
-|---------------|------|---------|----|-----------------------------------------------------------------|
-| userGroupName | Body | String  | O  | 사용자 그룹을 식별할 수 있는 이름                                             |
-| memberIds     | Body | Array   | O  | 프로젝트 멤버의 식별자 목록     <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨 |
-| selectAllYN   | Body | Boolean | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨              |
+| 이름            | 종류   | 형식      | 필수 | 설명                                                          |
+|---------------|------|---------|----|-------------------------------------------------------------|
+| userGroupName | Body | String  | O  | 사용자 그룹을 식별할 수 있는 이름                                         |
+| memberIds     | Body | Array   | O  | 프로젝트 멤버의 식별자 목록 <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨 |
+| selectAllYN   | Body | Boolean | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨          |
 
 <details><summary>예시</summary>
 <p>
@@ -2631,7 +2643,9 @@ POST /v3.0/user-groups
 ```json
 {
     "userGroupName": "dev-team",
-    "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
+    "memberIds": [
+        "1321e759-2ef3-4b85-9921-b13e918b24b5"
+    ]
 }
 ```
 
@@ -2674,7 +2688,10 @@ PUT /v3.0/user-groups/{userGroupId}
 ```json
 {
     "userGroupName": "dev-team",
-    "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5","f9064b09-2b15-442e-a4b0-3a5a2754555e"]
+    "memberIds": [
+        "1321e759-2ef3-4b85-9921-b13e918b24b5",
+        "f9064b09-2b15-442e-a4b0-3a5a2754555e"
+    ]
 }
 ```
 
@@ -2807,15 +2824,17 @@ GET /v3.0/notification-groups/{notificationGroupId}
     "notifySms": false,
     "isEnabled": true,
     "dbInstances": [
-            {
+        {
             "dbInstanceId": "ed5cb985-526f-4c54-9ae0-40288593de65",
             "dbInstanceName": "database"
-        }],
+        }
+    ],
     "userGroups": [
-            {
+        {
             "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
             "userGroupName": "dev-team"
-        }],
+        }
+    ],
     "createdYmdt": "2023-02-20T13:34:13+09:00",
     "updatedYmdt": "2023-02-20T13:34:13+09:00"
 }
@@ -2851,8 +2870,12 @@ POST /v3.0/notification-groups
     "notificationGroupName": "dev-team-noti",
     "notifyEmail": false,
     "isEnable": true,
-    "dbInstanceIds": ["ed5cb985-526f-4c54-9ae0-40288593de65"],
-    "userGroupIds": ["1aac0437-f32d-4923-ad3c-ac61c1cfdfe0"]
+    "dbInstanceIds": [
+        "ed5cb985-526f-4c54-9ae0-40288593de65"
+    ],
+    "userGroupIds": [
+        "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0"
+    ]
 }
 ```
 
@@ -2890,8 +2913,11 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 ```json
 {
-    "notifyEmail": true,
-    "dbInstanceIds": ["ed5cb985-526f-4c54-9ae0-40288593de65", "d51b7da0-682f-47ff-b588-b739f6adc740"]
+  "notifyEmail": true,
+  "dbInstanceIds": [
+    "ed5cb985-526f-4c54-9ae0-40288593de65",
+    "d51b7da0-682f-47ff-b588-b739f6adc740"
+  ]
 }
 ```
 
@@ -2949,17 +2975,17 @@ GET /v3.0/metrics
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "metrics": [
-        {
-            "measureName": "CPU_USAGE",
-            "unit": "%"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "metrics": [
+    {
+      "measureName": "CPU_USAGE",
+      "unit": "%"
+    }
+  ]
 }
 ```
 
@@ -3000,26 +3026,26 @@ GET /v3.0/metric-statistics
 
 ```json
 {
-    "metricStatistics": [
-        {
-            "measureName": "MYSQL_STATUS",
-            "unit": "",
-            "values": [
-                [
-                    1679298540,
-                    "1"
-                ],
-                [
-                    1679298600,
-                    "1"
-                ],
-                [
-                    1679298660,
-                    "1"
-                ]
-            ]
-        }
-    ]
+  "metricStatistics": [
+    {
+      "measureName": "MYSQL_STATUS",
+      "unit": "",
+      "values": [
+        [
+          1679298540,
+          "1"
+        ],
+        [
+          1679298600,
+          "1"
+        ],
+        [
+          1679298660,
+          "1"
+        ]
+      ]
+    }
+  ]
 }
 ```
 
@@ -3071,39 +3097,39 @@ GET /v3.0/events
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 28,
-    "events": [
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "totalCounts": 28,
+  "events": [
+    {
+      "eventCategoryType": "INSTANCE",
+      "eventCode": "INSTC_02_01",
+      "sourceId": "76f00947-356e-4a20-8922-428368cc45ed",
+      "sourceName": "db-instance",
+      "messages": [
         {
-            "eventCategoryType": "INSTANCE",
-            "eventCode": "INSTC_02_01",
-            "sourceId": "76f00947-356e-4a20-8922-428368cc45ed",
-            "sourceName": "db-instance",
-            "messages": [
-                {
-                    "langCode": "EN",
-                    "message": "DB instance started"
-                },
-                {
-                    "langCode": "JA",
-                    "message": "DBインスタンスの起動"
-                },
-                {
-                    "langCode": "KO",
-                    "message": "DB 인스턴스 시작"
-                },
-                {
-                    "langCode": "ZH",
-                    "message": "DB instance started"
-                }
-            ],
-            "eventYmdt": "2023-03-20T16:31:59+09:00"
+          "langCode": "EN",
+          "message": "DB instance started"
+        },
+        {
+          "langCode": "JA",
+          "message": "DBインスタンスの起動"
+        },
+        {
+          "langCode": "KO",
+          "message": "DB 인스턴스 시작"
+        },
+        {
+          "langCode": "ZH",
+          "message": "DB instance started"
         }
-    ]
+      ],
+      "eventYmdt": "2023-03-20T16:31:59+09:00"
+    }
+  ]
 }
 ```
 
@@ -3135,17 +3161,17 @@ GET /v3.0/event-codes
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "eventCodes": [
-        {
-            "eventCode": "INSTC_05_01",
-            "eventCategoryType": "INSTANCE"
-        }
-    ]
+  "header": {
+    "resultCode": 0,
+    "resultMessage": "SUCCESS",
+    "isSuccessful": true
+  },
+  "eventCodes": [
+    {
+      "eventCode": "INSTC_05_01",
+      "eventCategoryType": "INSTANCE"
+    }
+  ]
 }
 ```
 
