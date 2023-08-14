@@ -31,16 +31,22 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 
 | 버전           | 비고                                                        |
 |--------------|-----------------------------------------------------------|
+| <strong>8.0</strong> ||
 | MySQL 8.0.32 |                                                           | 
 | MySQL 8.0.28 |                                                           | 
 | MySQL 8.0.23 |                                                           |
 | MySQL 8.0.18 |                                                           |
+| <strong>5.7</strong> ||
 | MySQL 5.7.37 |                                                           |
-| MySQL 5.7.33 | 외부의 백업본으로 DB 인스턴스를 복원할 수 없습니다.                            |
+| MySQL 5.7.33 | 외부의 백업본으로 DB 인스턴스를 복원할 수 없습니다.                   |
 | MySQL 5.7.26 |                                                           |
 | MySQL 5.7.19 |                                                           |
 | MySQL 5.7.15 |                                                           |
+| <strong>5.6</strong> ||
 | MySQL 5.6.33 | 신규 DB 인스턴스를 생성할 수 없습니다. 기존 DB 인스턴스의 읽기 복제본 생성, 복원만 지원합니다. |
+
+DB 엔진의 경우 생성 이후 웹 콘솔의 수정 기능을 통해 버전 업그레이드가 가능합니다.
+DB 엔진에 대한 자세한 사항은 [DB 엔진](db-engine/)에서 확인할 수 있습니다.
 
 ### DB 인스턴스 타입
 
@@ -217,6 +223,64 @@ DB 인스턴스의 MySQL이 정상 동작하지 않는 경우 강제로 재시�
 ### 파라미터 그룹 변경 사항 적용
 
 DB 인스턴스에 연결된 파라미터 그룹의 파라미터가 수정된 경우, 해당 수정 사항을 반영해야 합니다. 변경된 파라미터 적용을 위해 재시작이 필요한 경우 DB 인스턴스가 재시작됩니다. 파라미터 그룹에 대한 자세한 설명은 [파라미터 그룹](parameter-group/) 항목을 참고합니다.
+
+### 사용자 관리
+
+RDS for MySQL에서는 웹 콘솔을 통해 데이터베이스에 접속할 사용자를 손쉽게 관리할 수 있는 기능을 제공합니다. DB 인스턴스를 생성할 때 사용자가 생성되며, 이미 생성된 DB 인스턴스에서 자유롭게 사용자를 생성, 수정, 삭제할 수 있습니다. 이를 위해 데이터베이스에서 쿼리를 통해 직접 사용자를 생성, 수정, 삭제하는 것을 허용하지 않습니다. 그 대신 미리 정의된 권한 템플릿을 이용하여 사용자에게 권한을 부여할 수 있습니다. 사용자에게 부여할 수 있는 권한 템플릿은 다음과 같습니다.
+
+* **READ**
+  * 조회 권한을 가지고 있습니다.
+
+```sql
+GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
+GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
+```
+
+* **CRUD**
+  * READ 권한을 포함하며, 데이터를 변경할 수 있는 권한을 가지고 있습니다.
+
+```sql
+GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
+```
+
+* **DDL**
+  * CRUD 권한을 포함하며, DDL 쿼리를 실행할 수 있는 권한을 가지고 있습니다.
+
+```sql
+GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
+GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
+```
+
+* **CUSTOM**
+  * 외부 데이터베이스 백업으로부터 DB 인스턴스를 복원한 경우, 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
+  * CUSTOM 권한 템플릿에는 어떤 권한이 있는지 알 수 없습니다.
+  * CUSTOM 권한 템플릿에서 다른 권한 템플릿으로 변경한 경우 다시 CUSTOM 권한 템플릿으로 변경할 수 없습니다.
+
+MySQL 5.7.33 버전 이상에서는 사용자 생성, 변경 시 인증 플러그인과 TLS Option을 지정할 수 있습니다. 인증 플러그인을 변경하려면 반드시 비밀번호를 같이 변경해야 하며, 비밀번호를 변경하지 않으면 기존 비밀번호를 사용합니다. 버전별 적용 가능한 인증 플러그인은 다음과 같습니다.
+
+* 5.7 버전
+
+| 인증 플러그인 | 설명                                   |
+|---------|--------------------------------------|
+| NATIVE  | `mysql_native_password`를 사용하여 인증합니다. |
+| SHA256  | `sha256_password`를 사용하여 인증합니다.       |
+
+* 8.0 버전
+
+| 인증 플러그인      | 설명                                   |
+|--------------|--------------------------------------|
+| NATIVE       | `mysql_native_password`를 사용하여 인증합니다. |
+| CACHING_SHA2 | `caching_sha2_password`를 사용하여 인증합니다. |
+
+TLS Option을 지정하여 클라이언트와 데이터베이스 간의 연결을 암호화할 수 있습니다.
+
+| TLS Option | 설명                                                                 |
+|------------|--------------------------------------------------------------------|
+| NONE       | 암호화된 연결을 적용하지 않습니다.                                                |
+| SSL        | 암호화된 연결을 적용합니다.                                                    |
+| X509       | 암호화된 연결을 적용하며 접속 시 인증서가 필요합니다. 접속에 필요한 인증서는 웹 콘솔에서 다운로드할 수 있습니다. |
 
 ## 고가용성 DB 인스턴스
 

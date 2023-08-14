@@ -32,15 +32,21 @@ You can use the versions specified below.
 
 | Version      | Note                                                                                                              | 
 |--------------|-------------------------------------------------------------------------------------------------------------------| 
+| <strong>8.0</strong> ||
 | MySQL 8.0.28 |                                                                                                                   | 
 | MySQL 8.0.23 |                                                                                                                   | 
 | MySQL 8.0.18 |                                                                                                                   | 
+| <strong>5.7</strong> ||
 | MySQL 5.7.37 |                                                                                                                   | 
 | MySQL 5.7.33 | You cannot restore DB instance with an external backup copy.                                                      | 
 | MySQL 5.7.26 |                                                                                                                   | 
 | MySQL 5.7.19 |                                                                                                                   | 
 | MySQL 5.7.15 |                                                                                                                   | 
+| <strong>5.6</strong> ||
 | MySQL 5.6.33 | Unable to create new DB instance. It only supports creating and restoring read replicas of existing DB instances. |
+
+DB 엔진의 경우 생성 이후 웹 콘솔의 수정 기능을 통해 버전 업그레이드가 가능합니다.
+DB 엔진에 대한 자세한 사항은 [DB 엔진](db-engine/)에서 확인할 수 있습니다.
 
 ### DB Instance Type
 

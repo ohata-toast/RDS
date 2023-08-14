@@ -29,6 +29,48 @@ If an API request fails to authenticate or is not authorized, the following erro
 | 80401      | Unauthorized  | Failed to authenticate |
 | 80403      | Forbidden     | Unauthorized.          |
 
+## 응답 공통 정보
+
+모든 API 요청에 '200 OK'로 응답합니다. 자세한 응답 결과는 응답 본문의 헤더를 참고합니다.
+
+#### 응답 본문
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+#### 필드
+| 이름 | 형식      | 설명|
+| --- |---------| --- |
+|resultCode | Number  | 결과 코드<br/>- 성공: `0`<br/>- 실패: `0`이 아닌 값 |
+|resultMessage | String  | 결과 메시지 |
+|isSuccessful | Boolean | 성공 여부 |
+
+
+## DB 엔진 유형
+
+| DB 엔진 유형 | 생성 가능 여부 | OBS로부터 복원 가능 여부 |
+| -------- | -------- | ---------------- |
+| MYSQL\_V5633 | X | X |
+| MYSQL\_V5715 | O | O |
+| MYSQL\_V5719 | O | O |
+| MYSQL\_V5726 | O | O |
+| MYSQL\_V5731 | X | X |
+| MYSQL\_V5733 | O | X |
+| MYSQL\_V5737 | O | O |
+| MYSQL\_V8018 | O | O |
+| MYSQL\_V8023 | O | O |
+| MYSQL\_V8028 | O | O |
+| MYSQL\_V8032 | O | O |
+
+* ENUM 타입의 dbVersion 필드에 대해 해당 값을 사용할 수 있습니다.
+* 버전에 따라 생성 또는 복원이 불가능한 경우가 있을 수 있습니다.
+
 ## Project Information
 
 ### List Regions
@@ -675,7 +717,7 @@ POST /v3.0/db-instances
 | userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                    |
 | useHighAvailability                          | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                                                                                                                                                                     |
 | pingInterval                                 | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                                                                                                                                                     |
-| useDefaultUserNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                  |
+| useDefaultNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                  |
 | useDeletionProtection                        | Body | Boolean | X        | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                                               |
 | network                                      | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                             | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
@@ -831,6 +873,39 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 | jobId | Body | UUID   | Identifier of requested task |
 
 ---
+### DB 인스턴스 강제 재시작하기
+```
+POST /v3.0/db-instances/{dbInstanceId}/force-restart
+```
+
+#### 요청
+
+| 이름                | 종류   | 형식      | 필수 | 설명                                                                        |
+|-------------------|------|---------|----|---------------------------------------------------------------------------|
+| dbInstanceId      | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
+
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
+---
 
 ### Start DB Instance
 
@@ -915,7 +990,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | parameterGroupId                             | Body | UUID    | X        | Parameter group identifier<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                |
 | dbSecurityGroupIds                           | Body | Array   | X        | DB security group identifiers<br/>- Default: Original DB instance value                                                                                                                                                                                                                                             |
 | userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                                                              |
-| useDefaultUserNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                                                            |
+| useDefaultNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                                                            |
 | useDeletionProtection                        | Body | Boolean | X        | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                                                                                         |
 | network                                      | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                                                                         |
 | network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>- Default: Original DB instance value                                                                                                                                                                                                                                       |
@@ -983,6 +1058,401 @@ This API does not require a request body.
 
 ---
 
+### 복원 정보 조회
+
+```
+GET /v3.0/db-instances/{dbInstanceId}/restoration-info
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| latestRestorableYmdt | Body | DateTime | 가장 최신의 복원 가능한 시간 |
+| restorableBackups | Body | Array | 복원 가능한 백업 목록 |
+| restorableBackups.backup | Body | Object | 백업 정보 객체 |
+| restorableBackups.backup.backupId | Body | UUID | 백업의 식별자 |
+| restorableBackups.backup.backupName | Body | String | 백업 이름 |
+| restorableBackups.backup.useBackupLock | Body | Boolean | 테이블 잠금 사용 여부 |
+| restorableBackups.backup.backupSize | Body | Number | 백업 크기 |
+| restorableBackups.backup.backupType | Body | Enum | 백업 유형<br><ul><li>`AUTO` : 자동</li><li>`MANUAL` : 수동</li></ul> |
+| restorableBackups.backup.backupStatus | Body | Enum | 백업 상태<br><ul><li>`BACKING_UP`: 백업 중인 경우</li><li>`COMPLETED`: 백업이 완료된 경우</li><li>`DELETING`: 백업이 삭제 중인 경우</li><li>`DELETED`: 백업이 삭제된 경우</li><li>`ERROR`: 오류가 발생한 경우</li></ul> |
+| restorableBackups.backup.dbInstanceId | Body | UUID | 원본 DB 인스턴스의 식별자 |
+| restorableBackups.backup.dbInstanceName | Body | String | 원본 DB 인스턴스의 이름 |
+| restorableBackups.backup.dbVersion | Body | String | DB 엔진 유형 |
+| restorableBackups.backup.failoverCount | Body | Number | 장애 조치 횟수 |
+| restorableBackups.backup.binLogFileName | Body | String | 바이너리 로그 파일 이름 |
+| restorableBackups.backup.binLogFilePosition | Body | Number | 바이너리 로그 파일 위치 |
+| restorableBackups.backup.createdYmdt | Body | DateTime | 백업 생성 일시 |
+| restorableBackups.backup.updatedYmdt | Body | DateTime | 백업 갱신 일시 |
+| restorableBackups.restorableBinLogs | Body | Array | 해당 백업을 이용하여 복원 가능한 바이너리 로그 이름 목록 |
+
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+	"header": {
+		"resultCode": 0,
+		"resultMessage": "SUCCESS",
+		"isSuccessful": true
+	},
+	"latestRestorableYmdt": "2023-07-10T15:44:44+09:00",
+	"restorableBackups": [
+		{
+			"backup": {
+				"backupId": "145d889a-fe08-474f-8f58-bde576ff96a9",
+				"backupName": "example-backup-name",
+				"backupStatus": "COMPLETED",
+				"dbInstanceId": "dba1be25-9429-4589-9716-7fb6daad7cb9",
+				"dbInstanceName": "original-db-instance-name",
+				"dbVersion": "MYSQL_V8032",
+				"backupType": "MANUAL",
+				"backupSize": 8299904,
+				"useBackupLock": true,
+				"failoverCount": 0,
+				"binLogFileName": "mysql-bin.000001",
+				"binLogPosition": 367916037,
+				"createdYmdt": "2023-07-10T15:44:44+09:00",
+				"updatedYmdt": "2023-07-10T15:46:07+09:00"
+			},
+			"restorableBinLogs": [
+				"mysql-bin.000001"
+			]
+		}
+	]
+}
+```
+
+</p>
+</details>
+
+
+---
+
+### 복원
+
+```
+POST /v3.0/db-instances/{dbInstanceId}/restore
+```
+
+#### 공통 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| restore | Body | Object | O | 복원 정보 객체 |
+| restore.restoreType | Body | Enum | O | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li><li>`BACKUP`: 기존에 생성한 백업을 이용한 스냅샷 복원 타입</li></ul> |
+| dbInstanceName | Body | String | O | DB 인스턴스를 식별할 수 있는 이름 |
+| description | Body | String | X | DB 인스턴스에 대한 추가 정보 |
+| dbFlavorId | Body | UUID | O | DB 인스턴스 사양의 식별자 |
+| dbPort | Body | Number | O | DB 포트<br><ul><li>최솟값: `3306`</li><li>최댓값: `43306`</li></ul> |
+| <span style="color:#313338">parameterGroupId</span> | Body | UUID | O | 파라미터 그룹의 식별자 |
+| dbSecurityGroupIds | Body | Array | X | DB 보안 그룹의 식별자 목록 |
+| userGroupIds | Body | Array | X | 사용자 그룹의 식별자 목록 |
+| useHighAvailability | Body | Boolean | X | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul> |
+| pingInterval | Body | Number | X | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul> |
+| useDefaultNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
+| network | Body | Object | O | 네트워크 정보 객체 |
+| network.subnetId | Body | UUID | O | 서브넷의 식별자 |
+| network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul> |
+| network.availabilityZone | Body | Enum | O | DB 인스턴스를 생성할 가용성 영역<br><ul><li>예시: `kr-pub-a`</li></ul> |
+| storage | Body | Object | O | 스토리지 정보 객체 |
+| storage.storageType | Body | Enum | O | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul> |
+| storage.storageSize | Body | Number | O | 데이터 스토리지 크기(GB)<br><ul><li>최솟값: `20`</li><li>최댓값: `2048`</li></ul> |
+| backup | Body | Object | O | 백업 정보 객체 |
+| backup.backupPeriod | Body | Number | O | 백업 보관 기간(일)<br><ul><li>최솟값: `0`</li><li>최댓값: `730`</li></ul> |
+| backup.ftwrlWaitTimeout | Body | Number | X | 쿼리 지연 대기 시간(초)<br><ul><li>기본값: `1800`</li><li>최솟값: `0`</li><li>최댓값: `21600`</li></ul> |
+| backup.backupRetryCount | Body | Number | X | 백업 재시도 횟수<br><ul><li>기본값: `0`</li><li>최솟값: `0`</li><li>최댓값: `10`</li></ul> |
+| backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br><ul><li>`KR1`: 한국(판교)</li><li>`KR2`: 한국(평촌)</li><li>`JP1`: 일본(도쿄)</li></ul> |
+| backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br><ul><li>기본값: `true`</li></ul> |
+| backup.backupSchedules | Body | Array | O | 백업 스케줄 목록 |
+|  |  |  |  |  |
+|  |  |  |  |  |
+| backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각<br><ul><li>예시: `00:00:00`</li></ul> |
+| backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30분</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1시간</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1시간 30분</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2시간</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2시간 30분</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3시간</span></li></ul> |
+| backup.backupSchedules.backupRetryExpireTime | Body | String | O | 백업 재시도 만료 시각<br><ul><li>백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.</li><li>예시: `01:30:00`</li></ul> |
+| useDeletionProtection | Body | Boolean | X | 삭제 보호 여부<br>기본값 : `false` |
+
+#### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| restore.restoreYmdt | Body | DateTime | O | DB 인스턴스 복원 시간.(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>복원 정보 조회로 조회한 가장 최신의 복원 가능한 시간 이전에 대해서만 복원이 가능하다. |
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "dbInstanceName": "db-instance",
+    "description": "description",
+    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
+    "dbPort": 10000,
+    "dbUserName": "db-user",
+    "dbPassword": "password",
+    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
+    "dbSecurityGroupIds": [
+        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
+    ],
+    "userGroupIds": [],
+    "network": {
+		"subnetId": "3ae7914f-9b42-4729-b125-87417b72cf36",
+		"availabilityZone": "kr-pub-a"
+	},
+	"storage": {
+		"storageType": "General SSD",
+		"storageSize": 20
+	},
+	"restore": {
+		"restoreType": "TIMESTAMP",
+		"restoreYmdt": "2023-07-10T15:44:44+09:00"
+	},
+	"backup": {
+		"backupPeriod": 1,
+		"backupSchedules": [
+			{
+				"backupWndBgnTime": "00:00:00",
+				"backupWndDuration": "ONE_HOUR_AND_HALF",
+				"backupRetryExpireTime": "01:30:00"
+			}
+		]
+	}
+}
+```
+
+</p>
+</details>
+
+#### 바이너리 로그를 이용한 시점 복원 시 요청(restoreType이 `BINLOG`인 경우)
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| restore.backupId | Body | UUID | O | 복원에 사용할 백업의 식별자 |
+| restore.binLog | Body | Object | O | 바이너리 로그 정보 객체 |
+| restore.binLog.binLogFileName | Body | String | O | 복원에 사용할 바이너리 로그 이름 |
+| restore.binLog.binLogPosition | Body | String | O | 복원에 사용할 바이너리 로그 위치 |
+
+* 바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그에 대해 복원이 가능합니다.
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "dbInstanceName": "db-instance",
+    "description": "description",
+    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
+    "dbPort": 10000,
+    "dbUserName": "db-user",
+    "dbPassword": "password",
+    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
+    "dbSecurityGroupIds": [
+        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
+    ],
+    "userGroupIds": [],
+    "network": {
+		"subnetId": "3ae7914f-9b42-4729-b125-87417b72cf36",
+		"availabilityZone": "kr-pub-a"
+	},
+	"storage": {
+		"storageType": "General SSD",
+		"storageSize": 20
+	},
+	"restore": {
+		"restoreType": "BINLOG",
+        "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
+		"binLogFileName": "mysql-bin.000001",
+		"binLogPosition": 1234567
+	},
+	"backup": {
+		"backupPeriod": 1,
+		"backupSchedules": [
+			{
+				"backupWndBgnTime": "00:00:00",
+				"backupWndDuration": "ONE_HOUR_AND_HALF",
+				"backupRetryExpireTime": "01:30:00"
+			}
+		]
+	}
+}
+```
+
+</p>
+</details>
+
+#### 백업을 이용한 복원 시 요청(restoreType이 `BACKUP`인 경우)
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| restore.backupId | Body | UUID | O(restoreType이 `BACKUP`인 경우) | 복원에 사용할 백업의 식별자 |
+
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "dbInstanceName": "db-instance",
+    "description": "description",
+    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
+    "dbPort": 10000,
+    "dbUserName": "db-user",
+    "dbPassword": "password",
+    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
+    "dbSecurityGroupIds": [
+        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
+    ],
+    "userGroupIds": [],
+    "network": {
+		"subnetId": "3ae7914f-9b42-4729-b125-87417b72cf36",
+		"availabilityZone": "kr-pub-a"
+	},
+	"storage": {
+		"storageType": "General SSD",
+		"storageSize": 20
+	},
+	"restore": {
+		"restoreType": "BACKUP",
+        "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36"
+	},
+	"backup": {
+		"backupPeriod": 1,
+		"backupSchedules": [
+			{
+				"backupWndBgnTime": "00:00:00",
+				"backupWndDuration": "ONE_HOUR_AND_HALF",
+				"backupRetryExpireTime": "01:30:00"
+			}
+		]
+	}
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+
+---
+
+### 오브젝트 스토리지로부터 복원
+
+```
+POST /v3.0/db-instances/restore-from-obs
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| restore | Body | Object | O | 복원 정보 객체 |
+| restore.tenantId | Body | String | O | 백업이 저장된 오브젝트 스토리지의 테넌트 ID |
+| restore.username | Body | String | O | NHN Cloud 계정 혹은 IAM 멤버 ID |
+| restore.password | Body | String | O | 백업이 저장된 오브젝트 스토리지의 API 비밀번호 |
+| restore.targetContainer | Body | String | O | 백업이 저장된 오브젝트 스토리지의 컨테이너 |
+| restore.objectPath | Body | String | O | 컨테이너에 저장된 백업의 경로 |
+| dbVersion | Body | Enum | O | DB 엔진 유형 |
+| dbInstanceName | Body | String | O | DB 인스턴스를 식별할 수 있는 이름 |
+| description | Body | String | X | DB 인스턴스에 대한 추가 정보 |
+| dbFlavorId | Body | UUID | O | DB 인스턴스 사양의 식별자 |
+| dbPort | Body | Number | O | DB 포트<br><ul><li>최솟값: `3306`</li><li>최댓값: `43306`</li></ul> |
+| <span style="color:#313338">parameterGroupId</span> | Body | UUID | O | 파라미터 그룹의 식별자 |
+| dbSecurityGroupIds | Body | Array | X | DB 보안 그룹의 식별자 목록 |
+| userGroupIds | Body | Array | X | 사용자 그룹의 식별자 목록 |
+| useHighAvailability | Body | Boolean | X | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul> |
+| pingInterval | Body | Number | X | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul> |
+| useDefaultNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
+| network | Body | Object | O | 네트워크 정보 객체 |
+| network.subnetId | Body | UUID | O | 서브넷의 식별자 |
+| network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul> |
+| network.availabilityZone | Body | Enum | O | DB 인스턴스를 생성할 가용성 영역<br><ul><li>예시: `kr-pub-a`</li></ul> |
+| storage | Body | Object | O | 스토리지 정보 객체 |
+| storage.storageType | Body | Enum | O | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul> |
+| storage.storageSize | Body | Number | O | 데이터 스토리지 크기(GB)<br><ul><li>최솟값: `20`</li><li>최댓값: `2048`</li></ul> |
+| backup | Body | Object | O | 백업 정보 객체 |
+| backup.backupPeriod | Body | Number | O | 백업 보관 기간(일)<br><ul><li>최솟값: `0`</li><li>최댓값: `730`</li></ul> |
+| backup.ftwrlWaitTimeout | Body | Number | X | 쿼리 지연 대기 시간(초)<br><ul><li>기본값: `1800`</li><li>최솟값: `0`</li><li>최댓값: `21600`</li></ul> |
+| backup.backupRetryCount | Body | Number | X | 백업 재시도 횟수<br><ul><li>기본값: `0`</li><li>최솟값: `0`</li><li>최댓값: `10`</li></ul> |
+| backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br><ul><li>`KR1`: 한국(판교)</li><li>`KR2`: 한국(평촌)</li><li>`JP1`: 일본(도쿄)</li></ul> |
+| backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br><ul><li>기본값: `true`</li></ul> |
+| backup.backupSchedules | Body | Array | O | 백업 스케줄 목록 |
+| backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각<br><ul><li>예시: `00:00:00`</li></ul> |
+| backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30분</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1시간</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1시간 30분</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2시간</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2시간 30분</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3시간</span></li></ul> |
+| backup.backupSchedules.backupRetryExpireTime | Body | String | O | 백업 재시도 만료 시각<br><ul><li>백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.</li><li>예시: `01:30:00`</li></ul> |
+
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "dbInstanceName": "db-instance",
+    "description": "description",
+    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
+    "dbPort": 10000,
+    "dbVersion":: "MYSQL_V8028",
+    "dbUserName": "db-user",
+    "dbPassword": "password",
+    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
+    "dbSecurityGroupIds": [
+        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
+    ],
+    "userGroupIds": [],
+    "network": {
+		"subnetId": "3ae7914f-9b42-4729-b125-87417b72cf36",
+		"availabilityZone": "kr-pub-a"
+	},
+	"storage": {
+		"storageType": "General SSD",
+		"storageSize": 20
+	},
+	"restore": {
+		"tenantId":"tenant-id",
+        "username":"username",
+        "password":"password",
+        "targetContainer":"targetContainer",
+        "objectPath":"objectPath"
+	},
+	"backup": {
+		"backupPeriod": 1,
+		"backupSchedules": [
+			{
+				"backupWndBgnTime": "00:00:00",
+				"backupWndDuration": "ONE_HOUR_AND_HALF",
+				"backupRetryExpireTime": "01:30:00"
+			}
+		]
+	}
+}
+```
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+
+---
+
 ### DB 인스턴스 삭제 보호 설정 변경하기
 
 ```
@@ -999,6 +1469,22 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2058,6 +2544,21 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2079,6 +2580,21 @@ This API does not require a request body.
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ### Create DB Security Group
@@ -2429,6 +2945,21 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ### Modify Parameter
@@ -2467,6 +2998,21 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ### Reset Parameter Group
@@ -2485,6 +3031,21 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ### Delete Parameter Group
@@ -2505,6 +3066,21 @@ This API does not require a request body.
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ## User Group
@@ -2683,6 +3259,21 @@ PUT /v3.0/user-groups/{userGroupId}
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ### Delete User Group
@@ -2701,6 +3292,21 @@ DELETE /v3.0/user-groups/{userGroupId}
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ## Notification Group
@@ -2900,6 +3506,21 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ### Delete Notification Group
@@ -2920,6 +3541,21 @@ This API does not require a request body.
 
 This API does not return a response body.
 
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 ---
 
 ## Monitoring

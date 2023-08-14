@@ -12,19 +12,22 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 
 | MySQL version | XtraBackup version |
 |---------------|--------------------|
-| 5.7.15        | 2.4.20             |
-| 5.7.19        | 2.4.20             |
-| 5.7.26        | 2.4.20             |
-| 5.7.33        | 2.4.20             |
-| 5.7.37        | 2.4.20             |
-| 8.0.18        | 8.0.26             |
-| 8.0.23        | 8.0.26             |
-| 8.0.28        | 8.0.28             |
-| 8.0.32        | 8.0.28             |
+| 5.7.15        | 2.4.28             |
+| 5.7.19        | 2.4.28             |
+| 5.7.26        | 2.4.28             |
+| 5.7.33        | 2.4.28             |
+| 5.7.37        | 2.4.28             |
+| 8.0.18        | 8.0.32             |
+| 8.0.23        | 8.0.32             |
+| 8.0.28        | 8.0.32             |
+| 8.0.32        | 8.0.32             |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
     * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+
+> [참고]
+> 2023년 8월 17일 XtraBackup 유틸리티의 버전이 업그레이드되었습니다. 이전 백업에 사용된 XtraBackup 버전은 웹 콘솔에서 확인할 수 있습니다.
 
 ### Auto Backup
 
@@ -112,13 +115,13 @@ You can use an external MySQL backup file to create a DB instance. When creating
 
 (1) Use the command below to perform a backup on the server where MySQL is installed.
 
-**XtraBackup 2.4.20 Example**
+**XtraBackup 2.4.xx Example**
 
 ``` 
 innobackupex --defaults-file={my.cnf path} --user {user} --password '{password}' --socket {MySQL socket file path} --compress --compress-threads=1 --stream=xbstream {directory where create backup file} 2>>{backup log file path} > {backup file path} 
 ```
 
-**XtraBackup 8.0.12 Example**
+**XtraBackup 8.0.xx Example**
 
 ```
 xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password }' --socket={MySQL socket file path } --compress --compress-threads=1 --stream=xbstream --backup { directory where create backup file } 2>>{ backup log file path } > { backup file path } 
@@ -157,7 +160,7 @@ rm -rf {MySQL data storage path}/*
 
 (5) Unzip and restore the downloaded backup files.
 
-**XtraBackup 2.4.20 Example**
+**XtraBackup 2.4.xx Example**
 
 ``` 
 cat {backup file storage path} | xbstream -x -C {MySQL data storage  path} 
@@ -165,7 +168,7 @@ innobackupex --decompress {MySQL data storage path}
 innobackupex --defaults-file={my.cnf path} --apply-log {MySQL data storage path} 
 ```
 
-**XtraBackup 8.0.12 Example**
+**XtraBackup 8.0.xx Example**
 
 ``` 
 cat { backup file storage path } | xbstream -x -C {MySQL data storage  path } 
