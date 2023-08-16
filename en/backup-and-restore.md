@@ -26,8 +26,8 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
     * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
-> [참고]
-> 2023년 8월 17일 XtraBackup 유틸리티의 버전이 업그레이드되었습니다. 이전 백업에 사용된 XtraBackup 버전은 웹 콘솔에서 확인할 수 있습니다.
+> [Note]
+> On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the web console.
 
 ### Auto Backup
 

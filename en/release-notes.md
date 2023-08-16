@@ -1,14 +1,14 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2023. 08. 17.
+### August 17,  2023
 
-#### 기능 추가 및 개선
+#### Added Features
 
-* 백업에 사용되는 xtrabackup 유틸리티 버전 업그레이드
-* 웹 콘솔에서 백업에 사용된 xtrabackup 유틸리티 버전을 확인할 수 있도록 개선
-* MySQL 5.7.33 버전 이상에서 사용자 생성 혹은 수정 시 인증 플러그인을 사용할 수 있도록 기능 추가
-* DB 인스턴스 수정 시 DB 엔진 버전을 업그레이드할 수 있는 기능 추가
-* MySQL 5.7.33 버전 이상에서 사용자 생성 혹은 수정 시 인증 플러그인과 TLS 옵션을 사용할 수 있도록 기능 추가
+* Upgrading the version of the xtrabackup utility used for backup
+* Improved to check the version of the xtrabackup utility used for backup in the web console
+* Added a feature to use authentication plugin when creating or modifying users in MySQL 5.7.33 or higher
+* Added a feature to upgrade the DB engine version when modifying a DB instance
+* Added a feature to use authentication plugins and TLS options when creating or modifying users in MySQL 5.7.33 or higher
 
 ### July 11, 2023
 
