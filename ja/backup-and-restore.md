@@ -11,19 +11,22 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 | MySQLバージョン | XtraBackupバージョン |
 |------------|-----------------|
-| 5.7.15     | 2.4.20          |
-| 5.7.19     | 2.4.20          |
-| 5.7.26     | 2.4.20          |
-| 5.7.33     | 2.4.20          |
-| 5.7.37     | 2.4.20          |
-| 8.0.18     | 8.0.26          |
-| 8.0.23     | 8.0.26          |
-| 8.0.28     | 8.0.28          |
-| 8.0.32     | 8.0.28          |
+| 5.7.15     | 2.4.28          |
+| 5.7.19     | 2.4.28          |
+| 5.7.26     | 2.4.28          |
+| 5.7.33     | 2.4.28          |
+| 5.7.37     | 2.4.28          |
+| 8.0.18     | 8.0.32          |
+| 8.0.23     | 8.0.32          |
+| 8.0.28     | 8.0.32          |
+| 8.0.32     | 8.0.32          |
 
 * XtraBackupのインストールに関する詳しい説明はPercona Webサイトを参照します。
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
     * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+
+> [참고]
+> 2023년 8월 17일 XtraBackup 유틸리티의 버전이 업그레이드되었습니다. 이전 백업에 사용된 XtraBackup 버전은 웹 콘솔에서 확인할 수 있습니다.
 
 ### 自動バックアップ
 
@@ -107,13 +110,13 @@ DBインスタンスのバックアップ保管期間を1日以上に設定す�
 
 (1) MySQLがインストールされたサーバーで下記のコマンドを利用してバックアップを実行します。
 
-**XtraBackup 2.4.20例**
+**XtraBackup 2.4.xx例**
 
 ```
 innobackupex --defaults-file={my.cnfパス} --user {ユーザー} --password '{パスワード}' --socket {MySQLソケットファイルのパス} --compress --compress-threads=1 --stream=xbstream {バックアップファイルが作成されるディレクトリ} 2>>{バックアップログファイルのパス} > {バックアップファイルのパス}
 ```
 
-**XtraBackup 8.0.12例**
+**XtraBackup 8.0.xx例**
 
 ```
 xtrabackup --defaults-file={my.cnfパス} --user={ユーザー} --password='{パスワード}' --socket={MySQLソケットファイルのパス} --compress --compress-threads=1 --stream=xbstream --backup {バックアップファイルが作成されるディレクトリ} 2>>{バックアップログファイルのパス} > {バックアップファイルのパス}
@@ -152,7 +155,7 @@ rm -rf {MySQLデータ保存パス}/*
 
 (5)ダウンロードしたバックアップファイルを解凍して復元します。
 
-**XtraBackup 2.4.20の例**
+**XtraBackup 2.4.xxの例**
 
 ```
 cat {バックアップファイル保存パス} | xbstream -x -C {MySQLデータ保存パス}
@@ -160,7 +163,7 @@ innobackupex --decompress {MySQLデータ保存パス}
 innobackupex --defaults-file={my.cnfパス} --apply-log {MySQLデータ保存パス}
 ```
 
-**XtraBackup 8.0.12の例**
+**XtraBackup 8.0.xxの例**
 
 ```
 cat {バックアップファイルの保存パス} | xbstream -x -C {MySQLデータ保存パス}
