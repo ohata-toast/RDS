@@ -1,14 +1,14 @@
-## Database > RDS for MySQL > DB 엔진
+## Database > RDS for MySQL > DB Engine
 
-## DB 엔진
-MySQL의 경우 버전 번호는 버전 = X.Y.Z로 구성됩니다. NHN Cloud RDS 용어에서 X.Y는 메이저 버전을, Z는 마이너 버전 번호를 나타냅니다.
+## DB Engine
+For MySQL, the version number consists of version = X.Y.Z. In NHN Cloud RDS terminology, X.Y represents the major version and Z represents the minor version number.
 
 
-### RDS에서 제공하는 DB 엔진 버전
+### DB engine version provided by RDS
 
-아래에 명시된 버전을 사용할 수 있습니다.
+The versions specified below are available.
 
-| 버전           | 비고                                                        |
+| Version           | Note                                                        |
 |--------------|-----------------------------------------------------------|
 | <strong>8.0</strong> ||
 | MySQL 8.0.32 |                                                           | 
@@ -17,49 +17,49 @@ MySQL의 경우 버전 번호는 버전 = X.Y.Z로 구성됩니다. NHN Cloud RD
 | MySQL 8.0.18 |                                                           |
 | <strong>5.7</strong> ||
 | MySQL 5.7.37 |                                                           |
-| MySQL 5.7.33 | 외부의 백업본으로 DB 인스턴스를 복원할 수 없습니다.                   |
+| MySQL 5.7.33 | You cannot restore a DB instance from an external backup.                   |
 | MySQL 5.7.26 |                                                           |
 | MySQL 5.7.19 |                                                           |
 | MySQL 5.7.15 |                                                           |
 | <strong>MySQL 5.6</strong> ||
-| MySQL 5.6.33 | 신규 DB 인스턴스를 생성할 수 없습니다. 기존 DB 인스턴스의 읽기 복제본 생성, 복원만 지원합니다. |
+| MySQL 5.6.33 | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
 
-MySQL에서 버전 번호는 버전 = `X.Y.Z`로 구성됩니다. NHN Cloud의 RDS for MySQL에서는 `X.Y`의 경우 메이저 버전을, `Z`는 마이너 버전을 나타냅니다.
+In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
-### DB 엔진 버전 관리
-DB 인스턴스 생성 이후, 해당 DB 인스턴스 수정과 함께 DB 엔진 버전 변경을 진행할 수 있습니다.
+### Manage DB Engine Version
+After creating the DB instance, you can change the DB engine version along with modifying the DB instance.
 
-> [주의]
-> DB 버전 변경 시도 시 업그레이드만 지원하며, 다운그레이드는 지원하지 않습니다.
+> [Caution]
+When attempting to change the DB version, only upgrade is supported, downgrade is not supported.
 
-DB 엔진 버전 업그레이드가 진행될 경우, 메이저 버전 번호만 변경되는 경우는 메이저 버전 업그레이드로, 마이너 버전 번호만 변경되는 경우는 마이너 버전 업그레이드로 간주합니다.
-DB 엔진 메이저 버전 업그레이드 시도 시에는 바로 다음의 메이저 버전의 DB 엔진 버전에 대해 업그레이드가 가능합니다.
+When upgrading the DB engine version, if only the major version number is changed, it is considered a major version upgrade, and if only the minor version number is changed, it is considered a minor version upgrade.
+When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
 
-#### MySQL 5.7에서 MySQL 8.0으로 업그레이드하기 위한 사전 점검
+#### Pre-inspection for upgrading from MySQL 5.7 to MySQL 8.0
 
-MySQL 8.0과 MySQL 5.7은 상당수의 비호환성 요소가 포함되어 있습니다. 따라서 `5.7`에서 `8.0` 버전으로 메이저 버전 DB 엔진 업그레이드를 진행하는 경우 문제가 발생할 수 있습니다. 이에 문제 발생이 예상되는 일부 항목에 대한 사전 점검 과정이 필요합니다. 다음은 사전 점검이 필요한 항목입니다.
+MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doing a major version DB engine upgrade from `5.7` to version `8.0` you may run into issues. Therefore, a pre-inspection process is required for some items that are expected to cause problems. The following items require prior inspection.
 
-- `mysqlcheck`를 통한 버전 업그레이드 결격 사항이 없어야 한다.
-- `INFORMATION_SCHEMA.VIEWS`를 통해 확인했을 때 컬럼명이 64자를 초과하는 내용이 없어야 한다.
-- 데이터 사전에서 사용되는 테이블과 동일한 명칭의 테이블이 없어야 한다.
-- 길이가 255자 또는 1020바이트를 초과하는 개별 ENUM, SET 열 요소가 있는 테이블, 저장 프로시저가 없어야 한다.
-- 외래 키 제약 조건 이름이 64자를 초과하는 테이블이 없어야 한다.
-- `lower_case_table_names` 설정을 1로 변경하려는 경우 스키마 이름이 소문자인지 확인한다.
-- `lower_case_table_names` 설정을 1로 변경하려는 경우 테이블 이름이 소문자인지 확인한다.
-- 특정 파티션 체크를 통해 추출되는 파티션 테이블이 없어야 한다.
-- InnoDB 시스템 테이블 스페이스와 일반 테이블 스페이스를 포함하는 공유 테이블 스페이스에 상주하는 테이블 파티션이 없어야 한다.
+- There must be no version upgrade disqualifications via `mysqlcheck`.
+- When checked through `INFORMATION_SCHEMA.VIEWS`, the column name must not exceed 64 characters.
+- There must not be a table with the same name as the table used in the data dictionary.
+- There must be no tables or stored procedures with individual ENUM, SET column elements that exceed 255 characters or 1020 bytes in length.
+- There must be no tables with foreign key constraint names longer than 64 characters.
+- If you want to change the `lower_case_table_names` setting to 1, make sure the schema names are lower case.
+- If you want to change the `lower_case_table_names` setting to 1, make sure the table names are lower case.
+- There must be no partition table extracted through a specific partition check.
+- No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
 
-세부 사항에 대해서는 [5.7에서 8.0으로 업그레이드 하기 위한 체크리스트 세부사항](https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_en.xlsx)에서 확인하실 수 있습니다.
+For more details, see [](https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ko.xlsx)Checklist Details to Upgrade from 5.7 to 8.0[](https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ko.xlsx).
 
-또한, 5.7에서는 사용되나 8.0에서는 제거 혹은 변경된 사항에 관해 확인이 필요합니다.
-- [SQL 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
-- [8.0에서 제거된 기능 가이드](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
+Also, you must check items that have been removed or changed in 8.0.
+- [Changes in SQL](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
+- [Features Removed in MySQL8.0](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
 
 
-#### 더미 DB 인스턴스를 사용한 DB 엔진 버전 업그레이드 
+#### Upgrading the DB Engine Version Using a Dummy DB Instance
 
-DB 인스턴스 수정 창에서 DB 엔진 버전 변경을 시도 시, 더미 DB 인스턴스 사용 여부를 선택하여 버전 업그레이드 과정에서의 고가용성을 가져올 수 있습니다. 더미 DB 인스턴스 사용 선택 시 DB 버전 업그레이드를 위한 예비 마스터가 생성됩니다. 
+When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created.
 
-> [주의]
-> 더미 DB 인스턴스의 경우 업그레이드 과정 중 임시 예비 마스터를 생성하므로, 해당 옵션은 고가용성 구성이 아닌 경우에만 사용할 수 있습니다.
+> [Caution]
+For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high availability configurations.
