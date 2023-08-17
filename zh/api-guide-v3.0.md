@@ -358,10 +358,10 @@ This API does not require a request body.
 
 ### Task Status
 
-| Status Name                | Description                   |
+| Status Name        | Description                   |
 |--------------------|----------------------|
 | `READY`            | Task in preparation         |
-| `Training creation is requested.`          | Task in progress         |
+| `RUNNING`          | Task in progress         |
 | `COMPLETED`        | Task completed           |
 | `REGISTERED`       | Task registered           |
 | `WAIT_TO_REGISTER` | Task waiting to register       |
@@ -3698,9 +3698,13 @@ GET /v3.0/metric-statistics
             "values": [
                 [
                     1679298540,
-                    April 25, 2023
+                    "1"
+                ],
+                [
                     1679298600,
-                    April 25, 2023
+                    "1"
+                ],
+                [
                     1679298660,
                     "1"
                 ]
