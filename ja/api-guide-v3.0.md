@@ -1100,11 +1100,10 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.dbVersion | Body | String | DBエンジンタイプ |
 | restorableBackups.backup.failoverCount | Body | Number | フェイルオーバー回数 |
 | restorableBackups.backup.binLogFileName | Body | String | バイナリログファイル名 |
-| restorableBackups.backup.binLogFilePosition | Body | Number | バイナリログファイル位置 |
+| restorableBackups.backup.binLogPosition | Body | Number | バイナリログファイル位置 |
 | restorableBackups.backup.createdYmdt | Body | DateTime | バックアップ作成日時 |
 | restorableBackups.backup.updatedYmdt | Body | DateTime | バックアップ更新日時 |
 | restorableBackups.restorableBinLogs | Body | Array | 該当バックアップを利用して復元可能なバイナリログ名リスト |
-
 
 
 <details><summary>例</summary>
@@ -1187,8 +1186,6 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.replicationRegion | Body | Enum | X | バックアップ複製リージョン<br><ul><li>`KR1`:韓国(パンギョ)</li><li>`KR2`:韓国(ピョンチョン)</li><li>`JP1`:日本(東京)</li></ul> |
 | backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br><ul><li>デフォルト値: `true`</li></ul> |
 | backup.backupSchedules | Body | Array | O | バックアップスケジュールリスト |
-|  |  |  |  |  |
-|  |  |  |  |  |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | バックアップ開始時刻<br><ul><li>例: `00:00:00`</li></ul> |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | バックアップDuration<br>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30分</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1時間</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1時間30分</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2時間</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2時間30分</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3時間</span></li></ul> |
 | backup.backupSchedules.backupRetryExpireTime | Body | String | O | バックアップ再試行期限時刻<br><ul><li>バックアップ再試行期限時刻はバックアップ開始時刻より前か後にする必要があります。</li><li>例: `01:30:00`</li></ul> |
