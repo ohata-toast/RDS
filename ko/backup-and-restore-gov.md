@@ -11,19 +11,22 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 
 | MySQL 버전 | XtraBackup 버전 |
 |----------|---------------|
-| 5.7.15   | 2.4.20        |
-| 5.7.19   | 2.4.20        |
-| 5.7.26   | 2.4.20        |
-| 5.7.33   | 2.4.20        |
-| 5.7.37   | 2.4.20        |
-| 8.0.18   | 8.0.26        |
-| 8.0.23   | 8.0.26        |
-| 8.0.28   | 8.0.28        |
-| 8.0.32   | 8.0.28        |
+| 5.7.15   | 2.4.28        |
+| 5.7.19   | 2.4.28        |
+| 5.7.26   | 2.4.28        |
+| 5.7.33   | 2.4.28        |
+| 5.7.37   | 2.4.28        |
+| 8.0.18   | 8.0.32        |
+| 8.0.23   | 8.0.32        |
+| 8.0.28   | 8.0.32        |
+| 8.0.32   | 8.0.32        |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
-    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+
+> [참고]
+> 2023년 8월 17일 XtraBackup 유틸리티의 버전이 업그레이드되었습니다. 이전 백업에 사용된 XtraBackup 버전은 웹 콘솔에서 확인할 수 있습니다.
 
 ### 자동 백업
 
@@ -42,6 +45,10 @@ DB 인스턴스의 백업 보관 기간을 1일 이상으로 설정하면 자동
 **쿼리 지연 대기 시간(초)**
 
 * 테이블 잠금 사용 시 `FLUSH TABLES WITH READ LOCK` 구문의 대기 시간을 설정합니다. 쿼리 지연 대기 시간만큼 `FLUSH TABLES WITH READ LOCK` 구문이 대기하게 됩니다. 0~21,600초까지 설정 가능합니다. 길게 설정할 수록 DML 쿼리 부하로 인한 백업 실패 가능성을 줄일 수 있으나, 전체 백업 시간이 길어질 수 있습니다.
+
+**백업 복제 리전**
+
+* 백업 파일을 다른 리전의 오브젝트 스토리지로 복제되도록 설정합니다. 백업 복제 리전은 재해 복구(disaster recovery)를 위한 기능으로 원본 리전의 백업 파일을 대상 리전으로 동일하게 복제하고 관리합니다. 복제는 백그라운드에서 일정 주기마다 진행됩니다. 백업 복제 리전을 설정하면 리전 간 복제 트래픽 과금이 청구되며, 대상 리전에 오브젝트 스토리지 사용량에 대한 과금이 추가로 청구됩니다.
 
 **백업 재시도 횟수**
 
@@ -103,13 +110,13 @@ DB 인스턴스의 백업 보관 기간을 1일 이상으로 설정하면 자동
 
 (1) MySQL이 설치된 서버에서 아래의 명령어를 이용하여 백업을 수행합니다.
 
-**XtraBackup 2.4.20 예제**
+**XtraBackup 2.4.xx 예제**
 
 ```
 innobackupex --defaults-file={my.cnf 경로} --user {사용자} --password '{비밀번호}' --socket {MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
 ```
 
-**XtraBackup 8.0.12 예제**
+**XtraBackup 8.0.xx 예제**
 
 ```
 xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비밀번호}' --socket={MySQL 소켓 파일 경로} --compress --compress-threads=1 --stream=xbstream --backup {백업 파일이 생성될 디렉터리} 2>>{백업 로그 파일 경로} > {백업 파일 경로}
@@ -148,7 +155,7 @@ rm -rf {MySQL 데이터 저장 경로}/*
 
 (5) 다운로드한 백업 파일의 압축을 해제하고 복원합니다.
 
-**XtraBackup 2.4.20 예제**
+**XtraBackup 2.4.xx 예제**
 
 ```
 cat {백업 파일 저장 경로} | xbstream -x -C {MySQL 데이터 저장 경로}
@@ -156,7 +163,7 @@ innobackupex --decompress {MySQL 데이터 저장 경로}
 innobackupex --defaults-file={my.cnf 경로} --apply-log {MySQL 데이터 저장 경로}
 ```
 
-**XtraBackup 8.0.12 예제**
+**XtraBackup 8.0.xx 예제**
 
 ```
 cat {백업 파일 저장 경로} | xbstream -x -C {MySQL 데이터 저장 경로}
