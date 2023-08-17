@@ -45,8 +45,8 @@ You can use the versions specified below.
 | <strong>5.6</strong> ||
 | MySQL 5.6.33 | Unable to create new DB instance. It only supports creating and restoring read replicas of existing DB instances. |
 
-DB 엔진의 경우 생성 이후 웹 콘솔의 수정 기능을 통해 버전 업그레이드가 가능합니다.
-DB 엔진에 대한 자세한 사항은 [DB 엔진](db-engine/)에서 확인할 수 있습니다.
+You can upgrade the version for DB engine by using the modification feature of the web consle after the engine is created.
+For more details, see [DB Engine](db-engine/).
 
 ### DB Instance Type
 
@@ -226,6 +226,64 @@ out of capacity, you may need to set a storage period for binary logs or expand 
 
 When the parameters of parameter group associated with DB instance are modified, they should be reflected. If restart is required to apply the changed parameters, the DB instance is restarted. For more details on the parameter group, see the [Parameter Group](parameter-group/).
 
+### Manage Users
+
+RDS for MySQL provides a feature to easily manage users who access the database through the web console. Users are created when you create a DB instance, and you can freely create, modify, or delete users in an already created DB instance. To this end, It is not allowed to create, modify, or delete users directly via queries in the database. Instead, you can grant permissions to users using predefined permission templates. The following permission templates can be granted to users.
+
+* **READ**
+  * You have permission to view.
+
+```sql
+GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
+GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
+```
+
+* **CRUD**
+  * Includes READ permission, and has permission to modify data.
+
+```sql
+GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
+```
+
+* **DDL**
+  * Includes CRUD permissions, and has permissions to execute DDL queries.
+
+```sql
+GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
+GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
+```
+
+* **CUSTOM**
+  * When restoring a DB instance from an external database backup, all users that exist in the database are represented with the CUSTOM permission.
+  * You cannot check what permissions are in the CUSTOM permission template.
+  * If you change from one CUSTOM permission template to another permission template, you cannot change back to a CUSTOM permission template.
+
+In MySQL 5.7.33 or higher, you can specify the authentication plugin and TLS Option when creating or changing users. If you change the authentication plugin, you must change the password as well. If you do not change the password, the existing password is used. Applicable authentication plugins by version are as follows.
+
+* Version 5.7
+
+| Authentication Plugin | Description                                   |
+|---------|--------------------------------------|
+| NATIVE  | Authenticate using `mysql_native_password`. |
+| SHA256  | Authenticate using `sha256_password`.       |
+
+* Version 8.0
+
+| Authentication Plugin      | Description                                   |
+|--------------|--------------------------------------|
+| NATIVE       | Authenticate using `mysql_native_password`. |
+| CACHING_SHA2 | Authenticate using `caching_sha2_password`. |
+
+You can encrypt the connection between the client and the database by specifying the TLS Option.
+
+| TLS Option | Description                                                                 |
+|------------|--------------------------------------------------------------------|
+| NONE       | Encrypted connections are not applied.                                                |
+| SSL        | Encrypted connections are applied.                                                    |
+| X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the web console. |
+
 ## High Availability DB instances
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
@@ -271,7 +329,7 @@ If the failed over master fails to recover, you can re-enable the high availabil
 
 ### Separate Failed over Master
 
-If no longer use the high availability configuration, you have to separate the failed over master. Separation causes the failed over master to form a new replication group and changes the type of DB instance to master. Any relationship between separated master and promoted master is broken and cannot be tied to a promoted master with high availability. After separation and becoming a new master, all the features that NHN Cloud offers become available again.
+If recovery of a failed over master fails and data correction is required, you can disable the high availability feature by separating that master. The replication relationship between the separated master and the promoted master is broken, and each behaves as a normal DB instance. After separation, you cannot recover to the existing configuration.
 
 ### Manual Failover
 
@@ -341,12 +399,12 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * Parameter description
-    * master_instance_ip : IP of replication target (Master) server
-    * master_instance_port : MySQL Port on the replication target (Master) Server
-    * user_id_for_replication : Account for replication to access MySQL on the replication target (Master) server
-    * password_for_replication_user : Account password for replication
-    * MASTER_LOG_FILE : The binary log file name of the replication target (Master)
-    * MASTER_LOG_POS : The binary log position of the replication target (Master)
+  * master_instance_ip : IP of replication target (Master) server
+  * master_instance_port : MySQL Port on the replication target (Master) Server
+  * user_id_for_replication : Account for replication to access MySQL on the replication target (Master) server
+  * password_for_replication_user : Account password for replication
+  * MASTER_LOG_FILE : The binary log file name of the replication target (Master)
+  * MASTER_LOG_POS : The binary log position of the replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4); 
@@ -442,7 +500,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### When `ERROR 1418` occurs during data importing
 
 * `ERROR 1418` occurs when the function declaration in the mysqldump file does not contain NO SQL, READS SQL DATA, or DETERMINISTIC and binary logging is enabled.
-    * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
+  * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
 * To resolve this, Parameter value of `log_bin_trust_function_creators` of DB instance to which you want to apply mysqldump file should be changed to `1`.
 
 ### Export by using replication
