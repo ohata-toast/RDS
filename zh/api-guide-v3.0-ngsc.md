@@ -1092,7 +1092,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.backupName | Body | String | Backup name |
 | restorableBackups.backup.useBackupLock | Body | Boolean | Whether to use table lock |
 | restorableBackups.backup.backupSize | Body | Number | Backup size |
-| restorableBackups.backup.backupType | Body | Enum | Backup type<br><ul><li>- `AUTO`: Automatic</li><li>- `MANUAL`:  Manual</li></ul> |
+| restorableBackups.backup.backupType | Body | Enum | Backup type<br><ul><li>- `AUTO`: Automatic</li><li>- `MANUAL`:  Manual</li></ul> |
 | restorableBackups.backup.backupStatus | Body | Enum | Backup Status<br><ul><li>`BACKING_UP`: Backup in progress</li><li>`COMPLETED`: Backup completed</li><li>`DELETING`: Backup being deleted</li><li>`DELETED`: Backup deleted</li><li>`ERROR`: Error occurred</li></ul> |
 | restorableBackups.backup.dbInstanceId | Body | UUID | Original DB instance identifier |
 | restorableBackups.backup.dbInstanceName | Body | String | Original DB instance name |

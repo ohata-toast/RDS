@@ -1089,7 +1089,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.backupName | Body | String | 백업 이름 |
 | restorableBackups.backup.useBackupLock | Body | Boolean | 테이블 잠금 사용 여부 |
 | restorableBackups.backup.backupSize | Body | Number | 백업 크기 |
-| restorableBackups.backup.backupType | Body | Enum | 백업 유형<br><ul><li>`AUTO` : 자동</li><li>`MANUAL` : 수동</li></ul> |
+| restorableBackups.backup.backupType | Body | Enum | 백업 유형<br><ul><li>`AUTO` : 자동</li><li>`MANUAL` : 수동</li></ul> |
 | restorableBackups.backup.backupStatus | Body | Enum | 백업 상태<br><ul><li>`BACKING_UP`: 백업 중인 경우</li><li>`COMPLETED`: 백업이 완료된 경우</li><li>`DELETING`: 백업이 삭제 중인 경우</li><li>`DELETED`: 백업이 삭제된 경우</li><li>`ERROR`: 오류가 발생한 경우</li></ul> |
 | restorableBackups.backup.dbInstanceId | Body | UUID | 원본 DB 인스턴스의 식별자 |
 | restorableBackups.backup.dbInstanceName | Body | String | 원본 DB 인스턴스의 이름 |

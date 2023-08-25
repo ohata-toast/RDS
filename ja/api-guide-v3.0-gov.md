@@ -1091,7 +1091,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.backupName | Body | String | バックアップ名 |
 | restorableBackups.backup.useBackupLock | Body | Boolean | テーブルロックを使用するかどうか |
 | restorableBackups.backup.backupSize | Body | Number | バックアップサイズ |
-| restorableBackups.backup.backupType | Body | Enum | バックアップタイプ<br><ul><li>`AUTO` :自動</li><li>`MANUAL` :手動</li></ul> |
+| restorableBackups.backup.backupType | Body | Enum | バックアップタイプ<br><ul><li>`AUTO` :自動</li><li>`MANUAL` :手動</li></ul> |
 | restorableBackups.backup.backupStatus | Body | Enum | バックアップ状態<br><ul><li>`BACKING_UP`:バックアップ中の場合</li><li>`COMPLETED`:バックアップが完了している場合</li><li>`DELETING`:バックアップが削除中の場合</li><li>`DELETED`:バックアップが削除されている場合</li><li>`ERROR`:エラーが発生した場合</li></ul> |
 | restorableBackups.backup.dbInstanceId | Body | UUID | 原本DBインスタンスの識別子 |
 | restorableBackups.backup.dbInstanceName | Body | String | 原本DBインスタンスの名前 |
@@ -1449,7 +1449,6 @@ POST /v3.0/db-instances/restore-from-obs
 	}
 }
 ```
-
 
 </p>
 </details>
