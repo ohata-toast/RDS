@@ -1103,7 +1103,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.updatedYmdt | Body | DateTime | バックアップ更新日時 |
 | restorableBackups.restorableBinLogs | Body | Array | 該当バックアップを利用して復元可能なバイナリログ名リスト |
 
-
 <details><summary>例</summary>
 <p>
 
@@ -1415,7 +1414,7 @@ POST /v3.0/db-instances/restore-from-obs
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
     "dbPort": 10000,
-    "dbVersion":: "MYSQL_V8028",
+    "dbVersion": "MYSQL_V8028",
     "dbUserName": "db-user",
     "dbPassword": "password",
     "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
@@ -1450,6 +1449,9 @@ POST /v3.0/db-instances/restore-from-obs
 	}
 }
 ```
+
+</p>
+</details>
 
 #### レスポンス
 
