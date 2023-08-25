@@ -1105,7 +1105,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.updatedYmdt | Body | DateTime | バックアップ更新日時 |
 | restorableBackups.restorableBinLogs | Body | Array | 該当バックアップを利用して復元可能なバイナリログ名リスト |
 
-
 <details><summary>例</summary>
 <p>
 
