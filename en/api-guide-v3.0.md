@@ -3790,7 +3790,7 @@ This API does not require a request body.
                 },
                 {
                     "langCode": "ZH",
-                    "message": "DB instance starte스d"
+                    "message": "DB instance started"
                 }
             ],
             "eventYmdt": "2023-03-20T16:31:59+09:00"
