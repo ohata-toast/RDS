@@ -316,7 +316,7 @@ GET /v3.0/db-versions
 
 ## 스토리지
 
-### 스토리지 목록 보기
+### 스토리지 타입 목록 보기
 
 ```
 GET /v3.0/storages
@@ -328,9 +328,9 @@ GET /v3.0/storages
 
 #### 응답
 
-| 이름       | 종류   | 형식    | 설명      |
-|----------|------|-------|---------|
-| storages | Body | Array | 스토리지 목록 |
+| 이름           | 종류   | 형식    | 설명         |
+|--------------|------|-------|------------|
+| storageTypes | Body | Array | 스토리지 타입 목록 |
 
 <details><summary>예시</summary>
 <p>
@@ -342,7 +342,7 @@ GET /v3.0/storages
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "storages": [
+    "storageTypes": [
         "General SSD",
         "General HDD"
     ]
@@ -654,23 +654,24 @@ GET /v3.0/db-instances/{dbInstanceId}
 
 #### 응답
 
-| 이름                    | 종류   | 형식       | 설명                                                                                                                                    |
-|-----------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId          | Body | UUID     | DB 인스턴스의 식별자                                                                                                                          |
-| dbInstanceGroupId     | Body | UUID     | DB 인스턴스 그룹의 식별자                                                                                                                       |
-| dbInstanceName        | Body | String   | DB 인스턴스를 식별할 수 있는 이름                                                                                                                  |
-| description           | Body | String   | DB 인스턴스에 대한 추가 정보                                                                                                                     |
-| dbVersion             | Body | Enum     | DB 엔진 유형                                                                                                                              |
-| dbPort                | Body | Number   | DB 포트                                                                                                                                 |
-| dbInstanceType        | Body | Enum     | DB 인스턴스의 역할 타입<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 조치된 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
-| dbInstanceStatus      | Body | Enum     | DB 인스턴스의 현재 상태                                                                                                                        |
-| progressStatus        | Body | Enum     | DB 인스턴스의 현재 작업 진행 상태                                                                                                                  |
-| dbFlavorId            | Body | UUID     | DB 인스턴스 사양의 식별자                                                                                                                       |
-| parameterGroupId      | Body | UUID     | DB 인스턴스에 적용된 파라미터 그룹의 식별자                                                                                                             |
-| dbSecurityGroupIds    | Body | Array    | DB 인스턴스에 적용된 DB 보안 그룹의 식별자 목록                                                                                                         |
-| useDeletionProtection | Body | Boolean  | DB 인스턴스 삭제 보호 여부                                                                                                                      |
-| createdYmdt           | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
-| updatedYmdt           | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| 이름                          | 종류   | 형식       | 설명                                                                                                                                    |
+|-----------------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                | Body | UUID     | DB 인스턴스의 식별자                                                                                                                          |
+| dbInstanceGroupId           | Body | UUID     | DB 인스턴스 그룹의 식별자                                                                                                                       |
+| dbInstanceName              | Body | String   | DB 인스턴스를 식별할 수 있는 이름                                                                                                                  |
+| description                 | Body | String   | DB 인스턴스에 대한 추가 정보                                                                                                                     |
+| dbVersion                   | Body | Enum     | DB 엔진 유형                                                                                                                              |
+| dbPort                      | Body | Number   | DB 포트                                                                                                                                 |
+| dbInstanceType              | Body | Enum     | DB 인스턴스의 역할 타입<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 조치된 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstanceStatus            | Body | Enum     | DB 인스턴스의 현재 상태                                                                                                                        |
+| progressStatus              | Body | Enum     | DB 인스턴스의 현재 작업 진행 상태                                                                                                                  |
+| dbFlavorId                  | Body | UUID     | DB 인스턴스 사양의 식별자                                                                                                                       |
+| parameterGroupId            | Body | UUID     | DB 인스턴스에 적용된 파라미터 그룹의 식별자                                                                                                             |
+| dbSecurityGroupIds          | Body | Array    | DB 인스턴스에 적용된 DB 보안 그룹의 식별자 목록                                                                                                         |
+| useDeletionProtection       | Body | Boolean  | DB 인스턴스 삭제 보호 여부                                                                                                                      |
+| supportAuthenticationPlugin | Body | Boolean  | 인증 플러그인 지원 여부                                                                                                                         |
+| createdYmdt                 | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| updatedYmdt                 | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 
 <details><summary>예시</summary>
 <p>
@@ -695,6 +696,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
     "useDeletionProtection": false,
+    "supportAuthenticationPlugin": true,
     "createdYmdt": "2022-11-23T12:03:13+09:00",
     "updatedYmdt": "2022-12-02T17:20:17+09:00"
 }
@@ -1945,6 +1947,9 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
+> [주의]
+> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true 인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 설정할 수 있습니다.
+
 <details><summary>예시</summary>
 <p>
 
@@ -1986,6 +1991,10 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | authorityType        | Body | Enum   | X  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>        |
 | authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
+
+> [주의]
+> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true 인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 수정할 수 있습니다.
+> `authenticationPlugin`의 값은 `dbPassword`와 동시에 수정을 해야 합니다.
 
 <details><summary>예시</summary>
 <p>
