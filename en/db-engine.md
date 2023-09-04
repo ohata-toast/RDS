@@ -49,7 +49,11 @@ MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doi
 - There must be no partition table extracted through a specific partition check.
 - No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
 
-For more details, see [](https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ko.xlsx)Checklist Details to Upgrade from 5.7 to 8.0[](https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ko.xlsx).
+DB 버전 업그레이드 사전 점검에 대해서는 다음과 같은 방법으로 결과 확인이 가능합니다.
+- `5.7에서 8.0으로 업그레이드 하기 위한 체크리스트 세부사항`(https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_en.xlsx)을 활용한 직접 확인
+- 콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용한 결과 확인
+- DB 버전 업그레이드 시도를 통한 결과 확인
+콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다.
 
 Also, you must check items that have been removed or changed in 8.0.
 - [Changes in SQL](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)

@@ -49,7 +49,11 @@ MySQL 8.0과 MySQL 5.7은 상당수의 비호환성 요소가 포함되어 있�
 - 특정 파티션 체크를 통해 추출되는 파티션 테이블이 없어야 한다.
 - InnoDB 시스템 테이블 스페이스와 일반 테이블 스페이스를 포함하는 공유 테이블 스페이스에 상주하는 테이블 파티션이 없어야 한다.
 
-세부 사항에 대해서는 [5.7에서 8.0으로 업그레이드 하기 위한 체크리스트 세부사항](https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ko.xlsx)에서 확인하실 수 있습니다.
+DB 버전 업그레이드 사전 점검에 대해서는 다음과 같은 방법으로 결과 확인이 가능합니다.
+- `5.7에서 8.0으로 업그레이드 하기 위한 체크리스트 세부사항`(https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ko.xlsx)을 활용한 직접 확인
+- 콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용한 결과 확인
+- DB 버전 업그레이드 시도를 통한 결과 확인
+콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다.
 
 또한, 5.7에서는 사용되나 8.0에서는 제거 혹은 변경된 사항에 관해 확인이 필요합니다.
 - [SQL 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
