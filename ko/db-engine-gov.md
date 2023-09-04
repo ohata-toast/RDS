@@ -21,7 +21,7 @@ MySQL의 경우 버전 번호는 버전 = X.Y.Z로 구성됩니다. NHN Cloud RD
 | MySQL 5.7.26 |                                                           |
 | MySQL 5.7.19 |                                                           |
 | MySQL 5.7.15 |                                                           |
-| <strong>MySQL 5.6</strong> ||
+| <strong>5.6</strong> ||
 | MySQL 5.6.33 | 신규 DB 인스턴스를 생성할 수 없습니다. 기존 DB 인스턴스의 읽기 복제본 생성, 복원만 지원합니다. |
 
 MySQL에서 버전 번호는 버전 = `X.Y.Z`로 구성됩니다. NHN Cloud의 RDS for MySQL에서는 `X.Y`의 경우 메이저 버전을, `Z`는 마이너 버전을 나타냅니다.
