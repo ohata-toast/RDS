@@ -1,8 +1,8 @@
-## Database > RDS for MySQL > 릴리스 노트
+## Database > RDS for MySQL > Release Notes
 
-### 2022. 09. 27.
+### September 27, 2022
 
-#### 신규 상품 출시
+#### New Releases
 
-- TOAST Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
-- 복잡한 설정 없이 Relational Database 사용할 수 있습니다.
+- TOAST Relational Database Service (RDS) provides Relational Database in the cloud environment.
+- No complicated configuration is required to enable relational database.

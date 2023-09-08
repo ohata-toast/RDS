@@ -316,6 +316,7 @@ GET /v3.0/db-versions
 
 ## ストレージ
 
+
 ### ストレージタイプリストを表示
 
 ```
@@ -333,6 +334,7 @@ GET /v3.0/storage-types
 | storageTypes | Body | Array | ストレージタイプリスト |
 
 <details><summary>例</summary>
+
 <p>
 
 ```json
@@ -710,6 +712,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 | supportAuthenticationPlugin | Body | Boolean  | 認証プラグインサポートの有無                                                                                                                         |
 | createdYmdt                 | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 | updatedYmdt                 | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+
 
 <details><summary>例</summary>
 <p>
