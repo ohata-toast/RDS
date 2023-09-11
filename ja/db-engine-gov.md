@@ -53,8 +53,17 @@ DB 버전 업그레이드 사전 점검에 대해서는 다음과 같은 방법�
 - `5.7から8.0にアップグレードするためのチェックリストの詳細`(https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ja.xlsx)을 활용한 직접 확인
 - 콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용한 결과 확인
 - DB 버전 업그레이드 시도를 통한 결과 확인
-콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다.
 
+콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다. 세부 내역 항목은 각각 다음의 의미를 가집니다.
+- `CHECK_BY_MYSQL_CHECK` : `mysqlcheck`を通じたバージョンアップグレードの欠格事項がないこと。
+- `COLUMN_LENGHT_LIMIT_CHECK` : `INFORMATION_SCHEMA.VIEWS`で確認した時、カラム名が64文字を超える内容がないこと。
+- `DUPLICATE_NAME_WITH_DATA_DICT` : データ辞書で使用されるテーブルと同じ名称のテーブルがないこと。
+- `ENUM_SET_SIZE_CHECK` : 長さが255文字または1020バイトを超える個々のENUM、SET列要素があるテーブル、保存プロシージャがないこと。
+- `FOREIGN_KEY_LENGTH_LIMIT_CHECK` : 外部キー制約条件名が64文字を超えるテーブルがないこと。
+- `LOWER_CASE_SCHEMAS_NAMES_CHECK` : `lower_case_table_names`設定を1に変更する場合、スキーマ名が小文字であることを確認する。
+- `LOWER_CASE_TABLE_NAMES_CHECK` : `lower_case_table_names`設定を1に変更する場合、テーブル名が小文字であることを確認する。
+- `PARTITION_TABLE_CHECK` : 特定のパーティションチェックで抽出されるパーティションテーブルがないこと。
+- `PROPERTY_LENGTH_LIMIT_CHECK` : InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
 
 また、5.7では使用されたが、8.0では削除または変更された事項について確認が必要です。
 - [SQL変更項目ガイド](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)

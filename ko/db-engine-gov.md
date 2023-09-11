@@ -53,7 +53,18 @@ DB 버전 업그레이드 사전 점검에 대해서는 다음과 같은 방법�
 - `5.7에서 8.0으로 업그레이드 하기 위한 체크리스트 세부사항`(https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ko.xlsx)을 활용한 직접 확인
 - 콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용한 결과 확인
 - DB 버전 업그레이드 시도를 통한 결과 확인
-콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다.
+
+콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다. 세부 내역 항목은 각각 다음의 의미를 가집니다.
+- `CHECK_BY_MYSQL_CHECK` : `mysqlcheck`를 통한 버전 업그레이드 결격 사항이 없어야 한다.
+- `COLUMN_LENGHT_LIMIT_CHECK` : `INFORMATION_SCHEMA.VIEWS`를 통해 확인했을 때 컬럼명이 64자를 초과하는 내용이 없어야 한다.
+- `DUPLICATE_NAME_WITH_DATA_DICT` : 데이터 사전에서 사용되는 테이블과 동일한 명칭의 테이블이 없어야 한다.
+- `ENUM_SET_SIZE_CHECK` : 길이가 255자 또는 1020바이트를 초과하는 개별 ENUM, SET 열 요소가 있는 테이블, 저장 프로시저가 없어야 한다.
+- `FOREIGN_KEY_LENGTH_LIMIT_CHECK` : 외래 키 제약 조건 이름이 64자를 초과하는 테이블이 없어야 한다.
+- `LOWER_CASE_SCHEMAS_NAMES_CHECK` : `lower_case_table_names` 설정을 1로 변경하려는 경우 스키마 이름이 소문자인지 확인한다.
+- `LOWER_CASE_TABLE_NAMES_CHECK` : `lower_case_table_names` 설정을 1로 변경하려는 경우 테이블 이름이 소문자인지 확인한다.
+- `PARTITION_TABLE_CHECK` : 특정 파티션 체크를 통해 추출되는 파티션 테이블이 없어야 한다.
+- `PROPERTY_LENGTH_LIMIT_CHECK` : InnoDB 시스템 테이블 스페이스와 일반 테이블 스페이스를 포함하는 공유 테이블 스페이스에 상주하는 테이블 파티션이 없어야 한다.
+
 
 또한, 5.7에서는 사용되나 8.0에서는 제거 혹은 변경된 사항에 관해 확인이 필요합니다.
 - [SQL 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
