@@ -1235,9 +1235,9 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-| --- | --- | --- | --- | --- |
-| restore.restoreYmdt | Body | DateTime | O | DB 인스턴스 복원 시간.(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>복원 정보 조회로 조회한 가장 최신의 복원 가능한 시간 이전에 대해서만 복원이 가능하다. |
+| 이름 | 종류 | 형식 | 필수 | 설명                                                                                             |
+| --- | --- | --- | --- |------------------------------------------------------------------------------------------------|
+| restore.restoreYmdt | Body | DateTime | O | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>복원 정보 조회로 조회한 가장 최신의 복원 가능한 시간 이전에 대해서만 복원이 가능하다. |
 
 
 <details><summary>예시</summary>
@@ -1286,12 +1286,12 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### 바이너리 로그를 이용한 시점 복원 시 요청(restoreType이 `BINLOG`인 경우)
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-| --- | --- | --- | --- | --- |
-| restore.backupId | Body | UUID | O | 복원에 사용할 백업의 식별자 |
+| 이름 | 종류 | 형식     | 필수 | 설명 |
+| --- | --- |--------| --- | --- |
+| restore.backupId | Body | UUID   | O | 복원에 사용할 백업의 식별자 |
 | restore.binLog | Body | Object | O | 바이너리 로그 정보 객체 |
 | restore.binLog.binLogFileName | Body | String | O | 복원에 사용할 바이너리 로그 이름 |
-| restore.binLog.binLogPosition | Body | String | O | 복원에 사용할 바이너리 로그 위치 |
+| restore.binLog.binLogPosition | Body | Number | O | 복원에 사용할 바이너리 로그 위치 |
 
 * 바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그에 대해 복원이 가능합니다.
 

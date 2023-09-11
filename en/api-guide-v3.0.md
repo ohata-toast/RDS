@@ -1235,9 +1235,9 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### Request when restoring a point in time restoration using Timestamp (if restoreType is `TIMESTAMP`)
 
-| Name | Type | Format | Required | Description |
-| --- | --- | --- | --- | --- |
-| restore.restoreYmdt | Body | DateTime | O | DB instance restore time. (YYYY-MM-DDThh:mm:ss.SSSTZD)<br>Restoration is possible only before the most recent restorable time, which is queried through restoration information inquiry. |
+| Name | Type | Format | Required | Description                                                                                                                                                                                            |
+| --- | --- | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| restore.restoreYmdt | Body | DateTime | O | Date and time of DB instance restoration(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>Restoration is possible only before the most recent restorable time, which is queried through restoration information inquiry. |
 
 
 <details><summary>Example</summary>
@@ -1287,11 +1287,11 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 #### Request for point-in-time restoration using binary logs (if restoreType is `BINLOG`)
 
 | Name | Type | Format | Required | Description |
-| --- | --- | --- | --- | --- |
-| restore.backupId | Body | UUID | O | Identifier of the backup to use for restoration |
+| --- | --- |--------| --- | --- |
+| restore.backupId | Body | UUID   | O | Identifier of the backup to use for restoration |
 | restore.binLog | Body | Object | O | Deleting Binary Logs |
 | restore.binLog.binLogFileName | Body | String | O | Binary log name to use for restoration |
-| restore.binLog.binLogPosition | Body | String | O | Binary log location to use for restoration |
+| restore.binLog.binLogPosition | Body | Number | O | Binary log location to use for restoration |
 
 * When restoring a point in time using the binary log, it is possible to restore the log recorded after that based on the binary log file and location of the base backup.
 

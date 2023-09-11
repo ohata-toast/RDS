@@ -1235,7 +1235,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 | 名前                  | 種類   | 形式       | 必須 | 説明                                                                                 |
 |---------------------|------|----------|----|------------------------------------------------------------------------------------|
-| restore.restoreYmdt | Body | DateTime | O  | DBインスタンス復元時間。(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>復元情報照会で照会した最新の復元可能な時間以前に対してのみ復元が可能です。 |
+| restore.restoreYmdt | Body | DateTime | O  | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>復元情報照会で照会した最新の復元可能な時間以前に対してのみ復元が可能です。 |
 
 <details><summary>例</summary>
 <p>
@@ -1288,7 +1288,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | restore.backupId              | Body | UUID   | O  | 復元に使用するバックアップの識別子 |
 | restore.binLog                | Body | Object | O  | バイナリログ情報オブジェクト    |
 | restore.binLog.binLogFileName | Body | String | O  | 復元に使用するバイナリログの名前  |
-| restore.binLog.binLogPosition | Body | String | O  | 復元に使用するバイナリログの位置  |
+| restore.binLog.binLogPosition | Body | Number | O  | 復元に使用するバイナリログの位置  |
 
 * バイナリログを利用した時点復元時、基準バックアップのバイナリログファイルおよび位置を基準に、その後に記録されたログに対して復元が可能です。
 
