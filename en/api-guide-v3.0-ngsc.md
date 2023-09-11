@@ -314,6 +314,44 @@ This API does not require a request body.
 
 ## Storage
 
+### List Storage Type
+
+```
+GET /v3.0/storage-types
+```
+
+#### Request
+
+This API does not require a request body.
+
+#### Response
+
+| Name           | Type   | Format    | Description         |
+|--------------|------|-------|------------|
+| storageTypes | Body | Array | Storage type list |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "storageTypes": [
+        "General SSD",
+        "General HDD"
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
 ### List Storage
 
 ```
@@ -667,6 +705,7 @@ This API does not require a request body.
 | parameterGroupId      | Body | UUID     | Parameter group identifier applied to DB instance                                                                                                             |
 | dbSecurityGroupIds    | Body | Array    | DB security group identifiers applied to DB instance                                                                                                         |
 | useDeletionProtection | Body | Boolean  | Whether to protect DB instance against deletion                                                                                                                      |
+| supportAuthenticationPlugin | Body | Boolean  | Whether to support authentication plugin    |
 | createdYmdt           | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 | updatedYmdt           | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 
@@ -693,6 +732,7 @@ This API does not require a request body.
     "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
     "useDeletionProtection": false,
+    "supportAuthenticationPlugin": true,
     "createdYmdt": "2022-11-23T12:03:13+09:00",
     "updatedYmdt": "2022-12-02T17:20:17+09:00"
 }
@@ -1195,7 +1235,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
-| restore.restoreYmdt | Body | DateTime | O | DB instance restore time. (YYYY-MM-DDThh:mm:ss.SSSTZD)<br>Restoration is possible only before the most recent restorable time, which is queried through restoration information inquiry. |
+| restore.restoreYmdt | Body | DateTime | O | Date and time of DB instance restoration(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>Restoration is possible only before the most recent restorable time, which is queried through restoration information inquiry. |
 
 
 <details><summary>Example</summary>
@@ -1245,11 +1285,11 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 #### Request for point-in-time restoration using binary logs (if restoreType is `BINLOG`)
 
 | Name | Type | Format | Required | Description |
-| --- | --- | --- | --- | --- |
-| restore.backupId | Body | UUID | O | Identifier of the backup to use for restoration |
+| --- | --- |--------| --- | --- |
+| restore.backupId | Body | UUID   | O | Identifier of the backup to use for restoration |
 | restore.binLog | Body | Object | O | Deleting Binary Logs |
 | restore.binLog.binLogFileName | Body | String | O | Binary log name to use for restoration |
-| restore.binLog.binLogPosition | Body | String | O | Binary log location to use for restoration |
+| restore.binLog.binLogPosition | Body | Number   | O | Binary log location to use for restoration |
 
 * When restoring a point in time using the binary log, it is possible to restore the log recorded after that based on the binary log file and location of the base backup.
 
@@ -1943,6 +1983,9 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | authenticationPlugin | Body | Enum   | X  | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
+> [Caution]
+> Only DB instances whose `supportAuthenticationPlugin` value is true can set the values for `authenticationPlugin`, `tlsOption`.
+
 <details><summary>Example</summary>
 <p>
 
@@ -1984,6 +2027,10 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | authorityType        | Body | Enum   | X  | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/>        |
 | authenticationPlugin | Body | Enum   | X  | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
+
+> [Caution]
+> DB instances whose `supportAuthenticationPlugin` value is true can set the values for `authenticationPlugin`, `tlsOption`.
+> The value of `authenticationPlugin` must be modified at the same time as `dbPassword`.
 
 <details><summary>Example</summary>
 <p>
