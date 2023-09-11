@@ -316,23 +316,23 @@ This API does not require a request body.
 
 ## Storage
 
-### 스토리지 타입 목록 보기
+### List Storage Type
 
 ```
 GET /v3.0/storage-types
 ```
 
-#### 요청
+#### Request
 
-이 API는 요청 본문을 요구하지 않습니다.
+This API does not require a request body.
 
-#### 응답
+#### Response
 
-| 이름           | 종류   | 형식    | 설명         |
+| Name           | Type   | Format    | Description         |
 |--------------|------|-------|------------|
-| storageTypes | Body | Array | 스토리지 타입 목록 |
+| storageTypes | Body | Array | Storage type list |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -366,8 +366,8 @@ This API does not require a request body.
 
 #### Response
 
-| Name       | Type   | Format    | Description      |
-|----------|------|-------|---------|
+| Name           | Type   | Format    | Description        |
+|--------------|------|-------|-----------|
 | storages | Body | Array | Storage list |
 
 <details><summary>Example</summary>
@@ -707,7 +707,7 @@ This API does not require a request body.
 | parameterGroupId      | Body | UUID     | Parameter group identifier applied to DB instance                                                                                                             |
 | dbSecurityGroupIds    | Body | Array    | DB security group identifiers applied to DB instance                                                                                                         |
 | useDeletionProtection | Body | Boolean  | Whether to protect DB instance against deletion                                                                                                                      |
-| supportAuthenticationPlugin | Body | Boolean  | 인증 플러그인 지원 여부                               |
+| supportAuthenticationPlugin | Body | Boolean  | Whether to support authentication plugin                               |
 | createdYmdt           | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 | updatedYmdt           | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 
@@ -1985,8 +1985,8 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | authenticationPlugin | Body | Enum   | X  | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
-> [주의]
-> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 설정할 수 있습니다.
+> [Caution]
+> Only DB instances whose `supportAuthenticationPlugin` value is true can set the values for `authenticationPlugin`, `tlsOption`.
 
 <details><summary>Example</summary>
 <p>
@@ -2030,9 +2030,9 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | authenticationPlugin | Body | Enum   | X  | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
-> [주의]
-> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 수정할 수 있습니다.
-> `authenticationPlugin`의 값은 `dbPassword`와 동시에 수정을 해야 합니다.
+> [Caution]
+> DB instances whose `supportAuthenticationPlugin` value is true can set the values for `authenticationPlugin`, `tlsOption`.
+> The value of `authenticationPlugin` must be modified at the same time as `dbPassword`.
 
 <details><summary>Example</summary>
 <p>

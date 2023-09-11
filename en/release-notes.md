@@ -1,12 +1,12 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2023. 09. 12.
+### September 12, 2023
 
-#### 기능 추가 및 개선
+#### Added Features
 
-* DB 엔진 버전 업그레이드 기능 추가
-  * MySQL 5.7에서 MySQL 8.0으로 DB 엔진 버전 업그레이드 시 호환성 확인을 위한 사전 점검 기능 지원
-  * 더미 DB 인스턴스를 사용한 DB 엔진 버전 업그레이드 지원
+  * Added a feature to upgrade DB engine version
+  * Added support for pre-checks for compatibility when upgrading the DB Engine version from MySQL 5.7 to MySQL 8.0. 
+  * Added support for upgrading DB Engine version using a dummy DB instance
 
 ### August 17,  2023
 
