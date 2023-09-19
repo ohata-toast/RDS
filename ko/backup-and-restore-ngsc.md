@@ -20,6 +20,8 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 | 8.0.23   | 8.0.32        |
 | 8.0.28   | 8.0.32        |
 | 8.0.32   | 8.0.32        |
+| 8.0.33   | 8.0.33        |
+| 8.0.34   | 8.0.34        |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
