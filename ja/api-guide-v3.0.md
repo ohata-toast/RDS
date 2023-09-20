@@ -856,6 +856,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbInstanceName     | Body | String  | X  | DBインスタンスを識別できる名前                                                              |
 | description        | Body | String  | X  | DBインスタンスの追加情報                                                                 |
 | dbPort             | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                    |
+| dbVersion          | Body | Enum    | X  | DBエンジンタイプ                                                                                                                           |
 | dbFlavorId         | Body | UUID    | X  | DBインスタンス仕様の識別子                                                                |
 | parameterGroupId   | Body | UUID    | X  | パラメータグループの識別子                                                                 |
 | dbSecurityGroupIds | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                           |

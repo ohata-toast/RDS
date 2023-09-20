@@ -23,7 +23,7 @@ The versions specified below are available.
 | MySQL 5.7.26 |                                                           |
 | MySQL 5.7.19 |                                                           |
 | MySQL 5.7.15 |                                                           |
-| <strong>MySQL 5.6</strong> ||
+| <strong>5.6</strong> ||
 | MySQL 5.6.33 | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
 
 In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
