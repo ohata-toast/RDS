@@ -55,19 +55,21 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 
 ## DBエンジンタイプ
 
-| DBエンジンタイプ    | 作成可否 | OBSから復元可否 |
-|--------------|------|-----------|
-| MYSQL\_V5633 | X    | X         |
-| MYSQL\_V5715 | O    | O         |
-| MYSQL\_V5719 | O    | O         |
-| MYSQL\_V5726 | O    | O         |
-| MYSQL\_V5731 | X    | X         |
-| MYSQL\_V5733 | O    | X         |
-| MYSQL\_V5737 | O    | O         |
-| MYSQL\_V8018 | O    | O         |
-| MYSQL\_V8023 | O    | O         |
-| MYSQL\_V8028 | O    | O         |
-| MYSQL\_V8032 | O    | O         |
+| DBエンジンタイプ | 作成可否 | OBSから復元可否 |
+| -------- | -------- | ---------------- |
+| MYSQL\_V5633 | X | X |
+| MYSQL\_V5715 | O | O |
+| MYSQL\_V5719 | O | O |
+| MYSQL\_V5726 | O | O |
+| MYSQL\_V5731 | X | X |
+| MYSQL\_V5733 | O | X |
+| MYSQL\_V5737 | O | O |
+| MYSQL\_V8018 | O | O |
+| MYSQL\_V8023 | O | O |
+| MYSQL\_V8028 | O | O |
+| MYSQL\_V8032 | O | O |
+| MYSQL\_V8033 | O | O |
+| MYSQL\_V8034 | O | O |
 
 * ENUMタイプのdbVersionフィールドに対して該当値を使用できます。
 * バージョンによって作成または復元が不可能な場合があります。
