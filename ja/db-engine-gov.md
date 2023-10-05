@@ -56,7 +56,7 @@ DB 버전 업그레이드 사전 점검에 대해서는 다음과 같은 방법�
 - 콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용한 결과 확인
 - DB 버전 업그레이드 시도를 통한 결과 확인
 
-콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다. 세부 내역 항목은 각각 다음의 의미를 가집니다.
+콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB 인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다. 세부 내역 항목은 각각 다음의 의미를 가집니다.
 - `CHECK_BY_MYSQL_CHECK` : `mysqlcheck`を通じたバージョンアップグレードの欠格事項がないこと。
 - `COLUMN_LENGHT_LIMIT_CHECK` : `INFORMATION_SCHEMA.VIEWS`で確認した時、カラム名が64文字を超える内容がないこと。
 - `DUPLICATE_NAME_WITH_DATA_DICT` : データ辞書で使用されるテーブルと同じ名称のテーブルがないこと。
@@ -85,7 +85,7 @@ DBインスタンスの修正ウィンドウでDBエンジンのバージョン�
 
 ### MySQL을 위한 MariaDB 서버 감사 플러그인 지원
 
-- RDS for MySQL 에서는 MariaDB 감사 플러그인을 사용하여 MySQL DB 인스턴스용 감사 플러그인을 제공합니다. 
+- RDS for MySQL에서는 MariaDB 감사 플러그인을 사용하여 MySQL DB 인스턴스용 감사 플러그인을 제공합니다. 
 
 > [주의]
 > 일부 MySQL 버전에서는 지원하지 않을 수 있으며, 지원하지 않는 버전으로의 버전 업그레이드 진행 시 해당 플러그인을 사용할 수 없습니다.
