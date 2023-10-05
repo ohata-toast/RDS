@@ -67,6 +67,8 @@ The API responds with "200 OK" to all API requests. For more information on the 
 | MYSQL_V8023 | O | O |
 | MYSQL_V8028 | O | O |
 | MYSQL_V8032 | O | O |
+| MYSQL_V8033 | O | O |
+| MYSQL_V8034 | O | O |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -850,6 +852,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbInstanceName     | Body | String  | X  | Name to identify DB instances                                                      |
 | description        | Body | String  | X  | Additional information on DB instances                                                         |
 | dbPort             | Body | Number  | X  | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                |
+| dbVersion          | Body | Enum    | X  | DB engine type                                                                                                                             |
 | dbFlavorId         | Body | UUID    | X  | Identifier of DB instance specifications                                                           |
 | parameterGroupId   | Body | UUID    | X  | Parameter group identifier                                                              |
 | dbSecurityGroupIds | Body | Array   | X  | DB security group identifiers                                                          |

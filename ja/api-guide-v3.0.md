@@ -57,19 +57,21 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 
 ## DBエンジンタイプ
 
-| DBエンジンタイプ    | 作成可否 | OBSから復元可否 |
-|--------------|------|-----------|
-| MYSQL\_V5633 | X    | X         |
-| MYSQL\_V5715 | O    | O         |
-| MYSQL\_V5719 | O    | O         |
-| MYSQL\_V5726 | O    | O         |
-| MYSQL\_V5731 | X    | X         |
-| MYSQL\_V5733 | O    | X         |
-| MYSQL\_V5737 | O    | O         |
-| MYSQL\_V8018 | O    | O         |
-| MYSQL\_V8023 | O    | O         |
-| MYSQL\_V8028 | O    | O         |
-| MYSQL\_V8032 | O    | O         |
+| DBエンジンタイプ | 作成可否 | OBSから復元可否 |
+| -------- | -------- | ---------------- |
+| MYSQL\_V5633 | X | X |
+| MYSQL\_V5715 | O | O |
+| MYSQL\_V5719 | O | O |
+| MYSQL\_V5726 | O | O |
+| MYSQL\_V5731 | X | X |
+| MYSQL\_V5733 | O | X |
+| MYSQL\_V5737 | O | O |
+| MYSQL\_V8018 | O | O |
+| MYSQL\_V8023 | O | O |
+| MYSQL\_V8028 | O | O |
+| MYSQL\_V8032 | O | O |
+| MYSQL\_V8033 | O | O |
+| MYSQL\_V8034 | O | O |
 
 * ENUMタイプのdbVersionフィールドに対して該当値を使用できます。
 * バージョンによって作成または復元が不可能な場合があります。
@@ -710,6 +712,9 @@ GET /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds          | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
 | useDeletionProtection       | Body | Boolean  | DBインスタンス削除保護の有無                                                                                                                         |
 | supportAuthenticationPlugin | Body | Boolean  | 認証プラグインサポートの有無                                                                                                                          |
+| needToApplyParameterGroup   | Body | Boolean  | 최신 파라미터 그룹 적용 필요 여부                                                                                                                   |
+| needMigration               | Body | Boolean  | 마이그레이션 필요 여부                                                                                                                          |
+| supportDbVersionUpgrade     | Body | Boolean  | DB 버전 업그레이드 지원 여부                                                                                                                     |
 | createdYmdt                 | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 | updatedYmdt                 | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 
@@ -737,6 +742,9 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
     "useDeletionProtection": false,
     "supportAuthenticationPlugin": true,
+    "needToApplyParameterGroup": false,
+    "needMigration": false,
+    "supportDbVersionUpgrade": true,
     "createdYmdt": "2022-11-23T12:03:13+09:00",
     "updatedYmdt": "2022-12-02T17:20:17+09:00"
 }
@@ -854,6 +862,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbInstanceName     | Body | String  | X  | DBインスタンスを識別できる名前                                                              |
 | description        | Body | String  | X  | DBインスタンスの追加情報                                                                 |
 | dbPort             | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                    |
+| dbVersion          | Body | Enum    | X  | DBエンジンタイプ                                                                                                                           |
 | dbFlavorId         | Body | UUID    | X  | DBインスタンス仕様の識別子                                                                |
 | parameterGroupId   | Body | UUID    | X  | パラメータグループの識別子                                                                 |
 | dbSecurityGroupIds | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                           |
@@ -1188,6 +1197,88 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 </p>
 </details>
 
+---
+
+### 복원될 마지막 쿼리 조회
+
+```
+GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
+```
+
+#### 공통 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| restoreType | Body | Enum | O | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li></ul>  |
+
+#### restoreType이 `TIMESTAMP`인 경우
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| restoreYmdt | Body | DateTime | O | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+	"restoreType": "TIMESTAMP",
+	"restoreYmdt": "2023-07-10T15:44:44+09:00"
+}
+```
+
+</p>
+</details>
+
+#### restoreType이 `BINLOG`인 경우
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| backupId | Body | UUID | O | 복원에 사용할 백업의 식별자 |
+| binLog | Body | Object | O | 바이너리 로그 정보 객체 |
+| binLog.binLogFileName | Body | String | O | 복원에 사용할 바이너리 로그 이름 |
+| binLog.binLogPosition | Body | Number | O | 복원에 사용할 바이너리 로그 위치 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+	"restoreType": "BINLOG",
+    "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
+	"binLogFileName": "mysql-bin.000001",
+	"binLogPosition": 1234567
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| executedYmdt | Body | DateTime | 쿼리 수행 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| lastQuery | Body | String | 마지막 수행 쿼리 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "executedYmdt": "2023-03-17T14:02:29+09:00",
+    "lastQuery": "INSERT INTO `test`.`test`SET  @1='0123'"
+}
+```
+
+</p>
+</details>
 
 ---
 

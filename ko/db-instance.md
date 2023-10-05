@@ -32,6 +32,8 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 | 버전           | 비고                                                        |
 |--------------|-----------------------------------------------------------|
 | <strong>8.0</strong> ||
+| MySQL 8.0.34 |                                                           | 
+| MySQL 8.0.33 |                                                           |
 | MySQL 8.0.32 |                                                           | 
 | MySQL 8.0.28 |                                                           | 
 | MySQL 8.0.23 |                                                           |
@@ -453,6 +455,31 @@ mysql> CALL mysql.tcrds_repl_skip_repl_error();
 
 ```
 mysql> CALL mysql.tcrds_repl_next_changemaster();
+```
+
+### tcrds_innodb_monitor_reset
+
+* information_schema.INNODB_METRICS 테이블의 counter를 0으로 재설정하는 innodb_monitor_reset variables를 실행하는 프로시저입니다.
+* `SET GLOBAL innodb_monitor_reset = '{counter-name|module_name|pattern|all}';` 쿼리를 실행합니다.
+* innodb_monitor_enable, innodb_monitor_disable는 RDS 파라미터로 제공합니다.
+
+```
+mysql> CALL mysql.tcrds_innodb_monitor_reset('{counter-name|module_name|pattern|all}');
+```
+
+```
+ex) CALL mysql.tcrds_innodb_monitor_reset('dml_reads');
+CALL mysql.tcrds_innodb_monitor_reset('module_dml');
+```
+
+### tcrds_innodb_monitor_reset_all
+
+* counter 값을 재설정하는 innodb_monitor_reset_all variables를 실행하는 프로시저입니다.
+* innodb_monitor_reset_all을 사용하려면 counter가 disable 상태여야 합니다.
+* `SET GLOBAL tcrds_innodb_monitor_reset_all = '{counter-name|module_name|pattern|all}';` 쿼리를 실행합니다.
+
+```
+mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
 ```
 
 ## 데이터 마이그레이션
