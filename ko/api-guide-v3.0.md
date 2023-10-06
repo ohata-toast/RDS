@@ -861,6 +861,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | description        | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                         |
 | dbPort             | Body | Number  | X  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                |
 | dbVersion          | Body | Enum    | X  | DB 엔진 유형                                                                                                                              |
+| useDummy      | Body | Boolean | X  | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>기본값: `false`                                         |
 | dbFlavorId         | Body | UUID    | X  | DB 인스턴스 사양의 식별자                                                           |
 | parameterGroupId   | Body | UUID    | X  | 파라미터 그룹의 식별자                                                              |
 | dbSecurityGroupIds | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                          |

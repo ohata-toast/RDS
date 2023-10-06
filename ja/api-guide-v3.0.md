@@ -863,6 +863,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | description        | Body | String  | X  | DBインスタンスの追加情報                                                                 |
 | dbPort             | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                    |
 | dbVersion          | Body | Enum    | X  | DBエンジンタイプ                                                                                                                           |
+| useDummy      | Body | Boolean | X  | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>Default: `false`                                         |
 | dbFlavorId         | Body | UUID    | X  | DBインスタンス仕様の識別子                                                                |
 | parameterGroupId   | Body | UUID    | X  | パラメータグループの識別子                                                                 |
 | dbSecurityGroupIds | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                           |

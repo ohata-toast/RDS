@@ -9,7 +9,7 @@
 * MySQL 8.0.33, MySQL 8.0.34 버전 추가
 * API v3.0 추가 및 변경
     * 복원될 마지막 쿼리 조회 API 추가
-    * DB 인스턴스 수정하기 API 요청에 `dbVersion` 필드 추가
+    * DB 인스턴스 수정하기 API 요청에 `dbVersion`, `useDummy` 필드 추가
     * DB 인스턴스 상세 보기 API 응답에 `needToApplyParameterGroup`, `needMigration`, `supportDbVersionUpgrade` 필드 추가
 
 ### 2023. 09. 12.
