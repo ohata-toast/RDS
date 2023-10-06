@@ -12,6 +12,7 @@
     * DB 인스턴스 수정하기 API 요청에 `dbVersion`, `useDummy` 필드 추가
     * DB 인스턴스 상세 보기 API 응답에 `needToApplyParameterGroup`, `needMigration`, `supportDbVersionUpgrade` 필드 추가
 
+
 ### 2023. 09. 12.
 
 #### 機能追加および改善
