@@ -855,6 +855,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | description        | Body | String  | X  | Additional information on DB instances                                                         |
 | dbPort             | Body | Number  | X  | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                |
 | dbVersion          | Body | Enum    | X  | DB engine type                                                                                                                             |
+| useDummy      | Body | Boolean | X  | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>Default: `false`                                         |
 | dbFlavorId         | Body | UUID    | X  | Identifier of DB instance specifications                                                           |
 | parameterGroupId   | Body | UUID    | X  | Parameter group identifier                                                              |
 | dbSecurityGroupIds | Body | Array   | X  | DB security group identifiers                                                          |
