@@ -712,9 +712,9 @@ GET /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds          | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
 | useDeletionProtection       | Body | Boolean  | DBインスタンス削除保護の有無                                                                                                                         |
 | supportAuthenticationPlugin | Body | Boolean  | 認証プラグインサポートの有無                                                                                                                          |
-| needToApplyParameterGroup   | Body | Boolean  | 최신 파라미터 그룹 적용 필요 여부                                                                                                                   |
-| needMigration               | Body | Boolean  | 마이그레이션 필요 여부                                                                                                                          |
-| supportDbVersionUpgrade     | Body | Boolean  | DB 버전 업그레이드 지원 여부                                                                                                                     |
+| needToApplyParameterGroup   | Body | Boolean  | 最新パラメータグループの適用が必要かどうか                                                                                                                   |
+| needMigration               | Body | Boolean  | マイグレーションが必要かどうか                                                                                                                          |
+| supportDbVersionUpgrade     | Body | Boolean  | DBのバージョンアップグレードをサポートするかどうか                                                                                                                     |
 | createdYmdt                 | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 | updatedYmdt                 | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 
@@ -863,7 +863,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | description        | Body | String  | X  | DBインスタンスの追加情報                                                                 |
 | dbPort             | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                    |
 | dbVersion          | Body | Enum    | X  | DBエンジンタイプ                                                                                                                           |
-| useDummy      | Body | Boolean | X  | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>Default: `false`                                         |
+| useDummy      | Body | Boolean | X  | 単一DBインスタンスのDBバージョンアップグレード時にダミーを使用するかどうか<br/>Default: `false`                                         |
 | dbFlavorId         | Body | UUID    | X  | DBインスタンス仕様の識別子                                                                |
 | parameterGroupId   | Body | UUID    | X  | パラメータグループの識別子                                                                 |
 | dbSecurityGroupIds | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                           |
@@ -1200,26 +1200,26 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 ---
 
-### 복원될 마지막 쿼리 조회
+### 復元される最後のクエリ照会
 
 ```
 GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
-#### 공통 요청
+#### 共通リクエスト
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-| restoreType | Body | Enum | O | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li></ul>  |
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| restoreType | Body | Enum | O | 復元タイプの種類<br><ul><li>`TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ</li><li>`BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ</li></ul>  |
 
-#### restoreType이 `TIMESTAMP`인 경우
+#### restoreTypeが`TIMESTAMP`の場合
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
-| restoreYmdt | Body | DateTime | O | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| restoreYmdt | Body | DateTime | O | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1232,16 +1232,16 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 </p>
 </details>
 
-#### restoreType이 `BINLOG`인 경우
+#### restoreTypeが`BINLOG`の場合
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
-| backupId | Body | UUID | O | 복원에 사용할 백업의 식별자 |
-| binLog | Body | Object | O | 바이너리 로그 정보 객체 |
-| binLog.binLogFileName | Body | String | O | 복원에 사용할 바이너리 로그 이름 |
-| binLog.binLogPosition | Body | Number | O | 복원에 사용할 바이너리 로그 위치 |
+| backupId | Body | UUID | O | 復元に使用するバックアップの識別子 |
+| binLog | Body | Object | O | バイナリログ情報オブジェクト |
+| binLog.binLogFileName | Body | String | O | 復元に使用するバイナリログの名前 |
+| binLog.binLogPosition | Body | Number | O | 復元に使用するバイナリログ位置 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1256,14 +1256,14 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 | --- | --- | --- | --- |
-| executedYmdt | Body | DateTime | 쿼리 수행 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| lastQuery | Body | String | 마지막 수행 쿼리 |
+| executedYmdt | Body | DateTime | クエリ遂行日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| lastQuery | Body | String | 最後に実行したクエリ |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -3900,7 +3900,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DB 인스턴스 시작"
+                    "message": "DBインスタンス起動"
                 },
                 {
                     "langCode": "ZH",
