@@ -1239,7 +1239,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | backupId | Body | UUID | O | 復元に使用するバックアップの識別子 |
 | binLog | Body | Object | O | バイナリログ情報オブジェクト |
 | binLog.binLogFileName | Body | String | O | 復元に使用するバイナリログの名前 |
-| binLog.binLogPosition | Body | Number | O | 復元に使用するバイナリログ位置 |
+| binLog.binLogPosition | Body | Number | O | 復元に使用するバイナリログの位置 |
 
 <details><summary>例</summary>
 <p>
@@ -1260,7 +1260,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 | 名前 | 種類 | 形式 | 説明 |
 | --- | --- | --- | --- |
-| executedYmdt | Body | DateTime | クエリ遂行日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| executedYmdt | Body | DateTime | クエリ実行日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | lastQuery | Body | String | 最後に実行したクエリ |
 
 <details><summary>例</summary>
@@ -3900,7 +3900,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DBインスタンス起動"
+                    "message": "DB 인스턴스 시작"
                 },
                 {
                     "langCode": "ZH",
