@@ -401,9 +401,9 @@ mysql> CALL mysql.tcrds_repl_next_changemaster();
 
 ### tcrds_innodb_monitor_reset
 
-* information_schema.INNODB_METRICS 테이블의 counter를 0으로 재설정하는 innodb_monitor_reset variables를 실행하는 프로시저입니다.
-* `SET GLOBAL innodb_monitor_reset = '{counter-name|module_name|pattern|all}';` 쿼리를 실행합니다.
-* innodb_monitor_enable, innodb_monitor_disable는 RDS 파라미터로 제공합니다.
+* information_schema.INNODB_METRICSテーブルのcounterを0にリセットするinnodb_monitor_reset variablesを実行するプロシージャです。
+* `SET GLOBAL innodb_monitor_reset = '{counter-name|module_name|pattern|all}';`クエリを実行します。
+* innodb_monitor_enable、innodb_monitor_disableはRDSパラメータで提供します。
 
 ```
 mysql> CALL mysql.tcrds_innodb_monitor_reset('{counter-name|module_name|pattern|all}');
@@ -416,9 +416,9 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 
 ### tcrds_innodb_monitor_reset_all
 
-* counter 값을 재설정하는 innodb_monitor_reset_all variables를 실행하는 프로시저입니다.
-* innodb_monitor_reset_all을 사용하려면 counter가 disable 상태여야 합니다.
-* `SET GLOBAL tcrds_innodb_monitor_reset_all = '{counter-name|module_name|pattern|all}';` 쿼리를 실행합니다.
+* counter値をリセットするinnodb_monitor_reset_all variablesを実行するプロシージャです。
+* innodb_monitor_reset_allを使用するには、counterがdisable状態である必要があります。
+* `SET GLOBAL tcrds_innodb_monitor_reset_all = '{counter-name|module_name|pattern|all}';`クエリを実行します。
 
 ```
 mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
