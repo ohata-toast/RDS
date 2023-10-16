@@ -12,7 +12,7 @@ The versions specified below are available.
 |--------------|-----------------------------------------------------------|
 | <strong>8.0</strong> ||
 | MySQL 8.0.34 |                                                           | 
-| MySQL 8.0.33 |                                                           |
+| MySQL 8.0.33 |                                                           | 
 | MySQL 8.0.32 |                                                           | 
 | MySQL 8.0.28 |                                                           | 
 | MySQL 8.0.23 |                                                           |
@@ -51,21 +51,22 @@ MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doi
 - There must be no partition table extracted through a specific partition check.
 - No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
 
-DB 버전 업그레이드 사전 점검에 대해서는 다음과 같은 방법으로 결과 확인이 가능합니다.
-- `5.7에서 8.0으로 업그레이드 하기 위한 체크리스트 세부사항`(https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_en.xlsx)을 활용한 직접 확인
-- 콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용한 결과 확인
-- DB 버전 업그레이드 시도를 통한 결과 확인
+For DB version upgrade pre-check, you can check the result in the following ways.
+- Check for `the detailed checklist for upgrading from 5.7 to 8.0`
+- When attempting to upgrade the DB version in the console, check the result using the `DB Engine Upgrade Pre-Check` button.
+- Check the results of DB version upgrade attempts
 
-콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB 인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다. 세부 내역 항목은 각각 다음의 의미를 가집니다.
-- `CHECK_BY_MYSQL_CHECK` : Must not include disqualifications for version upgrades via `mysqlcheck`.
-- `COLUMN_LENGHT_LIMIT_CHECK` : The column name must not exceed 64 characters when checked through `INFORMATION_SCHEMA.VIEWS`.
-- `DUPLICATE_NAME_WITH_DATA_DICT` : Must not include a table with the same name as the tables used in the data dictionary.
-- `ENUM_SET_SIZE_CHECK` : Must not include tables or stored procedures with individual ENUM, SET column elements that exceed 255 characters or 1020 bytes.
-- `FOREIGN_KEY_LENGTH_LIMIT_CHECK` : Must not include tables with foreign key length longer than 64 characters.
-- `LOWER_CASE_SCHEMAS_NAMES_CHECK` : If you want to change the `lower_case_table_names` setting to 1, make sure the schema names are lower case.
-- `LOWER_CASE_TABLE_NAMES_CHECK` : If you want to change the `lower_case_table_names` setting to 1, make sure the table names are lower case.
-- `PARTITION_TABLE_CHECK` : Must not include partition tables extracted through a specific partition check.
-- `PROPERTY_LENGTH_LIMIT_CHECK` : Must not include table partitions that reside in shared tablespaces including the InnoDB system tablespace and regular tablespaces.
+For the results of `DB Engine upgrade pre-check`in the console and the results of DB version upgrade attempts, you can check the details through `db_version_upgrade_compatibility.log`generated on the Log tab of each DB instance. The detailed history items have the following meanings respectively.
+- `CHECK_BY_MYSQL_CHECK`:  There must be no version upgrade disqualifications via `mysqlcheck`.
+- `COLUMN_LENGHT_LIMIT_CHECK`: When checked through INFORMATION_SCHEMA.VIEWS, the column name must not exceed 64 characters.
+- `DUPLICATE_NAME_WITH_DATA_DICT`: No table should have the same name as a table used in the data dictionary.
+- `ENUM_SET_SIZE_CHECK`: There must be no tables or stored procedures with individual ENUM, SET column elements that exceed 255 characters or 1020 bytes in length.
+- `FOREIGN_KEY_LENGTH_LIMIT_CHECK`: No table should have a foreign key constraint name longer than 64 characters.
+- `LOWER_CASE_SCHEMAS_NAMES_CHECK`: If you want to change the lower_case_table_names setting to 1, make sure the schema names are lower case.
+- `LOWER_CASE_TABLE_NAMES_CHECK`: If you want to change the lower_case_table_names setting to 1, make sure the table names are lower case.
+- `PARTITION_TABLE_CHECK`: There must be no partition table extracted through a specific partition check.
+- `PROPERTY_LENGTH_LIMIT_CHECK`: No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
+
 Also, you must check items that have been removed or changed in 8.0.
 - [Changes in SQL](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
 - [Features Removed in MySQL8.0](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
@@ -80,17 +81,17 @@ When trying to change the DB engine version in the Modify DB Instance window, yo
 For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high availability configurations.
 
 
-## MySQL을 위한 옵션
+## Options for MySQL
 
-### MySQL을 위한 MariaDB 서버 감사 플러그인 지원
+### Support for the MariaDB Server Audit plugin for MySQL
 
-- RDS for MySQL에서는 MariaDB 감사 플러그인을 사용하여 MySQL DB 인스턴스용 감사 플러그인을 제공합니다. 
+- RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances. 
 
-> [주의]
-> 일부 MySQL 버전에서는 지원하지 않을 수 있으며, 지원하지 않는 버전으로의 버전 업그레이드 진행 시 해당 플러그인을 사용할 수 없습니다.
+> [Caution]
+This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
 
-#### 지원 버전
-| MySQL 버전 | 서버 감사 플러그인 지원 여부 |
+#### Supported Versions
+| MySQL version | Whether to support server audit plugins |
 | --- | --- |
 | <strong>8.0</strong> ||
 | MySQL 8.0.34 |O| 
