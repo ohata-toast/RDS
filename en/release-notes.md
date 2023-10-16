@@ -1,5 +1,17 @@
 ## Database > RDS for MySQL > Release Notes
 
+### October 17, 2023
+
+#### Added Features and Updates
+
+* Improved to create instances by using read replica backups when configuring high availability and adding read replicas
+* Added the feature to enable previously created high availability instances of MySQL 5.7.33 or later to use the authentication plugin and TLS option.
+* Added the versions of MySQL 8.0.33 and MySQL 8.0.34
+* Added and modified API v3.0
+    * Added the API to list the last query to be restored
+    * Added `dbVersion` and `useDummy` fields to the Modify DB Instance API request
+    * Added `needToApplyParameterGroup`, `needMigration`, and `supportDbVersionUpgrade` fields to the List DB Instance API response.
+
 ### September 12, 2023
 
 #### Added Features

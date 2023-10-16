@@ -209,3 +209,24 @@ Performance metrics items that can be monitored are as follows.
 
 * ❶ Click the button to change the added monitoring settings.
 * ❷ Click the button to delete the added monitoring settings. 
+
+## Processlist
+
+RDS for MySQL collects queries executed on the database and the status of the InnoDB engine to analyze various issues occurring in the database. It collects the results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`once every second, and you can view the last four days of data in the Processlist tab of the console.
+
+> [Note] The collected data is stored in internal object storage and is not charged separately.
+
+The following items are collected
+
+| Item            | Description                                                |
+|---------------|---------------------------------------------------|
+| LogTime       | Collected time                                             |
+| PID           | Process ID                                           |
+| DB            | DB in use                                          |
+| User          | User                                               |
+| Host          | The hostname and IP address the user is connecting from                          |
+| Command       | Command type running thread (Sleep, Query, Quit, Kill, etc.)    |
+| State         | State of thread (Starting, Rolling back, System lock, etc.) |
+| ExecTime      | The seconds the thread has been in its current state.                          |
+| Query         | Running queries                                          |
+| InnoDB Status | InnoDB status information                                      |

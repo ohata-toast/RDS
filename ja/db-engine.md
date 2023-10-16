@@ -23,7 +23,7 @@ MySQLの場合、バージョン番号はバージョン= X.Y.Zで構成され�
 | MySQL 5.7.26 |                                                           |
 | MySQL 5.7.19 |                                                           |
 | MySQL 5.7.15 |                                                           |
-| <strong>MySQL 5.6</strong> ||
+| <strong>5.6</strong> ||
 | MySQL 5.6.33 | 新規DBインスタンスを作成できません。既存DBインスタンスのリードレプリカ作成、復元のみサポートします。 |
 
 MySQLでバージョン番号はバージョン= `X.Y.Z`で構成されます。NHN CloudのRDS for MySQLでは、`X.Y`の場合はメジャーバージョンを、`Z`はマイナーバージョンを表します。
@@ -51,7 +51,21 @@ MySQL 8.0とMySQL 5.7は相当数の非互換性要素が含まれています�
 - 特定のパーティションチェックで抽出されるパーティションテーブルがないこと。
 - InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
 
-詳細については、[5.7から8.0にアップグレードするためのチェックリストの詳細](https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ja.xlsx)で確認できます。
+DBバージョンアップグレードの事前点検については、次の方法で結果の確認が可能です。
+- `5.7から8.0にアップグレードするためのチェックリストの詳細`(https://static.toastoven.net/prod_rds/23.08.17/Check_5.7_to_8.0_ja.xlsx)を活用して直接確認
+- コンソールでDBバージョンをアップグレードする場合は、`DBエンジンアップグレード事前確認`ボタンを利用して結果を確認
+- DBバージョンアップグレードの試行による結果の確認
+
+コンソールで`DBエンジンアップグレード事前確認`による結果および、DBバージョンアップグレードの試行による結果は、個別DBインスタンスのログタブに作成された`db_version_upgrade_compatibility.log`を通じて詳細を確認できます。詳細項目はそれぞれ次の意味を持ちます。
+- `CHECK_BY_MYSQL_CHECK` : `mysqlcheck`を通じたバージョンアップグレードの欠格事項がないこと。
+- `COLUMN_LENGHT_LIMIT_CHECK` : `INFORMATION_SCHEMA.VIEWS`で確認した時、カラム名が64文字を超える内容がないこと。
+- `DUPLICATE_NAME_WITH_DATA_DICT` :データ辞書で使用されるテーブルと同じ名称のテーブルがないこと。
+- `ENUM_SET_SIZE_CHECK` :長さが255文字または1020バイトを超える個々のENUM、SET列要素があるテーブル、保存プロシージャがないこと。
+- `FOREIGN_KEY_LENGTH_LIMIT_CHECK` :外部キー制約条件名が64文字を超えるテーブルがないこと。
+- `LOWER_CASE_SCHEMAS_NAMES_CHECK` : `lower_case_table_names`設定を1に変更する場合、スキーマ名が小文字であることを確認する。
+- `LOWER_CASE_TABLE_NAMES_CHECK` : `lower_case_table_names`設定を1に変更する場合、テーブル名が小文字であることを確認する。
+- `PARTITION_TABLE_CHECK` :特定のパーティションチェックで抽出されるパーティションテーブルがないこと。
+- `PROPERTY_LENGTH_LIMIT_CHECK` : InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
 
 また、5.7では使用されたが、8.0では削除または変更された事項について確認が必要です。
 - [SQL変更項目ガイド](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
@@ -65,3 +79,32 @@ DBインスタンスの修正ウィンドウでDBエンジンのバージョン�
 
 > [注意]
 > ダミーDBインスタンスの場合、アップグレード過程で一時的な予備マスターを生成するため、このオプションは高可用性構成でない場合にのみ使用できます。
+
+
+## MySQL用のオプション
+
+### MySQL用のMariaDBサーバー監査プラグインをサポート
+
+- RDS for MySQLでは、MariaDB監査プラグインを使用してMySQL DBインスタンス用の監査プラグインを提供します。 
+
+> [注意]
+> 一部のMySQLバージョンではサポートしない場合があり、サポートしないバージョンにバージョンアップする場合、該当プラグインを使用できません。
+
+#### サポートバージョン
+| MySQLバージョン | サーバー監査プラグインサポートの有無 |
+| --- | --- |
+| <strong>8.0</strong> ||
+| MySQL 8.0.34 |O| 
+| MySQL 8.0.33 |O| 
+| MySQL 8.0.32 |O| 
+| MySQL 8.0.28 |O| 
+| MySQL 8.0.23 |O|
+| MySQL 8.0.18 |O|
+| <strong>5.7</strong> ||
+| MySQL 5.7.37 |X|
+| MySQL 5.7.33 |O|
+| MySQL 5.7.26 |O|
+| MySQL 5.7.19 |O|
+| MySQL 5.7.15 |X|
+| <strong>MySQL 5.6</strong> ||
+| MySQL 5.6.33 |O|

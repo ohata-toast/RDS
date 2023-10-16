@@ -700,6 +700,9 @@ GET /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds          | Body | Array    | DB 인스턴스에 적용된 DB 보안 그룹의 식별자 목록                                                                                                         |
 | useDeletionProtection       | Body | Boolean  | DB 인스턴스 삭제 보호 여부                                                                                                                      |
 | supportAuthenticationPlugin | Body | Boolean  | 인증 플러그인 지원 여부                                                                                                                         |
+| needToApplyParameterGroup   | Body | Boolean  | 최신 파라미터 그룹 적용 필요 여부                                                                                                                   |
+| needMigration               | Body | Boolean  | 마이그레이션 필요 여부                                                                                                                          |
+| supportDbVersionUpgrade     | Body | Boolean  | DB 버전 업그레이드 지원 여부                                                                                                                     |
 | createdYmdt                 | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 | updatedYmdt                 | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 
@@ -727,6 +730,9 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
     "useDeletionProtection": false,
     "supportAuthenticationPlugin": true,
+    "needToApplyParameterGroup": false,
+    "needMigration": false,
+    "supportDbVersionUpgrade": true,
     "createdYmdt": "2022-11-23T12:03:13+09:00",
     "updatedYmdt": "2022-12-02T17:20:17+09:00"
 }
@@ -841,6 +847,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbInstanceName     | Body | String  | X  | DB 인스턴스를 식별할 수 있는 이름                                                      |
 | description        | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                         |
 | dbPort             | Body | Number  | X  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                |
+| dbVersion          | Body | Enum    | X  | DB 엔진 유형                                                                                                                              |
+| useDummy      | Body | Boolean | X  | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>기본값: `false`                                         |
 | dbFlavorId         | Body | UUID    | X  | DB 인스턴스 사양의 식별자                                                           |
 | parameterGroupId   | Body | UUID    | X  | 파라미터 그룹의 식별자                                                              |
 | dbSecurityGroupIds | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                          |
@@ -1114,7 +1122,8 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 | 이름 | 종류 | 형식 | 설명 |
 | --- | --- | --- | --- |
-| latestRestorableYmdt | Body | DateTime | 가장 최신의 복원 가능한 시간 |
+| oldestRestorableYmdt | Body | DateTime | 가장 오래된 복원 가능한 시각 |
+| latestRestorableYmdt | Body | DateTime | 가장 최신의 복원 가능한 시각 |
 | restorableBackups | Body | Array | 복원 가능한 백업 목록 |
 | restorableBackups.backup | Body | Object | 백업 정보 객체 |
 | restorableBackups.backup.backupId | Body | UUID | 백업의 식별자 |
@@ -1145,6 +1154,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 		"resultMessage": "SUCCESS",
 		"isSuccessful": true
 	},
+    "oldestRestorableYmdt": "2023-07-09T16:33:33+09:00",
 	"latestRestorableYmdt": "2023-07-10T15:44:44+09:00",
 	"restorableBackups": [
 		{
@@ -1175,6 +1185,87 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 </p>
 </details>
 
+---
+
+### 복원될 마지막 쿼리 조회
+
+```
+GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
+```
+
+#### 공통 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| restoreType | Query | Enum | O | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li></ul>  |
+
+#### restoreType이 `TIMESTAMP`인 경우
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| restoreYmdt | Query | DateTime | O | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+	"restoreType": "TIMESTAMP",
+	"restoreYmdt": "2023-07-10T15:44:44+09:00"
+}
+```
+
+</p>
+</details>
+
+#### restoreType이 `BINLOG`인 경우
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| backupId | Query | UUID | O | 복원에 사용할 백업의 식별자 |
+| binLogFileName | Query | String | O | 복원에 사용할 바이너리 로그 이름 |
+| binLogPosition | Query | Number | O | 복원에 사용할 바이너리 로그 위치 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+	"restoreType": "BINLOG",
+    "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
+	"binLogFileName": "mysql-bin.000001",
+	"binLogPosition": 1234567
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| executedYmdt | Body | DateTime | 쿼리 수행 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| lastQuery | Body | String | 마지막 수행 쿼리 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "executedYmdt": "2023-03-17T14:02:29+09:00",
+    "lastQuery": "INSERT INTO `test`.`test`SET  @1='0123'"
+}
+```
+
+</p>
+</details>
 
 ---
 

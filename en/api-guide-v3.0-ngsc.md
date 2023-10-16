@@ -708,6 +708,9 @@ This API does not require a request body.
 | dbSecurityGroupIds    | Body | Array    | DB security group identifiers applied to DB instance                                                                                                         |
 | useDeletionProtection | Body | Boolean  | Whether to protect DB instance against deletion                                                                                                                      |
 | supportAuthenticationPlugin | Body | Boolean  | Whether to support authentication plugin    |
+| needToApplyParameterGroup   | Body | Boolean  | Need to apply the latest parameter group                                                                                                                   |
+| needMigration               | Body | Boolean  | Need to migrate                                                                                                                          |
+| supportDbVersionUpgrade     | Body | Boolean  | Whether to support DB version upgrade                                                                                                                     |
 | createdYmdt           | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 | updatedYmdt           | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 
@@ -735,6 +738,9 @@ This API does not require a request body.
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
     "useDeletionProtection": false,
     "supportAuthenticationPlugin": true,
+    "needToApplyParameterGroup": false,
+    "needMigration": false,
+    "supportDbVersionUpgrade": true,
     "createdYmdt": "2022-11-23T12:03:13+09:00",
     "updatedYmdt": "2022-12-02T17:20:17+09:00"
 }
@@ -852,6 +858,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbInstanceName     | Body | String  | X  | Name to identify DB instances                                                      |
 | description        | Body | String  | X  | Additional information on DB instances                                                         |
 | dbPort             | Body | Number  | X  | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                |
+| dbVersion          | Body | Enum    | X  | DB engine type                                                                                                                             |
+| useDummy      | Body | Boolean | X  | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>Default: `false`                                         |
 | dbFlavorId         | Body | UUID    | X  | Identifier of DB instance specifications                                                           |
 | parameterGroupId   | Body | UUID    | X  | Parameter group identifier                                                              |
 | dbSecurityGroupIds | Body | Array   | X  | DB security group identifiers                                                          |
@@ -1127,6 +1135,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 | Name | Type | Format | Description |
 | --- | --- | --- | --- |
+| oldestRestorableYmdt | Body | DateTime | Oldest restorable time |
 | latestRestorableYmdt | Body | DateTime | Most recent restoreable time |
 | restorableBackups | Body | Array | List of restoreable backups |
 | restorableBackups.backup | Body | Object | Backup information objects |
@@ -1158,6 +1167,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 		"resultMessage": "SUCCESS",
 		"isSuccessful": true
 	},
+    "oldestRestorableYmdt": "2023-07-09T16:33:33+09:00",
 	"latestRestorableYmdt": "2023-07-10T15:44:44+09:00",
 	"restorableBackups": [
 		{
@@ -1188,6 +1198,87 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 </p>
 </details>
 
+---
+
+### View the last query to be restored
+
+```
+GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
+```
+
+#### Common Request
+
+| Name | Type | Format | Required | Description |
+| --- | --- | --- | --- | --- |
+| dbInstanceId | URL | UUID | O | DB instance identifier |
+| restoreType | Query | Enum | O | Restoration type<br><ul><li>`TIMESTAMP`: A point-in-time restoration type using the time within the restorable time</li><li>`BINLOG`: A point-in-time restoration type using a binary log location that can be restored.</li></ul>  |
+
+#### If restoreType is `BACKUP`
+
+| Name | Type | Format | Required | Description |
+| --- | --- | --- | --- | --- |
+| restoreYmdt | Query | DateTime | O | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+	"restoreType": "TIMESTAMP",
+	"restoreYmdt": "2023-07-10T15:44:44+09:00"
+}
+```
+
+</p>
+</details>
+
+#### If restoreType is `BINLOG`
+
+| Name | Type | Format | Required | Description |
+| --- | --- | --- | --- | --- |
+| backupId | Query | UUID | O | Identifier of the backup to use for restoration |
+| binLogFileName | Query | String | O | Binary log name to use for restoration |
+| binLogPosition | Query | Number | O | Binary log location to use for restoration |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+	"restoreType": "BINLOG",
+    "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
+	"binLogFileName": "mysql-bin.000001",
+	"binLogPosition": 1234567
+}
+```
+
+</p>
+</details>
+
+#### Response
+
+| Name | Type | Format | Description |
+| --- | --- | --- | --- |
+| executedYmdt | Body | DateTime | Query executed date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| lastQuery | Body | String | Last executed query |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "executedYmdt": "2023-03-17T14:02:29+09:00",
+    "lastQuery": "INSERT INTO `test`.`test`SET  @1='0123'"
+}
+```
+
+</p>
+</details>
 
 ---
 
