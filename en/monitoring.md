@@ -158,21 +158,21 @@ If the users in the user group are excluded from the project members, they will 
 
 ## Processlist
 
-RDS for MySQL은 데이터베이스에서 발생하는 다양한 문제를 분석하기 위해 데이터베이스에서 수행된 쿼리와 InnoDB 엔진의 상태를 수집합니다. 1초에 한 번씩 `information_schema.processlist`의 결과와, `SHOW ENGINE INNODB STATUS`의 결과를 수집하며 최근 4일간의 데이터를 웹 콘솔의 Processlist 탭에서 조회할 수 있습니다.
+RDS for MySQL collects queries executed on the database and the status of the InnoDB engine to analyze various issues occurring in the database. It collects the results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`once every second, and you can view the last four days of data in the Processlist tab of the console.
 
-> [참고] 수집된 데이터는 내부 오브젝트 스토리지에 저장되며 별도로 과금하지 않습니다.
+> [Note] The collected data is stored in internal object storage and is not charged separately. 
 
-수집하는 항목은 다음과 같습니다.
+The following items are collected
 
-| 항목            | 설명                                                |
+| Item            | Description                                                |
 |---------------|---------------------------------------------------|
-| LogTime       | 수집 시각                                             |
-| PID           | 프로세스 ID                                           |
-| DB            | 사용 중인 DB                                          |
-| User          | 사용자                                               |
-| Host          | 사용자가 접속하고 있는 호스트명, IP 주소                          |
-| Command       | Thread 실행 중인 명령 타입(Sleep, Query, Quit, Kill 등)    |
-| State         | Thread의 상태(Starting, Rolling back, System lock 등) |
-| ExecTime      | Thread가 현재 상태를 유지한 시간(초)                          |
-| Query         | 실행 중인 쿼리                                          |
-| InnoDB Status | InnoDB 상태 정보                                      |
+| LogTime       | Collected time                                             |
+| PID           | Process ID                                           |
+| DB            | DB in use                                          |
+| User          | User                                               |
+| Host          | The hostname and IP address the user is connecting from                          |
+| Command       | Command type running thread (Sleep, Query, Quit, Kill, etc.)    |
+| State         | State of thread (Starting, Rolling back, System lock, etc.) |
+| ExecTime      | The seconds the thread has been in its current state.                          |
+| Query         | Running queries                                          |
+| InnoDB Status | InnoDB status information                                      |
