@@ -400,7 +400,7 @@ This API does not require a request body.
 | Status Name                | Description                   |
 |--------------------|----------------------|
 | `READY`            | Task in preparation         |
-| `Training creation is requested.`          | Task in progress         |
+| `RUNNING`          | 작업이 진행 중인 경우         |
 | `COMPLETED`        | Task completed           |
 | `REGISTERED`       | Task registered           |
 | `WAIT_TO_REGISTER` | Task waiting to register       |
@@ -2079,7 +2079,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [Caution]
-Only DB instances whose `supportAuthenticationPlugin` value is true can set the values of `authenticationPlugin` and `tlsOption`.
+> Only DB instances whose `supportAuthenticationPlugin` value is true can set the values of `authenticationPlugin` and `tlsOption`.
 
 <details><summary>Example</summary>
 <p>
@@ -2124,8 +2124,8 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [Caution]
-Only DB instances whose `supportAuthenticationPlugin` value is true can modify the values of `authenticationPlugin` and `tlsOption`.
-The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
+> Only DB instances whose `supportAuthenticationPlugin` value is true can modify the values of `authenticationPlugin` and `tlsOption`.
+> The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
 
 <details><summary>Example</summary>
 <p>
