@@ -1139,6 +1139,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 | 名前                                      | 種類   | 形式       | 説明                                                                                                                                                                                       |
 |-----------------------------------------|------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| oldestRestorableYmdt                    | Body | DateTime | 最古の復元可能時間                                                                                                                                                                                |
 | latestRestorableYmdt                    | Body | DateTime | 最新の復元可能時間                                                                                                                                                                                |
 | restorableBackups                       | Body | Array    | 復元可能なバックアップリスト                                                                                                                                                                           |
 | restorableBackups.backup                | Body | Object   | バックアップ情報オブジェクト                                                                                                                                                                           |
@@ -1168,6 +1169,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 		"resultMessage": "SUCCESS",
 		"isSuccessful": true
 	},
+    "oldestRestorableYmdt": "2023-07-09T16:33:33+09:00",
 	"latestRestorableYmdt": "2023-07-10T15:44:44+09:00",
 	"restorableBackups": [
 		{

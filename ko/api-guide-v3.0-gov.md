@@ -1133,7 +1133,8 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 | 이름 | 종류 | 형식 | 설명 |
 | --- | --- | --- | --- |
-| latestRestorableYmdt | Body | DateTime | 가장 최신의 복원 가능한 시간 |
+| oldestRestorableYmdt | Body | DateTime | 가장 오래된 복원 가능한 시각 |
+| latestRestorableYmdt | Body | DateTime | 가장 최신의 복원 가능한 시각 |
 | restorableBackups | Body | Array | 복원 가능한 백업 목록 |
 | restorableBackups.backup | Body | Object | 백업 정보 객체 |
 | restorableBackups.backup.backupId | Body | UUID | 백업의 식별자 |
@@ -1164,6 +1165,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 		"resultMessage": "SUCCESS",
 		"isSuccessful": true
 	},
+    "oldestRestorableYmdt": "2023-07-09T16:33:33+09:00",
 	"latestRestorableYmdt": "2023-07-10T15:44:44+09:00",
 	"restorableBackups": [
 		{
