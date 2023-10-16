@@ -1211,13 +1211,13 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | dbInstanceId | URL | UUID | O | DB instance identifier |
-| restoreType | Body | Enum | O | Restoration type<br><ul><li>`TIMESTAMP`: A point-in-time restoration type using the time within the restorable time</li><li>`BINLOG`: A point-in-time restoration type using a binary log location that can be restored.</li></ul>  |
+| restoreType | Query | Enum | O | Restoration type<br><ul><li>`TIMESTAMP`: A point-in-time restoration type using the time within the restorable time</li><li>`BINLOG`: A point-in-time restoration type using a binary log location that can be restored.</li></ul>  |
 
-#### O (if restoreType is `BACKUP`)
+#### If restoreType is `BACKUP`
 
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
-| restoreYmdt | Body | DateTime | O | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| restoreYmdt | Query | DateTime | O | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>Example</summary>
 <p>
@@ -1236,10 +1236,9 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
-| backupId | Body | UUID | O | Identifier of the backup to use for restoration |
-| binLog | Body | Object | O | Deleting Binary Logs |
-| binLog.binLogFileName | Body | String | O | Binary log name to use for restoration |
-| binLog.binLogPosition | Body | Number | O | Binary log location to use for restoration |
+| backupId | Query | UUID | O | Identifier of the backup to use for restoration |
+| binLogFileName | Query | String | O | Binary log name to use for restoration |
+| binLogPosition | Query | Number | O | Binary log location to use for restoration |
 
 <details><summary>Example</summary>
 <p>

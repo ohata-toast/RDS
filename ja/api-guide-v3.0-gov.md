@@ -1211,13 +1211,13 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
-| restoreType | Body | Enum | O | 復元タイプの種類<br><ul><li>`TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ</li><li>`BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ</li></ul>  |
+| restoreType | Query | Enum | O | 復元タイプの種類<br><ul><li>`TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ</li><li>`BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ</li></ul>  |
 
 #### restoreTypeが`TIMESTAMP`の場合
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
-| restoreYmdt | Body | DateTime | O | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| restoreYmdt | Query | DateTime | O | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>例</summary>
 <p>
@@ -1236,10 +1236,9 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
-| backupId | Body | UUID | O | 復元に使用するバックアップの識別子 |
-| binLog | Body | Object | O | バイナリログ情報オブジェクト |
-| binLog.binLogFileName | Body | String | O | 復元に使用するバイナリログの名前 |
-| binLog.binLogPosition | Body | Number | O | 復元に使用するバイナリログの位置 |
+| backupId | Query | UUID | O | 復元に使用するバックアップの識別子 |
+| binLogFileName | Query | String | O | 復元に使用するバイナリログの名前 |
+| binLogPosition | Query | Number | O | 復元に使用するバイナリログの位置 |
 
 <details><summary>例</summary>
 <p>
