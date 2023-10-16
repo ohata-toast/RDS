@@ -157,24 +157,3 @@ RDS for MySQLでサポートするチャートは以下の通りです。
 ユーザーグループに属すユーザーがプロジェクトメンバーから除外されると、ユーザーグループに属していたとしても通知を受け取れません。
 
 > [注意]実名認証を行っておらず携帯電話情報がない場合はSMS通知を受け取れません。
-
-## Processlist
-
-RDS for MySQLは、データベースで発生するさまざまな問題を分析するためのデータベースで実行されたクエリとInnoDBエンジンの状態を収集します。1秒に1回`information_schema.processlist`の結果と、`SHOW ENGINE INNODB STATUS`の結果を収集し、過去4日間のデータをWebコンソールのProcesslistタブで照会できます。
-
-> [参考]収集されたデータは内部オブジェクトストレージに保存され、別途課金されません。
-
-収集する項目は次のとおりです。
-
-| 項目           | 説明                                               |
-|---------------|---------------------------------------------------|
-| LogTime       | 収集時刻                                            |
-| PID           | プロセスID                                           |
-| DB            | 使用中のDB                                          |
-| User          | ユーザー                                              |
-| Host          | ユーザーが接続しているホスト名、IPアドレス                         |
-| Command       | Thread実行中のコマンドタイプ(Sleep、Query、Quit、Killなど)    |
-| State         | Threadの状態(Starting、Rolling back、System lockなど) |
-| ExecTime      | Threadが現在の状態を維持した時間(秒)                          |
-| Query         | 実行中のクエリ                                         |
-| InnoDB Status | InnoDBの状態情報                                     |

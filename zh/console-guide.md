@@ -59,6 +59,8 @@
 * User Access Control: Enter accessible users to DB instance in the CIDR format.
     * Unregistered IPs for user access control are not accessible.
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
+        * Inboud: Direction into the instance.
+        * Outbound: Direction out of the instance.
 
 > [Note] The Backup Replication Region feature is not provided for banking networks.
 

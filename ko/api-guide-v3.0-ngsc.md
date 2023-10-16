@@ -1122,7 +1122,8 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 | 이름 | 종류 | 형식 | 설명 |
 | --- | --- | --- | --- |
-| latestRestorableYmdt | Body | DateTime | 가장 최신의 복원 가능한 시간 |
+| oldestRestorableYmdt | Body | DateTime | 가장 오래된 복원 가능한 시각 |
+| latestRestorableYmdt | Body | DateTime | 가장 최신의 복원 가능한 시각 |
 | restorableBackups | Body | Array | 복원 가능한 백업 목록 |
 | restorableBackups.backup | Body | Object | 백업 정보 객체 |
 | restorableBackups.backup.backupId | Body | UUID | 백업의 식별자 |
@@ -1153,6 +1154,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 		"resultMessage": "SUCCESS",
 		"isSuccessful": true
 	},
+    "oldestRestorableYmdt": "2023-07-09T16:33:33+09:00",
 	"latestRestorableYmdt": "2023-07-10T15:44:44+09:00",
 	"restorableBackups": [
 		{
@@ -1196,13 +1198,13 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-| restoreType | Body | Enum | O | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li></ul>  |
+| restoreType | Query | Enum | O | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li></ul>  |
 
 #### restoreType이 `TIMESTAMP`인 경우
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
-| restoreYmdt | Body | DateTime | O | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| restoreYmdt | Query | DateTime | O | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -1221,10 +1223,9 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
-| backupId | Body | UUID | O | 복원에 사용할 백업의 식별자 |
-| binLog | Body | Object | O | 바이너리 로그 정보 객체 |
-| binLog.binLogFileName | Body | String | O | 복원에 사용할 바이너리 로그 이름 |
-| binLog.binLogPosition | Body | Number | O | 복원에 사용할 바이너리 로그 위치 |
+| backupId | Query | UUID | O | 복원에 사용할 백업의 식별자 |
+| binLogFileName | Query | String | O | 복원에 사용할 바이너리 로그 이름 |
+| binLogPosition | Query | Number | O | 복원에 사용할 바이너리 로그 위치 |
 
 <details><summary>예시</summary>
 <p>
