@@ -708,9 +708,9 @@ This API does not require a request body.
 | dbSecurityGroupIds    | Body | Array    | DB security group identifiers applied to DB instance                                                                                                         |
 | useDeletionProtection | Body | Boolean  | Whether to protect DB instance against deletion                                                                                                                      |
 | supportAuthenticationPlugin | Body | Boolean | Whether to support authentication plugin |
-| needToApplyParameterGroup   | Body | Boolean  | 최신 파라미터 그룹 적용 필요 여부                                                                                                                   |
-| needMigration               | Body | Boolean  | 마이그레이션 필요 여부                                                                                                                          |
-| supportDbVersionUpgrade     | Body | Boolean  | DB 버전 업그레이드 지원 여부                                                                                                                     |
+| needToApplyParameterGroup   | Body | Boolean  | Need to apply the latest parameter group                                                                                                                   |
+| needMigration               | Body | Boolean  | Need to migrate                                                                                                                          |
+| supportDbVersionUpgrade     | Body | Boolean  | Whether to support DB version upgrade                                                                                                                     |
 | createdYmdt           | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 | updatedYmdt           | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 
@@ -1200,26 +1200,26 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 ---
 
-### 복원될 마지막 쿼리 조회
+### View the last query to be restored
 
 ```
 GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
-#### 공통 요청
+#### Common Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-| restoreType | Body | Enum | O | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li></ul>  |
+| dbInstanceId | URL | UUID | O | DB instance identifier |
+| restoreType | Body | Enum | O | Restoration type<br><ul><li>`TIMESTAMP`: A point-in-time restoration type using the time within the restorable time</li><li>`BINLOG`: A point-in-time restoration type using a binary log location that can be restored.</li></ul>  |
 
-#### restoreType이 `TIMESTAMP`인 경우
+#### O (if restoreType is `BACKUP`)
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
-| restoreYmdt | Body | DateTime | O | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| restoreYmdt | Body | DateTime | O | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1232,16 +1232,16 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 </p>
 </details>
 
-#### restoreType이 `BINLOG`인 경우
+#### If restoreType is `BINLOG`
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
-| backupId | Body | UUID | O | 복원에 사용할 백업의 식별자 |
-| binLog | Body | Object | O | 바이너리 로그 정보 객체 |
-| binLog.binLogFileName | Body | String | O | 복원에 사용할 바이너리 로그 이름 |
-| binLog.binLogPosition | Body | Number | O | 복원에 사용할 바이너리 로그 위치 |
+| backupId | Body | UUID | O | Identifier of the backup to use for restoration |
+| binLog | Body | Object | O | Deleting Binary Logs |
+| binLog.binLogFileName | Body | String | O | Binary log name to use for restoration |
+| binLog.binLogPosition | Body | Number | O | Binary log location to use for restoration |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1256,14 +1256,14 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 </p>
 </details>
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 | --- | --- | --- | --- |
-| executedYmdt | Body | DateTime | 쿼리 수행 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| lastQuery | Body | String | 마지막 수행 쿼리 |
+| executedYmdt | Body | DateTime | Query executed date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| lastQuery | Body | String | Last executed query |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json

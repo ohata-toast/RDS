@@ -155,24 +155,3 @@ Users who receive notifications can be managed in groups. The notification targe
 If the users in the user group are excluded from the project members, they will not be notified even if they belong in the user group.
 
 > [Caution] If there is no mobile phone information due to no user verification, SMS notifications cannot be received.
-
-## Processlist
-
-RDS for MySQL collects queries executed on the database and the status of the InnoDB engine to analyze various issues occurring in the database. It collects the results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`once every second, and you can view the last four days of data in the Processlist tab of the console.
-
-> [Note] The collected data is stored in internal object storage and is not charged separately. 
-
-The following items are collected
-
-| Item            | Description                                                |
-|---------------|---------------------------------------------------|
-| LogTime       | Collected time                                             |
-| PID           | Process ID                                           |
-| DB            | DB in use                                          |
-| User          | User                                               |
-| Host          | The hostname and IP address the user is connecting from                          |
-| Command       | Command type running thread (Sleep, Query, Quit, Kill, etc.)    |
-| State         | State of thread (Starting, Rolling back, System lock, etc.) |
-| ExecTime      | The seconds the thread has been in its current state.                          |
-| Query         | Running queries                                          |
-| InnoDB Status | InnoDB status information                                      |

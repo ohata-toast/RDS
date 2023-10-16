@@ -106,5 +106,5 @@ This plugin may not be supported by all versions of MySQL and will be unavailabl
 | MySQL 5.7.26 |O|
 | MySQL 5.7.19 |O|
 | MySQL 5.7.15 |X|
-| <strong>MySQL 5.6</strong> ||
+| <strong>5.6</strong> ||
 | MySQL 5.6.33 |O|

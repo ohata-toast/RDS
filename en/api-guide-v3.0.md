@@ -397,19 +397,19 @@ This API does not require a request body.
 
 ### Task Status
 
-| Status Name                | Description                   |
-|--------------------|----------------------|
-| `READY`            | Task in preparation         |
-| `RUNNING`          | 작업이 진행 중인 경우         |
-| `COMPLETED`        | Task completed           |
-| `REGISTERED`       | Task registered           |
-| `WAIT_TO_REGISTER` | Task waiting to register       |
-| `INTERRUPTED`      | Task being interrupted |
-| `CANCELED`         | Task canceled           |
-| `FAILED`           | Task failed           |
-| `ERROR`            | Error occurred while task in progress   |
-| `DELETED`          | Task deleted           |
-| `FAIL_TO_READY`    | Failed to get ready for task        |
+| Status Name                | Description                           |
+|--------------------|---------------------------------------|
+| `READY`            | Task in preparation                   |
+| `RUNNING`          | Task in progress                      |
+| `COMPLETED`        | Task completed                        |
+| `REGISTERED`       | Task registered                       |
+| `WAIT_TO_REGISTER` | Task waiting to register              |
+| `INTERRUPTED`      | Task being interrupted                |
+| `CANCELED`         | Task canceled                         |
+| `FAILED`           | Task failed                           |
+| `ERROR`            | Error occurred while task in progress |
+| `DELETED`          | Task deleted                          |
+| `FAIL_TO_READY`    | Failed to get ready for task          |
 
 ### List Task Details
 
@@ -3839,9 +3839,13 @@ GET /v3.0/metric-statistics
             "values": [
                 [
                     1679298540,
-                    April 25, 2023
+                    "1"
+                ],
+                [
                     1679298600,
-                    April 25, 2023
+                    "1"
+                ],
+                [
                     1679298660,
                     "1"
                 ]
@@ -3981,5 +3985,4 @@ This API does not require a request body.
 </details>
 
 ---
-
 
