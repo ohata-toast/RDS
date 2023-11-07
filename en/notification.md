@@ -132,6 +132,24 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_60_00 | INSTANCE          | Yes          | DB instance migration started                                                 |
 | INSTC_60_01 | INSTANCE          | Yes          | DB instance migration completed                                               |
 | INSTC_60_04 | INSTANCE          | Yes          | DB instance migration failed                                                  |
+| INSTC_61_00 | INSTANCE          | 예        | 예비 마스터 재구축 시작                        |
+| INSTC_61_01 | INSTANCE          | 예        | 예비 마스터 재구축 완료                        |
+| INSTC_61_04 | INSTANCE          | 예        | 예비 마스터 재구축 실패                        |
+| INSTC_62_00 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 시작                    |
+| INSTC_62_01 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 완료                    |
+| INSTC_62_04 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 실패                    |
+| INSTC_63_01 | INSTANCE          | 예        | DB 인스턴스 바이너리 로그 해독                   |
+| INSTC_64_04 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 사전 점검 실패              |
+| INSTC_65_00 | INSTANCE          | 예        | 인증 플러그인 활성화 시작                       |
+| INSTC_65_01 | INSTANCE          | 예        | 인증 플러그인 활성화 완료                       |
+| INSTC_65_04 | INSTANCE          | 예        | 인증 플러그인 활성화 실패                       |
+| INSTC_66_00 | INSTANCE          | 예        | DB 인스턴스 강제 승격 시작                     |
+| INSTC_66_01 | INSTANCE          | 예        | DB 인스턴스 강제 승격 완료                     |
+| INSTC_66_04 | INSTANCE          | 예        | DB 인스턴스 강제 승격 실패                     |
+| INSTC_67_00 | INSTANCE          | 예        | OS 버전 업그레이드 시작                       |
+| INSTC_67_01 | INSTANCE          | 예        | OS 버전 업그레이드 종료                       |
+| INSTC_67_04 | INSTANCE          | 예        | OS 버전 업그레이드 실패                       |
+| INSTC_68_01 | INSTANCE          | 예        | 네트워크 통신 실패                           |
 | JOB_01_04   | JOB               | Yes          | Job execution failed                                                          |
 | TENAT_01_04 | TENANT            | Yes          | CPU cores limit                                                               |
 | TENAT_02_04 | TENANT            | Yes          | RAM capacity limit	                                                           |

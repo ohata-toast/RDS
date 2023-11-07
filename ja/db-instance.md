@@ -186,9 +186,18 @@ DBインスタンスを一定時間使用しないが、削除を望まない場
 > [参考]
 > リードレプリカの作成過程で必要なバイナリログ(binary log)サイズ分、オブジェクトストレージ課金が発生する可能性があります。
 
+#### 다른 리전의 서브넷에 읽기 복제본 생성
+  * 서로 다른 리전에 존재하는 VPC 간 리전 피어링을 연결하면 다른 리전 VPC에 속한 서브넷에 읽기 복제본을 생성할 수 있습니다.
+  * 리전 피어링이 연결되어 있더라도 라우트 설정이 올바르지 않을 경우 읽기 복제본 생성에 실패하거나 복제가 중단될 수 있습니다.
+  * 리전 피어링 연결에 관한 자세한 사항은 [리전 피어링](https://docs.nhncloud.com/ja/Network/Peering%20Gateway/ja/console-guide/#_2) 항목을 참고합니다.
+
 ### リードレプリカの昇格
 
 マスターとの複製関係を切って、リードレプリカをマスターに変更することを昇格と呼びます。昇格したマスターは、独立したDBインスタンスとして動作します。昇格しようとするリードレプリカとマスターの間に複製遅延がある場合、その遅延がなくなるまで昇格されません。
+
+### 읽기 복제본 강제 승격
+
+마스터나 원본 리전의 상태와 상관없이 읽기 복제본의 현재 시점 데이터로 강제 승격합니다.
 
 ### リードレプリカの複製中断
 
@@ -342,7 +351,7 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 
 * パラメータの説明
     * master_instance_ip:複製対象(Master)サーバーのIP
-    * master_instance_port :複製対象(Master)サーバーのMySQLポート
+    * master_instance_port:複製対象(Master)サーバーのMySQLポート
     * user_id_for_replication:複製対象(Master)サーバーのMySQLに接続する複製用アカウント
     * password_for_replication_user:複製用アカウントパスワード
     * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名

@@ -1033,6 +1033,47 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ---
 
+### DB 인스턴스 백업 후 내보내기
+
+```
+POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
+```
+
+#### 요청
+
+| 이름              | 종류   | 형식     | 필수 | 설명                          |
+|-----------------|------|--------|----|-----------------------------|
+| dbInstanceId    | URL  | UUID   | O  | DB 인스턴스의 식별자                |
+| tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
+| username        | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID   |
+| password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
+| targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
+| objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
+    "targetContainer": "/container",
+    "objectPath": "/backups/backup_file"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
 ### Replicate DB Instance
 
 ```
@@ -1219,19 +1260,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | --- | --- | --- | --- | --- |
 | restoreYmdt | Query | DateTime | O | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-	"restoreType": "TIMESTAMP",
-	"restoreYmdt": "2023-07-10T15:44:44+09:00"
-}
-```
-
-</p>
-</details>
-
 #### If restoreType is `BINLOG`
 
 | Name | Type | Format | Required | Description |
@@ -1239,21 +1267,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | backupId | Query | UUID | O | Identifier of the backup to use for restoration |
 | binLogFileName | Query | String | O | Binary log name to use for restoration |
 | binLogPosition | Query | Number | O | Binary log location to use for restoration |
-
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-	"restoreType": "BINLOG",
-    "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
-	"binLogFileName": "mysql-bin.000001",
-	"binLogPosition": 1234567
-}
-```
-
-</p>
-</details>
 
 #### Response
 
@@ -3860,6 +3873,19 @@ GET /v3.0/metric-statistics
 
 ## Event
 
+### 이벤트 카테고리
+
+이벤트는 카테고리로 분류할 수 있으며 아래와 같습니다.
+
+| 이벤트 카테고리    | 설명      |
+|-------------|---------|
+| ALL         | 전체      |
+| BACKUP      | 백업      |
+| DB_INSTANCE | DB 인스턴스 |
+| JOB         | 작업      |
+| TENANT      | 테넌트     |
+| MONITORING  | 모니터링    |
+
 ### List Events
 
 ```
@@ -3942,7 +3968,7 @@ This API does not require a request body.
 
 ---
 
-### List Event Codes
+### 구독 가능한 이벤트 코드 목록 보기
 
 ```
 GET /v3.0/event-codes
@@ -3984,4 +4010,235 @@ This API does not require a request body.
 
 ---
 
+### 이벤트 구독 목록 조회
 
+```
+GET /v3.0/event-subscriptions
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름               | 종류    | 형식     | 필수 | 설명                                             |
+|------------------|-------|--------|----|------------------------------------------------|
+| page             | Query | Number | O  | 조회할 목록의 페이지<br>\- 최솟값: `1`                     |
+| size             | Query | Number | O  | 조회할 목록의 페이지 크기<br>\- 최솟값: `1`<br>\- 최댓값: `100` | 
+| subscriptionId   | Query | String | X  | 검색할 이벤트 구독 식별자                                 |
+| subscriptionName | Query | String | X  | 검색할 이벤트 구독 이름<br>부분적으로 일치하는 모든 결과를 반환합니다.      |
+| sourceName       | Query | String | X  | 검색할 이벤트 소스 이름<br>부분적으로 일치하는 모든 결과를 반환합니다.      |
+| userGroupId      | Query | String | X  | 검색할 사용자 그룹 식별자                                 |
+
+#### 응답
+
+| 이름                                           | 종류   | 형식       | 설명                                |
+|----------------------------------------------|------|----------|-----------------------------------|
+| totalCounts                                  | Body | Number   | 전체 이벤트 구독 수                       |
+| eventSubscriptions                           | Body | Array    | 이벤트 구독 목록                         |
+| eventSubscriptions.subscriptionId            | Body | String   | 이벤트 구독 식별자                        | 
+| eventSubscriptions.eventCategoryCode         | Body | Enum     | 이벤트 카테고리                          |
+| eventSubscriptions.subscriptionName          | Body | String   | 이벤트 구독 이름                         | 
+| eventSubscriptions.enabled                   | Body | Boolean  | 활성화 여부                            |
+| eventSubscriptions.notifyEmail               | Body | Boolean  | 이메일 발송 여부                         |
+| eventSubscriptions.notifySms                 | Body | Boolean  | SMS 발송 여부                         | 
+| eventSubscriptions.createdYmdt               | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| eventSubscriptions.codes                     | Body | Array    | 구독할 이벤트 코드 목록                     |
+| eventSubscriptions.sources                   | Body | Array    | 구독할 이벤트 소스 목록                     |
+| eventSubscriptions.sources.eventSourceId     | Body | String   | 이벤트 소스 아이디                        |
+| eventSubscriptions.sources.eventCategoryCode | Body | Enum     | 이벤트 카테고리                          |
+| eventSubscriptions.userGroupIds              | Body | Array    | 알림 발송할 사용자 그룹 아이디 목록              |
+
+<details>
+<summary>예시</summary>
+<p>
+
+```json
+{
+    "totalCounts": 1,
+    "eventSubscriptions": [{
+        "eventCategoryCode": "ALL",
+        "subscriptionName": "이벤트 구독 예시",
+        "enabled": true, 
+        "notifyEmail": true, 
+        "notifySms": true, 
+        "createdYmdt": "2023-10-23T00:00:00.000+09:00",
+        "codes": [], 
+        "sources": [], 
+        "userGroupIds": ["35f883a5-9473-45ce-919c-ec3ede36b795"]
+    }]
+}
+```
+
+</p>
+</details>
+
+---
+
+### 이벤트 구독
+
+```
+POST /v3.0/event-subscriptions
+```
+
+#### 요청
+
+| 이름                        | 종류   | 형식                                               | 필수 | 설명                                                                                                                                                                                 |
+|---------------------------|------|--------------------------------------------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| eventCategoryCode         | Body | Enum                                             | O  | 이벤트 카테고리                                                                                                                                                                           |
+| subscriptionName          | Body | String                                           | O  | 이벤트 구독 이름                                                                                                                                                                          |
+| enabled                   | Body | Boolean                                          | O  | 활성화 여부<br>비활성화 시 알림을 발송하지 않습니다.                                                                                                                                                    |
+| notifyEmail               | Body | Boolean                                          | O  | 이메일 발송 여부                                                                                                                                                                          |
+| notifySms                 | Body | Boolean                                          | O  | SMS 발송 여부                                                                                                                                                                          |
+| codes                     | Body | Array                                            | O  | 구독할 이벤트 코드 목록<br>목록이 비어 있으면 전체 이벤트 코드를 구독<br>구독 가능한 이벤트 코드는 [이벤트](notification/#_1) 항목을 참고합니다.                                                                                     |
+| sources                   | Body | Array                                            | O  | 구독할 이벤트 소스 목록<br>목록이 비어 있으면 전체 이벤트 소스를 구독                                                                                                                                          |
+| sources.eventSourceId     | Body | String                                           | O  | 이벤트 소스 아이디<br>이벤트 카테고리에 따른 이벤트 소스는 아래와 같습니다.<br>- `BACKUP`: 백업 식별자<br>- `DB_INSTANE`: DB 인스턴스 식별자<br>- `JOB`: 서비스의 Appkey<br>- `TENANT`: 서비스의 Appkey<br>- `MONITORING`: 지원하지 않습니다. |
+| sources.eventCategoryCode | Body | <span style="color:rgb(49, 51, 56);">Enum</span> | O  | 이벤트 카테고리                                                                                                                                                                           |
+| userGroupIds              | Body | Array                                            | O  | 알림 발송할 사용자 그룹 아이디 목록                                                                                                                                                               |
+
+<details>
+<summary>예시</summary>
+<p>
+
+```json
+{
+    "eventCategoryCode": "ALL",
+    "subscriptionName": "이벤트 구독 예시",
+    "enabled": true, 
+    "notifyEmail": true, 
+    "notifySms": true, 
+    "codes": [], 
+    "sources": [], 
+    "userGroupIds": ["35f883a5-9473-45ce-919c-ec3ede36b795"]
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| subscriptionId | Body | UUID | 이벤트 구독 식별자 |
+
+<details>
+  <summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "subscriptionId": "824ffffa-09bd-42f9-bee9-cc14d1247609"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 이벤트 구독 정보 수정
+
+```
+PUT /v3.0/event-subscriptions/{subscriptionId}
+```
+
+#### 요청
+
+| 이름                        | 종류   | 형식                                               | 필수 | 설명                                                                                                                                                                                 |
+|---------------------------|------|--------------------------------------------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| subscriptionId            | URL  | UUID                                             | O  | 이벤트 구독 식별자                                                                                                                                                                         |
+| eventCategoryCode         | Body | Enum                                             | O  | 이벤트 카테고리                                                                                                                                                                           |
+| subscriptionName          | Body | String                                           | O  | 이벤트 구독 이름                                                                                                                                                                          |
+| enabled                   | Body | Boolean                                          | O  | 활성화 여부<br>비활성화 시 알림을 발송하지 않습니다.                                                                                                                                                    |
+| notifyEmail               | Body | Boolean                                          | O  | 이메일 발송 여부                                                                                                                                                                          |
+| notifySms                 | Body | Boolean                                          | O  | SMS 발송 여부                                                                                                                                                                          |
+| codes                     | Body | Array                                            | O  | 구독할 이벤트 코드 목록<br>목록이 비어 있으면 전체 이벤트 코드를 구독<br>구독 가능한 이벤트 코드는 [이벤트](notification/#_1) 항목을 참고합니다.                                                                                     |
+| sources                   | Body | Array                                            | O  | 구독할 이벤트 소스 목록<br>목록이 비어 있으면 전체 이벤트 소스를 구독                                                                                                                                          |
+| sources.eventSourceId     | Body | String                                           | O  | 이벤트 소스 아이디<br>이벤트 카테고리에 따른 이벤트 소스는 아래와 같습니다.<br>- `BACKUP`: 백업 식별자<br>- `DB_INSTANE`: DB 인스턴스 식별자<br>- `JOB`: 서비스의 Appkey<br>- `TENANT`: 서비스의 Appkey<br>- `MONITORING`: 지원하지 않습니다. |
+| sources.eventCategoryCode | Body | <span style="color:rgb(49, 51, 56);">Enum</span> | O  | 이벤트 카테고리                                                                                                                                                                           |
+| userGroupIds              | Body | Array                                            | O  | 알림 발송할 사용자 그룹 아이디 목록                                                                                                                                                               |
+
+<details>
+  <summary>예시</summary>
+<p>
+
+```json
+{
+    "eventCategoryCode": "ALL",
+    "subscriptionName": "이벤트 구독 예시",
+    "enabled": true, 
+    "notifyEmail": true, 
+    "notifySms": true, 
+    "codes": [], 
+    "sources": [], 
+    "userGroupIds": ["35f883a5-9473-45ce-919c-ec3ede36b795"]
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details>
+  <summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details> 
+
+---
+
+### 이벤트 구독 해지
+
+```
+DELETE /v3.0/event-subscriptions/{subscriptionId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| subscriptionId | URL | UUID | O | 이벤트 구독 식별자 |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details>
+  <summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
+---

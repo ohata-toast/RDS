@@ -57,15 +57,15 @@ DB 버전 업그레이드 사전 점검에 대해서는 다음과 같은 방법�
 - DB 버전 업그레이드 시도를 통한 결과 확인
 
 콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통한 결과 및 DB 버전 업그레이드 시도를 통한 결과의 경우 개별 DB 인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다. 세부 내역 항목은 각각 다음의 의미를 가집니다.
-- `CHECK_BY_MYSQL_CHECK` : `mysqlcheck`를 통한 버전 업그레이드 결격 사항이 없어야 한다.
-- `COLUMN_LENGHT_LIMIT_CHECK` : `INFORMATION_SCHEMA.VIEWS`를 통해 확인했을 때 컬럼명이 64자를 초과하는 내용이 없어야 한다.
-- `DUPLICATE_NAME_WITH_DATA_DICT` : 데이터 사전에서 사용되는 테이블과 동일한 명칭의 테이블이 없어야 한다.
-- `ENUM_SET_SIZE_CHECK` : 길이가 255자 또는 1020바이트를 초과하는 개별 ENUM, SET 열 요소가 있는 테이블, 저장 프로시저가 없어야 한다.
-- `FOREIGN_KEY_LENGTH_LIMIT_CHECK` : 외래 키 제약 조건 이름이 64자를 초과하는 테이블이 없어야 한다.
-- `LOWER_CASE_SCHEMAS_NAMES_CHECK` : `lower_case_table_names` 설정을 1로 변경하려는 경우 스키마 이름이 소문자인지 확인한다.
-- `LOWER_CASE_TABLE_NAMES_CHECK` : `lower_case_table_names` 설정을 1로 변경하려는 경우 테이블 이름이 소문자인지 확인한다.
-- `PARTITION_TABLE_CHECK` : 특정 파티션 체크를 통해 추출되는 파티션 테이블이 없어야 한다.
-- `PROPERTY_LENGTH_LIMIT_CHECK` : InnoDB 시스템 테이블 스페이스와 일반 테이블 스페이스를 포함하는 공유 테이블 스페이스에 상주하는 테이블 파티션이 없어야 한다.
+- `CHECK_BY_MYSQL_CHECK`: `mysqlcheck`를 통한 버전 업그레이드 결격 사항이 없어야 한다.
+- `COLUMN_LENGHT_LIMIT_CHECK`: `INFORMATION_SCHEMA.VIEWS`를 통해 확인했을 때 컬럼명이 64자를 초과하는 내용이 없어야 한다.
+- `DUPLICATE_NAME_WITH_DATA_DICT`: 데이터 사전에서 사용되는 테이블과 동일한 명칭의 테이블이 없어야 한다.
+- `ENUM_SET_SIZE_CHECK`: 길이가 255자 또는 1020바이트를 초과하는 개별 ENUM, SET 열 요소가 있는 테이블, 저장 프로시저가 없어야 한다.
+- `FOREIGN_KEY_LENGTH_LIMIT_CHECK`: 외래 키 제약 조건 이름이 64자를 초과하는 테이블이 없어야 한다.
+- `LOWER_CASE_SCHEMAS_NAMES_CHECK`: `lower_case_table_names` 설정을 1로 변경하려는 경우 스키마 이름이 소문자인지 확인한다.
+- `LOWER_CASE_TABLE_NAMES_CHECK`: `lower_case_table_names` 설정을 1로 변경하려는 경우 테이블 이름이 소문자인지 확인한다.
+- `PARTITION_TABLE_CHECK`: 특정 파티션 체크를 통해 추출되는 파티션 테이블이 없어야 한다.
+- `PROPERTY_LENGTH_LIMIT_CHECK`: InnoDB 시스템 테이블 스페이스와 일반 테이블 스페이스를 포함하는 공유 테이블 스페이스에 상주하는 테이블 파티션이 없어야 한다.
 
 또한, 5.7에서는 사용되나 8.0에서는 제거 혹은 변경된 사항에 관해 확인이 필요합니다.
 - [SQL 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
@@ -75,11 +75,17 @@ DB 버전 업그레이드 사전 점검에 대해서는 다음과 같은 방법�
 
 #### 더미 DB 인스턴스를 사용한 DB 엔진 버전 업그레이드 
 
-DB 인스턴스 수정 창에서 DB 엔진 버전 변경을 시도 시, 더미 DB 인스턴스 사용 여부를 선택하여 버전 업그레이드 과정에서의 고가용성을 가져올 수 있습니다. 더미 DB 인스턴스 사용 선택 시 DB 버전 업그레이드를 위한 예비 마스터가 생성됩니다. 
+DB 인스턴스 수정 화면에서 DB 엔진 버전 변경을 시도할 때 더미 DB 인스턴스 사용 여부를 선택해 버전 업그레이드 과정에서의 고가용성을 가져올 수 있습니다. 더미 DB 인스턴스 사용을 선택하면 DB 버전 업그레이드를 위한 예비 마스터가 생성됩니다. 
 
 > [주의]
 > 더미 DB 인스턴스의 경우 업그레이드 과정 중 임시 예비 마스터를 생성하므로, 해당 옵션은 고가용성 구성이 아닌 경우에만 사용할 수 있습니다.
 
+### 노후 운영체제를 사용하는 경우
+
+2022년 5월 10일 이전에 생성된 DB 인스턴스의 경우 내부 운영체제가 노후되어 DB 버전을 업그레이드하는 경우 DB 인스턴스가 교체됩니다. 교체 과정에서 DB 인스턴스의 식별자 및 내부 IP 주소가 변경됩니다. 알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동으로 교체됩니다. 단일 DB 인스턴스의 경우 DB 버전 변경 시 반드시 더미 DB 인스턴스를 사용해야 합니다. 고가용성 DB 인스턴스의 경우 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 마스터와 예비 마스터의 역할이 변경됩니다. 마스터의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하는 것을 권장합니다.  
+
+> [주의]
+> IP ACL 혹은 보안 그룹에서 기존 DB 인스턴스의 내부 IP를 직접 사용하는 경우 주의해야 합니다.
 
 ## MySQL을 위한 옵션
 

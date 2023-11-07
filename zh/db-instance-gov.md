@@ -402,12 +402,12 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * Parameter description
-  * master_instance_ip : IP of replication target (Master) server
-  * master_instance_port : MySQL Port on the replication target (Master) Server
-  * user_id_for_replication : Account for replication to access MySQL on the replication target (Master) server
-  * password_for_replication_user : Account password for replication
-  * MASTER_LOG_FILE : The binary log file name of the replication target (Master)
-  * MASTER_LOG_POS : The binary log position of the replication target (Master)
+  * master_instance_ip: IP of replication target (Master) server
+  * master_instance_port: MySQL Port on the replication target (Master) Server
+  * user_id_for_replication: Account for replication to access MySQL on the replication target (Master) server
+  * password_for_replication_user: Account password for replication
+  * MASTER_LOG_FILE: The binary log file name of the replication target (Master)
+  * MASTER_LOG_POS: The binary log position of the replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4); 

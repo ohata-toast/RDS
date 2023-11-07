@@ -1220,19 +1220,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | --- | --- | --- | --- | --- |
 | restoreYmdt | Query | DateTime | O | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-	"restoreType": "TIMESTAMP",
-	"restoreYmdt": "2023-07-10T15:44:44+09:00"
-}
-```
-
-</p>
-</details>
-
 #### If restoreType is `BINLOG`
 
 | Name               | Type | Format | Required | Description |
@@ -1240,21 +1227,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | backupId           | Query | UUID | O | Identifier of the backup to use for restoration |
 | binLogFileName     | Query | String | O | Binary log name to use for restoration |
 | binLogPosition | Query | Number | O | Binary log location to use for restoration |
-
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-	"restoreType": "BINLOG",
-    "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
-	"binLogFileName": "mysql-bin.000001",
-	"binLogPosition": 1234567
-}
-```
-
-</p>
-</details>
 
 #### Response
 

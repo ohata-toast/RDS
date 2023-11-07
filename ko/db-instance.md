@@ -173,7 +173,7 @@ DB 인스턴스를 일정 시간 동안 사용하지는 않지만, 삭제를 원
 
 > [참고]
 > 고가용성 DB 인스턴스, 읽기 복제본을 가지고 있는 마스터, 읽기 복제본은 중지할 수 없습니다.
-> DB 인스턴스가 플로팅 IP를 사용 중일 경우 중지와 상관 없이 플로팅 IP 요금이 과금됩니다.
+> DB 인스턴스가 플로팅 IP를 사용 중일 경우 중지와 상관없이 플로팅 IP 요금이 과금됩니다.
 
 ### 읽기 복제본 생성
 
@@ -186,9 +186,18 @@ DB 인스턴스를 일정 시간 동안 사용하지는 않지만, 삭제를 원
 > [참고]
 > 읽기 복제본 생성 과정에 필요한 바이너리 로그(binary log) 크기만큼 오브젝트 스토리지 과금이 발생할 수 있습니다.
 
+#### 다른 리전의 서브넷에 읽기 복제본 생성
+  * 서로 다른 리전에 존재하는 VPC 간 리전 피어링을 연결하면 다른 리전 VPC에 속한 서브넷에 읽기 복제본을 생성할 수 있습니다.
+  * 리전 피어링이 연결되어 있더라도 라우트 설정이 올바르지 않을 경우 읽기 복제본 생성에 실패하거나 복제가 중단될 수 있습니다.
+  * 리전 피어링 연결에 관한 자세한 사항은 [리전 피어링](https://docs.nhncloud.com/ko/Network/Peering%20Gateway/ko/console-guide/#_2) 항목을 참고합니다.
+
 ### 읽기 복제본 승격
 
 마스터와의 복제 관계를 끊고 읽기 복제본을 마스터로 변경하는 것을 승격이라 부릅니다. 승격된 마스터는 독립된 DB 인스턴스로서 동작하게 됩니다. 승격하려는 읽기 복제본과 마스터 사이에 복제 지연이 있는 경우, 해당 지연이 없어질 때까지 승격되지 않습니다.
+
+### 읽기 복제본 강제 승격
+
+마스터나 원본 리전의 상태와 상관없이 읽기 복제본의 현재 시점 데이터로 강제 승격합니다. 
 
 ### 읽기 복제본의 복제 중단
 
@@ -400,7 +409,7 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 
 * 파라미터 설명
     * master_instance_ip: 복제 대상(Master) 서버의 IP
-    * master_instance_port : 복제 대상(Master) 서버의 MySQL 포트
+    * master_instance_port: 복제 대상(Master) 서버의 MySQL 포트
     * user_id_for_replication: 복제 대상(Master) 서버의 MySQL에 접속할 복제용 계정
     * password_for_replication_user: 복제용 계정 패스워드
     * MASTER_LOG_FILE: 복제 대상(Master)의 binary log 파일명

@@ -80,6 +80,12 @@ When trying to change the DB engine version in the Modify DB Instance window, yo
 > [Caution]
 For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high availability configurations.
 
+### 노후 운영체제를 사용하는 경우
+
+2022년 5월 10일 이전에 생성된 DB 인스턴스의 경우 내부 운영체제가 노후되어 DB 버전을 업그레이드하는 경우 DB 인스턴스가 교체됩니다. 교체 과정에서 DB 인스턴스의 식별자 및 내부 IP 주소가 변경됩니다. 알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동으로 교체됩니다. 단일 DB 인스턴스의 경우 DB 버전 변경 시 반드시 더미 DB 인스턴스를 사용해야 합니다. 고가용성 DB 인스턴스의 경우 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 마스터와 예비 마스터의 역할이 변경됩니다. 마스터의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하는 것을 권장합니다.
+
+> [주의]
+> IP ACL 혹은 보안 그룹에서 기존 DB 인스턴스의 내부 IP를 직접 사용하는 경우 주의해야 합니다.
 
 ## Options for MySQL
 
