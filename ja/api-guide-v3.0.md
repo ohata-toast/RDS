@@ -1037,24 +1037,24 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ---
 
-### DB 인스턴스 백업 후 내보내기
+### DBインスタンスバックアップ後にエクスポート
 
 ```
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
 
-#### 요청
+#### リクエスト
 
-| 이름              | 종류   | 형식     | 필수 | 설명                          |
+| 名前             | 種類  | 形式    | 必須 | 説明                         |
 |-----------------|------|--------|----|-----------------------------|
-| dbInstanceId    | URL  | UUID   | O  | DB 인스턴스의 식별자                |
-| tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
-| username        | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID   |
-| password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
-| targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
-| objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
+| dbInstanceId    | URL  | UUID   | O  | DBインスタンスの識別子               |
+| tenantId        | Body | String | O  | バックアップが保存されるオブジェクトストレージのテナントID   |
+| username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID   |
+| password        | Body | String | O  | バックアップが保存されるオブジェクトストレージのAPIパスワード |
+| targetContainer | Body | String | O  | バックアップが保存されるオブジェクトストレージのコンテナ    |
+| objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス           |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1070,11 +1070,11 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 | --- | --- | --- | --- |
-| jobId | Body | UUID | 요청한 작업의 식별자 |
+| jobId | Body | UUID | リクエストした作業の識別子 |
 
 ---
 
@@ -1305,8 +1305,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### 共通リクエスト
 
-| 名前                                                  | 種類   | 形式      | 必須 | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-|-----------------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 名前 | 種類 | 形式 | 必須 | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --- | --- | --- | --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId                                        | URL  | UUID    | O  | DBインスタンスの識別子                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.restoreType                                 | Body | Enum    | O  | 復元タイプの種類<br><ul><li>`TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ</li><li>`BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ</li><li>`BACKUP`:既存に作成したバックアップを利用したスナップショット復元タイプ</li></ul>                                                                                                                                                                                                                                                                                                            |
@@ -1516,7 +1516,7 @@ POST /v3.0/db-instances/restore-from-obs
 |-----------------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.tenantId                                    | Body | String  | O  | バックアップが保存されたオブジェクトストレージのテナントID                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| restore.username                                    | Body | String  | O  | NHN CloudアカウントまたはIAMメンバーID                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| restore.username                                    | Body | String  | O  | NHN Cloud会員またはIAMメンバーID                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.password                                    | Body | String  | O  | バックアップが保存されたオブジェクトストレージのAPIパスワード                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | restore.targetContainer                             | Body | String  | O  | バックアップが保存されたオブジェクトストレージのコンテナ                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | restore.objectPath                                  | Body | String  | O  | コンテナに保存されたバックアップのパス                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -2360,7 +2360,7 @@ POST /v3.0/backups/{backupId}/export
 |-----------------|------|--------|----|----------------------------------|
 | backupId        | URL  | UUID   | O  | バックアップの識別子                       |
 | tenantId        | Body | String | O  | バックアップが保存されるオブジェクトストレージのテナントID   |
-| username        | Body | String | O  | NHN CloudアカウントまたはIAMメンバーID       |
+| username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID       |
 | password        | Body | String | O  | バックアップが保存されるオブジェクトストレージのAPIパスワード |
 | targetContainer | Body | String | O  | バックアップが保存されるオブジェクトストレージのコンテナ     |
 | objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス              |
@@ -2388,6 +2388,9 @@ POST /v3.0/backups/{backupId}/export
 | jobId | Body | UUID | リクエストした作業の識別子 |
 
 ---
+
+> [注意]
+> 手動バックアップの場合、バックアップが行われたDBインスタンスが存在しない場合、バックアップをオブジェクトストレージにエクスポートすることができません。
 
 ### バックアップを復元する
 
@@ -3850,18 +3853,18 @@ GET /v3.0/metric-statistics
 
 ## イベント
 
-### 이벤트 카테고리
+### イベントカテゴリー
 
-이벤트는 카테고리로 분류할 수 있으며 아래와 같습니다.
+イベントはカテゴリに分類することができ、下記の通りです。
 
-| 이벤트 카테고리    | 설명      |
+| イベントカテゴリー   | 説明     |
 |-------------|---------|
-| ALL         | 전체      |
-| BACKUP      | 백업      |
-| DB_INSTANCE | DB 인스턴스 |
-| JOB         | 작업      |
-| TENANT      | 테넌트     |
-| MONITORING  | 모니터링    |
+| ALL         | 全体     |
+| BACKUP      | バックアップ     |
+| DB_INSTANCE | DBインスタンス |
+| JOB         | 作業     |
+| TENANT      | テナント    |
+| MONITORING  | モニタリング   |
 
 ### イベントリスト照会
 
@@ -3945,7 +3948,7 @@ GET /v3.0/events
 
 ---
 
-### 구독 가능한 이벤트 코드 목록 보기
+### 購読可能なイベントコード一覧表示
 
 ```
 GET /v3.0/event-codes
@@ -3987,46 +3990,46 @@ GET /v3.0/event-codes
 
 ---
 
-### 이벤트 구독 목록 조회
+### イベント購読一覧照会
 
 ```
 GET /v3.0/event-subscriptions
 ```
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエスト本文を要求しません。
 
-| 이름               | 종류    | 형식     | 필수 | 설명                                             |
+| 名前              | 種類   | 形式    | 必須 | 説明                                            |
 |------------------|-------|--------|----|------------------------------------------------|
-| page             | Query | Number | O  | 조회할 목록의 페이지<br>\- 최솟값: `1`                     |
-| size             | Query | Number | O  | 조회할 목록의 페이지 크기<br>\- 최솟값: `1`<br>\- 최댓값: `100` | 
-| subscriptionId   | Query | String | X  | 검색할 이벤트 구독 식별자                                 |
-| subscriptionName | Query | String | X  | 검색할 이벤트 구독 이름<br>부분적으로 일치하는 모든 결과를 반환합니다.      |
-| sourceName       | Query | String | X  | 검색할 이벤트 소스 이름<br>부분적으로 일치하는 모든 결과를 반환합니다.      |
-| userGroupId      | Query | String | X  | 검색할 사용자 그룹 식별자                                 |
+| page             | Query | Number | O  | 照会するリストのページ<br>\- 最小値: `1`                     |
+| size             | Query | Number | O  | 照会するリストのページサイズ<br>\- 最小値: `1`<br>\- 最大値: `100` | 
+| subscriptionId   | Query | String | X  | 検索するイベント購読識別子                                |
+| subscriptionName | Query | String | X  | 検索するイベント購読名<br>部分的に一致するすべての結果を返します。      |
+| sourceName       | Query | String | X  | 検索するイベントソースの名前<br>部分的に一致するすべての結果を返します。      |
+| userGroupId      | Query | String | X  | 検索するユーザーグループ識別子                                |
 
-#### 응답
+#### レスポンス
 
-| 이름                                           | 종류   | 형식       | 설명                                |
+| 名前                                          | 種類  | 形式      | 説明                               |
 |----------------------------------------------|------|----------|-----------------------------------|
-| totalCounts                                  | Body | Number   | 전체 이벤트 구독 수                       |
-| eventSubscriptions                           | Body | Array    | 이벤트 구독 목록                         |
-| eventSubscriptions.subscriptionId            | Body | String   | 이벤트 구독 식별자                        | 
-| eventSubscriptions.eventCategoryCode         | Body | Enum     | 이벤트 카테고리                          |
-| eventSubscriptions.subscriptionName          | Body | String   | 이벤트 구독 이름                         | 
-| eventSubscriptions.enabled                   | Body | Boolean  | 활성화 여부                            |
-| eventSubscriptions.notifyEmail               | Body | Boolean  | 이메일 발송 여부                         |
-| eventSubscriptions.notifySms                 | Body | Boolean  | SMS 발송 여부                         | 
-| eventSubscriptions.createdYmdt               | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| eventSubscriptions.codes                     | Body | Array    | 구독할 이벤트 코드 목록                     |
-| eventSubscriptions.sources                   | Body | Array    | 구독할 이벤트 소스 목록                     |
-| eventSubscriptions.sources.eventSourceId     | Body | String   | 이벤트 소스 아이디                        |
-| eventSubscriptions.sources.eventCategoryCode | Body | Enum     | 이벤트 카테고리                          |
-| eventSubscriptions.userGroupIds              | Body | Array    | 알림 발송할 사용자 그룹 아이디 목록              |
+| totalCounts                                  | Body | Number   | 全体イベント購読数                       |
+| eventSubscriptions                           | Body | Array    | イベント購読リスト                        |
+| eventSubscriptions.subscriptionId            | Body | String   | イベント購読識別子                       | 
+| eventSubscriptions.eventCategoryCode         | Body | Enum     | イベントカテゴリー                         |
+| eventSubscriptions.subscriptionName          | Body | String   | イベント購読名                        | 
+| eventSubscriptions.enabled                   | Body | Boolean  | 有効かどうか                            |
+| eventSubscriptions.notifyEmail               | Body | Boolean  | メール送信の有無                         |
+| eventSubscriptions.notifySms                 | Body | Boolean  | SMS送信の有無                         | 
+| eventSubscriptions.createdYmdt               | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| eventSubscriptions.codes                     | Body | Array    | 購読するイベントコードリスト                    |
+| eventSubscriptions.sources                   | Body | Array    | 購読するイベントソースリスト                    |
+| eventSubscriptions.sources.eventSourceId     | Body | String   | イベントソースID                        |
+| eventSubscriptions.sources.eventCategoryCode | Body | Enum     | イベントカテゴリー                         |
+| eventSubscriptions.userGroupIds              | Body | Array    | 通知を送信するユーザーグループIDリスト             |
 
 <details>
-<summary>예시</summary>
+<summary>例</summary>
 <p>
 
 ```json
@@ -4034,7 +4037,7 @@ GET /v3.0/event-subscriptions
     "totalCounts": 1,
     "eventSubscriptions": [{
         "eventCategoryCode": "ALL",
-        "subscriptionName": "이벤트 구독 예시",
+        "subscriptionName": "イベント購読例",
         "enabled": true, 
         "notifyEmail": true, 
         "notifySms": true, 
@@ -4051,35 +4054,35 @@ GET /v3.0/event-subscriptions
 
 ---
 
-### 이벤트 구독
+### イベント購読
 
 ```
 POST /v3.0/event-subscriptions
 ```
 
-#### 요청
+#### リクエスト
 
-| 이름                        | 종류   | 형식                                               | 필수 | 설명                                                                                                                                                                                 |
+| 名前                       | 種類  | 形式                                              | 必須 | 説明                                                                                                                                                                                |
 |---------------------------|------|--------------------------------------------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| eventCategoryCode         | Body | Enum                                             | O  | 이벤트 카테고리                                                                                                                                                                           |
-| subscriptionName          | Body | String                                           | O  | 이벤트 구독 이름                                                                                                                                                                          |
-| enabled                   | Body | Boolean                                          | O  | 활성화 여부<br>비활성화 시 알림을 발송하지 않습니다.                                                                                                                                                    |
-| notifyEmail               | Body | Boolean                                          | O  | 이메일 발송 여부                                                                                                                                                                          |
-| notifySms                 | Body | Boolean                                          | O  | SMS 발송 여부                                                                                                                                                                          |
-| codes                     | Body | Array                                            | O  | 구독할 이벤트 코드 목록<br>목록이 비어 있으면 전체 이벤트 코드를 구독<br>구독 가능한 이벤트 코드는 [이벤트](notification/#_1) 항목을 참고합니다.                                                                                     |
-| sources                   | Body | Array                                            | O  | 구독할 이벤트 소스 목록<br>목록이 비어 있으면 전체 이벤트 소스를 구독                                                                                                                                          |
-| sources.eventSourceId     | Body | String                                           | O  | 이벤트 소스 아이디<br>이벤트 카테고리에 따른 이벤트 소스는 아래와 같습니다.<br>- `BACKUP`: 백업 식별자<br>- `DB_INSTANE`: DB 인스턴스 식별자<br>- `JOB`: 서비스의 Appkey<br>- `TENANT`: 서비스의 Appkey<br>- `MONITORING`: 지원하지 않습니다. |
-| sources.eventCategoryCode | Body | <span style="color:rgb(49, 51, 56);">Enum</span> | O  | 이벤트 카테고리                                                                                                                                                                           |
-| userGroupIds              | Body | Array                                            | O  | 알림 발송할 사용자 그룹 아이디 목록                                                                                                                                                               |
+| eventCategoryCode         | Body | Enum                                             | O  | イベントカテゴリー                                                                                                                                                                          |
+| subscriptionName          | Body | String                                           | O  | イベント購読名                                                                                                                                                                         |
+| enabled                   | Body | Boolean                                          | O  | 有効かどうか<br>無効の場合は通知を送信しません。                                                                                                                                                    |
+| notifyEmail               | Body | Boolean                                          | O  | メール送信の有無                                                                                                                                                                          |
+| notifySms                 | Body | Boolean                                          | O  | SMS送信の有無                                                                                                                                                                          |
+| codes                     | Body | Array                                            | O  | 購読するイベントコードリスト<br>リストが空の場合、全体イベントコードを購読<br>購読可能なイベントコードは[イベント](notification/#_1)項目を参考します。                                                                                     |
+| sources                   | Body | Array                                            | O  | 購読するイベントソースリスト<br>リストが空の場合は全体イベントソースを購読                                                                                                                                         |
+| sources.eventSourceId     | Body | String                                           | O  | イベントソースID<br>イベントカテゴリーに基づくイベントソースは次のとおりです。<br>- `BACKUP`:バックアップ識別子<br>- `DB_INSTANE`: DBインスタンス識別子<br>- `JOB`:サービスのAppkey<br>- `TENANT`:サービスのAppkey<br>- `MONITORING`:サポートしません。 |
+| sources.eventCategoryCode | Body | <span style="color:rgb(49, 51, 56);">Enum</span> | O  | イベントカテゴリー                                                                                                                                                                          |
+| userGroupIds              | Body | Array                                            | O  | 通知を送信するユーザーグループIDリスト                                                                                                                                                              |
 
 <details>
-<summary>예시</summary>
+<summary>例</summary>
 <p>
 
 ```json
 {
     "eventCategoryCode": "ALL",
-    "subscriptionName": "이벤트 구독 예시",
+    "subscriptionName": "イベント購読例",
     "enabled": true, 
     "notifyEmail": true, 
     "notifySms": true, 
@@ -4092,14 +4095,14 @@ POST /v3.0/event-subscriptions
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 | --- | --- | --- | --- |
-| subscriptionId | Body | UUID | 이벤트 구독 식별자 |
+| subscriptionId | Body | UUID | イベント購読識別子 |
 
 <details>
-  <summary>예시</summary>
+  <summary>例</summary>
 <p>
 
 ```json
@@ -4118,36 +4121,36 @@ POST /v3.0/event-subscriptions
 
 ---
 
-### 이벤트 구독 정보 수정
+### イベント購読情報の修正
 
 ```
 PUT /v3.0/event-subscriptions/{subscriptionId}
 ```
 
-#### 요청
+#### リクエスト
 
-| 이름                        | 종류   | 형식                                               | 필수 | 설명                                                                                                                                                                                 |
+| 名前                       | 種類  | 形式                                              | 必須 | 説明                                                                                                                                                                                |
 |---------------------------|------|--------------------------------------------------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| subscriptionId            | URL  | UUID                                             | O  | 이벤트 구독 식별자                                                                                                                                                                         |
-| eventCategoryCode         | Body | Enum                                             | O  | 이벤트 카테고리                                                                                                                                                                           |
-| subscriptionName          | Body | String                                           | O  | 이벤트 구독 이름                                                                                                                                                                          |
-| enabled                   | Body | Boolean                                          | O  | 활성화 여부<br>비활성화 시 알림을 발송하지 않습니다.                                                                                                                                                    |
-| notifyEmail               | Body | Boolean                                          | O  | 이메일 발송 여부                                                                                                                                                                          |
-| notifySms                 | Body | Boolean                                          | O  | SMS 발송 여부                                                                                                                                                                          |
-| codes                     | Body | Array                                            | O  | 구독할 이벤트 코드 목록<br>목록이 비어 있으면 전체 이벤트 코드를 구독<br>구독 가능한 이벤트 코드는 [이벤트](notification/#_1) 항목을 참고합니다.                                                                                     |
-| sources                   | Body | Array                                            | O  | 구독할 이벤트 소스 목록<br>목록이 비어 있으면 전체 이벤트 소스를 구독                                                                                                                                          |
-| sources.eventSourceId     | Body | String                                           | O  | 이벤트 소스 아이디<br>이벤트 카테고리에 따른 이벤트 소스는 아래와 같습니다.<br>- `BACKUP`: 백업 식별자<br>- `DB_INSTANE`: DB 인스턴스 식별자<br>- `JOB`: 서비스의 Appkey<br>- `TENANT`: 서비스의 Appkey<br>- `MONITORING`: 지원하지 않습니다. |
-| sources.eventCategoryCode | Body | <span style="color:rgb(49, 51, 56);">Enum</span> | O  | 이벤트 카테고리                                                                                                                                                                           |
-| userGroupIds              | Body | Array                                            | O  | 알림 발송할 사용자 그룹 아이디 목록                                                                                                                                                               |
+| subscriptionId            | URL  | UUID                                             | O  | イベント購読識別子                                                                                                                                                                        |
+| eventCategoryCode         | Body | Enum                                             | O  | イベントカテゴリー                                                                                                                                                                          |
+| subscriptionName          | Body | String                                           | O  | イベント購読名                                                                                                                                                                         |
+| enabled                   | Body | Boolean                                          | O  | 有効かどうか<br>無効の場合は通知を送信しません。                                                                                                                                                    |
+| notifyEmail               | Body | Boolean                                          | O  | メール送信の有無                                                                                                                                                                          |
+| notifySms                 | Body | Boolean                                          | O  | SMS送信の有無                                                                                                                                                                          |
+| codes                     | Body | Array                                            | O  | 購読するイベントコードリスト<br>リストが空の場合、全体イベントコードを購読<br>購読可能なイベントコードは[イベント](notification/#_1)項目を参考します。                                                                                     |
+| sources                   | Body | Array                                            | O  | 購読するイベントソースリスト<br>リストが空の場合は全体イベントソースを購読                                                                                                                                         |
+| sources.eventSourceId     | Body | String                                           | O  | イベントソースID<br>イベントカテゴリーに基づくイベントソースは次のとおりです。<br>- `BACKUP`:バックアップ識別子<br>- `DB_INSTANE`: DBインスタンス識別子<br>- `JOB`:サービスのAppkey<br>- `TENANT`:サービスのAppkey<br>- `MONITORING`:サポートしません。 |
+| sources.eventCategoryCode | Body | <span style="color:rgb(49, 51, 56);">Enum</span> | O  | イベントカテゴリー                                                                                                                                                                          |
+| userGroupIds              | Body | Array                                            | O  | 通知送信するユーザーグループIDリスト                                                                                                                                                              |
 
 <details>
-  <summary>예시</summary>
+  <summary>例</summary>
 <p>
 
 ```json
 {
     "eventCategoryCode": "ALL",
-    "subscriptionName": "이벤트 구독 예시",
+    "subscriptionName": "イベント購読例",
     "enabled": true, 
     "notifyEmail": true, 
     "notifySms": true, 
@@ -4160,12 +4163,12 @@ PUT /v3.0/event-subscriptions/{subscriptionId}
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-이 API는 응답 본문을 반환하지 않습니다.
+このAPIはレスポンス本文を返しません。
 
 <details>
-  <summary>예시</summary>
+  <summary>例</summary>
 <p>
 
 ```json
@@ -4183,26 +4186,26 @@ PUT /v3.0/event-subscriptions/{subscriptionId}
 
 ---
 
-### 이벤트 구독 해지
+### イベント購読解除
 
 ```
 DELETE /v3.0/event-subscriptions/{subscriptionId}
 ```
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
-| subscriptionId | URL | UUID | O | 이벤트 구독 식별자 |
+| subscriptionId | URL | UUID | O | イベント購読識別子 |
 
-#### 응답
+#### レスポンス
 
-이 API는 응답 본문을 반환하지 않습니다.
+このAPIはレスポンス本文を返しません。
 
 <details>
-  <summary>예시</summary>
+  <summary>例</summary>
 <p>
 
 ```json
