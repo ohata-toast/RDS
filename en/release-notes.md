@@ -1,18 +1,18 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2023. 11. 14.
+### November 14, 2023.
 
-#### 기능 추가 및 개선
+#### Added Features
 
-* 리전 피어링이 연결된 다른 리전의 서브넷에 읽기 복제본을 생성할 수 있도록 기능 추가
-* DB 인스턴스 강제 승격 기능 추가
-* 이벤트 구독 시 알림 유형을 선택할 수 있도록 개선
-* API v3.0 추가 및 변경
-  * DB 인스턴스 백업 후 내보내기 API 추가
-  * 이벤트 구독 목록 조회 API 추가
-  * 이벤트 구독 API 추가
-  * 이벤트 구독 정보 수정 API 추가
-  * 이벤트 구독 해지 API 추가
+* Added the feature to create read replicas on subnets in other regions with region peering connections
+* Added forced promotion of DB instances
+* Improved to allow you to select notification type when subscribing to events
+* API v3.0 additions and changes
+    * Added the Export after backing up DB instance API
+    * Added the List Event Subscriptions API
+    * Added the Subscribe to Events API
+    * Added the Modify Event Subscription Information API
+    * Added the Cancel Event Subscription API
 
 ### October 17, 2023
 

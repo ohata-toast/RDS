@@ -186,18 +186,18 @@ To improve read performance, you can create a read replica which can be used for
 > [Note]
 > Object storage pricing may occur as much as the binary log size required for the process of creating read replica.
 
-#### 다른 리전의 서브넷에 읽기 복제본 생성
-  * 서로 다른 리전에 존재하는 VPC 간 리전 피어링을 연결하면 다른 리전 VPC에 속한 서브넷에 읽기 복제본을 생성할 수 있습니다.
-  * 리전 피어링이 연결되어 있더라도 라우트 설정이 올바르지 않을 경우 읽기 복제본 생성에 실패하거나 복제가 중단될 수 있습니다.
-  * 리전 피어링 연결에 관한 자세한 사항은 [리전 피어링](https://docs.nhncloud.com/en/Network/Peering%20Gateway/en/console-guide/#_2) 항목을 참고합니다.
+#### Create Read Replica on Subnet in Different Region
+  * When you connect a region peering between VPCs that exist in different regions, you can create a read replica on a subnet that belongs to a VPC in a different region.
+  * Even if region peering is connected, if the route settings are incorrect, read replica creation might fail or replication might stop.
+  * For more information about connecting to region peering, see [Region peering](https://docs.nhncloud.com/ko/Network/Peering%20Gateway/ko/console-guide/#_2).
 
 ### Promote Read Replica
 
 Breaking the replication relationship with the master and changing the read replica to the master is called promotion. The promoted master acts as an independent DB instance. If any replication delay between the read replica and the master that you want to promote, it will not be promoted until the delay is gone.
 
-### 읽기 복제본 강제 승격
+### Force Promote Read Replica
 
-마스터나 원본 리전의 상태와 상관없이 읽기 복제본의 현재 시점 데이터로 강제 승격합니다.
+Force promotion to the read replica's point-in-time data, regardless of the state of the master or source region.
 
 ### Stop Replication of Read Replicas
 
