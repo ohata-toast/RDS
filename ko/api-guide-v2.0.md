@@ -63,15 +63,15 @@ GET /rds/api/v2.0/metric-statistics
 | to          | Query | Datetime | O  | 종료 일시            | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
 | interval    | Query | Integer  | X  | 조회 간격            | 1, 5, 30, 120, 1440 (분)                     |
 
-- interval : 기본값 사용 시 from/to 값에 따라 적절한 값을 자동 선택함
+- interval: 기본값 사용 시 from/to 값에 따라 적절한 값을 자동 선택함
     - 날짜 범위가 1일 이하 and 시작 날짜가 8일 경과 전 - 1분 단위 raw 데이터
     - 날짜 범위가 7일 이하 and 시작 날짜가 40일 경과 전 - 5분 단위 평균 데이터
     - 날짜 범위가 30일 이하 and 시작 날짜가 186일 경과 전 - 30분 단위 평균 데이터
     - 날짜 범위가 180일 이하 and 시작 날짜가 730일 경과 전 - 2시간 단위 평균 데이터
     - 그 외 - 1일 단위 평균 데이터
-- from, to : ISO Datetime 형식 예시
-    - UTC : 2021-01-01T00:00:00.000Z
-    - KST, JST : 2021-01-01T00:00:00.000+09:00
+- from, to: ISO Datetime 형식 예시
+    - UTC: 2021-01-01T00:00:00.000Z
+    - KST, JST: 2021-01-01T00:00:00.000+09:00
 
 #### 응답
 

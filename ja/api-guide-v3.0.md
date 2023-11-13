@@ -1037,6 +1037,47 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ---
 
+### DBインスタンスバックアップ後にエクスポート
+
+```
+POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
+```
+
+#### リクエスト
+
+| 名前             | 種類  | 形式    | 必須 | 説明                         |
+|-----------------|------|--------|----|-----------------------------|
+| dbInstanceId    | URL  | UUID   | O  | DBインスタンスの識別子               |
+| tenantId        | Body | String | O  | バックアップが保存されるオブジェクトストレージのテナントID   |
+| username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID   |
+| password        | Body | String | O  | バックアップが保存されるオブジェクトストレージのAPIパスワード |
+| targetContainer | Body | String | O  | バックアップが保存されるオブジェクトストレージのコンテナ    |
+| objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス           |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
+    "targetContainer": "/container",
+    "objectPath": "/backups/backup_file"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+| --- | --- | --- | --- |
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+---
+
 ### DBインスタンスを複製する
 
 ```
@@ -1221,19 +1262,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | --- | --- | --- | --- | --- |
 | restoreYmdt | Query | DateTime | O | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>例</summary>
-<p>
-
-```json
-{
-	"restoreType": "TIMESTAMP",
-	"restoreYmdt": "2023-07-10T15:44:44+09:00"
-}
-```
-
-</p>
-</details>
-
 #### restoreTypeが`BINLOG`の場合
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
@@ -1241,21 +1269,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | backupId | Query | UUID | O | 復元に使用するバックアップの識別子 |
 | binLogFileName | Query | String | O | 復元に使用するバイナリログの名前 |
 | binLogPosition | Query | Number | O | 復元に使用するバイナリログの位置 |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-	"restoreType": "BINLOG",
-    "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
-	"binLogFileName": "mysql-bin.000001",
-	"binLogPosition": 1234567
-}
-```
-
-</p>
-</details>
 
 #### レスポンス
 
@@ -1292,8 +1305,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### 共通リクエスト
 
-| 名前                                                  | 種類   | 形式      | 必須 | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-|-----------------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 名前 | 種類 | 形式 | 必須 | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --- | --- | --- | --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId                                        | URL  | UUID    | O  | DBインスタンスの識別子                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.restoreType                                 | Body | Enum    | O  | 復元タイプの種類<br><ul><li>`TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ</li><li>`BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ</li><li>`BACKUP`:既存に作成したバックアップを利用したスナップショット復元タイプ</li></ul>                                                                                                                                                                                                                                                                                                            |
@@ -1503,7 +1516,7 @@ POST /v3.0/db-instances/restore-from-obs
 |-----------------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.tenantId                                    | Body | String  | O  | バックアップが保存されたオブジェクトストレージのテナントID                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| restore.username                                    | Body | String  | O  | NHN CloudアカウントまたはIAMメンバーID                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| restore.username                                    | Body | String  | O  | NHN Cloud会員またはIAMメンバーID                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.password                                    | Body | String  | O  | バックアップが保存されたオブジェクトストレージのAPIパスワード                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | restore.targetContainer                             | Body | String  | O  | バックアップが保存されたオブジェクトストレージのコンテナ                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | restore.objectPath                                  | Body | String  | O  | コンテナに保存されたバックアップのパス                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -2347,7 +2360,7 @@ POST /v3.0/backups/{backupId}/export
 |-----------------|------|--------|----|----------------------------------|
 | backupId        | URL  | UUID   | O  | バックアップの識別子                       |
 | tenantId        | Body | String | O  | バックアップが保存されるオブジェクトストレージのテナントID   |
-| username        | Body | String | O  | NHN CloudアカウントまたはIAMメンバーID       |
+| username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID       |
 | password        | Body | String | O  | バックアップが保存されるオブジェクトストレージのAPIパスワード |
 | targetContainer | Body | String | O  | バックアップが保存されるオブジェクトストレージのコンテナ     |
 | objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス              |
@@ -2375,6 +2388,9 @@ POST /v3.0/backups/{backupId}/export
 | jobId | Body | UUID | リクエストした作業の識別子 |
 
 ---
+
+> [注意]
+> 手動バックアップの場合、バックアップが行われたDBインスタンスが存在しない場合、バックアップをオブジェクトストレージにエクスポートすることができません。
 
 ### バックアップを復元する
 
@@ -2422,9 +2438,9 @@ POST /v3.0/backups/{backupId}/restore
 ```json
 
 {
-"dbInstanceName" : "db-instance-restore",
-"dbFlavorId" : "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
-"dbPort" : 10000,
+"dbInstanceName": "db-instance-restore",
+"dbFlavorId": "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
+"dbPort": 10000,
 "parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
 "network": {
     "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
@@ -3837,6 +3853,19 @@ GET /v3.0/metric-statistics
 
 ## イベント
 
+### イベントカテゴリー
+
+イベントはカテゴリに分類することができ、下記の通りです。
+
+| イベントカテゴリー   | 説明     |
+|-------------|---------|
+| ALL         | 全体     |
+| BACKUP      | バックアップ     |
+| DB_INSTANCE | DBインスタンス |
+| JOB         | 作業     |
+| TENANT      | テナント    |
+| MONITORING  | モニタリング   |
+
 ### イベントリスト照会
 
 ```
@@ -3919,7 +3948,7 @@ GET /v3.0/events
 
 ---
 
-### イベントコードリストを表示
+### 購読可能なイベントコード一覧表示
 
 ```
 GET /v3.0/event-codes

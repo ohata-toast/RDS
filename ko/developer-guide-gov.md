@@ -320,7 +320,7 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 
 * 파라미터 설명
     * master_instance_ip: 복제 대상(Master) 서버의 IP
-    * master_instance_port : 복제 대상(Master) 서버의 MySQL 포트
+    * master_instance_port: 복제 대상(Master) 서버의 MySQL 포트
     * user_id_for_replication: 복제 대상(Master) 서버의 MySQL에 접속할 복제용 계정
     * password_for_replication_user: 복제용 계정 패스워드
     * MASTER_LOG_FILE: 복제 대상(Master)의 binary log 파일명

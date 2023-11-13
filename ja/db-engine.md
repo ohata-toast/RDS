@@ -57,15 +57,15 @@ DBバージョンアップグレードの事前点検については、次の方
 - DBバージョンアップグレードの試行による結果の確認
 
 コンソールで`DBエンジンアップグレード事前確認`による結果および、DBバージョンアップグレードの試行による結果は、個別DBインスタンスのログタブに作成された`db_version_upgrade_compatibility.log`を通じて詳細を確認できます。詳細項目はそれぞれ次の意味を持ちます。
-- `CHECK_BY_MYSQL_CHECK` : `mysqlcheck`を通じたバージョンアップグレードの欠格事項がないこと。
-- `COLUMN_LENGHT_LIMIT_CHECK` : `INFORMATION_SCHEMA.VIEWS`で確認した時、カラム名が64文字を超える内容がないこと。
+- `CHECK_BY_MYSQL_CHECK`: `mysqlcheck`を通じたバージョンアップグレードの欠格事項がないこと。
+- `COLUMN_LENGHT_LIMIT_CHECK`: `INFORMATION_SCHEMA.VIEWS`で確認した時、カラム名が64文字を超える内容がないこと。
 - `DUPLICATE_NAME_WITH_DATA_DICT` :データ辞書で使用されるテーブルと同じ名称のテーブルがないこと。
 - `ENUM_SET_SIZE_CHECK` :長さが255文字または1020バイトを超える個々のENUM、SET列要素があるテーブル、保存プロシージャがないこと。
 - `FOREIGN_KEY_LENGTH_LIMIT_CHECK` :外部キー制約条件名が64文字を超えるテーブルがないこと。
-- `LOWER_CASE_SCHEMAS_NAMES_CHECK` : `lower_case_table_names`設定を1に変更する場合、スキーマ名が小文字であることを確認する。
-- `LOWER_CASE_TABLE_NAMES_CHECK` : `lower_case_table_names`設定を1に変更する場合、テーブル名が小文字であることを確認する。
+- `LOWER_CASE_SCHEMAS_NAMES_CHECK`: `lower_case_table_names`設定を1に変更する場合、スキーマ名が小文字であることを確認する。
+- `LOWER_CASE_TABLE_NAMES_CHECK`: `lower_case_table_names`設定を1に変更する場合、テーブル名が小文字であることを確認する。
 - `PARTITION_TABLE_CHECK` :特定のパーティションチェックで抽出されるパーティションテーブルがないこと。
-- `PROPERTY_LENGTH_LIMIT_CHECK` : InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
+- `PROPERTY_LENGTH_LIMIT_CHECK`: InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
 
 また、5.7では使用されたが、8.0では削除または変更された事項について確認が必要です。
 - [SQL変更項目ガイド](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
@@ -80,6 +80,12 @@ DBインスタンスの修正ウィンドウでDBエンジンのバージョン�
 > [注意]
 > ダミーDBインスタンスの場合、アップグレード過程で一時的な予備マスターを生成するため、このオプションは高可用性構成でない場合にのみ使用できます。
 
+### 노후 운영체제를 사용하는 경우
+
+2022년 5월 10일 이전에 생성된 DB 인스턴스의 경우 내부 운영체제가 노후되어 DB 버전을 업그레이드하는 경우 DB 인스턴스가 교체됩니다. 교체 과정에서 DB 인스턴스의 식별자 및 내부 IP 주소가 변경됩니다. 알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동으로 교체됩니다. 단일 DB 인스턴스의 경우 DB 버전 변경 시 반드시 더미 DB 인스턴스를 사용해야 합니다. 고가용성 DB 인스턴스의 경우 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 마스터와 예비 마스터의 역할이 변경됩니다. 마스터의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하는 것을 권장합니다.
+
+> [주의]
+> IP ACL 혹은 보안 그룹에서 기존 DB 인스턴스의 내부 IP를 직접 사용하는 경우 주의해야 합니다.
 
 ## MySQL用のオプション
 
