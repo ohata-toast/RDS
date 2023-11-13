@@ -1,290 +1,292 @@
-## Database > RDS for MySQL > 알림
+## Database > RDS for MySQL > 通知
 
-## 이벤트
+## イベント
 
-이벤트는 RDS for MySQL이나 사용자에 의해 발생한 중요한 사건을 의미합니다. 이벤트는 이벤트 유형, 발생 일시, 원본 소스와 메시지로 구성됩니다. 이벤트는 웹 콘솔에서 조회 가능하며, 구독을 통해 이메일, SMS으로 이벤트 발생 알림을 받을 수 있습니다. 이벤트의 유형과 발생 가능한 이벤트는 아래와 같습니다.
+イベントとは、RDS for MySQLやユーザーによって発生した重要なイベントを意味します。イベントはイベントタイプ、発生日時、元ソースとメッセージで構成されます。イベントはWebコンソールで照会可能で、購読することでメール、SMSでイベント発生通知を受けることができます。イベントの種類と発生するイベントは下記の通りです。
 
-| 이벤트 코드      | 이벤트 유형            | 구독 가능 여부 | 설명                                   |
-|-------------|-------------------|----------|--------------------------------------|
-| BACUP_01_00 | BACKUP            | 아니오      | DB 인스턴스 백업 시작                        |
-| BACUP_01_01 | BACKUP            | 아니오      | DB 인스턴스 백업 완료                        |
-| BACUP_01_04 | BACKUP            | 아니오      | DB 인스턴스 백업 실패                        |
-| BACUP_02_01 | BACKUP            | 예        | 백업 삭제 완료                             |
-| BACUP_04_00 | BACKUP            | 예        | 오브젝트 스토리지 업로드 시작                     |
-| BACUP_04_01 | BACKUP            | 예        | 오브젝트 스토리지 업로드 완료                     |
-| BACUP_04_04 | BACKUP            | 예        | 오브젝트 스토리지 업로드 실패                     |
-| BACUP_05_00 | BACKUP            | 예        | 백업 내보내기 시작                           |
-| BACUP_05_01 | BACKUP            | 예        | 백업 내보내기 완료                           |
-| BACUP_05_04 | BACKUP            | 예        | 백업 내보내기 실패                           |
-| BACUP_06_01 | BACKUP            | 아니오      | DB 인스턴스 백업 실패(알려진 원인)                |
-| SECGP_01_01 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 생성                          |
-| SECGP_02_00 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 변경 시작                       |
-| SECGP_02_01 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 변경 완료                       |
-| SECGP_02_04 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 변경 실패                       |
-| SECGP_03_01 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 삭제                          |
-| INSTC_01_00 | INSTANCE          | 아니오      | DB 인스턴스 생성 시작                        |
-| INSTC_01_01 | INSTANCE          | 아니오      | DB 인스턴스 생성 완료                        |
-| INSTC_01_04 | INSTANCE          | 아니오      | DB 인스턴스 생성 실패                        |
-| INSTC_02_01 | INSTANCE          | 예        | DB 인스턴스 시작                           |
-| INSTC_03_01 | INSTANCE          | 예        | DB 인스턴스 종료                           |
-| INSTC_04_00 | INSTANCE          | 예        | DB 인스턴스 삭제 시작                        |
-| INSTC_04_01 | INSTANCE          | 예        | DB 인스턴스 삭제 완료                        |
-| INSTC_04_04 | INSTANCE          | 예        | DB 인스턴스 삭제 실패                        |
-| INSTC_05_00 | INSTANCE          | 예        | DB 인스턴스 백업 시작                        |
-| INSTC_05_01 | INSTANCE          | 예        | DB 인스턴스 백업 완료                        |
-| INSTC_05_04 | INSTANCE          | 예        | DB 인스턴스 백업 실패                        |
-| INSTC_06_00 | INSTANCE          | 예        | DB 인스턴스 복원 시작                        |
-| INSTC_06_01 | INSTANCE          | 예        | DB 인스턴스 복원 완료                        |
-| INSTC_06_04 | INSTANCE          | 예        | DB 인스턴스 복원 실패                        |
-| INSTC_07_01 | INSTANCE          | 예        | 자동 백업 설정 활성화                         |
-| INSTC_08_01 | INSTANCE          | 예        | 자동 백업 설정 비활성화                        |
-| INSTC_09_00 | INSTANCE          | 예        | 상세 설정 변경 시작                          |
-| INSTC_09_01 | INSTANCE          | 예        | 상세 설정 변경 완료                          |
-| INSTC_09_04 | INSTANCE          | 예        | 상세 설정 변경 실패                          |
-| INSTC_10_00 | INSTANCE          | 예        | 백업 및 사용자 접근 제어 설정 변경 시작              |
-| INSTC_10_01 | INSTANCE          | 예        | 백업 및 사용자 접근 제어 설정 변경 완료              |
-| INSTC_10_04 | INSTANCE          | 예        | 백업 및 사용자 접근 제어 설정 변경 실패              |
-| INSTC_11_01 | INSTANCE          | 예        | 사용자 접근 제어 변경 완료                      |
-| INSTC_13_01 | INSTANCE          | 예        | 플로팅 IP 연결                            |
-| INSTC_14_01 | INSTANCE          | 예        | 플로팅 IP 연결 해제                         |
-| INSTC_15_00 | INSTANCE          | 예        | DB 인스턴스 복제 시작                        |
-| INSTC_15_01 | INSTANCE          | 예        | DB 인스턴스 복제 완료                        |
-| INSTC_15_04 | INSTANCE          | 예        | DB 인스턴스 복제 실패                        |
-| INSTC_16_00 | INSTANCE          | 예        | DB 인스턴스 승격 시작                        |
-| INSTC_16_01 | INSTANCE          | 예        | DB 인스턴스 승격 완료                        |
-| INSTC_16_04 | INSTANCE          | 예        | DB 인스턴스 승격 실패                        |
-| INSTC_21_01 | INSTANCE          | 예        | DB 인스턴스 정상화                          |
-| INSTC_22_01 | INSTANCE          | 예        | DB 인스턴스 용량 부족                        |
-| INSTC_23_01 | INSTANCE          | 예        | DB 인스턴스 연결 실패                        |
-| INSTC_24_00 | INSTANCE          | 예        | DB 인스턴스 타입 변경 시작                     |
-| INSTC_24_01 | INSTANCE          | 예        | DB 인스턴스 타입 변경 완료                     |
-| INSTC_24_04 | INSTANCE          | 예        | DB 인스턴스 타입 변경 실패                     |
-| INSTC_25_00 | INSTANCE          | 예        | Storage 확장 시작                        |
-| INSTC_25_01 | INSTANCE          | 예        | Storage 확장 완료                        |
-| INSTC_25_04 | INSTANCE          | 예        | Storage 확장 실패                        |
-| INSTC_26_00 | INSTANCE          | 예        | DB 인스턴스 장애 조치 발생                     |
-| INSTC_26_01 | INSTANCE          | 예        | DB 인스턴스 장애 조치 완료                     |
-| INSTC_26_04 | INSTANCE          | 예        | DB 인스턴스 장애 조치 실패                     |
-| INSTC_27_01 | INSTANCE          | 예        | DB 인스턴스 용량 확보                        |
-| INSTC_27_04 | INSTANCE          | 예        | DB 인스턴스 용량 확보 실패                     |
-| INSTC_28_01 | INSTANCE          | 예        | 고가용성 DB 인스턴스 시작                      |
-| INSTC_29_01 | INSTANCE          | 예        | 고가용성 DB 인스턴스 종료                      |
-| INSTC_30_01 | INSTANCE          | 예        | 복제 중단                                |
-| INSTC_31_00 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 복구 시작         |
-| INSTC_31_01 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 복구 완료         |
-| INSTC_31_04 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 복구 실패         |
-| INSTC_32_00 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 재구축 시작        |
-| INSTC_32_01 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 재구축 완료        |
-| INSTC_32_04 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 재구축 실패        |
-| INSTC_33_00 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 제거 시작         |
-| INSTC_33_01 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 제거 완료         |
-| INSTC_33_04 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스 고가용성 제거 실패         |
-| INSTC_34_01 | INSTANCE          | 예        | 고가용성 일시 중지                           |
-| INSTC_34_04 | INSTANCE          | 예        | 고가용성 일시 중지 실패                        |
-| INSTC_35_01 | INSTANCE          | 예        | 고가용성 다시 시작                           |
-| INSTC_35_04 | INSTANCE          | 예        | 고가용성 다시 시작 실패                        |
-| INSTC_36_01 | INSTANCE          | 예        | 장애 조치를 이용한 인스턴스 재시작 완료               |
-| INSTC_36_04 | INSTANCE          | 예        | 장애 조치를 이용한 인스턴스 재시작 실패               |
-| INSTC_37_01 | INSTANCE          | 예        | DB User 생성                           |
-| INSTC_37_04 | INSTANCE          | 예        | DB User 생성 실패                        |
-| INSTC_38_01 | INSTANCE          | 예        | DB User 변경                           |
-| INSTC_38_04 | INSTANCE          | 예        | DB User 변경 실패                        |
-| INSTC_39_01 | INSTANCE          | 예        | DB User 삭제                           |
-| INSTC_40_01 | INSTANCE          | 예        | DB 스키마 생성                            |
-| INSTC_40_04 | INSTANCE          | 예        | DB 스키마 생성 실패                         |
-| INSTC_41_01 | INSTANCE          | 예        | DB 스키마 삭제                            |
-| INSTC_42_04 | INSTANCE          | 아니오      | CPU 코어 수 제한                          |
-| INSTC_43_04 | INSTANCE          | 아니오      | RAM 용량 제한                            |
-| INSTC_44_04 | INSTANCE          | 아니오      | 개별 볼륨 크기 제한                          |
-| INSTC_45_04 | INSTANCE          | 아니오      | 프로젝트 전체 볼륨 크기 제한                     |
-| INSTC_46_04 | INSTANCE          | 아니오      | Read Only Slave 개수 제한                |
-| INSTC_47_00 | INSTANCE          | 예        | DB 인스턴스 백업 및 내보내기 시작                 |
-| INSTC_47_01 | INSTANCE          | 예        | DB 인스턴스 백업 및 내보내기 완료                 |
-| INSTC_47_04 | INSTANCE          | 예        | DB 인스턴스 백업 및 내보내기 실패                 |
-| INSTC_48_00 | INSTANCE          | 예        | 오브젝트 스토리지에 있는 백업으로 DB 인스턴스 복원 시작     |
-| INSTC_48_01 | INSTANCE          | 예        | 오브젝트 스토리지에 있는 백업으로 DB 인스턴스 복원 완료     |
-| INSTC_48_04 | INSTANCE          | 예        | 오브젝트 스토리지에 있는 백업으로 DB 인스턴스 복원 실패     |
-| INSTC_49_00 | INSTANCE          | 예        | DB 인스턴스 강제 재시작 실행                    |
-| INSTC_50_00 | INSTANCE          | 예        | 백업 내보내기 시작                           |
-| INSTC_50_01 | INSTANCE          | 예        | 백업 내보내기 완료                           |
-| INSTC_50_04 | INSTANCE          | 예        | 백업 내보내기 실패                           |
-| INSTC_51_01 | INSTANCE          | 예        | DB 인스턴스 백업 실패                        |
-| INSTC_52_01 | INSTANCE          | 예        | DB 인스턴스 백업 및 내보내기 실패                 |
-| INSTC_53_00 | INSTANCE          | 예        | DB 인스턴스 중지 시작                        |
-| INSTC_53_01 | INSTANCE          | 예        | DB 인스턴스 중지 완료                        |
-| INSTC_53_04 | INSTANCE          | 예        | DB 인스턴스 중지 실패                        |
-| INSTC_54_00 | INSTANCE          | 예        | DB 인스턴스 복제 재구축 시작                    |
-| INSTC_54_01 | INSTANCE          | 예        | DB 인스턴스 복제 재구축 완료                    |
-| INSTC_54_04 | INSTANCE          | 예        | DB 인스턴스 복제 재구축 실패                    |
-| INSTC_55_01 | INSTANCE          | 예        | 복제 딜레이로 인한 장애 조치 재시작 실패              |
-| INSTC_56_00 | INSTANCE          | 예        | DB 인스턴스 보안 그룹 변경 시작                  |
-| INSTC_56_01 | INSTANCE          | 예        | DB 인스턴스 보안 그룹 변경 완료                  |
-| INSTC_56_04 | INSTANCE          | 예        | DB 인스턴스 보안 그룹 변경 실패                  |
-| INSTC_57_00 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 시작 |
-| INSTC_57_01 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 완료 |
-| INSTC_57_04 | INSTANCE          | 예        | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 실패 |
-| INSTC_58_00 | INSTANCE          | 예        | 파라미터 그룹 변경 시작                        |
-| INSTC_58_01 | INSTANCE          | 예        | 파라미터 그룹 변경 완료                        |
-| INSTC_58_04 | INSTANCE          | 예        | 파라미터 그룹 변경 실패                        |
-| INSTC_59_00 | INSTANCE          | 예        | 파라미터 그룹 변경 사항 적용 시작                  |
-| INSTC_59_01 | INSTANCE          | 예        | 파라미터 그룹 변경 사항 적용 완료                  |
-| INSTC_59_04 | INSTANCE          | 예        | 파라미터 그룹 변경 사항 적용 실패                  |
-| INSTC_60_00 | INSTANCE          | 예        | DB 인스턴스 마이그레이션 시작                    |
-| INSTC_60_01 | INSTANCE          | 예        | DB 인스턴스 마이그레이션 완료                    |
-| INSTC_60_04 | INSTANCE          | 예        | DB 인스턴스 마이그레이션 실패                    |
-| INSTC_61_00 | INSTANCE          | 예        | 예비 마스터 재구축 시작                        |
-| INSTC_61_01 | INSTANCE          | 예        | 예비 마스터 재구축 완료                        |
-| INSTC_61_04 | INSTANCE          | 예        | 예비 마스터 재구축 실패                        |
-| INSTC_62_00 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 시작                    |
-| INSTC_62_01 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 완료                    |
-| INSTC_62_04 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 실패                    |
-| INSTC_63_01 | INSTANCE          | 예        | DB 인스턴스 바이너리 로그 해독                   |
-| INSTC_64_04 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 사전 점검 실패              |
-| INSTC_65_00 | INSTANCE          | 예        | 인증 플러그인 활성화 시작                       |
-| INSTC_65_01 | INSTANCE          | 예        | 인증 플러그인 활성화 완료                       |
-| INSTC_65_04 | INSTANCE          | 예        | 인증 플러그인 활성화 실패                       |
-| INSTC_66_00 | INSTANCE          | 예        | DB 인스턴스 강제 승격 시작                     |
-| INSTC_66_01 | INSTANCE          | 예        | DB 인스턴스 강제 승격 완료                     |
-| INSTC_66_04 | INSTANCE          | 예        | DB 인스턴스 강제 승격 실패                     |
-| INSTC_67_00 | INSTANCE          | 예        | OS 버전 업그레이드 시작                       |
-| INSTC_67_01 | INSTANCE          | 예        | OS 버전 업그레이드 종료                       |
-| INSTC_67_04 | INSTANCE          | 예        | OS 버전 업그레이드 실패                       |
-| INSTC_68_01 | INSTANCE          | 예        | 네트워크 통신 실패                           |
-| JOB_01_04   | JOB               | 예        | Job 실행 실패                            |
-| TENAT_01_04 | TENANT            | 예        | CPU 코어 수 제한                          |
-| TENAT_02_04 | TENANT            | 예        | RAM 용량 제한	                           |
-| TENAT_03_04 | TENANT            | 예        | 개별 볼륨 크기 제한                          |
-| TENAT_04_04 | TENANT            | 예        | 프로젝트 전체 볼륨 크기 제한                     |
-| TENAT_05_04 | TENANT            | 예        | Read Only Slave 개수 제한                |
+| イベントコード     | イベントタイプ           | 購読可否 | 説明                                    |
+|-------------|-------------------|------|---------------------------------------|
+| BACUP_01_00 | BACKUP            | いいえ  | DBインスタンスのバックアップ開始                     |
+| BACUP_01_01 | BACKUP            | いいえ  | DBインスタンスのバックアップ完了                     |
+| BACUP_01_04 | BACKUP            | いいえ  | DBインスタンスのバックアップ失敗                     |
+| BACUP_02_01 | BACKUP            | はい   | バックアップの削除完了                           |
+| BACUP_04_00 | BACKUP            | はい   | オブジェクトストレージのアップロード開始                  |
+| BACUP_04_01 | BACKUP            | はい   | オブジェクトストレージのアップロード完了                  |
+| BACUP_04_04 | BACKUP            | はい   | オブジェクトストレージのアップロード失敗                  |
+| BACUP_05_00 | BACKUP            | はい   | バックアップのエクスポート開始                       |
+| BACUP_05_01 | BACKUP            | はい   | バックアップのエクスポート完了                       |
+| BACUP_05_04 | BACKUP            | はい   | バックアップのエクスポート失敗                       |
+| BACUP_06_01 | BACKUP            | いいえ  | DBインスタンスのバックアップ失敗(既知の原因)              |
+| SECGP_01_01 | DB_SECURITY_GROUP | いいえ  | DBセキュリティグループの作成                       |
+| SECGP_02_00 | DB_SECURITY_GROUP | いいえ  | DBセキュリティグループの変更開始                     |
+| SECGP_02_01 | DB_SECURITY_GROUP | いいえ  | DBセキュリティグループの変更完了                     |
+| SECGP_02_04 | DB_SECURITY_GROUP | いいえ  | DBセキュリティグループの変更失敗                     |
+| SECGP_03_01 | DB_SECURITY_GROUP | いいえ  | DBセキュリティグループの削除                       |
+| INSTC_01_00 | INSTANCE          | いいえ  | DBインスタンスの作成開始                         |
+| INSTC_01_01 | INSTANCE          | いいえ  | DBインスタンスの作成完了                         |
+| INSTC_01_04 | INSTANCE          | いいえ  | DBインスタンスの作成失敗                         |
+| INSTC_02_01 | INSTANCE          | はい   | DBインスタンスの起動                           |
+| INSTC_03_01 | INSTANCE          | はい   | DBインスタンスの停止                           |
+| INSTC_04_00 | INSTANCE          | はい   | DBインスタンスの削除開始                         |
+| INSTC_04_01 | INSTANCE          | はい   | DBインスタンスの削除完了                         |
+| INSTC_04_04 | INSTANCE          | はい   | DBインスタンスの削除失敗                         |
+| INSTC_05_00 | INSTANCE          | はい   | DBインスタンスのバックアップ開始                     |
+| INSTC_05_01 | INSTANCE          | はい   | DBインスタンスのバックアップ完了                     |
+| INSTC_05_04 | INSTANCE          | はい   | DBインスタンスのバックアップ失敗                     |
+| INSTC_06_00 | INSTANCE          | はい   | DBインスタンスの復元開始                         |
+| INSTC_06_01 | INSTANCE          | はい   | DBインスタンスの復元完了                         |
+| INSTC_06_04 | INSTANCE          | はい   | DBインスタンスの復元失敗                         |
+| INSTC_07_01 | INSTANCE          | はい   | 自動バックアップ設定の有効化                        |
+| INSTC_08_01 | INSTANCE          | はい   | 自動バックアップ設定の無効化                        |
+| INSTC_09_00 | INSTANCE          | はい   | 詳細設定の変更開始                             |
+| INSTC_09_01 | INSTANCE          | はい   | 詳細設定の変更完了                             |
+| INSTC_09_04 | INSTANCE          | はい   | 詳細設定の変更失敗                             |
+| INSTC_10_00 | INSTANCE          | はい   | バックアップおよびユーザーアクセス制御設定の変更開始            |
+| INSTC_10_01 | INSTANCE          | はい   | バックアップおよびユーザーアクセス制御設定の変更完了            |
+| INSTC_10_04 | INSTANCE          | はい   | バックアップおよびユーザーアクセス制御設定の変更失敗            |
+| INSTC_11_01 | INSTANCE          | はい   | ユーザーアクセス制御の変更完了                       |
+| INSTC_13_01 | INSTANCE          | はい   | Floating IP接続                         |
+| INSTC_14_01 | INSTANCE          | はい   | Floating IP接続解除                       |
+| INSTC_15_00 | INSTANCE          | はい   | DBインスタンスの複製開始                         |
+| INSTC_15_01 | INSTANCE          | はい   | DBインスタンスの複製完了                         |
+| INSTC_15_04 | のINSTANCE         | はい   | DBインスタンスの複製失敗                         |
+| INSTC_16_00 | INSTANCE          | はい   | DBインスタンスの昇格開始                         |
+| INSTC_16_01 | INSTANCE          | はい   | DBインスタンスの昇格完了                         |
+| INSTC_16_04 | INSTANCE          | はい   | DBインスタンスの昇格失敗                         |
+| INSTC_21_01 | INSTANCE          | はい   | DBインスタンスの正常化                          |
+| INSTC_22_01 | INSTANCE          | はい   | DBインスタンス容量不足                          |
+| INSTC_23_01 | INSTANCE          | はい   | DBインスタンス接続失敗                          |
+| INSTC_24_00 | INSTANCE          | はい   | DBインスタンスタイプの変更開始                      |
+| INSTC_24_01 | INSTANCE          | はい   | DBインスタンスタイプの変更完了                      |
+| INSTC_24_04 | INSTANCE          | はい   | DBインスタンスタイプの変更失敗                      |
+| INSTC_25_00 | INSTANCE          | はい   | Storage拡張開始                           |
+| INSTC_25_01 | INSTANCE          | はい   | Storage拡張完了                           |
+| INSTC_25_04 | INSTANCE          | はい   | Storage拡張失敗                           |
+| INSTC_26_00 | INSTANCE          | はい   | DBインスタンスフェイルオーバー発生                    |
+| INSTC_26_01 | INSTANCE          | はい   | DBインスタンスのフェイルオーバー完了                   |
+| INSTC_26_04 | INSTANCE          | はい   | DBインスタンスのフェイルオーバー失敗                   |
+| INSTC_27_01 | INSTANCE          | はい   | DBインスタンスの容量を確保                        |
+| INSTC_27_04 | INSTANCE          | はい   | DBインスタンスの容量確保失敗                       |
+| INSTC_28_01 | INSTANCE          | はい   | 高可用性DBインスタンスの起動                       |
+| INSTC_29_01 | INSTANCE          | はい   | 高可用性DBインスタンスの停止                       |
+| INSTC_30_01 | INSTANCE          | はい   | 複製中断                                  |
+| INSTC_31_00 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性復旧開始        |
+| INSTC_31_01 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性復旧完了        |
+| INSTC_31_04 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性復旧失敗        |
+| INSTC_32_00 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性再構築開始       |
+| INSTC_32_01 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性再構築完了       |
+| INSTC_32_04 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性再構築失敗       |
+| INSTC_33_00 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性除去開始        |
+| INSTC_33_01 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性除去完了        |
+| INSTC_33_04 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスの高可用性除去失敗        |
+| INSTC_34_01 | INSTANCE          | はい   | 高可用性の一時停止                             |
+| INSTC_34_04 | INSTANCE          | はい   | 高可用性の一時停止失敗                           |
+| INSTC_35_01 | INSTANCE          | はい   | 高可用性の再開                               |
+| INSTC_35_04 | INSTANCE          | はい   | 高可用性の再開失敗                             |
+| INSTC_36_01 | INSTANCE          | はい   | フェイルオーバーを利用したインスタンスの再起動完了             |
+| INSTC_36_04 | INSTANCE          | はい   | フェイルオーバーを利用したインスタンスの再起動失敗             |
+| INSTC_37_01 | INSTANCE          | はい   | DB User作成                             |
+| INSTC_37_04 | INSTANCE          | はい   | DB User作成失敗                           |
+| INSTC_38_01 | INSTANCE          | はい   | DB User変更                             |
+| INSTC_38_04 | INSTANCE          | はい   | DB User変更失敗                           |
+| INSTC_39_01 | INSTANCE          | はい   | DB User削除                             |
+| INSTC_40_01 | INSTANCE          | はい   | DBスキーマ作成                              |
+| INSTC_40_04 | INSTANCE          | はい   | DBスキーマ作成失敗                            |
+| INSTC_41_01 | INSTANCE          | はい   | DBスキーマ削除                              |
+| INSTC_42_04 | INSTANCE          | いいえ  | CPUコア数制限                              |
+| INSTC_43_04 | INSTANCE          | いいえ  | RAM容量制限                               |
+| INSTC_44_04 | INSTANCE          | いいえ  | 個別ボリュームサイズ制限                          |
+| INSTC_45_04 | INSTANCE          | いいえ  | プロジェクト全体ボリュームサイズ制限                    |
+| INSTC_46_04 | INSTANCE          | いいえ  | Read Only Slave数制限                    |
+| INSTC_47_00 | INSTANCE          | はい   | DBインスタンスのバックアップおよびエクスポート開始            |
+| INSTC_47_01 | INSTANCE          | はい   | DBインスタンスのバックアップおよびエクスポート完了            |
+| INSTC_47_04 | INSTANCE          | はい   | DBインスタンスのバックアップおよびエクスポート失敗            |
+| INSTC_48_00 | INSTANCE          | はい   | オブジェクトストレージにあるバックアップでDBインスタンス復元開始     |
+| INSTC_48_01 | INSTANCE          | はい   | オブジェクトストレージにあるバックアップでDBインスタンス復元完了     |
+| INSTC_48_04 | INSTANCE          | はい   | オブジェクトストレージにあるバックアップでDBインスタンス復元失敗     |
+| INSTC_49_00 | INSTANCE          | はい   | DBインスタンスの強制再起動実行                      |
+| INSTC_50_00 | INSTANCE          | はい   | バックアップのエクスポート開始                       |
+| INSTC_50_01 | INSTANCE          | はい   | バックアップのエクスポート完了                       |
+| INSTC_50_04 | INSTANCE          | はい   | バックアップのエクスポート失敗                       |
+| INSTC_51_01 | INSTANCE          | はい   | DBインスタンスのバックアップ失敗                     |
+| INSTC_52_01 | INSTANCE          | はい   | DBインスタンスのバックアップおよびエクスポート失敗            |
+| INSTC_53_00 | INSTANCE          | はい   | DBインスタンスの停止開始                         |
+| INSTC_53_01 | INSTANCE          | はい   | DBインスタンスの停止完了                         |
+| INSTC_53_04 | INSTANCE          | はい   | DBインスタンスの停止失敗                         |
+| INSTC_54_00 | INSTANCE          | はい   | DBインスタンスの複製再構築開始                      |
+| INSTC_54_01 | INSTANCE          | はい   | DBインスタンスの複製再構築完了                      |
+| INSTC_54_04 | INSTANCE          | はい   | DBインスタンスの複製再構築失敗                      |
+| INSTC_55_01 | INSTANCE          | はい   | 複製ディレイによるフェイルオーバー再起動失敗                |
+| INSTC_56_00 | INSTANCE          | はい   | DBインスタンスセキュリティグループ変更開始                |
+| INSTC_56_01 | INSTANCE          | はい   | DBインスタンスセキュリティグループの変更完了               |
+| INSTC_56_04 | INSTANCE          | はい   | DBインスタンスセキュリティグループの変更失敗               |
+| INSTC_57_00 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスを一般DBインスタンスに変更開始 |
+| INSTC_57_01 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスを一般DBインスタンスに変更完了 |
+| INSTC_57_04 | INSTANCE          | はい   | フェイルオーバーが完了したDBインスタンスを一般DBインスタンスに変更失敗 |
+| INSTC_58_00 | INSTANCE          | はい   | パラメータグループの変更開始                        |
+| INSTC_58_01 | INSTANCE          | はい   | パラメータグループの変更完了                        |
+| INSTC_58_04 | INSTANCE          | はい   | パラメータグループの変更失敗                        |
+| INSTC_59_00 | INSTANCE          | はい   | パラメータグループの変更事項適用開始                    |
+| INSTC_59_01 | INSTANCE          | はい   | パラメータグループ変更事項の適用完了                    |
+| INSTC_59_04 | INSTANCE          | はい   | パラメータグループ変更事項の適用失敗                    |
+| INSTC_60_00 | INSTANCE          | はい   | DBインスタンスのマイグレーション開始                   |
+| INSTC_60_01 | INSTANCE          | はい   | DBインスタンスのマイグレーション完了                   |
+| INSTC_60_04 | INSTANCE          | はい   | DBインスタンスのマイグレーション失敗                   |
+| INSTC_61_00 | INSTANCE          | はい        | 予備マスター再構築開始                        |
+| INSTC_61_01 | INSTANCE          | はい        | 予備マスター再構築完了                       |
+| INSTC_61_04 | INSTANCE          | はい        | 予備マスター再構築失敗                       |
+| INSTC_62_00 | INSTANCE          | はい        | DBエンジンバージョンアップグレード開始                    |
+| INSTC_62_01 | INSTANCE          | はい        | DBエンジンバージョンアップグレード完了                   |
+| INSTC_62_04 | INSTANCE          | はい        | DBエンジンバージョンアップグレード失敗                   |
+| INSTC_63_01 | INSTANCE          | はい        | DBインスタンスバイナリログ解読                   |
+| INSTC_64_04 | INSTANCE          | はい        | DBエンジンバージョンアップグレード事前点検失敗             |
+| INSTC_65_00 | INSTANCE          | はい        | 認証プラグイン有効化開始                       |
+| INSTC_65_01 | INSTANCE          | はい        | 認証プラグイン有効化完了                      |
+| INSTC_65_04 | INSTANCE          | はい        | 認証プラグイン有効化失敗                      |
+| INSTC_66_00 | INSTANCE          | はい        | DBインスタンス強制昇格開始                     |
+| INSTC_66_01 | INSTANCE          | はい        | DBインスタンス強制昇格完了                    |
+| INSTC_66_04 | INSTANCE          | はい        | DBインスタンス強制昇格失敗                    |
+| INSTC_67_00 | INSTANCE          | はい        | OSバージョンアップグレード開始                       |
+| INSTC_67_01 | INSTANCE          | はい        | OSバージョンアップグレード終了                      |
+| INSTC_67_04 | INSTANCE          | はい        | OSバージョンアップグレード失敗                      |
+| INSTC_68_01 | INSTANCE          | はい        | ネットワーク通信失敗                          |
+| JOB_01_04   | JOB               | はい   | Job実行失敗                               |
+| TENAT_01_04 | TENANT            | はい   | CPUコア数制限                              |
+| TENAT_02_04 | TENANT            | はい   | RAM容量制限	                              |
+| TENAT_03_04 | TENANT            | はい   | 個別ボリュームサイズ制限                          |
+| TENAT_04_04 | TENANT            | はい   | プロジェクト全体のボリュームサイズ制限                   |
+| TENAT_05_04 | TENANT            | はい   | Read Only Slave数制限                    |
 
-## 이벤트 구독
+## イベント購読
 
-이벤트 유형, 코드 및 소스로 구분하여 이벤트를 구독할 수 있습니다. 이벤트 유형으로 구독하면 이벤트 유형에 포함된 모든 이벤트 코드의 알림을 받습니다. 알림이 너무 광범위할 경우 이벤트 코드와 소스로 세분화해 구독할 수 있습니다. 프로젝트 멤버만 알림을 받을 사용자로 선택할 수 있습니다. 기본적으로 이메일로 이벤트 알림이 발송되며, 실명을 인증한 휴대전화 번호가 등록된 경우에만 SMS로 추가 이벤트 알림이 발송됩니다.
+イベントタイプ、コード、ソースに分けてイベントを購読できます。イベントタイプで購読すると、イベントタイプに含まれるすべてのイベントコードの通知を受け取ります。通知が広範すぎる場合、イベントコードとソースに細分化して購読できます。プロジェクトメンバーのみ通知を受けるユーザーとして選択できます。基本的にはメールでイベント通知が送信され、実名認証した携帯電話番号が登録された場合のみSMSで追加イベント通知が送信されます。
 
 ![event_subscription_01_ja](https://static.toastoven.net/prod_rds/23.04.11/event_subscription_01_ja.png)
 
-* ❶ **이벤트 구독** 버튼을 누르면 이벤트 구독을 등록할 수 있는 팝업창이 나타납니다.
-* ❷ 구독할 이벤트 유형을 선택합니다. 이벤트 유형에 따라 선택할 수 있는 이벤트 코드가 변경됩니다.
-* ❸ 구독할 이벤트 코드를 선택합니다.
-* ❹ 구독할 이벤트 소스를 선택합니다.
-* ❺ 이벤트 알림을 받을 사용자 그룹을 선택합니다.
-* ❻ 활성화 여부를 선택합니다. 활성화되지 않으면 이벤트 발생 알림을 발송하지 않습니다.
+* ❶ **イベント購読登録**を押すと、イベント購読を登録できるポップアップウィンドウが表示されます。
+* ❷ 購読するイベントタイプを選択します。イベントタイプによって選択できるイベントコードが変更されます。
+* ❸ 購読するイベントコードを選択します。
+* ❹ 購読するイベントソースを選択します。
+* ❺ イベント通知を受け取るユーザーグループを選択します。
+* ❻ 有効にするかどうかを選択します。`いいえ`を選択した場合、イベント発生通知を送信しません。
 
-## 사용자 그룹
+## ユーザーグループ
 
-알림을 받을 사용자를 그룹으로 관리할 수 있습니다. 알림 대상은 반드시 프로젝트 멤버로 등록이 되어 있어야 합니다. 사용자 그룹에 속한 사용자가 프로젝트 멤버에서 제외되면, 사용자 그룹에 속해 있다 하더라도 알림을 받을 수 없습니다.
+通知を受けるユーザーをグループで管理できます。通知対象は必ずプロジェクトメンバーとして登録されている必要があります。ユーザーグループに属するユーザーがプロジェクトメンバーから除外されると、ユーザーグループに属していても通知を受けることができません。
 
-> [주의]
-> 실명 인증을 진행하지 않아 휴대폰 정보가 없을 경우 SMS 알림을 받을 수 없습니다.
+> [注意]
+> 実名認証を行っておらず、携帯電話情報がない場合、SMS通知を受けることができません。
 
-### 사용자 그룹 생성
+### ユーザーグループの作成
 
 ![user_group_01_ja](https://static.toastoven.net/prod_rds/23.06.13/user_group_01_ja.png)
 
-* ❶ **사용자 그룹 생성** 버튼을 누르면 사용자 그룹을 생성할 수 있는 팝업이 나타납니다.
-* ❷ 사용자 그룹에 추가된 사용자가 나타납니다.
-* ❸ **x** 버튼을 누르면 추가된 사용자를 제외할 수 있습니다.
-* ❹ 사용자 목록에 사용자가 많을 경우 검색 조건을 입력하여 결과를 제한할 수 있습니다.
-* ❺ **전체 추가** 버튼을 눌러 프로젝트 멤버를 모두 사용자 그룹에 추가합니다.
-* ❻ **추가** 버튼을 눌러 사용자 그룹에 사용자를 추가합니다.
+* ❶ **ユーザーグループ作成**を押すと、ユーザーグループを作成できるポップアップウィンドウが表示されます。
+* ❷ ユーザーグループに追加されたユーザーが表示されます。
+* ❸ **x**を押すと、追加されたユーザーを除外できます。
+* ❹ ユーザーリストにユーザーが多い場合、検索条件を入力して結果を制限できます。
+* ❺ **全プロジェクトメンバー**を通知対象に追加します。
+    * 追加 すると、個別ユーザーの追加はキャンセルされます。
+    * 該当ユーザーグループを利用してアラームを送信する場合、その時点で全プロジェクトメンバーを対象にアラームを送信します。
+* ❻ **OK**を押してユーザーグループにユーザーを追加します。
 
-## 알림 그룹
+## 通知グループ
 
-알림 그룹을 통해 성능 지표에 대한 알림을 받을 수 있습니다. 지정합니다. -> 알림 그룹에 감시 대상 인스턴스와 알림을 받을 사용자 그룹을 지정합니다. 감시 설정을 통해 알림을 받을 성능 지표의 임겟값과 조건을 설정합니다. 설정된 지표가 감시 설정의 조건을 충족하면 연결된 사용자 그룹에 알림을 발송하게 됩니다. 알림 그룹에 설정된 알림 유형에 따라 SMS 혹은 메일로 알림을 발송합니다.
+通知グループを通じて、パフォーマンス指標に関する通知を受けることができます。指定します。-> 通知グループに監視対象インスタンスと通知を受けるユーザーグループを指定します。監視設定で通知を受けるパフォーマンス指標のしきい値と条件を設定します。設定された指標が監視設定の条件を満たすと、接続されたユーザーグループに通知が送信されます。通知グループに設定された通知タイプによって、SMSまたはメールで通知を送信します。
 
-### 알림 그룹 생성
+### 通知グループの作成
 
 ![notification_group_01_ja.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_01_ja.png)
 
-* ❶ **그룹 만들기** 버튼을 누르면 알림 그룹을 생성할 수 있는 팝업이 나타납니다.
-* ❷ 알림을 받을 방법을 선택합니다.
-* ❸ 활성화되지 않은 알림 그룹은 알림 발송을 하지 않습니다.
-* ❹ 감시 대상 DB 인스턴스를 선택합니다.
-* ❺ 알림을 받을 사용자 그룹을 선택합니다.
+* ❶ **グループ作成**を押すと、通知グループを作成できるポップアップウィンドウが表示されます。
+* ❷ 通知を受け取る方法を選択します。
+* ❸ 有効になっていない通知グループは通知送信をしません。
+* ❹ 監視対象DBインスタンスを選択します。
+* ❺ 通知を受け取るユーザーグループを選択します。
 
-## 감시 설정
+## 監視設定
 
-감시 설정은 감시 항목, 비교 방법, 임겟값 및 지속 시간으로 구성됩니다. 감시 항목의 성능 지푯값과 임겟값을 비교하여 조건이 충족하는지 판단합니다. 조건이 지속 시간 이상 연속해서 충족한다면 알림을 발송합니다. 예를 들어, CPU 사용률의 임겟값이 90% 이상이고 지속 시간이 5분이라면, 해당 알림 그룹과 연동된 DB 인스턴스의 CPU 사용률이 90% 이상인 상태가 5분 이상 지속되었을 때 사용자 그룹에 정의된 사용자들에게 알림을 보냅니다. 만약 CPU 사용률이 90% 이상이 되어도, 5분 이내에 90% 미만으로 떨어지면 알림이 발생하지 않습니다.
+監視設定は、監視項目、比較方法、しきい値、および持続時間で構成されます。監視項目の性能指標値としきい値を比較し、条件を満たしているかどうかを判断します。持続時間以上連続して条件を満たした場合、通知を送信します。例えば、CPU使用率のしきい値が90%以上で持続時間が5分であれば、その通知グループと連動されたDBインスタンスのCPU使用率が90%以上の状態が5分以上続いた時、ユーザーグループに定義されたユーザーに通知を送信します。もし、CPU使用率が90%以上になっても、5分以内に90%未満になれば、通知は発生しません。
 
-### 감시 설정 항목
+### 監視設定項目
 
-감시 가능한 성능 지표 항목은 다음과 같습니다.
+監視可能な性能指標項目は次のとおりです。
 
-| 힝목                         | 단위                 |
-|----------------------------|--------------------|
-| CPU 사용률                    | %                  |
-| CPU 사용량(IO Wait)           | %                  |
-| CPU 사용량(Nice)              | %                  |
-| CPU 사용량(System)            | %                  |
-| CPU 사용량(User)              | %                  |
-| Load Average 1M            |                    |
-| Load Average 5M            |                    |
-| Load Average 15M           |                    |
-| 메모리 사용량                    | %                  |
-| 메모리 사용량(바이트)               | MB                 |
-| 메모리 여유량(바이트)               | MB                 |
-| 메모리 버퍼(바이트)                | MB                 |
-| 캐시된 메모리(바이트)               | MB                 |
-| 스왑 사용량                     | MB                 |
-| 스왑 전체 크기                   | MB                 |
-| Storage 사용량                | %                  |
-| Storage 남은 사용량             | MB                 |
-| Storage IO Read            | KB/sec             |
-| Storage IO Write           | KB/sec             |
-| 스토리지 결함                    | 비정상: 0, 정상: 1      |
-| Network in BPS             | KB/sec             |
-| Network out BPS            | KB/sec             |
-| Database Connection Status | 접속 불가: 0, 접속 가능: 1 |
-| Queries Per Second         | counts/sec         |
-| Connection Total           | counts             |
-| Connection Running         | counts             |
-| Connection Cached          | counts             |
-| Connection Ratio           | counts             |
-| Database Activity Select   | counts/sec         |
-| Database Activity Insert   | counts/sec         |
-| Database Activity Update   | counts/sec         |
-| Database Activity Delete   | counts/sec         |
-| Database Activity Replace  | counts/sec         |
-| Database Activity Call     | counts/sec         |
-| Buffer Pool Total          | MB                 |
-| Buffer Pool Used           | MB                 |
-| Slow Query                 | counts/min         |
-| 복제 딜레이                     | sec                |
-| Row Access Index           | counts/min         |
-| Row Access Full scan       | counts/min         |
+| 項目                         | 単位              |
+|----------------------------|-----------------|
+| CPU使用率                     | %               |
+| CPU使用率(IO Wait)            | %               |
+| CPU使用率(Nice)               | %               |
+| CPU使用率(System)             | %               |
+| CPU使用率(User)               | %               |
+| Load Average 1M            |                 |
+| Load Average 5M            |                 |
+| Load Average 15M           |                 |
+| メモリ使用量                     | %               |
+| メモリ使用量(バイト)                | MB              |
+| メモリ空き容量(バイト)               | MB              |
+| メモリバッファ(バイト)               | MB              |
+| キャッシュされたメモリ(バイト)           | MB              |
+| スワップ使用量                    | MB              |
+| スワップ全体サイズ                  | MB              |
+| Storage使用量                 | %               |
+| Storageの空き容量               | MB              |
+| Storage IO Read            | KB/sec          |
+| Storage IO Write           | KB/sec          |
+| ストレージ障害                    | 異常: 0、正常: 1     |
+| Network in BPS             | KB/sec          |
+| Network out BPS            | KB/sec          |
+| Database Connection Status | 接続不可: 0、接続可能: 1 |
+| Queries Per Second         | counts/sec      |
+| Connection Total           | counts          |
+| Connection Running         | counts          |
+| Connection Cached          | counts          |
+| Connection Ratio           | counts          |
+| Database Activity Select   | counts/sec      |
+| Database Activity Insert   | counts/sec      |
+| Database Activity Update   | counts/sec      |
+| Database Activity Delete   | counts/sec      |
+| Database Activity Replace  | counts/sec      |
+| Database Activity Call     | counts/sec      |
+| Buffer Pool Total          | MB              |
+| Buffer Pool Used           | MB              |
+| Slow Query                 | counts/min      |
+| 複製ディレイ                     | sec             |
+| Row Access Index           | counts/min      |
+| Row Access Full scan       | counts/min      |
 
-### 감시 설정 추가
+### 監視設定の追加
 
 ![notification_group_02_ja.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_02_ja.png)
 
-* ❶ **감시설정** 버튼을 누르면 감시 설정을 변경할 수 있는 팝업이 나타납니다.
-* ❷ **감시 설정 추가** 버튼을 눌러 신규 감시 설정을 추가합니다.
-* ❸ 감시할 항목과 비교 방법, 임겟값, 지속 시간을 입력한 후 **추가** 버튼을 클릭합니다.
+* ❶ **監視設定**を押すと、監視設定を変更できるポップアップウィンドウが表示されます。
+* ❷ **監視設定の追加**を押して新規監視設定を追加します。
+* ❸ 監視する項目と比較方法、しきい値、持続時間を入力した後、**追加**をクリックします。
 
-### 감시 설정 변경 및 삭제
+### 監視設定の変更および削除
 
 ![notification_group_03_ja.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_03_ja.png)
 
-* ❶ 버튼을 클릭하면 추가된 감시 설정을 변경할 수 있습니다.
-* ❷ 버튼을 클릭하면 추가된 감시 설정을 삭제할 수 있습니다. 
+* ❶ ボタンをクリックすると、追加した監視設定を変更できます。
+* ❷ ボタンをクリックすると、追加した監視設定を削除できます。
 
 ## Processlist
 
-RDS for MySQL은 데이터베이스에서 발생하는 다양한 문제를 분석하기 위해 데이터베이스에서 수행된 쿼리와 InnoDB 엔진의 상태를 수집합니다. 1초에 한 번씩 `information_schema.processlist`의 결과와, `SHOW ENGINE INNODB STATUS`의 결과를 수집하며 최근 4일간의 데이터를 웹 콘솔의 Processlist 탭에서 조회할 수 있습니다.
+RDS for MySQLは、データベースで発生するさまざまな問題を分析するためのデータベースで実行されたクエリとInnoDBエンジンの状態を収集します。1秒に1回`information_schema.processlist`の結果と、`SHOW ENGINE INNODB STATUS`の結果を収集し、過去4日間のデータをWebコンソールのProcesslistタブで照会できます。
 
-> [참고] 수집된 데이터는 내부 오브젝트 스토리지에 저장되며 별도로 과금하지 않습니다.
+> [参考]収集されたデータは内部オブジェクトストレージに保存され、別途課金されません。
 
-수집하는 항목은 다음과 같습니다.
+収集する項目は次のとおりです。
 
-| 항목            | 설명                                                |
+| 項目           | 説明                                               |
 |---------------|---------------------------------------------------|
-| LogTime       | 수집 시각                                             |
-| PID           | 프로세스 ID                                           |
-| DB            | 사용 중인 DB                                          |
-| User          | 사용자                                               |
-| Host          | 사용자가 접속하고 있는 호스트명, IP 주소                          |
-| Command       | Thread 실행 중인 명령 타입(Sleep, Query, Quit, Kill 등)    |
-| State         | Thread의 상태(Starting, Rolling back, System lock 등) |
-| ExecTime      | Thread가 현재 상태를 유지한 시간(초)                          |
-| Query         | 실행 중인 쿼리                                          |
-| InnoDB Status | InnoDB 상태 정보                                      |
+| LogTime       | 収集時刻                                            |
+| PID           | プロセスID                                           |
+| DB            | 使用中のDB                                          |
+| User          | ユーザー                                              |
+| Host          | ユーザーが接続しているホスト名、IPアドレス                         |
+| Command       | Thread実行中のコマンドタイプ(Sleep、Query、Quit、Killなど)    |
+| State         | Threadの状態(Starting、Rolling back、System lockなど) |
+| ExecTime      | Threadが現在の状態を維持した時間(秒)                          |
+| Query         | 実行中のクエリ                                         |
+| InnoDB Status | InnoDBの状態情報                                     |

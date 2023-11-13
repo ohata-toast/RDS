@@ -80,6 +80,12 @@ When trying to change the DB engine version in the Modify DB Instance window, yo
 > [Caution]
 For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high availability configurations.
 
+### When using an Outdated Operating System
+
+For DB instances created before May 10, 2022, the DB instance will be replaced when the internal operating system is outdated so the DB version is upgraded. During the replacement process, the DB instance's identifier and internal IP address will be changed. The monitored instances in notification groups and event sources in event subscriptions are automatically replaced with the changed identifiers. For a single DB instance, you must use a dummy DB instance when changing DB versions. For high-availability DB instances, the roles of the master and spare master are changed using failover during the DB instance replacement process. Failover may fail if the master is heavily loaded, so it is recommended that you perform DB version change during off-peak hours.
+
+> [Caution]
+> Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
 
 ## Options for MySQL
 

@@ -186,9 +186,18 @@ To improve read performance, you can create a read replica which can be used for
 > [Note]
 > Object storage pricing may occur as much as the binary log size required for the process of creating read replica.
 
+#### Create Read Replica on Subnet in Different Region
+* When you connect a region peering between VPCs that exist in different regions, you can create a read replica on a subnet that belongs to a VPC in a different region.
+* Even if region peering is connected, if the route settings are incorrect, read replica creation might fail or replication might stop.
+* For more information about connecting to region peering, see [Region peering](https://docs.nhncloud.com/ko/Network/Peering%20Gateway/ko/console-guide/#_2).
+
 ### Promote Read Replica
 
 Breaking the replication relationship with the master and changing the read replica to the master is called promotion. The promoted master acts as an independent DB instance. If any replication delay between the read replica and the master that you want to promote, it will not be promoted until the delay is gone.
+
+### Force Promote Read Replica
+
+Force promotion to the read replica's point-in-time data, regardless of the state of the master or source region.
 
 ### Stop Replication of Read Replicas
 

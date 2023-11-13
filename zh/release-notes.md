@@ -1,5 +1,15 @@
 ## Database > RDS for MySQL > Release Notes
 
+### November 14, 2023.
+
+#### Added Features
+
+* Added the feature to create read replicas on subnets in other regions with region peering connections
+* Added forced promotion of DB instances
+* Improved to allow you to select notification type when subscribing to events
+* API v3.0 additions and changes
+  * Added the Export after backing up DB instance API
+
 ### October 17, 2023
 
 #### Added Features and Updates
@@ -8,17 +18,17 @@
 * Added the feature to enable previously created high availability instances of MySQL 5.7.33 or later to use the authentication plugin and TLS option.
 * Added the versions of MySQL 8.0.33 and MySQL 8.0.34
 * Added and modified API v3.0
-    * Added the API to list the last query to be restored
-    * Added `dbVersion` and `useDummy` fields to the Modify DB Instance API request
-    * Added `needToApplyParameterGroup`, `needMigration`, and `supportDbVersionUpgrade` fields to the List DB Instance API response.
+  * Added the API to list the last query to be restored
+  * Added `dbVersion` and `useDummy` fields to the Modify DB Instance API request
+  * Added `needToApplyParameterGroup`, `needMigration`, and `supportDbVersionUpgrade` fields to the List DB Instance API response.
 
 ### September 12, 2023
 
 #### Added Features
 
-  * Added a feature to upgrade DB engine version
-  * Added support for pre-checks for compatibility when upgrading the DB Engine version from MySQL 5.7 to MySQL 8.0. 
-  * Added support for upgrading DB Engine version using a dummy DB instance
+* Added a feature to upgrade DB engine version
+* Added support for pre-checks for compatibility when upgrading the DB Engine version from MySQL 5.7 to MySQL 8.0.
+* Added support for upgrading DB Engine version using a dummy DB instance
 
 ### August 17,  2023
 
@@ -52,26 +62,26 @@
 * Made improvements so that the user interface is consistent with NHN Cloud services
 * Made modifications so that manual backup is not deleted even when DB instances are deleted
 * Added parameter group feature
-    * The database settings of DB instance can be freely changed
-    * Applicable to multiple instances
-    * Changes to settings in an existing DB instance are migrated to a parameter group with the same name as the DB instance
+  * The database settings of DB instance can be freely changed
+  * Applicable to multiple instances
+  * Changes to settings in an existing DB instance are migrated to a parameter group with the same name as the DB instance
 * Added DB security group feature
-    * The access control of DB instance can be freely set
-    * Applicable to multiple instances
-    * Access control rules set on existing DB instances are migrated to the DB security group named as `{DB instance name}__{DB instance ID}` rule
+  * The access control of DB instance can be freely set
+  * Applicable to multiple instances
+  * Access control rules set on existing DB instances are migrated to the DB security group named as `{DB instance name}__{DB instance ID}` rule
 * Provided a screen to view DB instances grouped by replication arrangements
 * Displayed candidate master to web console
-    * Available to secure storage by deleting the binary log of candidate master
-    * Various logs of candidate master can be checked and downloaded
+  * Available to secure storage by deleting the binary log of candidate master
+  * Various logs of candidate master can be checked and downloaded
 * Rebuilding read replica is available
-    * The fixed IP address does not change because the DB instance of the read replica remain unchanged
-    * All data in the database is deleted, and recovered with the data of the master
+  * The fixed IP address does not change because the DB instance of the read replica remain unchanged
+  * All data in the database is deleted, and recovered with the data of the master
 * Recovery of master with a completed failover
-    * High availability recovery of a new master and a master with a completed failover is available
-    * Recovery can fail, and an unrecoverable master with a completed failover can be rebuilt
+  * High availability recovery of a new master and a master with a completed failover is available
+  * Recovery can fail, and an unrecoverable master with a completed failover can be rebuilt
 * Rebuilding master with a completed failover
-    * The fixed IP does not change because DB instance of the master with a completed failover remain unchanged
-    * All data in the database is deleted, and recovered with the data of the master
+  * The fixed IP does not change because DB instance of the master with a completed failover remain unchanged
+  * All data in the database is deleted, and recovered with the data of the master
 * Added MySQL 8.0.32 version
 
 #### Bug Fixes

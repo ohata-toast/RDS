@@ -9,10 +9,6 @@
 * Improved to allow you to select notification type when subscribing to events
 * API v3.0 additions and changes
     * Added the Export after backing up DB instance API
-    * Added the List Event Subscriptions API
-    * Added the Subscribe to Events API
-    * Added the Modify Event Subscription Information API
-    * Added the Cancel Event Subscription API
 
 ### October 17, 2023
 
