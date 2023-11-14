@@ -61,15 +61,15 @@ GET /v2.0/metric-statistics
 | to          | Query | Datetime | O        | End date                | yyyy-MM-dd'T'HH:mm:ss.SSSXXX (ISO Datetime) |
 | interval    | Query | Integer  | X        | View interval           | 1, 5, 30, 120, 1440 (minutes)               |
 
-- interval : when default is used, it automatically selects a value appropriate for the from/to value
+- interval: when default is used, it automatically selects a value appropriate for the from/to value
     - Date range is 1 day or less, and Start date has not exceeded 8 days yet - Raw data for every minute
     - Date range is 7 days or less, and Start date has not exceeded 40 days yet - Average data for every 5 minutes
     - Date range is 30 days or less, and Start date has not exceeded 186 days yet - Average data for every 30 minutes
     - Date range is 180 days or less, and Start date has not exceeded 730 days yet - Average data for every 2 hours
     - Other - Average daily data
-- from, to : ISO Datetime format example
-    - UTC : 2021-01-01T00:00:00.000Z
-    - KST, JST : 2021-01-01T00:00:00.000+09:00
+- from, to: ISO Datetime format example
+    - UTC: 2021-01-01T00:00:00.000Z
+    - KST, JST: 2021-01-01T00:00:00.000+09:00
 
 #### Response
 

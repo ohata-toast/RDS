@@ -1035,6 +1035,47 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ---
 
+### DB 인스턴스 백업 후 내보내기
+
+```
+POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
+```
+
+#### 요청
+
+| 이름              | 종류   | 형식     | 필수 | 설명                          |
+|-----------------|------|--------|----|-----------------------------|
+| dbInstanceId    | URL  | UUID   | O  | DB 인스턴스의 식별자                |
+| tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
+| username        | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID   |
+| password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
+| targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
+| objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
+    "targetContainer": "/container",
+    "objectPath": "/backups/backup_file"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
 ### DBインスタンスを複製する
 
 ```
@@ -1219,19 +1260,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | --- | --- | --- | --- | --- |
 | restoreYmdt | Query | DateTime | O | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>例</summary>
-<p>
-
-```json
-{
-	"restoreType": "TIMESTAMP",
-	"restoreYmdt": "2023-07-10T15:44:44+09:00"
-}
-```
-
-</p>
-</details>
-
 #### restoreTypeが`BINLOG`の場合
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
@@ -1239,21 +1267,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | backupId | Query | UUID | O | 復元に使用するバックアップの識別子 |
 | binLogFileName | Query | String | O | 復元に使用するバイナリログの名前 |
 | binLogPosition | Query | Number | O | 復元に使用するバイナリログの位置 |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-	"restoreType": "BINLOG",
-    "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
-	"binLogFileName": "mysql-bin.000001",
-	"binLogPosition": 1234567
-}
-```
-
-</p>
-</details>
 
 #### レスポンス
 
@@ -2420,9 +2433,9 @@ POST /v3.0/backups/{backupId}/restore
 ```json
 
 {
-"dbInstanceName" : "db-instance-restore",
-"dbFlavorId" : "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
-"dbPort" : 10000,
+"dbInstanceName": "db-instance-restore",
+"dbFlavorId": "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
+"dbPort": 10000,
 "parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
 "network": {
     "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
@@ -3835,6 +3848,19 @@ GET /v3.0/metric-statistics
 
 ## イベント
 
+### 이벤트 카테고리
+
+이벤트는 카테고리로 분류할 수 있으며 아래와 같습니다.
+
+| 이벤트 카테고리    | 설명      |
+|-------------|---------|
+| ALL         | 전체      |
+| BACKUP      | 백업      |
+| DB_INSTANCE | DB 인스턴스 |
+| JOB         | 작업      |
+| TENANT      | 테넌트     |
+| MONITORING  | 모니터링    |
+
 ### イベントリスト照会
 
 ```
@@ -3917,7 +3943,7 @@ GET /v3.0/events
 
 ---
 
-### イベントコードリストを表示
+### 구독 가능한 이벤트 코드 목록 보기
 
 ```
 GET /v3.0/event-codes

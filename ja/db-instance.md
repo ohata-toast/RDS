@@ -186,9 +186,18 @@ DBインスタンスを一定時間使用しないが、削除を望まない場
 > [参考]
 > リードレプリカの作成過程で必要なバイナリログ(binary log)サイズ分、オブジェクトストレージ課金が発生する可能性があります。
 
+#### 異なるリージョンのサブネットにリードレプリカ作成
+  * 異なるリージョンに存在するVPC間のリージョンピアリングを接続すると、他のリージョンVPCに属するサブネットにリードレプリカを作成できます。
+  * リージョンピアリングが接続されていても、ルート設定が正しくない場合、リードレプリカの作成に失敗したり、複製が中断されることがあります。
+  * リージョンピアリングの接続に関する詳細については、[リージョンピアリング](https://docs.nhncloud.com/ja/Network/Peering%20Gateway/ja/console-guide/#_2)項目を参照してください。
+
 ### リードレプリカの昇格
 
 マスターとの複製関係を切って、リードレプリカをマスターに変更することを昇格と呼びます。昇格したマスターは、独立したDBインスタンスとして動作します。昇格しようとするリードレプリカとマスターの間に複製遅延がある場合、その遅延がなくなるまで昇格されません。
+
+### リードレプリカの強制昇格
+
+マスターや原本リージョンの状態に関係なく、リードレプリカの現時点のデータで強制昇格します。
 
 ### リードレプリカの複製中断
 
@@ -342,7 +351,7 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 
 * パラメータの説明
     * master_instance_ip:複製対象(Master)サーバーのIP
-    * master_instance_port :複製対象(Master)サーバーのMySQLポート
+    * master_instance_port:複製対象(Master)サーバーのMySQLポート
     * user_id_for_replication:複製対象(Master)サーバーのMySQLに接続する複製用アカウント
     * password_for_replication_user:複製用アカウントパスワード
     * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名

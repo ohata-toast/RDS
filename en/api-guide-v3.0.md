@@ -1034,6 +1034,47 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ---
 
+### Export after Backing up DB Instance
+
+```
+POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
+```
+
+#### Request
+
+| Name              | Type   | Format     | Required | Description                          |
+|-----------------|------|--------|----|-----------------------------|
+| dbInstanceId    | URL  | UUID   | O  | DB instance identifier                |
+| tenantId        | Body | String | O  | Tenant ID of object storage to store backup   |
+| username        | Body | String | O  | NHN Cloud member or IAM member ID   |
+| password        | Body | String | O  | API password for object storage where backup is stored |
+| targetContainer | Body | String | O  | Object storage container where backup is stored     |
+| objectPath      | Body | String | O  | Backup path to be stored in container            |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
+    "targetContainer": "/container",
+    "objectPath": "/backups/backup_file"
+}
+```
+
+</p>
+</details>
+
+#### Response
+
+| Name | Type | Format | Description |
+| --- | --- | --- | --- |
+| jobId | Body | UUID | Identifier of requested task |
+
+---
+
 ### Replicate DB Instance
 
 ```
@@ -1220,19 +1261,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | --- | --- | --- | --- | --- |
 | restoreYmdt | Query | DateTime | O | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-	"restoreType": "TIMESTAMP",
-	"restoreYmdt": "2023-07-10T15:44:44+09:00"
-}
-```
-
-</p>
-</details>
-
 #### If restoreType is `BINLOG`
 
 | Name               | Type | Format | Required | Description |
@@ -1240,21 +1268,6 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | backupId           | Query | UUID | O | Identifier of the backup to use for restoration |
 | binLogFileName     | Query | String | O | Binary log name to use for restoration |
 | binLogPosition | Query | Number | O | Binary log location to use for restoration |
-
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-	"restoreType": "BINLOG",
-    "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
-	"binLogFileName": "mysql-bin.000001",
-	"binLogPosition": 1234567
-}
-```
-
-</p>
-</details>
 
 #### Response
 
@@ -3861,6 +3874,19 @@ GET /v3.0/metric-statistics
 
 ## Event
 
+### Event category
+
+Events can be categorized into categories, which are shown below.
+
+| Event category    | Description      |
+|-------------|---------|
+| ALL         | All      |
+| BACKUP      | Backups      |
+| DB_INSTANCE | DB Instance |
+| JOB         | Jobs      |
+| TENANT      | Tenant     |
+| MONITORING  | Monitoring    |
+
 ### List Events
 
 ```
@@ -3943,7 +3969,7 @@ This API does not require a request body.
 
 ---
 
-### List Event Codes
+### List Subscribable Event Codes
 
 ```
 GET /v3.0/event-codes
@@ -3984,4 +4010,3 @@ This API does not require a request body.
 </details>
 
 ---
-
