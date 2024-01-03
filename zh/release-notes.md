@@ -1,5 +1,12 @@
 ## Database > RDS for MySQL > Release Notes
 
+### January 9, 2024
+
+#### Added Features
+
+* Improved to control the timing of failover whe upgrading the DB engine version for high availability instances
+* Improved to allow you to operate the hypervisor migration feature for each DB instance
+
 ### December 19, 2023
 
 #### Added Features
