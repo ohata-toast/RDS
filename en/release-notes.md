@@ -7,12 +7,6 @@
 * Improved to control the timing of failover whe upgrading the DB engine version for high availability instances
 * Improved to allow you to operate the hypervisor migration feature for each DB instance
 
-
-#### Bug Fixes
-
-* In MariaDB 10.6.12, a tablespace conflict caused backup to fail, temporarily restricting new creation
-    * High availability configuration and restoration allowed
-
 ### December 19, 2023
 
 #### Added Features
