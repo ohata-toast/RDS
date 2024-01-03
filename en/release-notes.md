@@ -1,13 +1,26 @@
 ## Database > RDS for MySQL > Release Notes
 
+### January 9, 2024
+
+#### Added Features
+
+* Improved to control the timing of failover whe upgrading the DB engine version for high availability instances
+* Improved to allow you to operate the hypervisor migration feature for each DB instance
+
+
+#### Bug Fixes
+
+* In MariaDB 10.6.12, a tablespace conflict caused backup to fail, temporarily restricting new creation
+    * High availability configuration and restoration allowed
+
 ### December 19, 2023
 
 #### Added Features
 
 * Improved to make it easier to identify DB instances to which the changed parameter will be applied
-  * Added the 'Apply' button in front of the target name to apply the changed parameter on the DB instance list screen.
-  * Added the 'Apply' button to the parameter group item on the detail view screen of the DB instance to which the changed parameter will be applied.
-  * Add filter option that requires application of changed parameters
+    * Added the 'Apply' button in front of the target name to apply the changed parameter on the DB instance list screen.
+    * Added the 'Apply' button to the parameter group item on the detail view screen of the DB instance to which the changed parameter will be applied.
+    * Add filter option that requires application of changed parameters
 * Changed to retrieve servers that have been deleted within the last month when checking the View deleted servers on the server dashboard screen
 
 ### November 14, 2023.
@@ -61,8 +74,8 @@
 #### Added Features and Updates
 
 * Added rebuild support when a candidate master fails
-  * The DB instance on the candidate master does not change, so the fixed IP address does not change
-  * All data in the database are deleted, and restored with the data of the master
+    * The DB instance on the candidate master does not change, so the fixed IP address does not change
+    * All data in the database are deleted, and restored with the data of the master
 * Made improvements so that, when adding a user to user groups, all users of organizatons and projects can be added
 
 ### May 16, 2023
