@@ -486,7 +486,7 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 ### tcrds_innodb_monitor_reset_all
 * A procedure to run innodb_monitor_reset_all variables that reset the value of counter.
 * To use innodb_monitor_reset_all, the counter must be in the disable state.
-* Execute `SET GLOBAL tcrds_innodb_monitor_reset_all = '{counter-name|module_name|pattern|all}';`.
+* Execute `SET GLOBAL innodb_monitor_reset_all = '{counter-name|module_name|pattern|all}';`.
 
 ```
 mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
