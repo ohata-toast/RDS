@@ -64,7 +64,7 @@ DB 인스턴스의 각종 성능 지표를 차트 형태로 볼 수 있습니다
 | 복제 딜레이                     | sec                                                                                                                                  |                                   |
 | Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                                   |
 | Database Connection Status | mysql status                                                                                                                         | 접속 불가: 0, 접속 가능: 1                |
-| 스토리지 결함                    | disk fault status                                                                                                                    | 비정상: 0, 정상: 1                     |
+| 데이터 스토리지 결함                    | disk fault status                                                                                                                    | 비정상: 0, 정상: 1                     |
 
 ## 서버 그룹
 
