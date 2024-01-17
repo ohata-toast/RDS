@@ -1,5 +1,12 @@
 ## Database > RDS for MySQL > リリースノート
 
+### 2024. 01. 11.
+
+#### 機能追加および改善
+
+* 高可用性インスタンスのDBエンジンのバージョンアップグレード時にフェイルオーバー のタイミングを手動で制御できるように改善
+* DBインスタンスごとにハイパーバイザーマイグレーション機能を動作できるように改善
+
 ### 2023. 12. 19.
 
 #### 機能追加および改善
@@ -23,5 +30,5 @@
 
 #### 新商品発売
 
-- TOAST Relational Database Service (RDS)は、Relational Databaseをクラウド環境で提供する商品です。
+- Relational Database Service (RDS)は、Relational Databaseをクラウド環境で提供する商品です。
 - 複雑な設定をしなくても、Relational Databaseを使うことができます。
