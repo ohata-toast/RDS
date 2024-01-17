@@ -662,6 +662,6 @@
 
 #### 新商品発売
 
-- TOAST Relational Database Service (RDS)は、Relational Databaseをクラウド環境で提供する商品です。
+- Relational Database Service (RDS)は、Relational Databaseをクラウド環境で提供する商品です。
 - 複雑な設定をしなくても、Relational Databaseを使うことができます。
 - MySQL 5.6.33バージョンを提供します。
