@@ -1,5 +1,12 @@
 ## Database > RDS for MySQL > 릴리스 노트
 
+### 2024. 01. 11.
+
+#### 기능 추가 및 개선
+
+* 고가용성 인스턴스의 DB 엔진 버전 업그레이드 시 장애 조치 시점을 수동으로 제어할 수 있도록 개선
+* DB 인스턴스별로 하이퍼바이저 마이그레이션 기능을 동작할 수 있도록 개선
+
 ### 2023. 12. 19.
 
 #### 기능 추가 및 개선
@@ -146,5 +153,5 @@
 
 #### 신규 상품 출시
 
-* TOAST Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
+* Relational Database Service (RDS) 는 Relational Database 를 클라우드 환경에서 제공하는 상품입니다.
 * 복잡한 설정 없이 Relational Database 사용할 수 있습니다.
