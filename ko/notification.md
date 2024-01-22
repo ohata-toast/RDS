@@ -233,7 +233,7 @@
 | Storage 남은 사용량             | MB                 |
 | Storage IO Read            | KB/sec             |
 | Storage IO Write           | KB/sec             |
-| 스토리지 결함                    | 비정상: 0, 정상: 1      |
+| 데이터 스토리지 결함                    | 비정상: 0, 정상: 1      |
 | Network in BPS             | KB/sec             |
 | Network out BPS            | KB/sec             |
 | Database Connection Status | 접속 불가: 0, 접속 가능: 1 |
@@ -274,7 +274,7 @@
 
 RDS for MySQL은 데이터베이스에서 발생하는 다양한 문제를 분석하기 위해 데이터베이스에서 수행된 쿼리와 InnoDB 엔진의 상태를 수집합니다. 1초에 한 번씩 `information_schema.processlist`의 결과와, `SHOW ENGINE INNODB STATUS`의 결과를 수집하며 최근 4일간의 데이터를 웹 콘솔의 Processlist 탭에서 조회할 수 있습니다.
 
-> [참고] 수집된 데이터는 내부 오브젝트 스토리지에 저장되며 별도로 과금하지 않습니다.
+> [참고] 수집된 데이터는 내부 백업 스토리지에 저장되며 별도로 과금하지 않습니다.
 
 수집하는 항목은 다음과 같습니다.
 
