@@ -294,6 +294,15 @@ TLS Option을 지정하여 클라이언트와 데이터베이스 간의 연결�
 | SSL        | 암호화된 연결을 적용합니다.                                                    |
 | X509       | 암호화된 연결을 적용하며 접속 시 인증서가 필요합니다. 접속에 필요한 인증서는 웹 콘솔에서 다운로드할 수 있습니다. |
 
+### DB 스키마 & 사용자 직접 제어
+
+RDS for MySQL에서는 DB 스키마와 사용자를 손쉽게 관리할 수 있도록 웹 콘솔에서 관리 기능을 제공하지만, 사용자가 직접 제어할 수 있도록 설정하는 기능도 제공하고 있습니다. 웹 콘솔의 DB 인스턴스 수정 화면에서 DB 스키마 & 사용자 직접 제어 항목을 통해 설정할 수 있습니다.
+* 직접 제어를 사용하면 현재 생성되어 있는 모든 유저에게 아래 권한을 부여합니다.
+
+```sql
+GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
+```
+
 ## 고가용성 DB 인스턴스
 
 고가용성 DB 인스턴스는 가용성과 데이터 내구성을 증가시키고, 장애 허용이 가능한 데이터베이스를 제공합니다. 고가용성 DB 인스턴스는 마스터, 예비 마스터로 구성되며 서로 다른 가용성 영역에 생성됩니다. 예비 마스터는 장애에 대비한 DB 인스턴스로 평소에는 사용할 수 없습니다. 고가용성 DB 인스턴스의 경우 예비 마스터에서 백업이 수행됩니다.

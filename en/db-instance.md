@@ -297,6 +297,15 @@ You can encrypt the connection between the client and the database by specifying
 | SSL        | Encrypted connections are applied.                                                    |
 | X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the web console. |
 
+### DB 스키마 & 사용자 직접 제어
+
+RDS for MySQL에서는 DB 스키마와 사용자를 손쉽게 관리할 수 있도록 웹 콘솔에서 관리 기능을 제공하지만, 사용자가 직접 제어할 수 있도록 설정하는 기능도 제공하고 있습니다. 웹 콘솔의 DB 인스턴스 수정 화면에서 DB 스키마 & 사용자 직접 제어 항목을 통해 설정할 수 있습니다.
+* 직접 제어를 사용하면 현재 생성되어 있는 모든 유저에게 아래 권한을 부여합니다.
+
+```sql
+GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
+```
+
 ## High Availability DB instances
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
