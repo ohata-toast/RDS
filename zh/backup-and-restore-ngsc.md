@@ -53,7 +53,7 @@ If you need to permanently store databases at a certain point in time, you can p
 
 ### Auto Backup
 
-수동으로 백업을 수행시키는 경우 외에도 복원 작업을 위한 필요 또는 자동 백업 스케줄 사용 등에 따라 자동으로 백업이 수행될 수 있습니다. 자동 백업은 DB 인스턴스와 생명 주기가 동일합니다. DB 인스턴스가 삭제되면 보관된 자동 백업은 모두 삭제됩니다. 자동 백업에서 지원하는 설정 항목은 아래와 같습니다.
+수동으로 백업을 수행하는 경우 외에도 복원 작업을 위해 필요한 경우 또는 자동 백업 스케줄 설정에 따라 자동 백업이 수행될 수 있습니다. 자동 백업은 DB 인스턴스와 생명 주기가 동일합니다. DB 인스턴스가 삭제되면 보관된 자동 백업은 모두 삭제됩니다. 자동 백업에서 지원하는 설정 항목은 아래와 같습니다.
 
 **자동 백업 허용**
 
@@ -73,7 +73,7 @@ If you need to permanently store databases at a certain point in time, you can p
 
 **자동 백업 수행 시간**
 
-* 백업이 자동으로 스케줄 되는 시간을 설정할 수 있습니다. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the
+* 백업이 자동으로 수행되는 시간을 설정할 수 있습니다. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the
   backup based on the number of backups retries if it does not exceed the backup retries times.
 
 Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.

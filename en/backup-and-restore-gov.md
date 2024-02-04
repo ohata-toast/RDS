@@ -53,7 +53,7 @@ If you need to permanently store databases at a certain point in time, you can p
 
 ### Auto Backup
 
-수동으로 백업을 수행시키는 경우 외에도 복원 작업을 위한 필요 또는 자동 백업 스케줄 사용 등에 따라 자동으로 백업이 수행될 수 있습니다. 자동 백업은 DB 인스턴스와 생명 주기가 동일합니다. DB 인스턴스가 삭제되면 보관된 자동 백업은 모두 삭제됩니다. 자동 백업에서 지원하는 설정 항목은 아래와 같습니다.
+수동으로 백업을 수행하는 경우 외에도 복원 작업을 위해 필요한 경우 또는 자동 백업 스케줄 설정에 따라 자동 백업이 수행될 수 있습니다. 자동 백업은 DB 인스턴스와 생명 주기가 동일합니다. DB 인스턴스가 삭제되면 보관된 자동 백업은 모두 삭제됩니다. 자동 백업에서 지원하는 설정 항목은 아래와 같습니다.
 
 **자동 백업 허용**
 
@@ -65,7 +65,7 @@ If you need to permanently store databases at a certain point in time, you can p
 
 **자동 백업 복제 리전**
 
-* 자동 백업 파일을 다른 리전의 백업 스토리지로 복제되도록 설정합니다. 자동 백업 복제 리전은 재해 복구(disaster recovery)를 위한 기능으로 원본 리전의 자동 백업파일을 대상 리전으로 동일하게 복제하고 관리합니다. 복제는 백그라운드에서 일정 주기마다 진행됩니다. 자동 백업 복제 리전을 설정하면 리전 간 복제 트래픽 과금이 청구되며, 대상 리전에 백업 스토리지 사용량에 대한 과금이 추가로 청구됩니다.
+* 자동 백업 파일을 다른 리전의 백업 스토리지로 복제되도록 설정합니다. 자동 백업 복제 리전은 재해 복구(disaster recovery)를 위한 기능으로 원본 리전의 자동 백업파일을 대상 리전으로 동일하게 복제하고 관리합니다. 복제는 백그라운드에서 일정 주기마다 진행됩니다. 자동 백업 복제 리전을 설정하면 리전 간 복제 트래픽 비용이 청구되며, 대상 리전에 백업 스토리지 사용량에 대한 비용이 추가로 청구됩니다.
 
 **자동 백업 재시도 횟수**
 
@@ -77,7 +77,7 @@ If you need to permanently store databases at a certain point in time, you can p
 
 **자동 백업 수행 시간**
 
-* 백업이 자동으로 스케줄 되는 시간을 설정할 수 있습니다. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the
+* 백업이 자동으로 수행되는 시간을 설정할 수 있습니다. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the
   backup based on the number of backups retries if it does not exceed the backup retries times.
 
 Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
