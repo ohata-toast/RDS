@@ -23,6 +23,7 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 | 8.0.32        | 8.0.32             |
 | 8.0.33        | 8.0.33             |
 | 8.0.34        | 8.0.34             |
+| 8.0.35        | 8.0.35             |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -31,42 +32,17 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the web console.
 
-### Auto Backup
-
-If you set the backup archive period for a DB instance to 1 or more days, automatic backups are enabled, and backups are performed at the specified backup run time. Automatic backups have the same life cycle as DB instances. When DB instance is deleted, all archived automatic backups are deleted. When you create DB instance, you can set the settings for automatic backups, and you can also change the backup settings for the DB instance that is already created. Automatic Backup supports the
-following settings.
-
-**Backup Retention Period**
-
-* Sets the time period for storing backups on storage. It can be kept for up to 730 days, and if the backup archive period changes, the expired automatic backup files will be deleted immediately.
+백업 시에 적용되는 설정 항목은 다음과 같으며, 자동 백업 및 수동 백업 시에 모두 적용됩니다.
 
 **Use Table Lock**
 
 * `FLUSH TABLES WITH READ LOCK` ets whether the syntax is enabled or disabled.
 * Table lock enables the `FLUSH TABLES WITH READ LOCK` syntax periodically during backups to ensure consistency in backup data. If `FLUSH TABLES WITH READ LOCK` syntax fails to run, the backup will fail.
-* You can disable table locking if the DML query load is high during a backup. If you do not use table lock, `FLUSH TABLES WITH READ LOCK` syntax will not run, so a high DML load does not cause the backup to fail. However, backups without table lock may not ensure consistency of backup data and do not support point-in-time restoration.
+* You can disable table locking if the DML query load is high during a backup. If you do not use table lock, `FLUSH TABLES WITH READ LOCK` syntax will not run, so a high DML load does not cause the backup to fail. 하지만 테이블 잠금을 사용하지 않은 백업은 백업 데이터의 일관성이 보장되지 않을 수 있으며, 이에 따라 테이블 잠금을 사용하지 않고 생성된 백업 및 테이블 잠금을 사용하지 않도록 설정된 DB 인스턴스에 대해 복원 및 복제 과정을 포함한 일부 작업을 지원하지 않습니다.
 
 ** Query Latency Dash Time (second)**
 
 * When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
-
-**Backup Replication Region**
-
-* Set the backup file to be replicated to object storage in another region. Backup replication regions are features for disaster recovery that replicate and manage backup files from the original region equally to the destination region. Replication occurs in the background at regular intervals. When you set up a backup replication region, you are charged with inter-regional replication traffic, and the destination region is charged additionally for object storage usage.
-
-**Back Retry Times**
-
-* You can set the backup to retry if it fails due to DML query load or for other various reasons. You can retry maximum 10 times. Depending on the backup run time setting, you might not try again because there are still more retries.
-
-**Backup Run Time**
-
-* Allows you set the time that the backup takes place. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the
-  backup based on the number of backups retries if it does not exceed the backup retries times.
-
-Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
-
-> [Caution]
-> If you are unable to perform backup, for example, if the previous backup does not end, the backup may not be performed.
 
 ### Manual Backup
 
@@ -74,6 +50,40 @@ If you need to permanently store databases at a certain point in time, you can p
 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
+
+### Auto Backup
+
+수동으로 백업을 수행하는 경우 외에도 복원 작업을 위해 필요한 경우 또는 자동 백업 스케줄 설정에 따라 자동 백업이 수행될 수 있습니다. 자동 백업은 DB 인스턴스와 생명 주기가 동일합니다. DB 인스턴스가 삭제되면 보관된 자동 백업은 모두 삭제됩니다. 자동 백업에서 지원하는 설정 항목은 아래와 같습니다.
+
+**자동 백업 허용**
+
+* 자동 백업을 허용하지 않을 시 모든 자동 백업의 수행이 차단되며, 필요에 의해 백업이 수행될 가능성이 있는 복원, 복제 과정을 포함한 일부 작업을 지원하지 않습니다. 또한 아래의 자동 백업 관련 항목들에 대해 설정이 불가능합니다.
+
+**자동 백업 보관 기간**
+
+* 자동 백업을 백업 스토리지에 저장하는 기간을 설정합니다. 최대 730일까지 보관할 수 있으며, 자동 백업 보관 기간이 변경되면 보관 기간이 지난 자동 백업 파일은 바로 삭제됩니다.
+
+**자동 백업 복제 리전**
+
+* 자동 백업 파일을 다른 리전의 백업 스토리지로 복제되도록 설정합니다. 자동 백업 복제 리전은 재해 복구(disaster recovery)를 위한 기능으로 원본 리전의 자동 백업파일을 대상 리전으로 동일하게 복제하고 관리합니다. 복제는 백그라운드에서 일정 주기마다 진행됩니다. 자동 백업 복제 리전을 설정하면 리전 간 복제 트래픽 비용이 청구되며, 대상 리전에 백업 스토리지 사용량에 대한 비용이 추가로 청구됩니다.
+
+**자동 백업 재시도 횟수**
+
+* DML 쿼리 부하 또는 여러 다양한 이유로 자동 백업이 실패한 경우 재시도하도록 설정할 수 있습니다. 최대 10회까지 재시도할 수 있습니다. 재시도 횟수가 남아 있더라도 자동 백업 수행 시간 설정에 따라 재시도하지 않을 수 있습니다.
+
+**자동 백업 스케줄 사용**
+
+* 자동 백업 스케줄 사용 시 설정한 자동 백업 수행 시간에 자동으로 백업이 수행됩니다.
+
+**자동 백업 수행 시간**
+
+* 백업이 자동으로 수행되는 시간을 설정할 수 있습니다. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the
+  backup based on the number of backups retries if it does not exceed the backup retries times.
+
+Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
+
+> [Caution]
+> If you are unable to perform backup, for example, if the previous backup does not end, the backup may not be performed.
 
 ### Backup Storage and Pricing
 

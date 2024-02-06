@@ -32,6 +32,7 @@ NHN Cloudは、物理的なハードウェアの問題で生じる障害に備�
 | バージョン        | 備考                                                   |
 |--------------|------------------------------------------------------|
 | <strong>8.0</strong> ||
+| MySQL 8.0.35 |                                                      |
 | MySQL 8.0.34 |                                                      | 
 | MySQL 8.0.33 |                                                      |
 | MySQL 8.0.32 |                                                      | 
@@ -234,6 +235,15 @@ DBインスタンスのMySQLが正常に動作しない場合、強制的に再�
 ### パラメータグループの変更内容を適用
 
 DBインスタンスに接続されたパラメータグループのパラメータが修正された場合、その修正を反映する必要があります。変更されたパラメータを適用するために再起動が必要な場合、DBインスタンスが再起動されます。パラメータグループの詳細については、[パラメータグループ](parameter-group.md)を参照してください。
+
+### DB 스키마 & 사용자 직접 제어
+
+RDS for MySQL에서는 DB 스키마와 사용자를 손쉽게 관리할 수 있도록 웹 콘솔에서 관리 기능을 제공하지만, 사용자가 직접 제어할 수 있도록 설정하는 기능도 제공하고 있습니다. 웹 콘솔의 DB 인스턴스 수정 화면에서 DB 스키마 & 사용자 직접 제어 항목을 통해 설정할 수 있습니다.
+* 직접 제어를 사용하면 현재 생성되어 있는 모든 유저에게 아래 권한을 부여합니다.
+
+```sql
+GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
+```
 
 ## 高可用性DBインスタンス
 
