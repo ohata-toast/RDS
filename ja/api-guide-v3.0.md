@@ -8,7 +8,7 @@
 
 ## 認証および権限
 
-APIを使用するには認証に必要な`User Access Key ID`と`Secret Access Key`が必要です。<b>会員情報 > APIセキュリティ設定</b>で作成できます。
+APIを使用するには認証に必要な`User Access Key ID`と`Secret Access Key`が必要です。 콘솔 우측 상단의 로그인 계정 드롭다운 메뉴 중 <b>API 보안 설정</b>에서 생성할 수 있습니다.
 作成されたKeyはAppkeyと一緒にリクエストHeaderに含める必要があります。
 
 | 名前                         | 種類     | 形式     | 必須 | 説明                                 |
