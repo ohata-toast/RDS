@@ -8,7 +8,7 @@
 
 ## Authentication and Authorization
 
-`User Access Key ID` and `Secret Access Key` are required for authentication to use APIs.<b>Go to Member Information > API Security Settings<b> to create them.
+`User Access Key ID` and `Secret Access Key` are required for authentication to use APIs. To create them, select <b>API Security Setting</b> from the drop-down menu that appears when you hover over your account in the top right on the console.
 The created Key must be included in the request Header.
 
 | Name                         | Type     | Format     | Required | Description                               |
