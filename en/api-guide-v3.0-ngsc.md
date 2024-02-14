@@ -397,7 +397,8 @@ This API does not require a request body.
 
 | Status Name                | Description                           |
 |--------------------|---------------------------------------|
-| `READY`            | Task in preparation                   |
+| `PREPARING`        | Task in preparation                   |
+| `READY`            | Task in ready                         |
 | `RUNNING`          | Task in progress                      |
 | `COMPLETED`        | Task completed                        |
 | `REGISTERED`       | Task registered                       |
