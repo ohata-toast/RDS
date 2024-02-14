@@ -233,7 +233,7 @@
 | Storageの空き容量               | MB              |
 | Storage IO Read            | KB/sec          |
 | Storage IO Write           | KB/sec          |
-| ストレージ障害                    | 異常: 0、正常: 1     |
+| データストレージ障害                    | 異常: 0、正常: 1     |
 | Network in BPS             | KB/sec          |
 | Network out BPS            | KB/sec          |
 | Database Connection Status | 接続不可: 0、接続可能: 1 |

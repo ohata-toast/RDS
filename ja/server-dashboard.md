@@ -64,7 +64,7 @@ DBインスタンスの各種性能指標をチャート形式で見ることが
 | 複製ディレイ                     | sec                                                                                                                                  |                               |
 | Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                               |
 | Database Connection Status | mysql status                                                                                                                         | 接続不可: 0、接続可能: 1               |
-| ストレージ障害                    | disk fault status                                                                                                                    | 異常: 0、正常: 1                   |
+| データストレージ障害                    | disk fault status                                                                                                                    | 異常: 0、正常: 1                   |
 
 ## サーバーグループ
 
