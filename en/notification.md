@@ -232,7 +232,7 @@ Performance metrics items that can be monitored are as follows.
 
 RDS for MySQL collects queries executed on the database and the status of the InnoDB engine to analyze various issues occurring in the database. It collects the results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`once every second, and you can view the last four days of data in the Processlist tab of the console.
 
-> [Note] The collected data is stored in internal object storage and is not charged separately.
+> [Note] The collected data is stored in internal backup storage and is not charged separately.
 
 The following items are collected
 

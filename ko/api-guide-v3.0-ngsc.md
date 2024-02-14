@@ -6,7 +6,7 @@
 
 ## 인증 및 권한
 
-API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. <b>회원 정보 > API 보안 설정</b>에서 생성할 수 있습니다.
+API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. 콘솔 우측 상단의 계정에 마우스 포인터를 올리면 표시되는 드롭다운 메뉴에서 <b>API 보안 설정</b>을 선택해 생성할 수 있습니다.
 생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
 
 | 이름                         | 종류     | 형식     | 필수 | 설명                               |
@@ -306,9 +306,9 @@ GET /v3.0/db-versions
 
 ---
 
-## 스토리지
+## 데이터 스토리지
 
-### 스토리지 타입 목록 보기
+### 데이터 스토리지 타입 목록 보기
 
 ```
 GET /v3.0/storage-types
@@ -322,7 +322,7 @@ GET /v3.0/storage-types
 
 | 이름           | 종류   | 형식    | 설명         |
 |--------------|------|-------|------------|
-| storageTypes | Body | Array | 스토리지 타입 목록 |
+| storageTypes | Body | Array | 데이터 스토리지 타입 목록 |
 
 <details><summary>예시</summary>
 <p>
@@ -346,7 +346,7 @@ GET /v3.0/storage-types
 
 ---
 
-### 스토리지 목록 보기
+### 데이터 스토리지 목록 보기
 
 ```
 GET /v3.0/storages
@@ -360,7 +360,7 @@ GET /v3.0/storages
 
 | 이름           | 종류   | 형식    | 설명        |
 |--------------|------|-------|-----------|
-| storages | Body | Array | 스토리지 목록 |
+| storages | Body | Array | 데이터 스토리지 목록 |
 
 <details><summary>예시</summary>
 <p>
@@ -390,7 +390,8 @@ GET /v3.0/storages
 
 | 상태명                | 설명                   |
 |--------------------|----------------------|
-| `READY`            | 작업이 준비 중인 경우         |
+| `PREPARING`        | 작업이 준비 중인 경우         |
+| `READY`            | 작업이 준비 완료된 경우         |
 | `RUNNING`          | 작업이 진행 중인 경우         |
 | `COMPLETED`        | 작업이 완료된 경우           |
 | `REGISTERED`       | 작업이 등록된 경우           |
@@ -771,7 +772,7 @@ POST /v3.0/db-instances
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
 | network.availabilityZone                     | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                    |
-| storage                                      | Body | Object  | O  | 스토리지 정보 객체                                                                                                                                                                                                                  |    
+| storage                                      | Body | Object  | O  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                  |    
 | storage.storageType                          | Body | Enum    | O  | 데이터 스토리지 타입<br/>- 예시: `General SSD`                                                                                                                                                                                         |
 | storage.storageSize                          | Body | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                                                                                           |
 | backup                                       | Body | Object  | O  | 백업 정보 객체                                                                                                                                                                                                                    |
@@ -1085,7 +1086,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                                          |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                 |
 | network.availabilityZone                     | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                                            |
-| storage                                      | Body | Object  | X  | 스토리지 정보 객체                                                                                                                                                                                                                                          |    
+| storage                                      | Body | Object  | X  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                                          |    
 | storage.storageSize                          | Body | Number  | X  | 데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                                                                                           |
 | backup                                       | Body | Object  | X  | 백업 정보 객체                                                                                                                                                                                                                                            |
 | backup.backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
@@ -1309,7 +1310,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | network.subnetId | Body | UUID | O | 서브넷의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | network.availabilityZone | Body | Enum | O | DB 인스턴스를 생성할 가용성 영역<br><ul><li>예시: `kr-pub-a`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                              |
-| storage | Body | Object | O | 스토리지 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| storage | Body | Object | O | 데이터 스토리지 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | storage.storageType | Body | Enum | O | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | storage.storageSize | Body | Number | O | 데이터 스토리지 크기(GB)<br><ul><li>최솟값: `20`</li><li>최댓값: `2048`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                   |
 | backup | Body | Object | O | 백업 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -1524,7 +1525,7 @@ POST /v3.0/db-instances/restore-from-obs
 | network.subnetId | Body | UUID | O | 서브넷의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | network.availabilityZone | Body | Enum | O | DB 인스턴스를 생성할 가용성 영역<br><ul><li>예시: `kr-pub-a`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                               |
-| storage | Body | Object | O | 스토리지 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| storage | Body | Object | O | 데이터 스토리지 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | storage.storageType | Body | Enum | O | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | storage.storageSize | Body | Number | O | 데이터 스토리지 크기(GB)<br><ul><li>최솟값: `20`</li><li>최댓값: `2048`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                    |
 | backup | Body | Object | O | 백업 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -1741,7 +1742,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 
 ---
 
-### 스토리지 정보 보기
+### 데이터 스토리지 정보 보기
 
 ```
 GET /v3.0/db-instances/{dbInstanceId}/storage-info
@@ -1785,7 +1786,7 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
-### 스토리지 정보 수정하기
+### 데이터 스토리지 정보 수정하기
 
 ```
 PUT /v3.0/db-instances/{dbInstanceId}/storage-info
@@ -2398,7 +2399,7 @@ POST /v3.0/backups/{backupId}/restore
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
 | network.availabilityZone                     | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                    |
-| storage                                      | Body | Object  | O  | 스토리지 정보 객체                                                                                                                                                                                                                  |    
+| storage                                      | Body | Object  | O  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                  |    
 | storage.storageType                          | Body | Enum    | O  | 데이터 스토리지 타입<br/>- 예시: `General SSD`                                                                                                                                                                                         |
 | storage.storageSize                          | Body | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                                                                                           |
 | backup                                       | Body | Object  | O  | 백업 정보 객체                                                                                                                                                                                                                    |

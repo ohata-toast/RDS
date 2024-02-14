@@ -66,7 +66,7 @@ Certain parameters may be better represented by formulas using values associated
     * `sum([a, b, ...])`: Returns the sum of multiple values.
 * Variable
     * `ramSizeByte`: Indicates the byte value of the memory size of the current DB instance type.
-    * `storageSizeByte`: Indicates the byte value of the current DB instance storage size.
+    * `storageSizeByte`: Indicates the byte value of the current DB instance data storage size.
     * `vCPU`: Indicates the number of virtual CPU cores for the current DB instance type.
     * `dbPort`: Indicates the DB port of the current DB instance.
     * `serverId`: Indicates the server ID assigned to the current DB instance.
