@@ -6,7 +6,7 @@
 
 ## 認証および権限
 
-APIを使用するには認証に必要な`User Access Key ID`と`Secret Access Key`が必要です。<b>会員情報 > APIセキュリティ設定</b>で作成できます。
+APIを使用するには認証に必要な`User Access Key ID`と`Secret Access Key`が必要です。コンソール右上のアカウントにマウスポインタを合わせると表示されるドロップダウンメニューから<b>APIセキュリティ設定</b>を選択して作成できます。
 作成されたKeyはAppkeyと一緒にリクエストHeaderに含める必要があります。
 
 | 名前                         | 種類     | 形式     | 必須 | 説明                                 |
