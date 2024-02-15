@@ -11,6 +11,7 @@ The versions specified below are available.
 | Version           | Note                                                        |
 |--------------|-----------------------------------------------------------|
 | <strong>8.0</strong> ||
+| MySQL 8.0.35 |                                                           |
 | MySQL 8.0.34 |                                                           | 
 | MySQL 8.0.33 |                                                           | 
 | MySQL 8.0.32 |                                                           | 
@@ -79,6 +80,11 @@ When trying to change the DB engine version in the Modify DB Instance window, yo
 
 > [Caution]
 For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high availability configurations.
+
+#### Manual Control of Failover When Upgrading High Availability DB Instances
+
+When a DB instance is configured for high availability, the engine version of the candidate master is upgraded first, and then failover is used to promote the candidate master to master. Because failover briefly interrupts the service on the master, you can initiate failover at any time they want.
+The manual control of failover during version upgrade allows you to initiate failover directly from the console.
 
 ### When using an Outdated Operating System
 

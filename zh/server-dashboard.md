@@ -65,7 +65,7 @@ You can view various performance metrics for DB instance in chart form. Each per
 | Replication Delay          | sec                                                                                                                                  |                                                |
 | Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                                                |
 | Database Connection Status | mysql status                                                                                                                         | Unable to access: 0, Able to access: 1         |
-| Storage Defect             | disk fault status                                                                                                                    | Abnormal: 0, Normal: 1                         |
+| Data Storage Defect        | disk fault status                                                                                                                    | Abnormal: 0, Normal: 1                         |
 
 ## Server Group
 

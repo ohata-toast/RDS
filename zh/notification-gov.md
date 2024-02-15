@@ -185,8 +185,8 @@ You can manage users as groups to receive notifications. Notification target mus
 * ❸ Press **x** to exclude added users.
 * ❹ If there are many users in the user list, you can limit the results by entering search criteria.
 * ❺ Add **all project members** to the notified users.
-    * You cannot add individual users. If you do, it is canceled.
-    * When sending an alrm using the user group, the alarm is sent to all project members at the time.
+  * You cannot add individual users. If you do, it is canceled.
+  * When sending an alrm using the user group, the alarm is sent to all project members at the time.
 * ❻ Click **Add** to add a user to the user group.
 
 ## Notification Group
@@ -232,7 +232,7 @@ Performance metrics items that can be monitored are as follows.
 
 RDS for MySQL collects queries executed on the database and the status of the InnoDB engine to analyze various issues occurring in the database. It collects the results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`once every second, and you can view the last four days of data in the Processlist tab of the console.
 
-> [Note] The collected data is stored in internal object storage and is not charged separately.
+> [Note] The collected data is stored in internal backup storage and is not charged separately.
 
 The following items are collected
 
