@@ -306,10 +306,6 @@ RDS for MySQL provides management features in the web console to make it easy to
 GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
 ```
 
-직접 제어 사용 이후 다시 사용 안 함으로 변경했을 때 주의할 점
-* 기존에 부여했던 권한들을 회수하지 않습니다. 이때 명령어를 사용해 DB 스키마나 사용자를 추가한다면 웹 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
-* 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
-
 ## High Availability DB instances
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
@@ -381,14 +377,6 @@ master changes during failover and all binary logs are deleted. You can restore 
 
 You can temporarily stop the high availability feature in situations where temporary interruption of connectivity or high load is expected. If the high availability feature is paused, it does not detect failures, and therefore does not fail. Even if a task that requires a restart while the high availability feature is paused do not resume the paused high availability feature. Data replication occurs normal when high availability is paused, but we do not recommend that you pause for a long time
 as no failures are to be detected.
-
-### 예비 마스터 승격
-
-예비 마스터도 읽기 복제본과 마찬가지로 마스터와의 복제 관계를 끊고 마스터로 승격시킬 수 있습니다. 고가용성을 해제하고 읽기 복제본으로 변경 후, 읽기 복제본 승격과 동일한 작업을 진행합니다. 승격하려는 예비 마스터와 마스터 사이에 복제 지연이 있는 경우, 해당 지연이 없어질 때까지 승격되지 않습니다.
-
-### 예비 마스터 강제 승격
-
-마스터의 상태와 상관없이 예비 마스터의 현재 시점 데이터로 강제 승격합니다.
 
 ## MySQL Procedure
 

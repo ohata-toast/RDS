@@ -303,10 +303,6 @@ RDS for MySQL에서는 DB 스키마와 사용자를 손쉽게 관리할 수 있�
 GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
 ```
 
-직접 제어 사용 이후 다시 사용 안 함으로 변경했을 때 주의할 점
-* 기존에 부여했던 권한들을 회수하지 않습니다. 이때 명령어를 사용해 DB 스키마나 사용자를 추가한다면 웹 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
-* 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
-
 ## 고가용성 DB 인스턴스
 
 고가용성 DB 인스턴스는 가용성과 데이터 내구성을 증가시키고, 장애 허용이 가능한 데이터베이스를 제공합니다. 고가용성 DB 인스턴스는 마스터, 예비 마스터로 구성되며 서로 다른 가용성 영역에 생성됩니다. 예비 마스터는 장애에 대비한 DB 인스턴스로 평소에는 사용할 수 없습니다. 고가용성 DB 인스턴스의 경우 예비 마스터에서 백업이 수행됩니다.
@@ -378,14 +374,6 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 ### 예비 마스터 재구축
 
 네트워크의 단절, 잘못된 FEDERATED 엔진 사용, 다른 마스터로부터의 복제 설정과 같은 다양한 원인으로 예비 마스터 복제가 중단될 수 있습니다. 복제 중단 상태의 예비 마스터는 자동 장애 조치가 실행되지 않습니다. 예비 마스터의 복제 중단을 해결하려면 예비 마스터를 재구축해야 합니다. 예비 마스터 재구축 시에는 예비 마스터의 데이터베이스를 모두 제거하며, 마스터의 데이터베이스를 토대로 재구축합니다. 이 과정에서 재구축에 필요한 백업 파일이 마스터 데이터베이스에 존재하지 않을 경우 마스터에서 백업이 수행되며, 백업으로 인한 성능 저하가 발생할 수 있습니다.
-
-### 예비 마스터 승격
-
-예비 마스터도 읽기 복제본과 마찬가지로 마스터와의 복제 관계를 끊고 마스터로 승격시킬 수 있습니다. 고가용성을 해제하고 읽기 복제본으로 변경 후, 읽기 복제본 승격과 동일한 작업을 진행합니다. 승격하려는 예비 마스터와 마스터 사이에 복제 지연이 있는 경우, 해당 지연이 없어질 때까지 승격되지 않습니다.
-
-### 예비 마스터 강제 승격
-
-마스터의 상태와 상관없이 예비 마스터의 현재 시점 데이터로 강제 승격합니다.
 
 ## MySQL Procedure
 
