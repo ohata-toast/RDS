@@ -1,13 +1,13 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2024. 03. 12.
+### March 12, 2024
 
-#### 기능 추가 및 개선
+#### Added Features
 
-* 예비 마스터 승격 기능 추가
-* 예비 마스터 강제 승격 기능 추가
-* 장애 조치를 이용한 재시작 시 복제 딜레이를 대기할 수 있도록 기능 추가
-* DB 스키마 & 사용자 직접 제어 설정 해제 기능 추가
+* Added the feature to promote candidate masters
+* Added the feature to force promote candidate masters
+* Added the feature to wait for replication delay on restart with failover
+* Added the feature to turn off DB schema & user direct control settings
 
 ### February 15, 2024
 
