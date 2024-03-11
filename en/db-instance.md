@@ -306,6 +306,10 @@ RDS for MySQL provides management features in the web console to make it easy to
 GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
 ```
 
+Cautions when you enable direct control and then disable it again
+* Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the web console may not match.
+* All users that exist in the database, regardless of the permissions granted to them, are represented by CUSTOM permissions.
+
 ## High Availability DB instances
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
@@ -377,6 +381,14 @@ master changes during failover and all binary logs are deleted. You can restore 
 
 You can temporarily stop the high availability feature in situations where temporary interruption of connectivity or high load is expected. If the high availability feature is paused, it does not detect failures, and therefore does not fail. Even if a task that requires a restart while the high availability feature is paused do not resume the paused high availability feature. Data replication occurs normal when high availability is paused, but we do not recommend that you pause for a long time
 as no failures are to be detected.
+
+### Promote Candidate Master
+
+Just like a read replica, a candidate master can be promoted to master by breaking the replication relationship with the master. After disabling high availability and changing to a read replica, proceed with the same actions as promoting a read replica. If there is a replication delay between the candidate master you are promoting and the master, it will not be promoted until the delay is eliminated.
+
+### Force Promote Candidate Master
+
+Force promote to the current point-in-time data of the candidate master, regardless of the master status.
 
 ## MySQL Procedure
 
