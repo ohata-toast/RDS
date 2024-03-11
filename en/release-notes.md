@@ -1,5 +1,14 @@
 ## Database > RDS for MySQL > Release Notes
 
+### March 12, 2024
+
+#### Added Features
+
+* Added the feature to promote candidate masters
+* Added the feature to force promote candidate masters
+* Added the feature to wait for replication delay on restart with failover
+* Added the feature to turn off DB schema & user direct control settings
+
 ### February 15, 2024
 
 #### Added Features
