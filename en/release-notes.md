@@ -1,13 +1,22 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2024. 02. 15.
+### March 12, 2024
 
-#### 기능 추가 및 개선
+#### Added Features
 
-* DB 스키마 & 사용자 직접 제어 설정 기능 추가
-* 연결된 알림 그룹을 식별하기 쉽도록 개선
-  * DB 인스턴스 상세 보기 화면에서 연결된 알림 그룹 정보 노출
-* MySQL 8.0.35 버전 추가
+* Added the feature to promote candidate masters
+* Added the feature to force promote candidate masters
+* Added the feature to wait for replication delay on restart with failover
+* Added the feature to turn off DB schema & user direct control settings
+
+### February 15, 2024
+
+#### Added Features
+
+* Added DB schema & user-directed control settings
+* Improved to better identify connected notification groups
+    * Exposed connected notification group information on the DB instance view details screen
+* Added MySQL 8.0.35 version
 
 ### January 9, 2024
 

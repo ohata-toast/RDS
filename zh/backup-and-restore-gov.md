@@ -2,8 +2,7 @@
 
 ## Backup
 
-You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
-high-availability configuration or perform backups from read replica.
+You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica.
 
 > [Note]
 > High availability DB instances are backed up on the extra master without compromising the master's storage performance.
@@ -31,68 +30,67 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the web console.
+> High Availability DB instances are backed up on a candidate master to avoid degradation of data storage performance on the master.
 
-백업 시에 적용되는 설정 항목은 다음과 같으며, 자동 백업 및 수동 백업 시에 모두 적용됩니다.
+The following settings are applied to backup, and also to auto and manual backups.
 
 **Use Table Lock**
 
 * `FLUSH TABLES WITH READ LOCK` ets whether the syntax is enabled or disabled.
 * Table lock enables the `FLUSH TABLES WITH READ LOCK` syntax periodically during backups to ensure consistency in backup data. If `FLUSH TABLES WITH READ LOCK` syntax fails to run, the backup will fail.
-* You can disable table locking if the DML query load is high during a backup. If you do not use table lock, `FLUSH TABLES WITH READ LOCK` syntax will not run, so a high DML load does not cause the backup to fail. 하지만 테이블 잠금을 사용하지 않은 백업은 백업 데이터의 일관성이 보장되지 않을 수 있으며, 이에 따라 테이블 잠금을 사용하지 않고 생성된 백업 및 테이블 잠금을 사용하지 않도록 설정된 DB 인스턴스에 대해 복원 및 복제 과정을 포함한 일부 작업을 지원하지 않습니다.
+* You can disable table locking if the DML query load is high during a backup. If you do not use table lock, `FLUSH TABLES WITH READ LOCK` syntax will not run, so a high DML load does not cause the backup to fail. However, backups without table lock may not ensure consistency of backup data, and as a result, some operations, including restore and replication processes, are not supported for backups created without table lock and for DB instances with table locking disabled.
 
-** Query Latency Dash Time (second)**
+**Query Latency Dash Time (second)**
 
 * When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
 ### Manual Backup
 
-If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike automatic backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted Manual backups require you to enter a name for the backup and have the following limitations.
+If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike auto backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted Manual backups require you to enter a name for the backup and have the following limitations.
 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
 
 ### Auto Backup
 
-수동으로 백업을 수행하는 경우 외에도 복원 작업을 위해 필요한 경우 또는 자동 백업 스케줄 설정에 따라 자동 백업이 수행될 수 있습니다. 자동 백업은 DB 인스턴스와 생명 주기가 동일합니다. DB 인스턴스가 삭제되면 보관된 자동 백업은 모두 삭제됩니다. 자동 백업에서 지원하는 설정 항목은 아래와 같습니다.
+In addition to manually performing backups, auto backups can occur when needed for restore operations or based on auto backup schedule settings. Auto backups have the same lifecycle as DB instances. When a DB instance is deleted, all archived auto backups are deleted. The following setting items are supported by auto backups.
 
-**자동 백업 허용**
+**Allow Auto Backup**
 
-* 자동 백업을 허용하지 않을 시 모든 자동 백업의 수행이 차단되며, 필요에 의해 백업이 수행될 가능성이 있는 복원, 복제 과정을 포함한 일부 작업을 지원하지 않습니다. 또한 아래의 자동 백업 관련 항목들에 대해 설정이 불가능합니다.
+* If you don't allow auto backups, all auto backups will be blocked from taking place, and some operations, including restore and replication processes, that might otherwise take place on demand, will not be supported. In addition, you won't be able to set the following auto backup-related items
 
-**자동 백업 보관 기간**
+**Auto Backup Retention Period**
 
-* 자동 백업을 백업 스토리지에 저장하는 기간을 설정합니다. 최대 730일까지 보관할 수 있으며, 자동 백업 보관 기간이 변경되면 보관 기간이 지난 자동 백업 파일은 바로 삭제됩니다.
+* Sets the time period for storing auto backups on storage. It can be kept for up to 730 days, and if the auto backup archive period changes, the expired auto backup files will be deleted immediately.
 
-**자동 백업 복제 리전**
+**Auto Backup Replication Region**
 
-* 자동 백업 파일을 다른 리전의 백업 스토리지로 복제되도록 설정합니다. 자동 백업 복제 리전은 재해 복구(disaster recovery)를 위한 기능으로 원본 리전의 자동 백업파일을 대상 리전으로 동일하게 복제하고 관리합니다. 복제는 백그라운드에서 일정 주기마다 진행됩니다. 자동 백업 복제 리전을 설정하면 리전 간 복제 트래픽 비용이 청구되며, 대상 리전에 백업 스토리지 사용량에 대한 비용이 추가로 청구됩니다.
+* Set the auto backup file to be replicated to backup storage in another region. Auto Backup replication regions are features for disaster recovery that replicate and manage auto backup files from the original region equally to the destination region. Replication occurs in the background at regular intervals. When you set up an auto backup replication region, you are charged with inter-regional replication traffic, and the destination region is charged additionally for backup storage usage.
 
-**자동 백업 재시도 횟수**
+**Number of Auto Backup Retries**
 
-* DML 쿼리 부하 또는 여러 다양한 이유로 자동 백업이 실패한 경우 재시도하도록 설정할 수 있습니다. 최대 10회까지 재시도할 수 있습니다. 재시도 횟수가 남아 있더라도 자동 백업 수행 시간 설정에 따라 재시도하지 않을 수 있습니다.
+* You can set the auto backup to retry if it fails due to DML query load or for other various reasons. You can retry maximum 10 times. Depending on the auto backup run time setting, you might not try again even if there are still more retries.
 
-**자동 백업 스케줄 사용**
+**Use Auto Backup Schedule**
 
-* 자동 백업 스케줄 사용 시 설정한 자동 백업 수행 시간에 자동으로 백업이 수행됩니다.
+* When using an auto backup schedule, backups are performed automatically at the auto backup performance time you set.
 
-**자동 백업 수행 시간**
+**Auto Backup Run Time**
 
-* 백업이 자동으로 수행되는 시간을 설정할 수 있습니다. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the
-  backup based on the number of backups retries if it does not exceed the backup retries times.
+* Allows you set the time that the backup automatically takes place. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the backup based on the number of backups retries if it does not exceed the backup retries times.
 
 Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
 
 > [Caution]
-> If you are unable to perform backup, for example, if the previous backup does not end, the backup may not be performed.
+> Backups may not be performed in some situations, such as when a previous backup fails to terminate.
 
 ### Backup Storage and Pricing
 
-All backup files are uploaded to the internal object storage and stored. For manual backups, they are stored permanently until you delete them separately, and object storage charges are incurred depending on the backup capacity. For automatic backups, it is stored for the set retention period and charges for the full size of the automatic backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal object storage where the backup file is
-stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
+All backup files are uploaded to the internal backup storage and stored. For manual backups, they are stored permanently until you delete them separately, and backup storage charges are incurred depending on the backup capacity. For auto backups, it is stored for the set retention period and charges for the full size of the auto backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal backup storage where the backup file is stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
 
 ### Export Backup
 
-You can export backup files stored on internal object storage to user object storage on NHN Cloud. You can also export a manual or automatic backup file, or export the backup file to user object storage at the same time as you perform the backup. While exporting backups, network performance of the source DB instance may degrade.
+You can export backup files stored on internal backup storage to user object storage on NHN Cloud. You can also export a manual or auto backup file, or export the backup file to user object storage at the same time as you perform the backup. While exporting backups, network performance of the source DB instance may degrade.
 
 > [Note]
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
@@ -102,7 +100,7 @@ You can export backup files stored on internal object storage to user object sto
 Backups allow you to restore data to any point in time. Restoration always creates new DB instance and cannot be restored to the existing DB instance. You can restore only to the same DB engine version as the source DB instance from which you performed the backup. Supports restoring snapshots to the point in time when the backup was created, and restoring point in time to a specific point in time. You can restore it as backup of external MySQL as well as backup that you created in RDS for MySQL.
 
 > [Caution]
-> Restoration might fail if the storage size of the DB instance that you want to restore is smaller than the storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
+> Restoration might fail if the data storage size of the DB instance that you want to restore is smaller than the data storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
 
 ### Snapshot Restoration
 

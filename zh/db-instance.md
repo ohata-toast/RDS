@@ -103,33 +103,35 @@ Tasks performed on DB instance consist of the following values and are initiated
 | FAILING_OVER             | failing over             | 
 | MIGRATING                | migrating                | 
 | MODIFYING                | modifying                | 
+| NONE                     | none                     |
 | PREPARING                | preparing                | 
 | PROMOTING                | promoting                | 
+| PROMOTING_FORCIBLY       | force promoting          |
 | REBUILDING               | rebuilding               | 
 | REPAIRING                | repairing                | 
 | REPLICATING              | replicating              | 
 | RESTARTING               | restarting               | 
-| RESTARTING_FORCIBLY      | restarting forcibly      | 
+| RESTARTING_FORCIBLY      | force restarting         | 
 | RESTORING                | restoring                | 
 | STARTING                 | starting                 | 
 | STOPPING                 | stopping                 | 
 | SYNCING_SCHEMA           | syncing DB schema        | 
 | SYNCING_USER             | syncing user             | 
 | UPDATING_USER            | updating user            |
+| WAIT_MANUAL_CONTROL      | pending manul control of failover |
 
 > [Caution]
 > DB instance can handle only one task at a time.
 > If you request tasks at the same time, only the first requested task succeeds, and all subsequent requested tasks fail.
 > Tasks that fail the request can be found on the Event screen.
 
-### Storage
+### Data Storage
 
-DB instances support two types of storage: HDD and SSD. As performance and price vary by storage type, you should choose the right storage type for your database workload. You can create at least 20GB to 2TB of storage.
+DB instances support two types of storage: HDD and SSD. As performance and price vary by data storage type, you should choose the right storage type for your database workload. You can create at least 20GB to 2TB of data storage.
 
-### Scale Storage Size
+### Scale Data Storage Size
 
-You cannot change the storage type of DB instance, but the storage size is easily scalable through the web console. DB instances are terminated during storage size scale out, resulting in minutes of downtime depending on the service load. If a read replica exists, expanding the storage size of the master also expands the storage size of the read replica. If you have multiple read replicas, the storage size expansion will be sequential. If an error occurs while expanding the storage size, some
-read replicas might not be able to scale, and for read replicas that fail to scale, they can be scaled individually afterward. The storage size cannot be changed to be smaller than the current size.
+You cannot change the data storage type of DB instance, but the data storage size is easily scalable through the web console. DB instances are terminated during data storage size scale out, resulting in minutes of downtime depending on the service load. If a read replica exists, expanding the data storage size of the master also expands the data storage size of the read replica. If you have multiple read replicas, the data storage size expansion will be sequential. If an error occurs while expanding the data storage size, some read replicas might not be able to scale, and for read replicas that fail to scale, they can be scaled individually afterward. The data storage size cannot be changed to be smaller than the current size.
 
 ### Network
 
@@ -148,8 +150,7 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 
 ### Backup
 
-You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the web console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the
-size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
+You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the web console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal backup storage and are charged based on the size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
 ### Restoration
 
@@ -165,7 +166,7 @@ When you create a DB instance, you can set default notifications. If setting def
 | Storage remaining usage    | &lt;=          | 5,120MB         | 5 minutes | 
 | Database connection status | &lt;=          | 0               | 0 minutes | 
 | Storage usage              | &gt;=          | 95%             | 5 minutes | 
-| Storage defects            | &lt;=          | 0               | 0 minute  | 
+| Data Storage defects       | &lt;=          | 0               | 0 minute  | 
 | Connection ratio           | &gt;=          | 85%             | 5 minutes | 
 | Memory usage               | &gt;=          | 90%             | 5 minutes | 
 | Slow query                 | &gt;=          | 60 counts/min   | 5 minutes |
@@ -175,17 +176,19 @@ When you create a DB instance, you can set default notifications. If setting def
 If you do not use DB instance for a certain period of time, but you do not want to delete it, you can stop it. The virtual appliance of the stopped DB instance is shut down and will not be available until restarted. DB instances in a stopped state are charged at the discounted rate for 90 days from the moment they are stopped, and at the regular rate after 90 days. Make sure to delete unused DB instances to avoid unnecessary charges.
 
 > [Note]
-> High availability DB instances, masters with read replicas, and read replicas cannot be stopped. If the DB instance is using Floating IP, the Floating IP pricing is charged whether it is stopped or not.
+> High availability DB instances, masters with read replicas, and read replicas cannot be stopped.
+> If the DB instance is using Floating IP, the Floating IP pricing is charged whether it is stopped or not.
 
 ### Create Read Replica
 
 To improve read performance, you can create a read replica which can be used for read-only. You can create maximum five read replicas for one master. You cannot create a read replica of a read replica. We recommend that you make the read replica the same or higher specification as the master. Creating with low specifications may cause to delay replication.
 
 > [Caution]
-> When creating a read replica, the master's I/O performance may be lower than usual. The time to create read replica can increase in proportion to the size of the master's database.
+> When creating a read replica, the master's I/O performance may be lower than usual.
+> The time to create read replica can increase in proportion to the size of the master's database.
 
 > [Note]
-> Object storage pricing may occur as much as the binary log size required for the process of creating read replica.
+> Backup storage charge may occur as much as the binary log size required for the process of creating read replica.
 
 #### Create Read Replica on Subnet in Different Region
 * When you connect a region peering between VPCs that exist in different regions, you can create a read replica on a subnet that belongs to a VPC in a different region.
@@ -202,8 +205,7 @@ Force promotion to the read replica's point-in-time data, regardless of the stat
 
 ### Stop Replication of Read Replicas
 
-Read replicas can be stopped for several reasons. If the status of the read replica is `Replication stopped`, you must quickly determine the cause and perform normalization. If the ` Replication stopped` status persists for a long time, the replication delay will increase. If you do not have the binary log required for normalization, you must rebuild the read replica. The reason for replication stop can be determined by the `SHOW SLAVE STATUS` command in the read replica. If the value
-of `Last_Errno` is 1062, you can call the Procedure below until the error disappears.
+Read replicas can be stopped for several reasons. If the status of the read replica is `Replication stopped`, you must quickly determine the cause and perform normalization. If the ` Replication stopped` status persists for a long time, the replication delay will increase. If you do not have the binary log required for normalization, you must rebuild the read replica. The reason for replication stop can be determined by the `SHOW SLAVE STATUS` command in the read replica. If the value of `Last_Errno` is 1062, you can call the Procedure below until the error disappears.
 
 ``` 
 mysql> CALL mysql.tcrds_repl_skip_repl_error(); 
@@ -215,8 +217,7 @@ If you can't resolve the replication stop of read replica, you can rebuild it to
 
 ### Force Restart
 
-You can force restart if MySQL on DB instance is not working properly. For force restart, give the SIGTERM command to MySQL to wait 10 minutes for normal shutdown. If MySQL shuts down successfully within 10 minutes, reboot the virtual machine thereafter. If it does not shut down properly within 10 minutes, force to reboot the virtual machine. If virtual machine is forcibly rebooted, some of the transactions you are working on can be lost, and the data volume may be corrupted and may not be
-recovered. After force restart, the state of the DB instance might not return to the available state. In case of this situation, please contact the Customer Center.
+You can force restart if MySQL on DB instance is not working properly. For force restart, give the SIGTERM command to MySQL to wait 10 minutes for normal shutdown. If MySQL shuts down successfully within 10 minutes, reboot the virtual machine thereafter. If it does not shut down properly within 10 minutes, force to reboot the virtual machine. If virtual machine is forcibly rebooted, some of the transactions you are working on can be lost, and the data volume may be corrupted and may not be recovered. After force restart, the state of the DB instance might not return to the available state. In case of this situation, please contact the Customer Center.
 
 > [Caution]  
 > Due to the potential for data loss or data volume corruption, this feature should be avoided except in urgent and unavoidable circumstances.
@@ -226,8 +227,7 @@ recovered. After force restart, the state of the DB instance might not return to
 
 ### Secure Capacity
 
-If your storage is running out of capacity due to sudden heavy loads, you can delete the binary log with the ability to free up space in the web console. If you select securing capacity in the Web Console, a pop-up screen will be displayed where you can select the binary log for DB instance. Select Binary log and press the **Confirm** button to delete all binary logs generated before the selected binary log. Securing Capacity is a feature to temporarily secure capacity. If you continue to run
-out of capacity, you may need to set a storage period for binary logs or expand the size of your storage to match the service load.
+If your data storage is running out of capacity due to sudden heavy loads, you can delete the binary log with the ability to free up space in the web console. If you select securing capacity in the Web Console, a pop-up screen will be displayed where you can select the binary log for DB instance. Select Binary log and press the **Confirm** button to delete all binary logs generated before the selected binary log. Securing Capacity is a feature to temporarily secure capacity. If you continue to run out of capacity, you may need to set a storage period for binary logs or expand the size of your data storage to match the service load.
 
 > [Note]
 > You can set the storage period for binary logs with the `expire_logs_days` in MySQL 5.7 and later and the `binlog_expire_logs_seconds` parameter in MySQL 5.8 and later.
@@ -297,6 +297,19 @@ You can encrypt the connection between the client and the database by specifying
 | SSL        | Encrypted connections are applied.                                                    |
 | X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the web console. |
 
+### DB Schema & Direct User Control
+
+RDS for MySQL provides management features in the web console to make it easy to manage DB schemas and users, but it also provides the feature to set up direct user control. This can be set via the DB Schema & User Direct Control item on the Modify DB Instance screen in the web console.
+* With direct control, all currently created users are granted the following permissions
+
+```sql
+GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
+```
+
+직접 제어 사용 이후 다시 사용 안 함으로 변경했을 때 주의할 점
+* 기존에 부여했던 권한들을 회수하지 않습니다. 이때 명령어를 사용해 DB 스키마나 사용자를 추가한다면 웹 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
+* 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
+
 ## High Availability DB instances
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
@@ -309,7 +322,7 @@ High availability DB instances increase availability, data durability, and provi
 Candidate master has a process for detecting failures, which periodically detects the state of the master. This detection period is called ping interval and takes failover if four consecutive health checks fail. The shorter the ping interval, the more sensitive to the fault respond is, and the longer the ping interval, the less insensitive the fault respond is. It is important to set the appropriate ping interval for the service load accordingly.
 
 > [Note]
-> When the master's storage usage is full, the high availability monitoring process detects it as a failure and takes action, which you should be taken note of.
+> When the master's data storage usage is full, the high availability monitoring process detects it as a failure and takes action, which you should be taken note of.
 
 ### Automatic Failover
 
@@ -353,7 +366,7 @@ For high-availability DB instances, when performing an action that accompanies r
 * Change parameter group
 * When parameters that require a restart have changed
 * Reflect parameter group changes
-* Change storage size
+* Change data storage size
 
 When you restart with failover, the candidate master is restarted first. Failover will then promote the candidate master to the master, and the existing master will serve as a candidate master. Upon promotion, a record of the internal domain for access changes from master to candidate master, hence no changes to the application are required. The promoted master takes over all automatic backups of the previous master. Point-in-time restoration using existing backups is not supported because the
 master changes during failover and all binary logs are deleted. You can restore point-in-time from the time the new backup was performed on the promoted master.
@@ -368,6 +381,14 @@ master changes during failover and all binary logs are deleted. You can restore 
 
 You can temporarily stop the high availability feature in situations where temporary interruption of connectivity or high load is expected. If the high availability feature is paused, it does not detect failures, and therefore does not fail. Even if a task that requires a restart while the high availability feature is paused do not resume the paused high availability feature. Data replication occurs normal when high availability is paused, but we do not recommend that you pause for a long time
 as no failures are to be detected.
+
+### 예비 마스터 승격
+
+예비 마스터도 읽기 복제본과 마찬가지로 마스터와의 복제 관계를 끊고 마스터로 승격시킬 수 있습니다. 고가용성을 해제하고 읽기 복제본으로 변경 후, 읽기 복제본 승격과 동일한 작업을 진행합니다. 승격하려는 예비 마스터와 마스터 사이에 복제 지연이 있는 경우, 해당 지연이 없어질 때까지 승격되지 않습니다.
+
+### 예비 마스터 강제 승격
+
+마스터의 상태와 상관없이 예비 마스터의 현재 시점 데이터로 강제 승격합니다.
 
 ## MySQL Procedure
 
