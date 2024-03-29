@@ -2,7 +2,8 @@
 
 ## Backup
 
-You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica.
+You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
+high-availability configuration or perform backups from read replica.
 
 > [Note]
 > High availability DB instances are backed up on the extra master without compromising the master's storage performance.
@@ -34,6 +35,8 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 
 The following settings are applied to backup, and also to auto and manual backups.
 
+![backup-config-en](https://static.toastoven.net/prod_rds/24.03.12/backup-config-en.png)
+
 **Use Table Lock**
 
 * `FLUSH TABLES WITH READ LOCK` ets whether the syntax is enabled or disabled.
@@ -46,10 +49,30 @@ The following settings are applied to backup, and also to auto and manual backup
 
 ### Manual Backup
 
-If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike auto backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted Manual backups require you to enter a name for the backup and have the following limitations.
+If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike automatic backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted. 웹 콘솔에서 수동 백업을 수행하려면
+
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
+
+❶ 백업할 DB 인스턴스를 선택한 뒤 **백업**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
+
+![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
+
+❷ 원한다면 백업을 수행할 DB 인스턴스를 변경합니다.
+❸ 백업의 이름을 입력합니다. 아래와 같은 제약 사항이 있습니다.
 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
+
+또는 **백업** 탭에서
+
+![manual-backup-en](https://static.toastoven.net/prod_rds/24.03.12/manual-backup-en.png)
+
+❶ **+ 백업 생성**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
+
+![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
+
+❷ 백업을 수행할 DB 인스턴스를 선택합니다.
+❸ 백업의 이름을 입력한 뒤 **생성**을 클릭하면 백업 생성을 요청할 수 있습니다.
 
 ### Auto Backup
 
@@ -57,7 +80,7 @@ In addition to manually performing backups, auto backups can occur when needed f
 
 **Allow Auto Backup**
 
-* If you don't allow auto backups, all auto backups will be blocked from taking place, and some operations, including restore and replication processes, that might otherwise take place on demand, will not be supported. In addition, you won't be able to set the following auto backup-related items   
+* If you don't allow auto backups, all auto backups will be blocked from taking place, and some operations, including restore and replication processes, that might otherwise take place on demand, will not be supported. In addition, you won't be able to set the following auto backup-related items
 
 **Auto Backup Retention Period**
 
@@ -90,7 +113,32 @@ All backup files are uploaded to the internal backup storage and stored. For man
 
 ### Export Backup
 
-You can export backup files stored on internal backup storage to user object storage on NHN Cloud. You can also export a manual or auto backup file, or export the backup file to user object storage at the same time as you perform the backup. While exporting backups, network performance of the source DB instance may degrade.
+#### 백업을 수행하면서 파일 내보내기
+
+백업을 수행함과 동시에 백업 파일을 사용자 오브젝트 스토리지로 내보낼 수 있습니다.
+
+![db-instance-list-export-obs-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-en.png)
+
+![db-instance-list-export-obs-modal-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-modal-en.png)
+
+❶ 백업할 DB 인스턴스를 선택한 뒤 드롭다운 메뉴에서 **오브젝트 스토리지로 백업 내보내기**를 클릭하면 설정 팝업 화면이 나타납니다.
+❷ 백업이 저장될 오브젝트 스토리지의 테넌트 ID를 입력합니다. 테넌트 ID는 API 엔드포인트 설정에서 확인할 수 있습니다.
+❸ 백업이 저장될 오브젝트 스토리지의 NHN Cloud 회원 또는 IAM 멤버를 입력합니다.
+❹ 백업이 저장될 오브젝트 스토리지의 API 비밀번호를 입력합니다.
+❺ 백업이 저장될 오브젝트 스토리지의 컨테이너를 입력합니다.
+❻ 컨테이너에 저장될 백업의 경로를 입력합니다. 폴더 이름은 최대 255바이트이고, 전체 경로는 최대 1024바이트입니다. 특정 형태(. 또는 ..)는 사용할 수 없으며 특수문자(' " < > ;)와 공백은 입력할 수 없습니다.
+
+#### 백업 파일 내보내기
+
+내부 백업 스토리지에 저장된 백업 파일을 NHN Cloud의 사용자 오브젝트 스토리지로 내보낼 수 있습니다.
+
+![db-instance-detail-backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-en.png)
+
+❶ 백업을 수행한 원본 DB 인스턴스의 상세 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭하면 백업을 내보내기 위한 팝업 화면이 나타납니다.
+
+![backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/backup-export-en.png)
+
+❷ 또는 **백업** 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭합니다.
 
 > [Note]
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
@@ -104,7 +152,17 @@ Backups allow you to restore data to any point in time. Restoration always creat
 
 ### Snapshot Restoration
 
-Restoring a backup to a point in time is called snapshot restoration. Restoration is done with only backup files, you do not need the source DB instance from which you performed the backup.
+백업 파일만으로 복원을 진행해 백업을 수행한 원본 DB 인스턴스가 필요하지 않습니다. 웹 콘솔에서 스냅샷을 복원하려면
+
+![db-instance-snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-en.png)
+
+❶ DB 인스턴스의 상세 탭에서 복원할 백업 파일을 선택한 뒤 **스냅샷 복원**을 클릭하면 DB 인스턴스 복원 화면으로 이동합니다.
+
+또는
+
+![snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/snapshot-restoration-en.png)
+
+❶ 백업 탭에서 복원할 백업 파일을 선택한 뒤 **스냅샷 복원**을 클릭합니다.
 
 ### Point-in-time Restoration
 
@@ -115,6 +173,39 @@ difficult to restore to the desired point in time. For the cases listed below, y
 * When the binary log is automatically deleted by MySQL based on the Binary log retention period
 * When a binary log is deleted due to a failover of a high availability DB instance
 * When binary logs are corrupted or deleted for various other reasons
+
+웹 콘솔에서 시점 복원을 하려면
+
+![point-in-time-restoration-list-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-list-en.png)
+
+❶ 시점 복원할 DB 인스턴스를 선택한 뒤 **+ 시점 복원**을 클릭하면 시점 복원을 설정할 수 있는 페이지로 이동합니다.
+
+#### Timestamp를 이용한 복원
+
+Timestamp를 사용한 복원 시에는 선택한 시점과 가장 가까운 백업 파일을 기준으로 복원을 진행한 뒤, 원하는 시점까지의 바이너리 로그(binary log)를 적용합니다.
+
+![point-in-time-restoration-01-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-01-en.png)
+
+❶ 복원 방법을 선택합니다.
+
+![point-in-time-restoration-02-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-02-en.png)
+
+❷ 복원 시각을 선택합니다. 가장 최근 시점으로 복원하거나, 원하는 특정 시점을 직접 입력할 수 있습니다.
+
+![point-in-time-restoration-03-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-03-en.png)
+
+❸ **복원될 마지막 쿼리 확인**을 클릭하면 마지막으로 복원될 쿼리를 확인할 수 있는 팝업 화면이 표시됩니다.
+
+
+#### 바이너리 로그(binary log)를 이용한 복원
+
+바이너리 로그(binary log)를 활용한 복원 과정에서는 선택한 백업 파일로 먼저 복원을 진행한 후, 원하는 위치까지의 바이너리 로그(binary log)를 적용합니다.
+
+![point-in-time-restoration-04-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-04-en.png)
+
+❹ 바이너리 로그(binary log)로 복원을 하기 위해서는 먼저 백업 파일을 선택해야 합니다.
+❺ 바이너리 로그(binary log) 파일을 선택합니다.
+❻ 바이너리 로그(binary log)의 특정 위치를 입력합니다.
 
 ### Restoration with External MySQL Backup
 

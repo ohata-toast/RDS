@@ -34,6 +34,8 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 バックアップ時に適用される設定項目は以下の通りで、自動バックアップと手動バックアップの両方に適用されます。
 
+![backup-config-ja](https://static.toastoven.net/prod_rds/24.03.12/backup-config-ja.png)
+
 **テーブルロックの使用**
 
 * `FLUSH TABLES WITH READ LOCK`構文を実行するかどうかを設定します。
@@ -46,10 +48,30 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 ### 手動バックアップ
 
-特定の時点のデータベースを永久に保存するには、Webコンソールから手動でバックアップを実行することができます。手動バックアップは自動バックアップと異なり、明示的にバックアップを削除しない限り、DBインスタンスが削除されるときと同じように削除されません。手動バックアップの場合、バックアップの名前を入力する必要があり、下記のような制約があります。
+特定の時点のデータベースを永久に保存するには、Webコンソールから手動でバックアップを実行することができます。手動バックアップは自動バックアップと異なり、明示的にバックアップを削除しない限り、DBインスタンスが削除されるときと同じように削除されません。웹 콘솔에서 수동 백업을 수행하려면
+
+![db-instance-backup-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ja.png)
+
+❶ 백업할 DB 인스턴스를 선택한 뒤 **백업**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
+
+![db-instance-backup-popup-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-ja.png)
+
+❷ 원한다면 백업을 수행할 DB 인스턴스를 변경합니다.
+❸ 백업의 이름을 입력합니다. 아래와 같은 제약 사항이 있습니다.
 
 * バックアップ名はリージョンごとに固有の名前でなければなりません。
 * バックアップ名は1～100文字の間の英字、数字、一部の記号（-、_、.）のみ使用でき、最初の文字は英字のみ使用できます。
+
+또는 **백업** 탭에서
+
+![manual-backup-ja](https://static.toastoven.net/prod_rds/24.03.12/manual-backup-ja.png)
+
+❶ **+ 백업 생성**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
+
+![db-instance-backup-popup-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-ja.png)
+
+❷ 백업을 수행할 DB 인스턴스를 선택합니다.
+❸ 백업의 이름을 입력한 뒤 **생성**을 클릭하면 백업 생성을 요청할 수 있습니다.
 
 ### 自動バックアップ
 
@@ -90,7 +112,32 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 ### バックアップのエクスポート
 
-内部バックアップストレージに保存されたバックアップファイルをNHN Cloudのユーザーオブジェクトストレージにエクスポートできます。手動バックアップまたは自動バックアップファイルをエクスポートしたり、バックアップを実行すると同時にバックアップファイルをユーザーオブジェクトストレージにエクスポートすることもできます。バックアップをエクスポートしている間、元のDBインスタンスのネットワーク性能の低下が発生する場合があります。
+#### 백업을 수행하면서 파일 내보내기
+
+백업을 수행함과 동시에 백업 파일을 사용자 오브젝트 스토리지로 내보낼 수 있습니다.
+
+![db-instance-list-export-obs-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-ja.png)
+
+![db-instance-list-export-obs-modal-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-modal-ja.png)
+
+❶ 백업할 DB 인스턴스를 선택한 뒤 드롭다운 메뉴에서 **오브젝트 스토리지로 백업 내보내기**를 클릭하면 설정 팝업 화면이 나타납니다.
+❷ 백업이 저장될 오브젝트 스토리지의 테넌트 ID를 입력합니다. 테넌트 ID는 API 엔드포인트 설정에서 확인할 수 있습니다.
+❸ 백업이 저장될 오브젝트 스토리지의 NHN Cloud 회원 또는 IAM 멤버를 입력합니다.
+❹ 백업이 저장될 오브젝트 스토리지의 API 비밀번호를 입력합니다.
+❺ 백업이 저장될 오브젝트 스토리지의 컨테이너를 입력합니다.
+❻ 컨테이너에 저장될 백업의 경로를 입력합니다. 폴더 이름은 최대 255바이트이고, 전체 경로는 최대 1024바이트입니다. 특정 형태(. 또는 ..)는 사용할 수 없으며 특수문자(' " < > ;)와 공백은 입력할 수 없습니다.
+
+#### 백업 파일 내보내기
+
+내부 백업 스토리지에 저장된 백업 파일을 NHN Cloud의 사용자 오브젝트 스토리지로 내보낼 수 있습니다.
+
+![db-instance-detail-backup-export-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ja.png)
+
+❶ 백업을 수행한 원본 DB 인스턴스의 상세 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭하면 백업을 내보내기 위한 팝업 화면이 나타납니다.
+
+![backup-export-ja](https://static.toastoven.net/prod_rds/24.03.12/backup-export-ja.png)
+
+❷ 또는 **백업** 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭합니다.
 
 > [参考]
 > 手動バックアップの場合、バックアップを実行した元DBインスタンスが削除されると、バックアップをエクスポートできません。
@@ -104,7 +151,17 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 ### スナップショット復元
 
-スナップショット復元は、バックアップを実行した時点に復元します。バックアップファイルだけで復元を行い、バックアップを行った元のDBインスタンスが必要ありません。
+백업 파일만으로 복원을 진행해 백업을 수행한 원본 DB 인스턴스가 필요하지 않습니다. 웹 콘솔에서 스냅샷을 복원하려면
+
+![db-instance-snapshot-restoration-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-ja.png)
+
+❶ DB 인스턴스의 상세 탭에서 복원할 백업 파일을 선택한 뒤 **스냅샷 복원**을 클릭하면 DB 인스턴스 복원 화면으로 이동합니다.
+
+또는
+
+![snapshot-restoration-ja](https://static.toastoven.net/prod_rds/24.03.12/snapshot-restoration-ja.png)
+
+❶ 백업 탭에서 복원할 백업 파일을 선택한 뒤 **스냅샷 복원**을 클릭합니다.
 
 ### 時点復元
 
@@ -114,6 +171,38 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 * バイナリログ(binary log)保管期間に基づいてMySQLによって自動的にバイナリログ(binary log)が削除された場合
 * 高可用性DBインスタンスのフェイルオーバーによりバイナリログ(binary log)が削除された場合。
 * その他様々な理由でバイナリログ(binary log)が破損したり、削除されている場合。
+
+웹 콘솔에서 시점 복원을 하려면
+
+![point-in-time-restoration-list-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-list-ja.png)
+
+❶ 시점 복원할 DB 인스턴스를 선택한 뒤 **+ 시점 복원**을 클릭하면 시점 복원을 설정할 수 있는 페이지로 이동합니다.
+
+#### Timestamp를 이용한 복원
+
+Timestamp를 사용한 복원 시에는 선택한 시점과 가장 가까운 백업 파일을 기준으로 복원을 진행한 뒤, 원하는 시점까지의 바이너리 로그(binary log)를 적용합니다.
+
+![point-in-time-restoration-01-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-01-ja.png)
+
+❶ 복원 방법을 선택합니다.
+
+![point-in-time-restoration-02-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-02-ja.png)
+
+❷ 복원 시각을 선택합니다. 가장 최근 시점으로 복원하거나, 원하는 특정 시점을 직접 입력할 수 있습니다.
+
+![point-in-time-restoration-03-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-03-ja.png)
+
+❸ **복원될 마지막 쿼리 확인**을 클릭하면 마지막으로 복원될 쿼리를 확인할 수 있는 팝업 화면이 표시됩니다.
+
+#### 바이너리 로그(binary log)를 이용한 복원
+
+바이너리 로그(binary log)를 활용한 복원 과정에서는 선택한 백업 파일로 먼저 복원을 진행한 후, 원하는 위치까지의 바이너리 로그(binary log)를 적용합니다.
+
+![point-in-time-restoration-04-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-04-ja.png)
+
+❹ 바이너리 로그(binary log)로 복원을 하기 위해서는 먼저 백업 파일을 선택해야 합니다.
+❺ 바이너리 로그(binary log) 파일을 선택합니다.
+❻ 바이너리 로그(binary log)의 특정 위치를 입력합니다.
 
 ### 外部MySQLバックアップを利用した復元
 
