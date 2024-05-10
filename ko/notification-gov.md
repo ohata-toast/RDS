@@ -150,6 +150,11 @@
 | INSTC_67_01 | INSTANCE          | 예        | OS 버전 업그레이드 종료                       |
 | INSTC_67_04 | INSTANCE          | 예        | OS 버전 업그레이드 실패                       |
 | INSTC_68_01 | INSTANCE          | 예        | 네트워크 통신 실패                           |
+| INSTC_69_00 | INSTANCE          | 예        | 장애 조치 수동 제어 대기                       |
+| INSTC_69_01 | INSTANCE          | 예        | 장애 조치 수동 제어 성공                       |
+| INSTC_69_04 | INSTANCE          | 예        | 장애 조치 수동 제어 타임아웃                     |
+| INSTC_70_01 | INSTANCE          | 예        | 고가용성 정상화                             |
+| INSTC_71_01 | INSTANCE          | 예        | 고가용성 중단                              |
 | JOB_01_04   | JOB               | 예        | Job 실행 실패                            |
 | TENAT_01_04 | TENANT            | 예        | CPU 코어 수 제한                          |
 | TENAT_02_04 | TENANT            | 예        | RAM 용량 제한	                           |
@@ -185,7 +190,7 @@
 * ❷ 사용자 그룹에 추가된 사용자가 나타납니다.
 * ❸ **x**를 누르면 추가된 사용자를 제외할 수 있습니다.
 * ❹ 사용자 목록에 사용자가 많을 경우 검색 조건을 입력하여 결과를 제한할 수 있습니다.
-* ❺ **전체 프로젝트 멤버**를 통보 대상에 추가합니다. 
+* ❺ **전체 프로젝트 멤버**를 통보 대상에 추가합니다.
   * 추가 시 개별 사용자 추가는 취소됩니다.
   * 해당 사용자 그룹을 이용하여 알람을 전송하게 되는 경우, 당시 전체 프로젝트 멤버 대상으로 알람을 전송합니다.
 * ❻ **확인**를 눌러 사용자 그룹에 사용자를 추가합니다.
@@ -233,7 +238,7 @@
 | Storage 남은 사용량             | MB                 |
 | Storage IO Read            | KB/sec             |
 | Storage IO Write           | KB/sec             |
-| 데이터 스토리지 결함                    | 비정상: 0, 정상: 1      |
+| 데이터 스토리지 결함                | 비정상: 0, 정상: 1      |
 | Network in BPS             | KB/sec             |
 | Network out BPS            | KB/sec             |
 | Database Connection Status | 접속 불가: 0, 접속 가능: 1 |
@@ -268,25 +273,4 @@
 ![notification_group_03_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_03_ko.png)
 
 * ❶ 버튼을 클릭하면 추가된 감시 설정을 변경할 수 있습니다.
-* ❷ 버튼을 클릭하면 추가된 감시 설정을 삭제할 수 있습니다. 
-
-## Processlist
-
-RDS for MySQL은 데이터베이스에서 발생하는 다양한 문제를 분석하기 위해 데이터베이스에서 수행된 쿼리와 InnoDB 엔진의 상태를 수집합니다. 1초에 한 번씩 `information_schema.processlist`의 결과와, `SHOW ENGINE INNODB STATUS`의 결과를 수집하며 최근 4일간의 데이터를 웹 콘솔의 Processlist 탭에서 조회할 수 있습니다.
-
-> [참고] 수집된 데이터는 내부 백업 스토리지에 저장되며 별도로 과금하지 않습니다.
-
-수집하는 항목은 다음과 같습니다.
-
-| 항목            | 설명                                                |
-|---------------|---------------------------------------------------|
-| LogTime       | 수집 시각                                             |
-| PID           | 프로세스 ID                                           |
-| DB            | 사용 중인 DB                                          |
-| User          | 사용자                                               |
-| Host          | 사용자가 접속하고 있는 호스트명, IP 주소                          |
-| Command       | Thread 실행 중인 명령 타입(Sleep, Query, Quit, Kill 등)    |
-| State         | Thread의 상태(Starting, Rolling back, System lock 등) |
-| ExecTime      | Thread가 현재 상태를 유지한 시간(초)                          |
-| Query         | 실행 중인 쿼리                                          |
-| InnoDB Status | InnoDB 상태 정보                                      |
+* ❷ 버튼을 클릭하면 추가된 감시 설정을 삭제할 수 있습니다.

@@ -24,6 +24,7 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 | 8.0.33        | 8.0.33             |
 | 8.0.34        | 8.0.34             |
 | 8.0.35        | 8.0.35             |
+| 8.0.36        | 8.0.35             |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
     * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html

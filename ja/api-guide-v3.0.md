@@ -11,11 +11,11 @@
 APIを使用するには認証に必要な`User Access Key ID`と`Secret Access Key`が必要です。コンソール右上のアカウントにマウスポインタを合わせると表示されるドロップダウンメニューから<b>APIセキュリティ設定</b>を選択して作成できます。
 作成されたKeyはAppkeyと一緒にリクエストHeaderに含める必要があります。
 
-| 名前                         | 種類     | 形式     | 必須 | 説明                                 |
-|----------------------------|--------|--------|----|------------------------------------|
-| X-TC-APP-KEY               | Header | String | O  | RDS for MySQLサービスのAppkey           |
-| X-TC-AUTHENTICATION-ID     | Header | String | O  | APIセキュリティ設定メニューのUser Access Key ID |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O  | APIセキュリティ設定メニューのSecret Access Key  |
+| 名前                         | 種類     | 形式     | 必須 | 説明                                        |
+|----------------------------|--------|--------|----|-------------------------------------------|
+| X-TC-APP-KEY               | Header | String | O  | RDS for MySQLサービスのAppkeyまたはプロジェクト統合Appkey |
+| X-TC-AUTHENTICATION-ID     | Header | String | O  | APIセキュリティ設定メニューのUser Access Key ID        |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O  | APIセキュリティ設定メニューのSecret Access Key         |
 
 またプロジェクトメンバーのロールによって呼び出すことができるAPIが制限されます。 `RDS for MySQL ADMIN`、`RDS for MySQL VIEWER`に区分して権限を付与できます。
 
@@ -711,11 +711,12 @@ GET /v3.0/db-instances/{dbInstanceId}
 | dbFlavorId                  | Body | UUID     | DBインスタンス仕様の識別子                                                                                                                          |
 | parameterGroupId            | Body | UUID     | DBインスタンスに適用されたパラメータグループの識別子                                                                                                             |
 | dbSecurityGroupIds          | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
+| notificationGroupIds        | Body | Array    | DBインスタンスに適用された通知グループの識別子リスト                                                                                                             |
 | useDeletionProtection       | Body | Boolean  | DBインスタンス削除保護の有無                                                                                                                         |
 | supportAuthenticationPlugin | Body | Boolean  | 認証プラグインサポートの有無                                                                                                                          |
 | needToApplyParameterGroup   | Body | Boolean  | 最新パラメータグループの適用が必要かどうか                                                                                                                   |
-| needMigration               | Body | Boolean  | マイグレーションが必要かどうか                                                                                                                          |
-| supportDbVersionUpgrade     | Body | Boolean  | DBのバージョンアップグレードをサポートするかどうか                                                                                                                     |
+| needMigration               | Body | Boolean  | マイグレーションが必要かどうか                                                                                                                         |
+| supportDbVersionUpgrade     | Body | Boolean  | DBのバージョンアップグレードをサポートするかどうか                                                                                                              |
 | createdYmdt                 | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 | updatedYmdt                 | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 
@@ -741,6 +742,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
     "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
+    "notificationGroupIds": ["83a62a33-ddbf-4a04-8653-e54463d5b1ac"],
     "useDeletionProtection": false,
     "supportAuthenticationPlugin": true,
     "needToApplyParameterGroup": false,
@@ -1103,6 +1105,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                                         |
 | network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                                            |
 | storage                                      | Body | Object  | X  | ストレージ情報オブジェクト                                                                                                                                                                                                                                           |    
+| storage.storageType                          | Body | Enum    | X  | データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                                                      |
 | storage.storageSize                          | Body | Number  | X  | データストレージサイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                              |
 | backup                                       | Body | Object  | X  | バックアップ情報オブジェクト                                                                                                                                                                                                                                          |
 | backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |

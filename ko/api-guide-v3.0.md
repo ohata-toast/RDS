@@ -11,11 +11,11 @@
 API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. 콘솔 우측 상단의 계정에 마우스 포인터를 올리면 표시되는 드롭다운 메뉴에서 <b>API 보안 설정</b>을 선택해 생성할 수 있습니다.
 생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
 
-| 이름                         | 종류     | 형식     | 필수 | 설명                               |
-|----------------------------|--------|--------|----|----------------------------------|
-| X-TC-APP-KEY               | Header | String | O  | RDS for MySQL 서비스의 Appkey        |
-| X-TC-AUTHENTICATION-ID     | Header | String | O  | API 보안 설정 메뉴의 User Access Key ID |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O  | API 보안 설정 메뉴의 Secret Access Key  |
+| 이름                         | 종류     | 형식     | 필수 | 설명                                          |
+|----------------------------|--------|--------|----|---------------------------------------------|
+| X-TC-APP-KEY               | Header | String | O  | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-AUTHENTICATION-ID     | Header | String | O  | API 보안 설정 메뉴의 User Access Key ID            |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O  | API 보안 설정 메뉴의 Secret Access Key             |
 
 또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER`로 구분하여 권한을 부여할 수 있습니다.
 
@@ -709,6 +709,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 | dbFlavorId                  | Body | UUID     | DB 인스턴스 사양의 식별자                                                                                                                       |
 | parameterGroupId            | Body | UUID     | DB 인스턴스에 적용된 파라미터 그룹의 식별자                                                                                                             |
 | dbSecurityGroupIds          | Body | Array    | DB 인스턴스에 적용된 DB 보안 그룹의 식별자 목록                                                                                                         |
+| notificationGroupIds        | Body | Array    | DB 인스턴스에 적용된 알림 그룹의 식별자 목록                                                                                                            |
 | useDeletionProtection       | Body | Boolean  | DB 인스턴스 삭제 보호 여부                                                                                                                      |
 | supportAuthenticationPlugin | Body | Boolean  | 인증 플러그인 지원 여부                                                                                                                         |
 | needToApplyParameterGroup   | Body | Boolean  | 최신 파라미터 그룹 적용 필요 여부                                                                                                                   |
@@ -739,6 +740,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
     "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
+    "notificationGroupIds": ["83a62a33-ddbf-4a04-8653-e54463d5b1ac"],
     "useDeletionProtection": false,
     "supportAuthenticationPlugin": true,
     "needToApplyParameterGroup": false,
@@ -1095,12 +1097,13 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | parameterGroupId                             | Body | UUID    | X  | 파라미터 그룹의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                |
 | dbSecurityGroupIds                           | Body | Array   | X  | DB 보안 그룹의 식별자 목록<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                            |
 | userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                                                      |
-| useDefaultNotification                   | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                                                      |
+| useDefaultNotification                       | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                                                      |
 | useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                         |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                                          |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                 |
 | network.availabilityZone                     | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                                            |
-| storage                                      | Body | Object  | X  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                                          |    
+| storage                                      | Body | Object  | X  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                                      |    
+| storage.storageType                          | Body | Enum    | X  | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                                                                                                                                                                                                  |
 | storage.storageSize                          | Body | Number  | X  | 데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                                                                                           |
 | backup                                       | Body | Object  | X  | 백업 정보 객체                                                                                                                                                                                                                                            |
 | backup.backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |

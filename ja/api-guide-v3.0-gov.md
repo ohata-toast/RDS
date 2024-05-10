@@ -9,18 +9,18 @@
 APIを使用するには認証に必要な`User Access Key ID`と`Secret Access Key`が必要です。コンソール右上のアカウントにマウスポインタを合わせると表示されるドロップダウンメニューから<b>APIセキュリティ設定</b>を選択して作成できます。
 作成されたKeyはAppkeyと一緒にリクエストHeaderに含める必要があります。
 
-| 名前                         | 種類     | 形式     | 必須 | 説明                                 |
-|----------------------------|--------|--------|----|------------------------------------|
-| X-TC-APP-KEY               | Header | String | O  | RDS for MySQLサービスのAppkey           |
-| X-TC-AUTHENTICATION-ID     | Header | String | O  | APIセキュリティ設定メニューのUser Access Key ID |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O  | APIセキュリティ設定メニューのSecret Access Key  |
+| 名前                         | 種類     | 形式     | 必須 | 説明                                        |
+|----------------------------|--------|--------|----|-------------------------------------------|
+| X-TC-APP-KEY               | Header | String | O  | RDS for MySQLサービスのAppkeyまたはプロジェクト統合Appkey |
+| X-TC-AUTHENTICATION-ID     | Header | String | O  | APIセキュリティ設定メニューのUser Access Key ID        |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O  | APIセキュリティ設定メニューのSecret Access Key         |
 
 またプロジェクトメンバーのロールによって呼び出すことができるAPIが制限されます。 `RDS for MySQL ADMIN`、`RDS for MySQL VIEWER`に区分して権限を付与できます。
 
 * `RDS for MySQL ADMIN`権限はすべての機能を使用可能です。
 * `RDS for MySQL VIEWER`権限は情報を照会する機能のみ使用可能です。
-    * DBインスタンスを作成、修正、削除したり、DBインスタンスを対象とするいかなる機能も使用できません。
-    * ただし、通知グループとユーザーグループに関連する機能は使用可能です。
+  * DBインスタンスを作成、修正、削除したり、DBインスタンスを対象とするいかなる機能も使用できません。
+  * ただし、通知グループとユーザーグループに関連する機能は使用可能です。
 
 APIリクエスト時、認証に失敗したり権限がない場合、次のようなエラーが発生します。
 
@@ -709,11 +709,12 @@ GET /v3.0/db-instances/{dbInstanceId}
 | dbFlavorId                  | Body | UUID     | DBインスタンス仕様の識別子                                                                                                                          |
 | parameterGroupId            | Body | UUID     | DBインスタンスに適用されたパラメータグループの識別子                                                                                                             |
 | dbSecurityGroupIds          | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
+| notificationGroupIds        | Body | Array    | DBインスタンスに適用された通知グループの識別子リスト                                                                                                             |
 | useDeletionProtection       | Body | Boolean  | DBインスタンス削除保護の有無                                                                                                                         |
 | supportAuthenticationPlugin | Body | Boolean  | 認証プラグインサポートの有無                                                                                                                          |
 | needToApplyParameterGroup   | Body | Boolean  | 最新パラメータグループの適用が必要かどうか                                                                                                                   |
-| needMigration               | Body | Boolean  | マイグレーションが必要かどうか                                                                                                                          |
-| supportDbVersionUpgrade     | Body | Boolean  | DBのバージョンアップグレードをサポートするかどうか                                                                                                                     |
+| needMigration               | Body | Boolean  | マイグレーションが必要かどうか                                                                                                                         |
+| supportDbVersionUpgrade     | Body | Boolean  | DBのバージョンアップグレードをサポートするかどうか                                                                                                              |
 | createdYmdt                 | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 | updatedYmdt                 | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 
@@ -739,6 +740,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
     "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
+    "notificationGroupIds": ["83a62a33-ddbf-4a04-8653-e54463d5b1ac"],
     "useDeletionProtection": false,
     "supportAuthenticationPlugin": true,
     "needToApplyParameterGroup": false,
@@ -1036,24 +1038,24 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ---
 
-### DB 인스턴스 백업 후 내보내기
+### DBインスタンスバックアップ後にエクスポート
 
 ```
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
 
-#### 요청
+#### リクエスト
 
-| 이름              | 종류   | 형식     | 필수 | 설명                          |
+| 名前             | 種類  | 形式    | 必須 | 説明                         |
 |-----------------|------|--------|----|-----------------------------|
-| dbInstanceId    | URL  | UUID   | O  | DB 인스턴스의 식별자                |
-| tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
-| username        | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID   |
-| password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
-| targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
-| objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
+| dbInstanceId    | URL  | UUID   | O  | DBインスタンスの識別子               |
+| tenantId        | Body | String | O  | バックアップが保存されるオブジェクトストレージのテナントID   |
+| username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID   |
+| password        | Body | String | O  | バックアップが保存されるオブジェクトストレージのAPIパスワード |
+| targetContainer | Body | String | O  | バックアップが保存されるオブジェクトストレージのコンテナ    |
+| objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス           |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1069,11 +1071,11 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 | --- | --- | --- | --- |
-| jobId | Body | UUID | 요청한 작업의 식별자 |
+| jobId | Body | UUID | リクエストした作業の識別子 |
 
 ---
 
@@ -1101,6 +1103,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                                         |
 | network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                                            |
 | storage                                      | Body | Object  | X  | ストレージ情報オブジェクト                                                                                                                                                                                                                                           |    
+| storage.storageType                          | Body | Enum    | X  | データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                                                      |
 | storage.storageSize                          | Body | Number  | X  | データストレージサイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                              |
 | backup                                       | Body | Object  | X  | バックアップ情報オブジェクト                                                                                                                                                                                                                                          |
 | backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
@@ -1304,8 +1307,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### 共通リクエスト
 
-| 名前                                                  | 種類   | 形式      | 必須 | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-|-----------------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 名前 | 種類 | 形式 | 必須 | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --- | --- | --- | --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId                                        | URL  | UUID    | O  | DBインスタンスの識別子                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.restoreType                                 | Body | Enum    | O  | 復元タイプの種類<br><ul><li>`TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ</li><li>`BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ</li><li>`BACKUP`:既存に作成したバックアップを利用したスナップショット復元タイプ</li></ul>                                                                                                                                                                                                                                                                                                            |
@@ -1515,7 +1518,7 @@ POST /v3.0/db-instances/restore-from-obs
 |-----------------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.tenantId                                    | Body | String  | O  | バックアップが保存されたオブジェクトストレージのテナントID                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| restore.username                                    | Body | String  | O  | NHN CloudアカウントまたはIAMメンバーID                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| restore.username                                    | Body | String  | O  | NHN Cloud会員またはIAMメンバーID                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.password                                    | Body | String  | O  | バックアップが保存されたオブジェクトストレージのAPIパスワード                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | restore.targetContainer                             | Body | String  | O  | バックアップが保存されたオブジェクトストレージのコンテナ                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | restore.objectPath                                  | Body | String  | O  | コンテナに保存されたバックアップのパス                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -2359,7 +2362,7 @@ POST /v3.0/backups/{backupId}/export
 |-----------------|------|--------|----|----------------------------------|
 | backupId        | URL  | UUID   | O  | バックアップの識別子                       |
 | tenantId        | Body | String | O  | バックアップが保存されるオブジェクトストレージのテナントID   |
-| username        | Body | String | O  | NHN CloudアカウントまたはIAMメンバーID       |
+| username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID       |
 | password        | Body | String | O  | バックアップが保存されるオブジェクトストレージのAPIパスワード |
 | targetContainer | Body | String | O  | バックアップが保存されるオブジェクトストレージのコンテナ     |
 | objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス              |
@@ -2387,6 +2390,9 @@ POST /v3.0/backups/{backupId}/export
 | jobId | Body | UUID | リクエストした作業の識別子 |
 
 ---
+
+> [注意]
+> 手動バックアップの場合、バックアップが行われたDBインスタンスが存在しない場合、バックアップをオブジェクトストレージにエクスポートすることができません。
 
 ### バックアップを復元する
 
@@ -3849,18 +3855,18 @@ GET /v3.0/metric-statistics
 
 ## イベント
 
-### 이벤트 카테고리
+### イベントカテゴリー
 
-이벤트는 카테고리로 분류할 수 있으며 아래와 같습니다.
+イベントはカテゴリに分類することができ、下記の通りです。
 
-| 이벤트 카테고리    | 설명      |
+| イベントカテゴリー   | 説明     |
 |-------------|---------|
-| ALL         | 전체      |
-| BACKUP      | 백업      |
-| DB_INSTANCE | DB 인스턴스 |
-| JOB         | 작업      |
-| TENANT      | 테넌트     |
-| MONITORING  | 모니터링    |
+| ALL         | 全体     |
+| BACKUP      | バックアップ     |
+| DB_INSTANCE | DBインスタンス |
+| JOB         | 作業     |
+| TENANT      | テナント    |
+| MONITORING  | モニタリング   |
 
 ### イベントリスト照会
 
@@ -3944,7 +3950,7 @@ GET /v3.0/events
 
 ---
 
-### 구독 가능한 이벤트 코드 목록 보기
+### 購読可能なイベントコード一覧表示
 
 ```
 GET /v3.0/event-codes

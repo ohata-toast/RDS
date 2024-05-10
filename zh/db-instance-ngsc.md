@@ -429,7 +429,7 @@ mysql> CALL mysql.tcrds_current_lock();
 * **Create Replica** on the console can be used to configure replication of NHN Cloud RDS.
 
 ``` 
-mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS); 
+mysql> CALL mysql.tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS); 
 ```
 
 * Parameter description
