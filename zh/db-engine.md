@@ -8,24 +8,25 @@ For MySQL, the version number consists of version = X.Y.Z. In NHN Cloud RDS term
 
 The versions specified below are available.
 
-| Version           | Note                                                        |
-|--------------|-----------------------------------------------------------|
+| Version              | Note                                                        |
+|----------------------|-----------------------------------------------------------|
 | <strong>8.0</strong> ||
-| MySQL 8.0.35 |                                                           |
-| MySQL 8.0.34 |                                                           | 
-| MySQL 8.0.33 |                                                           | 
-| MySQL 8.0.32 |                                                           | 
-| MySQL 8.0.28 |                                                           | 
-| MySQL 8.0.23 |                                                           |
-| MySQL 8.0.18 |                                                           |
+| MySQL 8.0.36         |                                                           |
+| MySQL 8.0.35         |                                                           |
+| MySQL 8.0.34         |                                                           | 
+| MySQL 8.0.33         |                                                           | 
+| MySQL 8.0.32         |                                                           | 
+| MySQL 8.0.28         |                                                           | 
+| MySQL 8.0.23         |                                                           |
+| MySQL 8.0.18         |                                                           |
 | <strong>5.7</strong> ||
-| MySQL 5.7.37 |                                                           |
-| MySQL 5.7.33 | You cannot restore a DB instance from an external backup.                   |
-| MySQL 5.7.26 |                                                           |
-| MySQL 5.7.19 |                                                           |
-| MySQL 5.7.15 |                                                           |
+| MySQL 5.7.37         |                                                           |
+| MySQL 5.7.33         | You cannot restore a DB instance from an external backup.                   |
+| MySQL 5.7.26         |                                                           |
+| MySQL 5.7.19         |                                                           |
+| MySQL 5.7.15         |                                                           |
 | <strong>5.6</strong> ||
-| MySQL 5.6.33 | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
+| MySQL 5.6.33         | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
 
 In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
