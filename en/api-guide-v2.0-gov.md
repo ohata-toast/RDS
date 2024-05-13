@@ -1,8 +1,8 @@
 ## Database > RDS for MySQL > API Guide
 
-| Region                    | Endpoint                                  |
-|---------------------------|-------------------------------------------|
-| Korea (Pangyo) region     | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
+| Region                | Endpoint                                          |
+|-----------------------|---------------------------------------------------|
+| Korea (Pangyo) region | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
 
 ## Monitoring
 

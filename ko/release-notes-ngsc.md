@@ -4,7 +4,6 @@
 
 #### 기능 추가 및 개선
 
-* OS 버전 업그레이드 기능 추가
 * Slow Query 분석 기능 추가
   * Slow Query 분석, Process List, InnoDB Status 모니터링 기능을 포함한 분석 탭 제공
   * DB 인스턴스 수정 화면에서 Slow Query 분석 기능을 사용하지 않도록 설정할 수 있는 기능 제공

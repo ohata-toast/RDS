@@ -11,7 +11,7 @@
 - 統計情報照会に必要な統計項目(metric)を照会します。
 
 ```
-GET /rds/api/v2.0/metrics
+GET /v2.0/metrics
 ```
 
 #### リクエストヘッダ
