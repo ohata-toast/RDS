@@ -27,8 +27,8 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 | 8.0.36        | 8.0.35             |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
-    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the web console.
@@ -50,16 +50,16 @@ The following settings are applied to backup, and also to auto and manual backup
 
 ### Manual Backup
 
-If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike automatic backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted. 웹 콘솔에서 수동 백업을 수행하려면
+If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike auto backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted. To perform a manual backup from the console,
 
 ![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
 
-❶ 백업할 DB 인스턴스를 선택한 뒤 **백업**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
+❶ After selecting the DB instance to back up, click **Backup**, and the **Create Backup** pop-up screen appears.
 
 ![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
 
-❷ 원한다면 백업을 수행할 DB 인스턴스를 변경합니다.
-❸ 백업의 이름을 입력합니다. 아래와 같은 제약 사항이 있습니다.
+❷ If you want, change the DB instance to which you want to perform the backup.
+❸ Enter a name for the backup. There are the following limitations
 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
@@ -114,32 +114,32 @@ All backup files are uploaded to the internal backup storage and stored. For man
 
 ### Export Backup
 
-#### 백업을 수행하면서 파일 내보내기
+#### Export Files While Performing Backup
 
-백업을 수행함과 동시에 백업 파일을 사용자 오브젝트 스토리지로 내보낼 수 있습니다.
+You can export backup files to the user object storage while performing backup.
 
 ![db-instance-list-export-obs-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-en.png)
 
 ![db-instance-list-export-obs-modal-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-modal-en.png)
 
-❶ 백업할 DB 인스턴스를 선택한 뒤 드롭다운 메뉴에서 **오브젝트 스토리지로 백업 내보내기**를 클릭하면 설정 팝업 화면이 나타납니다.
-❷ 백업이 저장될 오브젝트 스토리지의 테넌트 ID를 입력합니다. 테넌트 ID는 API 엔드포인트 설정에서 확인할 수 있습니다.
-❸ 백업이 저장될 오브젝트 스토리지의 NHN Cloud 회원 또는 IAM 멤버를 입력합니다.
-❹ 백업이 저장될 오브젝트 스토리지의 API 비밀번호를 입력합니다.
-❺ 백업이 저장될 오브젝트 스토리지의 컨테이너를 입력합니다.
-❻ 컨테이너에 저장될 백업의 경로를 입력합니다. 폴더 이름은 최대 255바이트이고, 전체 경로는 최대 1024바이트입니다. 특정 형태(. 또는 ..)는 사용할 수 없으며 특수문자(' " < > ;)와 공백은 입력할 수 없습니다.
+❶ Select the DB instance to back up and click **Export Backup to Object Storage**from the drop-down menu, and the settings pop-up screen will appear.
+❷ Enter the tenant ID of the object storage where the backup will be saved. You can find the tenant ID in the API endpoint settings.
+❸ Enter the NHN Cloud member or IAM member of the object storage where the backup will be saved.
+❹ Enter the API password of the object storage where the backup will be saved.
+❺ Enter the container of the object storage where the backup will be saved.
+❻ Enter the path to the backup that will be stored in the container. The folder name can be up to 255 bytes, and the full path can be up to 1024 bytes. Certain forms (. or ..) are not allowed, and special characters (' " < > ;) and spaces are not allowed.
 
-#### 백업 파일 내보내기
+#### Export Backup Files
 
-내부 백업 스토리지에 저장된 백업 파일을 NHN Cloud의 사용자 오브젝트 스토리지로 내보낼 수 있습니다.
+You can export backup files stored on your internal backup storage to user object storage in NHN Cloud.
 
-![db-instance-detail-backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-en.png)
+![db-instance-detail-backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ko.png)
 
-❶ 백업을 수행한 원본 DB 인스턴스의 상세 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭하면 백업을 내보내기 위한 팝업 화면이 나타납니다.
+❶ On the Details tab of the source DB instance from which the backup was taken, select the backup file to export and click **Export Backup to Object Storage**, and a pop-up screen will appear to export the backup.
 
 ![backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/backup-export-en.png)
 
-❷ 또는 **백업** 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭합니다.
+Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
 
 > [Note]
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
@@ -153,17 +153,17 @@ Backups allow you to restore data to any point in time. Restoration always creat
 
 ### Snapshot Restoration
 
-백업 파일만으로 복원을 진행해 백업을 수행한 원본 DB 인스턴스가 필요하지 않습니다. 웹 콘솔에서 스냅샷을 복원하려면
+You can restore using only the backup file, so you don't need the original DB instance from which the backup was taken. To restore a snapshot from the web console,
 
 ![db-instance-snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-en.png)
 
-❶ DB 인스턴스의 상세 탭에서 복원할 백업 파일을 선택한 뒤 **스냅샷 복원**을 클릭하면 DB 인스턴스 복원 화면으로 이동합니다.
+❶ Select the backup file you want to restore On the details tab of the dB instance, and then click **Restore Snapshot**to go to the Restore DB instance screen.
 
-또는
+Or
 
 ![snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/snapshot-restoration-en.png)
 
-❶ 백업 탭에서 복원할 백업 파일을 선택한 뒤 **스냅샷 복원**을 클릭합니다.
+❶ On the Backup tab, select the backup file you want to restore, and then click **Restore Snapshot**.
 
 ### Point-in-time Restoration
 
@@ -175,38 +175,38 @@ difficult to restore to the desired point in time. For the cases listed below, y
 * When a binary log is deleted due to a failover of a high availability DB instance
 * When binary logs are corrupted or deleted for various other reasons
 
-웹 콘솔에서 시점 복원을 하려면
+To restore a point in time from the web console
 
 ![point-in-time-restoration-list-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-list-en.png)
 
-❶ 시점 복원할 DB 인스턴스를 선택한 뒤 **+ 시점 복원**을 클릭하면 시점 복원을 설정할 수 있는 페이지로 이동합니다.
+❶ Select the DB instance you want to restore to a point in time and click **\+ Restore Point-In-Time** to go to the page where you can set up a point in time restore.
 
-#### Timestamp를 이용한 복원
+#### Restore with Timestamp
 
-Timestamp를 사용한 복원 시에는 선택한 시점과 가장 가까운 백업 파일을 기준으로 복원을 진행한 뒤, 원하는 시점까지의 바이너리 로그(binary log)를 적용합니다.
+When restoring with a timestamp, proceed with the restoration based on the backup file closest to the selected point in time, and then applies a binary log up to the desired point in time.
 
 ![point-in-time-restoration-01-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-01-en.png)
 
-❶ 복원 방법을 선택합니다.
+❶ Select a restore method.
 
 ![point-in-time-restoration-02-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-02-en.png)
 
-❷ 복원 시각을 선택합니다. 가장 최근 시점으로 복원하거나, 원하는 특정 시점을 직접 입력할 수 있습니다.
+❷ Select a restore time. You can restore to the most recent point in time, or you can enter a specific point in time.
 
 ![point-in-time-restoration-03-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-03-en.png)
 
-❸ **복원될 마지막 쿼리 확인**을 클릭하면 마지막으로 복원될 쿼리를 확인할 수 있는 팝업 화면이 표시됩니다.
+❸ Click **Confirm the last query to be restored** to display a pop-up screen where you can confirm the last query to be restored.
 
 
-#### 바이너리 로그(binary log)를 이용한 복원
+#### Restore using binary logs
 
-바이너리 로그(binary log)를 활용한 복원 과정에서는 선택한 백업 파일로 먼저 복원을 진행한 후, 원하는 위치까지의 바이너리 로그(binary log)를 적용합니다.
+The restore with binary log process first restores to the selected backup file and then applies the binary log to the desired location.
 
 ![point-in-time-restoration-04-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-04-en.png)
 
-❹ 바이너리 로그(binary log)로 복원을 하기 위해서는 먼저 백업 파일을 선택해야 합니다.
-❺ 바이너리 로그(binary log) 파일을 선택합니다.
-❻ 바이너리 로그(binary log)의 특정 위치를 입력합니다.
+❹ To restore to a binary log, you must first select a backup file.
+❺ Select a binary log file.
+❻ Enter a specific location for the binary log.
 
 ### Restoration with External MySQL Backup
 
