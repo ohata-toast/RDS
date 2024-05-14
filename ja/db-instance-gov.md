@@ -32,6 +32,7 @@ NHN Cloudは、物理的なハードウェアの問題で生じる障害に備�
 | バージョン        | 備考                                                   |
 |--------------|------------------------------------------------------|
 | <strong>8.0</strong> ||
+| MySQL 8.0.36         |                                                           |
 | MySQL 8.0.35 |                                                      |
 | MySQL 8.0.34 |                                                      | 
 | MySQL 8.0.33 |                                                      |
@@ -371,7 +372,7 @@ mysql> CALL mysql.tcrds_current_lock();
 * NHN Cloud RDSの複製構成は、コンソールの**複製の作成**で行うことができます。
 
 ```
-mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
+mysql> CALL mysql.tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
 ```
 
 * パラメータの説明

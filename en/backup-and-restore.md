@@ -2,7 +2,8 @@
 
 ## Backup
 
-You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica.
+You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
+high-availability configuration or perform backups from read replica.
 
 > [Note]
 > High availability DB instances are backed up on the extra master without compromising the master's storage performance.
@@ -23,16 +24,19 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 | 8.0.33        | 8.0.33             |
 | 8.0.34        | 8.0.34             |
 | 8.0.35        | 8.0.35             |
+| 8.0.36        | 8.0.35             |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
-    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the web console.
 > High Availability DB instances are backed up on a candidate master to avoid degradation of data storage performance on the master.
 
 The following settings are applied to backup, and also to auto and manual backups.
+
+![backup-config-en](https://static.toastoven.net/prod_rds/24.03.12/backup-config-en.png)
 
 **Use Table Lock**
 
@@ -46,10 +50,30 @@ The following settings are applied to backup, and also to auto and manual backup
 
 ### Manual Backup
 
-If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike auto backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted Manual backups require you to enter a name for the backup and have the following limitations.
+If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike auto backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted. To perform a manual backup from the console,
+
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
+
+❶ After selecting the DB instance to back up, click **Backup**, and the **Create Backup** pop-up screen appears.
+
+![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
+
+❷ If you want, change the DB instance to which you want to perform the backup.
+❸ Enter a name for the backup. There are the following limitations
 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
+
+또는 **백업** 탭에서
+
+![manual-backup-en](https://static.toastoven.net/prod_rds/24.03.12/manual-backup-en.png)
+
+❶ **+ 백업 생성**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
+
+![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
+
+❷ 백업을 수행할 DB 인스턴스를 선택합니다.
+❸ 백업의 이름을 입력한 뒤 **생성**을 클릭하면 백업 생성을 요청할 수 있습니다.
 
 ### Auto Backup
 
@@ -57,7 +81,7 @@ In addition to manually performing backups, auto backups can occur when needed f
 
 **Allow Auto Backup**
 
-* If you don't allow auto backups, all auto backups will be blocked from taking place, and some operations, including restore and replication processes, that might otherwise take place on demand, will not be supported. In addition, you won't be able to set the following auto backup-related items   
+* If you don't allow auto backups, all auto backups will be blocked from taking place, and some operations, including restore and replication processes, that might otherwise take place on demand, will not be supported. In addition, you won't be able to set the following auto backup-related items
 
 **Auto Backup Retention Period**
 
@@ -90,7 +114,32 @@ All backup files are uploaded to the internal backup storage and stored. For man
 
 ### Export Backup
 
-You can export backup files stored on internal backup storage to user object storage on NHN Cloud. You can also export a manual or auto backup file, or export the backup file to user object storage at the same time as you perform the backup. While exporting backups, network performance of the source DB instance may degrade.
+#### Export Files While Performing Backup
+
+You can export backup files to the user object storage while performing backup.
+
+![db-instance-list-export-obs-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-en.png)
+
+![db-instance-list-export-obs-modal-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-modal-en.png)
+
+❶ Select the DB instance to back up and click **Export Backup to Object Storage**from the drop-down menu, and the settings pop-up screen will appear.
+❷ Enter the tenant ID of the object storage where the backup will be saved. You can find the tenant ID in the API endpoint settings.
+❸ Enter the NHN Cloud member or IAM member of the object storage where the backup will be saved.
+❹ Enter the API password of the object storage where the backup will be saved.
+❺ Enter the container of the object storage where the backup will be saved.
+❻ Enter the path to the backup that will be stored in the container. The folder name can be up to 255 bytes, and the full path can be up to 1024 bytes. Certain forms (. or ..) are not allowed, and special characters (' " < > ;) and spaces are not allowed.
+
+#### Export Backup Files
+
+You can export backup files stored on your internal backup storage to user object storage in NHN Cloud.
+
+![db-instance-detail-backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ko.png)
+
+❶ On the Details tab of the source DB instance from which the backup was taken, select the backup file to export and click **Export Backup to Object Storage**, and a pop-up screen will appear to export the backup.
+
+![backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/backup-export-en.png)
+
+Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
 
 > [Note]
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
@@ -104,7 +153,17 @@ Backups allow you to restore data to any point in time. Restoration always creat
 
 ### Snapshot Restoration
 
-Restoring a backup to a point in time is called snapshot restoration. Restoration is done with only backup files, you do not need the source DB instance from which you performed the backup.
+You can restore using only the backup file, so you don't need the original DB instance from which the backup was taken. To restore a snapshot from the web console,
+
+![db-instance-snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-en.png)
+
+❶ Select the backup file you want to restore On the details tab of the dB instance, and then click **Restore Snapshot**to go to the Restore DB instance screen.
+
+Or
+
+![snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/snapshot-restoration-en.png)
+
+❶ On the Backup tab, select the backup file you want to restore, and then click **Restore Snapshot**.
 
 ### Point-in-time Restoration
 
@@ -115,6 +174,39 @@ difficult to restore to the desired point in time. For the cases listed below, y
 * When the binary log is automatically deleted by MySQL based on the Binary log retention period
 * When a binary log is deleted due to a failover of a high availability DB instance
 * When binary logs are corrupted or deleted for various other reasons
+
+To restore a point in time from the web console
+
+![point-in-time-restoration-list-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-list-en.png)
+
+❶ Select the DB instance you want to restore to a point in time and click **\+ Restore Point-In-Time** to go to the page where you can set up a point in time restore.
+
+#### Restore with Timestamp
+
+When restoring with a timestamp, proceed with the restoration based on the backup file closest to the selected point in time, and then applies a binary log up to the desired point in time.
+
+![point-in-time-restoration-01-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-01-en.png)
+
+❶ Select a restore method.
+
+![point-in-time-restoration-02-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-02-en.png)
+
+❷ Select a restore time. You can restore to the most recent point in time, or you can enter a specific point in time.
+
+![point-in-time-restoration-03-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-03-en.png)
+
+❸ Click **Confirm the last query to be restored** to display a pop-up screen where you can confirm the last query to be restored.
+
+
+#### Restore using binary logs
+
+The restore with binary log process first restores to the selected backup file and then applies the binary log to the desired location.
+
+![point-in-time-restoration-04-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-04-en.png)
+
+❹ To restore to a binary log, you must first select a backup file.
+❺ Select a binary log file.
+❻ Enter a specific location for the binary log.
 
 ### Restoration with External MySQL Backup
 

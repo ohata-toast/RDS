@@ -1,10 +1,10 @@
 ## Database > RDS for MySQL > API Guide
 
-| Region                    | Endpoint                                  |
-|---------------------------|-------------------------------------------|
-| Korea (Pangyo) region     | https://kr1-mysql.api.nhncloudservice.com |
-| Korea (Pyeongchon) region | https://kr2-mysql.api.nhncloudservice.com |
-| Japan region              | https://jp1-mysql.api.nhncloudservice.com |
+| Region                    | Endpoint                                      |
+|---------------------------|-----------------------------------------------|
+| Korea (Pangyo) region     | https://kr1-rds-mysql.api.nhncloudservice.com |
+| Korea (Pyeongchon) region | https://kr2-rds-mysql.api.nhncloudservice.com |
+| Japan region              | https://jp1-rds-mysql.api.nhncloudservice.com |
 
 ## Monitoring
 
@@ -13,7 +13,7 @@
 - View the metrics necessary for viewing statistical information.
 
 ```
-GET /rds/api/v2.0/metrics
+GET /v2.0/metrics
 ```
 
 #### Request header

@@ -132,24 +132,29 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_60_00 | INSTANCE          | Yes          | DB instance migration started                                                 |
 | INSTC_60_01 | INSTANCE          | Yes          | DB instance migration completed                                               |
 | INSTC_60_04 | INSTANCE          | Yes          | DB instance migration failed                                                  |
-| INSTC_61_00 | INSTANCE          | Yes        | Candidate master rebuilding started                        |
-| INSTC_61_01 | INSTANCE          | Yes        | Candidate master rebuilding completed                        |
-| INSTC_61_04 | INSTANCE          | Yes        | Candidate master rebuilding failed                        |
-| INSTC_62_00 | INSTANCE          | Yes        | DB engine version upgrade started                    |
-| INSTC_62_01 | INSTANCE          | Yes        | DB engine version upgrade completed                    |
-| INSTC_62_04 | INSTANCE          | Yes        | DB engine version upgrade failed                    |
-| INSTC_63_01 | INSTANCE          | Yes        | Decrypt DB instance binary logs                   |
-| INSTC_64_04 | INSTANCE          | Yes        | DB engine version upgrade pre-check failed              |
-| INSTC_65_00 | INSTANCE          | Yes        | Authentication plugin activation started                       |
-| INSTC_65_01 | INSTANCE          | Yes        | Authentication plugin activation completed                       |
-| INSTC_65_04 | INSTANCE          | Yes        | Authentication plugin activation failed                       |
-| INSTC_66_00 | INSTANCE          | Yes        | Force promoting DB instance started                     |
-| INSTC_66_01 | INSTANCE          | Yes        | Force promoting DB instance completed                     |
-| INSTC_66_04 | INSTANCE          | Yes        | Force promoting DB instance failed                     |
-| INSTC_67_00 | INSTANCE          | Yes        | OS version upgrade started                       |
-| INSTC_67_01 | INSTANCE          | Yes        | OS version upgrade ended                       |
-| INSTC_67_04 | INSTANCE          | Yes        | OS version upgrade failed                       |
-| INSTC_68_01 | INSTANCE          | Yes        | Network communication failed                           |
+| INSTC_61_00 | INSTANCE          | Yes          | Candidate master rebuilding started                                           |
+| INSTC_61_01 | INSTANCE          | Yes          | Candidate master rebuilding completed                                         |
+| INSTC_61_04 | INSTANCE          | Yes          | Candidate master rebuilding failed                                            |
+| INSTC_62_00 | INSTANCE          | Yes          | DB engine version upgrade started                                             |
+| INSTC_62_01 | INSTANCE          | Yes          | DB engine version upgrade completed                                           |
+| INSTC_62_04 | INSTANCE          | Yes          | DB engine version upgrade failed                                              |
+| INSTC_63_01 | INSTANCE          | Yes          | Decrypt DB instance binary logs                                               |
+| INSTC_64_04 | INSTANCE          | Yes          | DB engine version upgrade pre-check failed                                    |
+| INSTC_65_00 | INSTANCE          | Yes          | Authentication plugin activation started                                      |
+| INSTC_65_01 | INSTANCE          | Yes          | Authentication plugin activation completed                                    |
+| INSTC_65_04 | INSTANCE          | Yes          | Authentication plugin activation failed                                       |
+| INSTC_66_00 | INSTANCE          | Yes          | Force promoting DB instance started                                           |
+| INSTC_66_01 | INSTANCE          | Yes          | Force promoting DB instance completed                                         |
+| INSTC_66_04 | INSTANCE          | Yes          | Force promoting DB instance failed                                            |
+| INSTC_67_00 | INSTANCE          | Yes          | OS version upgrade started                                                    |
+| INSTC_67_01 | INSTANCE          | Yes          | OS version upgrade ended                                                      |
+| INSTC_67_04 | INSTANCE          | Yes          | OS version upgrade failed                                                     |
+| INSTC_68_01 | INSTANCE          | Yes          | Network communication failed                                                  |
+| INSTC_69_00 | INSTANCE          | Yes            | Waiting for manual control of failover                                                            |
+| INSTC_69_01 | INSTANCE          | Yes            | Manual control of failover succeeded                                                                |
+| INSTC_69_04 | INSTANCE          | Yes            | Manual control of failover timeout                                                              |
+| INSTC_70_01 | INSTANCE          | Yes            | High availability normalized                                                                      |
+| INSTC_71_01 | INSTANCE          | Yes            | High availability stopped                                                                       |
 | JOB_01_04   | JOB               | Yes          | Job execution failed                                                          |
 | TENAT_01_04 | TENANT            | Yes          | CPU cores limit                                                               |
 | TENAT_02_04 | TENANT            | Yes          | RAM capacity limit	                                                           |
@@ -226,25 +231,4 @@ Performance metrics items that can be monitored are as follows.
 ![notification_group_03_en.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_03_en.png)
 
 * ❶ Click the button to change the added monitoring settings.
-* ❷ Click the button to delete the added monitoring settings.
-
-## Processlist
-
-RDS for MySQL collects queries executed on the database and the status of the InnoDB engine to analyze various issues occurring in the database. It collects the results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`once every second, and you can view the last four days of data in the Processlist tab of the console.
-
-> [Note] The collected data is stored in internal backup storage and is not charged separately.
-
-The following items are collected
-
-| Item            | Description                                                |
-|---------------|---------------------------------------------------|
-| LogTime       | Collected time                                             |
-| PID           | Process ID                                           |
-| DB            | DB in use                                          |
-| User          | User                                               |
-| Host          | The hostname and IP address the user is connecting from                          |
-| Command       | Command type running thread (Sleep, Query, Quit, Kill, etc.)    |
-| State         | State of thread (Starting, Rolling back, System lock, etc.) |
-| ExecTime      | The seconds the thread has been in its current state.                          |
-| Query         | Running queries                                          |
-| InnoDB Status | InnoDB status information                                      |
+* ❷ Click the button to delete the added monitoring settings. 

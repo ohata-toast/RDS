@@ -11,7 +11,7 @@
 - 통계 정보 조회에 필요한 통계 항목(metric)을 조회합니다.
 
 ```
-GET /rds/api/v2.0/metrics
+GET /v2.0/metrics
 ```
 
 #### 요청 헤더

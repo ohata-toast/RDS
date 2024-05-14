@@ -23,16 +23,21 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 | 8.0.33     | 8.0.33          |
 | 8.0.34     | 8.0.34          |
 | 8.0.35     | 8.0.35          |
+| 8.0.36     | 8.0.35          |
 
 * XtraBackupのインストールに関する詳しい説明はPercona Webサイトを参照します。
-    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [参考]
 > 2023年8月17日XtraBackupユーティリティのバージョンがアップグレードされました。以前バックアップに使用されたXtraBackupバージョンはWebコンソールで確認できます。
 > 高可用性DBインスタンスは予備マスターでバックアップが行われ、マスターのデータストレージの性能低下が発生しません。
 
 バックアップ時に適用される設定項目は以下の通りで、自動バックアップと手動バックアップの両方に適用されます。
+
+![backup-config-ja](https://static.toastoven.net/prod_rds/24.03.12/backup-config-ja.png)
+
+![backup-config-ko](https://static.toastoven.net/prod_rds/24.03.12/backup-config-ko.png)
 
 **テーブルロックの使用**
 
@@ -46,10 +51,30 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 ### 手動バックアップ
 
-特定の時点のデータベースを永久に保存するには、Webコンソールから手動でバックアップを実行することができます。手動バックアップは自動バックアップと異なり、明示的にバックアップを削除しない限り、DBインスタンスが削除されるときと同じように削除されません。手動バックアップの場合、バックアップの名前を入力する必要があり、下記のような制約があります。
+特定の時点のデータベースを永久に保存するには、Webコンソールから手動でバックアップを実行することができます。手動バックアップは自動バックアップと異なり、明示的にバックアップを削除しない限り、DBインスタンスが削除されるときと同じように削除されません。Webコンソールで手動バックアップを行うには
+
+![db-instance-backup-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ja.png)
+
+❶バックアップするDBインスタンスを選択した後、**バックアップ**をクリックすると、**バックアップ作成** ポップアップ画面が表示されます。
+
+![db-instance-backup-popup-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-ja.png)
+
+❷必要に応じてバックアップを実行するDBインスタンスを変更します。
+❸バックアップの名前を入力します。下記のような制約事項があります。
 
 * バックアップ名はリージョンごとに固有の名前でなければなりません。
 * バックアップ名は1～100文字の間の英字、数字、一部の記号（-、_、.）のみ使用でき、最初の文字は英字のみ使用できます。
+
+または**バックアップ**タブで
+
+![manual-backup-ja](https://static.toastoven.net/prod_rds/24.03.12/manual-backup-ja.png)
+
+❶ **+バックアップ作成**をクリックすると、**バックアップ作成**ポップアップ画面が表示されます。
+
+![db-instance-backup-popup-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-ja.png)
+
+❷バックアップを実行するDBインスタンスを選択します。
+❸バックアップの名前を入力した後、**作成**をクリックすると、バックアップの作成をリクエストできます。
 
 ### 自動バックアップ
 
@@ -90,7 +115,32 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 ### バックアップのエクスポート
 
-内部バックアップストレージに保存されたバックアップファイルをNHN Cloudのユーザーオブジェクトストレージにエクスポートできます。手動バックアップまたは自動バックアップファイルをエクスポートしたり、バックアップを実行すると同時にバックアップファイルをユーザーオブジェクトストレージにエクスポートすることもできます。バックアップをエクスポートしている間、元のDBインスタンスのネットワーク性能の低下が発生する場合があります。
+#### バックアップを実行しながらファイルをエクスポート
+
+バックアップを実行すると同時に、バックアップファイルをユーザーオブジェクトストレージにエクスポートできます。
+
+![db-instance-list-export-obs-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-ja.png)
+
+![db-instance-list-export-obs-modal-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-modal-ja.png)
+
+❶バックアップするDBインスタンスを選択した後、ドロップダウンメニューから**オブジェクトストレージにバックアップをエクスポート**をクリックすると、設定ポップアップ画面が表示されます。
+❷バックアップが保存されるオブジェクトストレージのテナントIDを入力します。テナントIDはAPIエンドポイント設定で確認できます。
+❸バックアップが保存されるオブジェクトストレージのNHN CloudメンバーまたはIAMメンバーを入力します。
+❹バックアップが保存されるオブジェクトストレージのAPIパスワードを入力します。
+❺バックアップが保存されるオブジェクトストレージのコンテナを入力します。
+❻コンテナに保存されるバックアップのパスを入力します。フォルダ名は最大255バイトで、全体のパスは最大1024バイトです。特定の形(. または ..)は使用できず、特殊文字(' " < > ;)とスペースは入力できません。
+
+#### バックアップファイルのエクスポート
+
+内部バックアップストレージに保存されたバックアップファイルをNHN Cloudのユーザーオブジェクトストレージにエクスポートできます。
+
+![db-instance-detail-backup-export-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ja.png)
+
+❶バックアップを実行した原本DBインスタンスの詳細タブでエクスポートするバックアップファイルを選択した後、**オブジェクトストレージにバックアップをエクスポート**をクリックすると、バックアップをエクスポートするためのポップアップ画面が表示されます。
+
+![backup-export-ja](https://static.toastoven.net/prod_rds/24.03.12/backup-export-ja.png)
+
+❷または**バックアップ**タブでエクスポートするバックアップファイルを選択した後、**オブジェクトストレージにバックアップをエクスポート**をクリックします。
 
 > [参考]
 > 手動バックアップの場合、バックアップを実行した元DBインスタンスが削除されると、バックアップをエクスポートできません。
@@ -104,7 +154,17 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 ### スナップショット復元
 
-スナップショット復元は、バックアップを実行した時点に復元します。バックアップファイルだけで復元を行い、バックアップを行った元のDBインスタンスが必要ありません。
+バックアップファイルだけで復元を行うため、バックアップを実行した原本DBインスタンスが必要ありません。 Webコンソールでスナップショットを復元するには
+
+![db-instance-snapshot-restoration-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-ja.png)
+
+❶ DBインスタンスの詳細タブで復元するバックアップファイルを選択した後、**スナップショット復元**をクリックすると、DBインスタンスの復元画面に移動します。
+
+または
+
+![snapshot-restoration-ja](https://static.toastoven.net/prod_rds/24.03.12/snapshot-restoration-ja.png)
+
+❶バックアップタブで復元するバックアップファイルを選択した後、**スナップショット復元**をクリックします。
 
 ### 時点復元
 
@@ -114,6 +174,38 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 * バイナリログ(binary log)保管期間に基づいてMySQLによって自動的にバイナリログ(binary log)が削除された場合
 * 高可用性DBインスタンスのフェイルオーバーによりバイナリログ(binary log)が削除された場合。
 * その他様々な理由でバイナリログ(binary log)が破損したり、削除されている場合。
+
+Webコンソールで時点復元を行うには
+
+![point-in-time-restoration-list-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-list-ja.png)
+
+❶時点復元するDBインスタンスを選択した後、**+時点復元**をクリックすると、時点復元を設定できるページに移動します。
+
+#### Timestampを利用した復元
+
+Timestampを使用した復元の場合は、選択した時点と最も近いバックアップファイルを基準に復元を行い、希望する時点までのバイナリログ(binary log)を適用します。
+
+![point-in-time-restoration-01-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-01-ja.png)
+
+❶復元方法を選択します。
+
+![point-in-time-restoration-02-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-02-ja.png)
+
+❷復元時刻を選択します。直近の時点に復元するか、希望する特定の時点を直接入力できます。
+
+![point-in-time-restoration-03-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-03-ja.png)
+
+❸ **復元される最後のクエリを確認**をクリックすると、最後に復元されるクエリを確認できるポップアップ画面が表示されます。
+
+#### バイナリログ(binary log)を利用した復元
+
+バイナリログ(binary log)を活用した復元過程では、選択したバックアップファイルで先に復元を行った後、希望する位置までのバイナリログ(binary log)を適用します。
+
+![point-in-time-restoration-04-ja](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-04-ja.png)
+
+❹バイナリログ(binary log)で復元するためには、まず、バックアップファイルを選択する必要があります。
+❺バイナリログ(binary log)ファイルを選択します。
+❻バイナリログ(binary log)の特定位置を入力します。
 
 ### 外部MySQLバックアップを利用した復元
 

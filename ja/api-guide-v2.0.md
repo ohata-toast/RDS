@@ -1,10 +1,10 @@
 ## Database > RDS for MySQL > APIガイド
 
-| リージョン         | エンドポイント                                   |
-|---------------|-------------------------------------------|
-| 韓国(パンギョ)リージョン | https://kr1-mysql.api.nhncloudservice.com |
-| 韓国(坪村)リージョン   | https://kr2-mysql.api.nhncloudservice.com |
-| 日本リージョン       | https://jp1-mysql.api.nhncloudservice.com |
+| リージョン         | エンドポイント                                       |
+|---------------|-----------------------------------------------|
+| 韓国(パンギョ)リージョン | https://kr1-rds-mysql.api.nhncloudservice.com |
+| 韓国(坪村)リージョン   | https://kr2-rds-mysql.api.nhncloudservice.com |
+| 日本リージョン       | https://jp1-rds-mysql.api.nhncloudservice.com |
 
 ## Monitoring
 
@@ -13,7 +13,7 @@
 - 統計情報照会に必要な統計項目(metric)を照会します。
 
 ```
-GET /rds/api/v2.0/metrics
+GET /v2.0/metrics
 ```
 
 #### リクエストヘッダ
