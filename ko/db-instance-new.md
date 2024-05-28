@@ -377,6 +377,26 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 > * 기존에 부여했던 권한들을 회수하지 않습니다. 이때 명령어를 사용해 DB 스키마나 사용자를 추가한다면 웹 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
 > * 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
 
+## DB 인스턴스 운영체제 업그레이드
+DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 업그레이드를 통해 보안 취약점을 해결하거나 운영체제의 EOL에 대응할 수 있습니다.
+운영체제 업그레이드는 서비스 순단이 발생하기 때문에 주의가 필요합니다. 고가용성 DB 인스턴스는 장애조치를 통해 서비스 순단을 최소화 할 수 있습니다.
+
+현재 DB 인스턴스의 운영체제 정보는 DB 인스턴스 상세 화면에서 확인할 수 있습니다.
+![db-instance-os-upgrade-ko.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ko.png)
+
+❶ DB 인스턴스의 운영체제 정보를 확인할 수 있습니다.
+❷ 운영체제가 버전 업그레이드 대상일 경우 **운영체제 버전 업그레이드** 버튼이 표시됩니다.
+
+운영체제 버전 업그레이드는 고가용성 구성인지 아닌지에 따라 다르게 동작합니다. 고가용성의 경우 장애 조치를 이용해 운영체제 버전 업그레이드를 수행합니다. 고가용성이 아닌 경우에는 DB 인스턴스를 재시작하여 운영체제 버전 업그레이드를 수행합니다.
+
+단일 DB 인스턴스의 운영체제 버전 업그레이드 버튼을 클릭하면 아래와 같은 팝업 화면이 나타납니다.
+![db-instance-os-upgrade-single-popup-ko.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-ko.png)
+
+고가용성 DB 인스턴스의 운영체제 버전 업그레이드 버튼을 클릭하면 아래와 같은 팝업 화면이 나타납니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](backup-and-restore/#mysql)을 참고합니다.
+![db-instance-os-upgrade-ha-popup-ko.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ha-popup-ko.png)
+
+❶ 장애 조치를 사용하는 방법만 제공 됩니다.
+
 ## DB 인스턴스 삭제
 
 더 이상 사용하지 않는 DB 인스턴스는 삭제할 수 있습니다. 마스터를 삭제하게 되면, 해당 복제 그룹에 속한 예비 마스터와 읽기 복제본도 모두 함께 삭제됩니다. 삭제된 DB 인스턴스는 복구할 수 없으므로, 중요한 DB 인스턴스에 대해서는 삭제 보호 설정을 활성화하는 것이 좋습니다.

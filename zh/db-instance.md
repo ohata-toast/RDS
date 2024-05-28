@@ -384,7 +384,7 @@ Supports DB instance operating system upgrades. By upgrading the operating syste
 Caution is required when upgrading the operating system because it may result in service disruption. Highly available DB instances can minimize service disruption through failover.
 
 You can check the operating system information of the current DB instance on the DB instance details screen.
-<!--[db-instance-os-upgrade-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-ko.png) -->
+![db-instance-os-upgrade-en.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-en.png)
 
 ❶ You can check the operating system information of the DB instance.
 ❷ If the operating system is eligible for version upgrade, the **OS Version Upgrade** button appears.
@@ -392,10 +392,10 @@ You can check the operating system information of the current DB instance on the
 Operating system version upgrades behave differently depending on whether you are in a highly available configuration or not. For high availability, the operating system version upgrade is performed using failover. For non-high availability, the operating system version upgrade is performed by restarting the DB instance.
 
 When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
-<!--[db-instance-os-upgrade-single-popup-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-simple-popup-ko.png) -->
+![db-instance-os-upgrade-single-popup-en.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
 
 When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual Failover](backup-and-restore/#mysql) of High Availability DB Instances.
-<!--[db-instance-os-upgrade-ha-popup-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-ha-popup-ko.png) -->
+![db-instance-os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ha-popup-en.png)
 
 ## Delete DB Instance
 
