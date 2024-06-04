@@ -1,20 +1,26 @@
 ## Database > RDS for MySQL > Release Notes
 
+### June 11, 2024
+
+#### Added Features
+
+* Added the feature to upgrade DB instance OS
+
 ### May 14, 2024
 
 #### Added Features
 
 * Added Slow Query analytics
-  * Provided the Analytics tab with Slow Query analysis, Process List, and InnoDB Status monitoring features
-  * Provided the feature to disable Slow Query Analytics on the Edit DB Instance screen
+    * Provided the Analytics tab with Slow Query analysis, Process List, and InnoDB Status monitoring features
+    * Provided the feature to disable Slow Query Analytics on the Edit DB Instance screen
 * Improved to see which parameter items actually change when applying parameter group changes
 * Improved to expose warning text and raise an event when high availability status is abnormal
 * Improved to select a storage type when creating read replicas
 * Added MySQL 8.0.36 version
 * Added and modified API v3.0
-  * Added the `storage.storageType` field to DB instance replicate API request
-  * Added the `notificationGroupIds` field to DB instance detail API response
-  * Improved the ability to use project integration appkeys when calling API v3.0
+    * Added the `storage.storageType` field to DB instance replicate API request
+    * Added the `notificationGroupIds` field to DB instance detail API response
+    * Improved the ability to use project integration appkeys when calling API v3.0
 
 ### March 12, 2024
 

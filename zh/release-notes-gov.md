@@ -1,10 +1,15 @@
 ## Database > RDS for MySQL > Release Notes
 
+### June 12, 2024
+
+#### Added Features
+
+* Added the feature to upgrade DB instance OS
+
 ### May 16, 2024
 
 #### Added Features
 
-* Added a feature to upgrade OS version
 * Added Slow Query analytics
   * Provided the Analytics tab with Slow Query analysis, Process List, and InnoDB Status monitoring features
   * Provided the feature to disable Slow Query Analytics on the Edit DB Instance screen
@@ -60,7 +65,7 @@
 * Added forced promotion of DB instances
 * Improved to allow you to select notification type when subscribing to events
 * API v3.0 additions and changes
-    * Added the Export after backing up DB instance API
+  * Added the Export after backing up DB instance API
 
 ### September 27, 2022
 
