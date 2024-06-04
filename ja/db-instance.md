@@ -376,6 +376,25 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 > * 既に付与した権限を回収しません。 この時、コマンドを使用してDBスキーマやユーザーを追加すると、Webコンソールのデータと整合性が合わなくなる場合があります。
 > * ユーザーに付与された権限と関係なく、データベースに存在するすべてのユーザーはCUSTOM権限で表現されます。
 
+## DBインスタンスOSアップグレード
+DBインスタンスOSアップグレードをサポートします。OSのアップグレードにより、セキュリティ脆弱性の解決やOSのEOL(end of life)に対応できます。 
+OSアップグレードはサービス瞬断が発生するため注意が必要です。高可用性DBインスタンスはフェイルオーバーにより、サービス瞬断を最小限に抑えることができます。
+
+現在のDBインスタンスのOS情報は、DBインスタンスの詳細画面で確認できます。
+<!--[db-instance-os-upgrade-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-ko.png)→
+
+❶ DBインスタンスのOS情報を確認できます。
+❷ OSがバージョンアップグレード対象である場合、**OSバージョンアップグレード**ボタンが表示されます。
+
+OSバージョンアップグレードは、高可用性構成であるかどうかによって異なります。高可用性の場合は、フェイルオーバーを利用してOSバージョンアップグレードを実行します。高可用性ではない場合は、DBインスタンスを再起動してOSバージョンアップグレードを実行します。
+
+単一DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。
+<!--[db-instance-os-upgrade-single-popup-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-simple-popup-ko.png)→
+
+高可用性DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。詳細については、高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
+<!--[db-instance-os-upgrade-ha-popup-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-ha-popup-ko.png)→
+
+
 ## DBインスタンスの削除
 
 使用しないDBインスタンスは削除できます。マスターを削除すると、そのレプリケーショングループに属する予備マスターとリードレプリケーションも全て削除されます。削除されたDBインスタンスは復旧できないため、重要なDBインスタンスは削除保護設定を有効にすることを推奨します。
@@ -560,6 +579,8 @@ DBインスタンスを強制的に再起動するには、Webコンソールで
 ![deletion-protection-popup-ja](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-ja.png)
 
 ❷削除保護設定を変更した後、**確認**をクリックします。
+
+
 
 ## 高可用性DBインスタンス
 
