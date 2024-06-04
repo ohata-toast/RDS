@@ -381,7 +381,7 @@ DBインスタンスOSアップグレードをサポートします。OSのア�
 OSアップグレードはサービス瞬断が発生するため注意が必要です。高可用性DBインスタンスはフェイルオーバーにより、サービス瞬断を最小限に抑えることができます。
 
 現在のDBインスタンスのOS情報は、DBインスタンスの詳細画面で確認できます。
-<!--[db-instance-os-upgrade-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-ko.png)→
+![db-instance-os-upgrade-ja.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ja.png)
 
 ❶ DBインスタンスのOS情報を確認できます。
 ❷ OSがバージョンアップグレード対象である場合、**OSバージョンアップグレード**ボタンが表示されます。
@@ -389,10 +389,10 @@ OSアップグレードはサービス瞬断が発生するため注意が必要
 OSバージョンアップグレードは、高可用性構成であるかどうかによって異なります。高可用性の場合は、フェイルオーバーを利用してOSバージョンアップグレードを実行します。高可用性ではない場合は、DBインスタンスを再起動してOSバージョンアップグレードを実行します。
 
 単一DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。
-<!--[db-instance-os-upgrade-single-popup-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-simple-popup-ko.png)→
+![db-instance-os-upgrade-single-popup-ja.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-ja.png)→
 
 高可用性DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。詳細については、高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
-<!--[db-instance-os-upgrade-ha-popup-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-ha-popup-ko.png)→
+![db-instance-os-upgrade-ha-popup-ja.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ha-popup-ja.png)→
 
 
 ## DBインスタンスの削除
