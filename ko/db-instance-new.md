@@ -914,7 +914,7 @@ mysqldump -h{rds_read_only_slave_insance_floating_ip} -u{db_id} -p{db_password} 
 * 백업된 파일을 열어 주석에 쓰여진 MASTER_LOG_FILE 및 MASTER_LOG_POS를 따로 기록합니다.
 * NHN Cloud RDS 인스턴스로부터 데이터를 백업할 외부 로컬 클라이언트 또는 DB가 설치된 컴퓨터의 용량이 충분한지 확인합니다.
 * 외부 DB의 my.cnf(Windows의 경우 my.ini) 파일에 아래와 같은 옵션을 추가합니다.
-* server-id의 경우 NHN Cloud RDS 인스턴스의 DB Configuration 항목의 server-id와 다른 값으로 입력합니다.
+* server-id의 경우 NHN Cloud RDS 인스턴스의 파라미터 항목의 server-id와 다른 값으로 입력합니다.
 
 ```
 ...
@@ -972,7 +972,7 @@ mysqldump -h{slave_insance_floating_ip} -u{db_id} -p{db_password} --port={db_por
 * 백업된 파일을 열어 주석의 MASTER_LOG_FILE 및 MASTER_LOG_POS를 따로 기록합니다.
 * NHN Cloud RDS 인스턴스로부터 데이터를 백업할 클라이언트나 컴퓨터의 용량이 충분한지 확인합니다.
 * 외부 DB의 my.cnf(Winodws의 경우 my.ini) 파일에 아래 옵션을 추가합니다.
-* server-id의 경우 NHN Cloud RDS 인스턴스의 DB Configuration 항목의 server-id와 다른 값으로 입력합니다.
+* server-id의 경우 NHN Cloud RDS 인스턴스의 파라미터 항목의 server-id와 다른 값으로 입력합니다.
 
 ```
 ...
@@ -1066,7 +1066,7 @@ Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다
 * 리모트 노드로의 송신을 허용하는 설정이 필요합니다.
   * DB 보안 그룹에서 규칙을 추가할 수 있습니다.
   * 자세한 사항은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
-* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우 DB Configuration의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
+* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우 파라미터의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
   * Read Only Slave를 구성할 경우 federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
   * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 오류 등으로 인한 복제 중단이 발생할 수 있습니다.
   * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table에 설정이 필요합니다.

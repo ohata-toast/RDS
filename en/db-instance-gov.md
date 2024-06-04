@@ -916,7 +916,7 @@ mysqldump -h{rds_read_only_slave_instance_floating_ip} -u{db_id} -p{db_password}
 * Open the backed up file and record the MASTER_LOG_FILE and MASTER_LOG_POS written in the annotation separately.
 * Check that the external local client or computer on which db is installed has sufficient capacity to back up data from the NHN Cloud RDS instance.
 * Add the following options to my.cnf (for winodws my.ini) file in external DB.
-* For server-id, enter a value different from the server-id of the DB Configuration entry for the NHN Cloud RDS instance.
+* For server-id, enter a value different from the server-id of the parameter entry for the NHN Cloud RDS instance.
 
 ```
 ...
@@ -974,7 +974,7 @@ mysqldump -h{slave_instance_floating_ip} -u{db_id} -p{db_password} --port={db_po
 * Open the backup file to record MASTER_LOG_FILE and MASTER_LOG_POS from the footnote.
 * Verify that there is enough capacity on the client or computer to back up data from NHN Cloud RDS instance.
 * Add below option to the my.cnf (or my.ini for Windows) file of the external database.
-* Put a different value for Server ID, from the Server ID of DB Configuration of NHN Cloud RDS Instance.
+* Put a different value for Server ID, from the Server ID of parameter of NHN Cloud RDS Instance.
 
 ```
 ...
@@ -1029,7 +1029,7 @@ NHN Cloud periodically updates the hypervisor software of the DB instance to imp
 DB instances running on a hypervisor that requires maintenance must be migrated to the hypervisor where maintenance has been completed.
 
 You can start migrating DB instances from the NHN Cloud console.
-When you select a specific DB instance according to the DB configuration and migrate it, if the associated DB instance (for example, Slave instance) is also an inspection target, it proceeds with the migration together.
+When you select a specific DB instance according to the parameter and migrate it, if the associated DB instance (for example, Slave instance) is also an inspection target, it proceeds with the migration together.
 Follow the guide below to use the migration feature on the console.
 Navigate to the project where the specified DB instance to be checked.
 
@@ -1070,7 +1070,7 @@ When using Federated Storage Engine, make sure you consider the following.
 * Make sure you need to allow the outbound direction to remote nodes.
   * You can add rules from DB security group.
   * Refer to [DB Security Group](db-security-group/) for more information.
-* When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of DB Configuration.
+* When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
   * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
   * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
   * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
