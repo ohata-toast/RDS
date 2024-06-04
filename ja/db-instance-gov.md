@@ -926,7 +926,7 @@ STOP SLAVE;
 RESET SLAVE;
 ```
 
-* 複製に使うアカウント情報と、先ほど別に記録しておいたMASTER_LOG_FILEとMSATER_LOG_POSを使って外部DBに下記のようにクエリを実行します。
+* 複製に使うアカウント情報と、先ほど別に記録しておいたMASTER_LOG_FILEとMASTER_LOG_POSを使って外部DBに下記のようにクエリを実行します。
 
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
@@ -984,7 +984,7 @@ mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY 
 mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
-* レプリケーションに使うアカウント情報と先に記録しておいたMASTER_LOG_FILE, MSATER_LOG_POSを利用してNHN Cloud RDSに次のようにクエリを実行します。
+* レプリケーションに使うアカウント情報と先に記録しておいたMASTER_LOG_FILE, MASTER_LOG_POSを利用してNHN Cloud RDSに次のようにクエリを実行します。
 
 ```
 mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );

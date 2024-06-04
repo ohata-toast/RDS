@@ -943,7 +943,7 @@ STOP SLAVE;
 RESET SLAVE;
 ```
 
-* Run the query on the external DB as shown below, using the account information to be used for replication and the MASTER_LOG_FILE and MSATER_LOG_POS that recorded earlier.
+* Run the query on the external DB as shown below, using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
@@ -1003,7 +1003,7 @@ mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replic
 ```
 
 * Run a query on NHN Cloud RDS as follows,
-  using the account information to be used for replication and the MASTER_LOG_FILE and MSATER_LOG_POS that recorded earlier.
+  using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
 ```
 mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
