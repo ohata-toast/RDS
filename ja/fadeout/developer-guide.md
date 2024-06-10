@@ -155,7 +155,7 @@ mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY 
 mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
-* 複製に使用するアカウント情報と、別途記録しておいたMASTER_LOG_FILE、MSATER_LOG_POSを利用してNHN Cloud RDSに次のクエリーを実行します。
+* 複製に使用するアカウント情報と、別途記録しておいたMASTER_LOG_FILE、MASTER_LOG_POSを利用してNHN Cloud RDSに次のクエリーを実行します。
 
 ```
 mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );

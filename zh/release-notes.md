@@ -1,5 +1,11 @@
 ## Database > RDS for MySQL > Release Notes
 
+### June 11, 2024
+
+#### Added Features
+
+* Added the feature to upgrade DB instance OS
+
 ### May 14, 2024
 
 #### Added Features

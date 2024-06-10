@@ -377,6 +377,27 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 > * 기존에 부여했던 권한들을 회수하지 않습니다. 이때 명령어를 사용해 DB 스키마나 사용자를 추가한다면 웹 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
 > * 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
 
+## DB 인스턴스 운영체제 업그레이드
+DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 업그레이드를 통해 보안 취약점을 해결하거나 운영체제의 EOL에 대응할 수 있습니다.
+운영체제 업그레이드는 서비스 순단이 발생하기 때문에 주의가 필요합니다. 고가용성 DB 인스턴스는 장애조치를 통해 서비스 순단을 최소화 할 수 있습니다.
+
+현재 DB 인스턴스의 운영체제 정보는 DB 인스턴스 상세 화면에서 확인할 수 있습니다.
+![db-instance-os-upgrade-ko.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ko.png)
+
+❶ DB 인스턴스의 운영체제 정보를 확인할 수 있습니다.
+❷ 운영체제가 버전 업그레이드 대상일 경우 **운영체제 버전 업그레이드** 버튼이 표시됩니다.
+
+운영체제 버전 업그레이드는 고가용성 구성인지 아닌지에 따라 다르게 동작합니다. 고가용성의 경우 장애 조치를 이용해 운영체제 버전 업그레이드를 수행합니다. 고가용성이 아닌 경우에는 DB 인스턴스를 재시작하여 운영체제 버전 업그레이드를 수행합니다.
+
+단일 DB 인스턴스의 운영체제 버전 업그레이드 버튼을 클릭하면 아래와 같은 팝업 화면이 나타납니다.
+![db-instance-os-upgrade-single-popup-ko.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-ko.png)
+
+고가용성 DB 인스턴스의 운영체제 버전 업그레이드 버튼을 클릭하면 아래와 같은 팝업 화면이 나타납니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](backup-and-restore/#mysql)을 참고합니다.
+![db-instance-os-upgrade-ha-popup-ko.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ha-popup-ko.png)
+
+❶ 장애 조치를 사용하는 방법만 제공 됩니다.
+
+
 ## DB 인스턴스 삭제
 
 더 이상 사용하지 않는 DB 인스턴스는 삭제할 수 있습니다. 마스터를 삭제하면 해당 복제 그룹에 속한 예비 마스터와 읽기 복제본도 모두 함께 삭제됩니다. 삭제된 DB 인스턴스는 복구할 수 없으므로 중요한 DB 인스턴스는 삭제 보호 설정을 활성화하는 것을 권장합니다.
@@ -573,6 +594,8 @@ DB 인스턴스 강제 재시작을 하려면 웹 콘솔에서
 ![deletion-protection-popup-ko](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-ko.png)
 
 ❷ 삭제 보호 설정을 변경한 후 **확인**을 클릭합니다.
+
+
 
 ## 고가용성 DB 인스턴스
 
@@ -891,7 +914,7 @@ mysqldump -h{rds_read_only_slave_insance_floating_ip} -u{db_id} -p{db_password} 
 * 백업된 파일을 열어 주석에 쓰여진 MASTER_LOG_FILE 및 MASTER_LOG_POS를 따로 기록합니다.
 * NHN Cloud RDS 인스턴스로부터 데이터를 백업할 외부 로컬 클라이언트 또는 DB가 설치된 컴퓨터의 용량이 충분한지 확인합니다.
 * 외부 DB의 my.cnf(Windows의 경우 my.ini) 파일에 아래와 같은 옵션을 추가합니다.
-* server-id의 경우 NHN Cloud RDS 인스턴스의 DB Configuration 항목의 server-id와 다른 값으로 입력합니다.
+* server-id의 경우 NHN Cloud RDS 인스턴스의 파라미터 항목의 server-id와 다른 값으로 입력합니다.
 
 ```
 ...
@@ -918,7 +941,7 @@ STOP SLAVE;
 RESET SLAVE;
 ```
 
-* 복제에 사용할 계정 정보와 아까 따로 기록해 두었던 MASTER_LOG_FILE과 MSATER_LOG_POS를 이용하여 외부 DB에 아래와 같이 쿼리를 실행합니다.
+* 복제에 사용할 계정 정보와 아까 따로 기록해 두었던 MASTER_LOG_FILE과 MASTER_LOG_POS를 이용하여 외부 DB에 아래와 같이 쿼리를 실행합니다.
 
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
@@ -949,7 +972,7 @@ mysqldump -h{slave_insance_floating_ip} -u{db_id} -p{db_password} --port={db_por
 * 백업된 파일을 열어 주석의 MASTER_LOG_FILE 및 MASTER_LOG_POS를 따로 기록합니다.
 * NHN Cloud RDS 인스턴스로부터 데이터를 백업할 클라이언트나 컴퓨터의 용량이 충분한지 확인합니다.
 * 외부 DB의 my.cnf(Winodws의 경우 my.ini) 파일에 아래 옵션을 추가합니다.
-* server-id의 경우 NHN Cloud RDS 인스턴스의 DB Configuration 항목의 server-id와 다른 값으로 입력합니다.
+* server-id의 경우 NHN Cloud RDS 인스턴스의 파라미터 항목의 server-id와 다른 값으로 입력합니다.
 
 ```
 ...
@@ -976,7 +999,7 @@ mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY 
 mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
-* 복제에 사용할 계정 정보와 앞에서 따로 기록해 두었던 MASTER_LOG_FILE, MSATER_LOG_POS를 이용하여 NHN Cloud RDS에 다음과 같이 쿼리를 실행합니다.
+* 복제에 사용할 계정 정보와 앞에서 따로 기록해 두었던 MASTER_LOG_FILE, MASTER_LOG_POS를 이용하여 NHN Cloud RDS에 다음과 같이 쿼리를 실행합니다.
 
 ```
 mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
@@ -1043,7 +1066,7 @@ Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다
 * 리모트 노드로의 송신을 허용하는 설정이 필요합니다.
   * DB 보안 그룹에서 규칙을 추가할 수 있습니다.
   * 자세한 사항은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
-* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우 DB Configuration의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
+* 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우 파라미터의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
   * Read Only Slave를 구성할 경우 federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
   * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 오류 등으로 인한 복제 중단이 발생할 수 있습니다.
   * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table에 설정이 필요합니다.

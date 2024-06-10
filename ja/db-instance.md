@@ -376,6 +376,25 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 > * 既に付与した権限を回収しません。 この時、コマンドを使用してDBスキーマやユーザーを追加すると、Webコンソールのデータと整合性が合わなくなる場合があります。
 > * ユーザーに付与された権限と関係なく、データベースに存在するすべてのユーザーはCUSTOM権限で表現されます。
 
+## DBインスタンスOSアップグレード
+DBインスタンスOSアップグレードをサポートします。OSのアップグレードにより、セキュリティ脆弱性の解決やOSのEOL(end of life)に対応できます。 
+OSアップグレードはサービス瞬断が発生するため注意が必要です。高可用性DBインスタンスはフェイルオーバーにより、サービス瞬断を最小限に抑えることができます。
+
+現在のDBインスタンスのOS情報は、DBインスタンスの詳細画面で確認できます。
+![db-instance-os-upgrade-ja.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ja.png)
+
+❶ DBインスタンスのOS情報を確認できます。
+❷ OSがバージョンアップグレード対象である場合、**OSバージョンアップグレード**ボタンが表示されます。
+
+OSバージョンアップグレードは、高可用性構成であるかどうかによって異なります。高可用性の場合は、フェイルオーバーを利用してOSバージョンアップグレードを実行します。高可用性ではない場合は、DBインスタンスを再起動してOSバージョンアップグレードを実行します。
+
+単一DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。
+![db-instance-os-upgrade-single-popup-ja.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-ja.png)→
+
+高可用性DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。詳細については、高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
+![db-instance-os-upgrade-ha-popup-ja.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ha-popup-ja.png)→
+
+
 ## DBインスタンスの削除
 
 使用しないDBインスタンスは削除できます。マスターを削除すると、そのレプリケーショングループに属する予備マスターとリードレプリケーションも全て削除されます。削除されたDBインスタンスは復旧できないため、重要なDBインスタンスは削除保護設定を有効にすることを推奨します。
@@ -560,6 +579,8 @@ DBインスタンスを強制的に再起動するには、Webコンソールで
 ![deletion-protection-popup-ja](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-ja.png)
 
 ❷削除保護設定を変更した後、**確認**をクリックします。
+
+
 
 ## 高可用性DBインスタンス
 
@@ -878,7 +899,7 @@ mysqldump -h{rds_read_only_slave_insance_floating_ip} -u{db_id} -p{db_password} 
 * バックアップされたファイルを開いて、コメントに書かれたMASTER_LOG_FILE及びMASTER_LOG_POSを別に記録します。
 * NHN Cloud RDSインスタンスからデータをバックアップする外部ローカルクライアントまたはDBがインストールされたコンピュータの容量が十分であることを確認します。
 * 外部DBのmy.cnf(Windowsの場合my.ini)ファイルに下記のようなオプションを追加します。
-* server-idの場合、NHN Cloud RDSインスタンスのDB Configuration項目のserver-idと違う値を入力します。
+* server-idの場合、NHN Cloud RDSインスタンスのパラメータ項目のserver-idと違う値を入力します。
 
 ```
 ...
@@ -905,7 +926,7 @@ STOP SLAVE;
 RESET SLAVE;
 ```
 
-* 複製に使うアカウント情報と、先ほど別に記録しておいたMASTER_LOG_FILEとMSATER_LOG_POSを使って外部DBに下記のようにクエリを実行します。
+* 複製に使うアカウント情報と、先ほど別に記録しておいたMASTER_LOG_FILEとMASTER_LOG_POSを使って外部DBに下記のようにクエリを実行します。
 
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
@@ -936,7 +957,7 @@ mysqldump -h{slave_insance_floating_ip} -u{db_id} -p{db_password} --port={db_por
 * バックアップされたファイルを開いて、コメントのMASTER_LOG_FILE及びMASTER_LOG_POSを別に記録します。
 * NHN Cloud RDSインスタンスからデータをバックアップするクライアントやコンピュータの容量が十分か確認します。
 * 外部DBのmy.cnf(Winodwsの場合はmy.ini)ファイルに下記のオプションを追加します。
-* server-idの場合、NHN Cloud RDSインスタンスのDB Configuration項目のserver-idと異なる値を入力します。
+* server-idの場合、NHN Cloud RDSインスタンスのパラメータ項目のserver-idと異なる値を入力します。
 
 ```
 ...
@@ -963,7 +984,7 @@ mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY 
 mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
-* レプリケーションに使うアカウント情報と先に記録しておいたMASTER_LOG_FILE, MSATER_LOG_POSを利用してNHN Cloud RDSに次のようにクエリを実行します。
+* レプリケーションに使うアカウント情報と先に記録しておいたMASTER_LOG_FILE, MASTER_LOG_POSを利用してNHN Cloud RDSに次のようにクエリを実行します。
 
 ```
 mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
@@ -1030,7 +1051,7 @@ Federated Storage Engineを使用する場合、次を考慮する必要があ�
 * リモートノードへの送信を許可する設定が必要です。
   * DBセキュリティグループでルールを追加できます。
   * 詳細については、 [DBセキュリティグループ](db-security-group/)項目を参照してください。
-* ローカルノード役割のRDSにRead Only Slaveを追加した構成で使用する場合は、DB Configurationのreplicate-ignore-tableにfederated設定されたテーブル名を指定する必要があります。
+* ローカルノード役割のRDSにRead Only Slaveを追加した構成で使用する場合は、パラメータのreplicate-ignore-tableにfederated設定されたテーブル名を指定する必要があります。
   * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
   * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
   * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
