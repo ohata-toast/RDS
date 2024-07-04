@@ -833,8 +833,8 @@ mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|patt
 ```
 
 ### tcrds_foreign_key_checks
-* foreign key 제약 조건을 체크하는 'foreign_key_checks' 변수를 제어하는 프로시저입니다.
-* `SET GLOBAL foreign_key_checks ='ON|OFF';` 쿼리를 실행합니다.
+* foreign key制約条件をチェックする'foreign_key_checks'変数を制御するプロシージャです。
+* `SET GLOBAL foreign_key_checks ='ON|OFF';`クエリを実行します。
 
 ```
 mysql> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
