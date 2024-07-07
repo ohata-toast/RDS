@@ -1,5 +1,18 @@
 ## Database > RDS for MySQL > リリースノート
 
+### 2024. 07. 11.
+
+#### 機能追加及び改善
+
+* foreign_key_checks設定プロシージャ追加
+* 新規パラメータの追加(MySQL 8.0.28バージョン以上)
+  * `innodb_ddl_threads`
+  * `innodb_parallel_read_threads`
+
+#### バグ修正
+
+* 削除されたDBインスタンスのバックアップでスナップショット復元ができない問題を修正
+
 ### 2024. 06. 12.
 
 #### 機能の追加および改善

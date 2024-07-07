@@ -1,5 +1,18 @@
 ## Database > RDS for MySQL > Release Notes
 
+### July 9, 2024
+
+#### Added Features
+
+* Add the procedure that controls foreign_key_checks
+* Added new parameters (MySQL 8.0.28 or later)
+    * `innodb_ddl_threads`
+    * `innodb_parallel_read_threads`
+
+#### Bug Fixes
+
+* Fixed an issue where snapshot restoration with a backup of a deleted DB instance was not possible
+
 ### June 11, 2024
 
 #### Added Features

@@ -832,6 +832,14 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
 ```
 
+### tcrds_foreign_key_checks
+* foreign key制約条件をチェックする'foreign_key_checks'変数を制御するプロシージャです。
+* `SET GLOBAL foreign_key_checks ='ON|OFF';`クエリを実行します。
+
+```
+mysql> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
+```
+
 ## データマイグレーション
 
 * RDSはmysqldumpを利用してNHN Cloud RDSの外部にデータをエクスポートしたり、外部からインポートできます。
