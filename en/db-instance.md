@@ -825,7 +825,7 @@ mysql> CALL mysql.tcrds_repl_next_changemaster();
 ### tcrds_innodb_monitor_reset
 
 * A procedure that runs innodb_monitor_reset variables that reset the counter in Information_schema.INNODB_METRICS table to zero.
-* `SET GLOBAL innodb_monitor_reset = '{counter-name|module_name|pattern|all}';` Run the query.
+* Run the following query: `SET GLOBAL innodb_monitor_reset = '{counter-name|module_name|pattern|all}';`.
 * innodb_monitor_enable, innodb_monitor_disable provides RDS parameter.
 
 ```
@@ -841,15 +841,15 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 
 * A procedure to run innodb_monitor_reset_all variables to reset counter value.
 * To use innodb_monitor_reset_all, the counter should be in disable state.
-* `SET GLOBAL innodb_monitor_reset_all = '{counter-name|module_name|pattern|all}';` Run the query.
+* Run the following query: `SET GLOBAL innodb_monitor_reset_all = '{counter-name|module_name|pattern|all}';`.
 
 ```
 mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
 ```
 
 ### tcrds_foreign_key_checks
-* foreign key 제약 조건을 체크하는 'foreign_key_checks' 변수를 제어하는 프로시저입니다.
-* `SET GLOBAL foreign_key_checks ='ON|OFF';` 쿼리를 실행합니다.
+* A procedure that controls the 'foreign_key_checks' variable that checks for foreign key constraints.
+* Run the following query: `SET GLOBAL foreign_key_checks ='ON|OFF';`.
 
 ```
 mysql> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
