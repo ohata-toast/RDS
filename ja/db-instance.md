@@ -157,7 +157,6 @@ DBインスタンスの状態は下記のような値で構成され、ユーザ
 | FAIL_TO_CONNECT   | 接続失敗                                            |
 | REPLICATION_STOP  | 複製中断                                            |
 | FAILOVER          | フェイルオーバー完了                                      |
-| FAILOVER_SHUTDOWN | フェイルオーバー完了(停止), 2023年4月11日以前にフェイルオーバーしたDBインスタンス |
 | SHUTDOWN          | 停止した                                            |
 
 変更できる検索条件は次のとおりです。

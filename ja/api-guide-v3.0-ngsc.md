@@ -584,7 +584,6 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | `FAIL_TO_CONNECT`   | DBインスタンス接続に失敗した場合              |
 | `REPLICATION_STOP`  | DBインスタンスの複製が中断した場合             |
 | `FAILOVER`          | DBインスタンスが高可用性フェイルオーバーした場合      |
-| `FAILOVER_SHUTDOWN` | DBインスタンスが高可用性フェイルオーバーして中断された場合 |
 | `SHUTDOWN`          | DBインスタンスが停止した場合                |
 | `DELETED`           | DBインスタンスが削除された場合               |
 
