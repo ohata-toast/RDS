@@ -493,7 +493,7 @@ If the route settings are incorrect, even if the region peering is connected, th
 
 #### Availability Zone
 
-Select the availability zone for read replica. Refer to [Availability Zone](./#_1) for a detailed description.
+Select the availability zone for read replica. Refer to [Availability Zone](#_1) for a detailed description.
 
 #### DB Instance Type
 
@@ -505,7 +505,7 @@ It is recommended to make it the same size as the source DB instance. If you set
 
 #### Floating IP
 
-Select whether or not to use floating IP for read replicas. Refer to [Floating IP](./#_1) for a detailed description.
+Select whether or not to use floating IP for read replicas. Refer to [Floating IP](#ip) for a detailed description.
 
 #### Parameter group
 
@@ -521,11 +521,11 @@ Select backup settings for the read replica. Refer to [Backup and Restore](backu
 
 #### Default notification
 
-Select whether or not to enable default notifications, refer to [default notifications](./#_1) for a detailed description.
+Select whether or not to enable default notifications, refer to [default notifications](#_7) for a detailed description.
 
 #### Deletion Protection
 
-Select whether or not to enable deletion protection. Refer to [Deletion Protection](./#_1) for a detailed description.
+Select whether or not to enable deletion protection. Refer to [Deletion Protection](#_8) for a detailed description.
 
 ### Promote read replication
 
@@ -552,14 +552,14 @@ mysql> CALL mysql.tcrds_repl_skip_repl_error();
 
 ### Rebuild Read Replica
 
-If you can't resolve the replication issue of read replica, you can restore it to its normal state by rebuilding. This process deletes all databases in the read replica and rebuilds it anew based on the master database. During rebuilding, read replicas are unavailable to use. Rebuilding read replicas requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you don't have a backup file, refer to [Create Read Replica](./#_1) for actions and precautions.
+If you can't resolve the replication issue of read replica, you can restore it to its normal state by rebuilding. This process deletes all databases in the read replica and rebuilds it anew based on the master database. During rebuilding, read replicas are unavailable to use. Rebuilding read replicas requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you don't have a backup file, refer to [Create Read Replica](#_22) for actions and precautions.
 
 > [Note]
 Connection information (domain, IP) does not change after rebuilding
 
 ## Restart DB instance
 
-You can restart a DB instance when you restart MySQL or want to manually do failover a high availability DB instance. We recommend that you perform it during low service load times to minimize restart times. For high availability DB instances, if restarting with failover is not enabled, restart the candidate master first, then restart the master. For restarting with failover feature, refer to [Manual Failover](./#_1) item.
+You can restart a DB instance when you restart MySQL or want to manually do failover a high availability DB instance. We recommend that you perform it during low service load times to minimize restart times. For high availability DB instances, if restarting with failover is not enabled, restart the candidate master first, then restart the master. For restarting with failover feature, refer to [Manual Failover](#_42) item.
 
 To restart a DB instance from the web console
 
