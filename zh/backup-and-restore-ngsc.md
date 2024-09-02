@@ -1,14 +1,17 @@
 ## Database > RDS for MySQL > Backup and Restoration
 
-## Backup
+## Backup 개요
 
-You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
-high-availability configuration or perform backups from read replica.
+You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. 백업으로 인한 성능 저하를 원치 않을 경우 고가용성 구성을 사용하거나, 이전 백업 이후 데이터의 증분만 백업하거나, 읽기 복제본에서 백업을 수행할 수도 있습니다.
 
 > [Note]
 > High availability DB instances are backed up on the extra master without compromising the master's storage performance.
+> 단, 다음의 경우 고가용성 DB 인스턴스이더라도 마스터에서 백업이 수행될 수 있습니다.
+> * 예비 마스터 장애로 인해 백업 수행이 불가능한 상태인 경우
+> * 예비 마스터 재구축을 위해 예비 마스터가 아닌 다른 DB 인스턴스에서 수행한 백업이 필요한 상황에서 읽기 복제본이 없는 경우
 
-RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
+RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL.
+Percona XtraBackup version in line with DB engine version is as follows.
 
 | MySQL version | XtraBackup version |
 |---------------|--------------------|
@@ -32,11 +35,77 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the web console.
-> High Availability DB instances are backed up on a candidate master to avoid degradation of data storage performance on the master.
 
+## 백업 종류
+
+백업은 수동 백업과 자동 백업으로 구분할 수 있습니다.
+
+### Manual Backup
+
+If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike auto backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted.
+수동 백업 생성 시에는 백업 이름을 지정해야 하며, 다음과 같은 제약 사항이 있습니다.
+* Backup name has to be unique for each region.
+* Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
+
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
+![backup-list-1-en](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-en.png)
+
+**수동 전체 백업 생성하기**
+
+❶ DB 인스턴스 목록에서 백업할 DB 인스턴스 선택 후 **백업**을 클릭하여 수동으로 전체 백업을 생성할 수 있습니다.
+❷ 백업 목록에서 **전체 백업 생성**을 클릭하고 백업할 DB 인스턴스를 지정하여 수동으로 전체 백업을 생성할 수 있습니다.
+
+**수동 증분 백업 생성하기**
+
+❸ 백업 목록에서 기준 백업을 선택 후 **증분 백업 생성**을 클릭하여 증분 백업을 생성할 수 있습니다. 일부 백업은 기준 백업으로 선택할 수 없습니다. 기준 백업에 대한 자세한 설명은 [기준 백업](#기준-백업)을 참고합니다.
+
+### Auto Backup
+
+In addition to manually performing backups, auto backups can occur when needed for restore operations or based on auto backup schedule settings.
+자동 백업 시에 적용되는 설정 항목은 [자동 백업 설정](#자동-백업-설정)을 참고합니다.
+
+## 백업 방식
+
+전체 백업과 증분 백업 방식이 제공됩니다.
+
+### 전체 백업
+
+DB 인스턴스의 모든 데이터를 백업합니다.
+
+### 증분 백업
+
+기준 백업이 수행된 이후의 데이터 변경분 만을 증분 방식으로 백업합니다. 변경이 잘 일어나지 않는 데이터가 대부분인 경우 추천됩니다.
+증분 백업은 항상 기준 백업을 수행했던 DB 인스턴스에서 수행됩니다.
+증분 백업으로 복원 시 최초 생성된 전체 백업 복원을 진행하고, 선택한 증분 백업에 도달할 때까지의 모든 증분이 순차적으로 반영됩니다.
+
+> [주의]
+> 증분 백업으로 복원 시에는 전체 백업으로 복원할 때보다 복원에 더 많은 시간이 소요될 수 있으며 이는 복원에 필요한 증분 백업들의 용량의 합에 비례합니다.
+
+#### 기준 백업
+
+증분 백업에는 데이터 변경사항의 기준이 될 백업이 필요합니다. 증분 백업도 새로운 증분 백업의 기준 백업이 될 수 있습니다.
+
+증분 백업의 기준이 되는 백업에는 다음 제약사항이 존재합니다. 수동 및 자동으로 증분 백업 시에 공통으로 적용됩니다.
+* 에러 상태의 백업은 기준 백업이 될 수 없습니다.
+* 마지막 장애 조치 이전에 생성된 백업은 기준 백업이 될 수 없습니다.
+* 마지막 DB 엔진 버전 업그레이드 이전에 생성된 백업은 기준 백업이 될 수 없습니다.
+* 이미 해당 백업을 기준으로 한 증분 백업이 존재하는 경우 기준 백업이 될 수 없습니다. 단, 이전 증분이 실패한 경우에는 동일한 백업을 기준으로 증분이 가능합니다.
+* 해당 백업을 수행했던 DB 인스턴스가 삭제되었거나 장애로 인해 백업을 수행할 수 없는 상태라면 기준 백업이 될 수 없습니다.
+* 2024년 9월 정기 배포 이전에 생성된 백업은 기준 백업이 될 수 없습니다.
+
+[자동 백업 스케줄 전략](#자동-백업-설정)에 따라 증분 백업이 스케줄 되는 경우 위 제약사항과 함께 다음 추가 제약사항을 만족하는 기준 백업이 자동으로 선택됩니다. 제약사항을 만족하는 기준 백업이 없는 경우 자동 백업 스케줄 전략과 관계 없이 전체 백업을 수행합니다.
+* 복제 중단 상태인 예비 마스터, 읽기 복제본에서 수행된 백업은 기준 백업이 될 수 없습니다.
+* 테이블 잠금을 사용하지 않은 상태에서 수행된 백업은 기준 백업이 될 수 없습니다.
+* 해당 백업 생성 이후에 새로운 전체 백업이 생성된 경우 기준 백업이 될 수 없습니다.
+
+## 백업 설정
+
+DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 지정할 수 있습니다.
+
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-en.png)
+
+### 공통 설정
 The following settings are applied to backup, and also to auto and manual backups.
-
-![backup-config-en](https://static.toastoven.net/prod_rds/24.03.12/backup-config-en.png)
 
 **Use Table Lock**
 
@@ -48,36 +117,10 @@ The following settings are applied to backup, and also to auto and manual backup
 
 * When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
-### Manual Backup
 
-If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike auto backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted. To perform a manual backup from the console,
+### 자동 백업 설정
 
-![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
-
-❶ After selecting the DB instance to back up, click **Backup**, and the **Create Backup** pop-up screen appears.
-
-![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
-
-❷ If you want, change the DB instance to which you want to perform the backup.
-❸ Enter a name for the backup. There are the following limitations
-
-* Backup name has to be unique for each region.
-* Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
-
-또는 **백업** 탭에서
-
-![manual-backup-en](https://static.toastoven.net/prod_rds/24.03.12/manual-backup-en.png)
-
-❶ **+ 백업 생성**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
-
-![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
-
-❷ 백업을 수행할 DB 인스턴스를 선택합니다.
-❸ 백업의 이름을 입력한 뒤 **생성**을 클릭하면 백업 생성을 요청할 수 있습니다.
-
-### Auto Backup
-
-In addition to manually performing backups, auto backups can occur when needed for restore operations or based on auto backup schedule settings. Auto backups have the same lifecycle as DB instances. When a DB instance is deleted, all archived auto backups are deleted. The following setting items are supported by auto backups.
+The following setting items are supported by auto backups.
 
 **Allow Auto Backup**
 
@@ -86,6 +129,9 @@ In addition to manually performing backups, auto backups can occur when needed f
 **Auto Backup Retention Period**
 
 * Sets the time period for storing auto backups on storage. It can be kept for up to 730 days, and if the auto backup archive period changes, the expired auto backup files will be deleted immediately.
+
+  > [주의]
+  > 증분 방식으로 생성된 백업은 자동 백업 보관 기간이 지나지 않았더라도 기준 백업이 삭제될 때 함께 삭제됩니다.
 
 **Auto Backup Replication Region**
 
@@ -99,14 +145,25 @@ In addition to manually performing backups, auto backups can occur when needed f
 
 * When using an auto backup schedule, backups are performed automatically at the auto backup performance time you set.
 
+**자동 백업 스케줄 전략**
+
+* 자동 백업을 수행할 전략을 지정할 수 있습니다.
+  * 매일 전체 백업 : 매일 전체 데이터를 백업합니다.
+  * 매일 전체 및 증분 백업 : 매일 전체 데이터를 1회 백업하고, 수 회 증분을 백업합니다.
+  * 주간 전체 백업 및 일일 증분 백업 : 특정 요일에 전체 데이터를 1회 백업하고, 나머지 요일에는 증분을 1회 백업합니다.
+
+**전체 데이터 백업 요일**
+
+* 주간 전체 백업 및 일일 증분 백업 전략 사용 시에만 지정 가능합니다. 최소 1개 ~ 최대 6개의 요일을 선택해야 하며, 선택한 요일에는 전체 백업이 진행되고 선택하지 않은 요일에는 증분 백업이 진행됩니다.
+
 **Auto Backup Run Time**
 
 * Allows you set the time that the backup automatically takes place. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the backup based on the number of backups retries if it does not exceed the backup retries times.
 
-Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
-
 > [Caution]
 > Backups may not be performed in some situations, such as when a previous backup fails to terminate.
+> 스케줄 상 증분 백업을 수행할 차례이더라도 증분이 가능한 기준 백업이 존재하지 않는 경우 전체 백업이 수행될 수 있습니다.
+> 증분 가능한 기준 백업에 대한 자세한 설명은 [기준 백업](#기준-백업) 항목을 참고합니다.
 
 ### Backup Storage and Pricing
 
@@ -114,9 +171,9 @@ All backup files are uploaded to the internal backup storage and stored. For man
 
 ### Export Backup
 
-#### Export Files While Performing Backup
+#### 백업을 수행하면서 파일 내보내기
 
-You can export backup files to the user object storage while performing backup.
+백업을 수행함과 동시에 백업 파일을 사용자 오브젝트 스토리지로 내보낼 수 있습니다. 증분 백업에 대해서는 지원되지 않습니다.
 
 ![db-instance-list-export-obs-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-en.png)
 
@@ -131,7 +188,7 @@ You can export backup files to the user object storage while performing backup.
 
 #### Export Backup Files
 
-You can export backup files stored on your internal backup storage to user object storage in NHN Cloud.
+You can export backup files stored on your internal backup storage to user object storage in NHN Cloud. 증분 백업에 대해서는 지원되지 않습니다.
 
 ![db-instance-detail-backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ko.png)
 
@@ -246,7 +303,7 @@ xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password 
 
 ### Restoration by Using RDS for MySQL Backup
 
-You can use the backup file in RDS for MySQL to restore the database in MySQL directly. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#_1) and use the same version as Percona XtraBackup used by RDS for MySQL.
+You can use the backup file in RDS for MySQL to restore the database in MySQL directly. 전체 백업에 대해서만 복원이 가능하며, 증분 백업 반영은 지원되지 않습니다. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#_1) and use the same version as Percona XtraBackup used by RDS for MySQL.
 
 (1) Export backup of RDS for MySQL to object storage with reference to the [Export Backup](backup-and-restore/#_5).
 

@@ -158,7 +158,6 @@ DB 인스턴스의 상태는 아래와 같은 값들로 구성되며, 사용자�
 | FAIL_TO_CONNECT   | 연결 실패                                         |
 | REPLICATION_STOP  | 복제 중단                                         |
 | FAILOVER          | 장애 조치 완료                                      |
-| FAILOVER_SHUTDOWN | 장애 조치 완료(정지), 2023년 4월 11일 이전에 장애 조치된 DB 인스턴스 |
 | SHUTDOWN          | 중지됨                                           |
 
 변경할 수 있는 검색 조건은 아래와 같습니다.

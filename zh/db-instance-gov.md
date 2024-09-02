@@ -160,7 +160,6 @@ The status of the DB instance consists of the following values and changes depen
 | FAIL_TO_CONNECT   | Linking failed                                         |
 | REPLICATION_STOP  | Replication stopped                                         |
 | FAILOVER          | Failover complete                                      |
-| FAILOVER_SHUTDOWN | Failover completed (shutdown), failed over DB instance before April 11, 2023 |
 | SHUTDOWN          | Stopped                                           |
 
 Search conditions that can be changed are as follows.
