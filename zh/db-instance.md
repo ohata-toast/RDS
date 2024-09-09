@@ -48,7 +48,7 @@ The versions specified below are available.
 | <strong>5.6</strong> |                                                           |
 | MySQL 5.6.33         | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
 
-For the DB engine, version upgrades are possible through the modification feature of web console after creation.
+For the DB engine, version upgrades are possible through the modification feature of console after creation.
 Details about DB engine can be found in [DB Engine](db-engine/).
 
 ### DB Instance Type
@@ -63,7 +63,7 @@ When creating DB instance, you must select appropriate DB instance type accordin
 | r2   | Available when memory is busy compared to other resources.                                                                     | 
 | x1   | Instance type that supports higher-end CPU and memory. Recommended for services or applications that require high performance. |
 
-The type of DB instance that you have already created can be easily changed through the web console.
+The type of DB instance that you have already created can be easily changed through the console.
 
 > [Caution]
 > If you change the type of DB instance that you have already created, the DB instance will be terminated, resulting in a few minutes of downtime.
@@ -78,7 +78,7 @@ You cannot change the data storage type for DB instance that you have already cr
 > [Note]
 To use more than 2TB of data storage, contact NHN Cloud Customer Center.
 
-Because the following tasks use the I/O capacity of data storage, the performance of DB instance may be degraded during the process.
+Because the following tasks increase the I/O usage of data storage, the performance of DB instance may be degraded during the process.
 
 * Back up single DB instance
 * Configuring High Availability for single DB Instance
@@ -86,7 +86,7 @@ Because the following tasks use the I/O capacity of data storage, the performanc
 * Rebuild Read Replication
 * Rebuild Candidate Master
 * Restore to a certain point in time
-* Export backup to the object storage
+* Export backup files to object storage after backing up from a single DB instance
 
 ### High Availability
 
@@ -113,7 +113,7 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 
 ### Backup
 
-You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the web console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the
+You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the
 size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
 ### Default Notification
@@ -137,7 +137,7 @@ If you activate deletion protection, you can protect DB instances from accidenta
 
 ## DB instances
 
-You can view DB instances created from the web console. It can be viewed as groups of DB instances or as individual DB instances.
+You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
 
 ![db-instance-list_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list_ko.png)
 
@@ -299,7 +299,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 |------------|------------------------------------------------------------------|
 | NONE       | Encrypted connections are not applied.                                              |
 | SSL        | Encrypted connections are applied.                                                  |
-| X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the web console. |
+| X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the console. |
 
 > [Note]
 User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and later versions.
@@ -338,7 +338,7 @@ Click on**Download** to charge Internet traffic as much as the size of the certi
 
 ## Modify DB instance
 
-You can easily change various items in DB instances created through web console. Changes requested are applied to DB instances sequentially. If restarting is required during the application process, apply all changes and restart DB instance. The following are the items that cannot be changed and require restarting.
+You can easily change various items in DB instances created through console. Changes requested are applied to DB instances sequentially. If restarting is required during the application process, apply all changes and restart DB instance. The following are the items that cannot be changed and require restarting.
 
 | Item           | Whether or not you can change  | Whether or not you need to restart                |
 |--------------|----------|-------------------------|
@@ -367,7 +367,7 @@ If restart with failover is not enabled, the DB instance is restarted after the 
 
 ### DB Schema & Direct User Control
 
-RDS for MySQL provides management from the web console to make it easier to manage DB schemas and users, but it also provides the feature to set up so that users can control themselves. Direct control grants all currently created users the following privileges.
+RDS for MySQL provides management from the console to make it easier to manage DB schemas and users, but it also provides the feature to set up so that users can control themselves. Direct control grants all currently created users the following privileges.
 
 ```sql
 GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
@@ -375,7 +375,7 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 
 > [Caution]
 If you change it to Disabled again after using direct control
-> * Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the web console may not match.
+> * Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the console may not match.
 > * All users that exist in the database, regardless of the permissions granted to them, are represented by CUSTOM permissions.
 
 ## Upgrade DB instance operating system
@@ -402,7 +402,7 @@ You can delete DB instances that are no longer in use. If you delete a master, y
 
 ## Backup
 
-You can prepare in advance to recover the database of your DB instance in case of failure. You can perform backups from the web console whenever necessary or you can set up periodic backups. Refer to [Backup](backup-and-restore/#_1) for more information.
+You can prepare in advance to recover the database of your DB instance in case of failure. You can perform backups from the console whenever necessary or you can set up periodic backups. Refer to [Backup](backup-and-restore/#_1) for more information.
 
 ## Restoration
 
@@ -410,7 +410,7 @@ You can use backups to restore data to any point in time. Restore always creates
 
 ## Secure Capacity
 
-If the capacity of the data storage is insufficient due to the excessive generation of binary logs from rapid load, you can delete the binary logs using Secure Capacity feature in web console. When you select Secure Capacity in web console, you will see a pop-up window where you can select the binary logs for DB instance.
+If the capacity of the data storage is insufficient due to the excessive generation of binary logs from rapid load, you can delete the binary logs using Secure Capacity feature in console. When you select Secure Capacity in console, you will see a pop-up window where you can select the binary logs for DB instance.
 Select the binary log and press **Confirm** to delete all binary logs created prior to the selected item. The Secure Capacity is a feature that temporarily secures capacity. If you keep running out of capacity, you must set the storage period for the binary log or expand the size of the data storage to match your service load.
 
 > [Note] You can set the storage period for binary logs with the `expire_logs_days` in MySQL 5.7 and later and the `binlog_expire_logs_seconds` parameter in MySQL 5.8 and later.
@@ -420,7 +420,7 @@ You can set the storage period for binary logs with the expire_logs_days in MySQ
 
 ## Apply parameter group changes
 
-Even if the settings for a parameter group associated with DB instance change, these changes do not apply automatically to DB instance. If the settings for the parameter applied to DB instance and the parameters group associated are different, the Web console displays **parameter** button.
+Even if the settings for a parameter group associated with DB instance change, these changes do not apply automatically to DB instance. If the settings for the parameter applied to DB instance and the parameters group associated are different, the console displays **parameter** button.
 
 You can apply changes in a parameter group to DB instance by using one of the following methods.
 
@@ -442,7 +442,7 @@ If restart with failover is not enabled, the DB instance is restarted after the 
 
 You can upload an external MySQL backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for MySQL. For more information, refer to [Restore with External MySQL Backup](backup-and-restore/#mysql).
 
-## Export backup to the object storage
+## Export backup files to the object storage after backup
 
 You can export backup files to user object storage in NHN Cloud at the same time as you perform a backup. Refer to [Export Backup](backup-and-restore/#_5) for more information.
 
@@ -467,7 +467,7 @@ For DB instances that are backed up, there may be a drop in storage I/O performa
 > [Note]
 Backup storage charges can be as much as the size of a binary log required for the read replica creation process.
 
-To create a read replica from the web console,
+To create a read replica from the console,
 
 ![db-instance-replica-create-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-replica-create-ko.png)
 
@@ -534,7 +534,7 @@ The process of breaking the replication relationship with the master and convert
 If the master DB instance is in an abnormal state, you cannot proceed with the promotion operations.
 
 > [Note]
-You can perform promotion operations from the same region's web console as the region where the read replica is located.
+You can perform promotion operations from the same region's console as the region where the read replica is located.
 
 ### Force Promotion of Read Replicas
 
@@ -554,13 +554,13 @@ mysql> CALL mysql.tcrds_repl_skip_repl_error();
 If you can't resolve the replication issue of read replica, you can restore it to its normal state by rebuilding. This process deletes all databases in the read replica and rebuilds it anew based on the master database. During rebuilding, read replicas are unavailable to use. Rebuilding read replicas requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you don't have a backup file, refer to [Create Read Replica](#_22) for actions and precautions.
 
 > [Note]
-Connection information (domain, IP) does not change after rebuilding
+Connection information (domain, IP) does not change after rebuilding.
 
 ## Restart DB instance
 
 You can restart a DB instance when you restart MySQL or want to manually do failover a high availability DB instance. We recommend that you perform it during low service load times to minimize restart times. For high availability DB instances, if restarting with failover is not enabled, restart the candidate master first, then restart the master. For restarting with failover feature, refer to [Manual Failover](#_42) item.
 
-To restart a DB instance from the web console
+To restart a DB instance from the console
 
 ![db-instance-restart-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-ko.png)
 
@@ -575,7 +575,7 @@ If MySQL in the DB instance is not working properly, you can force a restart. Fo
 > [Note]
 For high availability DB instances, you cannot force restart.
 
-To force restart a DB instance, from the web console
+To force restart a DB instance, from the console
 
 ![db-instance-restart-force-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-force-ko.png)
 
@@ -632,7 +632,7 @@ If the failed over master fails to recover, you can re-enable the high availabil
 > [Note]
 > Recovery is not supported for DB instances where failover occurred before April 11, 2023.
 
-To recover a failover master, from the web console
+To recover a failover master, from the console
 
 ![db-instance-failover-repair-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-repair-en.png)
 
@@ -655,7 +655,7 @@ For DB instances where backups are performed, storage I/O performance may be deg
 > [Note]
 Backup storage charges can be as much as the size of the binary log required for the failover master rebuild process.
 
-To rebuild a failover master, from the web console
+To rebuild a failover master, from the console
 
 ![db-instance-failover-rebuild-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-rebuild-ko.png)
 
@@ -665,7 +665,7 @@ To rebuild a failover master, from the web console
 
 If recovery of a failed over master fails and data correction is required, you can disable the high availability feature by separating that master. The replication relationship between the separated master and the promoted master is broken, and each behaves as a normal DB instance. After separation, you cannot recover to the existing configuration.
 
-To separate failover master, from the web console
+To separate failover master, from the console
 
 ![db-instance-failover-split-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-split-ko.png)
 
@@ -697,7 +697,7 @@ Because all binary logs are deleted during the failover process, you can proceed
 
 #### Manual Control of Failover
 
-You can apply changes to the candidate master first and then observe the trend, or you can control when you want to perform a failover at the exact time from the web console. When you select Failover Manual Control, the ❶ web console displays the **Failover** button after the candidate master restarts. Click on this button to activate the failover, which can wait up to 5 days for the failover to occur. If the failover is not enabled within five days, the task will be automatically cancelled.
+You can apply changes to the candidate master first and then observe the trend, or you can control when you want to perform a failover at the exact time from the console. When you select Failover Manual Control, the ❶ console displays the **Failover** button after the candidate master restarts. Click on this button to activate the failover, which can wait up to 5 days for the failover to occur. If the failover is not enabled within five days, the task will be automatically cancelled.
 
 ![db-instance-ha-wait-manual-failover-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-ko.png)
 

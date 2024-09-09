@@ -1,16 +1,11 @@
 ## Database > RDS for MySQL > Server Dashboard
 
 ## Server Dashboard
-
-You can visualize performance metrics in chart form on the server dashboard. Charts are arranged according to a preset layout. Metrics s are collected once every minute and kept for up to five years. Metrics data is aggregated as average values over 5 minutes, 30 minutes, 2 hours, and a day. Retention period by aggregation unit is as follows.
+You can visualize performance metrics in chart form on the server dashboard. Charts are arranged according to a preset layout. Metrics are collected once every minute and kept for up to 1 year. Retention period by aggregation unit is as follows.
 
 | Aggregate Unit | Retention Period |
-|----------------|------------------| 
-| 1 minute       | 7 days           |
-| 5 minutes      | 1 month          |
-| 30 minutes     | 6 months         |
-| 2 hours        | 2 years          |
-| 1 day          | 5 years          |
+|----------------|------------------|
+| 1 minute | 1 year |
 
 ## Layout
 

@@ -7,7 +7,7 @@ as other parameter groups.
 
 ### Create Parameter Group
 
-You can create parameter groups in the parameter web console when needed. Parameter groups are created by DB engine version and can be named and there are restrictions as follows.
+You can create parameter groups in the parameter console when needed. Parameter groups are created by DB engine version and can be named and there are restrictions as follows.
 
 * Must be unique for each region.
 * Must contains alphabets, numbers, and - _ between 1 and 100 characters, and the first character must be an alphabet.
@@ -31,7 +31,7 @@ group, and then click **Apply Parameter Group Changes** to reflect the changes i
 
 ### Compare Parameter Group
 
-After selecting two different parameter groups in the web console, click the **Compare** button to see what parameters are different. You can compare parameter groups for different DB engine versions as well as the same DB engine version.
+After selecting two different parameter groups in the console, click the **Compare** button to see what parameters are different. You can compare parameter groups for different DB engine versions as well as the same DB engine version.
 
 ### Delete Parameter Group
 
@@ -80,5 +80,5 @@ ramSizeByte * 6 / 10
 
 ### Change Parameter
 
-You can change the parameters by selecting a parameter group from the web console and pressing the **Edit Parameters** button. For parameters that cannot be changed, the value appears in plain text, and for parameters that can be changed, the INPUT that can be changed appears. When you press the `Preview Changes` button on the edit screen, a separate pop-up screen will be displayed to view the changed parameters, press the `Reset` button to return to the time before the change. All changes made
+You can change the parameters by selecting a parameter group from the console and pressing the **Edit Parameters** button. For parameters that cannot be changed, the value appears in plain text, and for parameters that can be changed, the INPUT that can be changed appears. When you press the `Preview Changes` button on the edit screen, a separate pop-up screen will be displayed to view the changed parameters, press the `Reset` button to return to the time before the change. All changes made
 in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#_5).

@@ -199,7 +199,7 @@ mysql> call mysql.tcrds_repl_init();
 ### Export backup to object storage
 
 * You may export an RDS for MySQL backup to the NHN Cloud object storage
-* After choosing DB Instance on **Instance** tab of the web console, go to the **Additional Functions** menu and click the **Export Backup to Object Storage** for a manual backup. The backup file can be uploaded to the object storage designated by the user right away.
+* After choosing DB Instance on **Instance** tab of the console, go to the **Additional Functions** menu and click the **Export Backup to Object Storage** for a manual backup. The backup file can be uploaded to the object storage designated by the user right away.
 * Moreover, choose the existing backup file on **Control Backup and Access** tab of the DB instance detail screen and click on the **Export Backup to Object Storage** to upload to the object storage designated by the user.
 * Backup files are uploaded onto the object storage designated by the user in the form of a multi-part object.
 
@@ -245,7 +245,7 @@ find {MySQL data storage path} -name "*.qp" -print0 | xargs -0 rm
 
 * You can use RDS for MySQL backup file of object storage in order to restore to RDS for MySQL of the same region and different project.
 * Export the backup file to object storage by referring to [Export backup to object storage](./developer-guide/#_5 ).
-* Access the web console of the project to restore, and click the Restore from Backup in Object Storage button in the Instance tab.
+* Access the console of the project to restore, and click the Restore from Backup in Object Storage button in the Instance tab.
 * Enter the information of the object storage where the backup file is stored and the DB instance, and click the **Create** button.
 
 ### Create a DB instance using external MySQL backup file of object storage
@@ -273,7 +273,7 @@ xtrabackup --defaults-file={my.cnf path} --user={username} --password='{password
     * The maximum file size that can be uploaded at a time is 5 GB.
     * If the size of backup file is larger than 5 GB, use a utility such as split to split the backup file to a size below 5 GB and perform multipart uploading.
     * For more details, see https://docs.nhncloud.com/en/Storage/Object%20Storage/en/api-guide/#multipart-upload.
-* Access the web console of the project to restore, and click the Restore from Backup in Object Storage button in the Instance tab.
+* Access the console of the project to restore, and click the Restore from Backup in Object Storage button in the Instance tab.
 * Enter the information of the object storage where the backup file is stored and the DB instance, and click the **Create** button.
 
 ## Procedure
