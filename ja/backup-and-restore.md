@@ -48,7 +48,7 @@ DBエンジンバージョン別のPercona XtraBackupバージョンは次のと
 * バックアップ名は1～100文字の間の英字、数字、一部の記号（-、_、.）のみ使用でき、最初の文字は英字のみ使用できます。
 
 ![db-instance-backup-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ja.png)
-![backup-list-1-ja](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-ja.png)
+![backup-list-1-ja](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-ko.png)
 
 **수동 전체 백업 생성하기**
 
@@ -101,7 +101,7 @@ DB 인스턴스의 모든 데이터를 백업합니다.
 
 DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 지정할 수 있습니다.
 
-![db-instance-backup-ja](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-ja.png)
+![db-instance-backup-ja](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-ko.png)
 
 ### 공통 설정
 

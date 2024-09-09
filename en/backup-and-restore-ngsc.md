@@ -48,7 +48,7 @@ If you need to permanently store databases at a certain point in time, you can p
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
 
 ![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
-![backup-list-1-en](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-en.png)
+![backup-list-1-en](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-ko.png)
 
 **수동 전체 백업 생성하기**
 
@@ -102,7 +102,7 @@ DB 인스턴스의 모든 데이터를 백업합니다.
 
 DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 지정할 수 있습니다.
 
-![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-en.png)
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-ko.png)
 
 ### 공통 설정
 The following settings are applied to backup, and also to auto and manual backups.
