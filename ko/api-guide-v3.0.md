@@ -584,7 +584,6 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | `FAIL_TO_CONNECT`   | DB 인스턴스 연결에 실패한 경우           |
 | `REPLICATION_STOP`  | DB 인스턴스의 복제가 중단된 경우          |
 | `FAILOVER`          | DB 인스턴스가 고가용성 장애 조치된 경우      |
-| `FAILOVER_SHUTDOWN` | DB 인스턴스가 고가용성 장애 조치되어 중단된 경우 |
 | `SHUTDOWN`          | DB 인스턴스가 중지된 경우              |
 | `DELETED`           | DB 인스턴스가 삭제된 경우              |
 
