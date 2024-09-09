@@ -581,7 +581,6 @@ This API does not require a request body.
 | `FAIL_TO_CONNECT`   | Failed to connect DB instance           |
 | `REPLICATION_STOP`  | Replication of DB instance is stopped          |
 | `FAILOVER`          | High availability DB instance failed over      |
-| `FAILOVER_SHUTDOWN` | DB instance shutdown due to high availability failover |
 | `SHUTDOWN`          | DB instance is stopped              |
 | `DELETED`           | DB instance is deleted              |
 
