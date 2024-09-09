@@ -2,7 +2,7 @@
 
 ## Process List, InnoDB Status
 
-RDS for MySQL collects queries performed on the database and the status of the InnoDB engine. The results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`are collected once per second, and you can view the last four days of data in the Analytics tab of the web console.
+RDS for MySQL collects queries performed on the database and the status of the InnoDB engine. The results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`are collected once per second, and you can view the last four days of data in the Analytics tab of the console.
 
 > [Note] The collected data is stored in internal backup storage and is not charged separately.
 
@@ -23,7 +23,7 @@ The following items are collected
 
 ## Slow Query
 
-RDS for MySQL analyzes the slow queries that occurred in your database and collects the results. It performs analysis once a minute using pt-query-digest, a query analysis tool provided by Percona, and you can view the last 30 days of data in the Analysis tab of the web console.
+RDS for MySQL analyzes the slow queries that occurred in your database and collects the results. It performs analysis once a minute using pt-query-digest, a query analysis tool provided by Percona, and you can view the last 30 days of data in the Analysis tab of the console.
 
 > [Note] You can disable the Slow Query analysis feature on the Modify DB Instance screen.
 

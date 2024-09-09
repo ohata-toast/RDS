@@ -2,7 +2,7 @@
 
 ## Event
 
-Event refers to an important event that occurs either by RDS for MySQL or by user. Event consists of the event type, the date and time of occurrence, the original source and the message. Event can be viewed from the web console, and you can receive notifications of event occurrence by email or SMS through subscription. The event type and the possible events are as follows.
+Event refers to an important event that occurs either by RDS for MySQL or by user. Event consists of the event type, the date and time of occurrence, the original source and the message. Event can be viewed from the console, and you can receive notifications of event occurrence by email or SMS through subscription. The event type and the possible events are as follows.
 
 | Event Code  | Event Category    | Availability | Description                                                                   |
 |-------------|-------------------|--------------|-------------------------------------------------------------------------------|
