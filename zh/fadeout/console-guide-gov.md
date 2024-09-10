@@ -310,7 +310,7 @@
 
 ### DB Schema & DB User Management
 
-* Web console can manage DB Schema and DB User.
+* console can manage DB Schema and DB User.
 
 > [Note] You can no longer create, modify, or delete DB Schema or DB User with a query.
 

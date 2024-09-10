@@ -2,7 +2,7 @@
 
 ## Process List、InnoDB Status
 
-データベースで実行されたクエリとInnoDBエンジンの状態を収集します。1秒に1回`information_schema.processlist`の結果と、`SHOW ENGINE INNODB STATUS`の結果を収集し、過去4日間のデータをWebコンソールの分析タブで照会できます。
+データベースで実行されたクエリとInnoDBエンジンの状態を収集します。1秒に1回`information_schema.processlist`の結果と、`SHOW ENGINE INNODB STATUS`の結果を収集し、過去4日間のデータをコンソールの分析タブで照会できます。
 
 > [参考]収集されたデータは、内部バックアップストレージに保存され、別途課金されることはありません。
 
@@ -23,7 +23,7 @@
 
 ## Slow Query
 
-データベースで発生したSlow Queryを分析して結果を収集します。Perconaが提供するクエリ分析ツールであるpt-query-digestを使用して、1分に1回分析することで過去30日間のデータをWebコンソールの分析タブで照会できます。
+データベースで発生したSlow Queryを分析して結果を収集します。Perconaが提供するクエリ分析ツールであるpt-query-digestを使用して、1分に1回分析することで過去30日間のデータをコンソールの分析タブで照会できます。
 
 > [参考] DBインスタンスの修正画面でSlow Query分析機能を使用しないように設定できます。
 

@@ -2,7 +2,7 @@
 
 ## Process List, InnoDB Status
 
-데이터베이스에서 수행된 쿼리와 InnoDB 엔진의 상태를 수집합니다. 1초에 한 번씩 `information_schema.processlist`의 결과와, `SHOW ENGINE INNODB STATUS`의 결과를 수집하며 최근 4일간의 데이터를 웹 콘솔의 분석 탭에서 조회할 수 있습니다.
+데이터베이스에서 수행된 쿼리와 InnoDB 엔진의 상태를 수집합니다. 1초에 한 번씩 `information_schema.processlist`의 결과와, `SHOW ENGINE INNODB STATUS`의 결과를 수집하며 최근 4일간의 데이터를 콘솔의 분석 탭에서 조회할 수 있습니다.
 
 > [참고] 수집된 데이터는 내부 백업 스토리지에 저장되며 별도로 과금하지 않습니다.
 
@@ -23,7 +23,7 @@
 
 ## Slow Query
 
-데이터베이스에서 발생한 Slow Query를 분석하여 결과를 수집합니다. Percona에서 제공하는 쿼리 분석 도구인 pt-query-digest를 사용하여 1분에 한 번씩 분석하며 최근 30일간의 데이터를 웹 콘솔의 분석 탭에서 조회할 수 있습니다.
+데이터베이스에서 발생한 Slow Query를 분석하여 결과를 수집합니다. Percona에서 제공하는 쿼리 분석 도구인 pt-query-digest를 사용하여 1분에 한 번씩 분석하며 최근 30일간의 데이터를 콘솔의 분석 탭에서 조회할 수 있습니다.
 
 > [참고] DB 인스턴스 수정 화면에서 Slow Query 분석 기능을 사용하지 않도록 설정할 수 있습니다.
 

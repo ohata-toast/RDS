@@ -6,7 +6,7 @@ When configuring the monitoring settings of the notification group, notification
 
 ## Event
 
-An event refers to important incident incurred by RDS for MySQL or the user. An event is comprised of a type, date of occurrence, event source, and message. It can be checked on the web console, and notification can be received via email and SMS through subscription. The event types and event occurrences are as follows.
+An event refers to important incident incurred by RDS for MySQL or the user. An event is comprised of a type, date of occurrence, event source, and message. It can be checked on the console, and notification can be received via email and SMS through subscription. The event types and event occurrences are as follows.
 
 | Event Type | Event Code  | Event Message                                                        |
 |------------|-------------|----------------------------------------------------------------------|

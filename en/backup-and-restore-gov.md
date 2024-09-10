@@ -1,42 +1,109 @@
 ## Database > RDS for MySQL > Backup and Restoration
 
-## Backup
+## Backup Overview
 
-You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the web console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
-high-availability configuration or perform backups from read replica.
+You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
+high-availability configuration or back up only increments of data since the previous backup, or perform backups from read replica.
 
 > [Note]
-> High availability DB instances are backed up on the extra master without compromising the master's storage performance.
-
-RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
+> High availability DB instances perform backups on the redundant master so that the storage performance of the master is not degraded.
+> However, backups can be performed on the master even if it is a high availability DB instance in the following cases.
+> * If a backup cannot be performed due to a candidate master failure.
+> * If you do not have a read replica in a situation where you need a backup taken from a DB instance other than the candidate master for rebuilding the candidate master and you do not have a read replica
+    RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
 
 | MySQL version | XtraBackup version |
-|---------------|--------------------|
-| 5.7.15        | 2.4.28             |
-| 5.7.19        | 2.4.28             |
-| 5.7.26        | 2.4.28             |
-| 5.7.33        | 2.4.28             |
-| 5.7.37        | 2.4.28             |
-| 8.0.18        | 8.0.32             |
-| 8.0.23        | 8.0.32             |
-| 8.0.28        | 8.0.32             |
-| 8.0.32        | 8.0.32             |
-| 8.0.33        | 8.0.33             |
-| 8.0.34        | 8.0.34             |
-| 8.0.35        | 8.0.35             |
-| 8.0.36        | 8.0.35             |
+|----------|---------------|
+| 5.7.15   | 2.4.28        |
+| 5.7.19   | 2.4.28        |
+| 5.7.26   | 2.4.28        |
+| 5.7.33   | 2.4.28        |
+| 5.7.37   | 2.4.28        |
+| 8.0.18   | 8.0.32        |
+| 8.0.23   | 8.0.32        |
+| 8.0.28   | 8.0.32        |
+| 8.0.32   | 8.0.32        |
+| 8.0.33   | 8.0.33        |
+| 8.0.34   | 8.0.34        |
+| 8.0.35   | 8.0.35        |
+| 8.0.36   | 8.0.35        |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [Note]
-> On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the web console.
-> High Availability DB instances are backed up on a candidate master to avoid degradation of data storage performance on the master.
+> On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.
+## Backup Type
 
-The following settings are applied to backup, and also to auto and manual backups.
+Backups can be categorized into manual and automa backups.
 
-![backup-config-en](https://static.toastoven.net/prod_rds/24.03.12/backup-config-en.png)
+### Manual Backup
+
+You can perform a manual backup from the console to permanently save a database at a specific point in time. Unlike auto backups, manual backups are not deleted when the DB instance is deleted, unless you explicitly delete the backup.
+When creating a manual backup, you must specify a name for the backup, with the following limitations.
+* Backup name has to be unique for each region.
+* Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
+
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ko.png)
+![backup-list-1-en](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-ko.png)
+
+**Create a manual full backup**
+
+❶ You can create a full backup manually by selecting the DB instance to back up from the DB instances list and clicking **Backup**.
+❷ You can create a full backup manually by clicking **Create Full Backup** in the backup list and specifying the DB instances to back up.
+
+**Create a Manual Incremental Backup**
+
+❸ You can create an incremental backup by selecting a baseline backup from the backup list and then clicking **Create incremental backup**. Some backups cannot be selected as a baseline backup; for a detailed description of baseline [backups](#기준-백업), see [Baseline backups](#기준-백업).
+
+
+### Auto Backup
+
+In addition to performing backups manually, auto backups can occur when required for restore operations or based on auto backup schedule settings.
+For settings that apply during auto backups, see [Auto Backup Settings](#자동-백업-설정).
+
+## Backup Method
+
+Full and incremental backups are available.
+
+### Full Backup
+
+Backs up all data in the DB instance.
+
+### Incremental Backup
+
+Incremental backups only back up data changes since the baseline backup was performed. Recommended if your data is mostly immutable.
+Incremental backups are always performed on the DB instance that performed the baseline backup.
+When restoring to an incremental backup, the restore proceeds from the first full backup created, and all increments are reflected sequentially until the selected incremental backup is reached.
+
+> [Caution]
+> Restoring from incremental backups may take more time than restoring from a full backup, which is proportional to the sum of the capacity of the incremental backups required for the restore.
+#### Baseline Backup
+
+Incremental backups require a backup to baseline data changes on. An incremental backup can also be the baseline backup for a new incremental backup.
+
+The following limitations exist for backups that are the basis for incremental backups. They are common to both manual and auto incremental backups.
+* A backup in an error state cannot be a baseline backup.
+* A backup created before the last failover cannot be the baseline backup.
+* A backup created before the last DB Engine version upgrade cannot be a baseline backup.
+* If an incremental backup already exists that is based on that backup, it cannot be the baseline backup. However, if the previous increment failed, you can increment based on the same backup.
+* If the DB instance that took that backup has been deleted or is unable to take a backup due to failure, it cannot be the baseline backup.
+* Backups created before the September 2024 scheduled release cannot be baseline backups.
+
+When incremental backups are scheduled according to [Auto Backup Schedule Strategy](#자동-백업-설정), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup schedule strategy.
+* A backup performed on a candidate master, read replica that is in a replication down state cannot be a baseline backup.
+* A backup performed without table locks enabled cannot be a baseline backup.
+* If a new full backup was created after that backup was created, it cannot be the baseline backup.
+
+## Backup Settings
+
+When creating and modifying DB instances, you can specify settings that will be applied to backups.
+
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-ko.png)
+
+### Common Settings
+The following topics are common to both auto and manual backups.
 
 **Use Table Lock**
 
@@ -48,36 +115,10 @@ The following settings are applied to backup, and also to auto and manual backup
 
 * When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
-### Manual Backup
 
-If you need to permanently store databases at a certain point in time, you can perform backups manually from the web console. Unlike auto backups, manual backups are not deleted, unless you explicitly delete the backup, as they are when DB instance is deleted. To perform a manual backup from the console,
+### Set Auto Backup
 
-![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
-
-❶ After selecting the DB instance to back up, click **Backup**, and the **Create Backup** pop-up screen appears.
-
-![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
-
-❷ If you want, change the DB instance to which you want to perform the backup.
-❸ Enter a name for the backup. There are the following limitations
-
-* Backup name has to be unique for each region.
-* Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
-
-또는 **백업** 탭에서
-
-![manual-backup-en](https://static.toastoven.net/prod_rds/24.03.12/manual-backup-en.png)
-
-❶ **+ 백업 생성**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
-
-![db-instance-backup-popup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-en.png)
-
-❷ 백업을 수행할 DB 인스턴스를 선택합니다.
-❸ 백업의 이름을 입력한 뒤 **생성**을 클릭하면 백업 생성을 요청할 수 있습니다.
-
-### Auto Backup
-
-In addition to manually performing backups, auto backups can occur when needed for restore operations or based on auto backup schedule settings. Auto backups have the same lifecycle as DB instances. When a DB instance is deleted, all archived auto backups are deleted. The following setting items are supported by auto backups.
+The following items apply only to auto backups.
 
 **Allow Auto Backup**
 
@@ -86,6 +127,9 @@ In addition to manually performing backups, auto backups can occur when needed f
 **Auto Backup Retention Period**
 
 * Sets the time period for storing auto backups on storage. It can be kept for up to 730 days, and if the auto backup archive period changes, the expired auto backup files will be deleted immediately.
+
+> [Caution]
+> Incrementally created backups are deleted when the baseline backup is deleted, even if the auto backup retention period has not passed.
 
 **Auto Backup Replication Region**
 
@@ -99,14 +143,25 @@ In addition to manually performing backups, auto backups can occur when needed f
 
 * When using an auto backup schedule, backups are performed automatically at the auto backup performance time you set.
 
+**Auto Backup Schedule Strategy**
+
+* You can specify a strategy for performing auto backups.
+  * Daily full backup: Back up your entire data every day.
+  * Daily full and incremental backups: One full backup of your data each day, and multiple incremental backups.
+  * Weekly full backups and daily incremental backups: One full backup of your data on certain days of the week, and one incremental backup on the remaining days of the week.
+
+**All Data Backup Days**
+
+* Can only be specified when using the weekly full backup and daily incremental backup strategies. You must select a minimum of one and a maximum of six days, and full backups will occur on the selected days and incremental backups will occur on the unselected days.
+
 **Auto Backup Run Time**
 
 * Allows you set the time that the backup automatically takes place. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the backup based on the number of backups retries if it does not exceed the backup retries times.
 
-Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
-
 > [Caution]
-> Backups may not be performed in some situations, such as when a previous backup fails to terminate.
+> A backup might not be performed in some situations, such as when a previous backup does not terminate.
+> If no incremental baseline backup exists, a full backup might be performed even though it is the scheduled turn to perform an incremental backup.
+> For a detailed description of incremental baseline backups, see [Baseline Backup](#기준-백업).
 
 ### Backup Storage and Pricing
 
@@ -116,13 +171,13 @@ All backup files are uploaded to the internal backup storage and stored. For man
 
 #### Export Files While Performing Backup
 
-You can export backup files to the user object storage while performing backup.
+After a backup, you can export the backup file to user object storage. This is not supported for incremental backups.
 
 ![db-instance-list-export-obs-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-en.png)
 
 ![db-instance-list-export-obs-modal-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-modal-en.png)
 
-❶ Select the DB instance to back up and click **Export Backup to Object Storage**from the drop-down menu, and the settings pop-up screen will appear.
+❶ Select the DB instance to back up and click **Export backup files to object storage** after backup from the drop-down menu, and the settings pop-up screen will appear.
 ❷ Enter the tenant ID of the object storage where the backup will be saved. You can find the tenant ID in the API endpoint settings.
 ❸ Enter the NHN Cloud member or IAM member of the object storage where the backup will be saved.
 ❹ Enter the API password of the object storage where the backup will be saved.
@@ -131,7 +186,7 @@ You can export backup files to the user object storage while performing backup.
 
 #### Export Backup Files
 
-You can export backup files stored on your internal backup storage to user object storage in NHN Cloud.
+You can export backup files stored in internal backup storage to user object storage. Not supported for incremental backups.
 
 ![db-instance-detail-backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ko.png)
 
@@ -153,7 +208,7 @@ Backups allow you to restore data to any point in time. Restoration always creat
 
 ### Snapshot Restoration
 
-You can restore using only the backup file, so you don't need the original DB instance from which the backup was taken. To restore a snapshot from the web console,
+You can restore using only the backup file, so you don't need the original DB instance from which the backup was taken. To restore a snapshot from the console,
 
 ![db-instance-snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-en.png)
 
@@ -175,7 +230,7 @@ difficult to restore to the desired point in time. For the cases listed below, y
 * When a binary log is deleted due to a failover of a high availability DB instance
 * When binary logs are corrupted or deleted for various other reasons
 
-To restore a point in time from the web console
+To restore a point in time from the console
 
 ![point-in-time-restoration-list-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-list-en.png)
 
@@ -237,7 +292,7 @@ xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password 
 * If the backup file is larger than 5GB, you have to use a utility such as split to cut the backup file to less than 5GB and upload it in multi-part.
 * For detailed information, refer to [Multipart Upload](/Storage/Object%20Storage/ko/api-guide/#_44).
 
-(4) After accessing the web console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
+(4) After accessing the console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
 
 > [Caution]
 > In the current version of 5.7.33, restoring DB instances using backup files on object storage is restricted.
@@ -246,7 +301,7 @@ xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password 
 
 ### Restoration by Using RDS for MySQL Backup
 
-You can use the backup file in RDS for MySQL to restore the database in MySQL directly. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#_1) and use the same version as Percona XtraBackup used by RDS for MySQL.
+You can use the backup file in RDS for MySQL to restore the database in MySQL directly. Only full backups can be restored; incremental backup reflection is not supported. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#_1) and use the same version as Percona XtraBackup used by RDS for MySQL.
 
 (1) Export backup of RDS for MySQL to object storage with reference to the [Export Backup](backup-and-restore/#_5).
 

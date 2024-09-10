@@ -1,5 +1,12 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2024. 09. 12.
+
+#### 기능 추가 및 개선
+
+* 증분 백업 기능 추가
+* DB 인스턴스 삭제 시 자동 백업 삭제 여부를 선택할 수 있도록 개선
+
 ### July 11, 2024
 
 #### Added Features
