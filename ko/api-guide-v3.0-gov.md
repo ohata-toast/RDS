@@ -3,7 +3,6 @@
 | 리전        | 엔드포인트                                             |
 |-----------|---------------------------------------------------|
 | 한국(판교) 리전 | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
-| 한국(평촌) 리전 | https://kr2-rds-mysql.api.gov-nhncloudservice.com |
 
 ## 인증 및 권한
 
