@@ -70,7 +70,6 @@
     * For items whose **Use Expression** is set to **Y**, you can enter an expression in **Parameter Value**.
     * Variables that can be used in expressions are as follows. (case sensitive)
         * ramSizeByte: Memory allocated to the DB instance (in bytes)
-        * storageSizeByte: Size of the DB instance volume (in bytes)
         * vCPU: Number of CPUs
         * dbPort
     * Operators that can be used in expressions are as follows.
