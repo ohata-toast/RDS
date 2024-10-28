@@ -156,7 +156,7 @@ The following items apply only to auto backups.
 
 **Auto Backup Run Time**
 
-* Allows you set the time that the backup automatically takes place. It consists of the backup start time, the backup window, and the backup retry expiration time. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. 백업이 실패할 경우 백업 윈도우를 넘지 않았다면 백업 재시도 횟수에 따라 백업을 다시 시도합니다.
+* Allows you set the time that the backup automatically takes place. It consists of the backup start time and the backup window. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. 백업이 실패할 경우 백업 윈도우를 넘지 않았다면 백업 재시도 횟수에 따라 백업을 다시 시도합니다.
 
 > [Caution]
 > A backup might not be performed in some situations, such as when a previous backup does not terminate.
