@@ -346,7 +346,6 @@ You can easily change various items in DB instances created through console. Cha
 | DB Engine        | Yes        | Yes                       |
 | DB Instance Type   | Yes        | Yes                       |
 | Data Storage Type  | No      |                         |
-| Data Storage Size  | Yes        | Yes                       |
 | Whether high availability or not      | Yes        | No                     |
 | PING interval      | Yes        | No                     | 
 | Name           | Yes        | No                     |
@@ -417,6 +416,10 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 
 > [Note]
 You can set the storage period for binary logs with the expire_logs_days in MySQL 5.7 and later and the binlog_expire_logs_seconds parameter in MySQL 5.8 and later.
+
+## 스토리지 크기 확장
+
+DB 인스턴스의 데이터 스토리지 크기를 확장할 수 있습니다. 확장 시 DB 인스턴스의 재시작 과정 없이 즉시 적용됩니다.
 
 ## Apply parameter group changes
 
