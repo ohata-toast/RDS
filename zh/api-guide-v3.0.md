@@ -794,7 +794,6 @@ POST /v3.0/db-instances
 | backup.backupSchedules                       | Body | Array   | O  | Backup schedules                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                               |
 | backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
-| backup.backupSchedules.backupRetryExpireTime | Body | String  | O  | Backup retry expiration time<br/>- The backup retry expiration time must be before or after the backup start time.<br/>- Example: `01:30:00`                                                                                                                                              |
 
 <details><summary>Example</summary>
 <p>
@@ -826,8 +825,7 @@ POST /v3.0/db-instances
         "backupSchedules": [
             {
                 "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "ONE_HOUR",
-                "backupRetryExpireTime": "01:30:00"
+                "backupWndDuration": "ONE_HOUR"
             }
         ]
     }
@@ -1109,7 +1107,6 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.backupSchedules                       | Body | Array   | X  | Backup schedules                                                                                                                                                                                                                                           |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | X  | Backup started time<br/>- Example: `00:00:00`<br/>- Default: Original DB instance value                                                                                                                                                                                               |
 | backup.backupSchedules.backupWndDuration     | Body | Enum    | X  | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour<br/>- Default: Original DB instance value |
-| backup.backupSchedules.backupRetryExpireTime | Body | String  | X  | Backup retry expiration time<br/>- The backup retry expiration time must be before or after the backup start time.<br/>- Example: `01:30:00`<br/>- Default: Original DB instance value                                                                                                                                              |
 
 <details><summary>Example</summary>
 <p>
@@ -1335,7 +1332,6 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.backupSchedules | Body | Array | O | Backup schedules                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | Backup duration<br>Auto backup proceeds within duration from backup start time.<br><ul><li>- `HALF_AN_HOUR`: 30 minutes</li><li>- `ONE_HOUR`: 1 hour</li><li>- `ONE_HOUR_AND_HALF`: 1.5 hour</li><li>- `TWO_HOURS`: 2 hour</li><li>- `TWO_HOURS_AND_HALF`: 2.5 hour</li><li>- `THREE_HOURS`: 3 hour</li></ul> |
-| backup.backupSchedules.backupRetryExpireTime | Body | String | O | Backup retry expiration time<br><ul><li>- The backup retry expiration time must be before or after the backup start time.</li><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                                                                                                                                       |
 | useDeletionProtection | Body | Boolean | X | Whether to protect against deletion<br>Default: `false`                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 #### Request when restoring a point in time restoration using Timestamp (if restoreType is `TIMESTAMP`)
@@ -1378,8 +1374,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 		"backupSchedules": [
 			{
 				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF",
-				"backupRetryExpireTime": "01:30:00"
+				"backupWndDuration": "ONE_HOUR_AND_HALF"
 			}
 		]
 	}
@@ -1436,8 +1431,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 		"backupSchedules": [
 			{
 				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF",
-				"backupRetryExpireTime": "01:30:00"
+				"backupWndDuration": "ONE_HOUR_AND_HALF"
 			}
 		]
 	}
@@ -1488,8 +1482,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 		"backupSchedules": [
 			{
 				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF",
-				"backupRetryExpireTime": "01:30:00"
+				"backupWndDuration": "ONE_HOUR_AND_HALF"
 			}
 		]
 	}
@@ -1551,7 +1544,6 @@ POST /v3.0/db-instances/restore-from-obs
 | backup.backupSchedules | Body | Array | O | Backup schedules                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | Backup duration<br>Auto backup proceeds within duration from backup start time.<br><ul><li>- `HALF_AN_HOUR`: 30 minutes</li><li>- `ONE_HOUR`: 1 hour</li><li>- `ONE_HOUR_AND_HALF`: 1.5 hour</li><li>- `TWO_HOURS`: 2 hour</li><li>- `TWO_HOURS_AND_HALF`: 2.5 hour</li><li>- `THREE_HOURS`: 3 hour</li></ul> |
-| backup.backupSchedules.backupRetryExpireTime | Body | String | O | Backup retry expiration time<br><ul><li>- The backup retry expiration time must be before or after the backup start time.</li><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                                                                                                                                       |
 
 
 
@@ -1592,8 +1584,7 @@ POST /v3.0/db-instances/restore-from-obs
 		"backupSchedules": [
 			{
 				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF",
-				"backupRetryExpireTime": "01:30:00"
+				"backupWndDuration": "ONE_HOUR_AND_HALF"
 			}
 		]
 	}
@@ -1850,7 +1841,6 @@ This API does not require a request body.
 | backupSchedules                       | Body | Array   | Backup schedules      |
 | backupSchedules.backupWndBgnTime      | Body | String  | Backup started time       |
 | backupSchedules.backupWndDuration     | Body | Enum    | Backup duration    |
-| backupSchedules.backupRetryExpireTime | Body | String  | Backup retry expiration time   |
 
 <details><summary>Example</summary>
 <p>
@@ -1870,8 +1860,7 @@ This API does not require a request body.
     "backupSchedules": [
         {
             "backupWndBgnTime": "00:00:00",
-            "backupWndDuration": "ONE_HOUR_AND_HALF",
-            "backupRetryExpireTime": "01:30:00"
+            "backupWndDuration": "ONE_HOUR_AND_HALF"
         }
     ]
 }
@@ -1902,7 +1891,6 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupSchedules                       | Body | Array   | X  | Backup schedules                                                                                                                                                                                                                   |
 | backupSchedules.backupWndBgnTime      | Body | String  | O  | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                               |
 | backupSchedules.backupWndDuration     | Body | Enum    | O  | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
-| backupSchedules.backupRetryExpireTime | Body | String  | O  | Backup retry expiration time<br/>- The backup retry expiration time must be before or after the backup start time.<br/>- Example: `01:30:00`                                                                                                                                              |
 
 <details><summary>Example</summary>
 <p>
@@ -1914,8 +1902,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
     "backupSchedules": [
         {
             "backupWndBgnTime": "01:00:00",
-            "backupWndDuration": "TWO_HOURS",
-            "backupRetryExpireTime": "03:00:00"
+            "backupWndDuration": "TWO_HOURS"
         }
     ]
 }
@@ -2436,7 +2423,6 @@ POST /v3.0/backups/{backupId}/restore
 | backup.backupSchedules                       | Body | Array   | O  | Backup schedules                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                               |
 | backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
-| backup.backupSchedules.backupRetryExpireTime | Body | String  | O  | Backup retry expiration time<br/>- The backup retry expiration time must be before or after the backup start time.<br/>- Example: `01:30:00`                                                                                                                                              |
 
 <details><summary>Example</summary>
 <p>
@@ -2461,8 +2447,7 @@ POST /v3.0/backups/{backupId}/restore
         "backupSchedules": [
             {
                 "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "HALF_AN_HOUR",
-                "backupRetryExpireTime": "01:30:00"
+                "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
     }

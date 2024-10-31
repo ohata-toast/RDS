@@ -346,7 +346,6 @@ You can easily change various items in DB instances created through console. Cha
 | DB Engine        | Yes        | Yes                       |
 | DB Instance Type   | Yes        | Yes                       |
 | Data Storage Type  | No      |                         |
-| Data Storage Size  | Yes        | Yes                       |
 | Whether high availability or not      | Yes        | No                     |
 | PING interval      | Yes        | No                     | 
 | Name           | Yes        | No                     |
