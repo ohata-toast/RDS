@@ -1897,7 +1897,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 "backupSchedules": [
     {
         "backupWndBgnTime": "01:00:00",
-            "backupWndDuration": "TWO_HOURS"
+        "backupWndDuration": "TWO_HOURS"
     }
 ]
 }
@@ -2443,7 +2443,7 @@ POST /v3.0/backups/{backupId}/restore
     "backupPeriod": 1,
     "backupSchedules": [{
         "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "HALF_AN_HOUR"
+        "backupWndDuration": "HALF_AN_HOUR"
     }
     ]
 }
