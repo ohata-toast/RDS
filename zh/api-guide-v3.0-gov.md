@@ -9,11 +9,11 @@
 `User Access Key ID` and `Secret Access Key` are required for authentication to use APIs. To create them, select <b>API Security Setting</b> from the drop-down menu that appears when you hover over your account in the top right on the console.
 The created Key must be included in the request Header.
 
-| Name                         | Type     | Format     | Required | Description                               |
-|----------------------------|--------|--------|----|----------------------------------|
-| X-TC-APP-KEY               | Header | String | O  | Appkey of RDS for MySQL        |
-| X-TC-AUTHENTICATION-ID     | Header | String | O  | User Access Key ID in API Security Settings menu |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O  | Secret Access Key in API Security Settings menu  |
+| Name                       | Type   | Format | Required | Description                                              |
+|----------------------------|--------|--------|----------|----------------------------------------------------------|
+| X-TC-APP-KEY               | Header | String | O        | Appkey of RDS for MySQL or integrated Appkey for project |
+| X-TC-AUTHENTICATION-ID     | Header | String | O        | User Access Key ID in API Security Settings menu         |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O        | Secret Access Key in API Security Settings menu          |
 
 In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for MySQL ADMIN` and `RDS for MySQL VIEWER`.
 
@@ -691,27 +691,28 @@ This API does not require a request body.
 
 #### Response
 
-| Name                          | Type   | Format       | Description                                                                                                                                    |
-|-----------------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId                | Body | UUID     | DB instance identifier                                                                                                                          |
-| dbInstanceGroupId           | Body | UUID     | DB instance group identifier                                                                                                                       |
-| dbInstanceName              | Body | String   | Name to identify DB instances                                                                                                                  |
-| description                 | Body | String   | Additional information on DB instances                                                                                                                     |
-| dbVersion                   | Body | Enum     | DB engine type                                                                                                                              |
-| dbPort                      | Body | Number   | DB port                                                                                                                                 |
+| Name                        | Type | Format   | Description                                                                                                                                                             |
+|-----------------------------|------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                | Body | UUID     | DB instance identifier                                                                                                                                                  |
+| dbInstanceGroupId           | Body | UUID     | DB instance group identifier                                                                                                                                            |
+| dbInstanceName              | Body | String   | Name to identify DB instances                                                                                                                                           |
+| description                 | Body | String   | Additional information on DB instances                                                                                                                                  |
+| dbVersion                   | Body | Enum     | DB engine type                                                                                                                                                          |
+| dbPort                      | Body | Number   | DB port                                                                                                                                                                 |
 | dbInstanceType              | Body | Enum     | DB instance role type<br/>- `MASTER`: Master<br/>- `FAILED_MASTER`: Failed over master<br/>- `CANDIDATE_MASTER`: Candidate master<br/>- `READ_ONLY_SLAVE`: Read replica |
-| dbInstanceStatus            | Body | Enum     | DB instance current status                                                                                                                        |
-| progressStatus              | Body | Enum     | Current task status of DB instance                                                                                                                  |
-| dbFlavorId                  | Body | UUID     | Identifier of DB instance specifications                                                                                                                       |
-| parameterGroupId            | Body | UUID     | Parameter group identifier applied to DB instance                                                                                                             |
-| dbSecurityGroupIds          | Body | Array    | DB security group identifiers applied to DB instance                                                                                                         |
-| useDeletionProtection       | Body | Boolean  | Whether to protect DB instance against deletion                                                                                                                      |
-| supportAuthenticationPlugin | Body | Boolean  | Whether to support authentication plugin                                                                                                                         |
-| needToApplyParameterGroup   | Body | Boolean  | Need to apply the latest parameter group                                                                                                                   |
-| needMigration               | Body | Boolean  | Need to migrate                                                                                                                          |
-| supportDbVersionUpgrade     | Body | Boolean  | Whether to support DB version upgrade                                                                                                                     |
-| createdYmdt                 | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
-| updatedYmdt                 | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| dbInstanceStatus            | Body | Enum     | DB instance current status                                                                                                                                              |
+| progressStatus              | Body | Enum     | Current task status of DB instance                                                                                                                                      |
+| dbFlavorId                  | Body | UUID     | Identifier of DB instance specifications                                                                                                                                |
+| parameterGroupId            | Body | UUID     | Parameter group identifier applied to DB instance                                                                                                                       |
+| dbSecurityGroupIds          | Body | Array    | DB security group identifiers applied to DB instance                                                                                                                    |
+| notificationGroupIds        | Body | Array    | Notification group identifiers applied to DB instance                                                                                                                   |
+| useDeletionProtection       | Body | Boolean  | Whether to protect DB instance against deletion                                                                                                                         |
+| supportAuthenticationPlugin | Body | Boolean  | Whether to support authentication plugin                                                                                                                                |
+| needToApplyParameterGroup   | Body | Boolean  | Need to apply the latest parameter group                                                                                                                                |
+| needMigration               | Body | Boolean  | Need to migrate                                                                                                                                                         |
+| supportDbVersionUpgrade     | Body | Boolean  | Whether to support DB version upgrade                                                                                                                                   |
+| createdYmdt                 | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
+| updatedYmdt                 | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                     |
 
 <details><summary>Example</summary>
 <p>
@@ -735,6 +736,7 @@ This API does not require a request body.
     "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
     "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
+    "notificationGroupIds": ["83a62a33-ddbf-4a04-8653-e54463d5b1ac"],
     "useDeletionProtection": false,
     "supportAuthenticationPlugin": true,
     "needToApplyParameterGroup": false,
@@ -792,7 +794,6 @@ POST /v3.0/db-instances
 | backup.backupSchedules                       | Body | Array   | O  | Backup schedules                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                               |
 | backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
-| backup.backupSchedules.backupRetryExpireTime | Body | String  | O  | Backup retry expiration time<br/>- The backup retry expiration time must be before or after the backup start time.<br/>- Example: `01:30:00`                                                                                                                                              |
 
 <details><summary>Example</summary>
 <p>
@@ -824,8 +825,7 @@ POST /v3.0/db-instances
         "backupSchedules": [
             {
                 "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "ONE_HOUR",
-                "backupRetryExpireTime": "01:30:00"
+                "backupWndDuration": "ONE_HOUR"
             }
         ]
     }
@@ -1081,33 +1081,33 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 #### Request
 
-| Name                                           | Type   | Format      | Required | Description                                                                                                                                                                                                                                                  |
-|----------------------------------------------|------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId                                 | URL  | UUID    | O  | DB instance identifier                                                                                                                                                                                                                                        |
-| dbInstanceName                               | Body | String  | O  | Name to identify DB instances                                                                                                                                                                                                                                |
-| description                                  | Body | String  | X  | Additional information on DB instances                                                                                                                                                                                                                                   |
-| dbFlavorId                                   | Body | UUID    | X  | Identifier of DB instance specifications<br/>- Default: Original DB instance value                                                                                                                                                                                                             |
-| dbPort                                       | Body | Number  | X  | DB port<br/>- Default: Original DB instance value<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                                                                                                                                                  |
-| parameterGroupId                             | Body | UUID    | X  | Parameter group identifier<br/>- Default: Original DB instance value                                                                                                                                                                                                                |
-| dbSecurityGroupIds                           | Body | Array   | X  | DB security group identifiers<br/>- Default: Original DB instance value                                                                                                                                                                                                            |
-| userGroupIds                                 | Body | Array   | X  | User group identifiers                                                                                                                                                                                                                                      |
-| useDefaultNotification                   | Body | Boolean | X  | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                      |
-| useDeletionProtection                        | Body | Boolean | X  | Whether to protect against deletion<br/>Default: `false`                                                                                                                                                                                                                         |
-| network                                      | Body | Object  | O  | Network information objects                                                                                                                                                                                                                                          |
-| network.usePublicAccess                      | Body | Boolean | X  | External access is available or not<br/>- Default: Original DB instance value                                                                                                                                                                                                                 |
-| network.availabilityZone                     | Body | Enum    | O  | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                                                                                                                                                                                            |
-| storage                                      | Body | Object  | X  | Storage information objects                                                                                                                                                                                                                                          |    
-| storage.storageSize                          | Body | Number  | X  | Block Storage Size (GB)<br/>- Default: Original DB instance value<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                                                                                                                                                           |
-| backup                                       | Body | Object  | X  | Backup information objects                                                                                                                                                                                                                                            |
-| backup.backupPeriod                          | Body | Number  | X  | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                 |
-| backup.ftwrlWaitTimeout                      | Body | Number  | X  | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                            |
-| backup.backupRetryCount                      | Body | Number  | X  | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                    |
-| backup.replicationRegion                     | Body | Enum    | X  | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region<br/>- Default: Original DB instance value                                                                                                                                                       |
-| backup.useBackupLock                         | Body | Boolean | X  | Whether to use table lock<br/>- Default: Original DB instance value                                                                                                                                                                                                                |
-| backup.backupSchedules                       | Body | Array   | X  | Backup schedules                                                                                                                                                                                                                                           |
-| backup.backupSchedules.backupWndBgnTime      | Body | String  | X  | Backup started time<br/>- Example: `00:00:00`<br/>- Default: Original DB instance value                                                                                                                                                                                               |
-| backup.backupSchedules.backupWndDuration     | Body | Enum    | X  | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour<br/>- Default: Original DB instance value |
-| backup.backupSchedules.backupRetryExpireTime | Body | String  | X  | Backup retry expiration time<br/>- The backup retry expiration time must be before or after the backup start time.<br/>- Example: `01:30:00`<br/>- Default: Original DB instance value                                                                                                                                              |
+| Name                                         | Type | Format  | Required | Description                                                                                                                                                                                                                                                                                                         |
+|----------------------------------------------|------|---------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                                 | URL  | UUID    | O        | DB instance identifier                                                                                                                                                                                                                                                                                              |
+| dbInstanceName                               | Body | String  | O        | Name to identify DB instances                                                                                                                                                                                                                                                                                       |
+| description                                  | Body | String  | X        | Additional information on DB instances                                                                                                                                                                                                                                                                              |
+| dbFlavorId                                   | Body | UUID    | X        | Identifier of DB instance specifications<br/>- Default: Original DB instance value                                                                                                                                                                                                                                  |
+| dbPort                                       | Body | Number  | X        | DB port<br/>- Default: Original DB instance value<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                                                                                                                                                                          |
+| parameterGroupId                             | Body | UUID    | X        | Parameter group identifier<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                |
+| dbSecurityGroupIds                           | Body | Array   | X        | DB security group identifiers<br/>- Default: Original DB instance value                                                                                                                                                                                                                                             |
+| userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                                                              |
+| useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                                                            |
+| useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                                                                                                                                                                                                                            |
+| network                                      | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                                                                         |
+| network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>- Default: Original DB instance value                                                                                                                                                                                                                                       |
+| network.availabilityZone                     | Body | Enum    | O        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                                                                                                                                                                                                                       |
+| storage                                      | Body | Object  | X        | Storage information objects                                                                                                                                                                                                                                                                                         |    
+| storage.storageType                          | Body | Enum    | X        | Block Storage Type<br/>- Example: `General SSD`                                                                                                                                                                                                                                                                     |
+| storage.storageSize                          | Body | Number  | X        | Block Storage Size (GB)<br/>- Default: Original DB instance value<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                                                                                                                                                                             |
+| backup                                       | Body | Object  | X        | Backup information objects                                                                                                                                                                                                                                                                                          |
+| backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
+| backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
+| backup.replicationRegion                     | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region<br/>- Default: Original DB instance value                                                                                                                                    |
+| backup.useBackupLock                         | Body | Boolean | X        | Whether to use table lock<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                 |
+| backup.backupSchedules                       | Body | Array   | X        | Backup schedules                                                                                                                                                                                                                                                                                                    |
+| backup.backupSchedules.backupWndBgnTime      | Body | String  | X        | Backup started time<br/>- Example: `00:00:00`<br/>- Default: Original DB instance value                                                                                                                                                                                                                             |
+| backup.backupSchedules.backupWndDuration     | Body | Enum    | X        | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour<br/>- Default: Original DB instance value |
 
 <details><summary>Example</summary>
 <p>
@@ -1333,7 +1333,6 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.backupSchedules | Body | Array | O | Backup schedules                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | Backup duration<br>Auto backup proceeds within duration from backup start time.<br><ul><li>- `HALF_AN_HOUR`: 30 minutes</li><li>- `ONE_HOUR`: 1 hour</li><li>- `ONE_HOUR_AND_HALF`: 1.5 hour</li><li>- `TWO_HOURS`: 2 hour</li><li>- `TWO_HOURS_AND_HALF`: 2.5 hour</li><li>- `THREE_HOURS`: 3 hour</li></ul> |
-| backup.backupSchedules.backupRetryExpireTime | Body | String | O | Backup retry expiration time<br><ul><li>- The backup retry expiration time must be before or after the backup start time.</li><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                                                                                                                                       |
 | useDeletionProtection | Body | Boolean | X | Whether to protect against deletion<br>Default: `false`                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 #### Request when restoring a point in time restoration using Timestamp (if restoreType is `TIMESTAMP`)
@@ -1376,8 +1375,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 		"backupSchedules": [
 			{
 				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF",
-				"backupRetryExpireTime": "01:30:00"
+				"backupWndDuration": "ONE_HOUR_AND_HALF"
 			}
 		]
 	}
@@ -1434,8 +1432,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 		"backupSchedules": [
 			{
 				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF",
-				"backupRetryExpireTime": "01:30:00"
+				"backupWndDuration": "ONE_HOUR_AND_HALF"
 			}
 		]
 	}
@@ -1486,8 +1483,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 		"backupSchedules": [
 			{
 				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF",
-				"backupRetryExpireTime": "01:30:00"
+				"backupWndDuration": "ONE_HOUR_AND_HALF"
 			}
 		]
 	}
@@ -1549,7 +1545,6 @@ POST /v3.0/db-instances/restore-from-obs
 | backup.backupSchedules | Body | Array | O | Backup schedules                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | Backup duration<br>Auto backup proceeds within duration from backup start time.<br><ul><li>- `HALF_AN_HOUR`: 30 minutes</li><li>- `ONE_HOUR`: 1 hour</li><li>- `ONE_HOUR_AND_HALF`: 1.5 hour</li><li>- `TWO_HOURS`: 2 hour</li><li>- `TWO_HOURS_AND_HALF`: 2.5 hour</li><li>- `THREE_HOURS`: 3 hour</li></ul> |
-| backup.backupSchedules.backupRetryExpireTime | Body | String | O | Backup retry expiration time<br><ul><li>- The backup retry expiration time must be before or after the backup start time.</li><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                                                                                                                                       |
 
 
 
@@ -1590,8 +1585,7 @@ POST /v3.0/db-instances/restore-from-obs
 		"backupSchedules": [
 			{
 				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF",
-				"backupRetryExpireTime": "01:30:00"
+				"backupWndDuration": "ONE_HOUR_AND_HALF"
 			}
 		]
 	}
@@ -1848,7 +1842,6 @@ This API does not require a request body.
 | backupSchedules                       | Body | Array   | Backup schedules      |
 | backupSchedules.backupWndBgnTime      | Body | String  | Backup started time       |
 | backupSchedules.backupWndDuration     | Body | Enum    | Backup duration    |
-| backupSchedules.backupRetryExpireTime | Body | String  | Backup retry expiration time   |
 
 <details><summary>Example</summary>
 <p>
@@ -1868,8 +1861,7 @@ This API does not require a request body.
     "backupSchedules": [
         {
             "backupWndBgnTime": "00:00:00",
-            "backupWndDuration": "ONE_HOUR_AND_HALF",
-            "backupRetryExpireTime": "01:30:00"
+            "backupWndDuration": "ONE_HOUR_AND_HALF"
         }
     ]
 }
@@ -1900,7 +1892,6 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupSchedules                       | Body | Array   | X  | Backup schedules                                                                                                                                                                                                                   |
 | backupSchedules.backupWndBgnTime      | Body | String  | O  | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                               |
 | backupSchedules.backupWndDuration     | Body | Enum    | O  | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
-| backupSchedules.backupRetryExpireTime | Body | String  | O  | Backup retry expiration time<br/>- The backup retry expiration time must be before or after the backup start time.<br/>- Example: `01:30:00`                                                                                                                                              |
 
 <details><summary>Example</summary>
 <p>
@@ -1912,8 +1903,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
     "backupSchedules": [
         {
             "backupWndBgnTime": "01:00:00",
-            "backupWndDuration": "TWO_HOURS",
-            "backupRetryExpireTime": "03:00:00"
+            "backupWndDuration": "TWO_HOURS"
         }
     ]
 }
@@ -2434,7 +2424,6 @@ POST /v3.0/backups/{backupId}/restore
 | backup.backupSchedules                       | Body | Array   | O  | Backup schedules                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                               |
 | backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
-| backup.backupSchedules.backupRetryExpireTime | Body | String  | O  | Backup retry expiration time<br/>- The backup retry expiration time must be before or after the backup start time.<br/>- Example: `01:30:00`                                                                                                                                              |
 
 <details><summary>Example</summary>
 <p>
@@ -2459,8 +2448,7 @@ POST /v3.0/backups/{backupId}/restore
         "backupSchedules": [
             {
                 "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "HALF_AN_HOUR",
-                "backupRetryExpireTime": "01:30:00"
+                "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
     }
