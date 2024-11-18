@@ -418,25 +418,25 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 > [Note]
 You can set the storage period for binary logs with the expire_logs_days in MySQL 5.7 and later and the binlog_expire_logs_seconds parameter in MySQL 5.8 and later.
 
-## 스토리지 크기 확장
+## Expand Storage Size
 
-DB 인스턴스의 데이터 스토리지 크기를 확장할 수 있습니다. 확장 시 DB 인스턴스의 재시작 과정 없이 즉시 적용됩니다.
+You can scale up the data storage size of a DB instance. The expansion takes effect immediately without restarting the DB instance.
 
-## 자동 스토리지 확장
+## Auto Scale Storage
 
-DB 인스턴스의 데이터 스토리지 크기를 자동으로 확장할 수 있습니다. 자동 스토리지 확장을 사용하면 데이터 스토리지의 용량이 부족할 때 자동으로 확장하여 데이터베이스의 가용성을 유지할 수 있습니다.
+You can automatically scale the data storage size of a DB instance. With auto storage expansion, you can maintain the availability of your database by automatically scaling up when data storage runs out of capacity.
 
-자동 스토리지 확장을 사용하려면 DB 인스턴스 생성 및 수정 시 **자동 스토리지 확장**을 활성화해야 합니다.
+To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances. 
 
-자동 스토리지 확장을 활성화하면 세 가지 옵션을 설정할 수 있습니다.
-* 스토리지 자동 확장 조건: 스토리지 사용률이 설정한 값 이상으로 5분 이상 지속될 때 자동으로 스토리지를 확장합니다.
-* 스토리지 자동 확장 최대값: 스토리지 자동 확장으로 확장될 수 있는 최대 크기입니다.
-* 스토리지 자동 확장 쿨다운: 스토리지 자동 확장 기능이 한번 실행된 후, 다시 기능이 활성화되기까지의 시간을 설정합니다.
+When you enable auto scale storage, you can set three options
+* Storage Auto Scale Conditions: Automatically expand storage when storage utilization is above a set value for more than 5 minutes.
+* Storage Auto Scale Max: The maximum size that storage auto-scale can grow to.
+* Storage Auto Scale Cooldown: Set the amount of time after storage auto scale cooldown runs once before the feature is enabled again.
 
-자동 스토리지 확장 기능이 실행될 때의 증가량은 다음 값들 중 가장 큰 값으로 설정됩니다.
-* 10GB
-* 스토리지 크기의 10%
-* 직전 한시간의 데이터 스토리지 사용량 증가분 * 쿨다운(시간으로 환산)
+The amount of increase when the auto scale storage feature runs is set to the largest of the following values
+* 10 GB
+* 10% of storage size
+* Data storage usage growth in the last hour * cooldown (in hours)
 
 ## Apply parameter group changes
 
