@@ -12,26 +12,26 @@
 
 レイアウトを利用してチャートのサイズと位置を表示できます。サービス起動時に`基本システム指標`と`基本MySQL指標`を基本レイアウトとして提供します。基本レイアウトは変更または削除できません。また、チャートを追加したり、追加されたチャートを変更または削除することもできません。チャートで基本レイアウトに含まれていない情報を表示するには、新しいレイアウトを作成してチャートを追加できます。
 
-![layout_01_ko](https://static.toastoven.net/prod_rds/23.04.11/layout_01_ko.png)
+![layout_01_ja](https://static.toastoven.net/prod_rds/23.04.11/layout_01_ja.png)
 
 ❶ **レイアウト作成**をクリックすると、レイアウトを作成できるポップアップウィンドウが表示されます。
 ❷ レイアウト名を入力した後、**作成**を押してレイアウトを作成します。
 
 ### レイアウトにチャートを追加
 
-![layout_02_ko](https://static.toastoven.net/prod_rds/23.04.11/layout_02_ko.png)
+![layout_02_ja](https://static.toastoven.net/prod_rds/23.04.11/layout_02_ja.png)
 
 ❶ レイアウトを選択します。
 ❷ **チャートの追加**を押すと、チャートを追加できるポップアップウィンドウが表示されます。
 
-![layout_03_ko](https://static.toastoven.net/prod_rds/23.04.11/layout_03_ko.png)
+![layout_03_ja](https://static.toastoven.net/prod_rds/23.04.11/layout_03_ja.png)
 ❶ チェックボックスを選択して追加するチャートを複数選択できます。
 ❷ チャート名をクリックすると、左側の領域にチャートのプレビューが表示されます。
 ❸ **追加**をクリックすると、選択したチャートがすべて追加されます。
 
 ### レイアウトのチャート変更および削除
 
-![layout_04_ko](https://static.toastoven.net/prod_rds/23.04.11/layout_04_ko.png)
+![layout_04_ja](https://static.toastoven.net/prod_rds/23.04.11/layout_04_ja.png)
 
 ❶チャートの上部領域をクリックした後、ドラッグ＆ドロップして位置を移動できます。
 ❷ チャートの右下の領域をドラッグ＆ドロップして、チャートのサイズを変更できます。
@@ -61,6 +61,7 @@ DBインスタンスの各種性能指標をチャート形式で見ることが
 | Row Access                 | index (counts/sec)<br/>full scan (counts/sec)                                                                                        |                               |
 | Database Connection Status | mysql status                                                                                                                         | 接続不可: 0、接続可能: 1               |
 | データストレージ障害                    | disk fault status                                                                                                                    | 異常: 0、正常: 1                   |
+| Replication Thread Status  | replication IO / SQL thread status                                                                                                   | 異常: 0、正常: 1                         |
 
 ## サーバーグループ
 
@@ -68,7 +69,7 @@ DBインスタンスの各種性能指標をチャート形式で見ることが
 
 ### サーバーグループの作成
 
-![chart_01_ko](https://static.toastoven.net/prod_rds/23.04.11/chart_01_ko.png)
+![chart_01_ja](https://static.toastoven.net/prod_rds/23.04.11/chart_01_ja.png)
 
 ❶ **グループ追加**をクリックすると、グループを作成できるポップアップウィンドウが表示されます。
 ❷ サーバーグループに追加するDBインスタンスを選択します。
@@ -77,11 +78,11 @@ DBインスタンスの各種性能指標をチャート形式で見ることが
 
 サーバーダッシュボードの左側のサーバーリストにDBインスタンスとサーバーグループが一緒に表示されます。
 
-![server_group_01_ko](https://static.toastoven.net/prod_rds/23.04.11/server_group_01_ko.png)
+![server_group_01_ja](https://static.toastoven.net/prod_rds/23.04.11/server_group_01_ja.png)
 
 ❶ **+**、**-**を押してサーバーグループを展開したり、閉じたりすることができます。
 ❷ サーバーグループに属するDBインスタンスをクリックすると、チャートに表示される色を変更できる色選択ポップアップが表示されます。
 
-![server_group_02_ko](https://static.toastoven.net/prod_rds/23.04.11/server_group_02_ko.png)
+![server_group_02_ja](https://static.toastoven.net/prod_rds/23.04.11/server_group_02_ja.png)
 
 ❶ **:** サーバーリストの各項目の右側に表示されるメニューアイコンをクリックしてサーバーグループの変更または削除を行うことができます。

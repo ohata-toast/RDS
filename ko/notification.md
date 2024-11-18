@@ -155,6 +155,9 @@
 | INSTC_69_04 | INSTANCE          | 예        | 장애 조치 수동 제어 타임아웃                     |
 | INSTC_70_01 | INSTANCE          | 예        | 고가용성 정상화                             |
 | INSTC_71_01 | INSTANCE          | 예        | 고가용성 중단                              |
+| INSTC_73_00 | INSTANCE          | 예        | 스토리지 자동 확장 시작                        |
+| INSTC_73_01 | INSTANCE          | 예        | 스토리지 자동 확장 완료                        |
+| INSTC_73_04 | INSTANCE          | 예        | 스토리지 자동 확장 실패                        |
 | JOB_01_04   | JOB               | 예        | Job 실행 실패                            |
 | TENAT_01_04 | TENANT            | 예        | CPU 코어 수 제한                          |
 | TENAT_02_04 | TENANT            | 예        | RAM 용량 제한	                           |
@@ -217,48 +220,51 @@
 
 감시 가능한 성능 지표 항목은 다음과 같습니다.
 
-| 힝목                         | 단위                 |
-|----------------------------|--------------------|
-| CPU 사용률                    | %                  |
-| CPU 사용량(IO Wait)           | %                  |
-| CPU 사용량(Nice)              | %                  |
-| CPU 사용량(System)            | %                  |
-| CPU 사용량(User)              | %                  |
-| Load Average 1M            |                    |
-| Load Average 5M            |                    |
-| Load Average 15M           |                    |
-| 메모리 사용량                    | %                  |
-| 메모리 사용량(바이트)               | MB                 |
-| 메모리 여유량(바이트)               | MB                 |
-| 메모리 버퍼(바이트)                | MB                 |
-| 캐시된 메모리(바이트)               | MB                 |
-| 스왑 사용량                     | MB                 |
-| 스왑 전체 크기                   | MB                 |
-| Storage 사용량                | %                  |
-| Storage 남은 사용량             | MB                 |
-| Storage IO Read            | KB/sec             |
-| Storage IO Write           | KB/sec             |
-| 데이터 스토리지 결함                | 비정상: 0, 정상: 1      |
-| Network in BPS             | KB/sec             |
-| Network out BPS            | KB/sec             |
-| Database Connection Status | 접속 불가: 0, 접속 가능: 1 |
-| Queries Per Second         | counts/sec         |
-| Connection Total           | counts             |
-| Connection Running         | counts             |
-| Connection Cached          | counts             |
-| Connection Ratio           | counts             |
-| Database Activity Select   | counts/sec         |
-| Database Activity Insert   | counts/sec         |
-| Database Activity Update   | counts/sec         |
-| Database Activity Delete   | counts/sec         |
-| Database Activity Replace  | counts/sec         |
-| Database Activity Call     | counts/sec         |
-| Buffer Pool Total          | MB                 |
-| Buffer Pool Used           | MB                 |
-| Slow Query                 | counts/min         |
-| 복제 딜레이                     | sec                |
-| Row Access Index           | counts/min         |
-| Row Access Full scan       | counts/min         |
+| 힝목                                     | 단위                 |
+|----------------------------------------|--------------------|
+| CPU 사용률                                | %                  |
+| CPU 사용량(IO Wait)                       | %                  |
+| CPU 사용량(Nice)                          | %                  |
+| CPU 사용량(System)                        | %                  |
+| CPU 사용량(User)                          | %                  |
+| Load Average 1M                        |                    |
+| Load Average 5M                        |                    |
+| Load Average 15M                       |                    |
+| 메모리 사용량                                | %                  |
+| 메모리 사용량(바이트)                           | MB                 |
+| 메모리 여유량(바이트)                           | MB                 |
+| 메모리 버퍼(바이트)                            | MB                 |
+| 캐시된 메모리(바이트)                           | MB                 |
+| 스왑 사용량                                 | MB                 |
+| 스왑 전체 크기                               | MB                 |
+| Storage 사용량                            | %                  |
+| Storage 남은 사용량                         | MB                 |
+| Storage IO Read                        | KB/sec             |
+| Storage IO Write                       | KB/sec             |
+| 데이터 스토리지 결함                            | 비정상: 0, 정상: 1      |
+| Network in BPS                         | KB/sec             |
+| Network out BPS                        | KB/sec             |
+| Database Connection Status             | 접속 불가: 0, 접속 가능: 1 |
+| Queries Per Second                     | counts/sec         |
+| Connection Total                       | counts             |
+| Connection Running                     | counts             |
+| Connection Cached                      | counts             |
+| Connection Ratio                       | counts             |
+| Database Activity Select               | counts/sec         |
+| Database Activity Insert               | counts/sec         |
+| Database Activity Update               | counts/sec         |
+| Database Activity Delete               | counts/sec         |
+| Database Activity Replace              | counts/sec         |
+| Database Activity Call                 | counts/sec         |
+| Buffer Pool Total                      | MB                 |
+| Buffer Pool Used                       | MB                 |
+| Slow Query                             | counts/min         |
+| 복제 딜레이                                 | sec                |
+| Row Access Index                       | counts/min         |
+| Row Access Full scan                   | counts/min         |
+| Database Replication IO Thread Status  | 비정상: 0, 정상: 1     |
+| Database Replication SQL Thread Status | 비정상: 0, 정상: 1     |
+| Database Replication Threads Status    | 비정상: 0, 정상: 1     |
 
 ### 감시 설정 추가
 

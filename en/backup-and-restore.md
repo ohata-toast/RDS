@@ -45,8 +45,8 @@ When creating a manual backup, you must specify a name for the backup, with the 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
 
-![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ko.png)
-![backup-list-1-en](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-ko.png)
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
+![backup-list-en](https://static.toastoven.net/prod_rds/24.11.12/backup-list-en.png)
 
 **Create a manual full backup**
 
@@ -100,7 +100,7 @@ When incremental backups are scheduled according to [Auto Backup Schedule Strate
 
 When creating and modifying DB instances, you can specify settings that will be applied to backups.
 
-![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-ko.png)
+![db-instance-backup-form-en](https://static.toastoven.net/prod_rds/24.11.12/db-instance-backup-form-en.png)
 
 ### Common Settings
 The following topics are common to both auto and manual backups.
@@ -188,7 +188,7 @@ After a backup, you can export the backup file to user object storage. This is n
 
 You can export backup files stored in internal backup storage to user object storage. Not supported for incremental backups.
 
-![db-instance-detail-backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ko.png)
+![db-instance-detail-backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-en.png)
 
 ❶ On the Details tab of the source DB instance from which the backup was taken, select the backup file to export and click **Export Backup to Object Storage**, and a pop-up screen will appear to export the backup.
 
