@@ -155,6 +155,9 @@
 | INSTC_69_04 | INSTANCE          | 예        | 장애 조치 수동 제어 타임아웃                     |
 | INSTC_70_01 | INSTANCE          | 예        | 고가용성 정상화                             |
 | INSTC_71_01 | INSTANCE          | 예        | 고가용성 중단                              |
+| INSTC_73_00 | INSTANCE          | 예        | 스토리지 자동 확장 시작                        |
+| INSTC_73_01 | INSTANCE          | 예        | 스토리지 자동 확장 완료                        |
+| INSTC_73_04 | INSTANCE          | 예        | 스토리지 자동 확장 실패                        |
 | JOB_01_04   | JOB               | 예        | Job 실행 실패                            |
 | TENAT_01_04 | TENANT            | 예        | CPU 코어 수 제한                          |
 | TENAT_02_04 | TENANT            | 예        | RAM 용량 제한	                           |
@@ -259,6 +262,9 @@
 | 복제 딜레이                     | sec                |
 | Row Access Index           | counts/min         |
 | Row Access Full scan       | counts/min         |
+| Database Replication IO Thread Status  | 비정상: 0, 정상: 1     |
+| Database Replication SQL Thread Status | 비정상: 0, 정상: 1     |
+| Database Replication Threads Status    | 비정상: 0, 정상: 1     |
 
 ### 감시 설정 추가
 

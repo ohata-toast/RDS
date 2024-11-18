@@ -155,6 +155,9 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_69_04 | INSTANCE          | Yes            | Manual control of failover timeout                                                              |
 | INSTC_70_01 | INSTANCE          | Yes            | High availability normalized                                                                      |
 | INSTC_71_01 | INSTANCE          | Yes            | High availability stopped                                                                       |
+| INSTC_73_00 | INSTANCE          | Yes          | Auto scale storage started                                                    |
+| INSTC_73_01 | INSTANCE          | Yes          | Auto scale storage completed                                                  |
+| INSTC_73_04 | INSTANCE          | Yes          | Auto scale storage failed                                                     |
 | JOB_01_04   | JOB               | Yes          | Job execution failed                                                          |
 | TENAT_01_04 | TENANT            | Yes          | CPU cores limit                                                               |
 | TENAT_02_04 | TENANT            | Yes          | RAM capacity limit	                                                           |
@@ -166,7 +169,7 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 
 You can subscribe to events by event type, code, and source. When you subscribe by event type, you will be notified of all the event codes included in the event type. If the notification is too broad, you can subscribe by event code and source. You can select only project members as the users to receive notifications. By default, event notifications are sent by email, and additional event notifications are sent by SMS only if mobile phone number with real name authentication is registered.
 
-![event_subscription_01_ko](https://static.toastoven.net/prod_rds/23.04.11/event_subscription_01_en.png)
+![event_subscription_01_en](https://static.toastoven.net/prod_rds/23.04.11/event_subscription_01_en.png)
 
 * ❶ When you click **Register Event Subscription**, a pop-up window appears to subscribe to events.
 * ❷ Select the event type you want to subscribe to. Event code that you can select can be changed depending on the event type.
