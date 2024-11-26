@@ -139,7 +139,7 @@ If you activate deletion protection, you can protect DB instances from accidenta
 
 You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
 
-![db-instance-list_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list_ko.png)
+![db-instance-list_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list_en.png)
 
 ❶ You can change DB instance screen mode.  
 ❷ By clicking on the button, you can open or close a DB instance that belongs to a group.  
@@ -164,7 +164,7 @@ The status of the DB instance consists of the following values and changes depen
 
 Search conditions that can be changed are as follows.
 
-![db-instance-filter_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-filter_ko.png)
+![db-instance-filter_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-filter_en.png)
 
 ❶ You can search for DB instances with filtering conditions that require parameter changes to be applied.
 
@@ -172,7 +172,7 @@ Search conditions that can be changed are as follows.
 
 You can select a DB instance to view the details.
 
-![db-instance-detail_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail_ko.png)
+![db-instance-detail_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail_en.png)
 
 ❶ When you click on the domain of the connection information, a pop-up window appears to confirm the IP address.
 ❷ When you click on DB Security Group, a pop-up window appears where you can check DB security rules.
@@ -198,7 +198,7 @@ You can view and download various log files from Log tab of DB instance. Log fil
 | server_audit.log | 30 of 20MB  | Changeable | `server_audit_logging`<br />`server_audit_file_rotations`              | 
 | mysql-bin.xxxxxx | 5 days         | Changeable | `binlog_expire_logs_seconds` (8.X version)<br />`expire_logs_days` (5.X version) |
 
-![db-instance-detail-log_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log_ko.png)
+![db-instance-detail-log_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log_en.png)
 
 ❶ Click on **View Logs** and you will see a pop-up window where you can check the contents of the log file. You can check logs up to 65,535 Bytes.
 ❷ When **Import** is clicked, the request is made to download the log file for DB instance.
@@ -220,7 +220,7 @@ DB instance's **DB Schema and User** tab allows you to query and control the sch
 
 #### DB schema created
 
-![db-instance-detail-schema_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema_ko.png)
+![db-instance-detail-schema_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema_en.png)
 
 ❶ Click on **Create** and a pop-up window will appear where you can enter the name of DB schema.
 ❷ You can create a DB schema by entering the DB schema name and clicking on **Confirm**.
@@ -234,14 +234,14 @@ You cannot modify the name of DB schema that has created.
 
 #### DB schema deleted
 
-![db-instance-detail-schema-delete-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema-delete-ko.png)
+![db-instance-detail-schema-delete-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema-delete-en.png)
 
 ❶ Select DB schema you want to delete and click on the drop-down menu.
 ❷ Click on **Delete** menu and pop-up window will appear to confirm deletion. You can request to delete by clicking on **Confirm**.
 
 #### Create a user
 
-![db-instance-detail-user-create-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-create-ko.png)
+![db-instance-detail-user-create-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-create-en.png)
 
 ❶ Click on **+Create** and you'll see the Add User pop-up window.
 ❷ Enter a user ID.
@@ -308,8 +308,8 @@ User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and l
 
 If you set TLS option for your account to X509, you need a certificate to access the DB instance.
 
-![db-instance-detail-user-cert-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-ko.png)
-![db-instance-detail-user-cert-down-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-down-ko.png)
+![db-instance-detail-user-cert-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-en.png)
+![db-instance-detail-user-cert-down-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-down-en.png)
 
 ❶ Select the DB instance to which you want to download the certificate.
 ❷ Click on drop-down menu.
@@ -323,7 +323,7 @@ Click on**Download** to charge Internet traffic as much as the size of the certi
 
 #### Edit users
 
-![db-instance-detail-user-modify-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-modify-ko.png)
+![db-instance-detail-user-modify-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-modify-en.png)
 
 ❶ Click on **Modify** on the user row you want to modify and you will see a pop-up window where you can modify your information.
 ❷ If you do not enter Password, it will not be changed.
@@ -331,7 +331,7 @@ Click on**Download** to charge Internet traffic as much as the size of the certi
 
 #### Deleting a user
 
-![db-instance-detail-user-delete-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-delete-ko.png)
+![db-instance-detail-user-delete-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-delete-en.png)
 
 ❶ Select the user you want to delete and click on the drop-down menu.
 ❷ Click on **Delete** and **Confirm Delete** pop-up window will appear. You can request deletion by clicking on **Confirm**.
@@ -361,7 +361,7 @@ You can easily change various items in DB instances created through console. Cha
 
 For high availability DB instances, if there are any changes to items that need to be restarted, it provides a restart capability using failover to increase stability and reduce disconnected time.
 
-![db-instance-modify-ha-ko.png](https://static.toastoven.net/prod_rds/24.03.12/db-instance-modify-ha-ko.png)
+![modify-ha-popup-en](https://static.toastoven.net/prod_rds/24.11.12/modify-ha-popup-en.png)
 
 If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](backup-and-restore/#mysql) in a high availability DB instance.
 
@@ -394,7 +394,7 @@ When you click the OS Version Upgrade button for a single DB instance, the follo
 ![db-instance-os-upgrade-single-popup-en.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
 
 When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual Failover](backup-and-restore/#mysql) of High Availability DB Instances.
-![db-instance-os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ha-popup-en.png)
+![os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/24.11.12/os-upgrade-ha-popup-en.png)
 
 ## Delete DB Instance
 
@@ -418,25 +418,25 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 > [Note]
 You can set the storage period for binary logs with the expire_logs_days in MySQL 5.7 and later and the binlog_expire_logs_seconds parameter in MySQL 5.8 and later.
 
-## 스토리지 크기 확장
+## Expand Storage Size
 
-DB 인스턴스의 데이터 스토리지 크기를 확장할 수 있습니다. 확장 시 DB 인스턴스의 재시작 과정 없이 즉시 적용됩니다.
+You can scale up the data storage size of a DB instance. The expansion takes effect immediately without restarting the DB instance.
 
-## 자동 스토리지 확장
+## Auto Scale Storage
 
-DB 인스턴스의 데이터 스토리지 크기를 자동으로 확장할 수 있습니다. 자동 스토리지 확장을 사용하면 데이터 스토리지의 용량이 부족할 때 자동으로 확장하여 데이터베이스의 가용성을 유지할 수 있습니다.
+You can automatically scale the data storage size of a DB instance. With auto storage expansion, you can maintain the availability of your database by automatically scaling up when data storage runs out of capacity.
 
-자동 스토리지 확장을 사용하려면 DB 인스턴스 생성 및 수정 시 **자동 스토리지 확장**을 활성화해야 합니다.
+To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances. 
 
-자동 스토리지 확장을 활성화하면 세 가지 옵션을 설정할 수 있습니다.
-* 스토리지 자동 확장 조건: 스토리지 사용률이 설정한 값 이상으로 5분 이상 지속될 때 자동으로 스토리지를 확장합니다.
-* 스토리지 자동 확장 최대값: 스토리지 자동 확장으로 확장될 수 있는 최대 크기입니다.
-* 스토리지 자동 확장 쿨다운: 스토리지 자동 확장 기능이 한번 실행된 후, 다시 기능이 활성화되기까지의 시간을 설정합니다.
+When you enable auto scale storage, you can set three options
+* Storage Auto Scale Conditions: Automatically expand storage when storage utilization is above a set value for more than 5 minutes.
+* Storage Auto Scale Max: The maximum size that storage auto-scale can grow to.
+* Storage Auto Scale Cooldown: Set the amount of time after storage auto scale cooldown runs once before the feature is enabled again.
 
-자동 스토리지 확장 기능이 실행될 때의 증가량은 다음 값들 중 가장 큰 값으로 설정됩니다.
-* 10GB
-* 스토리지 크기의 10%
-* 직전 한시간의 데이터 스토리지 사용량 증가분 * 쿨다운(시간으로 환산)
+The amount of increase when the auto scale storage feature runs is set to the largest of the following values
+* 10 GB
+* 10% of storage size
+* Data storage usage growth in the last hour * cooldown (in hours)
 
 ## Apply parameter group changes
 
@@ -444,7 +444,7 @@ Even if the settings for a parameter group associated with DB instance change, t
 
 You can apply changes in a parameter group to DB instance by using one of the following methods.
 
-![db-instance-list-parameter-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-parameter-ko.png)
+![db-instance-list-parameter-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-parameter-en.png)
 
 ❶ Click on **Parameters** of the DB instance or
 ❷ Select the DB instance and click on **Apply Parameter Group Changes** from the drop-down menu, or click
@@ -454,7 +454,7 @@ If the parameters in the parameter group that require restart are changed, the D
 
 High availability DB instances provide restart feature using failover to increase stability and reduce disconnected time.
 
-![db-instance-parameter-ha-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-parameter-ha-ko.png)
+![db-instance-parameter-ha-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-parameter-ha-en.png)
 
 If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](backup-and-restore/#mysql) in a high availability DB instance.
 
@@ -489,7 +489,7 @@ Backup storage charges can be as much as the size of a binary log required for t
 
 To create a read replica from the console,
 
-![db-instance-replica-create-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-replica-create-ko.png)
+![db-instance-replica-create-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-replica-create-en.png)
 
 ❶ Select the source DB instance and click on **Create Read Replica**
 
@@ -582,7 +582,7 @@ You can restart a DB instance when you restart MySQL or want to manually do fail
 
 To restart a DB instance from the console
 
-![db-instance-restart-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-ko.png)
+![db-instance-restart-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-en.png)
 
 ❶ Select the DB instance you want to restart and click on **Restart DB instance** menu from the drop-down menu.
 
@@ -597,7 +597,7 @@ For high availability DB instances, you cannot force restart.
 
 To force restart a DB instance, from the console
 
-![db-instance-restart-force-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-force-ko.png)
+![db-instance-restart-force-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-force-en.png)
 
 ❶ Select the DB instance for which you want a forced restart and from the drop-down menu, click on **Force Restart DB instance** menu.
 
@@ -605,11 +605,11 @@ To force restart a DB instance, from the console
 
 Enabling Delete Protection protects DB instances from being accidentally deleted. You cannot delete DB instances until Delete Protection is disabled. To change Delete Protection settings
 
-![db-instance-deletion-protection-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-deletion-protection-ko.png)
+![db-instance-deletion-protection-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-deletion-protection-en.png)
 
 ❶ If you select the DB instance for which you want to change the Deletion Protection settings and click on **Change Deletion Protection Settings** menu from the drop-down menu, a pop-up window will appear.
 
-![deletion-protection-popup-ko](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-ko.png)
+![deletion-protection-popup-en](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-en.png)
 
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
@@ -677,7 +677,7 @@ Backup storage charges can be as much as the size of the binary log required for
 
 To rebuild a failover master, from the console
 
-![db-instance-failover-rebuild-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-rebuild-ko.png)
+![db-instance-failover-rebuild-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-rebuild-en.png)
 
 ❶ Select the failover master you want to rebuild and click on **Rebuild failover master** menu from the drop-down menu.
 
@@ -687,7 +687,7 @@ If recovery of a failed over master fails and data correction is required, you c
 
 To separate failover master, from the console
 
-![db-instance-failover-split-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-split-ko.png)
+![db-instance-failover-split-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-split-en.png)
 
 ❶ Select the failed master you want to isolate and click on **Separate failed over master** menu from the drop-down menu.
 
@@ -719,7 +719,7 @@ Because all binary logs are deleted during the failover process, you can proceed
 
 You can apply changes to the candidate master first and then observe the trend, or you can control when you want to perform a failover at the exact time from the console. When you select Failover Manual Control, the ❶ console displays the **Failover** button after the candidate master restarts. Click on this button to activate the failover, which can wait up to 5 days for the failover to occur. If the failover is not enabled within five days, the task will be automatically cancelled.
 
-![db-instance-ha-wait-manual-failover-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-ko.png)
+![db-instance-ha-wait-manual-failover-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-en.png)
 
 > [Caution]
 While waiting for a failover, no automatic failover occurs.

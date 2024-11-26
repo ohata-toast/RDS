@@ -155,6 +155,9 @@
 | INSTC_69_04 | INSTANCE          | はい    | フェイルオーバーの手動制御タイムアウト                     |
 | INSTC_70_01 | INSTANCE          | はい    | 高可用性正常化                             |
 | INSTC_71_01 | INSTANCE          | はい    | 高可用性中断                              |
+| INSTC_73_00 | INSTANCE          | はい    | ストレージ自動拡張開始                                                    |
+| INSTC_73_01 | INSTANCE          | はい    | ストレージ自動拡張完了                                                  |
+| INSTC_73_04 | INSTANCE          | はい    | ストレージ自動拡張失敗                                                     |
 | JOB_01_04   | JOB               | はい   | Job実行失敗                               |
 | TENAT_01_04 | TENANT            | はい   | CPUコア数制限                              |
 | TENAT_02_04 | TENANT            | はい   | RAM容量制限	                              |
@@ -259,6 +262,9 @@
 | 複製ディレイ                     | sec             |
 | Row Access Index           | counts/min      |
 | Row Access Full scan       | counts/min      |
+| Database Replication IO Thread Status  | 異常: 0、正常: 1     |
+| Database Replication SQL Thread Status | 異常: 0、正常: 1     |
+| Database Replication Threads Status    | 異常: 0、正常: 1     |
 
 ### 監視設定の追加
 
