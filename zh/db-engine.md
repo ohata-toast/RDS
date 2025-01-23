@@ -8,24 +8,24 @@ For MySQL, the version number consists of version = X.Y.Z. In NHN Cloud RDS term
 
 The versions specified below are available.
 
-| Version              | Note                                                        |
-|----------------------|-----------------------------------------------------------|
-| <strong>8.0</strong> ||
-| MySQL 8.0.36         |                                                           |
-| MySQL 8.0.35         |                                                           |
-| MySQL 8.0.34         |                                                           | 
-| MySQL 8.0.33         |                                                           | 
-| MySQL 8.0.32         |                                                           | 
-| MySQL 8.0.28         |                                                           | 
-| MySQL 8.0.23         |                                                           |
-| MySQL 8.0.18         |                                                           |
-| <strong>5.7</strong> ||
-| MySQL 5.7.37         |                                                           |
-| MySQL 5.7.33         | You cannot restore a DB instance from an external backup.                   |
-| MySQL 5.7.26         |                                                           |
-| MySQL 5.7.19         |                                                           |
-| MySQL 5.7.15         |                                                           |
-| <strong>5.6</strong> ||
+| Version              | Note                                                                                                              |
+|----------------------|-------------------------------------------------------------------------------------------------------------------|
+| <strong>8.0</strong> |                                                                                                                   |
+| MySQL 8.0.36         |                                                                                                                   |
+| MySQL 8.0.35         |                                                                                                                   |
+| MySQL 8.0.34         |                                                                                                                   | 
+| MySQL 8.0.33         |                                                                                                                   | 
+| MySQL 8.0.32         |                                                                                                                   | 
+| MySQL 8.0.28         |                                                                                                                   | 
+| MySQL 8.0.23         |                                                                                                                   |
+| MySQL 8.0.18         |                                                                                                                   |
+| <strong>5.7</strong> |                                                                                                                   |
+| MySQL 5.7.37         |                                                                                                                   |
+| MySQL 5.7.33         | You cannot restore a DB instance from an external backup.                                                         |
+| MySQL 5.7.26         |                                                                                                                   |
+| MySQL 5.7.19         |                                                                                                                   |
+| MySQL 5.7.15         |                                                                                                                   |
+| <strong>5.6</strong> |                                                                                                                   |
 | MySQL 5.6.33         | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
 
 In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
@@ -75,9 +75,9 @@ Also, you must check items that have been removed or changed in 8.0.
 
 
 
-#### Upgrading the DB Engine Version Using a Dummy DB Instance
+#### Upgrading the DB Engine Version Using a Dummy DB Instance 
 
-When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created.
+When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created. 
 
 > [Caution]
 For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high availability configurations.
@@ -89,7 +89,7 @@ The manual control of failover during version upgrade allows you to initiate fai
 
 ### When using an Outdated Operating System
 
-For DB instances created before May 10, 2022, the DB instance will be replaced when the internal operating system is outdated so the DB version is upgraded. During the replacement process, the DB instance's identifier and internal IP address will be changed. The monitored instances in notification groups and event sources in event subscriptions are automatically replaced with the changed identifiers. For a single DB instance, you must use a dummy DB instance when changing DB versions. For high-availability DB instances, the roles of the master and spare master are changed using failover during the DB instance replacement process. Failover may fail if the master is heavily loaded, so it is recommended that you perform DB version change during off-peak hours.
+For DB instances created before May 10, 2022, the DB instance will be replaced when the internal operating system is outdated so the DB version is upgraded. During the replacement process, the DB instance's identifier and internal IP address will be changed. The monitored instances in notification groups and event sources in event subscriptions are automatically replaced with the changed identifiers. For a single DB instance, you must use a dummy DB instance when changing DB versions. For high-availability DB instances, the roles of the master and spare master are changed using failover during the DB instance replacement process. Failover may fail if the master is heavily loaded, so it is recommended that you perform DB version change during off-peak hours.  
 
 > [Caution]
 > Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
@@ -98,26 +98,28 @@ For DB instances created before May 10, 2022, the DB instance will be replaced w
 
 ### Support for the MariaDB Server Audit plugin for MySQL
 
-- RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances.
+- RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances. 
 
 > [Caution]
 This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
 
 #### Supported Versions
-| MySQL version | Whether to support server audit plugins |
-| --- | --- |
-| <strong>8.0</strong> ||
-| MySQL 8.0.34 |O| 
-| MySQL 8.0.33 |O| 
-| MySQL 8.0.32 |O| 
-| MySQL 8.0.28 |O| 
-| MySQL 8.0.23 |O|
-| MySQL 8.0.18 |O|
-| <strong>5.7</strong> ||
-| MySQL 5.7.37 |X|
-| MySQL 5.7.33 |O|
-| MySQL 5.7.26 |O|
-| MySQL 5.7.19 |O|
-| MySQL 5.7.15 |X|
-| <strong>5.6</strong> ||
-| MySQL 5.6.33 |O|
+| MySQL version        | Whether to support server audit plugins |
+|----------------------|-----------------------------------------|
+| <strong>8.0</strong> |                                         |
+| MySQL 8.0.36         | O                                       |
+| MySQL 8.0.35         | O                                       |
+| MySQL 8.0.34         | O                                       | 
+| MySQL 8.0.33         | O                                       | 
+| MySQL 8.0.32         | O                                       | 
+| MySQL 8.0.28         | O                                       | 
+| MySQL 8.0.23         | O                                       |
+| MySQL 8.0.18         | O                                       |
+| <strong>5.7</strong> |                                         |
+| MySQL 5.7.37         | X                                       |
+| MySQL 5.7.33         | O                                       |
+| MySQL 5.7.26         | O                                       |
+| MySQL 5.7.19         | O                                       |
+| MySQL 5.7.15         | X                                       |
+| <strong>5.6</strong> |                                         |
+| MySQL 5.6.33         | O                                       |

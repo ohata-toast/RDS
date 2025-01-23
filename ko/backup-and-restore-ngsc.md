@@ -47,8 +47,8 @@ DB 엔진 버전에 따른 Percona XtraBackup 버전은 아래와 같습니다.
 * 백업 이름은 리전별로 고유해야 합니다.
 * 백업 이름은 1~100자 사이의 영문자, 숫자, 일부 기호(-, _, .)만 입력할 수 있으며, 첫 번째 글자는 영문자만 사용할 수 있습니다.
 
-![db-instance-backup-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ko.png)
-![backup-list-1-ko](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-ko.png)
+![db-instance-backup-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-backup-ko.png)
+![backup-list-1-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.09.10/backup-list-1-ko.png)
 
 **수동 전체 백업 생성하기**
 
@@ -103,7 +103,7 @@ DB 인스턴스의 모든 데이터를 백업합니다.
 
 DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 지정할 수 있습니다.
 
-![db-instance-backup-form-ko](https://static.toastoven.net/prod_rds/24.11.12/db-instance-backup-form-ko.png)
+![db-instance-backup-form-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.11.12/db-instance-backup-form-ko.png)
 
 ### 공통 설정
 
@@ -176,9 +176,9 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 
 백업 후 백업 파일을 사용자 오브젝트 스토리지로 내보낼 수 있습니다. 증분 백업에 대해서는 지원되지 않습니다.
 
-![db-instance-list-export-obs-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-ko.png)
+![db-instance-list-export-obs-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-list-export-obs-ko.png)
 
-![db-instance-list-export-obs-modal-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-modal-ko.png)
+![db-instance-list-export-obs-modal-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-list-export-obs-modal-ko.png)
 
 ❶ 백업할 DB 인스턴스를 선택한 뒤 드롭다운 메뉴에서 **백업 후 오브젝트 스토리지로 백업 파일 내보내기**를 클릭하면 설정 팝업 화면이 나타납니다.
 ❷ 백업이 저장될 오브젝트 스토리지의 테넌트 ID를 입력합니다. 테넌트 ID는 API 엔드포인트 설정에서 확인할 수 있습니다.
@@ -191,11 +191,11 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 
 내부 백업 스토리지에 저장된 백업 파일을 사용자 오브젝트 스토리지로 내보낼 수 있습니다. 증분 백업에 대해서는 지원되지 않습니다.
 
-![db-instance-detail-backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ko.png)
+![db-instance-detail-backup-export-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-backup-export-ko.png)
 
 ❶ 백업을 수행한 원본 DB 인스턴스의 상세 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭하면 백업을 내보내기 위한 팝업 화면이 나타납니다.
 
-![backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/backup-export-ko.png)
+![backup-export-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/backup-export-ko.png)
 
 ❷ 또는 **백업** 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭합니다.
 
@@ -213,13 +213,13 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 
 백업 파일만으로 복원을 진행해 백업을 수행한 원본 DB 인스턴스가 필요하지 않습니다. 콘솔에서 스냅샷을 복원하려면
 
-![db-instance-snapshot-restoration-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-ko.png)
+![db-instance-snapshot-restoration-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-snapshot-restoration-ko.png)
 
 ❶ DB 인스턴스의 상세 탭에서 복원할 백업 파일을 선택한 뒤 **스냅샷 복원**을 클릭하면 DB 인스턴스 복원 화면으로 이동합니다.
 
 또는
 
-![snapshot-restoration-ko](https://static.toastoven.net/prod_rds/24.03.12/snapshot-restoration-ko.png)
+![snapshot-restoration-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/snapshot-restoration-ko.png)
 
 ❶ 백업 탭에서 복원할 백업 파일을 선택한 뒤 **스냅샷 복원**을 클릭합니다.
 
@@ -234,7 +234,7 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 
 콘솔에서 시점 복원을 하려면
 
-![point-in-time-restoration-list-ko](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-list-ko.png)
+![point-in-time-restoration-list-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/point-in-time-restoration-list-ko.png)
 
 ❶ 시점 복원할 DB 인스턴스를 선택한 뒤 **+ 시점 복원**을 클릭하면 시점 복원을 설정할 수 있는 페이지로 이동합니다.
 
@@ -242,15 +242,15 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 
 Timestamp를 사용한 복원 시에는 선택한 시점과 가장 가까운 백업 파일을 기준으로 복원을 진행한 뒤, 원하는 시점까지의 바이너리 로그(binary log)를 적용합니다.
 
-![point-in-time-restoration-01-ko](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-01-ko.png)
+![point-in-time-restoration-01-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/point-in-time-restoration-01-ko.png)
 
 ❶ 복원 방법을 선택합니다.
 
-![point-in-time-restoration-02-ko](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-02-ko.png)
+![point-in-time-restoration-02-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/point-in-time-restoration-02-ko.png)
 
 ❷ 복원 시각을 선택합니다. 가장 최근 시점으로 복원하거나, 원하는 특정 시점을 직접 입력할 수 있습니다.
 
-![point-in-time-restoration-03-ko](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-03-ko.png)
+![point-in-time-restoration-03-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/point-in-time-restoration-03-ko.png)
 
 ❸ **복원될 마지막 쿼리 확인**을 클릭하면 마지막으로 복원될 쿼리를 확인할 수 있는 팝업 화면이 표시됩니다.
 
@@ -259,7 +259,7 @@ Timestamp를 사용한 복원 시에는 선택한 시점과 가장 가까운 백
 
 바이너리 로그(binary log)를 활용한 복원 과정에서는 선택한 백업 파일로 먼저 복원을 진행한 후, 원하는 위치까지의 바이너리 로그(binary log)를 적용합니다.
 
-![point-in-time-restoration-04-ko](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-04-ko.png)
+![point-in-time-restoration-04-ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/point-in-time-restoration-04-ko.png)
 
 ❹ 바이너리 로그(binary log)로 복원을 하기 위해서는 먼저 백업 파일을 선택해야 합니다.
 ❺ 바이너리 로그(binary log) 파일을 선택합니다.

@@ -101,7 +101,7 @@
 * Added forced promotion of DB instances
 * Improved to allow you to select notification type when subscribing to events
 * API v3.0 additions and changes
-  * Added the Export after backing up DB instance API
+    * Added the Export after backing up DB instance API
 
 ### September 27, 2022
 

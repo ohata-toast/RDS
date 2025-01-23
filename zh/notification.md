@@ -150,11 +150,11 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_67_01 | INSTANCE          | Yes          | OS version upgrade ended                                                      |
 | INSTC_67_04 | INSTANCE          | Yes          | OS version upgrade failed                                                     |
 | INSTC_68_01 | INSTANCE          | Yes          | Network communication failed                                                  |
-| INSTC_69_00 | INSTANCE          | Yes            | Waiting for manual control of failover                                                            |
-| INSTC_69_01 | INSTANCE          | Yes            | Manual control of failover succeeded                                                                |
-| INSTC_69_04 | INSTANCE          | Yes            | Manual control of failover timeout                                                              |
-| INSTC_70_01 | INSTANCE          | Yes            | High availability normalized                                                                      |
-| INSTC_71_01 | INSTANCE          | Yes            | High availability stopped                                                                       |
+| INSTC_69_00 | INSTANCE          | Yes          | Waiting for manual control of failover                                        |
+| INSTC_69_01 | INSTANCE          | Yes          | Manual control of failover succeeded                                          |
+| INSTC_69_04 | INSTANCE          | Yes          | Manual control of failover timeout                                            |
+| INSTC_70_01 | INSTANCE          | Yes          | High availability normalized                                                  |
+| INSTC_71_01 | INSTANCE          | Yes          | High availability stopped                                                     |
 | INSTC_73_00 | INSTANCE          | Yes          | Auto scale storage started                                                    |
 | INSTC_73_01 | INSTANCE          | Yes          | Auto scale storage completed                                                  |
 | INSTC_73_04 | INSTANCE          | Yes          | Auto scale storage failed                                                     |

@@ -11,19 +11,19 @@ You can visualize performance metrics in chart form on the server dashboard. Cha
 
 Use a layout to show the size and position of charts. When the service is enabled, 2 layouts are provided by default, `Default system index` and `Default MySQL index`. Default layouts cannot be changed or deleted and you cannot add charts or change or delete charts that have been added. If you want to view charts in addition to the default layouts, you can create a layout and add charts.
 
-![layout_01_en](https://static.toastoven.net/prod_rds/23.04.11/layout_01_en.png)
+![layout_01_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/layout_01_en.png)
 
 * ❶ When you click **Create Layout**, a pop-up window appears where you can create a layout.
 * ❷ Enter a layout name and click **Create** to create a layout.
 
 ### Add Charts to Layout
 
-![layout_02_en](https://static.toastoven.net/prod_rds/23.04.11/layout_02_en.png)
+![layout_02_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/layout_02_en.png)
 
 * ❶ Select the layout you want.
 * ❷ When you click **Add Chart**, a pop-up window appears where you can add charts.
 
-![layout_03_en](https://static.toastoven.net/prod_rds/23.04.11/layout_03_en.png)
+![layout_03_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/layout_03_en.png)
 
 * ❶ You can select multiple charts that you want to add by checking the check box.
 * ❷ When you click a chart name, a chart preview appears in the red square area on the left.
@@ -31,7 +31,7 @@ Use a layout to show the size and position of charts. When the service is enable
 
 ### Change and Delete Charts in Layout
 
-![layout_04_en](https://static.toastoven.net/prod_rds/23.04.11/layout_04_en.png)
+![layout_04_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/layout_04_en.png)
 
 * ❶ You can reposition the chart by clicking and holding the top area of the chart and dragging and dropping it wherever you want.
 * ❷ You can resize the chart by dragging and dropping the bottom right area of the chart.
@@ -69,7 +69,7 @@ Server group allows you to view performance metrics for multiple DB instances in
 
 ### Create Server Group
 
-![chart_01_en](https://static.toastoven.net/prod_rds/23.04.11/chart_01_en.png)
+![chart_01_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/chart_01_en.png)
 
 * ❶ **Add Group** displays a pop-up window where you can create groups.
 * ❷ Select DB instance to add to server groups.
@@ -78,11 +78,11 @@ Server group allows you to view performance metrics for multiple DB instances in
 
 DB instances and server groups appear together in the list of servers on the left side of the server dashboard.
 
-![server_group_01_en](https://static.toastoven.net/prod_rds/23.04.11/server_group_01_en.png)
+![server_group_01_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/server_group_01_en.png)
 
 * ❶ Click **+**, **-** to unfold or close the server group.
 * ❷ When you click DB instance that belongs to a server group, a color selection pop-up appears where you can change the color that will appear in the chart.
 
-![server_group_02_en](https://static.toastoven.net/prod_rds/23.04.11/server_group_02_en.png)
+![server_group_02_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/server_group_02_en.png)
 
 * ❶ **:You can change or delete the server group by clicking **.

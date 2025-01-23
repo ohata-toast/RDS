@@ -139,7 +139,7 @@ If you activate deletion protection, you can protect DB instances from accidenta
 
 You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
 
-![db-instance-list_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list_en.png)
+![db-instance-list_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-list_en.png)
 
 ❶ You can change DB instance screen mode.  
 ❷ By clicking on the button, you can open or close a DB instance that belongs to a group.  
@@ -164,7 +164,7 @@ The status of the DB instance consists of the following values and changes depen
 
 Search conditions that can be changed are as follows.
 
-![db-instance-filter_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-filter_en.png)
+![db-instance-filter_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-filter_en.png)
 
 ❶ You can search for DB instances with filtering conditions that require parameter changes to be applied.
 
@@ -172,7 +172,7 @@ Search conditions that can be changed are as follows.
 
 You can select a DB instance to view the details.
 
-![db-instance-detail_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail_en.png)
+![db-instance-detail_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail_en.png)
 
 ❶ When you click on the domain of the connection information, a pop-up window appears to confirm the IP address.
 ❷ When you click on DB Security Group, a pop-up window appears where you can check DB security rules.
@@ -198,7 +198,7 @@ You can view and download various log files from Log tab of DB instance. Log fil
 | server_audit.log | 30 of 20MB  | Changeable | `server_audit_logging`<br />`server_audit_file_rotations`              | 
 | mysql-bin.xxxxxx | 5 days         | Changeable | `binlog_expire_logs_seconds` (8.X version)<br />`expire_logs_days` (5.X version) |
 
-![db-instance-detail-log_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log_en.png)
+![db-instance-detail-log_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-log_en.png)
 
 ❶ Click on **View Logs** and you will see a pop-up window where you can check the contents of the log file. You can check logs up to 65,535 Bytes.
 ❷ When **Import** is clicked, the request is made to download the log file for DB instance.
@@ -210,7 +210,7 @@ Click on **Download** to charge Internet traffic as the size of the log file.
 
 ❹ For binary logs, you can download them in two forms. Click on **Import** and you will see a pop-up window where you can select the type of binary log.
 
-![db-instance-detail-log-bin_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log-bin_en.png)
+![db-instance-detail-log-bin_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-log-bin_en.png)
 
 ❺ Select to use the mysqlbinlog utility to convert the binary log into SQL file and then download it.
 
@@ -220,7 +220,7 @@ DB instance's **DB Schema and User** tab allows you to query and control the sch
 
 #### DB schema created
 
-![db-instance-detail-schema_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema_en.png)
+![db-instance-detail-schema_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-schema_en.png)
 
 ❶ Click on **Create** and a pop-up window will appear where you can enter the name of DB schema.
 ❷ You can create a DB schema by entering the DB schema name and clicking on **Confirm**.
@@ -234,14 +234,14 @@ You cannot modify the name of DB schema that has created.
 
 #### DB schema deleted
 
-![db-instance-detail-schema-delete-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema-delete-en.png)
+![db-instance-detail-schema-delete-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-schema-delete-en.png)
 
 ❶ Select DB schema you want to delete and click on the drop-down menu.
 ❷ Click on **Delete** menu and pop-up window will appear to confirm deletion. You can request to delete by clicking on **Confirm**.
 
 #### Create a user
 
-![db-instance-detail-user-create-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-create-en.png)
+![db-instance-detail-user-create-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-create-en.png)
 
 ❶ Click on **+Create** and you'll see the Add User pop-up window.
 ❷ Enter a user ID.
@@ -308,8 +308,8 @@ User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and l
 
 If you set TLS option for your account to X509, you need a certificate to access the DB instance.
 
-![db-instance-detail-user-cert-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-en.png)
-![db-instance-detail-user-cert-down-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-down-en.png)
+![db-instance-detail-user-cert-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-cert-en.png)
+![db-instance-detail-user-cert-down-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-cert-down-en.png)
 
 ❶ Select the DB instance to which you want to download the certificate.
 ❷ Click on drop-down menu.
@@ -323,7 +323,7 @@ Click on**Download** to charge Internet traffic as much as the size of the certi
 
 #### Edit users
 
-![db-instance-detail-user-modify-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-modify-en.png)
+![db-instance-detail-user-modify-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-modify-en.png)
 
 ❶ Click on **Modify** on the user row you want to modify and you will see a pop-up window where you can modify your information.
 ❷ If you do not enter Password, it will not be changed.
@@ -331,7 +331,7 @@ Click on**Download** to charge Internet traffic as much as the size of the certi
 
 #### Deleting a user
 
-![db-instance-detail-user-delete-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-delete-en.png)
+![db-instance-detail-user-delete-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-delete-en.png)
 
 ❶ Select the user you want to delete and click on the drop-down menu.
 ❷ Click on **Delete** and **Confirm Delete** pop-up window will appear. You can request deletion by clicking on **Confirm**.
@@ -361,7 +361,7 @@ You can easily change various items in DB instances created through console. Cha
 
 For high availability DB instances, if there are any changes to items that need to be restarted, it provides a restart capability using failover to increase stability and reduce disconnected time.
 
-![modify-ha-popup-en](https://static.toastoven.net/prod_rds/24.11.12/modify-ha-popup-en.png)
+![modify-ha-popup-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.11.12/modify-ha-popup-en.png)
 
 If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](backup-and-restore/#mysql) in a high availability DB instance.
 
@@ -383,7 +383,7 @@ Supports DB instance operating system upgrades. By upgrading the operating syste
 Caution is required when upgrading the operating system because it may result in service disruption. Highly available DB instances can minimize service disruption through failover.
 
 You can check the operating system information of the current DB instance on the DB instance details screen.
-![db-instance-os-upgrade-en.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-en.png)
+![db-instance-os-upgrade-en.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.06.11/db-instance-os-upgrade-en.png)
 
 ❶ You can check the operating system information of the DB instance.
 ❷ If the operating system is eligible for version upgrade, the **OS Version Upgrade** button appears.
@@ -391,10 +391,10 @@ You can check the operating system information of the current DB instance on the
 Operating system version upgrades behave differently depending on whether you are in a highly available configuration or not. For high availability, the operating system version upgrade is performed using failover. For non-high availability, the operating system version upgrade is performed by restarting the DB instance.
 
 When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
-![db-instance-os-upgrade-single-popup-en.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
+![db-instance-os-upgrade-single-popup-en.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
 
 When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual Failover](backup-and-restore/#mysql) of High Availability DB Instances.
-![os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/24.11.12/os-upgrade-ha-popup-en.png)
+![os-upgrade-ha-popup-en.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.11.12/os-upgrade-ha-popup-en.png)
 
 ## Delete DB Instance
 
@@ -444,7 +444,7 @@ Even if the settings for a parameter group associated with DB instance change, t
 
 You can apply changes in a parameter group to DB instance by using one of the following methods.
 
-![db-instance-list-parameter-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-parameter-en.png)
+![db-instance-list-parameter-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-list-parameter-en.png)
 
 ❶ Click on **Parameters** of the DB instance or
 ❷ Select the DB instance and click on **Apply Parameter Group Changes** from the drop-down menu, or click
@@ -454,7 +454,7 @@ If the parameters in the parameter group that require restart are changed, the D
 
 High availability DB instances provide restart feature using failover to increase stability and reduce disconnected time.
 
-![db-instance-parameter-ha-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-parameter-ha-en.png)
+![db-instance-parameter-ha-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-parameter-ha-en.png)
 
 If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](backup-and-restore/#mysql) in a high availability DB instance.
 
@@ -489,7 +489,7 @@ Backup storage charges can be as much as the size of a binary log required for t
 
 To create a read replica from the console,
 
-![db-instance-replica-create-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-replica-create-en.png)
+![db-instance-replica-create-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-replica-create-en.png)
 
 ❶ Select the source DB instance and click on **Create Read Replica**
 
@@ -582,7 +582,7 @@ You can restart a DB instance when you restart MySQL or want to manually do fail
 
 To restart a DB instance from the console
 
-![db-instance-restart-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-en.png)
+![db-instance-restart-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-restart-en.png)
 
 ❶ Select the DB instance you want to restart and click on **Restart DB instance** menu from the drop-down menu.
 
@@ -597,7 +597,7 @@ For high availability DB instances, you cannot force restart.
 
 To force restart a DB instance, from the console
 
-![db-instance-restart-force-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-force-en.png)
+![db-instance-restart-force-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-restart-force-en.png)
 
 ❶ Select the DB instance for which you want a forced restart and from the drop-down menu, click on **Force Restart DB instance** menu.
 
@@ -605,11 +605,11 @@ To force restart a DB instance, from the console
 
 Enabling Delete Protection protects DB instances from being accidentally deleted. You cannot delete DB instances until Delete Protection is disabled. To change Delete Protection settings
 
-![db-instance-deletion-protection-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-deletion-protection-en.png)
+![db-instance-deletion-protection-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-deletion-protection-en.png)
 
 ❶ If you select the DB instance for which you want to change the Deletion Protection settings and click on **Change Deletion Protection Settings** menu from the drop-down menu, a pop-up window will appear.
 
-![deletion-protection-popup-en](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-en.png)
+![deletion-protection-popup-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/deletion-protection-popup-en.png)
 
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
@@ -654,7 +654,7 @@ If the failed over master fails to recover, you can re-enable the high availabil
 
 To recover a failover master, from the console
 
-![db-instance-failover-repair-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-repair-en.png)
+![db-instance-failover-repair-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-failover-repair-en.png)
 
 ❶ Select the failover master you want to recover from and click on **Recover 	
 Failed Over Master** menu from the drop-down menu.
@@ -677,7 +677,7 @@ Backup storage charges can be as much as the size of the binary log required for
 
 To rebuild a failover master, from the console
 
-![db-instance-failover-rebuild-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-rebuild-en.png)
+![db-instance-failover-rebuild-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-failover-rebuild-en.png)
 
 ❶ Select the failover master you want to rebuild and click on **Rebuild failover master** menu from the drop-down menu.
 
@@ -687,7 +687,7 @@ If recovery of a failed over master fails and data correction is required, you c
 
 To separate failover master, from the console
 
-![db-instance-failover-split-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-split-en.png)
+![db-instance-failover-split-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-failover-split-en.png)
 
 ❶ Select the failed master you want to isolate and click on **Separate failed over master** menu from the drop-down menu.
 
@@ -719,7 +719,7 @@ Because all binary logs are deleted during the failover process, you can proceed
 
 You can apply changes to the candidate master first and then observe the trend, or you can control when you want to perform a failover at the exact time from the console. When you select Failover Manual Control, the ❶ console displays the **Failover** button after the candidate master restarts. Click on this button to activate the failover, which can wait up to 5 days for the failover to occur. If the failover is not enabled within five days, the task will be automatically cancelled.
 
-![db-instance-ha-wait-manual-failover-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-en.png)
+![db-instance-ha-wait-manual-failover-en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-en.png)
 
 > [Caution]
 While waiting for a failover, no automatic failover occurs.
@@ -1064,11 +1064,11 @@ Navigate to the project where the specified DB instance to be checked.
 
 Those with the migration button next to name are the maintenance targets.
 
-![rds_planed_migration_0](https://static.toastoven.net/prod_rds/planned_migration_alarm/image0_en.png)
+![rds_planed_migration_0](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/planned_migration_alarm/image0_en.png)
 
 You can view the detailed inspection schedule by moving the mouse pointer over the migration button.
 
-![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_en.png)
+![rds_planed_migration_1](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/planned_migration_alarm/image1_en.png)
 
 #### 2. Make sure you close any application programs that are running on the DB instance.
 
@@ -1077,13 +1077,13 @@ If it is inevitable to affect the service, please contact NHN Cloud Customer Cen
 
 #### 3. Select a DB instance for maintenance, click migration, and click OK on window asking of migration.
 
-![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_en.png)
+![rds_planed_migration_2](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/planned_migration_alarm/image2_en.png)
 
 #### 4. Wait for the DB instance migration to finish.
 
 If the DB instance state does not change, do 'refresh'.
 
-![rds_planed_migration_3](https://static.toastoven.net/prod_rds/planned_migration_alarm/image3_en.png)
+![rds_planed_migration_3](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/planned_migration_alarm/image3_en.png)
 
 No operations can be performed on the DB instance while migration is in progress.
 If the DB instance migration is not completed normally, it is automatically reported to the administrator, and NHN Cloud will contact you.

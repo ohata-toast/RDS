@@ -21,8 +21,8 @@ In addition, the APIs you can call are limited based on the project member role.
 
 * `RDS for MySQL ADMIN permission holders` can use all available features as before.
 * `RDS for MySQL MEMBER permission holders` can use read-only feature.
-  * Cannot use any features aimed at DB instances or create, modify, or delete any DB instance.
-  * But, notification group and user group-related features are available.
+    * Cannot use any features aimed at DB instances or create, modify, or delete any DB instance.
+    * But, notification group and user group-related features are available.
 
 If an API request fails to authenticate or is not authorized, the following error occurs.
 

@@ -138,7 +138,7 @@ DBインスタンス作成時、基本通知を設定できます。基本通知
 
 コンソールで作成されたDBインスタンスを確認できます。レプリケーショングループ単位でまとめて見たり、個別DBインスタンスで見ることができます。
 
-![db-instance-list_ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list_ja.png)
+![db-instance-list_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-list_ja.png)
 
 ❶ DBインスタンス画面モードを変更できます。
 ❷ボタンをクリックして、グループ内に属するDBインスタンスを展開したり、折りたたむことができます。
@@ -161,7 +161,7 @@ DBインスタンスの状態は下記のような値で構成され、ユーザ
 
 変更できる検索条件は次のとおりです。
 
-![db-instance-filter_ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-filter_ja.png)
+![db-instance-filter_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-filter_ja.png)
 
 ❶パラメータ変更事項適用が必要なDBインスタンスをフィルタリング条件で検索できます。
 
@@ -169,7 +169,7 @@ DBインスタンスの状態は下記のような値で構成され、ユーザ
 
 DBインスタンスを選択すると、詳細情報を見ることができます。
 
-![db-instance-detail_ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail_ja.png)
+![db-instance-detail_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail_ja.png)
 
 ❶接続情報のドメインをクリックすると、IPアドレスを確認できるポップアップが表示されます。
 ❷ DBセキュリティグループをクリックすると、DBセキュリティルールを確認できるポップアップが表示されます。
@@ -195,7 +195,7 @@ DBインスタンスのログタブでは、各種ログファイルの閲覧や
 | server_audit.log | 20MB 30個 | 変更可能 | `server_audit_logging`<br />`server_audit_file_rotations`              | 
 | mysql-bin.xxxxxx | 5日      | 変更可能 | `binlog_expire_logs_seconds` (8.Xバージョン)<br />`expire_logs_days` (5.Xバージョン) |
 
-![db-instance-detail-log_ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log_ja.png)
+![db-instance-detail-log_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-log_ja.png)
 
 ❶ **ログ表示**をクリックすると、ログファイルの内容を確認できるポップアップ画面が表示されます。最大65,535Bytesのログを確認できます。
 ❷ **インポート**をクリックすると、DBインスタンスのログファイルをダウンロードするようにリクエストします。
@@ -207,7 +207,7 @@ DBインスタンスのログタブでは、各種ログファイルの閲覧や
 
 ❹バイナリログ(binary log)の場合、2つの形式でダウンロードできます。**インポート**をクリックすると、バイナリログの形式を選択できるポップアップ画面が表示されます。
 
-![db-instance-detail-log-bin_ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log-bin_ja.png)
+![db-instance-detail-log-bin_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-log-bin_ja.png)
 
 ❺ mysqlbinlogユーティリティを利用してバイナリログ(binary log)をSQLファイルに変換してダウンロードする場合は選択します。
 
@@ -217,7 +217,7 @@ DBインスタンスの**DBスキーマ＆ユーザー**タブでは、データ
 
 #### DBスキーマの作成
 
-![db-instance-detail-schema_ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema_ja.png)
+![db-instance-detail-schema_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-schema_ja.png)
 
 ❶ **作成**をクリックすると、DBスキーマの名前を入力できるポップアップウィンドウが表示されます。
 ❷ DBスキーマ名を入力した後、**確認**をクリックしてDBスキーマを作成することができます。
@@ -231,14 +231,14 @@ DBスキーマ名には下記のような制約事項があります。
 
 #### DBスキーマの削除
 
-![db-instance-detail-schema-delete-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema-delete-ja.png)
+![db-instance-detail-schema-delete-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-schema-delete-ja.png)
 
 ❶削除するDBスキーマを選択し、ドロップダウンメニューをクリックします。
 ❷ **削除**メニューをクリックすると、削除確認ポップアップ画面が表示されます。**確認**をクリックして削除をリクエストできます。
 
 #### ユーザーの作成
 
-![db-instance-detail-user-create-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-create-ja.png)
+![db-instance-detail-user-create-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-create-ja.png)
 
 ❶ **+作成**をクリックすると、ユーザー追加ポップアップ画面が表示されます。
 ❷ユーザーIDを入力します。
@@ -305,8 +305,8 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 ユーザーアカウントのTLS OptionをX509に設定した場合、DBインスタンスに接続するには証明書が必要です。
 
-![db-instance-detail-user-cert-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-ja.png)
-![db-instance-detail-user-cert-down-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-down-ja.png)
+![db-instance-detail-user-cert-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-cert-ja.png)
+![db-instance-detail-user-cert-down-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-cert-down-ja.png)
 
 ❶証明書をダウンロードするDBインスタンスを選択します。
 ❷ドロップダウンメニューをクリックします。
@@ -320,7 +320,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 #### ユーザーの修正
 
-![db-instance-detail-user-modify-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-modify-ja.png)
+![db-instance-detail-user-modify-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-modify-ja.png)
 
 ❶修正するユーザー行の**修正**をクリックすると、ユーザー情報を修正できるポップアップ画面が表示されます。
 ❷ Passwordを入力しないと変更されません。
@@ -328,7 +328,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 #### ユーザーの削除
 
-![db-instance-detail-user-delete-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-delete-ja.png)
+![db-instance-detail-user-delete-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-detail-user-delete-ja.png)
 
 ❶削除するユーザーを選択し、ドロップダウンメニューをクリックします。
 ❷ **削除**をクリックすると、**削除確認**ポップアップ画面が表示されます。**確認**をクリックして削除をリクエストできます。
@@ -358,7 +358,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 高可用性DBインスタンスの場合、再起動が必要な項目の変更がある場合、安定性を高め、瞬断時間を減らすためにフェイルオーバーを利用した再起動機能を提供します。
 
-![modify-ha-popup-ja](https://static.toastoven.net/prod_rds/24.11.12/modify-ha-popup-ja.png)
+![modify-ha-popup-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.11.12/modify-ha-popup-ja.png)
 
 フェイルオーバーを利用した再起動を使用しない場合は、マスターと予備マスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
 
@@ -380,7 +380,7 @@ DBインスタンスOSアップグレードをサポートします。OSのア�
 OSアップグレードはサービス瞬断が発生するため注意が必要です。高可用性DBインスタンスはフェイルオーバーにより、サービス瞬断を最小限に抑えることができます。
 
 現在のDBインスタンスのOS情報は、DBインスタンスの詳細画面で確認できます。
-![db-instance-os-upgrade-ja.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ja.png)
+![db-instance-os-upgrade-ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.06.11/db-instance-os-upgrade-ja.png)
 
 ❶ DBインスタンスのOS情報を確認できます。
 ❷ OSがバージョンアップグレード対象である場合、**OSバージョンアップグレード**ボタンが表示されます。
@@ -388,10 +388,10 @@ OSアップグレードはサービス瞬断が発生するため注意が必要
 OSバージョンアップグレードは、高可用性構成であるかどうかによって異なります。高可用性の場合は、フェイルオーバーを利用してOSバージョンアップグレードを実行します。高可用性ではない場合は、DBインスタンスを再起動してOSバージョンアップグレードを実行します。
 
 単一DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。
-![db-instance-os-upgrade-single-popup-ja.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-ja.png)→
+![db-instance-os-upgrade-single-popup-ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-ja.png)→
 
 高可用性DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。詳細については、高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
-![os-upgrade-ha-popup-ja.png](https://static.toastoven.net/prod_rds/24.11.12/os-upgrade-ha-popup-ja.png)→
+![os-upgrade-ha-popup-ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.11.12/os-upgrade-ha-popup-ja.png)→
 
 
 ## DBインスタンスの削除
@@ -442,7 +442,7 @@ DBインスタンスに接続されたパラメータグループの設定が変
 
 次のいずれかの方法を使用してDBインスタンスにパラメータグループの変更を適用できます。
 
-![db-instance-list-parameter-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-parameter-ja.png)
+![db-instance-list-parameter-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-list-parameter-ja.png)
 
 ❶対象DBインスタンスの**パラメータ**をクリックする。
 ❷対象DBインスタンスを選択した後、ドロップダウンメニューの**パラメータグループ変更適用**メニューをクリックするか、または
@@ -452,7 +452,7 @@ DBインスタンスに接続されたパラメータグループの設定が変
 
 高可用性DBインスタンスの場合、安定性を高め、瞬断時間を減らすためにフェイルオーバーを利用した再起動機能を提供します。
 
-![db-instance-parameter-ha-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-parameter-ha-ja.png)
+![db-instance-parameter-ha-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-parameter-ha-ja.png)
 
 フェイルオーバーを利用した再起動を使用しない場合は、マスターと予備マスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
 
@@ -487,7 +487,7 @@ DBインスタンスに接続されたパラメータグループの設定が変
 
 リードレプリカを作成するには、コンソールで
 
-![db-instance-replica-create-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-replica-create-ja.png)
+![db-instance-replica-create-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-replica-create-ja.png)
 
 ❶原本DBインスタンスを選択した後、[リードレプリカ作成]をクリックすると
 
@@ -567,7 +567,7 @@ MySQLを再起動したり、高可用性DBインスタンスを手動でフェ�
 
 DBインスタンスを再起動するには、コンソールで
 
-![db-instance-restart-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-ja.png)
+![db-instance-restart-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-restart-ja.png)
 
 ❶再起動を希望するDBインスタンスを選択した後、ドロップダウンメニューから**DBインスタンスの再起動**メニューをクリックします。
 
@@ -583,7 +583,7 @@ DBインスタンスのMySQLが正常に動作しない場合、強制的に再�
 
 DBインスタンスを強制的に再起動するには、コンソールで
 
-![db-instance-restart-force-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-force-ja.png)
+![db-instance-restart-force-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-restart-force-ja.png)
 
 ❶強制再起動を希望するDBインスタンスを選択した後、ドロップダウンメニューから**DBインスタンス強制再起動**メニューをクリックします。
 
@@ -591,11 +591,11 @@ DBインスタンスを強制的に再起動するには、コンソールで
 
 削除保護を有効にすると、誤ってDBインスタンスが削除されないように保護できます。削除保護を無効化するまで、そのDBインスタンスを削除できません。削除保護設定を変更するには
 
-![db-instance-deletion-protection-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-deletion-protection-ja.png)
+![db-instance-deletion-protection-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-deletion-protection-ja.png)
 
 ❶削除保護設定を変更したいDBインスタンスを選択した後、ドロップダウンメニューから**削除保護設定変更**メニューをクリックすると、ポップアップウィンドウが表示されます。
 
-![deletion-protection-popup-ja](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-ja.png)
+![deletion-protection-popup-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/deletion-protection-popup-ja.png)
 
 ❷削除保護設定を変更した後、**確認**をクリックします。
 
@@ -640,7 +640,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 フェイルオーバーされたマスターを復旧するには、コンソールで
 
-![db-instance-failover-repair-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-repair-ja.png)
+![db-instance-failover-repair-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-failover-repair-ja.png)
 
 ❶復旧を希望するフェイルオーバーされたマスターを選択した後、ドロップダウンメニューから**フェイルオーバーされたマスターの復旧**メニューをクリックします。
 
@@ -662,7 +662,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 フェイルオーバーされたマスターを再構築するには、コンソールで
 
-![db-instance-failover-rebuild-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-rebuild-ja.png)
+![db-instance-failover-rebuild-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-failover-rebuild-ja.png)
 
 ❶再構築を希望するフェイルオーバーされたマスターを選択した後、ドロップダウンメニューから**フェイルオーバーされたマスターの再構築**メニューをクリックします。
 
@@ -672,7 +672,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 フェイルオーバーされたマスターを分離するには、コンソールで
 
-![db-instance-failover-split-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-split-ja.png)
+![db-instance-failover-split-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-failover-split-ja.png)
 
 ❶分離を希望するフェイルオーバーされたマスターを選択した後、ドロップダウンメニューから**フェイルオーバーされたマスター分離**メニューをクリックします。
 
@@ -704,7 +704,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 予備マスターに変更事項を先に適用した後、その推移を観察したり、正確な時間にフェイルオーバーを実行したい場合、コンソールでフェイルオーバーのタイミングを直接制御できます。フェイルオーバー手動制御を選択すると、予備マスターが再起動された後、❶コンソールに**フェイルオーバー**ボタンが表示されます。このボタンをクリックするとフェイルオーバーが実行され、最大5日間実行を待機できます。5日以内にフェイルオーバーを実行しない場合、その作業は自動的にキャンセルされます。
 
-![db-instance-ha-wait-manual-failover-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-ja.png)
+![db-instance-ha-wait-manual-failover-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-ja.png)
 
 > [注意]
 > フェイルオーバーを待機している間は、自動フェイルオーバーは行われません。
@@ -1045,11 +1045,11 @@ DB構成に応じて特定DBインスタンスを選択してマイグレーシ�
 
 名前の横にマイグレーションボタンがあるDBインスタンスがメンテナンス対象のインスタンスです。
 
-![rds_planed_migration_0](https://static.toastoven.net/prod_rds/planned_migration_alarm/image0_ja.png)
+![rds_planed_migration_0](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/planned_migration_alarm/image0_ja.png)
 
 マイグレーションボタンにマウスオーバーすると、メンテナンス日程の詳細を確認できます。
 
-![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_ja.png)
+![rds_planed_migration_1](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/planned_migration_alarm/image1_ja.png)
 
 #### 2. メンテナンス対象DBインスタンスに接続中のアプリケーションソフトウェアを終了する必要があります。
 
@@ -1058,13 +1058,13 @@ DBに接続しているサービスに影響を与えないように、適切な
 
 #### 3. メンテナンス対象DBインスタンスを選択してマイグレーションボタンをクリックし、DBインスタンスマイグレーションの確認ウィンドウが表示されたら確認ボタンをクリックします。
 
-![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_ja.png)
+![rds_planed_migration_2](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/planned_migration_alarm/image2_ja.png)
 
 #### 4. DBインスタンスのマイグレーションが終わるまで待機します。
 
 DBインスタンスの状態が変更されない場合は「更新」を行ってください。
 
-![rds_planed_migration_3](https://static.toastoven.net/prod_rds/planned_migration_alarm/image3_ja.png)
+![rds_planed_migration_3](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/planned_migration_alarm/image3_ja.png)
 
 DBインスタンスのマイグレーション中は何も操作ができません。
 DBインスタンスのマイグレーションが正常に完了しなかった場合、自動的に管理者に報告され、NHN Cloudから別途連絡いたします。

@@ -4,7 +4,7 @@
 You can visualize performance metrics in chart form on the server dashboard. Charts are arranged according to a preset layout. Metrics are collected once every minute and kept for up to 1 year. Retention period by aggregation unit is as follows.
 
 | Aggregate Unit | Retention Period |
-|----------------|------------------|
+|----------------|------------------| 
 | 1 minute | 1 year |
 
 ## Layout

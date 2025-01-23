@@ -169,7 +169,7 @@
 
 이벤트 유형, 코드 및 소스로 구분하여 이벤트를 구독할 수 있습니다. 이벤트 유형으로 구독하면 이벤트 유형에 포함된 모든 이벤트 코드의 알림을 받습니다. 알림이 너무 광범위할 경우 이벤트 코드와 소스로 세분화해 구독할 수 있습니다. 프로젝트 멤버만 알림을 받을 사용자로 선택할 수 있습니다. 기본적으로 이메일로 이벤트 알림이 발송되며, 실명을 인증한 휴대전화 번호가 등록된 경우에만 SMS로 추가 이벤트 알림이 발송됩니다.
 
-![event_subscription_01_ko](https://static.toastoven.net/prod_rds/23.04.11/event_subscription_01_ko.png)
+![event_subscription_01_ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/event_subscription_01_ko.png)
 
 * ❶ **이벤트 구독 등록**을 누르면 이벤트 구독을 등록할 수 있는 팝업 창이 나타납니다.
 * ❷ 구독할 이벤트 유형을 선택합니다. 이벤트 유형에 따라 선택할 수 있는 이벤트 코드가 변경됩니다.
@@ -187,7 +187,7 @@
 
 ### 사용자 그룹 생성
 
-![user_group_01_ko](https://static.toastoven.net/prod_rds/23.06.13/user_group_01_ko.png)
+![user_group_01_ko](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.06.13/user_group_01_ko.png)
 
 * ❶ **사용자 그룹 생성**을 누르면 사용자 그룹을 생성할 수 있는 팝업 창이 나타납니다.
 * ❷ 사용자 그룹에 추가된 사용자가 나타납니다.
@@ -204,7 +204,7 @@
 
 ### 알림 그룹 생성
 
-![notification_group_01_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_01_ko.png)
+![notification_group_01_ko.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_01_ko.png)
 
 * ❶ **그룹 만들기**를 누르면 알림 그룹을 생성할 수 있는 팝업 창이 나타납니다.
 * ❷ 알림을 받을 방법을 선택합니다.
@@ -268,7 +268,7 @@
 
 ### 감시 설정 추가
 
-![notification_group_02_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_02_ko.png)
+![notification_group_02_ko.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_02_ko.png)
 
 * ❶ **감시 설정**을 누르면 감시 설정을 변경할 수 있는 팝업 창이 나타납니다.
 * ❷ **감시 설정 추가** 를 눌러 신규 감시 설정을 추가합니다.
@@ -276,7 +276,7 @@
 
 ### 감시 설정 변경 및 삭제
 
-![notification_group_03_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_03_ko.png)
+![notification_group_03_ko.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_03_ko.png)
 
 * ❶ 버튼을 클릭하면 추가된 감시 설정을 변경할 수 있습니다.
 * ❷ 버튼을 클릭하면 추가된 감시 설정을 삭제할 수 있습니다.

@@ -426,7 +426,7 @@ You can scale up the data storage size of a DB instance. The expansion takes eff
 
 You can automatically scale the data storage size of a DB instance. With auto storage expansion, you can maintain the availability of your database by automatically scaling up when data storage runs out of capacity.
 
-To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances.
+To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances. 
 
 When you enable auto scale storage, you can set three options
 * Storage Auto Scale Conditions: Automatically expand storage when storage utilization is above a set value for more than 5 minutes.
