@@ -117,7 +117,7 @@ The following topics are common to both auto and manual backups.
 * When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
 
-### et Auto BackupS
+### Set Auto Backup
 
 The following items apply only to auto backups.
 

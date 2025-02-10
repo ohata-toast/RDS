@@ -7,6 +7,7 @@
 
 #### Bug Fixes
 * Fixed an issue where deleted notification group information appears on the view DB instance details screen
+
 ### November 12, 2024
 
 #### Added Features and Updates

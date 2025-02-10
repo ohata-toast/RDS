@@ -1845,7 +1845,7 @@ This API does not require a request body.
 | backupRetryCount                      | Body | Number  | Number of backup retries      |
 | replicationRegion                     | Body | Enum    | Backup replication region       |
 | useBackupLock                         | Body | Boolean | Whether to use table lock   |
-| backupSchedules                       | Body | Array   | 예정된 자동 백업 목록      |
+| backupSchedules                       | Body | Array   | Scheduled auto backup list      |
 | backupSchedules.backupWndBgnTime      | Body | String  | Backup started time       |
 | backupSchedules.backupWndDuration     | Body | Enum    | Backup duration    |
 
