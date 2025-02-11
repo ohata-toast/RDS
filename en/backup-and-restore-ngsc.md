@@ -27,6 +27,7 @@ high-availability configuration or back up only increments of data since the pre
 | 8.0.34   | 8.0.34        |
 | 8.0.35   | 8.0.35        |
 | 8.0.36   | 8.0.35        |
+| 8.0.40   | 8.0.35        |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -60,7 +61,7 @@ When creating a manual backup, you must specify a name for the backup, with the 
 
 ### Auto Backup
 
-In addition to performing backups manually, auto backups can occur when required for restore operations or based on auto backup schedule settings.
+In addition to performing backups manually, auto backups can occur when required for restore operations or based on scheduled auto backup settings.
 For settings that apply during auto backups, see [Auto Backup Settings](#자동-백업-설정).
 
 ## Backup Method
@@ -91,7 +92,7 @@ The following limitations exist for backups that are the basis for incremental b
 * If the DB instance that took that backup has been deleted or is unable to take a backup due to failure, it cannot be the baseline backup.
 * Backups created before the September 2024 scheduled release cannot be baseline backups.
 
-When incremental backups are scheduled according to [Auto Backup Schedule Strategy](#자동-백업-설정), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup schedule strategy.
+When incremental backups are scheduled according to [Auto Backup Strategy](#Set-Auto-Backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
 * A backup performed on a candidate master, read replica that is in a replication down state cannot be a baseline backup.
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
@@ -139,11 +140,11 @@ The following items apply only to auto backups.
 
 * You can set the auto backup to retry if it fails due to DML query load or for other various reasons. You can retry maximum 10 times. Depending on the auto backup run time setting, you might not try again even if there are still more retries.
 
-**Use Auto Backup Schedule**
+**Use Scheduled Auto Backup**
 
-* When using an auto backup schedule, backups are performed automatically at the auto backup performance time you set.
+* When using scheduled auto backups, backups are performed automatically at the auto backup performance time you set.
 
-**Auto Backup Schedule Strategy**
+**Auto Backup Strategy**
 
 * You can specify a strategy for performing auto backups.
   * Daily full backup: Back up your entire data every day.
