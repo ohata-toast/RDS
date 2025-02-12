@@ -90,7 +90,7 @@ Because the following tasks increase the I/O usage of data storage, the performa
 
 ### High Availability
 
-High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#_1).
+High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#ha-db-instance).
 
 ### Network
 
@@ -613,7 +613,7 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
-## High Availability DB Instances
+## High Availability DB Instances {#ha-db-instance}
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
 
