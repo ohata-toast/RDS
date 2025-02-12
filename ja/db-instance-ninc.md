@@ -361,7 +361,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 ![modify-ha-popup-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.11.12/modify-ha-popup-ja.png)
 
-フェイルオーバーを利用した再起動を使用しない場合は、マスターと予備マスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
+フェイルオーバーを利用した再起動を使用しない場合は、マスターと予備マスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#restore-from-external)を参照してください。
 
 ### DBスキーマ&ユーザー直接制御
 
@@ -391,7 +391,7 @@ OSバージョンアップグレードは、高可用性構成であるかどう
 単一DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。
 ![db-instance-os-upgrade-single-popup-ja.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-ja.png)→
 
-高可用性DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。詳細については、高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
+高可用性DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。詳細については、高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#restore-from-external)を参照してください。
 ![os-upgrade-ha-popup-ja.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.11.12/os-upgrade-ha-popup-ja.png)→
 
 
@@ -401,11 +401,11 @@ OSバージョンアップグレードは、高可用性構成であるかどう
 
 ## バックアップ
 
-障害状況に備えて、DBインスタンスのデータベースを復旧できるように事前に準備できます。必要な時にコンソールでバックアップを実行したり、定期的にバックアップが実行されるように設定できます。詳細は[バックアップ](backup-and-restore/#_1)の項目を参照してください。
+障害状況に備えて、DBインスタンスのデータベースを復旧できるように事前に準備できます。必要な時にコンソールでバックアップを実行したり、定期的にバックアップが実行されるように設定できます。詳細は[バックアップ](backup-and-restore/#overview)の項目を参照してください。
 
 ## 復元
 
-バックアップを利用して希望の時点にデータを復元できます。復元時には常に新しいDBインスタンスが作成され、既存のDBインスタンスに復元することはできません。詳細は[復元](backup-and-restore/#_6)の項目を参照してください。
+バックアップを利用して希望の時点にデータを復元できます。復元時には常に新しいDBインスタンスが作成され、既存のDBインスタンスに復元することはできません。詳細は[復元](backup-and-restore/#restore)の項目を参照してください。
 
 ### 容量確保
 
@@ -455,15 +455,15 @@ DBインスタンスに接続されたパラメータグループの設定が変
 
 ![db-instance-parameter-ha-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/24.03.12/db-instance-parameter-ha-ja.png)
 
-フェイルオーバーを利用した再起動を使用しない場合は、マスターと予備マスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#mysql)を参照してください。
+フェイルオーバーを利用した再起動を使用しない場合は、マスターと予備マスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](backup-and-restore/#restore-from-external)を参照してください。
 
 ## オブジェクトストレージにあるバックアップで復元
 
-外部MySQLのバックアップファイルをNHN Cloudのユーザーオブジェクトストレージにアップロードして、RDS for MySQLのDBインスタンスに復元することができます。詳細は、[外部MySQLバックアップを利用した復元](backup-and-restore/#mysql)を参照してください。
+外部MySQLのバックアップファイルをNHN Cloudのユーザーオブジェクトストレージにアップロードして、RDS for MySQLのDBインスタンスに復元することができます。詳細は、[外部MySQLバックアップを利用した復元](backup-and-restore/#restore-from-external)を参照してください。
 
 ## バックアップ後、オブジェクトストレージにバックアップファイルをエクスポート
 
-バックアップ後、バックアップファイルをユーザーオブジェクトストレージにエクスポートできます。詳細については、[バックアップエクスポート](backup-and-restore/#_5)項目を参照してください。
+バックアップ後、バックアップファイルをユーザーオブジェクトストレージにエクスポートできます。詳細については、[バックアップエクスポート](backup-and-restore/#export)項目を参照してください。
 
 ## リードレプリカ
 

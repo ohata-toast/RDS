@@ -1,5 +1,6 @@
 ## Database > RDS for MySQL > Backup and Restoration
 
+<a id="overview"></a>
 ## Backup Overview
 
 You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
@@ -29,8 +30,8 @@ high-availability configuration or back up only increments of data since the pre
 | 8.0.36   | 8.0.35        |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.
@@ -146,9 +147,9 @@ The following items apply only to auto backups.
 **Auto Backup Schedule Strategy**
 
 * You can specify a strategy for performing auto backups.
-  * Daily full backup: Back up your entire data every day.
-  * Daily full and incremental backups: One full backup of your data each day, and multiple incremental backups.
-  * Weekly full backups and daily incremental backups: One full backup of your data on certain days of the week, and one incremental backup on the remaining days of the week.
+    * Daily full backup: Back up your entire data every day.
+    * Daily full and incremental backups: One full backup of your data each day, and multiple incremental backups.
+    * Weekly full backups and daily incremental backups: One full backup of your data on certain days of the week, and one incremental backup on the remaining days of the week.
 
 **All Data Backup Days**
 
@@ -167,6 +168,7 @@ The following items apply only to auto backups.
 
 All backup files are uploaded to the internal backup storage and stored. For manual backups, they are stored permanently until you delete them separately, and backup storage charges are incurred depending on the backup capacity. For auto backups, it is stored for the set retention period and charges for the full size of the auto backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal backup storage where the backup file is stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
 
+<a id="export"></a>
 ### Export Backup
 
 #### Export Files While Performing Backup
@@ -199,6 +201,7 @@ Select the backup file to export from the **Backup** tab and click **Export to O
 > [Note]
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
 
+<a id="restore"></a>
 ## Restoration
 
 Backups allow you to restore data to any point in time. Restoration always creates new DB instance and cannot be restored to the existing DB instance. You can restore only to the same DB engine version as the source DB instance from which you performed the backup. Supports restoring snapshots to the point in time when the backup was created, and restoring point in time to a specific point in time. You can restore it as backup of external MySQL as well as backup that you created in RDS for MySQL.
@@ -263,9 +266,10 @@ The restore with binary log process first restores to the selected backup file a
 ❺ Select a binary log file.
 ❻ Enter a specific location for the binary log.
 
+<a id="restore-from-external"></a>
 ### Restoration with External MySQL Backup
 
-You can use an external MySQL backup file to create a DB instance. When creating an external MySQL backup file, refer to [Backup](backup-and-restore/#_1) and use the same version as the Percona XtraBackup used by RDS for MySQL.
+You can use an external MySQL backup file to create a DB instance. When creating an external MySQL backup file, refer to [Backup](backup-and-restore/#overview) and use the same version as the Percona XtraBackup used by RDS for MySQL.
 
 > [Caution]
 > If the setting value of innodb\_data\_file\_path is not ibdata1:12M:autoextend, it is unable to restore to DB instance of RDS for MySQL.
@@ -301,9 +305,9 @@ xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password 
 
 ### Restoration by Using RDS for MySQL Backup
 
-You can use the backup file in RDS for MySQL to restore the database in MySQL directly. Only full backups can be restored; incremental backup reflection is not supported. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#_1) and use the same version as Percona XtraBackup used by RDS for MySQL.
+You can use the backup file in RDS for MySQL to restore the database in MySQL directly. Only full backups can be restored; incremental backup reflection is not supported. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#overview) and use the same version as Percona XtraBackup used by RDS for MySQL.
 
-(1) Export backup of RDS for MySQL to object storage with reference to the [Export Backup](backup-and-restore/#_5).
+(1) Export backup of RDS for MySQL to object storage with reference to the [Export Backup](backup-and-restore/#export).
 
 (2) Download the backup of the object storage to the server on which you want to restore it.
 
