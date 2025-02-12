@@ -90,7 +90,7 @@ Because the following tasks increase the I/O usage of data storage, the performa
 
 ### High Availability
 
-High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#_1).
+High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#ha-db-instance).
 
 ### Network
 
@@ -426,7 +426,7 @@ You can scale up the data storage size of a DB instance. The expansion takes eff
 
 You can automatically scale the data storage size of a DB instance. With auto storage expansion, you can maintain the availability of your database by automatically scaling up when data storage runs out of capacity.
 
-To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances. 
+To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances.
 
 When you enable auto scale storage, you can set three options
 * Storage Auto Scale Conditions: Automatically expand storage when storage utilization is above a set value for more than 5 minutes.
@@ -613,7 +613,7 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
-## High Availability DB Instances
+## High Availability DB Instances {#ha-db-instance}
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
 
@@ -783,12 +783,12 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * Explaining parameter
-  * master_instance_ip : IP of replication target (Master) server
-  * master_instance_port: MySQL port on the replication target (Master) server
-  * user_id_for_replication: an account for replication to access MySQL on the replication target (Master) server
-  * password_for_replication_user : Password of account for replication
-  * MASTER_LOG_FILE : Binary log file name of replication target (Master)
-  * MASTER_LOG_POS : Binary log file position of replication target (Master)
+    * master_instance_ip : IP of replication target (Master) server
+    * master_instance_port: MySQL port on the replication target (Master) server
+    * user_id_for_replication: an account for replication to access MySQL on the replication target (Master) server
+    * password_for_replication_user : Password of account for replication
+    * MASTER_LOG_FILE : Binary log file name of replication target (Master)
+    * MASTER_LOG_POS : Binary log file position of replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -918,7 +918,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### When `ERROR 1418` occurs during data importing
 
 * `ERROR 1418` occurs when the function declaration in the mysqldump file does not contain NO SQL, READS SQL DATA, or DETERMINISTIC and binary logging is enabled.
-  * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
+    * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
 * To resolve this, Parameter value of `log_bin_trust_function_creators` of DB instance to which you want to apply mysqldump file should be changed to `1`.
 
 ### Export by using replication
@@ -1095,15 +1095,15 @@ When using Federated Storage Engine, make sure you consider the following.
 #### For configuration using RDS as a local node
 
 * Make sure you need to allow the outbound direction to remote nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
 * When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
-  * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
-  * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
-  * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
+    * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
+    * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
+    * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
 
 #### For configuration using RDS as a remote node
 
 * Make sure you need to allow the inbound direction to local nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
