@@ -264,7 +264,7 @@ Timestampを使用した復元の場合は、選択した時点と最も近い�
 
 ### 外部MySQLバックアップを利用した復元
 
-外部MySQLバックアップファイルを利用してDBインスタンスを作成できます。外部MySQLバックアップファイルを作成する時、[バックアップ](backup-and-restore/#_1)項目を参照してRDS for MySQLで使用するPercona XtraBackupと同じバージョンを使用する必要があります。
+外部MySQLバックアップファイルを利用してDBインスタンスを作成できます。外部MySQLバックアップファイルを作成する時、[バックアップ](backup-and-restore/#overview)項目を参照してRDS for MySQLで使用するPercona XtraBackupと同じバージョンを使用する必要があります。
 
 > [注意]
 > innodb_data_file_pathの設定値がibdata1:12M:autoextendでない場合、RDS for MySQLのDBインスタンスに復元できません。
@@ -300,9 +300,9 @@ xtrabackup --defaults-file={my.cnfパス} --user={ユーザー} --password='{パ
 
 ### RDS for MySQLのバックアップを利用した復元
 
-RDS for MySQLのバックアップファイルを利用して直接MySQLのデータベースを復元することができますが、全体バックアップに対してのみ復元が可能で、増分バックアップの反映はサポートされません。RDS for MySQLのバックアップファイルを復元する時、[バックアップ](backup-and-restore/#_1)項目を参照してRDS for MySQLで使用するPercona XtraBackupと同じバージョンを使用する必要があります。
+RDS for MySQLのバックアップファイルを利用して直接MySQLのデータベースを復元することができますが、全体バックアップに対してのみ復元が可能で、増分バックアップの反映はサポートされません。RDS for MySQLのバックアップファイルを復元する時、[バックアップ](backup-and-restore/#overview)項目を参照してRDS for MySQLで使用するPercona XtraBackupと同じバージョンを使用する必要があります。
 
-(1) [バックアップのエクスポート](backup-and-restore/#_5)の項目を参照して、RDS for MySQLのバックアップをオブジェクトストレージにエクスポートします。
+(1) [バックアップのエクスポート](backup-and-restore/#export)の項目を参照して、RDS for MySQLのバックアップをオブジェクトストレージにエクスポートします。
 
 (2)オブジェクトストレージのバックアップを復元したいサーバーにダウンロードします。
 

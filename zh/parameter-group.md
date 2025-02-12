@@ -22,6 +22,7 @@ You can create a new parameter group based on an existing parameter group. The c
 
 When you group parameters, you change the values of all parameters to the default values for the DB engine version.
 
+<a id="apply"></a>
 ### Apply Parameter Group
 
 When creating or modifying a DB instance, you can select the parameter groups to apply to the DB instance. One parameter group is applied to one DB instance, and one parameter group can be applied to multiple DB instances. If a parameter in a parameter group is changed, the change does not immediately apply to the DB instance. If an associated DB instance exists, the parameter group changes to `Need to Apply`. On the DB Instances list screen, select the DB instance associated with the parameter
@@ -80,4 +81,4 @@ ramSizeByte * 6 / 10
 ### Change Parameter
 
 You can change the parameters by selecting a parameter group from the console and pressing the **Edit Parameters** button. For parameters that cannot be changed, the value appears in plain text, and for parameters that can be changed, the INPUT that can be changed appears. When you press the `Preview Changes` button on the edit screen, a separate pop-up screen will be displayed to view the changed parameters, press the `Reset` button to return to the time before the change. All changes made
-in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#_5).
+in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#apply).
