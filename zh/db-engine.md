@@ -11,6 +11,7 @@ The versions specified below are available.
 | Version              | Note                                                                                                              |
 |----------------------|-------------------------------------------------------------------------------------------------------------------|
 | <strong>8.0</strong> |                                                                                                                   |
+| MySQL 8.0.40         |                                                                                                                   |
 | MySQL 8.0.36         |                                                                                                                   |
 | MySQL 8.0.35         |                                                                                                                   |
 | MySQL 8.0.34         |                                                                                                                   | 
@@ -107,6 +108,7 @@ This plugin may not be supported by all versions of MySQL and will be unavailabl
 | MySQL version        | Whether to support server audit plugins |
 |----------------------|-----------------------------------------|
 | <strong>8.0</strong> |                                         |
+| MySQL 8.0.40         | O                                       |
 | MySQL 8.0.36         | O                                       |
 | MySQL 8.0.35         | O                                       |
 | MySQL 8.0.34         | O                                       | 

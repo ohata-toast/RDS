@@ -61,7 +61,7 @@ When creating a manual backup, you must specify a name for the backup, with the 
 
 ### Auto Backup
 
-In addition to performing backups manually, auto backups can occur when required for restore operations or based on 예정된 자동 백업 설정.
+In addition to performing backups manually, auto backups can occur when required for restore operations or based on scheduled auto backup settings.
 For settings that apply during auto backups, see [Auto Backup Settings](#자동-백업-설정).
 
 ## Backup Method
@@ -92,7 +92,7 @@ The following limitations exist for backups that are the basis for incremental b
 * If the DB instance that took that backup has been deleted or is unable to take a backup due to failure, it cannot be the baseline backup.
 * Backups created before the September 2024 scheduled release cannot be baseline backups.
 
-When incremental backups are scheduled according to [자동 백업 전략](#자동-백업-설정), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the 자동 백업 전략.
+When incremental backups are scheduled according to [Auto Backup Strategy](#Set-Auto-Backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
 * A backup performed on a candidate master, read replica that is in a replication down state cannot be a baseline backup.
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
@@ -140,11 +140,11 @@ The following items apply only to auto backups.
 
 * You can set the auto backup to retry if it fails due to DML query load or for other various reasons. You can retry maximum 10 times. Depending on the auto backup run time setting, you might not try again even if there are still more retries.
 
-**예정된 자동 백업 사용**
+**Use Scheduled Auto Backup**
 
-* 예정된 자동 백업 사용 시, backups are performed automatically at the auto backup performance time you set.
+* When using scheduled auto backups, backups are performed automatically at the auto backup performance time you set.
 
-**자동 백업 전략**
+**Auto Backup Strategy**
 
 * You can specify a strategy for performing auto backups.
   * Daily full backup: Back up your entire data every day.

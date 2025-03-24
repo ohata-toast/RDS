@@ -1,21 +1,30 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2024. 11. 14.
+### February 13, 2025
 
-#### 기능 추가 및 개선
+#### Added Features and Updates
+* Added the MySQL 8.0.40 version
 
-* 스토리지 자동 확장 기능 추가
-* 스토리지 크기 확장 시 DB 인스턴스를 재시작하지 않도록 개선
-* DB 인스턴스 수정 기능에 포함되어 있던 스토리지 크기 확장 기능을 드롭다운 메뉴로 분리
-* 고가용성 일시 중지 상태에서 예비 마스터를 재구축 시 일시 중지 상태가 유지되도록 변경
-* 자동 백업 설정 중 백업 재시도 만료 시각 설정 항목을 제거하고 백업 윈도우 시간 범위 내에서 백업을 재시도하도록 개선
+#### Bug Fixes
+* Fixed an issue where deleted notification group information appears on the view DB instance details screen
 
-### 2024. 09. 12.
+### November 14, 2024
 
-#### 기능 추가 및 개선
+#### Added Features and Updates
 
-* 증분 백업 기능 추가
-* DB 인스턴스 삭제 시 자동 백업 삭제 여부를 선택할 수 있도록 개선
+* Added the feature to auto-scale storage
+* Improved to avoid restarting DB instances when scaling storage size
+* Separated the scale storage size feature from the modify DB instance feature into a drop-down menu
+* Changed the high availability pause status to stay when rebuilding a candidate master
+* Removed the backup retry expiration time setting during auto backup setup and improved to allow users to retry backups within the backup window time range.
+
+### September 12, 2024
+
+#### Added Features and Updates
+
+* Added the incremental backup feature
+* Improved to allow users to choose whether to delete automatic backups when deleting a DB instance
+
 
 ### July 11, 2024
 

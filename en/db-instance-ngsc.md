@@ -31,6 +31,7 @@ The versions specified below are available.
 | Version              | Note                                                        |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.0</strong> |                                                           |
+| MySQL 8.0.40         |                                                           |
 | MySQL 8.0.36         |                                                           |
 | MySQL 8.0.35         |                                                           |
 | MySQL 8.0.34         |                                                           | 
