@@ -91,7 +91,7 @@ Because the following tasks increase the I/O usage of data storage, the performa
 
 ### High Availability
 
-High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#_1).
+High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#ha-db-instance).
 
 ### Network
 
@@ -364,7 +364,7 @@ For high availability DB instances, if there are any changes to items that need 
 
 ![modify-ha-popup-en](https://static.toastoven.net/prod_rds/24.11.12/modify-ha-popup-en.png)
 
-If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](backup-and-restore/#mysql) in a high availability DB instance.
+If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
 
 ### DB Schema & Direct User Control
 
@@ -394,7 +394,7 @@ Operating system version upgrades behave differently depending on whether you ar
 When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
 ![db-instance-os-upgrade-single-popup-en.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
 
-When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual Failover](backup-and-restore/#mysql) of High Availability DB Instances.
+When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual failover item](db-instance/#manual-failover) of High Availability DB Instances.
 ![os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/24.11.12/os-upgrade-ha-popup-en.png)
 
 ## Delete DB Instance
@@ -403,11 +403,11 @@ You can delete DB instances that are no longer in use. If you delete a master, y
 
 ## Backup
 
-You can prepare in advance to recover the database of your DB instance in case of failure. You can perform backups from the console whenever necessary or you can set up periodic backups. Refer to [Backup](backup-and-restore/#_1) for more information.
+You can prepare in advance to recover the database of your DB instance in case of failure. You can perform backups from the console whenever necessary or you can set up periodic backups. Refer to [Backup](backup-and-restore/#overview) for more information.
 
 ## Restoration
 
-You can use backups to restore data to any point in time. Restore always creates a new DB instance and cannot be restored to existing DB instance. Refer to [Restore](backup-and-restore/#_6) for more information.
+You can use backups to restore data to any point in time. Restore always creates a new DB instance and cannot be restored to existing DB instance. Refer to [Restore](backup-and-restore/#restore) for more information.
 
 ## Secure Capacity
 
@@ -427,7 +427,7 @@ You can scale up the data storage size of a DB instance. The expansion takes eff
 
 You can automatically scale the data storage size of a DB instance. With auto storage expansion, you can maintain the availability of your database by automatically scaling up when data storage runs out of capacity.
 
-To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances. 
+To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances.
 
 When you enable auto scale storage, you can set three options
 * Storage Auto Scale Conditions: Automatically expand storage when storage utilization is above a set value for more than 5 minutes.
@@ -457,15 +457,15 @@ High availability DB instances provide restart feature using failover to increas
 
 ![db-instance-parameter-ha-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-parameter-ha-en.png)
 
-If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](backup-and-restore/#mysql) in a high availability DB instance.
+If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
 
 ## Recover from backup in object storage
 
-You can upload an external MySQL backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for MySQL. For more information, refer to [Restore with External MySQL Backup](backup-and-restore/#mysql).
+You can upload an external MySQL backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for MySQL. For more information, refer to [Restore with External MySQL Backup](backup-and-restore/#restore-from-external).
 
 ## Export backup files to the object storage after backup
 
-You can export backup files to user object storage in NHN Cloud at the same time as you perform a backup. Refer to [Export Backup](backup-and-restore/#_5) for more information.
+You can export backup files to user object storage in NHN Cloud at the same time as you perform a backup. Refer to [Export Backup](backup-and-restore/#export) for more information.
 
 ## Read Replica
 
@@ -614,6 +614,7 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
+<a id="ha-db-instance"></a>
 ## High Availability DB Instances
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
@@ -639,6 +640,9 @@ from the time the new backup was performed on the promoted master.
 
 > [Caution]
 > If the position number value of the binary log between master and candidate master differs by more than 100,000,000, there is no failover.
+
+> [주의]
+> 마스터와 예비 마스터 간의 바이너리 로그(binary log)의 position number 값이 100,000,000 이상 차이가 날 경우 장애 조치가 되지 않습니다.
 
 ### Failed over Master
 
@@ -692,6 +696,7 @@ To separate failover master, from the console
 
 ❶ Select the failed master you want to isolate and click on **Separate failed over master** menu from the drop-down menu.
 
+<a id="manual-failover"></a>
 ### Manual Failover
 
 For a high availability DB instance, you can select whether or not to restart with a failover when you perform an operation that accompanies a restart, which is as follows.
@@ -784,12 +789,12 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 ```
 
 * Explaining parameter
-  * master_instance_ip : IP of replication target (Master) server
-  * master_instance_port: MySQL port on the replication target (Master) server
-  * user_id_for_replication: an account for replication to access MySQL on the replication target (Master) server
-  * password_for_replication_user : Password of account for replication
-  * MASTER_LOG_FILE : Binary log file name of replication target (Master)
-  * MASTER_LOG_POS : Binary log file position of replication target (Master)
+    * master_instance_ip : IP of replication target (Master) server
+    * master_instance_port: MySQL port on the replication target (Master) server
+    * user_id_for_replication: an account for replication to access MySQL on the replication target (Master) server
+    * password_for_replication_user : Password of account for replication
+    * MASTER_LOG_FILE : Binary log file name of replication target (Master)
+    * MASTER_LOG_POS : Binary log file position of replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -919,7 +924,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### When `ERROR 1418` occurs during data importing
 
 * `ERROR 1418` occurs when the function declaration in the mysqldump file does not contain NO SQL, READS SQL DATA, or DETERMINISTIC and binary logging is enabled.
-  * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
+    * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
 * To resolve this, Parameter value of `log_bin_trust_function_creators` of DB instance to which you want to apply mysqldump file should be changed to `1`.
 
 ### Export by using replication
@@ -1096,15 +1101,15 @@ When using Federated Storage Engine, make sure you consider the following.
 #### For configuration using RDS as a local node
 
 * Make sure you need to allow the outbound direction to remote nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
 * When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
-  * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
-  * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
-  * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
+    * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
+    * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
+    * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
 
 #### For configuration using RDS as a remote node
 
 * Make sure you need to allow the inbound direction to local nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
