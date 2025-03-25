@@ -80,4 +80,4 @@ ramSizeByte * 6 / 10
 ### Change Parameter
 
 You can change the parameters by selecting a parameter group from the console and pressing the **Edit Parameters** button. For parameters that cannot be changed, the value appears in plain text, and for parameters that can be changed, the INPUT that can be changed appears. When you press the `Preview Changes` button on the edit screen, a separate pop-up screen will be displayed to view the changed parameters, press the `Reset` button to return to the time before the change. All changes made
-in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#_5).
+in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#apply).
