@@ -2270,6 +2270,101 @@ This API does not require a request body.
 
 ---
 
+### 로그 파일 목록 보기
+
+```
+GET /v3.0/db-instances/{dbInstanceId}/log-files
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+| logFileTypes | Query | Array  | X  | 로그 파일 타입 종류 목록<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log  |
+
+#### 응답
+
+| 이름                     | 종류   | 형식     | 설명                                                                                                                                      |
+|------------------------|------|--------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| logFiles       | Body | Array   | 로그 파일 목록 |
+| logFiles.logFileName       | Body | String   | 로그 파일 이름 |
+| logFiles.logFileType | Body | Enum | 로그 파일 타입 종류<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
+| logFiles.logFileSize| Body | Number   | 로그 파일 크기(Byte) |
+| logFiles.createdYmdt| Body | DateTime   | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "logFiles": [
+        {
+            "logFileName": "xtra_full.log-20230317",
+            "logFileType": "BACKUP",
+            "logFileSize": 4096,
+            "createdYmdt": "2023-03-17T14:02:29+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### 로그 파일 내보내기
+
+```
+POST /v3.0/db-instances/{dbInstanceId}/log-files/export
+```
+
+#### 요청
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+| logFileNames | Body | Array | O | 로그 파일 이름 목록<br/>- 최소 크기: `1` |
+| tenantId        | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 테넌트 ID   |
+| username        | Body | String | O  | NHN Cloud 계정 또는 IAM 계정 ID   |
+| password        | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 API 비밀번호 |
+| targetContainer | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 컨테이너     |
+| objectPath      | Body | String | O  | 컨테이너에 저장될 로그 파일의 경로            |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "logFileNames": ["xtra_full.log-20230317"],
+    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
+    "targetContainer": "/container",
+    "objectPath": "logs/backup"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
 ## Backups
 
 ### Backup Status
