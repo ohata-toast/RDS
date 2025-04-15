@@ -1,5 +1,13 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2025. 04. 16.
+
+#### 기능 추가 및 개선
+
+* API v3.0 추가 및 변경
+  * 로그 파일 목록 보기 API 추가
+  * 로그 파일 내보내기 API 추가
+
 ### February 13, 2025
 
 #### Added Features and Updates
@@ -102,7 +110,7 @@
 * Added forced promotion of DB instances
 * Improved to allow you to select notification type when subscribing to events
 * API v3.0 additions and changes
-    * Added the Export after backing up DB instance API
+  * Added the Export after backing up DB instance API
 
 ### August 29, 2023
 
