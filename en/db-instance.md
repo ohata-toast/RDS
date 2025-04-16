@@ -641,9 +641,6 @@ from the time the new backup was performed on the promoted master.
 > [Caution]
 > If the position number value of the binary log between master and candidate master differs by more than 100,000,000, there is no failover.
 
-> [주의]
-> 마스터와 예비 마스터 간의 바이너리 로그(binary log)의 position number 값이 100,000,000 이상 차이가 날 경우 장애 조치가 되지 않습니다.
-
 ### Failed over Master
 
 A master that fails and conducts failover is called failover master. Backups of failed over master are not automatically performed, and all other features other than failed over master recovery, rebuild, separate, and delete are not performed.
