@@ -8,14 +8,13 @@
 
 ## Authentication and Authorization
 
-`User Access Key ID` and `Secret Access Key` are required for authentication to use APIs. To create them, select <b>API Security Setting</b> from the drop-down menu that appears when you hover over your account in the top right on the console.
-The created Key must be included in the request Header.
+API를 사용하려면 [Public API > API 호출 및 인증](/nhncloud/ko/public-api/api-authentication/)을 통해 발급 받은 Bearer 유형의 토큰이 필요합니다.
+발급 받은 토큰은 Appkey와 함께 요청 Header에 포함해야 합니다.
 
-| Name                       | Type   | Format | Required | Description                                                              |
-|----------------------------|--------|--------|----------|--------------------------------------------------------------------------|
-| X-TC-APP-KEY               | Header | String | O        | Appkey of RDS for {{engine.pascalCase}} or integrated Appkey for project |
-| X-TC-AUTHENTICATION-ID     | Header | String | O        | User Access Key ID in API Security Settings menu                         |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O        | Secret Access Key in API Security Settings menu                          |
+| 이름                  | 종류     | 형식     | 필수 | 설명                                                          |
+|---------------------|--------|--------|----|-------------------------------------------------------------|
+| X-TC-APP-KEY        | Header | String | O  | RDS for {{engine.pascalCase}} 서비스의 Appkey 또는 프로젝트 통합 Appkey |
+| X-NHN-AUTHORIZATION | Header | String | O  | Public API로 발급 받은 Bearer 유형 토큰   1                          |
 
 In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for {{engine.pascalCase}} ADMIN` and `RDS for {{engine.pascalCase}} VIEWER`.
 
@@ -98,6 +97,12 @@ The API responds with "200 OK" to all API requests. For more information on the 
 GET /v4.0/project/regions
 ```
 
+#### 필요 권한
+
+| 권한명                                     | 설명         |
+|-----------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:Project.Get | 프로젝트 정보 조회 |
+
 #### Request
 
 This API does not require a request body.
@@ -160,6 +165,12 @@ This API does not require a request body.
 GET /v4.0/project/members
 ```
 
+#### 필요 권한
+
+| 권한명                                     | 설명         |
+|-----------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:Project.Get | 프로젝트 정보 조회 |
+
 #### Request
 
 This API does not require a request body.
@@ -208,6 +219,12 @@ This API does not require a request body.
 GET /v4.0/db-flavors
 ```
 
+#### 필요 권한
+
+| 권한명                                       | 설명               |
+|-------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
+
 #### Request
 
 This API does not require a request body.
@@ -255,6 +272,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/network/subnets
 ```
+
+#### 필요 권한
+
+| 권한명                                      | 설명        |
+|------------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:Network.List | 서브넷 목록 보기 |
 
 #### Request
 
@@ -306,6 +329,12 @@ This API does not require a request body.
 GET /v4.0/db-versions
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명          |
+|--------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:DbVersion.List | DB 엔진 목록 보기 |
+
 #### Request
 
 This API does not require a request body.
@@ -347,9 +376,16 @@ This API does not require a request body.
 ## Storage
 
 ### List Storage Type
+
 ```http
 GET /v4.0/storage-types
 ```
+
+#### 필요 권한
+
+| 권한명                                      | 설명                |
+|------------------------------------------|-------------------|
+| RDSfor{{engine.pascalCase}}:Storage.List | 데이터 스토리지 타입 목록 보기 |
 
 #### Request
 
@@ -372,44 +408,6 @@ This API does not require a request body.
         "isSuccessful": true
     },
     "storageTypes": [
-        "General SSD",
-        "General HDD"
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### List Storage
-
-```http
-GET /v4.0/storages
-```
-
-#### Request
-
-This API does not require a request body.
-
-#### Response
-
-| Name     | Type | Format | Description  |
-|----------|------|--------|--------------|
-| storages | Body | Array  | Storage list |
-
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storages": [
         "General SSD",
         "General HDD"
     ]
@@ -445,6 +443,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/jobs/{jobId}
 ```
+
+#### 필요 권한
+
+| 권한명                                 | 설명          |
+|-------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:Job.Get | 작업 정보 상세 보기 |
 
 #### Request
 
@@ -502,6 +506,12 @@ This API does not require a request body.
 GET /v4.0/db-instance-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                              | 설명               |
+|--------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
+
 #### Request
 
 This API does not require a request body.
@@ -547,6 +557,13 @@ This API does not require a request body.
 ```http
 GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                             | 설명               |
+|-------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
+
 
 #### Request
 
@@ -651,6 +668,12 @@ This API does not require a request body.
 GET /v4.0/db-instances
 ```
 
+#### 필요 권한
+
+| 권한명                                         | 설명            |
+|---------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.List | DB 인스턴스 목록 보기 |
+
 #### Request
 
 This API does not require a request body.
@@ -711,6 +734,12 @@ This API does not require a request body.
 GET /v4.0/db-instances/{dbInstanceId}
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
+
 #### Request
 
 This API does not require a request body.
@@ -737,6 +766,7 @@ This API does not require a request body.
 | dbSecurityGroupIds          | Body | Array    | DB security group identifiers applied to DB instance                                                                                                                    |
 | notificationGroupIds        | Body | Array    | Notification group identifiers applied to DB instance                                                                                                                   |
 | useDeletionProtection       | Body | Boolean  | Whether to protect DB instance against deletion                                                                                                                         |
+| useSlowQueryAnalysis        | Body | Boolean  | Slow query 분석 여부                                                                                                                                                        |
 | supportAuthenticationPlugin | Body | Boolean  | Whether to support authentication plugin                                                                                                                                |
 | needToApplyParameterGroup   | Body | Boolean  | Need to apply the latest parameter group                                                                                                                                |
 | needMigration               | Body | Boolean  | Need to migrate                                                                                                                                                         |
@@ -768,6 +798,7 @@ This API does not require a request body.
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
     "notificationGroupIds": ["83a62a33-ddbf-4a04-8653-e54463d5b1ac"],
     "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
     "supportAuthenticationPlugin": true,
     "needToApplyParameterGroup": false,
     "needMigration": false,
@@ -788,24 +819,31 @@ This API does not require a request body.
 POST /v4.0/db-instances
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Create | DB 인스턴스 생성하기 |
+
 #### Request
 
-| Name                                     | Type | Format  | Required | Description                                                                                                                                                                                                                                                               |
-|------------------------------------------|------|---------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceName                           | Body | String  | O        | Name to identify DB instances                                                                                                                                                                                                                                             |
-| description                              | Body | String  | X        | Additional information on DB instances                                                                                                                                                                                                                                    |
-| dbFlavorId                               | Body | UUID    | O        | Identifier of DB instance specifications                                                                                                                                                                                                                                  |
-| dbVersion                                | Body | Enum    | O        | DB engine type                                                                                                                                                                                                                                                            |
-| dbPort                                   | Body | Number  | O        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                                                                                                                                                                          |
-| dbUserName                               | Body | String  | O        | DB user account name                                                                                                                                                                                                                                                      |
-| dbPassword                               | Body | String  | O        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                                                                                                                                                                             |
-| parameterGroupId                         | Body | UUID    | O        | Parameter group identifier                                                                                                                                                                                                                                                |
-| dbSecurityGroupIds                       | Body | Array   | X        | DB security group identifiers                                                                                                                                                                                                                                             ||network|Body|Object|O|Network information objects|
-| userGroupIds                             | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                    |
-| useHighAvailability                      | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                                                                                                                                                                     |
-| pingInterval                             | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                                                                                                                                                     |
-| useDefaultNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                  |
-| useDeletionProtection                    | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                                                                                                                                                                                  |
+| Name                   | Type | Format  | Required | Description                                                                                                           |
+|------------------------|------|---------|----------|-----------------------------------------------------------------------------------------------------------------------|
+| dbInstanceName         | Body | String  | O        | Name to identify DB instances                                                                                         |
+| description            | Body | String  | X        | Additional information on DB instances                                                                                |
+| dbFlavorId             | Body | UUID    | O        | Identifier of DB instance specifications                                                                              |
+| dbVersion              | Body | Enum    | O        | DB engine type                                                                                                        |
+| dbPort                 | Body | Number  | O        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                      |
+| dbUserName             | Body | String  | O        | DB user account name                                                                                                  |
+| dbPassword             | Body | String  | O        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                         |
+| parameterGroupId       | Body | UUID    | O        | Parameter group identifier                                                                                            |
+| dbSecurityGroupIds     | Body | Array   | X        | DB security group identifiers                                                                                         ||network|Body|Object|O|Network information objects|
+| userGroupIds           | Body | Array   | X        | User group identifiers                                                                                                |
+| useHighAvailability    | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                 |
+| pingInterval           | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| useDefaultNotification | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                              |
+| useDeletionProtection  | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                              |
+| useSlowQueryAnalysis   | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                    |
 {{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
 | tlsOption                                | Body | Enum    | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                                              |
@@ -817,6 +855,11 @@ POST /v4.0/db-instances
 | storage                                  | Body | Object  | O        | Storage information objects                                                                                                                                                                                                                                               |    
 | storage.storageType                      | Body | Enum    | O        | Block Storage Type<br/>- Example: `General SSD`                                                                                                                                                                                                                           |
 | storage.storageSize                      | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                                                                                                                                                                             |
+| storage.storageAutoscale                     | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                   |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | 스토리지 자동 확장 여부                                                       |
+| storage.storageAutoscale.threshold           | Body | Number  | X  | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                         |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                   |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                   |
 | backup                                   | Body | Object  | O        | Backup information objects                                                                                                                                                                                                                                                |
 | backup.backupPeriod                      | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
@@ -883,6 +926,12 @@ POST /v4.0/db-instances
 PUT /v4.0/db-instances/{dbInstanceId}
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### Request
 
 | Name               | Type | Format  | Required | Description                                                                                                       |
@@ -895,6 +944,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbVersion          | Body | Enum    | X        | DB engine type                                                                                                    |
 | useDummy           | Body | Boolean | X        | Whether to use dummies when upgrading the DB version of a single DB instance<br/>Default: `false`                 |
 {{/if}}
+| useSlowQueryAnalysis | Body | Boolean  | X | Slow query 분석 여부 |
 | dbFlavorId         | Body | UUID    | X        | Identifier of DB instance specifications                                                                          |
 | parameterGroupId   | Body | UUID    | X        | Parameter group identifier                                                                                        |
 | dbSecurityGroupIds | Body | Array   | X        | DB security group identifiers                                                                                     |
@@ -931,6 +981,12 @@ PUT /v4.0/db-instances/{dbInstanceId}
 DELETE /v4.0/db-instances/{dbInstanceId}
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Delete | DB 인스턴스 삭제하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -953,6 +1009,12 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/restart
 ```
 
+#### 필요 권한
+
+| 권한명                                            | 설명            |
+|------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Restart | DB 인스턴스 재시작하기 |
+
 #### Request
 
 | Name              | Type | Format  | Required | Description                                                                                                       |
@@ -972,6 +1034,12 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/force-restart
 ```
+
+#### 필요 권한
+
+| 권한명                                                 | 설명               |
+|-----------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
 
 #### Request
 
@@ -1009,6 +1077,12 @@ This API does not return a response body.
 POST /v4.0/db-instances/{dbInstanceId}/start
 ```
 
+#### 필요 권한
+
+| 권한명                                          | 설명           |
+|----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Start | DB 인스턴스 시작하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -1030,6 +1104,12 @@ This API does not require a request body.
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/stop
 ```
+
+#### 필요 권한
+
+| 권한명                                         | 설명           |
+|---------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Stop | DB 인스턴스 정지하기 |
 
 #### Request
 
@@ -1053,6 +1133,12 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/backup
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Backup | DB 인스턴스 백업하기 |
+
 #### Request
 
 | Name         | Type | Format | Required | Description              |
@@ -1073,6 +1159,12 @@ POST /v4.0/db-instances/{dbInstanceId}/backup
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
+
+#### 필요 권한
+
+| 권한명                                                          | 설명                |
+|--------------------------------------------------------------|-------------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
 
 #### Request
 
@@ -1115,30 +1207,42 @@ POST /v4.0/db-instances/{dbInstanceId}/backup-to-object-storage
 POST /v4.0/db-instances/{dbInstanceId}/replicate
 ```
 
+#### 필요 권한
+
+| 권한명                                                          | 설명                |
+|--------------------------------------------------------------|-------------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
+
 #### Request
 
-| Name                                     | Type | Format  | Required | Description                                                                                                                                                                                                                                                                                                         |
-|------------------------------------------|------|---------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId                             | URL  | UUID    | O        | DB instance identifier                                                                                                                                                                                                                                                                                              |
-| dbInstanceName                           | Body | String  | O        | Name to identify DB instances                                                                                                                                                                                                                                                                                       |
-| description                              | Body | String  | X        | Additional information on DB instances                                                                                                                                                                                                                                                                              |
-| dbFlavorId                               | Body | UUID    | X        | Identifier of DB instance specifications<br/>- Default: Original DB instance value                                                                                                                                                                                                                                  |
-| dbPort                                   | Body | Number  | X        | DB port<br/>- Default: Original DB instance value<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                                                                                                                                                                          |
-| parameterGroupId                         | Body | UUID    | X        | Parameter group identifier<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                |
-| dbSecurityGroupIds                       | Body | Array   | X        | DB security group identifiers<br/>- Default: Original DB instance value                                                                                                                                                                                                                                             |
-| userGroupIds                             | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                                                              |
-| useDefaultNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                                                            |
-| useDeletionProtection                    | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                                                                                                                                                                                                                            |
-| network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                                                                         |
-| network.usePublicAccess                  | Body | Boolean | X        | External access is available or not<br/>- Default: Original DB instance value                                                                                                                                                                                                                                       |
-| network.availabilityZone                 | Body | Enum    | O        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                                                                                                                                                                                                                       |
-| storage                                  | Body | Object  | X        | Storage information objects                                                                                                                                                                                                                                                                                         |    
-| storage.storageType                      | Body | Enum    | X        | Block Storage Type<br/>- Example: `General SSD`                                                                                                                                                                                                                                                                     |
-| storage.storageSize                      | Body | Number  | X        | Block Storage Size (GB)<br/>- Default: Original DB instance value<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                                                                                                                                                                             |
-| backup                                   | Body | Object  | X        | Backup information objects                                                                                                                                                                                                                                                                                          |
-| backup.backupPeriod                      | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
-| backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
-| backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
+| Name                                         | Type | Format  | Required | Description                                                                                                             |
+|----------------------------------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                                 | URL  | UUID    | O        | DB instance identifier                                                                                                  |
+| dbInstanceName                               | Body | String  | O        | Name to identify DB instances                                                                                           |
+| description                                  | Body | String  | X        | Additional information on DB instances                                                                                  |
+| dbFlavorId                                   | Body | UUID    | X        | Identifier of DB instance specifications<br/>- Default: Original DB instance value                                      |
+| dbPort                                       | Body | Number  | X        | DB port<br/>- Default: Original DB instance value<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`              |
+| parameterGroupId                             | Body | UUID    | X        | Parameter group identifier<br/>- Default: Original DB instance value                                                    |
+| dbSecurityGroupIds                           | Body | Array   | X        | DB security group identifiers<br/>- Default: Original DB instance value                                                 |
+| userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                  |
+| useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                |
+| useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                                |
+| useSlowQueryAnalysis                         | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                      |
+| network                                      | Body | Object  | O        | Network information objects                                                                                             |
+| network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>- Default: Original DB instance value                                           |
+| network.availabilityZone                     | Body | Enum    | O        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                           |
+| storage                                      | Body | Object  | X        | Storage information objects                                                                                             |    
+| storage.storageType                          | Body | Enum    | X        | Block Storage Type<br/>- Example: `General SSD`                                                                         |
+| storage.storageSize                          | Body | Number  | X        | Block Storage Size (GB)<br/>- Default: Original DB instance value<br/>- Minimum value: `20`<br/>- Maximum value: `2048` |
+| storage.storageAutoscale                     | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                       |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                           |
+| storage.storageAutoscale.threshold           | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                             |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                       |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                       |
+| backup                                       | Body | Object  | X        | Backup information objects                                                                                              |
+| backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`   |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`     |
+| backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`   |
 {{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region<br/>- Default: Original DB instance value                                                                                                                                    |
 {{/if}}
@@ -1181,6 +1285,12 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 POST /v4.0/db-instances/{dbInstanceId}/promote
 ```
 
+#### 필요 권한
+
+| 권한명                                            | 설명           |
+|------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Promote | DB 인스턴스 승격하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -1197,11 +1307,45 @@ This API does not require a request body.
 
 ---
 
+### DB 인스턴스 재구축하기
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/rebuild
+```
+
+#### 필요 권한
+
+| 권한명                                            | 설명            |
+|------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+#### 응답
+
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
 ### View Restoration Information
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 ```
+
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### Request
 
@@ -1284,6 +1428,12 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
+
 #### Common Request
 
 | Name         | Type  | Format | Required | Description                                                                                                                                                                                                                        |
@@ -1338,6 +1488,12 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 POST /v4.0/db-instances/{dbInstanceId}/restore
 ```
 
+#### 필요 권한
+
+| 권한명                                            | 설명           |
+|------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Restore | DB 인스턴스 복원하기 |
+
 #### Common Request
 
 | Name                                                | Type | Format  | Required | Description                                                                                                                                                                                                                                                                                                      |
@@ -1355,6 +1511,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | useHighAvailability                                 | Body | Boolean | X        | Whether to use high availability<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                           |
 | pingInterval                                        | Body | Number  | X        | Ping interval (sec) when using high availability<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                   |
 | useDefaultNotification                              | Body | Boolean | X        | Whether to use default notification<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                        |
+| useDeletionProtection                               | Body | Boolean | X        | Whether to protect against deletion<br>Default: `false`                                                                                                                                                                                                                                                          |
+| useSlowQueryAnalysis                                | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                                                                                                                                                                                               |
 | network                                             | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                                                                      |
 | network.subnetId                                    | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                                                                |
 | network.usePublicAccess                             | Body | Boolean | X        | External access is available or not<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                        |
@@ -1362,6 +1520,11 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | storage                                             | Body | Object  | O        | Storage information objects                                                                                                                                                                                                                                                                                      |
 | storage.storageType                                 | Body | Enum    | O        | Block Storage Type<br><ul><li>- Example: `General SSD`</li></ul>                                                                                                                                                                                                                                                 |
 | storage.storageSize                                 | Body | Number  | O        | Block Storage Size (GB)<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
+| storage.storageAutoscale                            | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                                                                                                                                                                                                                |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                                                                                                                                                                                                                    |
+| storage.storageAutoscale.threshold                  | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                                                                                                                                                                                                                      |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                                                                                                                                                                                                                |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                                                                                                                                                                                                                |
 | backup                                              | Body | Object  | O        | Backup information objects                                                                                                                                                                                                                                                                                       |
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                |
@@ -1373,7 +1536,6 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.backupSchedules                              | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                                                       |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O        | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                    |
 | backup.backupSchedules.backupWndDuration            | Body | Enum    | O        | Backup duration<br>Auto backup proceeds within duration from backup start time.<br><ul><li>- `HALF_AN_HOUR`: 30 minutes</li><li>- `ONE_HOUR`: 1 hour</li><li>- `ONE_HOUR_AND_HALF`: 1.5 hour</li><li>- `TWO_HOURS`: 2 hour</li><li>- `TWO_HOURS_AND_HALF`: 2.5 hour</li><li>- `THREE_HOURS`: 3 hour</li></ul>    |
-| useDeletionProtection                               | Body | Boolean | X        | Whether to protect against deletion<br>Default: `false`                                                                                                                                                                                                                                                          |
 
 #### Request when restoring a point in time restoration using Timestamp (if restoreType is `TIMESTAMP`)
 
@@ -1548,38 +1710,51 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 POST /v4.0/db-instances/restore-from-obs
 ```
 
+#### 필요 권한
+
+| 권한명                                                   | 설명                      |
+|-------------------------------------------------------|-------------------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.RestoreFromObs | DB 인스턴스 오브젝트 스토리지로부터 복원 |
+
 #### Request
 
-| Name                                                | Type | Format  | Required | Description                                                                                                                                                                                                                                                                                                   |
-|-----------------------------------------------------|------|---------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| restore                                             | Body | Object  | O        | Restoration information object                                                                                                                                                                                                                                                                                |
-| restore.tenantId                                    | Body | String  | O        | Tenant ID of object storage where backups are stored                                                                                                                                                                                                                                                          |
-| restore.username                                    | Body | String  | O        | NHN Cloud account or IAM member ID                                                                                                                                                                                                                                                                            |
-| restore.password                                    | Body | String  | O        | API password for object storage where backups are stored                                                                                                                                                                                                                                                      |
-| restore.targetContainer                             | Body | String  | O        | Container for object storage where backups are stored                                                                                                                                                                                                                                                         |
-| restore.objectPath                                  | Body | String  | O        | Backup path stored in container                                                                                                                                                                                                                                                                               |
-| dbVersion                                           | Body | Enum    | O        | DB engine type                                                                                                                                                                                                                                                                                                |
-| dbInstanceName                                      | Body | String  | O        | Name to identify DB instances                                                                                                                                                                                                                                                                                 |
-| description                                         | Body | String  | X        | Additional information on DB instances                                                                                                                                                                                                                                                                        |
-| dbFlavorId                                          | Body | UUID    | O        | Identifier of DB instance specifications                                                                                                                                                                                                                                                                      |
-| dbPort                                              | Body | Number  | O        | DB port<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                              |
-| <span style="color:#313338">parameterGroupId</span> | Body | UUID    | O        | Parameter group identifier                                                                                                                                                                                                                                                                                    |
-| dbSecurityGroupIds                                  | Body | Array   | X        | DB security group identifiers                                                                                                                                                                                                                                                                                 |
-| userGroupIds                                        | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                                                        |
-| useHighAvailability                                 | Body | Boolean | X        | Whether to use high availability<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                        |
-| pingInterval                                        | Body | Number  | X        | Ping interval (sec) when using high availability<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                |
-| useDefaultNotification                              | Body | Boolean | X        | Whether to use default notification<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                     |
-| network                                             | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                                                                   |
-| network.subnetId                                    | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                                                             |
-| network.usePublicAccess                             | Body | Boolean | X        | External access is available or not<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                     |
-| network.availabilityZone                            | Body | Enum    | O        | Availability zone where DB instance will be created<br><ul><li>- Example: `kr-pub-a`</li></ul>                                                                                                                                                                                                                |
-| storage                                             | Body | Object  | O        | Storage information objects                                                                                                                                                                                                                                                                                   |
-| storage.storageType                                 | Body | Enum    | O        | Block Storage Type<br><ul><li>- Example: `General SSD`</li></ul>                                                                                                                                                                                                                                              |
-| storage.storageSize                                 | Body | Number  | O        | Block Storage Size (GB)<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                              |
-| backup                                              | Body | Object  | O        | Backup information objects                                                                                                                                                                                                                                                                                    |
-| backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                              |
-| backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                             |
-| backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                        |
+| Name                                                | Type | Format  | Required | Description                                                                                                                                    |
+|-----------------------------------------------------|------|---------|----------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| restore                                             | Body | Object  | O        | Restoration information object                                                                                                                 |
+| restore.tenantId                                    | Body | String  | O        | Tenant ID of object storage where backups are stored                                                                                           |
+| restore.username                                    | Body | String  | O        | NHN Cloud account or IAM member ID                                                                                                             |
+| restore.password                                    | Body | String  | O        | API password for object storage where backups are stored                                                                                       |
+| restore.targetContainer                             | Body | String  | O        | Container for object storage where backups are stored                                                                                          |
+| restore.objectPath                                  | Body | String  | O        | Backup path stored in container                                                                                                                |
+| dbVersion                                           | Body | Enum    | O        | DB engine type                                                                                                                                 |
+| dbInstanceName                                      | Body | String  | O        | Name to identify DB instances                                                                                                                  |
+| description                                         | Body | String  | X        | Additional information on DB instances                                                                                                         |
+| dbFlavorId                                          | Body | UUID    | O        | Identifier of DB instance specifications                                                                                                       |
+| dbPort                                              | Body | Number  | O        | DB port<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                               |
+| <span style="color:#313338">parameterGroupId</span> | Body | UUID    | O        | Parameter group identifier                                                                                                                     |
+| dbSecurityGroupIds                                  | Body | Array   | X        | DB security group identifiers                                                                                                                  |
+| userGroupIds                                        | Body | Array   | X        | User group identifiers                                                                                                                         |
+| useHighAvailability                                 | Body | Boolean | X        | Whether to use high availability<br><ul><li>Default: `false`</li></ul>                                                                         |
+| pingInterval                                        | Body | Number  | X        | Ping interval (sec) when using high availability<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul> |
+| useDefaultNotification                              | Body | Boolean | X        | Whether to use default notification<br><ul><li>Default: `false`</li></ul>                                                                      |
+| useDeletionProtection                               | Body | Boolean | X        | Whether to protect against deletion<br>Default: `false`                                                                                        |
+| useSlowQueryAnalysis                                | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                             |
+| network                                             | Body | Object  | O        | Network information objects                                                                                                                    |
+| network.subnetId                                    | Body | UUID    | O        | Subnet identifier                                                                                                                              |
+| network.usePublicAccess                             | Body | Boolean | X        | External access is available or not<br><ul><li>Default: `false`</li></ul>                                                                      |
+| network.availabilityZone                            | Body | Enum    | O        | Availability zone where DB instance will be created<br><ul><li>- Example: `kr-pub-a`</li></ul>                                                 |
+| storage                                             | Body | Object  | O        | Storage information objects                                                                                                                    |
+| storage.storageType                                 | Body | Enum    | O        | Block Storage Type<br><ul><li>- Example: `General SSD`</li></ul>                                                                               |
+| storage.storageSize                                 | Body | Number  | O        | Block Storage Size (GB)<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                               |
+| storage.storageAutoscale                            | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                                              |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                                                  |
+| storage.storageAutoscale.threshold                  | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                                                    |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                                              |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                                              |
+| backup                                              | Body | Object  | O        | Backup information objects                                                                                                                     |
+| backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                               |
+| backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                              |
+| backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                         |
 {{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                            | Body | Enum    | X        | Backup replication region<br><ul><li>- `KR1`: Korea (Pangyo) Region</li><li>- `KR2`: Korea (Pyeongchon) Region</li><li>- `JP1`: Japan (Tokyo) Region</li></ul>                                                                                                                                                |
 {{/if}}
@@ -1653,6 +1828,12 @@ POST /v4.0/db-instances/restore-from-obs
 PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### Request
 
 | Name                  | Type | Format  | Required | Description                         |
@@ -1688,6 +1869,12 @@ This API does not return a response body.
 PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
 
+#### 필요 권한
+
+| 권한명                                                 | 설명        |
+|-----------------------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Modify | 고가용성 수정하기 |
+
 #### Request
 
 | Name                | Type | Format  | Required | Description                                                                                          |
@@ -1709,6 +1896,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
+
+#### 필요 권한
+
+| 권한명                                                 | 설명           |
+|-----------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Resume | 고가용성 다시 시작하기 |
 
 #### Request
 
@@ -1732,6 +1925,12 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명           |
+|----------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Pause | 고가용성 일시 중지하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -1753,6 +1952,12 @@ This API does not require a request body.
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
+
+#### 필요 권한
+
+| 권한명                                                 | 설명        |
+|-----------------------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Repair | 고가용성 복구하기 |
 
 #### Request
 
@@ -1776,6 +1981,12 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명        |
+|----------------------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Split | 고가용성 분리하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -1798,6 +2009,12 @@ This API does not require a request body.
 GET /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
+
 #### Request
 
 This API does not require a request body.
@@ -1808,11 +2025,16 @@ This API does not require a request body.
 
 #### Response
 
-| Name          | Type | Format | Description                                                                                                |
-|---------------|------|--------|------------------------------------------------------------------------------------------------------------|
-| storageType   | Body | Enum   | Block Storage Type                                                                                         |
-| storageSize   | Body | Number | Block Storage Size (GB)                                                                                    |
-| storageStatus | Body | Enum   | Data Storage Current Status<br/>- `DETACHED`: Detached<br/>- `ATTACHED`: Attached<br/>- `DELETED`: Deleted |
+| Name                                 | Type | Format  | Description                                                                                                |
+|--------------------------------------|------|---------|------------------------------------------------------------------------------------------------------------|
+| storageType                          | Body | Enum    | Block Storage Type                                                                                         |
+| storageSize                          | Body | Number  | Block Storage Size (GB)                                                                                    |
+| storageStatus                        | Body | Enum    | Data Storage Current Status<br/>- `DETACHED`: Detached<br/>- `ATTACHED`: Attached<br/>- `DELETED`: Deleted |
+| storageAutoscale                     | Body | Object  | 데이터 스토리지 자동 확장 객체                                                                                          |
+| storageAutoscale.useStorageAutoscale | Body | Boolean | 스토리지 자동 확장 여부                                                                                              |
+| storageAutoscale.threshold           | Body | Number  | 자동 확장 조건(%)                                                                                                |
+| storageAutoscale.maxStorageSize      | Body | Number  | 자동 확장 최대 크기(GB)                                                                                            |
+| storageAutoscale.cooldownTime        | Body | Number  | 자동 확장 쿨다운 시간(분)                                                                                            |
 
 <details><summary>Example</summary>
 <p>
@@ -1826,7 +2048,13 @@ This API does not require a request body.
     },
     "storageType": "General SSD",
     "storageSize": 20,
-    "storageStatus": "ATTACHED"
+    "storageStatus": "ATTACHED",
+    "storageAutoscale": {
+         "useStorageAutoscale": true,
+         "threshold": 80,
+         "maxStorageSize": 100,
+         "cooldownTime": 10
+    }
 }
 ```
 
@@ -1842,13 +2070,24 @@ This API does not require a request body.
 PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### Request
 
-| Name              | Type | Format  | Required | Description                                                                                                       |
-|-------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId      | URL  | UUID    | O        | DB instance identifier                                                                                            |
-| storageSize       | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: Current value<br/>- Maximum value: `2048`                            |
-| useOnlineFailover | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
+| Name                                 | Type | Format  | Required | Description                                                                                                       |
+|--------------------------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                         | URL  | UUID    | O        | DB instance identifier                                                                                            |
+| storageSize                          | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: Current value<br/>- Maximum value: `2048`                            |
+| useOnlineFailover                    | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
+| storageAutoscale                     | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                 |
+| storageAutoscale.useStorageAutoscale | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                     |
+| storageAutoscale.threshold           | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                       |
+| storageAutoscale.maxStorageSize      | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                 |
+| storageAutoscale.cooldownTime        | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                 |
 
 #### Response
 
@@ -1863,6 +2102,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
+
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### Request
 
@@ -1921,6 +2166,12 @@ This API does not require a request body.
 PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### Request
 
 | Name                              | Type | Format  | Required | Description                                                                                                                                                                                                                                                               |
@@ -1969,6 +2220,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/network-info
 ```
+
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### Request
 
@@ -2029,6 +2286,12 @@ This API does not require a request body.
 PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### Request
 
 | Name            | Type | Format  | Required | Description                         |
@@ -2049,6 +2312,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-users
 ```
+
+#### 필요 권한
+
+| 권한명                                             | 설명                  |
+|-------------------------------------------------|---------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.List | DB 인스턴스 내 사용자 목록 보기 |
 
 #### Request
 
@@ -2114,6 +2383,13 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
+
+#### 필요 권한
+
+| 권한명                                               | 설명                 |
+|---------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Create | DB 인스턴스 내 사용자 생성하기 |
+
 #### Request
 
 | Name                 | Type | Format | Required | Description                                                                                                                                                              |
@@ -2167,6 +2443,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+#### 필요 권한
+
+| 권한명                                               | 설명                 |
+|---------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Modify | DB 인스턴스 내 사용자 수정하기 |
+
 #### Request
 
 | Name                 | Type | Format | Required | Description                                                                                                                                                              |
@@ -2210,6 +2492,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+#### 필요 권한
+
+| 권한명                                               | 설명                 |
+|---------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Delete | DB 인스턴스 내 사용자 삭제하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -2232,6 +2520,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명                  |
+|---------------------------------------------------|---------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.List | DB 인스턴스 내 스키마 목록 보기 |
 
 #### Request
 
@@ -2283,6 +2577,12 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
+#### 필요 권한
+
+| 권한명                                                 | 설명                 |
+|-----------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.Create | DB 인스턴스 내 스키마 생성하기 |
+
 #### Request
 
 | Name         | Type | Format | Required | Description            |
@@ -2303,6 +2603,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```http
 DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
+
+#### 필요 권한
+
+| 권한명                                                 | 설명                 |
+|-----------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.Delete | DB 인스턴스 내 스키마 삭제하기 |
 
 #### Request
 
@@ -2326,6 +2632,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```
+
+#### 필요 권한
+
+| 권한명                                            | 설명                    |
+|------------------------------------------------|-----------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceLog.List | DB 인스턴스 내 로그 파일 목록 보기 |
 
 #### Request
 
@@ -2378,6 +2690,12 @@ This API does not require a request body.
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```
+
+#### 필요 권한
+
+| 권한명                                              | 설명                   |
+|--------------------------------------------------|----------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceLog.Export | DB 인스턴스 내 로그 파일 내보내기 |
 
 #### Request
 
@@ -2433,6 +2751,12 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```http
 GET /v4.0/backups
 ```
+
+#### 필요 권한
+
+| 권한명                                     | 설명       |
+|-----------------------------------------|----------|
+| RDSfor{{engine.pascalCase}}:Backup.List | 백업 목록 조회 |
 
 #### Request
 
@@ -2506,6 +2830,12 @@ This API does not require a request body.
 POST /v4.0/backups/{backupId}/export
 ```
 
+#### 필요 권한
+
+| 권한명                                       | 설명      |
+|-------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Export | 백업 내보내기 |
+
 #### Request
 
 | Name            | Type | Format | Required | Description                                            |
@@ -2547,33 +2877,45 @@ POST /v4.0/backups/{backupId}/export
 POST /v4.0/backups/{backupId}/restore
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명      |
+|--------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Restore | 백업 복원하기 |
+
 #### Request
 
-| Name                                     | Type | Format  | Required | Description                                                                                                                                                                                                                                                               |
-|------------------------------------------|------|---------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| backupId                                 | URL  | UUID    | O        | Backup identifier                                                                                                                                                                                                                                                         |
-| dbInstanceName                           | Body | String  | O        | Name to identify DB instances                                                                                                                                                                                                                                             |
-| description                              | Body | String  | X        | Additional information on DB instances                                                                                                                                                                                                                                    |
-| dbFlavorId                               | Body | UUID    | O        | Identifier of DB instance specifications                                                                                                                                                                                                                                  |
-| dbPort                                   | Body | Integer | O        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                                                                                                                                                                          |
-| parameterGroupId                         | Body | UUID    | O        | Parameter group identifier                                                                                                                                                                                                                                                |
-| dbSecurityGroupIds                       | Body | Array   | X        | DB security group identifiers                                                                                                                                                                                                                                             ||network|Body|Object|O|Network information objects|
-| userGroupIds                             | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                    |
-| useHighAvailability                      | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                                                                                                                                                                     |
-| pingInterval                             | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                                                                                                                                                     |
-| useDefaultNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                  |
-| useDeletionProtection                    | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                                                                                                                                                                                  | 
-| network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
-| network.subnetId                         | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
-| network.usePublicAccess                  | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                                                                                                                                                  |
-| network.availabilityZone                 | Body | Enum    | O        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                                                                                                                                                                             |
-| storage                                  | Body | Object  | O        | Storage information objects                                                                                                                                                                                                                                               |    
-| storage.storageType                      | Body | Enum    | O        | Block Storage Type<br/>- Example: `General SSD`                                                                                                                                                                                                                           |
-| storage.storageSize                      | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                                                                                                                                                                             |
-| backup                                   | Body | Object  | O        | Backup information objects                                                                                                                                                                                                                                                |
-| backup.backupPeriod                      | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
-| backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
-| backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
+| Name                                         | Type | Format  | Required | Description                                                                                                           |
+|----------------------------------------------|------|---------|----------|-----------------------------------------------------------------------------------------------------------------------|
+| backupId                                     | URL  | UUID    | O        | Backup identifier                                                                                                     |
+| dbInstanceName                               | Body | String  | O        | Name to identify DB instances                                                                                         |
+| description                                  | Body | String  | X        | Additional information on DB instances                                                                                |
+| dbFlavorId                                   | Body | UUID    | O        | Identifier of DB instance specifications                                                                              |
+| dbPort                                       | Body | Integer | O        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                      |
+| parameterGroupId                             | Body | UUID    | O        | Parameter group identifier                                                                                            |
+| dbSecurityGroupIds                           | Body | Array   | X        | DB security group identifiers                                                                                         ||network|Body|Object|O|Network information objects|
+| userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                |
+| useHighAvailability                          | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                 |
+| pingInterval                                 | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                              |
+| useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                              | 
+| useSlowQueryAnalysis                         | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                    |
+| network                                      | Body | Object  | O        | Network information objects                                                                                           |
+| network.subnetId                             | Body | UUID    | O        | Subnet identifier                                                                                                     |
+| network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                              |
+| network.availabilityZone                     | Body | Enum    | O        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                         |
+| storage                                      | Body | Object  | O        | Storage information objects                                                                                           |    
+| storage.storageType                          | Body | Enum    | O        | Block Storage Type<br/>- Example: `General SSD`                                                                       |
+| storage.storageSize                          | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                         |
+| storage.storageAutoscale                     | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                     |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                         |
+| storage.storageAutoscale.threshold           | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                           |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                     |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                     |
+| backup                                       | Body | Object  | O        | Backup information objects                                                                                            |
+| backup.backupPeriod                          | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                           |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                            |
+| backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                          |
 {{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 {{/if}}
@@ -2629,6 +2971,12 @@ POST /v4.0/backups/{backupId}/restore
 DELETE /v4.0/backups/{backupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                       | 설명      |
+|-------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Delete | 백업 삭제하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -2661,6 +3009,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/db-security-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                              | 설명             |
+|--------------------------------------------------|----------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
 
 #### Request
 
@@ -2711,6 +3065,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                             | 설명             |
+|-------------------------------------------------|----------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
 
 #### Request
 
@@ -2791,6 +3151,12 @@ This API does not require a request body.
 POST /v4.0/db-security-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명            |
+|----------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
+
 #### Request
 
 | Name                | Type | Format | Required | Description                                                                                                                                                                                                                      |
@@ -2846,6 +3212,12 @@ POST /v4.0/db-security-groups
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명            |
+|----------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
+
 #### Request
 
 | Name                | Type | Format | Required | Description                                 |
@@ -2896,6 +3268,12 @@ This API does not return a response body.
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명            |
+|----------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -2931,6 +3309,12 @@ This API does not return a response body.
 ```http
 POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
+
+#### 필요 권한
+
+| 권한명                                                    | 설명               |
+|--------------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
 
 #### Request
 
@@ -2979,6 +3363,12 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
+#### 필요 권한
+
+| 권한명                                                    | 설명               |
+|--------------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
+
 #### Request
 
 | Name              | Type | Format | Required | Description                                                                                                                                                                                                                      |
@@ -3025,6 +3415,12 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
+#### 필요 권한
+
+| 권한명                                                    | 설명               |
+|--------------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 삭제하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -3049,6 +3445,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/parameter-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                             | 설명            |
+|-------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.List | 파라미터 그룹 목록 보기 |
 
 #### Request
 
@@ -3106,6 +3508,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                            | 설명            |
+|------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
 
 #### Request
 
@@ -3182,6 +3590,12 @@ This API does not require a request body.
 POST /v4.0/parameter-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Create | 파라미터 그룹 생성하기 |
+
 #### Request
 
 | Name               | Type | Format | Required | Description                               |
@@ -3217,6 +3631,12 @@ POST /v4.0/parameter-groups
 POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```
 
+#### 필요 권한
+
+| 권한명                                             | 설명           |
+|-------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
+
 #### Request
 
 | Name               | Type | Format | Required | Description                               |
@@ -3251,6 +3671,12 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
 #### Request
 
@@ -3299,6 +3725,12 @@ This API does not return a response body.
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
 #### Request
 
@@ -3354,6 +3786,12 @@ This API does not return a response body.
 PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```
 
+#### 필요 권한
+
+| 권한명                                              | 설명            |
+|--------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
+
 #### Request
 
 | Name             | Type | Format | Required | Description                |
@@ -3387,6 +3825,12 @@ This API does not return a response body.
 ```http
 DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
 
 #### Request
 
@@ -3425,6 +3869,12 @@ This API does not return a response body.
 ```http
 GET /v4.0/user-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                        | 설명           |
+|--------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.List | 사용자 그룹 목록 보기 |
 
 #### Request
 
@@ -3471,6 +3921,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/user-groups/{userGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                       | 설명           |
+|-------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.Get | 사용자 그룹 상세 보기 |
 
 #### Request
 
@@ -3526,13 +3982,19 @@ This API does not require a request body.
 POST /v4.0/user-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                          | 설명          |
+|----------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.Create | 사용자 그룹 생성하기 |
+
 #### Request
 
 | Name          | Type | Format  | Required | Description                                                                 |
 |---------------|------|---------|----------|-----------------------------------------------------------------------------|
 | userGroupName | Body | String  | O        | Name to identify user groups                                                |
-| memberIds     | Body | Array   | O        | Project member identifiers <br /> Ignored when `selectAllYN` is true        |
-| selectAllYN   | Body | Boolean | X        | All project members or not <br /> If true, the group is set for all members |
+| memberIds     | Body | Array   | O        | Project member identifiers <br /> Ignored when `selectAll` is true          |
+| selectAll     | Body | Boolean | X        | All project members or not <br /> If true, the group is set for all members |
 
 <details><summary>Example</summary>
 <p>
@@ -3549,7 +4011,7 @@ POST /v4.0/user-groups
 ```json
 {
     "userGroupName": "dev-team",
-    "selectAllYN":true
+    "selectAll": true
 }
 ```
 
@@ -3570,6 +4032,12 @@ POST /v4.0/user-groups
 PUT /v4.0/user-groups/{userGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                          | 설명          |
+|----------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.Modify | 사용자 그룹 수정하기 |
+
 #### Request
 
 | Name          | Type | Format  | Required | Description                                                                 |
@@ -3577,7 +4045,7 @@ PUT /v4.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID    | O        | User group identifier                                                       |
 | userGroupName | Body | String  | X        | Name to identify user groups                                                |
 | memberIds     | Body | Array   | X        | Project member identifiers                                                  |
-| selectAllYN   | Body | Boolean | X        | All project members or not <br /> If true, the group is set for all members |
+| selectAll     | Body | Boolean | X        | All project members or not <br /> If true, the group is set for all members |
 
 <details><summary>Example</summary>
 <p>
@@ -3623,6 +4091,12 @@ This API does not return a response body.
 DELETE /v4.0/user-groups/{userGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                          | 설명          |
+|----------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.Delete | 사용자 그룹 삭제하기 |
+
 #### Request
 
 | Name        | Type | Format | Required | Description           |
@@ -3658,6 +4132,12 @@ This API does not return a response body.
 ```http
 GET /v4.0/notification-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                                | 설명          |
+|----------------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.List | 알림 그룹 목록 보기 |
 
 #### Request
 
@@ -3710,6 +4190,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/notification-groups/{notificationGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명          |
+|---------------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Get | 알림 그룹 상세 보기 |
 
 #### Request
 
@@ -3780,6 +4266,12 @@ This API does not require a request body.
 POST /v4.0/notification-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                                  | 설명         |
+|------------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Create | 알림 그룹 생성하기 |
+
 #### Request
 
 | Name                  | Type | Format  | Required | Description                                                 |
@@ -3824,6 +4316,12 @@ POST /v4.0/notification-groups
 ```http
 PUT /v4.0/notification-groups/{notificationGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                                  | 설명         |
+|------------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Modify | 알림 그룹 수정하기 |
 
 #### Request
 
@@ -3881,6 +4379,12 @@ This API does not return a response body.
 DELETE /v4.0/notification-groups/{notificationGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                                  | 설명         |
+|------------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Delete | 알림 그룹 삭제하기 |
+
 #### Request
 
 This API does not require a request body.
@@ -3918,6 +4422,12 @@ This API does not return a response body.
 ```http
 GET /v4.0/metrics
 ```
+
+#### 필요 권한
+
+| 권한명                                     | 설명       |
+|-----------------------------------------|----------|
+| RDSfor{{engine.pascalCase}}:Metric.List | 통계 정보 조회 |
 
 #### Request
 
@@ -3960,6 +4470,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/metric-statistics
 ```
+
+#### 필요 권한
+
+| 권한명                                     | 설명       |
+|-----------------------------------------|----------|
+| RDSfor{{engine.pascalCase}}:Metric.List | 통계 정보 조회 |
 
 #### Request
 
@@ -4035,6 +4551,12 @@ Events can be categorized into categories, which are shown below.
 ```http
 GET /v4.0/events
 ```
+
+#### 필요 권한
+
+| 권한명                                    | 설명        |
+|----------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:Event.List | 이벤트 목록 보기 |
 
 #### Request
 
@@ -4117,6 +4639,12 @@ This API does not require a request body.
 ```http
 GET /v4.0/event-codes
 ```
+
+#### 필요 권한
+
+| 권한명                                    | 설명        |
+|----------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:Event.List | 이벤트 목록 보기 |
 
 #### Request
 

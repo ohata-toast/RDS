@@ -8,14 +8,14 @@
 
 ## 인증 및 권한
 
-API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. 콘솔 우측 상단의 계정에 마우스 포인터를 올리면 표시되는 드롭다운 메뉴에서 <b>API 보안 설정</b>을 선택해 생성할 수 있습니다.
-생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
+API를 사용하려면 [Public API > API 호출 및 인증](/nhncloud/ko/public-api/api-authentication/)을 통해 발급 받은 Bearer 유형의 토큰이 필요합니다.
+발급 받은 토큰은 Appkey와 함께 요청 Header에 포함해야 합니다.
 
-| 이름                         | 종류     | 형식     | 필수 | 설명                                                          |
-|----------------------------|--------|--------|----|-------------------------------------------------------------|
-| X-TC-APP-KEY               | Header | String | O  | RDS for {{engine.pascalCase}} 서비스의 Appkey 또는 프로젝트 통합 Appkey |
-| X-TC-AUTHENTICATION-ID     | Header | String | O  | API 보안 설정 메뉴의 User Access Key ID                            |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O  | API 보안 설정 메뉴의 Secret Access Key                             |
+| 이름                  | 종류     | 형식     | 필수 | 설명                                                          |
+|---------------------|--------|--------|----|-------------------------------------------------------------|
+| X-TC-APP-KEY        | Header | String | O  | RDS for {{engine.pascalCase}} 서비스의 Appkey 또는 프로젝트 통합 Appkey |
+| X-NHN-AUTHORIZATION | Header | String | O  | Public API로 발급 받은 Bearer 유형 토큰   1                          |
+
 
 또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for {{engine.pascalCase}} ADMIN`, `RDS for {{engine.pascalCase}} VIEWER`로 구분하여 권한을 부여할 수 있습니다.
 
@@ -98,6 +98,12 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 GET /v4.0/project/regions
 ```
 
+#### 필요 권한
+
+| 권한명                                     | 설명         |
+|-----------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:Project.Get | 프로젝트 정보 조회 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -160,6 +166,12 @@ GET /v4.0/project/regions
 GET /v4.0/project/members
 ```
 
+#### 필요 권한
+
+| 권한명                                     | 설명         |
+|-----------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:Project.Get | 프로젝트 정보 조회 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -208,6 +220,12 @@ GET /v4.0/project/members
 GET /v4.0/db-flavors
 ```
 
+#### 필요 권한
+
+| 권한명                                       | 설명               |
+|-------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -255,6 +273,12 @@ GET /v4.0/db-flavors
 ```http
 GET /v4.0/network/subnets
 ```
+
+#### 필요 권한
+
+| 권한명                                      | 설명        |
+|------------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:Network.List | 서브넷 목록 보기 |
 
 #### 요청
 
@@ -306,6 +330,12 @@ GET /v4.0/network/subnets
 GET /v4.0/db-versions
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명          |
+|--------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:DbVersion.List | DB 엔진 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -352,6 +382,12 @@ GET /v4.0/db-versions
 GET /v4.0/storage-types
 ```
 
+#### 필요 권한
+
+| 권한명                                      | 설명                |
+|------------------------------------------|-------------------|
+| RDSfor{{engine.pascalCase}}:Storage.List | 데이터 스토리지 타입 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -373,44 +409,6 @@ GET /v4.0/storage-types
         "isSuccessful": true
     },
     "storageTypes": [
-        "General SSD",
-        "General HDD"
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### 데이터 스토리지 목록 보기
-
-```http
-GET /v4.0/storages
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름       | 종류   | 형식    | 설명          |
-|----------|------|-------|-------------|
-| storages | Body | Array | 데이터 스토리지 목록 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storages": [
         "General SSD",
         "General HDD"
     ]
@@ -446,6 +444,12 @@ GET /v4.0/storages
 ```http
 GET /v4.0/jobs/{jobId}
 ```
+
+#### 필요 권한
+
+| 권한명                                 | 설명          |
+|-------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:Job.Get | 작업 정보 상세 보기 |
 
 #### 요청
 
@@ -503,6 +507,12 @@ GET /v4.0/jobs/{jobId}
 GET /v4.0/db-instance-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                              | 설명               |
+|--------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -548,6 +558,12 @@ GET /v4.0/db-instance-groups
 ```http
 GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                             | 설명               |
+|-------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
 
 #### 요청
 
@@ -652,6 +668,12 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 GET /v4.0/db-instances
 ```
 
+#### 필요 권한
+
+| 권한명                                         | 설명            |
+|---------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.List | DB 인스턴스 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -712,6 +734,12 @@ GET /v4.0/db-instances
 GET /v4.0/db-instances/{dbInstanceId}
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -738,6 +766,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds          | Body | Array    | DB 인스턴스에 적용된 DB 보안 그룹의 식별자 목록                                                                                                         |
 | notificationGroupIds        | Body | Array    | DB 인스턴스에 적용된 알림 그룹의 식별자 목록                                                                                                            |
 | useDeletionProtection       | Body | Boolean  | DB 인스턴스 삭제 보호 여부                                                                                                                      |
+| useSlowQueryAnalysis        | Body | Boolean  | Slow query 분석 여부                                                                                                                      |
 | supportAuthenticationPlugin | Body | Boolean  | 인증 플러그인 지원 여부                                                                                                                         |
 | needToApplyParameterGroup   | Body | Boolean  | 최신 파라미터 그룹 적용 필요 여부                                                                                                                   |
 | needMigration               | Body | Boolean  | 마이그레이션 필요 여부                                                                                                                          |
@@ -769,6 +798,7 @@ GET /v4.0/db-instances/{dbInstanceId}
     "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
     "notificationGroupIds": ["83a62a33-ddbf-4a04-8653-e54463d5b1ac"],
     "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
     "supportAuthenticationPlugin": true,
     "needToApplyParameterGroup": false,
     "needMigration": false,
@@ -789,24 +819,31 @@ GET /v4.0/db-instances/{dbInstanceId}
 POST /v4.0/db-instances
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Create | DB 인스턴스 생성하기 |
+
 #### 요청
 
-| 이름                                           | 종류   | 형식      | 필수 | 설명                                                                                                                                                                                                                          |
-|----------------------------------------------|------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                                                                                                                                                                        |
-| description                                  | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                                                                                                                                                                           |
-| dbFlavorId                                   | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                                                                                                                                                                             |
-| dbVersion                                    | Body | Enum    | O  | DB 엔진 유형                                                                                                                                                                                                                    |
-| dbPort                                       | Body | Number  | O  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                                                                                                                                                                  |
-| dbUserName                                   | Body | String  | O  | DB 사용자 계정명                                                                                                                                                                                                                  |
-| dbPassword                                   | Body | String  | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                                                                                                                             |
-| parameterGroupId                             | Body | UUID    | O  | 파라미터 그룹의 식별자                                                                                                                                                                                                                |
-| dbSecurityGroupIds                           | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                                                                                                                                                                            ||network|Body|Object|O|네트워크 정보 객체|
-| userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                              |
-| useHighAvailability                          | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                               |
-| pingInterval                                 | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                                                                                         |
-| useDefaultNotification                       | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
-| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                 |
+| 이름                     | 종류   | 형식      | 필수 | 설명                                                                  |
+|------------------------|------|---------|----|---------------------------------------------------------------------|
+| dbInstanceName         | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                |
+| description            | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                   |
+| dbFlavorId             | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                     |
+| dbVersion              | Body | Enum    | O  | DB 엔진 유형                                                            |
+| dbPort                 | Body | Number  | O  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                          |
+| dbUserName             | Body | String  | O  | DB 사용자 계정명                                                          |
+| dbPassword             | Body | String  | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                     |
+| parameterGroupId       | Body | UUID    | O  | 파라미터 그룹의 식별자                                                        |
+| dbSecurityGroupIds     | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                    ||network|Body|Object|O|네트워크 정보 객체|
+| userGroupIds           | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
+| useHighAvailability    | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
+| pingInterval           | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| useDefaultNotification | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
+| useDeletionProtection  | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
+| useSlowQueryAnalysis   | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
 {{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                     |
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
@@ -818,6 +855,11 @@ POST /v4.0/db-instances
 | storage                                      | Body | Object  | O  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                  |    
 | storage.storageType                          | Body | Enum    | O  | 데이터 스토리지 타입<br/>- 예시: `General SSD`                                                                                                                                                                                         |
 | storage.storageSize                          | Body | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                                                                                           |
+| storage.storageAutoscale                     | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                   |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | 스토리지 자동 확장 여부                                                       |
+| storage.storageAutoscale.threshold           | Body | Number  | X  | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                         |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                   |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                   |
 | backup                                       | Body | Object  | O  | 백업 정보 객체                                                                                                                                                                                                                    |
 | backup.backupPeriod                          | Body | Number  | O  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                          |
@@ -884,6 +926,12 @@ POST /v4.0/db-instances
 PUT /v4.0/db-instances/{dbInstanceId}
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### 요청
 
 | 이름                 | 종류   | 형식      | 필수 | 설명                                                                        |
@@ -896,6 +944,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbVersion          | Body | Enum    | X  | DB 엔진 유형                                                                                                                              |
 | useDummy      | Body | Boolean | X  | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>기본값: `false`                                         |
 {{/if}}
+| useSlowQueryAnalysis | Body | Boolean  | X | Slow query 분석 여부 |
 | dbFlavorId         | Body | UUID    | X  | DB 인스턴스 사양의 식별자                                                           |
 | parameterGroupId   | Body | UUID    | X  | 파라미터 그룹의 식별자                                                              |
 | dbSecurityGroupIds | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                          |
@@ -932,6 +981,12 @@ PUT /v4.0/db-instances/{dbInstanceId}
 DELETE /v4.0/db-instances/{dbInstanceId}
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Delete | DB 인스턴스 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -954,6 +1009,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 POST /v4.0/db-instances/{dbInstanceId}/restart
 ```
 
+#### 필요 권한
+
+| 권한명                                            | 설명            |
+|------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Restart | DB 인스턴스 재시작하기 |
+
 #### 요청
 
 | 이름                | 종류   | 형식      | 필수 | 설명                                                                        |
@@ -970,9 +1031,16 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 
 ---
 ### DB 인스턴스 강제 재시작하기
+
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/force-restart
 ```
+
+#### 필요 권한
+
+| 권한명                                                 | 설명               |
+|-----------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
 
 #### 요청
 
@@ -1010,6 +1078,12 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 POST /v4.0/db-instances/{dbInstanceId}/start
 ```
 
+#### 필요 권한
+
+| 권한명                                          | 설명           |
+|----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Start | DB 인스턴스 시작하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1031,6 +1105,12 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/stop
 ```
+
+#### 필요 권한
+
+| 권한명                                         | 설명           |
+|---------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Stop | DB 인스턴스 정지하기 |
 
 #### 요청
 
@@ -1054,6 +1134,12 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 POST /v4.0/db-instances/{dbInstanceId}/backup
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Backup | DB 인스턴스 백업하기 |
+
 #### 요청
 
 | 이름           | 종류   | 형식     | 필수 | 설명              |
@@ -1074,6 +1160,12 @@ POST /v4.0/db-instances/{dbInstanceId}/backup
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
+
+#### 필요 권한
+
+| 권한명                                                          | 설명                |
+|--------------------------------------------------------------|-------------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
 
 #### 요청
 
@@ -1116,30 +1208,42 @@ POST /v4.0/db-instances/{dbInstanceId}/backup-to-object-storage
 POST /v4.0/db-instances/{dbInstanceId}/replicate
 ```
 
+#### 필요 권한
+
+| 권한명                                                          | 설명                |
+|--------------------------------------------------------------|-------------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
+
 #### 요청
 
-| 이름                                           | 종류   | 형식      | 필수 | 설명                                                                                                                                                                                                                                                  |
-|----------------------------------------------|------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId                                 | URL  | UUID    | O  | DB 인스턴스의 식별자                                                                                                                                                                                                                                        |
-| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                                                                                                                                                                                                |
-| description                                  | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                                                                                                                                                                                                   |
-| dbFlavorId                                   | Body | UUID    | X  | DB 인스턴스 사양의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                             |
-| dbPort                                       | Body | Number  | X  | DB 포트<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                                                                                                                                                                  |
-| parameterGroupId                             | Body | UUID    | X  | 파라미터 그룹의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                |
-| dbSecurityGroupIds                           | Body | Array   | X  | DB 보안 그룹의 식별자 목록<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                            |
-| userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                                                      |
-| useDefaultNotification                       | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                                                      |
-| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                         |
-| network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                                          |
-| network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                 |
-| network.availabilityZone                     | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                                            |
-| storage                                      | Body | Object  | X  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                                      |    
-| storage.storageType                          | Body | Enum    | X  | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                                                                                                                                                                                                  |
-| storage.storageSize                          | Body | Number  | X  | 데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                                                                                           |
-| backup                                       | Body | Object  | X  | 백업 정보 객체                                                                                                                                                                                                                                            |
-| backup.backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
-| backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                                            |
-| backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                                    |
+| 이름                                           | 종류   | 형식      | 필수 | 설명                                                                        |
+|----------------------------------------------|------|---------|----|---------------------------------------------------------------------------|
+| dbInstanceId                                 | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
+| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                      |
+| description                                  | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                         |
+| dbFlavorId                                   | Body | UUID    | X  | DB 인스턴스 사양의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                   |
+| dbPort                                       | Body | Number  | X  | DB 포트<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`        |
+| parameterGroupId                             | Body | UUID    | X  | 파라미터 그룹의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                      |
+| dbSecurityGroupIds                           | Body | Array   | X  | DB 보안 그룹의 식별자 목록<br/>- 기본값: 원본 DB 인스턴스 값                                  |
+| userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                            |
+| useDefaultNotification                       | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                            |
+| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                               |
+| useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                        |
+| network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                |
+| network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: 원본 DB 인스턴스 값                                       |
+| network.availabilityZone                     | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                  |
+| storage                                      | Body | Object  | X  | 데이터 스토리지 정보 객체                                                            |    
+| storage.storageType                          | Body | Enum    | X  | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                        |
+| storage.storageSize                          | Body | Number  | X  | 데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `20`<br/>- 최댓값: `2048` |
+| storage.storageAutoscale                     | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                         |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | 스토리지 자동 확장 여부                                                             |
+| storage.storageAutoscale.threshold           | Body | Number  | X  | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                               |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                         |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                         |
+| backup                                       | Body | Object  | X  | 백업 정보 객체                                                                  |
+| backup.backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`       |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `21600`  |
+| backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `10`          |
 {{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                       |
 {{/if}}
@@ -1182,6 +1286,40 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 POST /v4.0/db-instances/{dbInstanceId}/promote
 ```
 
+#### 필요 권한
+
+| 권한명                                            | 설명           |
+|------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Promote | DB 인스턴스 승격하기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+#### 응답
+
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
+### DB 인스턴스 재구축하기
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/rebuild
+```
+
+#### 필요 권한
+
+| 권한명                                            | 설명            |
+|------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1203,6 +1341,12 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 ```
+
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -1285,6 +1429,12 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
+
 #### 공통 요청
 
 | 이름           | 종류    | 형식   | 필수 | 설명                                                                                                                          |
@@ -1339,6 +1489,12 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 POST /v4.0/db-instances/{dbInstanceId}/restore
 ```
 
+#### 필요 권한
+
+| 권한명                                            | 설명           |
+|------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Restore | DB 인스턴스 복원하기 |
+
 #### 공통 요청
 
 | 이름                                                  | 종류   | 형식      | 필수 | 설명                                                                                                                                                                      |
@@ -1356,6 +1512,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | useHighAvailability                                 | Body | Boolean | X  | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                            |
 | pingInterval                                        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul>                                                                                  |
 | useDefaultNotification                              | Body | Boolean | X  | 기본 알림 사용 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                           |
+| useDeletionProtection                               | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                                                                                                                |
+| useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                                                      |
 | network                                             | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                              |
 | network.subnetId                                    | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                |
 | network.usePublicAccess                             | Body | Boolean | X  | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                           |
@@ -1363,6 +1521,11 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | storage                                             | Body | Object  | O  | 데이터 스토리지 정보 객체                                                                                                                                                          |
 | storage.storageType                                 | Body | Enum    | O  | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                                                                                                                      |
 | storage.storageSize                                 | Body | Number  | O  | 데이터 스토리지 크기(GB)<br><ul><li>최솟값: `20`</li><li>최댓값: `2048`</li></ul>                                                                                                      |
+| storage.storageAutoscale                            | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                                                                                                                       |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X  | 스토리지 자동 확장 여부                                                                                                                                                           |
+| storage.storageAutoscale.threshold                  | Body | Number  | X  | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                                                                             |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                                                                       |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                                                                       |
 | backup                                              | Body | Object  | O  | 백업 정보 객체                                                                                                                                                                |
 | backup.backupPeriod                                 | Body | Number  | O  | 백업 보관 기간(일)<br><ul><li>최솟값: `0`</li><li>최댓값: `730`</li></ul>                                                                                                            |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br><ul><li>기본값: `1800`</li><li>최솟값: `0`</li><li>최댓값: `21600`</li></ul>                                                                                   |
@@ -1374,7 +1537,6 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.backupSchedules | Body | Array | O | 예정된 자동 백업 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각<br><ul><li>예시: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30분</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1시간</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1시간 30분</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2시간</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2시간 30분</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3시간</span></li></ul> |
-| useDeletionProtection | Body | Boolean | X | 삭제 보호 여부<br>기본값: `false`                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 #### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
 
@@ -1549,6 +1711,12 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 POST /v4.0/db-instances/restore-from-obs
 ```
 
+#### 필요 권한
+
+| 권한명                                                   | 설명                      |
+|-------------------------------------------------------|-------------------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.RestoreFromObs | DB 인스턴스 오브젝트 스토리지로부터 복원 |
+
 #### 요청
 
 | 이름                                                  | 종류   | 형식      | 필수 | 설명                                                                                     |
@@ -1570,6 +1738,8 @@ POST /v4.0/db-instances/restore-from-obs
 | useHighAvailability                                 | Body | Boolean | X  | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul>                                           |
 | pingInterval                                        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul> |
 | useDefaultNotification                              | Body | Boolean | X  | 기본 알림 사용 여부<br><ul><li>기본값: `false`</li></ul>                                          |
+| useDeletionProtection                               | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                               |
+| useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                                     |
 | network                                             | Body | Object  | O  | 네트워크 정보 객체                                                                             |
 | network.subnetId                                    | Body | UUID    | O  | 서브넷의 식별자                                                                               |
 | network.usePublicAccess                             | Body | Boolean | X  | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul>                                          |
@@ -1577,6 +1747,11 @@ POST /v4.0/db-instances/restore-from-obs
 | storage                                             | Body | Object  | O  | 데이터 스토리지 정보 객체                                                                         |
 | storage.storageType                                 | Body | Enum    | O  | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                                     |
 | storage.storageSize                                 | Body | Number  | O  | 데이터 스토리지 크기(GB)<br><ul><li>최솟값: `20`</li><li>최댓값: `2048`</li></ul>                     |
+| storage.storageAutoscale                            | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                                      |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X  | 스토리지 자동 확장 여부                                                                          |
+| storage.storageAutoscale.threshold                  | Body | Number  | X  | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                            |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                      |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                      |
 | backup                                              | Body | Object  | O  | 백업 정보 객체                                                                               |
 | backup.backupPeriod                                 | Body | Number  | O  | 백업 보관 기간(일)<br><ul><li>최솟값: `0`</li><li>최댓값: `730`</li></ul>                           |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br><ul><li>기본값: `1800`</li><li>최솟값: `0`</li><li>최댓값: `21600`</li></ul>  |
@@ -1654,6 +1829,12 @@ POST /v4.0/db-instances/restore-from-obs
 PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### 요청
 
 | 이름                    | 종류   | 형식      | 필수 | 설명           |
@@ -1689,6 +1870,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
 
+#### 필요 권한
+
+| 권한명                                                 | 설명        |
+|-----------------------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Modify | 고가용성 수정하기 |
+
 #### 요청
 
 | 이름                  | 종류   | 형식      | 필수 | 설명                                                   |
@@ -1710,6 +1897,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
+
+#### 필요 권한
+
+| 권한명                                                 | 설명           |
+|-----------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Resume | 고가용성 다시 시작하기 |
 
 #### 요청
 
@@ -1733,6 +1926,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명           |
+|----------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Pause | 고가용성 일시 중지하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1754,6 +1953,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
+
+#### 필요 권한
+
+| 권한명                                                 | 설명        |
+|-----------------------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Repair | 고가용성 복구하기 |
 
 #### 요청
 
@@ -1777,6 +1982,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명        |
+|----------------------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:HighAvailability.Split | 고가용성 분리하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1799,6 +2010,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 GET /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1809,11 +2026,16 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 #### 응답
 
-| 이름            | 종류   | 형식     | 설명                                                                                   |
-|---------------|------|--------|--------------------------------------------------------------------------------------|
-| storageType   | Body | Enum   | 데이터 스토리지 타입                                                                          |
-| storageSize   | Body | Number | 데이터 스토리지 크기(GB)                                                                      |
-| storageStatus | Body | Enum   | 데이터 스토리지의 현재 상태<br/>- `DETACHED`: 부착되지 않음<br/>- `ATTACHED`: 부착됨<br/>- `DELETED`: 삭제됨 |
+| 이름                                   | 종류   | 형식      | 설명                                                                                   |
+|--------------------------------------|------|---------|--------------------------------------------------------------------------------------|
+| storageType                          | Body | Enum    | 데이터 스토리지 타입                                                                          |
+| storageSize                          | Body | Number  | 데이터 스토리지 크기(GB)                                                                      |
+| storageStatus                        | Body | Enum    | 데이터 스토리지의 현재 상태<br/>- `DETACHED`: 부착되지 않음<br/>- `ATTACHED`: 부착됨<br/>- `DELETED`: 삭제됨 |
+| storageAutoscale                     | Body | Object  | 데이터 스토리지 자동 확장 객체                                                                    |
+| storageAutoscale.useStorageAutoscale | Body | Boolean | 스토리지 자동 확장 여부                                                                        |
+| storageAutoscale.threshold           | Body | Number  | 자동 확장 조건(%)                                                                          |
+| storageAutoscale.maxStorageSize      | Body | Number  | 자동 확장 최대 크기(GB)                                                                      |
+| storageAutoscale.cooldownTime        | Body | Number  | 자동 확장 쿨다운 시간(분)                                                                      |
 
 <details><summary>예시</summary>
 <p>
@@ -1827,7 +2049,13 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
     },
     "storageType": "General SSD",
     "storageSize": 20,
-    "storageStatus": "ATTACHED"
+    "storageStatus": "ATTACHED",
+    "storageAutoscale": {
+         "useStorageAutoscale": true,
+         "threshold": 80,
+         "maxStorageSize": 100,
+         "cooldownTime": 10
+    }
 }
 ```
 
@@ -1843,13 +2071,24 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### 요청
 
-| 이름                | 종류   | 형식      | 필수 | 설명                                                                        |
-|-------------------|------|---------|----|---------------------------------------------------------------------------|
-| dbInstanceId      | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
-| storageSize       | Body | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: 현재값<br/>- 최댓값: `2048`                          |
-| useOnlineFailover | Body | Boolean | X  | 장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
+| 이름                                   | 종류   | 형식      | 필수 | 설명                                                                        |
+|--------------------------------------|------|---------|----|---------------------------------------------------------------------------|
+| dbInstanceId                         | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
+| storageSize                          | Body | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: 현재값<br/>- 최댓값: `2048`                          |
+| useOnlineFailover                    | Body | Boolean | X  | 장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
+| storageAutoscale                     | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                         |
+| storageAutoscale.useStorageAutoscale | Body | Boolean | X  | 스토리지 자동 확장 여부                                                             |
+| storageAutoscale.threshold           | Body | Number  | X  | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                               |
+| storageAutoscale.maxStorageSize      | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                         |
+| storageAutoscale.cooldownTime        | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                         |
 
 #### 응답
 
@@ -1864,6 +2103,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
+
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -1922,6 +2167,12 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### 요청
 
 | 이름                                    | 종류   | 형식      | 필수 | 설명                                                                                                                                                                                                                          |
@@ -1970,6 +2221,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/network-info
 ```
+
+#### 필요 권한
+
+| 권한명                                        | 설명            |
+|--------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -2030,6 +2287,12 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
+#### 필요 권한
+
+| 권한명                                           | 설명           |
+|-----------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### 요청
 
 | 이름              | 종류   | 형식      | 필수 | 설명           |
@@ -2050,6 +2313,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-users
 ```
+
+#### 필요 권한
+
+| 권한명                                             | 설명                  |
+|-------------------------------------------------|---------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.List | DB 인스턴스 내 사용자 목록 보기 |
 
 #### 요청
 
@@ -2115,6 +2384,13 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 POST /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
+
+#### 필요 권한
+
+| 권한명                                               | 설명                 |
+|---------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Create | DB 인스턴스 내 사용자 생성하기 |
+
 #### 요청
 
 | 이름                   | 종류   | 형식     | 필수 | 설명                                                                                                                      |
@@ -2168,6 +2444,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+#### 필요 권한
+
+| 권한명                                               | 설명                 |
+|---------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Modify | DB 인스턴스 내 사용자 수정하기 |
+
 #### 요청
 
 | 이름                   | 종류   | 형식     | 필수 | 설명                                                                                                                      |
@@ -2211,6 +2493,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+#### 필요 권한
+
+| 권한명                                               | 설명                 |
+|---------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Delete | DB 인스턴스 내 사용자 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2233,6 +2521,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명                  |
+|---------------------------------------------------|---------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.List | DB 인스턴스 내 스키마 목록 보기 |
 
 #### 요청
 
@@ -2284,6 +2578,12 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
+#### 필요 권한
+
+| 권한명                                                 | 설명                 |
+|-----------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.Create | DB 인스턴스 내 스키마 생성하기 |
+
 #### 요청
 
 | 이름           | 종류   | 형식     | 필수 | 설명           |
@@ -2304,6 +2604,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```http
 DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
+
+#### 필요 권한
+
+| 권한명                                                 | 설명                 |
+|-----------------------------------------------------|--------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.Delete | DB 인스턴스 내 스키마 삭제하기 |
 
 #### 요청
 
@@ -2327,6 +2633,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```
+
+#### 필요 권한
+
+| 권한명                                            | 설명                    |
+|------------------------------------------------|-----------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceLog.List | DB 인스턴스 내 로그 파일 목록 보기 |
 
 #### 요청
 
@@ -2379,6 +2691,12 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```
+
+#### 필요 권한
+
+| 권한명                                              | 설명                   |
+|--------------------------------------------------|----------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceLog.Export | DB 인스턴스 내 로그 파일 내보내기 |
 
 #### 요청
 
@@ -2434,6 +2752,12 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```http
 GET /v4.0/backups
 ```
+
+#### 필요 권한
+
+| 권한명                                     | 설명       |
+|-----------------------------------------|----------|
+| RDSfor{{engine.pascalCase}}:Backup.List | 백업 목록 조회 |
 
 #### 요청
 
@@ -2507,6 +2831,12 @@ GET /v4.0/backups
 POST /v4.0/backups/{backupId}/export
 ```
 
+#### 필요 권한
+
+| 권한명                                       | 설명      |
+|-------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Export | 백업 내보내기 |
+
 #### 요청
 
 | 이름              | 종류   | 형식     | 필수 | 설명                          |
@@ -2551,33 +2881,45 @@ POST /v4.0/backups/{backupId}/export
 POST /v4.0/backups/{backupId}/restore
 ```
 
+#### 필요 권한
+
+| 권한명                                        | 설명      |
+|--------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Restore | 백업 복원하기 |
+
 #### 요청
 
-| 이름                       | 종류   | 형식      | 필수 | 설명                                                                  |
-|--------------------------|------|---------|----|---------------------------------------------------------------------|
-| backupId                 | URL  | UUID    | O  | 백업의 식별자                                                             |
-| dbInstanceName           | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                |
-| description              | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                   |
-| dbFlavorId               | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                     |
-| dbPort                   | Body | Integer | O  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                          |
-| parameterGroupId         | Body | UUID    | O  | 파라미터 그룹의 식별자                                                        |
-| dbSecurityGroupIds       | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                    ||network|Body|Object|O|네트워크 정보 객체|
-| userGroupIds             | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
-| useHighAvailability      | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
-| pingInterval             | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
-| useDefaultNotification   | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
-| useDeletionProtection    | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         | 
-| network                  | Body | Object  | O  | 네트워크 정보 객체                                                          |
-| network.subnetId         | Body | UUID    | O  | 서브넷의 식별자                                                            |
-| network.usePublicAccess  | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: `false`                                      |
-| network.availabilityZone | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                            |
-| storage                  | Body | Object  | O  | 데이터 스토리지 정보 객체                                                      |    
-| storage.storageType      | Body | Enum    | O  | 데이터 스토리지 타입<br/>- 예시: `General SSD`                                 |
-| storage.storageSize      | Body | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                   |
-| backup                   | Body | Object  | O  | 백업 정보 객체                                                            |
-| backup.backupPeriod      | Body | Number  | O  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                         |
-| backup.ftwrlWaitTimeout  | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`  |
-| backup.backupRetryCount  | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`             |
+| 이름                                           | 종류   | 형식      | 필수 | 설명                                                                  |
+|----------------------------------------------|------|---------|----|---------------------------------------------------------------------|
+| backupId                                     | URL  | UUID    | O  | 백업의 식별자                                                             |
+| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                |
+| description                                  | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                   |
+| dbFlavorId                                   | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                     |
+| dbPort                                       | Body | Integer | O  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                          |
+| parameterGroupId                             | Body | UUID    | O  | 파라미터 그룹의 식별자                                                        |
+| dbSecurityGroupIds                           | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                    ||network|Body|Object|O|네트워크 정보 객체|
+| userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
+| useHighAvailability                          | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
+| pingInterval                                 | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| useDefaultNotification                       | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
+| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         | 
+| useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
+| network                                      | Body | Object  | O  | 네트워크 정보 객체                                                          |
+| network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                            |
+| network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: `false`                                      |
+| network.availabilityZone                     | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                            |
+| storage                                      | Body | Object  | O  | 데이터 스토리지 정보 객체                                                      |    
+| storage.storageType                          | Body | Enum    | O  | 데이터 스토리지 타입<br/>- 예시: `General SSD`                                 |
+| storage.storageSize                          | Body | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                   |
+| storage.storageAutoscale                     | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                   |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | 스토리지 자동 확장 여부                                                       |
+| storage.storageAutoscale.threshold           | Body | Number  | X  | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                         |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                   |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                   |
+| backup                                       | Body | Object  | O  | 백업 정보 객체                                                            |
+| backup.backupPeriod                          | Body | Number  | O  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                         |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`  |
+| backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`             |
 {{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
 {{/if}}
@@ -2633,6 +2975,12 @@ POST /v4.0/backups/{backupId}/restore
 DELETE /v4.0/backups/{backupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                       | 설명      |
+|-------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Delete | 백업 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2665,6 +3013,12 @@ DELETE /v4.0/backups/{backupId}
 ```http
 GET /v4.0/db-security-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                              | 설명             |
+|--------------------------------------------------|----------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
 
 #### 요청
 
@@ -2715,6 +3069,12 @@ GET /v4.0/db-security-groups
 ```http
 GET /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                             | 설명             |
+|-------------------------------------------------|----------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
 
 #### 요청
 
@@ -2795,6 +3155,12 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 POST /v4.0/db-security-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명            |
+|----------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
+
 #### 요청
 
 | 이름                  | 종류   | 형식     | 필수 | 설명                                                                                                                                                                                       |
@@ -2850,6 +3216,12 @@ POST /v4.0/db-security-groups
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명            |
+|----------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
+
 #### 요청
 
 | 이름                  | 종류   | 형식     | 필수 | 설명                    |
@@ -2900,6 +3272,12 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                                | 설명            |
+|----------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2935,6 +3313,12 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```http
 POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
+
+#### 필요 권한
+
+| 권한명                                                    | 설명               |
+|--------------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
 
 #### 요청
 
@@ -2983,6 +3367,12 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
+#### 필요 권한
+
+| 권한명                                                    | 설명               |
+|--------------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
+
 #### 요청
 
 | 이름                | 종류   | 형식     | 필수 | 설명                                                                                                                                                                                       |
@@ -3029,6 +3419,12 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
+#### 필요 권한
+
+| 권한명                                                    | 설명               |
+|--------------------------------------------------------|------------------|
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3053,6 +3449,12 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```http
 GET /v4.0/parameter-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                             | 설명            |
+|-------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.List | 파라미터 그룹 목록 보기 |
 
 #### 요청
 
@@ -3110,6 +3512,12 @@ GET /v4.0/parameter-groups
 ```http
 GET /v4.0/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                            | 설명            |
+|------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
 
 #### 요청
 
@@ -3186,6 +3594,12 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 POST /v4.0/parameter-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Create | 파라미터 그룹 생성하기 |
+
 #### 요청
 
 | 이름                 | 종류   | 형식     | 필수 | 설명                   |
@@ -3221,6 +3635,12 @@ POST /v4.0/parameter-groups
 POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```
 
+#### 필요 권한
+
+| 권한명                                             | 설명           |
+|-------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
+
 #### 요청
 
 | 이름                 | 종류   | 형식     | 필수 | 설명                   |
@@ -3255,6 +3675,12 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
 #### 요청
 
@@ -3303,6 +3729,12 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
 #### 요청
 
@@ -3358,6 +3790,12 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```
 
+#### 필요 권한
+
+| 권한명                                              | 설명            |
+|--------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
+
 #### 요청
 
 | 이름               | 종류  | 형식   | 필수 | 설명           |
@@ -3391,6 +3829,12 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```http
 DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
 
 #### 요청
 
@@ -3429,6 +3873,12 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```http
 GET /v4.0/user-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                        | 설명           |
+|--------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.List | 사용자 그룹 목록 보기 |
 
 #### 요청
 
@@ -3475,6 +3925,12 @@ GET /v4.0/user-groups
 ```http
 GET /v4.0/user-groups/{userGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                       | 설명           |
+|-------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.Get | 사용자 그룹 상세 보기 |
 
 #### 요청
 
@@ -3530,13 +3986,19 @@ GET /v4.0/user-groups/{userGroupId}
 POST /v4.0/user-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                          | 설명          |
+|----------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.Create | 사용자 그룹 생성하기 |
+
 #### 요청
 
-| 이름            | 종류   | 형식      | 필수 | 설명                                                          |
-|---------------|------|---------|----|-------------------------------------------------------------|
-| userGroupName | Body | String  | O  | 사용자 그룹을 식별할 수 있는 이름                                         |
-| memberIds     | Body | Array   | O  | 프로젝트 멤버의 식별자 목록 <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨 |
-| selectAllYN   | Body | Boolean | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨          |
+| 이름            | 종류   | 형식      | 필수 | 설명                                                        |
+|---------------|------|---------|----|-----------------------------------------------------------|
+| userGroupName | Body | String  | O  | 사용자 그룹을 식별할 수 있는 이름                                       |
+| memberIds     | Body | Array   | O  | 프로젝트 멤버의 식별자 목록 <br /> `selectAll`이 true인 경우 해당 필드 값은 무시됨 |
+| selectAll     | Body | Boolean | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨        |
 
 <details><summary>예시</summary>
 <p>
@@ -3553,7 +4015,7 @@ POST /v4.0/user-groups
 ```json
 {
     "userGroupName": "dev-team",
-    "selectAllYN":true
+    "selectAll": true
 }
 ```
 
@@ -3574,6 +4036,12 @@ POST /v4.0/user-groups
 PUT /v4.0/user-groups/{userGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                          | 설명          |
+|----------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.Modify | 사용자 그룹 수정하기 |
+
 #### 요청
 
 | 이름            | 종류   | 형식      | 필수 | 설명                                                 |
@@ -3581,7 +4049,7 @@ PUT /v4.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID    | O  | 사용자 그룹의 식별자                                        |
 | userGroupName | Body | String  | X  | 사용자 그룹을 식별할 수 있는 이름                                |
 | memberIds     | Body | Array   | X  | 프로젝트 멤버의 식별자 목록                                    |
-| selectAllYN   | Body | Boolean | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨 |
+| selectAll     | Body | Boolean | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨 |
 
 <details><summary>예시</summary>
 <p>
@@ -3627,6 +4095,12 @@ PUT /v4.0/user-groups/{userGroupId}
 DELETE /v4.0/user-groups/{userGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                          | 설명          |
+|----------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:UserGroup.Delete | 사용자 그룹 삭제하기 |
+
 #### 요청
 
 | 이름          | 종류  | 형식   | 필수 | 설명          |
@@ -3662,6 +4136,12 @@ DELETE /v4.0/user-groups/{userGroupId}
 ```http
 GET /v4.0/notification-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                                | 설명          |
+|----------------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.List | 알림 그룹 목록 보기 |
 
 #### 요청
 
@@ -3714,6 +4194,12 @@ GET /v4.0/notification-groups
 ```http
 GET /v4.0/notification-groups/{notificationGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                               | 설명          |
+|---------------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Get | 알림 그룹 상세 보기 |
 
 #### 요청
 
@@ -3784,6 +4270,12 @@ GET /v4.0/notification-groups/{notificationGroupId}
 POST /v4.0/notification-groups
 ```
 
+#### 필요 권한
+
+| 권한명                                                  | 설명         |
+|------------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Create | 알림 그룹 생성하기 |
+
 #### 요청
 
 | 이름                    | 종류   | 형식      | 필수 | 설명                          |
@@ -3828,6 +4320,12 @@ POST /v4.0/notification-groups
 ```http
 PUT /v4.0/notification-groups/{notificationGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                                  | 설명         |
+|------------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Modify | 알림 그룹 수정하기 |
 
 #### 요청
 
@@ -3885,6 +4383,12 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 DELETE /v4.0/notification-groups/{notificationGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명                                                  | 설명         |
+|------------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Delete | 알림 그룹 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3922,6 +4426,12 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 ```http
 GET /v4.0/metrics
 ```
+
+#### 필요 권한
+
+| 권한명                                     | 설명       |
+|-----------------------------------------|----------|
+| RDSfor{{engine.pascalCase}}:Metric.List | 통계 정보 조회 |
 
 #### 요청
 
@@ -3964,6 +4474,12 @@ GET /v4.0/metrics
 ```http
 GET /v4.0/metric-statistics
 ```
+
+#### 필요 권한
+
+| 권한명                                     | 설명       |
+|-----------------------------------------|----------|
+| RDSfor{{engine.pascalCase}}:Metric.List | 통계 정보 조회 |
 
 #### 요청
 
@@ -4039,6 +4555,12 @@ GET /v4.0/metric-statistics
 ```http
 GET /v4.0/events
 ```
+
+#### 필요 권한
+
+| 권한명                                    | 설명        |
+|----------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:Event.List | 이벤트 목록 보기 |
 
 #### 요청
 
@@ -4121,6 +4643,12 @@ GET /v4.0/events
 ```http
 GET /v4.0/event-codes
 ```
+
+#### 필요 권한
+
+| 권한명                                    | 설명        |
+|----------------------------------------|-----------|
+| RDSfor{{engine.pascalCase}}:Event.List | 이벤트 목록 보기 |
 
 #### 요청
 
