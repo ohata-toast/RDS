@@ -1,0 +1,75 @@
+const fs = require('fs');
+const Handlebars = require('handlebars');
+require('handlebars-helpers')();
+
+const languages = ['ko', 'en', 'ja'];
+const docs = [
+    'analysis',
+    'api-guide-v2.0',
+    'api-guide-v3.0',
+    'backup-and-restore',
+    'db-engine',
+    'db-instance',
+    'db-security-group',
+    'notification',
+    'overview',
+    'parameter-group',
+    'server-dashboard'
+];
+const configs = [
+    {
+        engine: 'mysql',
+        env: 'public',
+        exclusionDocs: []
+    },
+    {
+        engine: 'mysql',
+        env: 'gov',
+        exclusionDocs: []
+    },
+    {
+        engine: 'mysql',
+        env: 'ncgn',
+        exclusionDocs: []
+    },
+    {
+        engine: 'mysql',
+        env: 'ninc',
+        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
+    },
+    {
+        engine: 'mysql',
+        env: 'ngsc',
+        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
+    },
+    {
+        engine: 'mariadb',
+        env: 'public',
+        exclusionDocs: ['db-engine']
+    },
+    {
+        engine: 'mariadb',
+        env: 'gov',
+        exclusionDocs: ['db-engine']
+    }
+];
+
+for (let config of configs) {
+    let context = JSON.parse(fs.readFileSync(`config/${config.engine}-${config.env}.json`, 'utf-8'));
+
+    for (let language of languages) {
+        for (let doc of docs) {
+            if (config.exclusionDocs.indexOf(doc) >= 0) {
+                continue;
+            }
+
+            const template = fs.readFileSync(`template/${language}/${doc}.md`, 'utf-8');
+
+            let compiled = Handlebars.compile(template);
+            const result = compiled(context);
+
+            fs.writeFileSync(`${config.engine}/${language}/${doc}-${config.env}.md`, result);
+            console.log(`${config.engine}/${language}/${doc}-${config.env}.md created`);
+        }
+    }
+}

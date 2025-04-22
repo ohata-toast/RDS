@@ -1,0 +1,23 @@
+{
+    "engine": {
+        "lowerCase": "mariadb",
+        "upperCase": "MARIADB",
+        "pascalCase": "MariaDB",
+        "sampleDbVersionCode": "MARIADB_V10330",
+        "sampleDbVersionName": "Maria DB 10.3.30"
+    },
+    "env": "public",
+    "url": {
+        "cdn": "https://static.toastoven.net/prod_rds/mariadb"
+    },
+    "regions": [
+        {
+            "text": {
+                "ko": "한국(판교) 리전",
+                "en": "Korea (Pangyo) region",
+                "ja": "韓国(パンギョ)リージョン"
+            },
+            "endpoint": "https://kr1-rds-mariadb.api.nhncloudservice.com"
+        }
+    ]
+}

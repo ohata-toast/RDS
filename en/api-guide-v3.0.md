@@ -1183,7 +1183,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 | --- | --- | --- | --- |
 | oldestRestorableYmdt | Body | DateTime | Oldest restorable time |
 | latestRestorableYmdt | Body | DateTime | Most recent restorable time |
-| restorableBackups | Body | Array | List of restoreable backups |
+| restorableBackups | Body | Array | List of restorable backups |
 | restorableBackups.backup | Body | Object | Backup information objects |
 | restorableBackups.backup.backupId | Body | UUID | Backup identifier |
 | restorableBackups.backup.backupName | Body | String | Backup name |
