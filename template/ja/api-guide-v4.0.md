@@ -14,7 +14,7 @@ API를 사용하려면 [Public API > API 호출 및 인증](/nhncloud/ko/public-
 | 이름                  | 종류     | 형식     | 필수 | 설명                                                          |
 |---------------------|--------|--------|----|-------------------------------------------------------------|
 | X-TC-APP-KEY        | Header | String | O  | RDS for {{engine.pascalCase}} 서비스의 Appkey 또는 프로젝트 통합 Appkey |
-| X-NHN-AUTHORIZATION | Header | String | O  | Public API로 발급 받은 Bearer 유형 토큰   1                          |
+| X-NHN-AUTHORIZATION | Header | String | O  | Public API로 발급 받은 Bearer 유형 토큰                              |
 
 またプロジェクトメンバーのロールによって呼び出すことができるAPIが制限されます。 `RDS for {{engine.pascalCase}} ADMIN`、`RDS for {{engine.pascalCase}} VIEWER`に区分して権限を付与できます。
 
