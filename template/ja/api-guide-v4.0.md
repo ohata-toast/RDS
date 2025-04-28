@@ -485,7 +485,7 @@ GET /v4.0/jobs/{jobId}
     "jobStatus": "RUNNING",
     "resourceRelations": [
         {
-            "resourceType": "INSTANCE",
+            "resourceType": "DB_INSTANCE",
             "resourceId": "56b39dcf-65eb-47ec-9d4f-09f160ba2266"
         }
     ],
@@ -1127,80 +1127,6 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 ---
 
-### DBインスタンスをバックアップする
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/backup
-```
-
-#### 필요 권한
-
-| 권한명                                           | 설명           |
-|-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Backup | DB 인스턴스 백업하기 |
-
-#### リクエスト
-
-| 名前           | 種類   | 形式     | 必須 | 説明             |
-|--------------|------|--------|----|----------------|
-| dbInstanceId | URL  | UUID   | O  | DBインスタンスの識別子   |
-| backupName   | Body | String | O  | バックアップを識別できる名前 |
-
-#### レスポンス
-
-| 名前    | 種類   | 形式   | 説明            |
-|-------|------|------|---------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBインスタンスバックアップ後にエクスポート
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/backup-to-object-storage
-```
-
-#### 필요 권한
-
-| 권한명                                                          | 설명                |
-|--------------------------------------------------------------|-------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
-
-#### リクエスト
-
-| 名前              | 種類   | 形式     | 必須 | 説明                               |
-|-----------------|------|--------|----|----------------------------------|
-| dbInstanceId    | URL  | UUID   | O  | DBインスタンスの識別子                     |
-| tenantId        | Body | String | O  | バックアップが保存されるオブジェクトストレージのテナントID   |
-| username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID          |
-| password        | Body | String | O  | バックアップが保存されるオブジェクトストレージのAPIパスワード |
-| targetContainer | Body | String | O  | バックアップが保存されるオブジェクトストレージのコンテナ     |
-| objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス              |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
-    "username": "gildong.hong@nhn.com",
-    "password": "password",
-    "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前    | 種類   | 形式   | 説明            |
-|-------|------|------|---------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
 ### DBインスタンスを複製する
 
 ```http
@@ -1209,9 +1135,9 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 #### 필요 권한
 
-| 권한명                                                          | 설명                |
-|--------------------------------------------------------------|-------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
+| 권한명                                              | 설명           |
+|--------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Replicate | DB 인스턴스 복제하기 |
 
 #### リクエスト
 
@@ -2810,6 +2736,75 @@ GET /v4.0/backups
 
 </p>
 </details>
+
+---
+
+### バックアップを作成する
+
+```http
+POST /v4.0/backups
+```
+
+#### 필요 권한
+
+| 권한명                                       | 설명      |
+|-------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Create | 백업 생성하기 |
+
+#### 共通リクエスト
+
+| 名前               | 種類   | 形式     | 必須 | 説明                                                               |
+|------------------|------|--------|----|------------------------------------------------------------------|
+| backupName       | Body | String | O  | バックアップ名                                                          |
+| backupMethodType | Body | Enum   | O  | バックアップ方式タイプ<br/>- `FULL`: 全体バックアップ<br/>- `INCREMENTAL`: 増分バックアップ |
+
+#### backupMethodTypeが`FULL`の場合
+
+| 名前           | 種類   | 形式   | 必須 | 説明           |
+|--------------|------|------|----|--------------|
+| dbInstanceId | Body | UUID | O  | DBインスタンスの識別子 |
+
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "backupName": "example-backup-name",
+    "backupMethodType": "FULL",
+    "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd"
+}
+```
+
+</p>
+</details>
+
+#### backupMethodTypeが`INCREMENTAL`の場合
+
+| 名前           | 種類   | 形式   | 必須 | 説明           |
+|--------------|------|------|----|--------------|
+| baseBackupId | Body | UUID | O  | 基準バックアップの識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "backupName": "example-backup-name",
+    "backupMethodType": "INCREMENTAL",
+    "baseBackupId": "3ae7914f-9b42-4729-b125-87417b72cf36"
+}
+```
+
+</p>
+</details>
+
+
+#### レスポンス
+
+| 名前    | 種類   | 形式   | 説明            |
+|-------|------|------|---------------|
+| jobId | Body | UUID | リクエストした作業の識別子 |
 
 ---
 

@@ -484,7 +484,7 @@ This API does not require a request body.
     "jobStatus": "RUNNING",
     "resourceRelations": [
         {
-            "resourceType": "INSTANCE",
+            "resourceType": "DB_INSTANCE",
             "resourceId": "56b39dcf-65eb-47ec-9d4f-09f160ba2266"
         }
     ],
@@ -1127,80 +1127,6 @@ This API does not require a request body.
 
 ---
 
-### Backup DB Instance
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/backup
-```
-
-#### 필요 권한
-
-| 권한명                                           | 설명           |
-|-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Backup | DB 인스턴스 백업하기 |
-
-#### Request
-
-| Name         | Type | Format | Required | Description              |
-|--------------|------|--------|----------|--------------------------|
-| dbInstanceId | URL  | UUID   | O        | DB instance identifier   |
-| backupName   | Body | String | O        | Name to identify backups |
-
-#### Response
-
-| Name  | Type | Format | Description                  |
-|-------|------|--------|------------------------------|
-| jobId | Body | UUID   | Identifier of requested task |
-
----
-
-### Export after Backing up DB Instance
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/backup-to-object-storage
-```
-
-#### 필요 권한
-
-| 권한명                                                          | 설명                |
-|--------------------------------------------------------------|-------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
-
-#### Request
-
-| Name            | Type | Format | Required | Description                                            |
-|-----------------|------|--------|----------|--------------------------------------------------------|
-| dbInstanceId    | URL  | UUID   | O        | DB instance identifier                                 |
-| tenantId        | Body | String | O        | Tenant ID of object storage to store backup            |
-| username        | Body | String | O        | NHN Cloud member or IAM member ID                      |
-| password        | Body | String | O        | API password for object storage where backup is stored |
-| targetContainer | Body | String | O        | Object storage container where backup is stored        |
-| objectPath      | Body | String | O        | Backup path to be stored in container                  |
-
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
-    "username": "gildong.hong@nhn.com",
-    "password": "password",
-    "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
-}
-```
-
-</p>
-</details>
-
-#### Response
-
-| Name  | Type | Format | Description                  |
-|-------|------|--------|------------------------------|
-| jobId | Body | UUID   | Identifier of requested task |
-
----
-
 ### Replicate DB Instance
 
 ```http
@@ -1209,9 +1135,9 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 #### 필요 권한
 
-| 권한명                                                          | 설명                |
-|--------------------------------------------------------------|-------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
+| 권한명                                              | 설명           |
+|--------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Replicate | DB 인스턴스 복제하기 |
 
 #### Request
 
@@ -2821,6 +2747,76 @@ This API does not require a request body.
 
 </p>
 </details>
+
+---
+
+### Create Backup
+
+```http
+POST /v4.0/backups
+```
+
+#### 필요 권한
+
+| 권한명                                       | 설명      |
+|-------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Create | 백업 생성하기 |
+
+#### Common Request
+
+| Name             | Type | Format | Required | Description                                                                          |
+|------------------|------|--------|----------|--------------------------------------------------------------------------------------|
+| backupName       | Body | String | O        | Backup name                                                                          |
+| backupMethodType | Body | Enum   | O        | Backup method type<br/>- `FULL`: Full backup<br/>- `INCREMENTAL`: Incremental backup |
+
+#### If backupMethodType is `FULL`
+
+| Name         | Type | Format | Required | Description            |
+|--------------|------|--------|----------|------------------------|
+| dbInstanceId | Body | UUID   | O        | DB instance identifier |
+
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "backupName": "example-backup-name",
+    "backupMethodType": "FULL",
+    "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd"
+}
+```
+
+</p>
+</details>
+
+#### If backupMethodType is `INCREMENTAL`
+
+| Name         | Type | Format | Required | Description                |
+|--------------|------|--------|----------|----------------------------|
+| baseBackupId | Body | UUID   | O        | Baseline backup identifier |
+
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "backupName": "example-backup-name",
+    "backupMethodType": "INCREMENTAL",
+    "baseBackupId": "3ae7914f-9b42-4729-b125-87417b72cf36"
+}
+```
+
+</p>
+</details>
+
+
+#### Response
+
+| Name  | Type | Format | Description                  |
+|-------|------|--------|------------------------------|
+| jobId | Body | UUID   | Identifier of requested task |
 
 ---
 

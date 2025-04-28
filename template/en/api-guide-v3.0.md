@@ -480,7 +480,7 @@ This API does not require a request body.
     "jobStatus": "RUNNING",
     "resourceRelations": [
         {
-            "resourceType": "INSTANCE",
+            "resourceType": "DB_INSTANCE",
             "resourceId": "56b39dcf-65eb-47ec-9d4f-09f160ba2266"
         }
     ],

@@ -485,7 +485,7 @@ GET /v4.0/jobs/{jobId}
     "jobStatus": "RUNNING",
     "resourceRelations": [
         {
-            "resourceType": "INSTANCE",
+            "resourceType": "DB_INSTANCE",
             "resourceId": "56b39dcf-65eb-47ec-9d4f-09f160ba2266"
         }
     ],
@@ -1128,80 +1128,6 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 ---
 
-### DB 인스턴스 백업하기
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/backup
-```
-
-#### 필요 권한
-
-| 권한명                                           | 설명           |
-|-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Backup | DB 인스턴스 백업하기 |
-
-#### 요청
-
-| 이름           | 종류   | 형식     | 필수 | 설명              |
-|--------------|------|--------|----|-----------------|
-| dbInstanceId | URL  | UUID   | O  | DB 인스턴스의 식별자    |
-| backupName   | Body | String | O  | 백업을 식별할 수 있는 이름 |
-
-#### 응답
-
-| 이름    | 종류   | 형식   | 설명          |
-|-------|------|------|-------------|
-| jobId | Body | UUID | 요청한 작업의 식별자 |
-
----
-
-### DB 인스턴스 백업 후 내보내기
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/backup-to-object-storage
-```
-
-#### 필요 권한
-
-| 권한명                                                          | 설명                |
-|--------------------------------------------------------------|-------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
-
-#### 요청
-
-| 이름              | 종류   | 형식     | 필수 | 설명                          |
-|-----------------|------|--------|----|-----------------------------|
-| dbInstanceId    | URL  | UUID   | O  | DB 인스턴스의 식별자                |
-| tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
-| username        | Body | String | O  | NHN Cloud 계정 또는 IAM 계정 ID   |
-| password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
-| targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
-| objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
-    "username": "gildong.hong@nhn.com",
-    "password": "password",
-    "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-| 이름    | 종류   | 형식   | 설명          |
-|-------|------|------|-------------|
-| jobId | Body | UUID | 요청한 작업의 식별자 |
-
----
-
 ### DB 인스턴스 복제하기
 
 ```http
@@ -1210,9 +1136,9 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 #### 필요 권한
 
-| 권한명                                                          | 설명                |
-|--------------------------------------------------------------|-------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
+| 권한명                                              | 설명           |
+|--------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Replicate | DB 인스턴스 복제하기 |
 
 #### 요청
 
@@ -2822,6 +2748,76 @@ GET /v4.0/backups
 
 </p>
 </details>
+
+---
+
+### 백업 생성하기
+
+```http
+POST /v4.0/backups
+```
+
+#### 필요 권한
+
+| 권한명                                       | 설명      |
+|-------------------------------------------|---------|
+| RDSfor{{engine.pascalCase}}:Backup.Create | 백업 생성하기 |
+
+#### 공통 요청
+
+| 이름               | 종류   | 형식     | 필수 | 설명                                                         |
+|------------------|------|--------|----|------------------------------------------------------------|
+| backupName       | Body | String | O  | 백업을 식별할 수 있는 이름                                            |
+| backupMethodType | Body | Enum   | O  | 백업 방식 타입 종류<br/>- `FULL`: 전체 백업<br/>- `INCREMENTAL`: 증분 백업 |
+
+#### 전체 백업(backupMethodType이 `FULL`인 경우)
+
+| 이름           | 종류   | 형식   | 필수 | 설명           |
+|--------------|------|------|----|--------------|
+| dbInstanceId | Body | UUID | O  | DB 인스턴스의 식별자 |
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "backupName": "example-backup-name",
+    "backupMethodType": "FULL",
+    "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd"
+}
+```
+
+</p>
+</details>
+
+#### 증분 백업(backupMethodType이 `INCREMENTAL`인 경우)
+
+| 이름           | 종류   | 형식   | 필수 | 설명         |
+|--------------|------|------|----|------------|
+| baseBackupId | Body | UUID | O  | 기준 백업의 식별자 |
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "backupName": "example-backup-name",
+    "backupMethodType": "INCREMENTAL",
+    "baseBackupId": "3ae7914f-9b42-4729-b125-87417b72cf36"
+}
+```
+
+</p>
+</details>
+
+
+#### 응답
+
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
