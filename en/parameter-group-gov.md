@@ -22,6 +22,7 @@ You can create a new parameter group based on an existing parameter group. The c
 
 When you group parameters, you change the values of all parameters to the default values for the DB engine version.
 
+<a id="apply"></a>
 ### Apply Parameter Group
 
 When creating or modifying a DB instance, you can select the parameter groups to apply to the DB instance. One parameter group is applied to one DB instance, and one parameter group can be applied to multiple DB instances. If a parameter in a parameter group is changed, the change does not immediately apply to the DB instance. If an associated DB instance exists, the parameter group changes to `Need to Apply`. On the DB Instances list screen, select the DB instance associated with the parameter
@@ -56,20 +57,20 @@ The parameter contains the following information.
 Certain parameters may be better represented by formulas using values associated with DB instances rather than using fixed values. To support this, you can use predefined variables, formulas, and functions for `NUMERIC`, `INTEGER` data format.
 
 * Formulas
-  * You can use `()`, `+`, `-`, `*`, `/`.
-  * The result of a formula must always be a number.
-  * If the data type is `INTEGER`, decimals are discarded.
-  * If the data type is `NUMERIC`, it is rounded to the ninth decimal place.
+    * You can use `()`, `+`, `-`, `*`, `/`.
+    * The result of a formula must always be a number.
+    * If the data type is `INTEGER`, decimals are discarded.
+    * If the data type is `NUMERIC`, it is rounded to the ninth decimal place.
 * Functions
-  * `max(a, b, ...)`: Returns the largest of several values.
-  * `min(a, b, ...)`: Returns the smallest of several values.
-  * `sum([a, b, ...])`: Returns the sum of multiple values.
+    * `max(a, b, ...)`: Returns the largest of several values.
+    * `min(a, b, ...)`: Returns the smallest of several values.
+    * `sum([a, b, ...])`: Returns the sum of multiple values.
 * Variable
-  * `ramSizeByte`: Indicates the byte value of the memory size of the current DB instance type.
-  * `vCPU`: Indicates the number of virtual CPU cores for the current DB instance type.
-  * `dbPort`: Indicates the DB port of the current DB instance.
-  * `serverId`: Indicates the server ID assigned to the current DB instance.
-  * `readOnly`: Indicates `1` or `0` when the current DB instance is read-only.
+    * `ramSizeByte`: Indicates the byte value of the memory size of the current DB instance type.
+    * `vCPU`: Indicates the number of virtual CPU cores for the current DB instance type.
+    * `dbPort`: Indicates the DB port of the current DB instance.
+    * `serverId`: Indicates the server ID assigned to the current DB instance.
+    * `readOnly`: Indicates `1` or `0` when the current DB instance is read-only.
 
 Below example is the default value of `innodb_buffer_pool_size` parameter, and it indicates setting to 6/10 of the memory size of the DB instance type.
 

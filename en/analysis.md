@@ -8,18 +8,18 @@ RDS for MySQL collects queries performed on the database and the status of the I
 
 The following items are collected
 
-| Item            | Description                                                |
-|---------------|---------------------------------------------------|
-| LogTime       | Collected time                                             |
-| PID           | Process ID                                           |
-| DB            | DB in use                                          |
-| User          | User                                               |
-| Host          | The hostname and IP address the user is connecting from                          |
-| Command       | Command type running thread (Sleep, Query, Quit, Kill, etc.)    |
-| State         | State of thread (Starting, Rolling back, System lock, etc.) |
-| ExecTime      | The seconds the thread has been in its current state.                          |
-| Query         | Running queries                                          |
-| InnoDB Status | InnoDB status information                                      |
+| Item          | Description                                                  |
+|---------------|--------------------------------------------------------------|
+| LogTime       | Collected time                                               |
+| PID           | Process ID                                                   |
+| DB            | DB in use                                                    |
+| User          | User                                                         |
+| Host          | The hostname and IP address the user is connecting from      |
+| Command       | Command type running thread (Sleep, Query, Quit, Kill, etc.) |
+| State         | State of thread (Starting, Rolling back, System lock, etc.)  |
+| ExecTime      | The seconds the thread has been in its current state.        |
+| Query         | Running queries                                              |
+| InnoDB Status | InnoDB status information                                    |
 
 ## Slow Query
 
@@ -29,14 +29,14 @@ RDS for MySQL analyzes the slow queries that occurred in your database and colle
 
 The following items are collected.
 
-| Item             | Description                        |
-|----------------|---------------------------|
-| Checksum       | Checksum for abstracted queries      |
-| Total ExecTime | Total execution time (seconds)               |
-| Avg ExecTime   | Average time to perform (seconds)               |
-| Max ExecTime   | Maximum time to perform (in seconds)               |
-| Min ExecTime   | Minimum time to perform (in seconds)               |
-| Query Count    | Number of queries issued                  |
+| Item           | Description                                                  |
+|----------------|--------------------------------------------------------------|
+| Checksum       | Checksum for abstracted queries                              |
+| Total ExecTime | Total execution time (seconds)                               |
+| Avg ExecTime   | Average time to perform (seconds)                            |
+| Max ExecTime   | Maximum time to perform (in seconds)                         |
+| Min ExecTime   | Minimum time to perform (in seconds)                         |
+| Query Count    | Number of queries issued                                     |
 | Query          | Abstracted queries so you can group similar queries together |
 
 > [Caution]

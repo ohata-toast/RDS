@@ -8,18 +8,18 @@
 
 収集する項目は次のとおりです。
 
-| 項目           | 説明                                               |
-|---------------|---------------------------------------------------|
-| LogTime       | 収集時刻                                            |
-| PID           | プロセスID                                           |
-| DB            | 使用中のDB                                          |
-| User          | ユーザー                                              |
+| 項目            | 説明                                             |
+|---------------|------------------------------------------------|
+| LogTime       | 収集時刻                                           |
+| PID           | プロセスID                                         |
+| DB            | 使用中のDB                                         |
+| User          | ユーザー                                           |
 | Host          | ユーザーが接続しているホスト名、IPアドレス                         |
-| Command       | Thread実行中のコマンドタイプ(Sleep、Query、Quit、Killなど)    |
+| Command       | Thread実行中のコマンドタイプ(Sleep、Query、Quit、Killなど)     |
 | State         | Threadの状態(Starting、Rolling back、System lockなど) |
-| ExecTime      | Threadが現在の状態を維持した時間(秒)                          |
-| Query         | 実行中のクエリ                                         |
-| InnoDB Status | InnoDBの状態情報                                     |
+| ExecTime      | Threadが現在の状態を維持した時間(秒)                         |
+| Query         | 実行中のクエリ                                        |
+| InnoDB Status | InnoDBの状態情報                                    |
 
 ## Slow Query
 
@@ -29,14 +29,14 @@
 
 収集する項目は次のとおりです。
 
-| 項目            | 説明                       |
-|----------------|---------------------------|
-| Checksum       | 抽象化されたクエリに対するChecksum      |
-| Total ExecTime | 合計実行時間(秒)               |
-| Avg ExecTime   | 平均実行時間(秒)               |
-| Max ExecTime   | 最大実行時間(秒)               |
-| Min ExecTime   | 最小実行時間(秒)               |
-| Query Count    | 発生したクエリ数                  |
+| 項目             | 説明                          |
+|----------------|-----------------------------|
+| Checksum       | 抽象化されたクエリに対するChecksum       |
+| Total ExecTime | 合計実行時間(秒)                   |
+| Avg ExecTime   | 平均実行時間(秒)                   |
+| Max ExecTime   | 最大実行時間(秒)                   |
+| Min ExecTime   | 最小実行時間(秒)                   |
+| Query Count    | 発生したクエリ数                    |
 | Query          | 類似したクエリ同士を結合できるように抽象化されたクエリ |
 
 > [注意]

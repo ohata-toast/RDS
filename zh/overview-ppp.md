@@ -1,1 +1,0 @@
-## Database > RDS for MySQL > 개요

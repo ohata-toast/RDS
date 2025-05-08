@@ -68,8 +68,15 @@ for (let config of configs) {
             let compiled = Handlebars.compile(template);
             const result = compiled(context);
 
-            fs.writeFileSync(`${config.engine}/${language}/${doc}-${config.env}.md`, result);
-            console.log(`${config.engine}/${language}/${doc}-${config.env}.md created`);
+            let fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;
+
+            if (config.engine === 'mysql') {
+                fs.writeFileSync(`${language}/${fileName}`, result);
+            } else {
+                fs.writeFileSync(`${config.engine}/${language}/${fileName}`, result);
+            }
+
+            console.log(`${config.engine}/${language}/${fileName} created`);
         }
     }
 }

@@ -27,7 +27,6 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 ### DB 엔진
 
 아래에 명시된 버전을 사용할 수 있습니다.
-
 | 버전                   | 비고                                                        |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.0</strong> |                                                           |
@@ -139,7 +138,7 @@ DB 인스턴스 생성 시 기본 알림을 설정할 수 있습니다. 기본 �
 
 콘솔에서 생성된 DB 인스턴스를 확인할 수 있습니다. DB 인스턴스 그룹 단위로 묶어서 보거나, 개별 DB 인스턴스로 볼 수 있습니다.
 
-![db-instance-list_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list_ko.png)
+![db-instance-list_ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-list_ko.png)
 
 ❶ DB 인스턴스 화면 모드를 변경할 수 있습니다.
 ❷ 버튼을 클릭하여 그룹 안에 속한 DB 인스턴스를 펼치거나 접을 수 있습니다.
@@ -163,7 +162,7 @@ DB 인스턴스의 상태는 아래와 같은 값들로 구성되며, 사용자�
 
 변경할 수 있는 검색 조건은 아래와 같습니다.
 
-![db-instance-filter_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-filter_ko.png)
+![db-instance-filter_ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-filter_ko.png)
 
 ❶ 파라미터 변경 사항 적용이 필요한 DB 인스턴스를 필터링 조건으로 검색할 수 있습니다.
 
@@ -171,7 +170,7 @@ DB 인스턴스의 상태는 아래와 같은 값들로 구성되며, 사용자�
 
 DB 인스턴스를 선택하면 상세 정보를 볼 수 있습니다.
 
-![db-instance-detail_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail_ko.png)
+![db-instance-detail_ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail_ko.png)
 
 ❶ 접속 정보의 도메인을 클릭하면 IP 주소를 확인할 수 있는 팝업 창이 나타납니다.
 ❷ DB 보안 그룹을 클릭하면 DB 보안 규칙을 확인할 수 있는 팝업 창이 나타납니다.
@@ -197,7 +196,7 @@ DB 인스턴스의 로그 탭에서는 각종 로그 파일을 보거나 다운�
 | server_audit.log | 20MB 30개  | 변경 가능 | `server_audit_logging`<br />`server_audit_file_rotations`              | 
 | mysql-bin.xxxxxx | 5일        | 변경 가능 | `binlog_expire_logs_seconds` (8.X 버전)<br />`expire_logs_days` (5.X 버전) |
 
-![db-instance-detail-log_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log_ko.png)
+![db-instance-detail-log_ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-log_ko.png)
 
 ❶ **로그 보기**를 클릭하면 로그 파일의 내용을 확인할 수 있는 팝업 화면이 나타납니다. 최대 65,535Bytes의 로그를 확인할 수 있습니다.
 ❷ **가져오기**를 클릭하면 DB 인스턴스의 로그 파일을 다운로드할 수 있도록 요청합니다.
@@ -209,7 +208,7 @@ DB 인스턴스의 로그 탭에서는 각종 로그 파일을 보거나 다운�
 
 ❹ 바이너리 로그(binary log)의 경우 2가지 형태로 내려받을 수 있습니다. **가져오기**를 클릭하면 바이너리 로그 형태를 선택할 수 있는 팝업 화면이 나타납니다.
 
-![db-instance-detail-log-bin_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log-bin_ko.png)
+![db-instance-detail-log-bin_ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-log-bin_ko.png)
 
 ❺ mysqlbinlog 유틸리티를 이용하여 바이너리 로그(binary log)를 SQL 파일로 변환 후 내려받으려면 선택합니다.
 
@@ -219,7 +218,7 @@ DB 인스턴스의 **DB 스키마 & 사용자** 탭에서는 데이터베이스�
 
 #### DB 스키마 생성
 
-![db-instance-detail-schema_ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema_ko.png)
+![db-instance-detail-schema_ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-schema_ko.png)
 
 ❶ **생성**을 클릭하면 DB 스키마의 이름을 입력할 수 있는 팝업 창이 나타납니다.
 ❷ DB 스키마 이름을 입력한 뒤 **확인**을 클릭하여 DB 스키마를 생성할 수 있습니다.
@@ -233,14 +232,14 @@ DB 스키마 이름은 아래와 같은 제약 사항이 있습니다.
 
 #### DB 스키마 삭제
 
-![db-instance-detail-schema-delete-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema-delete-ko.png)
+![db-instance-detail-schema-delete-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-schema-delete-ko.png)
 
 ❶ 삭제할 DB 스키마를 선택 후 드롭다운 메뉴를 클릭합니다.
 ❷ **삭제** 메뉴를 클릭하면 삭제 확인 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
 
 #### 사용자 생성
 
-![db-instance-detail-user-create-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-create-ko.png)
+![db-instance-detail-user-create-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-create-ko.png)
 
 ❶ **+ 생성**을 클릭하면 사용자 추가 팝업 화면이 나타납니다.
 ❷ 사용자 ID를 입력합니다.
@@ -307,8 +306,8 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 사용자 계정의 TLS Option을 X509로 설정한 경우 DB 인스턴스에 접속하려면 인증서가 필요합니다.
 
-![db-instance-detail-user-cert-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-ko.png)
-![db-instance-detail-user-cert-down-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-cert-down-ko.png)
+![db-instance-detail-user-cert-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-cert-ko.png)
+![db-instance-detail-user-cert-down-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-cert-down-ko.png)
 
 ❶ 인증서를 내려받을 DB 인스턴스를 선택합니다.
 ❷ 드롭다운 메뉴를 클릭합니다.
@@ -322,7 +321,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 #### 사용자 수정
 
-![db-instance-detail-user-modify-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-modify-ko.png)
+![db-instance-detail-user-modify-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-modify-ko.png)
 
 ❶ 수정할 사용자 행의 **수정**을 클릭하면 사용자 정보를 수정할 수 있는 팝업 화면이 나타납니다.
 ❷ Password를 입력하지 않으면 변경되지 않습니다.
@@ -330,7 +329,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 #### 사용자 삭제
 
-![db-instance-detail-user-delete-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-delete-ko.png)
+![db-instance-detail-user-delete-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-delete-ko.png)
 
 ❶ 삭제할 사용자를 선택 후 드롭다운 메뉴를 클릭합니다.
 ❷ **삭제**를 클릭하면 **삭제 확인** 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
@@ -360,7 +359,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 고가용성 DB 인스턴스의 경우 재시작이 필요한 항목의 변경이 있으면 안정성을 높이고 순단 시간을 줄이기 위하여 장애 조치를 이용한 재시작 기능을 제공합니다.
 
-![modify-ha-popup-ko](https://static.toastoven.net/prod_rds/24.11.12/modify-ha-popup-ko.png)
+![modify-ha-popup-ko](https://static.toastoven.net/prod_rds/mysql/24.11.12/modify-ha-popup-ko.png)
 
 장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](db-instance/#manual-failover)을 참고합니다.
 
@@ -382,7 +381,7 @@ DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 �
 운영체제 업그레이드는 서비스 순단이 발생하기 때문에 주의가 필요합니다. 고가용성 DB 인스턴스는 장애조치를 통해 서비스 순단을 최소화 할 수 있습니다.
 
 현재 DB 인스턴스의 운영체제 정보는 DB 인스턴스 상세 화면에서 확인할 수 있습니다.
-![db-instance-os-upgrade-ko.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-ko.png)
+![db-instance-os-upgrade-ko.png](https://static.toastoven.net/prod_rds/mysql/24.06.11/db-instance-os-upgrade-ko.png)
 
 ❶ DB 인스턴스의 운영체제 정보를 확인할 수 있습니다.
 ❷ 운영체제가 버전 업그레이드 대상일 경우 **운영체제 버전 업그레이드** 버튼이 표시됩니다.
@@ -390,13 +389,12 @@ DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 �
 운영체제 버전 업그레이드는 고가용성 구성인지 아닌지에 따라 다르게 동작합니다. 고가용성의 경우 장애 조치를 이용해 운영체제 버전 업그레이드를 수행합니다. 고가용성이 아닌 경우에는 DB 인스턴스를 재시작하여 운영체제 버전 업그레이드를 수행합니다.
 
 단일 DB 인스턴스의 운영체제 버전 업그레이드 버튼을 클릭하면 아래와 같은 팝업 화면이 나타납니다.
-![db-instance-os-upgrade-single-popup-ko.png](https://static.toastoven.net/prod_rds/24.06.11/db-instance-os-upgrade-simple-popup-ko.png)
+![db-instance-os-upgrade-single-popup-ko.png](https://static.toastoven.net/prod_rds/mysql/24.06.11/db-instance-os-upgrade-simple-popup-ko.png)
 
 고가용성 DB 인스턴스의 운영체제 버전 업그레이드 버튼을 클릭하면 아래와 같은 팝업 화면이 나타납니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](db-instance/#manual-failover)을 참고합니다.
-![os-upgrade-ha-popup-ko.png](https://static.toastoven.net/prod_rds/24.11.12/os-upgrade-ha-popup-ko.png)
+![os-upgrade-ha-popup-ko.png](https://static.toastoven.net/prod_rds/mysql/24.11.12/os-upgrade-ha-popup-ko.png)
 
 ❶ 장애 조치를 사용하는 방법만 제공 됩니다.
-
 
 ## DB 인스턴스 삭제
 
@@ -446,7 +444,7 @@ DB 인스턴스에 연결된 파라미터 그룹의 설정이 변경되어도 �
 
 다음 방법 중 하나를 사용하여 DB 인스턴스에 파라미터 그룹의 변경 사항을 적용할 수 있습니다.
 
-![db-instance-list-parameter-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-parameter-ko.png)
+![db-instance-list-parameter-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-list-parameter-ko.png)
 
 ❶ 대상 DB 인스턴스의 **파라미터**를 클릭하거나
 ❷ 대상 DB 인스턴스를 선택한 후 드롭다운 메뉴에서 **파라미터 그룹 변경 사항 적용** 메뉴를 클릭하거나
@@ -456,7 +454,7 @@ DB 인스턴스에 연결된 파라미터 그룹의 설정이 변경되어도 �
 
 고가용성 DB 인스턴스의 경우 안정성을 높이고 순단 시간을 줄이기 위하여 장애 조치를 이용한 재시작 기능을 제공합니다.
 
-![db-instance-parameter-ha-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-parameter-ha-ko.png)
+![db-instance-parameter-ha-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-parameter-ha-ko.png)
 
 장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](db-instance/#manual-failover)을 참고합니다.
 
@@ -491,7 +489,7 @@ DB 인스턴스에 연결된 파라미터 그룹의 설정이 변경되어도 �
 
 읽기 복제본을 생성하려면 콘솔에서
 
-![db-instance-replica-create-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-replica-create-ko.png)
+![db-instance-replica-create-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-replica-create-ko.png)
 
 ❶ 원본 DB 인스턴스를 선택한 뒤 **읽기 복제본 생성**을 클릭하면
 
@@ -583,7 +581,7 @@ MySQL을 재시작하거나 고가용성 DB 인스턴스를 수동으로 장애 
 
 DB 인스턴스 재시작을 하려면 콘솔에서
 
-![db-instance-restart-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-ko.png)
+![db-instance-restart-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-restart-ko.png)
 
 ❶ 재시작을 원하는 DB 인스턴스를 선택 후 드롭다운 메뉴에서 **DB 인스턴스 재시작** 메뉴를 클릭합니다.
 
@@ -599,7 +597,7 @@ DB 인스턴스의 MySQL이 정상 동작하지 않는 경우 강제로 재시�
 
 DB 인스턴스 강제 재시작을 하려면 콘솔에서
 
-![db-instance-restart-force-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-restart-force-ko.png)
+![db-instance-restart-force-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-restart-force-ko.png)
 
 ❶ 강제 재시작을 원하는 DB 인스턴스를 선택 후 드롭다운 메뉴에서 **DB 인스턴스 강제 재시작** 메뉴를 클릭합니다.
 
@@ -607,11 +605,11 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 
 삭제 보호를 활성화하면 실수로 DB 인스턴스가 삭제되지 않도록 보호할 수 있습니다. 삭제 보호를 비활성화할 때까지 해당 DB 인스턴스를 삭제할 수 없습니다. 삭제 보호 설정을 변경하려면
 
-![db-instance-deletion-protection-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-deletion-protection-ko.png)
+![db-instance-deletion-protection-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-deletion-protection-ko.png)
 
 ❶ 삭제 보호 설정을 변경하려는 DB 인스턴스를 선택 후 드롭다운 메뉴에서 **삭제 보호 설정 변경** 메뉴를 클릭하면 팝업 창이 나타납니다.
 
-![deletion-protection-popup-ko](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-ko.png)
+![deletion-protection-popup-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/deletion-protection-popup-ko.png)
 
 ❷ 삭제 보호 설정을 변경한 후 **확인**을 클릭합니다.
 
@@ -642,6 +640,8 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 
 > [주의]
 > 마스터와 예비 마스터 간의 바이너리 로그(binary log)의 position number 값이 100,000,000 이상 차이가 날 경우 장애 조치가 되지 않습니다.
+> `replicate-ignore-db` 혹은 `replicate-ignore-table` 이 적용된 경우, 해당 DB 혹은 테이블의 변경 사항은 복제되지 않으므로 장애 조치에 실패할 수 있습니다.
+
 
 ### 장애 조치된 마스터
 
@@ -656,7 +656,7 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 
 장애 조치된 마스터를 복구하려면 콘솔에서
 
-![db-instance-failover-repair-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-repair-ko.png)
+![db-instance-failover-repair-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-failover-repair-ko.png)
 
 ❶ 복구를 원하는 장애 조치된 마스터를 선택 후 드롭다운 메뉴에서 **장애 조치된 마스터 복구** 메뉴를 클릭합니다.
 
@@ -678,7 +678,7 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 
 장애 조치된 마스터를 재구축하려면 콘솔에서
 
-![db-instance-failover-rebuild-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-rebuild-ko.png)
+![db-instance-failover-rebuild-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-failover-rebuild-ko.png)
 
 ❶ 재구축을 원하는 장애 조치된 마스터를 선택 후 드롭다운 메뉴에서 **장애 조치된 마스터 재구축** 메뉴를 클릭합니다.
 
@@ -688,7 +688,7 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 
 장애 조치된 마스터를 분리하려면 콘솔에서
 
-![db-instance-failover-split-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-failover-split-ko.png)
+![db-instance-failover-split-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-failover-split-ko.png)
 
 ❶ 분리를 원하는 장애 조치된 마스터를 선택 후 드롭다운 메뉴에서 **장애 조치된 마스터 분리** 메뉴를 클릭합니다.
 
@@ -721,7 +721,7 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 
 예비 마스터에 변경 사항을 먼저 적용한 뒤 그 추이를 관찰하거나, 정확한 시간에 장애 조치를 실행하고자 할 때 콘솔에서 장애 조치 시점을 직접 제어할 수 있습니다. 장애 조치 수동 제어를 선택하면 예비 마스터가 재시작된 후 ❶ 콘솔에 **장애 조치** 버튼이 표시됩니다. 이 버튼을 클릭하면 장애 조치가 실행되며, 최대 5일간 실행을 대기할 수 있습니다. 5일 이내에 장애 조치를 실행하지 않을 경우 해당 작업은 자동으로 취소됩니다.
 
-![db-instance-ha-wait-manual-failover-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-ko.png)
+![db-instance-ha-wait-manual-failover-ko](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-ha-wait-manual-failover-ko.png)
 
 > [주의]
 > 장애 조치를 대기하는 동안에는 자동 장애 조치가 되지 않습니다.
@@ -918,7 +918,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### 데이터 가져오는 도중 `ERROR 1418` 오류가 발생할 경우
 
 * `ERROR 1418` 오류는 mysqldump 파일의 함수 선언에 NO SQL, READS SQL DATA, DETERMINISTIC이 없으며 바이너리 로그가 활성화된 상태일 때 발생합니다.
-  * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL 문서를 참고합니다.
+  * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) 문서를 참고합니다.
 * 이를 해결하기 위해서는 mysqldump 파일을 적용할 DB 인스턴스의 `log_bin_trust_function_creators` 파라미터의 값을 `1`로 변경해야 합니다.
 
 ### 복제를 이용하여 내보내기
@@ -1062,11 +1062,11 @@ DB 구성에 따라 특정 DB 인스턴스를 선택하여 마이그레이션 �
 
 이름 옆에 마이그레이션 버튼이 있는 DB 인스턴스가 점검 대상 인스턴스입니다.
 
-![rds_planed_migration_0](https://static.toastoven.net/prod_rds/planned_migration_alarm/image0_kr.png)
+![rds_planed_migration_0](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/image0_kr.png)
 
 마이그레이션 버튼 위에 마우스 포인터를 올리면 자세한 점검 일정을 확인할 수 있습니다.
 
-![rds_planed_migration_1](https://static.toastoven.net/prod_rds/planned_migration_alarm/image1_kr.png)
+![rds_planed_migration_1](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/image1_kr.png)
 
 #### 2. 점검 대상 DB 인스턴스에 접속 중인 응용 프로그램을 종료해야 합니다.
 
@@ -1075,13 +1075,13 @@ DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취�
 
 #### 3. 점검 대상 DB 인스턴스를 선택하고 마이그레이션 버튼을 클릭한 후 DB 인스턴스 마이그레이션 확인을 묻는 창이 나타나면 확인 버튼을 클릭합니다.
 
-![rds_planed_migration_2](https://static.toastoven.net/prod_rds/planned_migration_alarm/image2_kr.png)
+![rds_planed_migration_2](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/image2_kr.png)
 
 #### 4. DB 인스턴스 마이그레이션이 끝날 때까지 대기합니다.
 
 DB 인스턴스 상태가 변경되지 않는다면 '새로 고침'하십시오.
 
-![rds_planed_migration_3](https://static.toastoven.net/prod_rds/planned_migration_alarm/image3_kr.png)
+![rds_planed_migration_3](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/image3_kr.png)
 
 DB 인스턴스가 마이그레이션되는 동안에는 아무런 조작을 할 수 없습니다.
 DB 인스턴스 마이그레이션이 정상적으로 완료되지 않으면 자동으로 관리자에게 보고되며, NHN Cloud에서 별도로 연락을 드립니다.

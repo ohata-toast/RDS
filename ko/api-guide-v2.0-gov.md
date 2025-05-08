@@ -1,7 +1,7 @@
 ## Database > RDS for MySQL > API 가이드
 
-| 리전        | 엔드포인트                                             |
-|-----------|---------------------------------------------------|
+| 리전        | 엔드포인트                                         |
+|-----------|-----------------------------------------------|
 | 한국(판교) 리전 | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
 
 ## Monitoring
@@ -10,7 +10,7 @@
 
 - 통계 정보 조회에 필요한 통계 항목(metric)을 조회합니다.
 
-```
+```http
 GET /v2.0/metrics
 ```
 
@@ -24,16 +24,16 @@ GET /v2.0/metrics
 
 ```json
 {
-  "metrics": [
-    {
-      "measureName": "CPU_USAGE",
-      "unit": "%"
-    },
-    {
-      "measureName": "NETWORK_SENT",
-      "unit": "Bytes/min"
-    }
-  ]
+    "metrics": [
+        {
+            "measureName": "CPU_USAGE",
+            "unit": "%"
+        },
+        {
+            "measureName": "NETWORK_SENT",
+            "unit": "Bytes/min"
+        }
+    ]
 }
 ```
 
@@ -41,7 +41,7 @@ GET /v2.0/metrics
 
 - 일정 주기마다 수집된 통계 정보들을 조회합니다.
 
-```
+```http
 GET /rds/api/v2.0/metric-statistics
 ```
 
