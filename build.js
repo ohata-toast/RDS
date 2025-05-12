@@ -2,7 +2,7 @@ const fs = require('fs');
 const Handlebars = require('handlebars');
 require('handlebars-helpers')();
 
-const languages = ['ko', 'en', 'ja'];
+const languages = ['ko', 'en', 'ja', 'zh'];
 const docs = [
     'analysis',
     'api-guide-v2.0',
@@ -63,13 +63,26 @@ for (let config of configs) {
                 continue;
             }
 
-            const template = fs.readFileSync(`template/${language}/${doc}.md`, 'utf-8');
+            let template;
+
+            if (language === 'zh') {
+                template = fs.readFileSync(`template/en/${doc}.md`, 'utf-8');
+            } else {
+                template = fs.readFileSync(`template/${language}/${doc}.md`, 'utf-8');
+            }
 
             let compiled = Handlebars.compile(template);
             const result = compiled(context);
 
-            fs.writeFileSync(`${config.engine}/${language}/${doc}-${config.env}.md`, result);
-            console.log(`${config.engine}/${language}/${doc}-${config.env}.md created`);
+            let fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;
+
+            if (config.engine === 'mysql') {
+                fs.writeFileSync(`${language}/${fileName}`, result);
+            } else {
+                fs.writeFileSync(`${config.engine}/${language}/${fileName}`, result);
+            }
+
+            console.log(`${config.engine}/${language}/${fileName} created`);
         }
     }
 }

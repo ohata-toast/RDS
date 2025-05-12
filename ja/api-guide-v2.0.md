@@ -3,8 +3,8 @@
 | リージョン         | エンドポイント                                       |
 |---------------|-----------------------------------------------|
 | 韓国(パンギョ)リージョン | https://kr1-rds-mysql.api.nhncloudservice.com |
-| 韓国(坪村)リージョン   | https://kr2-rds-mysql.api.nhncloudservice.com |
-| 日本リージョン       | https://jp1-rds-mysql.api.nhncloudservice.com |
+| 韓国(ピョンチョン)リージョン | https://kr2-rds-mysql.api.nhncloudservice.com |
+| 日本リージョン | https://jp1-rds-mysql.api.nhncloudservice.com |
 
 ## Monitoring
 
@@ -12,7 +12,7 @@
 
 - 統計情報照会に必要な統計項目(metric)を照会します。
 
-```
+```http
 GET /v2.0/metrics
 ```
 
@@ -43,7 +43,7 @@ GET /v2.0/metrics
 
 - 一定周期ごとに収集された統計情報を照会します。
 
-```
+```http
 GET /rds/api/v2.0/metric-statistics
 ```
 

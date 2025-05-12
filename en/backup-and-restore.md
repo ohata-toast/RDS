@@ -14,21 +14,21 @@ high-availability configuration or back up only increments of data since the pre
     RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
 
 | MySQL version | XtraBackup version |
-|----------|---------------|
-| 5.7.15   | 2.4.28        |
-| 5.7.19   | 2.4.28        |
-| 5.7.26   | 2.4.28        |
-| 5.7.33   | 2.4.28        |
-| 5.7.37   | 2.4.28        |
-| 8.0.18   | 8.0.32        |
-| 8.0.23   | 8.0.32        |
-| 8.0.28   | 8.0.32        |
-| 8.0.32   | 8.0.32        |
-| 8.0.33   | 8.0.33        |
-| 8.0.34   | 8.0.34        |
-| 8.0.35   | 8.0.35        |
-| 8.0.36   | 8.0.35        |
-| 8.0.40   | 8.0.35        |
+|---------------|--------------------|
+| 5.7.15        | 2.4.28             |
+| 5.7.19        | 2.4.28             |
+| 5.7.26        | 2.4.28             |
+| 5.7.33        | 2.4.28             |
+| 5.7.37        | 2.4.28             |
+| 8.0.18        | 8.0.32             |
+| 8.0.23        | 8.0.32             |
+| 8.0.28        | 8.0.32             |
+| 8.0.32        | 8.0.32             |
+| 8.0.33        | 8.0.33             |
+| 8.0.34        | 8.0.34             |
+| 8.0.35        | 8.0.35             |
+| 8.0.36        | 8.0.35             |
+| 8.0.40        | 8.0.35             |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -36,6 +36,7 @@ high-availability configuration or back up only increments of data since the pre
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.
+
 ## Backup Type
 
 Backups can be categorized into manual and automa backups.
@@ -47,8 +48,8 @@ When creating a manual backup, you must specify a name for the backup, with the 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
 
-![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
-![backup-list-en](https://static.toastoven.net/prod_rds/24.11.12/backup-list-en.png)
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-backup-en.png)
+![backup-list-en](https://static.toastoven.net/prod_rds/mysql/24.11.12/backup-list-en.png)
 
 **Create a manual full backup**
 
@@ -102,7 +103,7 @@ When incremental backups are scheduled according to [Auto Backup Strategy](#Set-
 
 When creating and modifying DB instances, you can specify settings that will be applied to backups.
 
-![db-instance-backup-form-en](https://static.toastoven.net/prod_rds/24.11.12/db-instance-backup-form-en.png)
+![db-instance-backup-form-en](https://static.toastoven.net/prod_rds/mysql/24.11.12/db-instance-backup-form-en.png)
 
 ### Common Settings
 The following topics are common to both auto and manual backups.
@@ -176,9 +177,9 @@ All backup files are uploaded to the internal backup storage and stored. For man
 
 After a backup, you can export the backup file to user object storage. This is not supported for incremental backups.
 
-![db-instance-list-export-obs-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-en.png)
+![db-instance-list-export-obs-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-list-export-obs-en.png)
 
-![db-instance-list-export-obs-modal-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-export-obs-modal-en.png)
+![db-instance-list-export-obs-modal-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-list-export-obs-modal-en.png)
 
 ❶ Select the DB instance to back up and click **Export backup files to object storage** after backup from the drop-down menu, and the settings pop-up screen will appear.
 ❷ Enter the tenant ID of the object storage where the backup will be saved. You can find the tenant ID in the API endpoint settings.
@@ -191,11 +192,11 @@ After a backup, you can export the backup file to user object storage. This is n
 
 You can export backup files stored in internal backup storage to user object storage. Not supported for incremental backups.
 
-![db-instance-detail-backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-en.png)
+![db-instance-detail-backup-export-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-backup-export-en.png)
 
 ❶ On the Details tab of the source DB instance from which the backup was taken, select the backup file to export and click **Export Backup to Object Storage**, and a pop-up screen will appear to export the backup.
 
-![backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/backup-export-en.png)
+![backup-export-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/backup-export-en.png)
 
 Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
 
@@ -214,13 +215,13 @@ Backups allow you to restore data to any point in time. Restoration always creat
 
 You can restore using only the backup file, so you don't need the original DB instance from which the backup was taken. To restore a snapshot from the console,
 
-![db-instance-snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-en.png)
+![db-instance-snapshot-restoration-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-snapshot-restoration-en.png)
 
 ❶ Select the backup file you want to restore On the details tab of the dB instance, and then click **Restore Snapshot**to go to the Restore DB instance screen.
 
 Or
 
-![snapshot-restoration-en](https://static.toastoven.net/prod_rds/24.03.12/snapshot-restoration-en.png)
+![snapshot-restoration-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/snapshot-restoration-en.png)
 
 ❶ On the Backup tab, select the backup file you want to restore, and then click **Restore Snapshot**.
 
@@ -236,7 +237,7 @@ difficult to restore to the desired point in time. For the cases listed below, y
 
 To restore a point in time from the console
 
-![point-in-time-restoration-list-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-list-en.png)
+![point-in-time-restoration-list-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/point-in-time-restoration-list-en.png)
 
 ❶ Select the DB instance you want to restore to a point in time and click **\+ Restore Point-In-Time** to go to the page where you can set up a point in time restore.
 
@@ -244,15 +245,15 @@ To restore a point in time from the console
 
 When restoring with a timestamp, proceed with the restoration based on the backup file closest to the selected point in time, and then applies a binary log up to the desired point in time.
 
-![point-in-time-restoration-01-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-01-en.png)
+![point-in-time-restoration-01-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/point-in-time-restoration-01-en.png)
 
 ❶ Select a restore method.
 
-![point-in-time-restoration-02-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-02-en.png)
+![point-in-time-restoration-02-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/point-in-time-restoration-02-en.png)
 
 ❷ Select a restore time. You can restore to the most recent point in time, or you can enter a specific point in time.
 
-![point-in-time-restoration-03-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-03-en.png)
+![point-in-time-restoration-03-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/point-in-time-restoration-03-en.png)
 
 ❸ Click **Confirm the last query to be restored** to display a pop-up screen where you can confirm the last query to be restored.
 
@@ -261,7 +262,7 @@ When restoring with a timestamp, proceed with the restoration based on the backu
 
 The restore with binary log process first restores to the selected backup file and then applies the binary log to the desired location.
 
-![point-in-time-restoration-04-en](https://static.toastoven.net/prod_rds/24.03.12/point-in-time-restoration-04-en.png)
+![point-in-time-restoration-04-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/point-in-time-restoration-04-en.png)
 
 ❹ To restore to a binary log, you must first select a backup file.
 ❺ Select a binary log file.

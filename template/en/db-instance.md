@@ -664,6 +664,7 @@ from the time the new backup was performed on the promoted master.
 
 > [Caution]
 > If the position number value of the binary log between master and candidate master differs by more than 100,000,000, there is no failover.
+> `replicate-ignore-db` 혹은 `replicate-ignore-table` 이 적용된 경우, 해당 DB 혹은 테이블의 변경 사항은 복제되지 않으므로 장애 조치에 실패할 수 있습니다.
 
 ### Failed over Master
 
