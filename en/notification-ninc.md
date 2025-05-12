@@ -150,11 +150,11 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_67_01 | INSTANCE          | Yes          | OS version upgrade ended                                                      |
 | INSTC_67_04 | INSTANCE          | Yes          | OS version upgrade failed                                                     |
 | INSTC_68_01 | INSTANCE          | Yes          | Network communication failed                                                  |
-| INSTC_69_00 | INSTANCE          | Yes            | Waiting for manual control of failover                                                            |
-| INSTC_69_01 | INSTANCE          | Yes            | Manual control of failover succeeded                                                                |
-| INSTC_69_04 | INSTANCE          | Yes            | Manual control of failover timeout                                                              |
-| INSTC_70_01 | INSTANCE          | Yes            | High availability normalized                                                                      |
-| INSTC_71_01 | INSTANCE          | Yes            | High availability stopped                                                                       |
+| INSTC_69_00 | INSTANCE          | Yes          | Waiting for manual control of failover                                        |
+| INSTC_69_01 | INSTANCE          | Yes          | Manual control of failover succeeded                                          |
+| INSTC_69_04 | INSTANCE          | Yes          | Manual control of failover timeout                                            |
+| INSTC_70_01 | INSTANCE          | Yes          | High availability normalized                                                  |
+| INSTC_71_01 | INSTANCE          | Yes          | High availability stopped                                                     |
 | INSTC_73_00 | INSTANCE          | Yes          | Auto scale storage started                                                    |
 | INSTC_73_01 | INSTANCE          | Yes          | Auto scale storage completed                                                  |
 | INSTC_73_04 | INSTANCE          | Yes          | Auto scale storage failed                                                     |
@@ -169,7 +169,7 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 
 You can subscribe to events by event type, code, and source. When you subscribe by event type, you will be notified of all the event codes included in the event type. If the notification is too broad, you can subscribe by event code and source. You can select only project members as the users to receive notifications. By default, event notifications are sent by email, and additional event notifications are sent by SMS only if mobile phone number with real name authentication is registered.
 
-![event_subscription_01_en](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/event_subscription_01_en.png)
+![event_subscription_01_en](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/event_subscription_01_en.png)
 
 * ❶ When you click **Register Event Subscription**, a pop-up window appears to subscribe to events.
 * ❷ Select the event type you want to subscribe to. Event code that you can select can be changed depending on the event type.
@@ -186,7 +186,7 @@ You can manage users as groups to receive notifications. Notification target mus
 
 ### Create User Group
 
-![user_group_01_en](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.06.13/user_group_01_en.png)
+![user_group_01_en](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.06.13/user_group_01_en.png)
 
 * ❶ When you click**Create user group**, a pop-up screen appears where you can create user groups.
 * ❷ Users added to the user group appear.
@@ -204,7 +204,7 @@ notification group.
 
 ### Create Notification Group
 
-![notification_group_01_en.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_01_en.png)
+![notification_group_01_en.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/notification_group_01_en.png)
 
 * ❶ When you click **Create Group**, a pop-up appears where you can create an notification group.
 * ❷ Select how you want to be notified.
@@ -223,7 +223,7 @@ Performance metrics items that can be monitored are as follows.
 
 ### Add Monitoring Setting
 
-![notification_group_02_en.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_02_en.png)
+![notification_group_02_en.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/notification_group_02_en.png)
 
 * ❶ When you click **Monitoring Settings**, a pop-up appears where you can change the monitoring settings.
 * ❷ Click **Add Monitoring Settings** to add new monitoring settings.
@@ -231,7 +231,7 @@ Performance metrics items that can be monitored are as follows.
 
 ### Change and Delete Monitoring Settings
 
-![notification_group_03_en.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_03_en.png)
+![notification_group_03_en.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/notification_group_03_en.png)
 
 * ❶ Click the button to change the added monitoring settings.
 * ❷ Click the button to delete the added monitoring settings. 

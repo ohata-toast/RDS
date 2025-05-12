@@ -1,12 +1,23 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2025. 04. 16.
+### 2025. 05. 13.
 
 #### 기능 추가 및 개선
 
-* API v3.0 추가 및 변경
-  * 로그 파일 목록 보기 API 추가
-  * 로그 파일 내보내기 API 추가
+* VIP(Virtual IP)를 사용할 수 있도록 개선
+  * 신규로 생성하는 DB 인스턴스부터 VIP를 발급하며, VIP는 항상 마스터 DB 인스턴스를 바라보도록 설정됩니다. 기존 DB 인스턴스는 콘솔에서 [VIP 추가] 버튼을 클릭해 직접 발급할 수 있습니다.
+* 고가용성이 비정상인 상황에서 콘솔을 통해 명시적으로 중지할 수 있도록 개선
+* 감시 설정에 소수값을 입력할 수 있도록 개선
+* 사용자 그룹 이름에 한글을 입력할 수 있도록 개선
+* DB 인스턴스의 파라미터 그룹 변경 시 변경 내역 모달 창에서 재시작 여부를 확인할 수 있도록 개선
+
+### April 16, 2025
+
+#### Added Features and Updates
+
+* Added and modified API v3.0
+  * Added the API to list Log files
+  * Added the Export Log file API
 
 ### February 13, 2025
 

@@ -169,7 +169,7 @@
 
 이벤트 유형, 코드 및 소스로 구분하여 이벤트를 구독할 수 있습니다. 이벤트 유형으로 구독하면 이벤트 유형에 포함된 모든 이벤트 코드의 알림을 받습니다. 알림이 너무 광범위할 경우 이벤트 코드와 소스로 세분화해 구독할 수 있습니다. 프로젝트 멤버만 알림을 받을 사용자로 선택할 수 있습니다. 기본적으로 이메일로 이벤트 알림이 발송되며, 실명을 인증한 휴대전화 번호가 등록된 경우에만 SMS로 추가 이벤트 알림이 발송됩니다.
 
-![event_subscription_01_ko](https://static.toastoven.net/prod_rds/23.04.11/event_subscription_01_ko.png)
+![event_subscription_01_ko](https://static.toastoven.net/prod_rds/mysql/23.04.11/event_subscription_01_ko.png)
 
 * ❶ **이벤트 구독 등록**을 누르면 이벤트 구독을 등록할 수 있는 팝업 창이 나타납니다.
 * ❷ 구독할 이벤트 유형을 선택합니다. 이벤트 유형에 따라 선택할 수 있는 이벤트 코드가 변경됩니다.
@@ -187,13 +187,13 @@
 
 ### 사용자 그룹 생성
 
-![user_group_01_ko](https://static.toastoven.net/prod_rds/23.06.13/user_group_01_ko.png)
+![user_group_01_ko](https://static.toastoven.net/prod_rds/mysql/23.06.13/user_group_01_ko.png)
 
 * ❶ **사용자 그룹 생성**을 누르면 사용자 그룹을 생성할 수 있는 팝업 창이 나타납니다.
 * ❷ 사용자 그룹에 추가된 사용자가 나타납니다.
 * ❸ **x**를 누르면 추가된 사용자를 제외할 수 있습니다.
 * ❹ 사용자 목록에 사용자가 많을 경우 검색 조건을 입력하여 결과를 제한할 수 있습니다.
-* ❺ **전체 프로젝트 멤버**를 통보 대상에 추가합니다.
+* ❺ **전체 프로젝트 멤버**를 통보 대상에 추가합니다. 
   * 추가 시 개별 사용자 추가는 취소됩니다.
   * 해당 사용자 그룹을 이용하여 알람을 전송하게 되는 경우, 당시 전체 프로젝트 멤버 대상으로 알람을 전송합니다.
 * ❻ **확인**를 눌러 사용자 그룹에 사용자를 추가합니다.
@@ -204,7 +204,7 @@
 
 ### 알림 그룹 생성
 
-![notification_group_01_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_01_ko.png)
+![notification_group_01_ko.png](https://static.toastoven.net/prod_rds/mysql/23.04.11/notification_group_01_ko.png)
 
 * ❶ **그룹 만들기**를 누르면 알림 그룹을 생성할 수 있는 팝업 창이 나타납니다.
 * ❷ 알림을 받을 방법을 선택합니다.
@@ -220,55 +220,55 @@
 
 감시 가능한 성능 지표 항목은 다음과 같습니다.
 
-| 힝목                         | 단위                 |
-|----------------------------|--------------------|
-| CPU 사용률                    | %                  |
-| CPU 사용량(IO Wait)           | %                  |
-| CPU 사용량(Nice)              | %                  |
-| CPU 사용량(System)            | %                  |
-| CPU 사용량(User)              | %                  |
-| Load Average 1M            |                    |
-| Load Average 5M            |                    |
-| Load Average 15M           |                    |
-| 메모리 사용량                    | %                  |
-| 메모리 사용량(바이트)               | MB                 |
-| 메모리 여유량(바이트)               | MB                 |
-| 메모리 버퍼(바이트)                | MB                 |
-| 캐시된 메모리(바이트)               | MB                 |
-| 스왑 사용량                     | MB                 |
-| 스왑 전체 크기                   | MB                 |
-| Storage 사용량                | %                  |
-| Storage 남은 사용량             | MB                 |
-| Storage IO Read            | KB/sec             |
-| Storage IO Write           | KB/sec             |
-| 데이터 스토리지 결함                | 비정상: 0, 정상: 1      |
-| Network in BPS             | KB/sec             |
-| Network out BPS            | KB/sec             |
-| Database Connection Status | 접속 불가: 0, 접속 가능: 1 |
-| Queries Per Second         | counts/sec         |
-| Connection Total           | counts             |
-| Connection Running         | counts             |
-| Connection Cached          | counts             |
-| Connection Ratio           | counts             |
-| Database Activity Select   | counts/sec         |
-| Database Activity Insert   | counts/sec         |
-| Database Activity Update   | counts/sec         |
-| Database Activity Delete   | counts/sec         |
-| Database Activity Replace  | counts/sec         |
-| Database Activity Call     | counts/sec         |
-| Buffer Pool Total          | MB                 |
-| Buffer Pool Used           | MB                 |
-| Slow Query                 | counts/min         |
-| 복제 딜레이                     | sec                |
-| Row Access Index           | counts/min         |
-| Row Access Full scan       | counts/min         |
-| Database Replication IO Thread Status  | 비정상: 0, 정상: 1     |
-| Database Replication SQL Thread Status | 비정상: 0, 정상: 1     |
-| Database Replication Threads Status    | 비정상: 0, 정상: 1     |
+| 힝목                                     | 단위                 |
+|----------------------------------------|--------------------|
+| CPU 사용률                                | %                  |
+| CPU 사용량(IO Wait)                       | %                  |
+| CPU 사용량(Nice)                          | %                  |
+| CPU 사용량(System)                        | %                  |
+| CPU 사용량(User)                          | %                  |
+| Load Average 1M                        |                    |
+| Load Average 5M                        |                    |
+| Load Average 15M                       |                    |
+| 메모리 사용량                                | %                  |
+| 메모리 사용량(바이트)                           | MB                 |
+| 메모리 여유량(바이트)                           | MB                 |
+| 메모리 버퍼(바이트)                            | MB                 |
+| 캐시된 메모리(바이트)                           | MB                 |
+| 스왑 사용량                                 | MB                 |
+| 스왑 전체 크기                               | MB                 |
+| Storage 사용량                            | %                  |
+| Storage 남은 사용량                         | MB                 |
+| Storage IO Read                        | KB/sec             |
+| Storage IO Write                       | KB/sec             |
+| 데이터 스토리지 결함                            | 비정상: 0, 정상: 1      |
+| Network in BPS                         | KB/sec             |
+| Network out BPS                        | KB/sec             |
+| Database Connection Status             | 접속 불가: 0, 접속 가능: 1 |
+| Queries Per Second                     | counts/sec         |
+| Connection Total                       | counts             |
+| Connection Running                     | counts             |
+| Connection Cached                      | counts             |
+| Connection Ratio                       | counts             |
+| Database Activity Select               | counts/sec         |
+| Database Activity Insert               | counts/sec         |
+| Database Activity Update               | counts/sec         |
+| Database Activity Delete               | counts/sec         |
+| Database Activity Replace              | counts/sec         |
+| Database Activity Call                 | counts/sec         |
+| Buffer Pool Total                      | MB                 |
+| Buffer Pool Used                       | MB                 |
+| Slow Query                             | counts/min         |
+| 복제 딜레이                                 | sec                |
+| Row Access Index                       | counts/min         |
+| Row Access Full scan                   | counts/min         |
+| Database Replication IO Thread Status  | 비정상: 0, 정상: 1      |
+| Database Replication SQL Thread Status | 비정상: 0, 정상: 1      |
+| Database Replication Threads Status    | 비정상: 0, 정상: 1      |
 
 ### 감시 설정 추가
 
-![notification_group_02_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_02_ko.png)
+![notification_group_02_ko.png](https://static.toastoven.net/prod_rds/mysql/23.04.11/notification_group_02_ko.png)
 
 * ❶ **감시 설정**을 누르면 감시 설정을 변경할 수 있는 팝업 창이 나타납니다.
 * ❷ **감시 설정 추가** 를 눌러 신규 감시 설정을 추가합니다.
@@ -276,7 +276,7 @@
 
 ### 감시 설정 변경 및 삭제
 
-![notification_group_03_ko.png](https://static.toastoven.net/prod_rds/23.04.11/notification_group_03_ko.png)
+![notification_group_03_ko.png](https://static.toastoven.net/prod_rds/mysql/23.04.11/notification_group_03_ko.png)
 
 * ❶ 버튼을 클릭하면 추가된 감시 설정을 변경할 수 있습니다.
 * ❷ 버튼을 클릭하면 추가된 감시 설정을 삭제할 수 있습니다.

@@ -1,0 +1,23 @@
+{
+    "engine": {
+        "lowerCase": "mysql",
+        "upperCase": "MYSQL",
+        "pascalCase": "MySQL",
+        "sampleDbVersionCode": "MYSQL_V8028",
+        "sampleDbVersionName": "MySQL 8.0.28"
+    },
+    "env": "ncgn",
+    "url": {
+        "cdn": "https://static.toastoven.net/prod_rds/mysql"
+    },
+    "regions": [
+        {
+            "text": {
+                "ko": "한국(판교) 리전",
+                "en": "Korea (Pangyo) region",
+                "ja": "韓国(パンギョ)リージョン"
+            },
+            "endpoint": "https://kr1-rds-mysql.api.gncloud.go.kr"
+        }
+    ]
+}

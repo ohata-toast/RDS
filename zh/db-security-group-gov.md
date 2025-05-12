@@ -1,36 +1,37 @@
-## Database > RDS for MySQL > DB 보안 그룹
+## Database > RDS for MySQL > DB Security Group
 
-## DB 보안 그룹
+## DB Security Group
 
-DB 보안 그룹은 DB 인스턴스의 송수신 트래픽을 제어하여 DB 인스턴스를 보호할 목적으로 사용합니다. 규칙으로 지정한 트래픽은 허용하고, 나머지 트래픽은 차단하는 '포지티브 시큐리티 모델(positive security model)'을 사용합니다. DB 인스턴스에 DB 보안 그룹을 연결하지 않을 경우 모든 송수신 트래픽이 허용되지 않습니다. DB 보안 그룹을 생성하더라도 DB 인스턴스에 적용하지 않으면 DB 보안 그룹의 규칙이 적용되지 않습니다. DB 인스턴스에 다수의 DB 보안 그룹을 적용할 수 있습니다. DB 보안 그룹의 주요 특징은 아래와 같습니다.
+DB security groups are used to protect DB instances by controlling the incoming and outgoing traffic of DB instances. The positive security model is used to only allow the traffic specified by rules and block the rest. Unless you connect DB security groups to DB instances, all incoming and outgoing traffic is not allowed. Even if the DB security group is created, the rule will not apply if the DB security group is not set for the DB instance. You can apply multiple DB security groups to DB
+instances. Main features of DB security group are as follows.
 
-* DB 보안 그룹은 'stateful'로 동작하기 때문에 DB 보안 규칙으로 한 번 연결된 세션은 반대 방향의 규칙이 없더라도 허용됩니다.
-* 예를 들어 DB 인스턴스로 향하는 TCP 3306의 첫 번째 패킷이 '수신 TCP PORT 3306' 규칙에 따라 통과되었다면, DB 인스턴스에서 TCP 3306 포트를 출발지로 하여 전송되는 패킷은 차단되지 않습니다.
-* 다만, 일정 시간 규칙에 부합하는 패킷이 들어오지 않아 세션이 만료되면 반대 방향의 패킷도 차단됩니다.
-* DB 보안 규칙은 하나씩 추가하는 것보다 범위를 지정하는 것이 효율 면에서 유리합니다. DB 보안 규칙이 증가하면 성능 저하가 발생할 수 있습니다.
-* 세션의 상태가 맞지 않는 트래픽은 차단될 수 있습니다.
+* Because DB security groups act as 'stateful', sessions connected once by DB security rules are allowed even if there are no rules in the opposite direction.
+* For example, if the first packet on TCP 3306 destined for a DB instance is passed by the 'Incoming TCP PORT 3306' rule, packets sent from the DB instance to the TCP 3306 port are not blocked.
+* However, packets in the opposite direction are also blocked when the session expires because no packets compliant with the rule are received for a certain period of time.
+* Defining the scope of DB security rules is more efficient than adding them one by one. Increasing DB security rules can cause performance degradation.
+* Traffic that is out of session state can be blocked.
 
-DB 보안 그룹은 이름과 설명, 다수의 DB 보안 규칙으로 구성되며, DB 보안 그룹의 이름은 아래와 같은 제약 사항이 있습니다.
+DB security group consists of name, description, and a number of DB security rules, and DB security group name has the following restrictions.
 
-* DB 보안 그룹 이름은 리전별로 고유해야 합니다.
-* DB 보안 그룹 이름은 1~100 사이의 알파벳, 숫자, - _ . 만 사용할 수 있으며, 첫 번째 문자는 알파벳이어야 합니다.
+* Must be unique for each region.
+* Must consist of alphabets, numbers, - _ between 1 and 100 characters. and the first character has must be an alphabet.
 
-### DB 보안 그룹 적용
+### Applying DB Security Groups
 
-DB 인스턴스를 생성할 때 적용할 DB 보안 그룹을 선택할 수 있습니다. DB 인스턴스에 다수의 DB 보안 그룹을 적용할 수 있습니다. 적용된 모든 DB 보안 그룹의 규칙들이 DB 인스턴스에 적용됩니다. 적용된 DB 인스턴스는 DB 인스턴스 수정 화면에서 자유롭게 변경할 수 있습니다.
+When you create a DB instance, you can select the DB security group to apply. You can apply multiple DB security groups to DB instances. The rules of DB security groups already applied also apply to DB instances. You can freely change the applied DB instance on the Modify DB Instance screen.
 
-## DB 보안 규칙
+## DB Security Rules
 
-하나의 DB 보안 그룹에 다수의 DB 보안 규칙을 생성할 수 있습니다. DB 인스턴스에 DB 보안 그룹을 설정하면 해당 DB 보안 그룹에 생성된 모든 DB 보안 규칙들이 적용됩니다.
+You can create multiple DB security rules in one DB security group. When you set up DB security groups in a DB instance, all DB security rules created in that DB security group are applied.
 
-| 항목         | 설명                                                                                                                       |
-|------------|--------------------------------------------------------------------------------------------------------------------------|
-| 방향         | 수신은 DB 인스턴스로 유입되는 방향을 의미합니다. 송신은 DB 인스턴스에서 나가는 방향을 의미합니다.                                                                |
-| Ether Type | EtherType IP의 버전을 의미합니다. IPv4, IPv6를 지정할 수 있습니다.                                                                         |
-| 포트         | 규칙을 적용할 포트를 설정합니다. 단일 포트나 포트 범위로 입력할 수 있고, DB 포트를 선택할 수 있습니다. DB 포트를 선택하면 DB 인스턴스의 DB 포트가 자동으로 입력됩니다.                    |
-| 원격         | IP 주소 범위를 지정할 수 있습니다. 규칙의 방향이 '송신'이면 목적지가 원격이고, '수신'이면 출발지가 원격입니다.<br/>규칙의 방향에 따라 트래픽의 출발지와 목적지가 설정된 IP 주소나 범위인지를 비교합니다. |
-| 설명         | DB 보안 그룹 규칙에 대한 설명을 추가할 수 있습니다.                                                                                          |
+| Item        | Description                                                                                                                                                                                                                                                                          | 
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| Direction   | Inbound refers to the direction into the DB instance. Outbound means the direction out of the DB instance.                                                                                                                                                                           | 
+| EtherType   | The version of EtherType IP. You can specify IPv4, IPv6.                                                                                                                                                                                                                             | 
+| Port        | Set the port to which rules apply. You can enter a single port or a port range, or select the DB port. When you select the DB port, the DB port of the DB instance is automatically entered.                                                                                         | 
+| Remote      | You can set the IP address range. If the direction of the rule is 'outbound', the traffic destination is remote; if 'inbound', the traffic source is remote.<br/>Depending on the direction of the rule, compares whether the traffic source or destination is IP address or range.. | 
+| Description | You can add a description for DB security group rules.                                                                                                                                                                                                                               |
 
-### DB 보안 규칙 변경
+### Change DB Security Rules
 
-DB 보안 규칙의 생성, 수정, 삭제와 같은 변경이 발생하면 변경 사항이 DB 보안 그룹과 연결된 DB 인스턴스에 순차적으로 적용됩니다. DB 보안 그룹에 연결된 모든 DB 인스턴스에 적용되기 전까지 DB 보안 그룹에 신규로 DB 보안 규칙을 추가하거나, 다른 DB 보안 규칙을 수정, 삭제할 수 없습니다.
+When changes occur, such as creating, modifying, or deleting DB security rules, the changes are applied sequentially to the DB instances attached with the DB security group. You cannot add new DB security rules to DB security group or modify or delete other DB security rules until they are applied to all DB instances attached with DB security group.
