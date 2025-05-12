@@ -1,7 +1,7 @@
 ## Database > RDS for MySQL > API Guide
 
-| Region                | Endpoint                                          |
-|-----------------------|---------------------------------------------------|
+| Region                    | Endpoint                                      |
+|---------------------------|-----------------------------------------------|
 | Korea (Pangyo) region | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
 
 ## Monitoring
@@ -10,7 +10,7 @@
 
 - View the metrics necessary for viewing statistical information.
 
-```
+```http
 GET /v2.0/metrics
 ```
 
@@ -41,8 +41,8 @@ GET /v2.0/metrics
 
 - Views the statistical information collected on a regular basis.
 
-```
-GET /v2.0/metric-statistics
+```http
+GET /rds/api/v2.0/metric-statistics
 ```
 
 #### Request header

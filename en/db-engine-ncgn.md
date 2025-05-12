@@ -55,7 +55,7 @@ MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doi
 - No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
 
 For DB version upgrade pre-check, you can check the result in the following ways.
-- Check for `the detailed checklist for upgrading from 5.7 to 8.0`
+- Check for `the detailed checklist for upgrading from 5.7 to 8.0`(https://static.toastoven.net/prod_rds/mysql/23.08.17/Check_5.7_to_8.0_en.xlsx)
 - When attempting to upgrade the DB version in the console, check the result using the `DB Engine Upgrade Pre-Check` button.
 - Check the results of DB version upgrade attempts
 
@@ -76,9 +76,9 @@ Also, you must check items that have been removed or changed in 8.0.
 
 
 
-#### Upgrading the DB Engine Version Using a Dummy DB Instance
+#### Upgrading the DB Engine Version Using a Dummy DB Instance 
 
-When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created.
+When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created. 
 
 > [Caution]
 For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high availability configurations.
@@ -90,7 +90,7 @@ The manual control of failover during version upgrade allows you to initiate fai
 
 ### When using an Outdated Operating System
 
-For DB instances created before May 10, 2022, the DB instance will be replaced when the internal operating system is outdated so the DB version is upgraded. During the replacement process, the DB instance's identifier and internal IP address will be changed. The monitored instances in notification groups and event sources in event subscriptions are automatically replaced with the changed identifiers. For a single DB instance, you must use a dummy DB instance when changing DB versions. For high-availability DB instances, the roles of the master and spare master are changed using failover during the DB instance replacement process. Failover may fail if the master is heavily loaded, so it is recommended that you perform DB version change during off-peak hours.
+For DB instances created before May 10, 2022, the DB instance will be replaced when the internal operating system is outdated so the DB version is upgraded. During the replacement process, the DB instance's identifier and internal IP address will be changed. The monitored instances in notification groups and event sources in event subscriptions are automatically replaced with the changed identifiers. For a single DB instance, you must use a dummy DB instance when changing DB versions. For high-availability DB instances, the roles of the master and spare master are changed using failover during the DB instance replacement process. Failover may fail if the master is heavily loaded, so it is recommended that you perform DB version change during off-peak hours.  
 
 > [Caution]
 > Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
@@ -99,7 +99,7 @@ For DB instances created before May 10, 2022, the DB instance will be replaced w
 
 ### Support for the MariaDB Server Audit plugin for MySQL
 
-- RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances.
+- RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances. 
 
 > [Caution]
 This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.

@@ -1,0 +1,39 @@
+{
+    "engine": {
+        "lowerCase": "mysql",
+        "upperCase": "MYSQL",
+        "pascalCase": "MySQL",
+        "sampleDbVersionCode": "MYSQL_V8028",
+        "sampleDbVersionName": "MySQL 8.0.28"
+    },
+    "env": "public",
+    "url": {
+        "cdn": "https://static.toastoven.net/prod_rds/mysql"
+    },
+    "regions": [
+        {
+            "text": {
+                "ko": "한국(판교) 리전",
+                "en": "Korea (Pangyo) region",
+                "ja": "韓国(パンギョ)リージョン"
+            },
+            "endpoint": "https://kr1-rds-mysql.api.nhncloudservice.com"
+        },
+        {
+            "text": {
+                "ko": "한국(평촌) 리전",
+                "en": "Korea (Pyeongchon) region",
+                "ja": "韓国(ピョンチョン)リージョン"
+            },
+            "endpoint": "https://kr2-rds-mysql.api.nhncloudservice.com"
+        },
+        {
+            "text": {
+                "ko": "일본 리전",
+                "en": "Japan region",
+                "ja": "日本リージョン"
+            },
+            "endpoint": "https://jp1-rds-mysql.api.nhncloudservice.com"
+        }
+    ]
+}

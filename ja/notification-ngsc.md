@@ -150,14 +150,14 @@
 | INSTC_67_01 | INSTANCE          | はい   | OSバージョンアップグレード終了                      |
 | INSTC_67_04 | INSTANCE          | はい   | OSバージョンアップグレード失敗                      |
 | INSTC_68_01 | INSTANCE          | はい   | ネットワーク通信失敗                            |
-| INSTC_69_00 | INSTANCE          | はい    | フェイルオーバーの手動制御待機                       |
-| INSTC_69_01 | INSTANCE          | はい    | フェイルオーバーの手動制御成功                       |
-| INSTC_69_04 | INSTANCE          | はい    | フェイルオーバーの手動制御タイムアウト                     |
-| INSTC_70_01 | INSTANCE          | はい    | 高可用性正常化                             |
-| INSTC_71_01 | INSTANCE          | はい    | 高可用性中断                              |
-| INSTC_73_00 | INSTANCE          | はい    | ストレージ自動拡張開始                                                    |
-| INSTC_73_01 | INSTANCE          | はい    | ストレージ自動拡張完了                                                  |
-| INSTC_73_04 | INSTANCE          | はい    | ストレージ自動拡張失敗                                                     |
+| INSTC_69_00 | INSTANCE          | はい   | フェイルオーバーの手動制御待機                       |
+| INSTC_69_01 | INSTANCE          | はい   | フェイルオーバーの手動制御成功                       |
+| INSTC_69_04 | INSTANCE          | はい   | フェイルオーバーの手動制御タイムアウト                   |
+| INSTC_70_01 | INSTANCE          | はい   | 高可用性正常化                               |
+| INSTC_71_01 | INSTANCE          | はい   | 高可用性中断                                |
+| INSTC_73_00 | INSTANCE          | はい   | ストレージ自動拡張開始                           |
+| INSTC_73_01 | INSTANCE          | はい   | ストレージ自動拡張完了                           |
+| INSTC_73_04 | INSTANCE          | はい   | ストレージ自動拡張失敗                           |
 | JOB_01_04   | JOB               | はい   | Job実行失敗                               |
 | TENAT_01_04 | TENANT            | はい   | CPUコア数制限                              |
 | TENAT_02_04 | TENANT            | はい   | RAM容量制限	                              |
@@ -169,7 +169,7 @@
 
 イベントタイプ、コード、ソースに分けてイベントを購読できます。イベントタイプで購読すると、イベントタイプに含まれるすべてのイベントコードの通知を受け取ります。通知が広範すぎる場合、イベントコードとソースに細分化して購読できます。プロジェクトメンバーのみ通知を受けるユーザーとして選択できます。基本的にはメールでイベント通知が送信され、実名認証した携帯電話番号が登録された場合のみSMSで追加イベント通知が送信されます。
 
-![event_subscription_01_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/event_subscription_01_ja.png)
+![event_subscription_01_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/event_subscription_01_ja.png)
 
 * ❶ **イベント購読登録**を押すと、イベント購読を登録できるポップアップウィンドウが表示されます。
 * ❷ 購読するイベントタイプを選択します。イベントタイプによって選択できるイベントコードが変更されます。
@@ -187,13 +187,13 @@
 
 ### ユーザーグループの作成
 
-![user_group_01_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.06.13/user_group_01_ja.png)
+![user_group_01_ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.06.13/user_group_01_ja.png)
 
 * ❶ **ユーザーグループ作成**を押すと、ユーザーグループを作成できるポップアップウィンドウが表示されます。
 * ❷ ユーザーグループに追加されたユーザーが表示されます。
 * ❸ **x**を押すと、追加されたユーザーを除外できます。
 * ❹ ユーザーリストにユーザーが多い場合、検索条件を入力して結果を制限できます。
-* ❺ **全プロジェクトメンバー**を通知対象に追加します。
+* ❺ **全プロジェクトメンバー**を通知対象に追加します。 
   * 追加 すると、個別ユーザーの追加はキャンセルされます。
   * 該当ユーザーグループを利用してアラームを送信する場合、その時点で全プロジェクトメンバーを対象にアラームを送信します。
 * ❻ **OK**を押してユーザーグループにユーザーを追加します。
@@ -204,7 +204,7 @@
 
 ### 通知グループの作成
 
-![notification_group_01_ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_01_ja.png)
+![notification_group_01_ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/notification_group_01_ja.png)
 
 * ❶ **グループ作成**を押すと、通知グループを作成できるポップアップウィンドウが表示されます。
 * ❷ 通知を受け取る方法を選択します。
@@ -268,7 +268,7 @@
 
 ### 監視設定の追加
 
-![notification_group_02_ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_02_ja.png)
+![notification_group_02_ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/notification_group_02_ja.png)
 
 * ❶ **監視設定**を押すと、監視設定を変更できるポップアップウィンドウが表示されます。
 * ❷ **監視設定の追加**を押して新規監視設定を追加します。
@@ -276,7 +276,7 @@
 
 ### 監視設定の変更および削除
 
-![notification_group_03_ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/23.04.11/notification_group_03_ja.png)
+![notification_group_03_ja.png](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/notification_group_03_ja.png)
 
 * ❶ ボタンをクリックすると、追加した監視設定を変更できます。
 * ❷ ボタンをクリックすると、追加した監視設定を削除できます。
