@@ -7,6 +7,7 @@ const docs = [
     'analysis',
     'api-guide-v2.0',
     'api-guide-v3.0',
+    'api-guide-v4.0',
     'backup-and-restore',
     'db-engine',
     'db-instance',
