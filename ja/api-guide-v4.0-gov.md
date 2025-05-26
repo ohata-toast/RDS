@@ -1,10 +1,8 @@
-## Database > RDS for {{engine.pascalCase}} > APIガイド
+## Database > RDS for MySQL > APIガイド
 
 | リージョン      | エンドポイント                                       |
 |-----------|-----------------------------------------------|
-{{#each regions}}
-| {{this.text.ko}} | {{this.endpoint}} |
-{{/each}}
+| 한국(판교) 리전 | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
 
 ## 認証及び権限
 
@@ -13,14 +11,14 @@ APIを使用するには[Public API > API呼び出し及び認証](/nhncloud/ko/
 
 | 名前                | 種類   | 形式   | 必須 | 説明                                                        |
 |---------------------|--------|--------|----|-------------------------------------------------------------|
-| X-TC-APP-KEY        | Header | String | O  | RDS for {{engine.pascalCase}}サービスのAppkeyまたはプロジェクト統合Appkey |
+| X-TC-APP-KEY        | Header | String | O  | RDS for MySQLサービスのAppkeyまたはプロジェクト統合Appkey |
 | X-NHN-AUTHORIZATION | Header | String | O  | Public APIで発行されたBearerタイプトークン                            |
 
 
-また、プロジェクトメンバーのロールによって呼び出すことができるAPIが制限されます。 `RDS for {{engine.pascalCase}} ADMIN`, `RDS for {{engine.pascalCase}} VIEWER`で区分して権限を付与できます。
+また、プロジェクトメンバーのロールによって呼び出すことができるAPIが制限されます。 `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER`で区分して権限を付与できます。
 
-* `RDS for {{engine.pascalCase}} ADMIN`権限は全ての機能を使用可能です。
-* `RDS for {{engine.pascalCase}} VIEWER`権限は情報を照会する機能のみ使用可能です。
+* `RDS for MySQL ADMIN`権限は全ての機能を使用可能です。
+* `RDS for MySQL VIEWER`権限は情報を照会する機能のみ使用可能です。
     * DBインスタンスを作成、修正、削除したり、DBインスタンスを対象とするいかなる機能も使用できません。
     * ただし、通知グループとユーザーグループに関連する機能は使用可能です。
 
@@ -56,7 +54,6 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 
 ## DBエンジンタイプ
 
-{{#if (eq engine.lowerCase "mysql")}}
 | DBエンジンタイプ | 作成可否 | OBSから復元可否 |
 |--------------|----------|-----------------|
 | MYSQL\_V5633 | X        | X               |
@@ -75,17 +72,6 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 | MYSQL_V8035  | O        | O               |
 | MYSQL_V8036  | O        | O               |
 | MYSQL_V8040  | O        | O               |
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-| DBエンジンタイプ      | 作成可否 | OBSから復元可否 |
-|-----------------|----------|------------------|
-| MARIADB_V10330  | O        | O                |
-| MARIADB_V10611  | O        | O                |
-| MARIADB_V10612  | O        | O                |
-| MARIADB_V10616  | O        | O                |
-| MARIADB_V101107 | O        | O                |
-| MARIADB_V101108 | O        | O                |
-{{/if}}
 
 * ENUMタイプのdbVersionフィールドに対して該当値を使用できます。
 * バージョンによって作成または復元が不可能な場合があります。
@@ -102,7 +88,7 @@ GET /v4.0/project/regions
 
 | 権限名                                   | 説明       |
 |-----------------------------------------|------------|
-| RDSfor{{engine.pascalCase}}:Project.Get | プロジェクト情報照会 |
+| RDSforMySQL:Project.Get | プロジェクト情報照会 |
 
 #### リクエスト
 
@@ -113,12 +99,7 @@ GET /v4.0/project/regions
 | 名前               | 種類 | 形式    | 説明                                                                       |
 |--------------------|------|---------|----------------------------------------------------------------------------|
 | regions            | Body | Array   | リージョンリスト                                                                    |
-{{#if (eq engine.lowerCase "mysql")}}
 | regions.regionCode | Body | Enum    | リージョンコード<br/>- `KR1`:韓国(パンギョ)リージョン<br/>- `KR2`:韓国(ピョンチョン)リージョン<br/>- `JP1`:日本(東京)リージョン |
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-| regions.regionCode | Body | Enum    | リージョンコード<br/>- `KR1`:韓国(パンギョ)リージョン |
-{{/if}}
 | regions.isEnabled  | Body | Boolean | リージョンが有効かどうか                                                                          |
 
 <details><summary>例</summary>
@@ -132,7 +113,6 @@ GET /v4.0/project/regions
         "isSuccessful": true
     },
     "regions": [
-{{#if (eq engine.lowerCase "mysql")}}    
         {
             "regionCode": "KR1",
             "isEnabled": true
@@ -145,13 +125,6 @@ GET /v4.0/project/regions
             "regionCode": "JP1",
             "isEnabled": true
         }
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-        {
-            "regionCode": "KR1",
-            "isEnabled": true
-        }
-{{/if}}
     ]
 }
 ```
@@ -170,7 +143,7 @@ GET /v4.0/project/members
 
 | 権限名                                   | 説明       |
 |-----------------------------------------|------------|
-| RDSfor{{engine.pascalCase}}:Project.Get | プロジェクト情報照会 |
+| RDSforMySQL:Project.Get | プロジェクト情報照会 |
 
 #### リクエスト
 
@@ -224,7 +197,7 @@ GET /v4.0/db-flavors
 
 | 権限名                                     | 説明             |
 |-------------------------------------------|------------------|
-| RDSfor{{engine.pascalCase}}:DbFlavor.List | DBインスタンス仕様リスト表示 |
+| RDSforMySQL:DbFlavor.List | DBインスタンス仕様リスト表示 |
 
 #### リクエスト
 
@@ -278,7 +251,7 @@ GET /v4.0/network/subnets
 
 | 権限名                                    | 説明      |
 |------------------------------------------|-----------|
-| RDSfor{{engine.pascalCase}}:Network.List | サブネットリスト表示 |
+| RDSforMySQL:Network.List | サブネットリスト表示 |
 
 #### リクエスト
 
@@ -334,7 +307,7 @@ GET /v4.0/db-versions
 
 | 権限名                                      | 説明        |
 |--------------------------------------------|-------------|
-| RDSfor{{engine.pascalCase}}:DbVersion.List | DBエンジンリスト表示 |
+| RDSforMySQL:DbVersion.List | DBエンジンリスト表示 |
 
 #### リクエスト
 
@@ -361,8 +334,8 @@ GET /v4.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "{{engine.sampleDbVersionCode}}",
-            "dbVersionName": "{{engine.sampleDbVersionName}}",
+            "dbVersion": "MYSQL_V8028",
+            "dbVersionName": "MySQL 8.0.28",
             "restorableFromObs": true
         }
     ]
@@ -386,7 +359,7 @@ GET /v4.0/storage-types
 
 | 権限名                                    | 説明              |
 |------------------------------------------|-------------------|
-| RDSfor{{engine.pascalCase}}:Storage.List | データストレージタイプリスト表示 |
+| RDSforMySQL:Storage.List | データストレージタイプリスト表示 |
 
 #### リクエスト
 
@@ -449,7 +422,7 @@ GET /v4.0/jobs/{jobId}
 
 | 権限名                               | 説明        |
 |-------------------------------------|-------------|
-| RDSfor{{engine.pascalCase}}:Job.Get | 作業情報詳細表示 |
+| RDSforMySQL:Job.Get | 作業情報詳細表示 |
 
 #### リクエスト
 
@@ -511,7 +484,7 @@ GET /v4.0/db-instance-groups
 
 | 権限名                                            | 説明             |
 |--------------------------------------------------|------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceGroup.List | DBインスタンスグループリスト表示 |
+| RDSforMySQL:DbInstanceGroup.List | DBインスタンスグループリスト表示 |
 
 #### リクエスト
 
@@ -563,7 +536,7 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 | 権限名                                           | 説明             |
 |-------------------------------------------------|------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceGroup.Get | DBインスタンスグループ詳細表示 |
+| RDSforMySQL:DbInstanceGroup.Get | DBインスタンスグループ詳細表示 |
 
 #### リクエスト
 
@@ -672,7 +645,7 @@ GET /v4.0/db-instances
 
 | 権限名                                       | 説明          |
 |---------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.List | DBインスタンスリスト表示 |
+| RDSforMySQL:DbInstance.List | DBインスタンスリスト表示 |
 
 #### リクエスト
 
@@ -711,7 +684,7 @@ GET /v4.0/db-instances
             "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
             "dbInstanceName": "db-instance",
             "description": null,
-            "dbVersion": "{{engine.sampleDbVersionCode}}",
+            "dbVersion": "MYSQL_V8028",
             "dbPort": 10000,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -738,7 +711,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 | 権限名                                      | 説明          |
 |--------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Get | DBインスタンス詳細表示 |
+| RDSforMySQL:DbInstance.Get | DBインスタンス詳細表示 |
 
 #### リクエスト
 
@@ -788,7 +761,7 @@ GET /v4.0/db-instances/{dbInstanceId}
     "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
     "dbInstanceName": "db-instance",
     "description": null,
-    "dbVersion": "{{engine.sampleDbVersionCode}}",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -823,7 +796,7 @@ POST /v4.0/db-instances
 
 | 権限名                                         | 説明         |
 |-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Create | DBインスタンスの作成 |
+| RDSforMySQL:DbInstance.Create | DBインスタンスの作成 |
 
 #### リクエスト
 
@@ -844,10 +817,8 @@ POST /v4.0/db-instances
 | useDefaultNotification | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                      |
 | useDeletionProtection  | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         |
 | useSlowQueryAnalysis   | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                  |
-{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                     |
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
-{{/if}}
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                |
 | network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                  |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                             |
@@ -864,9 +835,7 @@ POST /v4.0/db-instances
 | backup.backupPeriod                          | Body | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                          |
 | backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                     |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                       |
-{{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | O  | 予定された自動バックアップリスト                                                                                                                                                                                                                 |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                               |
@@ -880,7 +849,7 @@ POST /v4.0/db-instances
     "dbInstanceName": "db-instance",
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbVersion": "{{engine.sampleDbVersionCode}}",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbUserName": "db-user",
     "dbPassword": "password",
@@ -930,7 +899,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 | 権限名                                         | 説明         |
 |-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DBインスタンスを修正する |
+| RDSforMySQL:DbInstance.Modify | DBインスタンスを修正する |
 
 #### リクエスト
 
@@ -940,10 +909,8 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbInstanceName     | Body | String  | X  | DBインスタンスを識別できる名前                                                             |
 | description        | Body | String  | X  | DBインスタンスの追加情報                                                                |
 | dbPort             | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                |
-{{#if (eq engine.lowerCase "mysql")}}    
 | dbVersion          | Body | Enum    | X  | DBエンジンタイプ                                                                                                                            |
 | useDummy           | Body | Boolean | X  | 単一DBインスタンスのDBバージョンアップグレード時にダミーを使用するかどうか<br/>Default: `false`                  |
-{{/if}}
 | useSlowQueryAnalysis | Body | Boolean  | X | Slow query分析を行うかどうか |
 | dbFlavorId         | Body | UUID    | X  | DBインスタンス仕様の識別子                                                         |
 | parameterGroupId   | Body | UUID    | X  | パラメータグループの識別子                                                            |
@@ -985,7 +952,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 | 権限名                                         | 説明         |
 |-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Delete | DBインスタンスの削除 |
+| RDSforMySQL:DbInstance.Delete | DBインスタンスの削除 |
 
 #### リクエスト
 
@@ -1013,7 +980,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 
 | 権限名                                          | 説明          |
 |------------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Restart | DBインスタンスの再起動 |
+| RDSforMySQL:DbInstance.Restart | DBインスタンスの再起動 |
 
 #### リクエスト
 
@@ -1040,7 +1007,7 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 
 | 権限名                                               | 説明             |
 |-----------------------------------------------------|------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.ForceRestart | DBインスタンスの強制再起動 |
+| RDSforMySQL:DbInstance.ForceRestart | DBインスタンスの強制再起動 |
 
 #### リクエスト
 
@@ -1082,7 +1049,7 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 
 | 権限名                                        | 説明         |
 |----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Start | DBインスタンスの起動 |
+| RDSforMySQL:DbInstance.Start | DBインスタンスの起動 |
 
 #### リクエスト
 
@@ -1110,7 +1077,7 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 | 権限名                                       | 説明         |
 |---------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Stop | DBインスタンスの停止 |
+| RDSforMySQL:DbInstance.Stop | DBインスタンスの停止 |
 
 #### リクエスト
 
@@ -1138,7 +1105,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 | 権限名                                            | 説明         |
 |--------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Replicate | DBインスタンスの複製 |
+| RDSforMySQL:DbInstance.Replicate | DBインスタンスの複製 |
 
 #### リクエスト
 
@@ -1170,9 +1137,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`       |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `21600`  |
 | backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `10`          |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                     |
-{{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | X  | 予定された自動バックアップリスト                                                                                                                                                                                                                                         |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | X  | バックアップ開始時刻<br/>- 例: `00:00:00`<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                             |
@@ -1216,7 +1181,7 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 
 | 権限名                                          | 説明         |
 |------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Promote | DBインスタンスの昇格 |
+| RDSforMySQL:DbInstance.Promote | DBインスタンスの昇格 |
 
 #### リクエスト
 
@@ -1244,7 +1209,7 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 
 | 権限名                                          | 説明          |
 |------------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Rebuild | DBインスタンスの再構築 |
+| RDSforMySQL:DbInstance.Rebuild | DBインスタンスの再構築 |
 
 #### リクエスト
 
@@ -1272,7 +1237,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 
 | 権限名                                      | 説明          |
 |--------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Get | DBインスタンス詳細表示 |
+| RDSforMySQL:DbInstance.Get | DBインスタンス詳細表示 |
 
 #### リクエスト
 
@@ -1326,7 +1291,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 				"backupStatus": "COMPLETED",
 				"dbInstanceId": "dba1be25-9429-4589-9716-7fb6daad7cb9",
 				"dbInstanceName": "original-db-instance-name",
-				"dbVersion": "{{engine.sampleDbVersionCode}}",
+				"dbVersion": "MYSQL_V8028",
 				"backupType": "MANUAL",
 				"backupSize": 8299904,
 				"useBackupLock": true,
@@ -1359,7 +1324,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 | 権限名                                      | 説明          |
 |--------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Get | DBインスタンス詳細表示 |
+| RDSforMySQL:DbInstance.Get | DBインスタンス詳細表示 |
 
 #### 共通リクエスト
 
@@ -1419,7 +1384,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | 権限名                                          | 説明         |
 |------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Restore | DBインスタンスの復元 |
+| RDSforMySQL:DbInstance.Restore | DBインスタンスの復元 |
 
 #### 共通リクエスト
 
@@ -1456,9 +1421,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.backupPeriod                                 | Body | Number  | O  | バックアップ保管期間(日)<br><ul><li>最小値: `0`</li><li>最大値: `730`</li></ul>                                                                                                            |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | クエリ遅延待機時間(秒)<br><ul><li>デフォルト値: `1800`</li><li>最小値: `0`</li><li>最大値: `21600`</li></ul>                                                                                   |
 | backup.backupRetryCount                             | Body | Number  | X  | バックアップ再試行回数<br><ul><li>デフォルト値: `0`</li><li>最小値: `0`</li><li>最大値: `10`</li></ul>                                                                                              |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion | Body | Enum | X | バックアップ複製リージョン<br><ul><li>`KR1`:韓国(パンギョ)</li><li>`KR2`:韓国(ピョンチョン)</li><li>`JP1`:日本(東京)</li></ul>                                                                                                                                                                                                                                                                                                                                                                              |
-{{/if}}
 | backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br><ul><li>デフォルト値: `true`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | backup.backupSchedules | Body | Array | O | 予定された自動バックアップリスト                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | バックアップ開始時刻<br><ul><li>例: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -1641,7 +1604,7 @@ POST /v4.0/db-instances/restore-from-obs
 
 | 権限名                                                 | 説明                    |
 |-------------------------------------------------------|-------------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.RestoreFromObs | DBインスタンスオブジェクトストレージから復元 |
+| RDSforMySQL:DbInstance.RestoreFromObs | DBインスタンスオブジェクトストレージから復元 |
 
 #### リクエスト
 
@@ -1682,9 +1645,7 @@ POST /v4.0/db-instances/restore-from-obs
 | backup.backupPeriod                                 | Body | Number  | O  | バックアップ保管期間(日)<br><ul><li>最小値: `0`</li><li>最大値: `730`</li></ul>                           |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | クエリ遅延待機時間(秒)<br><ul><li>デフォルト値: `1800`</li><li>最小値: `0`</li><li>最大値: `21600`</li></ul>  |
 | backup.backupRetryCount                             | Body | Number  | X  | バックアップ再試行回数<br><ul><li>デフォルト値: `0`</li><li>最小値: `0`</li><li>最大値: `10`</li></ul>             |
-{{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion | Body | Enum | X | バックアップ複製リージョン<br><ul><li>`KR1`:韓国(パンギョ)</li><li>`KR2`:韓国(ピョンチョン)</li><li>`JP1`:日本(東京)</li></ul>                                                                                                                                                                                                                                                                                                                                                                               |
-{{/if}}
 | backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br><ul><li>デフォルト値: `true`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | backup.backupSchedules | Body | Array | O | 予定された自動バックアップリスト                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | バックアップ開始時刻<br><ul><li>例: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -1701,7 +1662,7 @@ POST /v4.0/db-instances/restore-from-obs
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
     "dbPort": 10000,
-    "dbVersion": "{{engine.sampleDbVersionCode}}",
+    "dbVersion": "MYSQL_V8028",
     "dbUserName": "db-user",
     "dbPassword": "password",
     "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
@@ -1759,7 +1720,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 | 権限名                                         | 説明         |
 |-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DBインスタンスを修正する |
+| RDSforMySQL:DbInstance.Modify | DBインスタンスを修正する |
 
 #### リクエスト
 
@@ -1800,7 +1761,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 
 | 権限名                                               | 説明      |
 |-----------------------------------------------------|-----------|
-| RDSfor{{engine.pascalCase}}:HighAvailability.Modify | 高可用性の修正 |
+| RDSforMySQL:HighAvailability.Modify | 高可用性の修正 |
 
 #### リクエスト
 
@@ -1828,7 +1789,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 
 | 権限名                                               | 説明         |
 |-----------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:HighAvailability.Resume | 高可用性の再開 |
+| RDSforMySQL:HighAvailability.Resume | 高可用性の再開 |
 
 #### リクエスト
 
@@ -1856,7 +1817,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 
 | 権限名                                              | 説明         |
 |----------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:HighAvailability.Pause | 高可用性の一時停止 |
+| RDSforMySQL:HighAvailability.Pause | 高可用性の一時停止 |
 
 #### リクエスト
 
@@ -1884,7 +1845,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 
 | 権限名                                               | 説明      |
 |-----------------------------------------------------|-----------|
-| RDSfor{{engine.pascalCase}}:HighAvailability.Repair | 高可用性の復旧 |
+| RDSforMySQL:HighAvailability.Repair | 高可用性の復旧 |
 
 #### リクエスト
 
@@ -1912,7 +1873,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 
 | 権限名                                              | 説明      |
 |----------------------------------------------------|-----------|
-| RDSfor{{engine.pascalCase}}:HighAvailability.Split | 高可用性の分離 |
+| RDSforMySQL:HighAvailability.Split | 高可用性の分離 |
 
 #### リクエスト
 
@@ -1940,7 +1901,7 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | 権限名                                      | 説明          |
 |--------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Get | DBインスタンス詳細表示 |
+| RDSforMySQL:DbInstance.Get | DBインスタンス詳細表示 |
 
 #### リクエスト
 
@@ -2001,7 +1962,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | 権限名                                         | 説明         |
 |-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DBインスタンスを修正する |
+| RDSforMySQL:DbInstance.Modify | DBインスタンスを修正する |
 
 #### リクエスト
 
@@ -2034,7 +1995,7 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 | 権限名                                      | 説明          |
 |--------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Get | DBインスタンス詳細表示 |
+| RDSforMySQL:DbInstance.Get | DBインスタンス詳細表示 |
 
 #### リクエスト
 
@@ -2097,7 +2058,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 | 権限名                                         | 説明         |
 |-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DBインスタンスを修正する |
+| RDSforMySQL:DbInstance.Modify | DBインスタンスを修正する |
 
 #### リクエスト
 
@@ -2107,9 +2068,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                 |
 | ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                                            |
 | backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                                    |
-{{#if (eq engine.lowerCase "mysql")}}
 | replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                       |
-{{/if}}
 | useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか                                                                                                                                                                                                              |
 | backupSchedules                       | Body | Array   | X  | 予定された自動バックアップリスト                                                                                                                                                                                                                 |
 | backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                               |
@@ -2152,7 +2111,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 | 権限名                                      | 説明          |
 |--------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Get | DBインスタンス詳細表示 |
+| RDSforMySQL:DbInstance.Get | DBインスタンス詳細表示 |
 
 #### リクエスト
 
@@ -2194,7 +2153,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
     },
     "endPoints": [
         {
-            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.{{engine.lowerCase}}.rds.nhncloudservice.com",
+            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
             "ipAddress": "192.168.0.2",
             "endPointType": "INTERNAL"
         }
@@ -2217,7 +2176,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 | 権限名                                         | 説明         |
 |-----------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Modify | DBインスタンスを修正する |
+| RDSforMySQL:DbInstance.Modify | DBインスタンスを修正する |
 
 #### リクエスト
 
@@ -2244,7 +2203,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 
 | 権限名                                           | 説明                |
 |-------------------------------------------------|---------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceUser.List | DBインスタンス内のユーザーリストを表示 |
+| RDSforMySQL:DbInstanceUser.List | DBインスタンス内のユーザーリストを表示 |
 
 #### リクエスト
 
@@ -2264,10 +2223,8 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.host                 | Body | String   | DBユーザーアカウントのホスト名                                                                                                         |
 | dbUsers.authorityType        | Body | Enum     | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>            |
 | dbUsers.dbUserStatus         | Body | Enum     | DBユーザーの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `UPDATING`:修正中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み |
-{{#if (eq engine.lowerCase "mysql")}}
 | dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password     |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
-{{/if}}
 | dbUsers.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 | dbUsers.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 
@@ -2288,10 +2245,8 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
             "host": "%",
             "authorityType": "DDL",
             "dbUserStatus": "STABLE",
-{{#if (eq engine.lowerCase "mysql")}}
             "authenticationPlugin": "NATIVE",
             "tlsOption": "NONE",
-{{/if}}
             "createdYmdt": "2023-03-17T14:02:29+09:00",
             "updatedYmdt": "2023-03-17T14:02:31+09:00"
         }
@@ -2315,7 +2270,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 | 権限名                                             | 説明               |
 |---------------------------------------------------|--------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceUser.Create | DBインスタンス内のユーザーを作成 |
+| RDSforMySQL:DbInstanceUser.Create | DBインスタンス内のユーザーを作成 |
 
 #### リクエスト
 
@@ -2326,13 +2281,11 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                      |
 | host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                                     |
 | authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>        |
-{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [注意]
 > DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を設定できます。
-{{/if}}
 
 <details><summary>例</summary>
 <p>
@@ -2342,14 +2295,9 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
     "dbUserName": "db-user",
     "dbPassword": "password",
     "host": "1.1.1.%",
-{{#if (eq engine.lowerCase "mysql")}}
     "authorityType": "CRUD",
     "authenticationPlugin": "NATIVE",
     "tlsOption": "NONE"
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-    "authorityType": "CRUD"
-{{/if}}
 }
 ```
 
@@ -2374,7 +2322,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | 権限名                                             | 説明               |
 |---------------------------------------------------|--------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceUser.Modify | DBインスタンス内のユーザーを修正 |
+| RDSforMySQL:DbInstanceUser.Modify | DBインスタンス内のユーザーを修正 |
 
 #### リクエスト
 
@@ -2384,14 +2332,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O  | DBユーザーの識別子                                                                                                           |
 | dbPassword           | Body | String | X  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                      |
 | authorityType        | Body | Enum   | X  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>        |
-{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [注意]
 > DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を修正できます。
 > `authenticationPlugin`の値は`dbPassword`と同時に修正する必要があります。
-{{/if}}
 
 <details><summary>例</summary>
 <p>
@@ -2423,7 +2369,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | 権限名                                             | 説明               |
 |---------------------------------------------------|--------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceUser.Delete | DBインスタンス内のユーザーを削除 |
+| RDSforMySQL:DbInstanceUser.Delete | DBインスタンス内のユーザーを削除 |
 
 #### リクエスト
 
@@ -2452,7 +2398,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 | 権限名                                             | 説明                |
 |---------------------------------------------------|---------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceSchema.List | DBインスタンス内のスキーマリストを表示 |
+| RDSforMySQL:DbInstanceSchema.List | DBインスタンス内のスキーマリストを表示 |
 
 #### リクエスト
 
@@ -2508,7 +2454,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 | 権限名                                               | 説明               |
 |-----------------------------------------------------|--------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceSchema.Create | DBインスタンス内のスキーマを作成 |
+| RDSforMySQL:DbInstanceSchema.Create | DBインスタンス内のスキーマを作成 |
 
 #### リクエスト
 
@@ -2535,7 +2481,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 | 権限名                                               | 説明               |
 |-----------------------------------------------------|--------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceSchema.Delete | DBインスタンス内のスキーマを削除 |
+| RDSforMySQL:DbInstanceSchema.Delete | DBインスタンス内のスキーマを削除 |
 
 #### リクエスト
 
@@ -2564,7 +2510,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 | 権限名                                          | 説明                  |
 |------------------------------------------------|-----------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceLog.List | DBインスタンス内のログファイルリストを表示 |
+| RDSforMySQL:DbInstanceLog.List | DBインスタンス内のログファイルリストを表示 |
 
 #### リクエスト
 
@@ -2622,7 +2568,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 | 権限名                                            | 説明                 |
 |--------------------------------------------------|----------------------|
-| RDSfor{{engine.pascalCase}}:DbInstanceLog.Export | DBインスタンス内のログファイルをエクスポート |
+| RDSforMySQL:DbInstanceLog.Export | DBインスタンス内のログファイルをエクスポート |
 
 #### リクエスト
 
@@ -2683,7 +2629,7 @@ GET /v4.0/backups
 
 | 権限名                                   | 説明     |
 |-----------------------------------------|----------|
-| RDSfor{{engine.pascalCase}}:Backup.List | バックアップリスト照会 |
+| RDSforMySQL:Backup.List | バックアップリスト照会 |
 
 #### リクエスト
 
@@ -2708,9 +2654,7 @@ GET /v4.0/backups
 | backups.backupStatus | Body | Enum     | バックアップの現在状態                       |
 | backups.dbInstanceId | Body | UUID     | 原本DBインスタンスの識別子                 |
 | backups.dbVersion    | Body | Enum     | DBエンジンタイプ                        |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backups.utilVersion  | Body | String   | バックアップに使用されたxtrabackupユーティリティバージョン      |
-{{/if}}
 | backups.backupType   | Body | Enum     | バックアップタイプ                           |
 | backups.backupSize   | Body | Number   | バックアップのサイズ(Byte)                      |
 | createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -2733,10 +2677,8 @@ GET /v4.0/backups
             "backupName": "backup",
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-            "dbVersion": "{{engine.sampleDbVersionCode}}",
-{{#if (eq engine.lowerCase "mysql")}}    
+            "dbVersion": "MYSQL_V8028",
             "utilVersion": "8.0.28",
-{{/if}}
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",
@@ -2761,7 +2703,7 @@ POST /v4.0/backups
 
 | 権限名                                     | 説明    |
 |-------------------------------------------|---------|
-| RDSfor{{engine.pascalCase}}:Backup.Create | バックアップの作成 |
+| RDSforMySQL:Backup.Create | バックアップの作成 |
 
 #### 共通リクエスト
 
@@ -2831,7 +2773,7 @@ POST /v4.0/backups/{backupId}/export
 
 | 権限名                                     | 説明    |
 |-------------------------------------------|---------|
-| RDSfor{{engine.pascalCase}}:Backup.Export | バックアップエクスポート |
+| RDSforMySQL:Backup.Export | バックアップエクスポート |
 
 #### リクエスト
 
@@ -2881,7 +2823,7 @@ POST /v4.0/backups/{backupId}/restore
 
 | 権限名                                      | 説明    |
 |--------------------------------------------|---------|
-| RDSfor{{engine.pascalCase}}:Backup.Restore | バックアップの復元 |
+| RDSforMySQL:Backup.Restore | バックアップの復元 |
 
 #### リクエスト
 
@@ -2916,9 +2858,7 @@ POST /v4.0/backups/{backupId}/restore
 | backup.backupPeriod                          | Body | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                         |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`  |
 | backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`             |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                       |
-{{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | O  | 予定された自動バックアップリスト                                                                                                                                                                                                                 |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                               |
@@ -2975,7 +2915,7 @@ DELETE /v4.0/backups/{backupId}
 
 | 権限名                                     | 説明    |
 |-------------------------------------------|---------|
-| RDSfor{{engine.pascalCase}}:Backup.Delete | バックアップの削除 |
+| RDSforMySQL:Backup.Delete | バックアップの削除 |
 
 #### リクエスト
 
@@ -3014,7 +2954,7 @@ GET /v4.0/db-security-groups
 
 | 権限名                                            | 説明           |
 |--------------------------------------------------|----------------|
-| RDSfor{{engine.pascalCase}}:DbSecurityGroup.List | DBセキュリティグループリスト表示 |
+| RDSforMySQL:DbSecurityGroup.List | DBセキュリティグループリスト表示 |
 
 #### リクエスト
 
@@ -3070,7 +3010,7 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | 権限名                                           | 説明           |
 |-------------------------------------------------|----------------|
-| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Get | DBセキュリティグループ詳細表示 |
+| RDSforMySQL:DbSecurityGroup.Get | DBセキュリティグループ詳細表示 |
 
 #### リクエスト
 
@@ -3155,7 +3095,7 @@ POST /v4.0/db-security-groups
 
 | 権限名                                              | 説明          |
 |----------------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Create | DBセキュリティグループの作成 |
+| RDSforMySQL:DbSecurityGroup.Create | DBセキュリティグループの作成 |
 
 #### リクエスト
 
@@ -3216,7 +3156,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | 権限名                                              | 説明          |
 |----------------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Modify | DBセキュリティグループの修正 |
+| RDSforMySQL:DbSecurityGroup.Modify | DBセキュリティグループの修正 |
 
 #### リクエスト
 
@@ -3272,7 +3212,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | 権限名                                              | 説明          |
 |----------------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Delete | DBセキュリティグループの削除 |
+| RDSforMySQL:DbSecurityGroup.Delete | DBセキュリティグループの削除 |
 
 #### リクエスト
 
@@ -3314,7 +3254,7 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 | 権限名                                                  | 説明             |
 |--------------------------------------------------------|------------------|
-| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | DBセキュリティグループルールの作成 |
+| RDSforMySQL:DbSecurityGroupRule.Create | DBセキュリティグループルールの作成 |
 
 #### リクエスト
 
@@ -3367,7 +3307,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 | 権限名                                                  | 説明             |
 |--------------------------------------------------------|------------------|
-| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Modify | DBセキュリティグループルールの修正 |
+| RDSforMySQL:DbSecurityGroupRule.Modify | DBセキュリティグループルールの修正 |
 
 #### リクエスト
 
@@ -3419,7 +3359,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 | 権限名                                                  | 説明             |
 |--------------------------------------------------------|------------------|
-| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | DBセキュリティグループルールの削除 |
+| RDSforMySQL:DbSecurityGroupRule.Create | DBセキュリティグループルールの削除 |
 
 #### リクエスト
 
@@ -3450,7 +3390,7 @@ GET /v4.0/parameter-groups
 
 | 権限名                                           | 説明          |
 |-------------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:ParameterGroup.List | パラメータグループリスト表示 |
+| RDSforMySQL:ParameterGroup.List | パラメータグループリスト表示 |
 
 #### リクエスト
 
@@ -3488,7 +3428,7 @@ GET /v4.0/parameter-groups
             "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
             "parameterGroupName": "parameter-group",
             "description": null,
-            "dbVersion": "{{engine.sampleDbVersionCode}}",
+            "dbVersion": "MYSQL_V8028",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-02-31T15:28:17+09:00",
             "updatedYmdt": "2023-02-31T15:28:17+09:00"
@@ -3513,7 +3453,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 
 | 権限名                                          | 説明          |
 |------------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:ParameterGroup.Get | パラメータグループ詳細表示 |
+| RDSforMySQL:ParameterGroup.Get | パラメータグループ詳細表示 |
 
 #### リクエスト
 
@@ -3558,7 +3498,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
     "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
     "parameterGroupName": "parameter-group",
     "description": null,
-    "dbVersion": "{{engine.sampleDbVersionCode}}",
+    "dbVersion": "MYSQL_V8028",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
@@ -3594,7 +3534,7 @@ POST /v4.0/parameter-groups
 
 | 権限名                                             | 説明         |
 |---------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:ParameterGroup.Create | パラメータグループの作成 |
+| RDSforMySQL:ParameterGroup.Create | パラメータグループの作成 |
 
 #### リクエスト
 
@@ -3610,7 +3550,7 @@ POST /v4.0/parameter-groups
 ```json
 {
     "parameterGroupName": "parameter-group",
-    "dbVersion": "{{engine.sampleDbVersionCode}}"
+    "dbVersion": "MYSQL_V8028"
 }
 ```
 
@@ -3635,7 +3575,7 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 | 権限名                                           | 説明         |
 |-------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:ParameterGroup.Copy | パラメータグループコピーする |
+| RDSforMySQL:ParameterGroup.Copy | パラメータグループコピーする |
 
 #### リクエスト
 
@@ -3676,7 +3616,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 | 権限名                                             | 説明         |
 |---------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | パラメータグループの修正 |
+| RDSforMySQL:ParameterGroup.Modify | パラメータグループの修正 |
 
 #### リクエスト
 
@@ -3730,7 +3670,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 
 | 権限名                                             | 説明         |
 |---------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | パラメータグループの修正 |
+| RDSforMySQL:ParameterGroup.Modify | パラメータグループの修正 |
 
 #### リクエスト
 
@@ -3790,7 +3730,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 
 | 権限名                                            | 説明          |
 |--------------------------------------------------|---------------|
-| RDSfor{{engine.pascalCase}}:ParameterGroup.Reset | パラメータグループのリセット |
+| RDSforMySQL:ParameterGroup.Reset | パラメータグループのリセット |
 
 #### リクエスト
 
@@ -3830,7 +3770,7 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 | 権限名                                             | 説明         |
 |---------------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:ParameterGroup.Delete | パラメータグループの削除 |
+| RDSforMySQL:ParameterGroup.Delete | パラメータグループの削除 |
 
 #### リクエスト
 
@@ -3874,7 +3814,7 @@ GET /v4.0/user-groups
 
 | 権限名                                      | 説明         |
 |--------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:UserGroup.List | ユーザーグループリスト表示 |
+| RDSforMySQL:UserGroup.List | ユーザーグループリスト表示 |
 
 #### リクエスト
 
@@ -3926,7 +3866,7 @@ GET /v4.0/user-groups/{userGroupId}
 
 | 権限名                                     | 説明         |
 |-------------------------------------------|--------------|
-| RDSfor{{engine.pascalCase}}:UserGroup.Get | ユーザーグループ詳細表示 |
+| RDSforMySQL:UserGroup.Get | ユーザーグループ詳細表示 |
 
 #### リクエスト
 
@@ -3986,7 +3926,7 @@ POST /v4.0/user-groups
 
 | 権限名                                        | 説明        |
 |----------------------------------------------|-------------|
-| RDSfor{{engine.pascalCase}}:UserGroup.Create | ユーザーグループの作成 |
+| RDSforMySQL:UserGroup.Create | ユーザーグループの作成 |
 
 #### リクエスト
 
@@ -4036,7 +3976,7 @@ PUT /v4.0/user-groups/{userGroupId}
 
 | 権限名                                        | 説明        |
 |----------------------------------------------|-------------|
-| RDSfor{{engine.pascalCase}}:UserGroup.Modify | ユーザーグループの修正 |
+| RDSforMySQL:UserGroup.Modify | ユーザーグループの修正 |
 
 #### リクエスト
 
@@ -4095,7 +4035,7 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 | 権限名                                        | 説明        |
 |----------------------------------------------|-------------|
-| RDSfor{{engine.pascalCase}}:UserGroup.Delete | ユーザーグループの削除 |
+| RDSforMySQL:UserGroup.Delete | ユーザーグループの削除 |
 
 #### リクエスト
 
@@ -4137,7 +4077,7 @@ GET /v4.0/notification-groups
 
 | 権限名                                              | 説明        |
 |----------------------------------------------------|-------------|
-| RDSfor{{engine.pascalCase}}:NotificationGroup.List | 通知グループリスト表示 |
+| RDSforMySQL:NotificationGroup.List | 通知グループリスト表示 |
 
 #### リクエスト
 
@@ -4195,7 +4135,7 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 | 権限名                                             | 説明        |
 |---------------------------------------------------|-------------|
-| RDSfor{{engine.pascalCase}}:NotificationGroup.Get | 通知グループ詳細表示 |
+| RDSforMySQL:NotificationGroup.Get | 通知グループ詳細表示 |
 
 #### リクエスト
 
@@ -4270,7 +4210,7 @@ POST /v4.0/notification-groups
 
 | 権限名                                                | 説明       |
 |------------------------------------------------------|------------|
-| RDSfor{{engine.pascalCase}}:NotificationGroup.Create | 通知グループの作成 |
+| RDSforMySQL:NotificationGroup.Create | 通知グループの作成 |
 
 #### リクエスト
 
@@ -4321,7 +4261,7 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 
 | 権限名                                                | 説明       |
 |------------------------------------------------------|------------|
-| RDSfor{{engine.pascalCase}}:NotificationGroup.Modify | 通知グループの修正 |
+| RDSforMySQL:NotificationGroup.Modify | 通知グループの修正 |
 
 #### リクエスト
 
@@ -4383,7 +4323,7 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 | 権限名                                                | 説明       |
 |------------------------------------------------------|------------|
-| RDSfor{{engine.pascalCase}}:NotificationGroup.Delete | 通知グループの削除 |
+| RDSforMySQL:NotificationGroup.Delete | 通知グループの削除 |
 
 #### リクエスト
 
@@ -4427,7 +4367,7 @@ GET /v4.0/metrics
 
 | 権限名                                   | 説明     |
 |-----------------------------------------|----------|
-| RDSfor{{engine.pascalCase}}:Metric.List | 統計情報照会 |
+| RDSforMySQL:Metric.List | 統計情報照会 |
 
 #### リクエスト
 
@@ -4475,7 +4415,7 @@ GET /v4.0/metric-statistics
 
 | 権限名                                   | 説明     |
 |-----------------------------------------|----------|
-| RDSfor{{engine.pascalCase}}:Metric.List | 統計情報照会 |
+| RDSforMySQL:Metric.List | 統計情報照会 |
 
 #### リクエスト
 
@@ -4556,7 +4496,7 @@ GET /v4.0/events
 
 | 権限名                                  | 説明      |
 |----------------------------------------|-----------|
-| RDSfor{{engine.pascalCase}}:Event.List | イベントリスト表示 |
+| RDSforMySQL:Event.List | イベントリスト表示 |
 
 #### リクエスト
 
@@ -4644,7 +4584,7 @@ GET /v4.0/event-codes
 
 | 権限名                                  | 説明      |
 |----------------------------------------|-----------|
-| RDSfor{{engine.pascalCase}}:Event.List | イベントリスト表示 |
+| RDSforMySQL:Event.List | イベントリスト表示 |
 
 #### リクエスト
 
