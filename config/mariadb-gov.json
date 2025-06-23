@@ -19,9 +19,5 @@
             },
             "endpoint": "https://kr1-rds-mariadb.api.gov-nhncloudservice.com"
         }
-    ],
-    "deploy": {
-        "2025-05": "2025년 5월 15일",
-        "2025-07": "2025년 7월 17일"
-    }
+    ]
 }

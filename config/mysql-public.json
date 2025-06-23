@@ -35,9 +35,5 @@
             },
             "endpoint": "https://jp1-rds-mysql.api.nhncloudservice.com"
         }
-    ],
-    "deploy": {
-        "2025-05": "2025년 5월 13일",
-        "2025-07": "2025년 7월 15일"
-    }
+    ]
 }
