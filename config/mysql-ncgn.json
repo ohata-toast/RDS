@@ -19,5 +19,9 @@
             },
             "endpoint": "https://kr1-rds-mysql.api.gncloud.go.kr"
         }
-    ]
+    ],
+    "deploy": {
+        "2025-05": "2025년 5월 15일",
+        "2025-07": "2025년 7월 17일"
+    }
 }
