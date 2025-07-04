@@ -2858,7 +2858,7 @@ POST /v4.0/backups/{backupId}/export
     "username": "gildong.hong@nhn.com",
     "password": "password",
     "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
+    "objectPath": "backups/backup_file"
 }
 ```
 

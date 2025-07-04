@@ -1041,7 +1041,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
     "username": "gildong.hong@nhn.com",
     "password": "password",
     "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
+    "objectPath": "backups/backup_file"
 }
 ```
 
@@ -2428,7 +2428,7 @@ POST /v3.0/backups/{backupId}/export
     "username": "gildong.hong@nhn.com",
     "password": "password",
     "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
+    "objectPath": "backups/backup_file"
 }
 ```
 
