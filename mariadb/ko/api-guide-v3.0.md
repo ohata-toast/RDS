@@ -1040,7 +1040,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
+    "targetContainer": "container",
     "objectPath": "backups/backup_file"
 }
 ```
@@ -2308,7 +2308,7 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
+    "targetContainer": "container",
     "objectPath": "logs/backup"
 }
 ```
@@ -2427,7 +2427,7 @@ POST /v3.0/backups/{backupId}/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
+    "targetContainer": "container",
     "objectPath": "backups/backup_file"
 }
 ```
