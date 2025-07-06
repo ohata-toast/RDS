@@ -2645,7 +2645,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
+    "targetContainer": "container",
     "objectPath": "logs/backup"
 }
 ```
@@ -2852,8 +2852,8 @@ POST /v4.0/backups/{backupId}/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
+    "targetContainer": "container",
+    "objectPath": "backups/backup_file"
 }
 ```
 
