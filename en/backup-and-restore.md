@@ -183,7 +183,7 @@ After a backup, you can export the backup file to user object storage. This is n
 
 ❶ Select the DB instance to back up and click **Export backup files to object storage** after backup from the drop-down menu, and the settings pop-up screen will appear.
 ❷ Enter the tenant ID of the object storage where the backup will be saved. You can find the tenant ID in the API endpoint settings.
-❸ Enter the NHN Cloud member or IAM member of the object storage where the backup will be saved.
+❸ Enter the NHN Cloud account or IAM account of the object storage where the backup will be saved.
 ❹ Enter the API password of the object storage where the backup will be saved.
 ❺ Enter the container of the object storage where the backup will be saved.
 ❻ Enter the path to the backup that will be stored in the container. The folder name can be up to 255 bytes, and the full path can be up to 1024 bytes. Certain forms (. or ..) are not allowed, and special characters (' " < > ;) and spaces are not allowed.
