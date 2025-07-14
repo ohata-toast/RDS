@@ -13,6 +13,9 @@ DB instance name has the following restrictions.
 * DB instance name must be unique by region.
 * DB instance name contains alphabets, numbers, and - _ between 1 and 100 characters. ,and the first character must be an alphabet.
 
+> [참고]
+> 2025년 7월 점검 이후부터 고가용성 DB 인스턴스의 경우 마스터뿐만 아니라 예비 마스터의 이름도 입력하도록 변경되었습니다. 예비 마스터의 이름도 마스터와 동일한 제약사항을 가지며 마스터와 예비 마스터의 이름은 서로 달라야 합니다. 점검 이전 생성한 DB 인스턴스의 경우 예비 마스터의 이름은 마스터와 동일합니다.
+
 ## Create DB Instance
 
 You can create DB instance using the settings below.
@@ -171,6 +174,12 @@ When you create a DB instance, it issues an internal domain. The internal domain
 
 If you created a floating IP, issue additional external domains. The external domain points to the address of the floating IP. Because external domains or floating IPs are accessible from outside, you must protect the DB instance by setting the rules of DB security group appropriately.
 
+### Virtual IP
+
+2025년 5월 점검 이후 생성한 DB 인스턴스는 VIP(Virtual IP)를 지원합니다. VIP는 사용자 VPC 서브넷에 속한 IP 주소를 가리킵니다. 고가용성 DB 인스턴스의 경우 VIP는 항상 현재 시점의 마스터를 가리킵니다. 응용 프로그램의 접속 정보는 반드시 VIP를 직접 사용하거나 VIP를 가리키는 내부 (VIP) 도메인을 사용해야 합니다.
+
+2025년 5월 이전에 생성한 DB 인스턴스의 경우 웹 콘솔의 `VIP 추가` 메뉴를 클릭하여 VIP를 추가할 수 있습니다. VIP를 추가하면 기존 내부 도메인과 내부 (VIP) 도메인이 함께 제공됩니다. 단, 장애 조치가 발생하면 VIP는 예비 마스터를 가리키게 되지만 내부 도메인의 경우 때에 따라 예비 마스터를 가리키지 않을 수 있습니다. 따라서 VIP를 추가하면 반드시 응용 프로그램의 접속 정보를 VIP 혹인 내부 (VIP) 도메인을 사용하도록 수정해야 합니다.
+
 ### Log
 
 You can view and download various log files from Log tab of DB instance. Log files are rotated to the settings set as below. Some log files can be enabled or disabled in the parameter group.
@@ -328,6 +337,23 @@ If you change it to Disabled again after using direct control
 > * Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the console may not match.
 > * All users that exist in the database, regardless of the permissions granted to them, are represented by CUSTOM permissions.
 
+## Upgrade DB instance operating system
+Supports DB instance operating system upgrades. By upgrading the operating system, you can resolve security vulnerabilities or respond to the end of life (EOL) of the operating system.
+Caution is required when upgrading the operating system because it may result in service disruption. Highly available DB instances can minimize service disruption through failover.
+
+You can check the operating system information of the current DB instance on the DB instance details screen.
+![db-instance-os-upgrade-en.png](https://static.toastoven.net/prod_rds/mariadb/24.06.11/db-instance-os-upgrade-en.png)
+
+❶ You can check the operating system information of the DB instance.
+❷ If the operating system is eligible for version upgrade, the **OS Version Upgrade** button appears.
+
+Operating system version upgrades behave differently depending on whether you are in a highly available configuration or not. For high availability, the operating system version upgrade is performed using failover. For non-high availability, the operating system version upgrade is performed by restarting the DB instance.
+
+When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
+![db-instance-os-upgrade-single-popup-en.png](https://static.toastoven.net/prod_rds/mariadb/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
+
+When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual failover item](db-instance/#manual-failover) of High Availability DB Instances.
+![os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/mariadb/24.11.12/os-upgrade-ha-popup-en.png)
 
 ## Delete DB Instance
 
