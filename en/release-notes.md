@@ -1,31 +1,37 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2025. 07. 15.
+### July 15, 2025
 
-#### 기능 추가 및 개선
+#### Added Features and Updates
 
-- DB 보안 그룹의 송신 규칙으로 DB 포트 타입을 지정할 수 없도록 개선
-- 고가용성 DB 인스턴스의 예비 마스터 이름도 입력하도록 수정
-- Resource Watcher 에서 DB 인스턴스 리소스 확인 가능하도록 개선
-- 장애 조치 된 마스터도 삭제하기 전까지 정상 과금하도록 수정
-- 바이너리 로그가 없어서 장애 조치 된 마스터를 복구하지 못하는 경우 정확한 에러 메시지를 노출하도록 개선
+- Improved to disallow specifying the DB port type in egress rules of DB security groups
+- Changed to require entering the name of the candidate master for high-availability DB instances
+- Improved to allow DB instance resources to be checked in Resource Watcher
+- Fixed billing so that the failover master is charged normally until it is deleted
+- Improved to display accurate error messages when failover masters cannot be recovered due to missing binary logs
 
-#### 버그 수정
+#### Bug Fixes
 
-- 백업 내보내기 시 경로에 특수 문자가 포함되면 백업이 실패하는 문제 수정
-- 사용자 그룹 삭제 시 이벤트 구독에서 해당 사용자 그룹이 삭제되지 않는 문제 수정
-- 중복된 알림 그룹 삭제 시 정확한 에러 메시지를 노출하도록 개선
+- Fixed an issue where backup failed when special characters were included in the export path
+- Fixed an issue where the user group was not deleted from event subscriptions when the user group was deleted
+- Improved to display accurate error messages when deleting duplicate notification groups
 
-### 2025. 05. 13.
+### May 13, 2025
 
-#### 기능 추가 및 개선
+#### Added Features and Updates
 
-* VIP(Virtual IP)를 사용할 수 있도록 개선
-  * 신규로 생성하는 DB 인스턴스부터 VIP를 발급하며, VIP는 항상 마스터 DB 인스턴스를 바라보도록 설정됩니다. 기존 DB 인스턴스는 콘솔에서 [VIP 추가] 버튼을 클릭해 직접 발급할 수 있습니다.
-* 고가용성이 비정상인 상황에서 콘솔을 통해 명시적으로 중지할 수 있도록 개선
-* 감시 설정에 소수값을 입력할 수 있도록 개선
-* 사용자 그룹 이름에 한글을 입력할 수 있도록 개선
-* DB 인스턴스의 파라미터 그룹 변경 시 변경 내역 모달 창에서 재시작 여부를 확인할 수 있도록 개선
+* Improved to support using VIP (Virtual IP)
+  * VIP is now issued for newly created DB instances and is always configured to point to the master DB instance. For existing DB instances, VIPs can be issued manually by clicking the [Add VIP] button in the console
+* Improved to allow explicitly disabling High Availability via the console when it is in an abnormal state
+* Improved to allow entering decimal values in monitoring settings
+* Improved to allow entering Korean characters in user group names
+* Improved the change history modal window to check whether to restart when changing parameter groups on DB instances
+
+#### Bug Fixes
+
+* Fixed an issue where you could enter invalid values in the event source when creating event subscriptions via the Open API
+* Fixed an issue where the status of DB instances was intermittently not updated
+* Fixed an issue where an unknown error modal window was sometimes exposed
 
 ### April 15, 2025
 
