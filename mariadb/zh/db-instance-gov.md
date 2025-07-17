@@ -13,8 +13,8 @@ DB instance name has the following restrictions.
 * DB instance name must be unique by region.
 * DB instance name contains alphabets, numbers, and - _ between 1 and 100 characters. ,and the first character must be an alphabet.
 
-> [참고]
-> 2025년 7월 점검 이후부터 고가용성 DB 인스턴스의 경우 마스터뿐만 아니라 예비 마스터의 이름도 입력하도록 변경되었습니다. 예비 마스터의 이름도 마스터와 동일한 제약사항을 가지며 마스터와 예비 마스터의 이름은 서로 달라야 합니다. 점검 이전 생성한 DB 인스턴스의 경우 예비 마스터의 이름은 마스터와 동일합니다.
+> [Note]
+> After the maintenance in July 2025, for high-availability DB instances, the name of the candidate master must be entered in addition to the master. The candidate master name follows the same restrictions as the master name, and the two names must be different. For DB instances created before this maintenance, the candidate master name is the same as the master.
 
 ## Create DB Instance
 
@@ -176,9 +176,9 @@ If you created a floating IP, issue additional external domains. The external do
 
 ### Virtual IP
 
-2025년 5월 점검 이후 생성한 DB 인스턴스는 VIP(Virtual IP)를 지원합니다. VIP는 사용자 VPC 서브넷에 속한 IP 주소를 가리킵니다. 고가용성 DB 인스턴스의 경우 VIP는 항상 현재 시점의 마스터를 가리킵니다. 응용 프로그램의 접속 정보는 반드시 VIP를 직접 사용하거나 VIP를 가리키는 내부 (VIP) 도메인을 사용해야 합니다.
+Starting with DB instances created after the May 2025 maintenance, VIP (Virtual IP) is supported. The VIP is an IP address within the user's VPC subnet. For high-availability DB instances, the VIP is always the current master. Application connection information must use either the VIP directly or the internal (VIP) domain.
 
-2025년 5월 이전에 생성한 DB 인스턴스의 경우 웹 콘솔의 `VIP 추가` 메뉴를 클릭하여 VIP를 추가할 수 있습니다. VIP를 추가하면 기존 내부 도메인과 내부 (VIP) 도메인이 함께 제공됩니다. 단, 장애 조치가 발생하면 VIP는 예비 마스터를 가리키게 되지만 내부 도메인의 경우 때에 따라 예비 마스터를 가리키지 않을 수 있습니다. 따라서 VIP를 추가하면 반드시 응용 프로그램의 접속 정보를 VIP 혹인 내부 (VIP) 도메인을 사용하도록 수정해야 합니다.
+For DB instances created before the May 2025 maintenance, you can add a VIP by selecting `Add VIP` in the web console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the candidate master, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
 
 ### Log
 
@@ -596,7 +596,7 @@ from the time the new backup was performed on the promoted master.
 
 > [Caution]
 > If the position number value of the binary log between master and candidate master differs by more than 100,000,000, there is no failover.
-> `replicate-ignore-db` 혹은 `replicate-ignore-table` 이 적용된 경우, 해당 DB 혹은 테이블의 변경 사항은 복제되지 않으므로 장애 조치에 실패할 수 있습니다.
+> If `replicate-ignore-db` or `replicate-ignore-table` is applied, changes to that DB or table will not be replicated and failover may fail.
 
 ### Failed over Master
 
