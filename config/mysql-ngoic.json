@@ -8,7 +8,7 @@
     },
     "env": "ninc",
     "url": {
-        "cdn": "https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql"
+        "cdn": "https://static-station.ngoic.com/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql"
     },
     "regions": [
         {
