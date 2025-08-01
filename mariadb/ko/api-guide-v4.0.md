@@ -782,23 +782,24 @@ POST /v4.0/db-instances
 
 #### 요청
 
-| 이름                     | 종류   | 형식      | 필수 | 설명                                                                  |
-|------------------------|------|---------|----|---------------------------------------------------------------------|
-| dbInstanceName         | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                |
-| description            | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                   |
-| dbFlavorId             | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                     |
-| dbVersion              | Body | Enum    | O  | DB 엔진 유형                                                            |
-| dbPort                 | Body | Number  | O  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                          |
-| dbUserName             | Body | String  | O  | DB 사용자 계정명                                                          |
-| dbPassword             | Body | String  | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                     |
-| parameterGroupId       | Body | UUID    | O  | 파라미터 그룹의 식별자                                                        |
-| dbSecurityGroupIds     | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                    ||network|Body|Object|O|네트워크 정보 객체|
-| userGroupIds           | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
-| useHighAvailability    | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
-| pingInterval           | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
-| useDefaultNotification | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
-| useDeletionProtection  | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
-| useSlowQueryAnalysis   | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
+| 이름                      | 종류    | 형식      | 필수 | 설명                                                                  |
+|-------------------------|-------|---------|----|---------------------------------------------------------------------|
+| dbInstanceName          | Body  | String  | O  | DB 인스턴스를 식별할 수 있는 마스터 이름                                            |
+| dbInstanceCandidateName | Body  | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름(고가용성 사용 시 필수 값)                         |
+| description             | Body  | String  | X  | DB 인스턴스에 대한 추가 정보                                                   |
+| dbFlavorId              | Body  | UUID    | O  | DB 인스턴스 사양의 식별자                                                     |
+| dbVersion               | Body  | Enum    | O  | DB 엔진 유형                                                            |
+| dbPort                  | Body  | Number  | O  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                          |
+| dbUserName              | Body  | String  | O  | DB 사용자 계정명                                                          |
+| dbPassword              | Body  | String  | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                     |
+| parameterGroupId        | Body  | UUID    | O  | 파라미터 그룹의 식별자                                                        |
+| dbSecurityGroupIds      | Body  | Array   | X  | DB 보안 그룹의 식별자 목록                                                    |
+| userGroupIds            | Body  | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
+| useHighAvailability     | Body  | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
+| pingInterval            | Body  | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| useDefaultNotification  | Body  | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
+| useDeletionProtection   | Body  | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
+| useSlowQueryAnalysis    | Body  | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
@@ -882,12 +883,13 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 #### 요청
 
-| 이름                 | 종류   | 형식      | 필수 | 설명                                                                        |
-|--------------------|------|---------|----|---------------------------------------------------------------------------|
-| dbInstanceId       | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
-| dbInstanceName     | Body | String  | X  | DB 인스턴스를 식별할 수 있는 이름                                                      |
-| description        | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                         |
-| dbPort             | Body | Number  | X  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                |
+| 이름                      | 종류   | 형식      | 필수 | 설명                                          |
+|-------------------------|------|---------|----|---------------------------------------------|
+| dbInstanceId            | URL  | UUID    | O  | DB 인스턴스의 식별자                                |
+| dbInstanceName          | Body | String  | X  | DB 인스턴스를 식별할 수 있는 마스터 이름                    |
+| dbInstanceCandidateName | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름(고가용성 사용 시 필수 값) |
+| description             | Body | String  | X  | DB 인스턴스에 대한 추가 정보                           |
+| dbPort                  | Body | Number  | X  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`  |
 | useSlowQueryAnalysis | Body | Boolean  | X | Slow query 분석 여부 |
 | dbFlavorId         | Body | UUID    | X  | DB 인스턴스 사양의 식별자                                                           |
 | parameterGroupId   | Body | UUID    | X  | 파라미터 그룹의 식별자                                                              |
@@ -1089,7 +1091,8 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | 이름                                           | 종류   | 형식      | 필수 | 설명                                                                        |
 |----------------------------------------------|------|---------|----|---------------------------------------------------------------------------|
 | dbInstanceId                                 | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
-| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                      |
+| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 마스터 이름                                                  |
+| dbInstanceCandidateName                      | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름(고가용성 사용 시 필수 값)                               |
 | description                                  | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                         |
 | dbFlavorId                                   | Body | UUID    | X  | DB 인스턴스 사양의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                   |
 | dbPort                                       | Body | Number  | X  | DB 포트<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`        |
@@ -1369,7 +1372,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | dbInstanceId                                        | URL  | UUID    | O  | DB 인스턴스의 식별자                                                                                                                                                            |
 | restore                                             | Body | Object  | O  | 복원 정보 객체                                                                                                                                                                |
 | restore.restoreType                                 | Body | Enum    | O  | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li><li>`BACKUP`: 기존에 생성한 백업을 이용한 스냅샷 복원 타입</li></ul> |
-| dbInstanceName                                      | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                                                                                                                    |
+| dbInstanceName                                      | Body | String  | O  | DB 인스턴스를 식별할 수 있는 마스터 이름                                                                                                                                                |
+| dbInstanceCandidateName                             | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름(고가용성 사용 시 필수 값)                                                                                                                             |
 | description                                         | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                                                                                                                       |
 | dbFlavorId                                          | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                                                                                                                         |
 | dbPort                                              | Body | Number  | O  | DB 포트<br><ul><li>최솟값: `3306`</li><li>최댓값: `43306`</li></ul>                                                                                                             |
@@ -1592,7 +1596,8 @@ POST /v4.0/db-instances/restore-from-obs
 | restore.targetContainer                             | Body | String  | O  | 백업이 저장된 오브젝트 스토리지의 컨테이너                                                                |
 | restore.objectPath                                  | Body | String  | O  | 컨테이너에 저장된 백업의 경로                                                                       |
 | dbVersion                                           | Body | Enum    | O  | DB 엔진 유형                                                                               |
-| dbInstanceName                                      | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                                   |
+| dbInstanceName                                      | Body | String  | O  | DB 인스턴스를 식별할 수 있는 마스터 이름                                                               |
+| dbInstanceCandidateName                             | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름(고가용성 사용 시 필수 값)                                            |
 | description                                         | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                                      |
 | dbFlavorId                                          | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                                        |
 | dbPort                                              | Body | Number  | O  | DB 포트<br><ul><li>최솟값: `3306`</li><li>최댓값: `43306`</li></ul>                            |
@@ -2547,7 +2552,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
+    "targetContainer": "container",
     "objectPath": "logs/backup"
 }
 ```
@@ -2748,8 +2753,8 @@ POST /v4.0/backups/{backupId}/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
+    "targetContainer": "container",
+    "objectPath": "backups/backup_file"
 }
 ```
 
@@ -2784,7 +2789,8 @@ POST /v4.0/backups/{backupId}/restore
 | 이름                                           | 종류   | 형식      | 필수 | 설명                                                                  |
 |----------------------------------------------|------|---------|----|---------------------------------------------------------------------|
 | backupId                                     | URL  | UUID    | O  | 백업의 식별자                                                             |
-| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                |
+| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 마스터 이름                                            |
+| dbInstanceCandidateName                      | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름(고가용성 사용 시 필수 값)                         |
 | description                                  | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                   |
 | dbFlavorId                                   | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                     |
 | dbPort                                       | Body | Integer | O  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                          |

@@ -1,0 +1,23 @@
+{
+    "engine": {
+        "lowerCase": "mysql",
+        "upperCase": "MYSQL",
+        "pascalCase": "MySQL",
+        "sampleDbVersionCode": "MYSQL_V8028",
+        "sampleDbVersionName": "MySQL 8.0.28"
+    },
+    "env": "ngovc",
+    "url": {
+        "cdn": "https://static-station.ngovc.com/v1/AUTH_3365819a41194e7ca358853f5b2eec52/cdn/prod_rds/mysql"
+    },
+    "regions": [
+        {
+            "text": {
+                "ko": "한국(판교) 리전",
+                "en": "Korea (Pangyo) region",
+                "ja": "韓国(パンギョ)リージョン"
+            },
+            "endpoint": ""
+        }
+    ]
+}
