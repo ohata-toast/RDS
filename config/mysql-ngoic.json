@@ -8,7 +8,7 @@
     },
     "env": "ngoic",
     "url": {
-        "cdn": "https://static-station.ngoic.com/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql"
+        "cdn": "https://static-station.ngoic.com/v1/AUTH_c8bd5293535a46f8bc6705b349f67ea3/cdn/prod_rds/mysql"
     },
     "regions": [
         {
