@@ -40,6 +40,16 @@ const configs = [
     },
     {
         engine: 'mysql',
+        env: 'ngovc',
+        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
+    },
+    {
+        engine: 'mysql',
+        env: 'ngoic',
+        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
+    },
+    {
+        engine: 'mysql',
         env: 'ngsc',
         exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
     },

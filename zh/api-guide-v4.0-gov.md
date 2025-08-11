@@ -6,13 +6,13 @@
 
 ## Authentication and Authorization
 
-API를 사용하려면 [Public API > API 호출 및 인증](/nhncloud/ko/public-api/api-authentication/)을 통해 발급 받은 Bearer 유형의 토큰이 필요합니다.
-발급 받은 토큰은 Appkey와 함께 요청 Header에 포함해야 합니다.
+To use the API, you need a token of type Bearer, issued through [Public API > API Calls and Authentication](/nhncloud/ko/public-api/api-authentication/).
+The issued token must be included in the request header along with the Appkey.
 
-| 이름                  | 종류     | 형식     | 필수 | 설명                                                          |
+| Name                | Type   | Format | Required | Description                                           |
 |---------------------|--------|--------|----|-------------------------------------------------------------|
-| X-TC-APP-KEY        | Header | String | O  | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
-| X-NHN-AUTHORIZATION | Header | String | O  | Public API로 발급 받은 Bearer 유형 토큰                              |
+| X-TC-APP-KEY        | Header | String | O  | Appkey of RDS for MySQL or integrated Appkey for project |
+| X-NHN-AUTHORIZATION | Header | String | O  | Bearer type token issued with the Public API                           |
 
 In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for MySQL ADMIN` and `RDS for MySQL VIEWER`.
 
@@ -83,11 +83,11 @@ The API responds with "200 OK" to all API requests. For more information on the 
 GET /v4.0/project/regions
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                     | 설명         |
+| Permission Name                                     | Description         |
 |-----------------------------------------|------------|
-| RDSforMySQL:Project.Get | 프로젝트 정보 조회 |
+| RDSforMySQL:Project.Get | Query project information |
 
 #### Request
 
@@ -138,11 +138,11 @@ This API does not require a request body.
 GET /v4.0/project/members
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                     | 설명         |
+| Permission Name                                      | Description         |
 |-----------------------------------------|------------|
-| RDSforMySQL:Project.Get | 프로젝트 정보 조회 |
+| RDSforMySQL:Project.Get | Query project information |
 
 #### Request
 
@@ -192,11 +192,11 @@ This API does not require a request body.
 GET /v4.0/db-flavors
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                       | 설명               |
+| Permission Name                                       | Description               |
 |-------------------------------------------|------------------|
-| RDSforMySQL:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
+| RDSforMySQL:DbFlavor.List | List DB Instance Specifications |
 
 #### Request
 
@@ -246,11 +246,11 @@ This API does not require a request body.
 GET /v4.0/network/subnets
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                      | 설명        |
+| Permission Name                                     | Description        |
 |------------------------------------------|-----------|
-| RDSforMySQL:Network.List | 서브넷 목록 보기 |
+| RDSforMySQL:Network.List | List subnets |
 
 #### Request
 
@@ -302,11 +302,11 @@ This API does not require a request body.
 GET /v4.0/db-versions
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명          |
+| Permission Name                                        | Description          |
 |--------------------------------------------|-------------|
-| RDSforMySQL:DbVersion.List | DB 엔진 목록 보기 |
+| RDSforMySQL:DbVersion.List | List DB Engines |
 
 #### Request
 
@@ -354,11 +354,11 @@ This API does not require a request body.
 GET /v4.0/storage-types
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                      | 설명                |
+| Permission Name                                      | Description                |
 |------------------------------------------|-------------------|
-| RDSforMySQL:Storage.List | 데이터 스토리지 타입 목록 보기 |
+| RDSforMySQL:Storage.List | List data storage types |
 
 #### Request
 
@@ -417,11 +417,11 @@ This API does not require a request body.
 GET /v4.0/jobs/{jobId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                 | 설명          |
+| Permission Name                                 | Description          |
 |-------------------------------------|-------------|
-| RDSforMySQL:Job.Get | 작업 정보 상세 보기 |
+| RDSforMySQL:Job.Get | List Task Details |
 
 #### Request
 
@@ -479,11 +479,11 @@ This API does not require a request body.
 GET /v4.0/db-instance-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                              | 설명               |
+| Permission Name                                              | Description               |
 |--------------------------------------------------|------------------|
-| RDSforMySQL:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
+| RDSforMySQL:DbInstanceGroup.List | List DB Instances |
 
 #### Request
 
@@ -531,11 +531,11 @@ This API does not require a request body.
 GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                             | 설명               |
+| Permission Name                                             | Description               |
 |-------------------------------------------------|------------------|
-| RDSforMySQL:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
+| RDSforMySQL:DbInstanceGroup.Get | List DB Instance Group Details |
 
 
 #### Request
@@ -641,11 +641,11 @@ This API does not require a request body.
 GET /v4.0/db-instances
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                         | 설명            |
+| Permission Name                                         | Description            |
 |---------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.List | DB 인스턴스 목록 보기 |
+| RDSforMySQL:DbInstance.List | List DB instances |
 
 #### Request
 
@@ -707,11 +707,11 @@ This API does not require a request body.
 GET /v4.0/db-instances/{dbInstanceId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명            |
+| Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -739,7 +739,7 @@ This API does not require a request body.
 | dbSecurityGroupIds          | Body | Array    | DB security group identifiers applied to DB instance                                                                                                                    |
 | notificationGroupIds        | Body | Array    | Notification group identifiers applied to DB instance                                                                                                                   |
 | useDeletionProtection       | Body | Boolean  | Whether to protect DB instance against deletion                                                                                                                         |
-| useSlowQueryAnalysis        | Body | Boolean  | Slow query 분석 여부                                                                                                                                                        |
+| useSlowQueryAnalysis        | Body | Boolean  | Whether to analyze slow queries                                                                                                                                                         |
 | supportAuthenticationPlugin | Body | Boolean  | Whether to support authentication plugin                                                                                                                                |
 | needToApplyParameterGroup   | Body | Boolean  | Need to apply the latest parameter group                                                                                                                                |
 | needMigration               | Body | Boolean  | Need to migrate                                                                                                                                                         |
@@ -792,17 +792,18 @@ This API does not require a request body.
 POST /v4.0/db-instances
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                           | 설명           |
+| Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Create | DB 인스턴스 생성하기 |
+| RDSforMySQL:DbInstance.Create | Create DB Instance |
 
 #### Request
 
 | Name                   | Type | Format  | Required | Description                                                                                                           |
 |------------------------|------|---------|----------|-----------------------------------------------------------------------------------------------------------------------|
-| dbInstanceName         | Body | String  | O        | Name to identify DB instances                                                                                         |
+| dbInstanceName         | Body | String  | O        | Master name to identify DB instances                                                                                  |
+| dbInstanceCandidateName| Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description            | Body | String  | X        | Additional information on DB instances                                                                                |
 | dbFlavorId             | Body | UUID    | O        | Identifier of DB instance specifications                                                                              |
 | dbVersion              | Body | Enum    | O        | DB engine type                                                                                                        |
@@ -810,13 +811,13 @@ POST /v4.0/db-instances
 | dbUserName             | Body | String  | O        | DB user account name                                                                                                  |
 | dbPassword             | Body | String  | O        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                         |
 | parameterGroupId       | Body | UUID    | O        | Parameter group identifier                                                                                            |
-| dbSecurityGroupIds     | Body | Array   | X        | DB security group identifiers                                                                                         ||network|Body|Object|O|Network information objects|
+| dbSecurityGroupIds     | Body | Array   | X        | DB security group identifiers                                                                                         |
 | userGroupIds           | Body | Array   | X        | User group identifiers                                                                                                |
 | useHighAvailability    | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                 |
 | pingInterval           | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
 | useDefaultNotification | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                              |
 | useDeletionProtection  | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                              |
-| useSlowQueryAnalysis   | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                    |
+| useSlowQueryAnalysis   | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                 |
 | authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
 | tlsOption                                | Body | Enum    | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                                              |
 | network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
@@ -826,11 +827,11 @@ POST /v4.0/db-instances
 | storage                                  | Body | Object  | O        | Storage information objects                                                                                                                                                                                                                                               |    
 | storage.storageType                      | Body | Enum    | O        | Block Storage Type<br/>- Example: `General SSD`                                                                                                                                                                                                                           |
 | storage.storageSize                      | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                                                                                                                                                                             |
-| storage.storageAutoscale                     | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                   |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | 스토리지 자동 확장 여부                                                       |
-| storage.storageAutoscale.threshold           | Body | Number  | X  | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                         |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                   |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                   |
+| storage.storageAutoscale                     | Body | Object  | X  | Block Storage Auto Scaling Objects                                         |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | Whether to enable storage auto scaling                                     |
+| storage.storageAutoscale.threshold           | Body | Number  | X  | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`        |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | Auto scaling maximum size (GB)<br/>- Maximum value: `4096`                           |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 | backup                                   | Body | Object  | O        | Backup information objects                                                                                                                                                                                                                                                |
 | backup.backupPeriod                      | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
@@ -895,23 +896,24 @@ POST /v4.0/db-instances
 PUT /v4.0/db-instances/{dbInstanceId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                           | 설명           |
+| Permission Name                               | Description  |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
 | Name               | Type | Format  | Required | Description                                                                                                       |
 |--------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId       | URL  | UUID    | O        | DB instance identifier                                                                                            |
-| dbInstanceName     | Body | String  | X        | Name to identify DB instances                                                                                     |
+| dbInstanceName     | Body | String  | O        | Master name to identify DB instances                                                                              |
+| dbInstanceCandidateName| Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description        | Body | String  | X        | Additional information on DB instances                                                                            |
 | dbPort             | Body | Number  | X        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                  |
 | dbVersion          | Body | Enum    | X        | DB engine type                                                                                                    |
 | useDummy           | Body | Boolean | X        | Whether to use dummies when upgrading the DB version of a single DB instance<br/>Default: `false`                 |
-| useSlowQueryAnalysis | Body | Boolean  | X | Slow query 분석 여부 |
+| useSlowQueryAnalysis | Body | Boolean  | X | Whether to analyze slow queries |
 | dbFlavorId         | Body | UUID    | X        | Identifier of DB instance specifications                                                                          |
 | parameterGroupId   | Body | UUID    | X        | Parameter group identifier                                                                                        |
 | dbSecurityGroupIds | Body | Array   | X        | DB security group identifiers                                                                                     |
@@ -948,11 +950,11 @@ PUT /v4.0/db-instances/{dbInstanceId}
 DELETE /v4.0/db-instances/{dbInstanceId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                           | 설명           |
+| Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Delete | DB 인스턴스 삭제하기 |
+| RDSforMySQL:DbInstance.Delete | Delete DB instance |
 
 #### Request
 
@@ -976,11 +978,11 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/restart
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                            | 설명            |
+| Permission Name                                            | Description            |
 |------------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Restart | DB 인스턴스 재시작하기 |
+| RDSforMySQL:DbInstance.Restart | Restart DB Instance |
 
 #### Request
 
@@ -1002,11 +1004,11 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 POST /v4.0/db-instances/{dbInstanceId}/force-restart
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                 | 설명               |
+| Permission Name                                                 | Description               |
 |-----------------------------------------------------|------------------|
-| RDSforMySQL:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
+| RDSforMySQL:DbInstance.ForceRestart | Force Restart DB instance |
 
 #### Request
 
@@ -1044,11 +1046,11 @@ This API does not return a response body.
 POST /v4.0/db-instances/{dbInstanceId}/start
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                          | 설명           |
+| Permission Name                              | Description           |
 |----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Start | DB 인스턴스 시작하기 |
+| RDSforMySQL:DbInstance.Start | Start DB Instance |
 
 #### Request
 
@@ -1072,11 +1074,11 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/stop
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                         | 설명           |
+| Permission Name                                         | Description            |
 |---------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Stop | DB 인스턴스 정지하기 |
+| RDSforMySQL:DbInstance.Stop | Stop DB Instance |
 
 #### Request
 
@@ -1100,18 +1102,19 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/replicate
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                              | 설명           |
+| Permission Name                                  | Description           |
 |--------------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Replicate | DB 인스턴스 복제하기 |
+| RDSforMySQL:DbInstance.Replicate | Replicate DB Instance |
 
 #### Request
 
 | Name                                         | Type | Format  | Required | Description                                                                                                             |
 |----------------------------------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId                                 | URL  | UUID    | O        | DB instance identifier                                                                                                  |
-| dbInstanceName                               | Body | String  | O        | Name to identify DB instances                                                                                           |
+| dbInstanceName                               | Body | String  | O        | Master name to identify DB instances                                                                                  |
+| dbInstanceCandidateName                      | Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description                                  | Body | String  | X        | Additional information on DB instances                                                                                  |
 | dbFlavorId                                   | Body | UUID    | X        | Identifier of DB instance specifications<br/>- Default: Original DB instance value                                      |
 | dbPort                                       | Body | Number  | X        | DB port<br/>- Default: Original DB instance value<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`              |
@@ -1127,11 +1130,11 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | storage                                      | Body | Object  | X        | Storage information objects                                                                                             |    
 | storage.storageType                          | Body | Enum    | X        | Block Storage Type<br/>- Example: `General SSD`                                                                         |
 | storage.storageSize                          | Body | Number  | X        | Block Storage Size (GB)<br/>- Default: Original DB instance value<br/>- Minimum value: `20`<br/>- Maximum value: `2048` |
-| storage.storageAutoscale                     | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                       |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                           |
-| storage.storageAutoscale.threshold           | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                             |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                       |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                       |
+| storage.storageAutoscale                     | Body | Object  | X        | Block Storage Auto Scaling Objects                                                                                                       |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                           |
+| storage.storageAutoscale.threshold           | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                             |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | Auto scaling maximum size (GB)<br/>- Maximum value:: `4096`                                                                                       |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                       |
 | backup                                       | Body | Object  | X        | Backup information objects                                                                                              |
 | backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`   |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`     |
@@ -1176,11 +1179,11 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 POST /v4.0/db-instances/{dbInstanceId}/promote
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                            | 설명           |
+| Permission Name                                            | Description           |
 |------------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Promote | DB 인스턴스 승격하기 |
+| RDSforMySQL:DbInstance.Promote | Promote DB Instance |
 
 #### Request
 
@@ -1198,31 +1201,31 @@ This API does not require a request body.
 
 ---
 
-### DB 인스턴스 재구축하기
+### Rebuild DB Instance
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/rebuild
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                            | 설명            |
+| Permission Name                                            | Description            |
 |------------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
+| RDSforMySQL:DbInstance.Rebuild | Rebuild DB Instance |
 
-#### 요청
+#### Request
 
-이 API는 요청 본문을 요구하지 않습니다.
+This API does not require a request body.
 
-| 이름           | 종류  | 형식   | 필수 | 설명           |
+| Name         | Type | Format | Required | Description            |
 |--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+| dbInstanceId | URL | UUID | O  | DB instance identifier |
 
-#### 응답
+#### Response
 
-| 이름    | 종류   | 형식   | 설명          |
+| Name  | Type | Format | Description                  |
 |-------|------|------|-------------|
-| jobId | Body | UUID | 요청한 작업의 식별자 |
+| jobId | Body | UUID | Identifier of requested task |
 
 ---
 
@@ -1232,11 +1235,11 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명            |
+| Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -1319,11 +1322,11 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명            |
+| Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Common Request
 
@@ -1379,11 +1382,11 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 POST /v4.0/db-instances/{dbInstanceId}/restore
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                            | 설명           |
+| Permission Name                                            | Description           |
 |------------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Restore | DB 인스턴스 복원하기 |
+| RDSforMySQL:DbInstance.Restore | Restore DB Instance |
 
 #### Common Request
 
@@ -1392,7 +1395,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | dbInstanceId                                        | URL  | UUID    | O        | DB instance identifier                                                                                                                                                                                                                                                                                           |
 | restore                                             | Body | Object  | O        | Restoration information object                                                                                                                                                                                                                                                                                   |
 | restore.restoreType                                 | Body | Enum    | O        | Restoration type<br><ul><li>`TIMESTAMP`: A point-in-time restoration type using the time within the restorable time</li><li>`BINLOG`: A point-in-time restoration type using a binary log location that can be restored.</li><li>`BACKUP`: Snapshot restoration type using a previously created backup</li></ul> |
-| dbInstanceName                                      | Body | String  | O        | Name to identify DB instances                                                                                                                                                                                                                                                                                    |
+| dbInstanceName                                      | Body | String  | O        | Master name to identify DB instances                                                                                  |
+| dbInstanceCandidateName                             | Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description                                         | Body | String  | X        | Additional information on DB instances                                                                                                                                                                                                                                                                           |
 | dbFlavorId                                          | Body | UUID    | O        | Identifier of DB instance specifications                                                                                                                                                                                                                                                                         |
 | dbPort                                              | Body | Number  | O        | DB port<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                                 |
@@ -1403,7 +1407,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | pingInterval                                        | Body | Number  | X        | Ping interval (sec) when using high availability<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                   |
 | useDefaultNotification                              | Body | Boolean | X        | Whether to use default notification<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                        |
 | useDeletionProtection                               | Body | Boolean | X        | Whether to protect against deletion<br>Default: `false`                                                                                                                                                                                                                                                          |
-| useSlowQueryAnalysis                                | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                                                                                                                                                                                               |
+| useSlowQueryAnalysis                                | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                                                                                                                                                                                                                               |
 | network                                             | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                                                                      |
 | network.subnetId                                    | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                                                                |
 | network.usePublicAccess                             | Body | Boolean | X        | External access is available or not<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                        |
@@ -1411,11 +1415,11 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | storage                                             | Body | Object  | O        | Storage information objects                                                                                                                                                                                                                                                                                      |
 | storage.storageType                                 | Body | Enum    | O        | Block Storage Type<br><ul><li>- Example: `General SSD`</li></ul>                                                                                                                                                                                                                                                 |
 | storage.storageSize                                 | Body | Number  | O        | Block Storage Size (GB)<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
-| storage.storageAutoscale                            | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                                                                                                                                                                                                                |
-| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                                                                                                                                                                                                                    |
-| storage.storageAutoscale.threshold                  | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                                                                                                                                                                                                                      |
-| storage.storageAutoscale.maxStorageSize             | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                                                                                                                                                                                                                |
-| storage.storageAutoscale.cooldownTime               | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                                                                                                                                                                                                                |
+| storage.storageAutoscale                            | Body | Object  | X        | Block Storage Auto Scaling Objects                                                                                                                                                                                                                                                                                                 |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                                                                                                                                                                                                                    |
+| storage.storageAutoscale.threshold                  | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                                                                                                                                                                                                                      |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X        | Auto scaling maximum size (GB)<br/>- Maximum value: `4096`                                                                                                                                                                                                                                                                                |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                                                                                                                                                                                                                |
 | backup                                              | Body | Object  | O        | Backup information objects                                                                                                                                                                                                                                                                                       |
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                |
@@ -1599,11 +1603,11 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 POST /v4.0/db-instances/restore-from-obs
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                   | 설명                      |
+| Permission Name                                           | Description           |
 |-------------------------------------------------------|-------------------------|
-| RDSforMySQL:DbInstance.RestoreFromObs | DB 인스턴스 오브젝트 스토리지로부터 복원 |
+| RDSforMySQL:DbInstance.RestoreFromObs | Restore a DB instance from object storage |
 
 #### Request
 
@@ -1616,7 +1620,8 @@ POST /v4.0/db-instances/restore-from-obs
 | restore.targetContainer                             | Body | String  | O        | Container for object storage where backups are stored                                                                                          |
 | restore.objectPath                                  | Body | String  | O        | Backup path stored in container                                                                                                                |
 | dbVersion                                           | Body | Enum    | O        | DB engine type                                                                                                                                 |
-| dbInstanceName                                      | Body | String  | O        | Name to identify DB instances                                                                                                                  |
+| dbInstanceName                                      | Body | String  | O        | Master name to identify DB instances                                                                                  |
+| dbInstanceCandidateName                             | Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description                                         | Body | String  | X        | Additional information on DB instances                                                                                                         |
 | dbFlavorId                                          | Body | UUID    | O        | Identifier of DB instance specifications                                                                                                       |
 | dbPort                                              | Body | Number  | O        | DB port<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                               |
@@ -1627,7 +1632,7 @@ POST /v4.0/db-instances/restore-from-obs
 | pingInterval                                        | Body | Number  | X        | Ping interval (sec) when using high availability<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul> |
 | useDefaultNotification                              | Body | Boolean | X        | Whether to use default notification<br><ul><li>Default: `false`</li></ul>                                                                      |
 | useDeletionProtection                               | Body | Boolean | X        | Whether to protect against deletion<br>Default: `false`                                                                                        |
-| useSlowQueryAnalysis                                | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                             |
+| useSlowQueryAnalysis                                | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                                                             |
 | network                                             | Body | Object  | O        | Network information objects                                                                                                                    |
 | network.subnetId                                    | Body | UUID    | O        | Subnet identifier                                                                                                                              |
 | network.usePublicAccess                             | Body | Boolean | X        | External access is available or not<br><ul><li>Default: `false`</li></ul>                                                                      |
@@ -1635,11 +1640,11 @@ POST /v4.0/db-instances/restore-from-obs
 | storage                                             | Body | Object  | O        | Storage information objects                                                                                                                    |
 | storage.storageType                                 | Body | Enum    | O        | Block Storage Type<br><ul><li>- Example: `General SSD`</li></ul>                                                                               |
 | storage.storageSize                                 | Body | Number  | O        | Block Storage Size (GB)<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                               |
-| storage.storageAutoscale                            | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                                              |
-| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                                                  |
-| storage.storageAutoscale.threshold                  | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                                                    |
-| storage.storageAutoscale.maxStorageSize             | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                                              |
-| storage.storageAutoscale.cooldownTime               | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                                              |
+| storage.storageAutoscale                            | Body | Object  | X        | Block Storage Auto Scaling Objects                                                                                                                                   |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                                                  |
+| storage.storageAutoscale.threshold                  | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                                                    |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X        | Auto scaling maximum size (GB)<br/>- Maximum value: `4096`                                                                                                              |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                                              |
 | backup                                              | Body | Object  | O        | Backup information objects                                                                                                                     |
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                               |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                              |
@@ -1715,11 +1720,11 @@ POST /v4.0/db-instances/restore-from-obs
 PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                           | 설명           |
+| Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -1756,11 +1761,11 @@ This API does not return a response body.
 PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                 | 설명        |
+| Permission Name                                     | Description        |
 |-----------------------------------------------------|-----------|
-| RDSforMySQL:HighAvailability.Modify | 고가용성 수정하기 |
+| RDSforMySQL:HighAvailability.Modify | Modify high availability |
 
 #### Request
 
@@ -1784,11 +1789,11 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                 | 설명           |
+| Permission Name                                     | Description           |
 |-----------------------------------------------------|--------------|
-| RDSforMySQL:HighAvailability.Resume | 고가용성 다시 시작하기 |
+| RDSforMySQL:HighAvailability.Resume | Restart high availability |
 
 #### Request
 
@@ -1812,11 +1817,11 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                | 설명           |
+| Permission Name                                    | Description           |
 |----------------------------------------------------|--------------|
-| RDSforMySQL:HighAvailability.Pause | 고가용성 일시 중지하기 |
+| RDSforMySQL:HighAvailability.Pause | Pause high availability |
 
 #### Request
 
@@ -1840,11 +1845,11 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                 | 설명        |
+| Permission Name                                     | Description           |
 |-----------------------------------------------------|-----------|
-| RDSforMySQL:HighAvailability.Repair | 고가용성 복구하기 |
+| RDSforMySQL:HighAvailability.Repair | Recover high availability |
 
 #### Request
 
@@ -1868,11 +1873,11 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                | 설명        |
+| Permission Name                                    | Description           |
 |----------------------------------------------------|-----------|
-| RDSforMySQL:HighAvailability.Split | 고가용성 분리하기 |
+| RDSforMySQL:HighAvailability.Split | Separate high availability |
 
 #### Request
 
@@ -1896,11 +1901,11 @@ This API does not require a request body.
 GET /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명            |
+| Permission Name                            | Description           |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -1917,11 +1922,11 @@ This API does not require a request body.
 | storageType                          | Body | Enum    | Block Storage Type                                                                                         |
 | storageSize                          | Body | Number  | Block Storage Size (GB)                                                                                    |
 | storageStatus                        | Body | Enum    | Data Storage Current Status<br/>- `DETACHED`: Detached<br/>- `ATTACHED`: Attached<br/>- `DELETED`: Deleted |
-| storageAutoscale                     | Body | Object  | 데이터 스토리지 자동 확장 객체                                                                                          |
-| storageAutoscale.useStorageAutoscale | Body | Boolean | 스토리지 자동 확장 여부                                                                                              |
-| storageAutoscale.threshold           | Body | Number  | 자동 확장 조건(%)                                                                                                |
-| storageAutoscale.maxStorageSize      | Body | Number  | 자동 확장 최대 크기(GB)                                                                                            |
-| storageAutoscale.cooldownTime        | Body | Number  | 자동 확장 쿨다운 시간(분)                                                                                            |
+| storageAutoscale                     | Body | Object  | Block Storage Auto Scaling Objects                                                                         |
+| storageAutoscale.useStorageAutoscale | Body | Boolean | Whether to enable storage auto scaling                                                                     |
+| storageAutoscale.threshold           | Body | Number  | Auto scale out conditions (%)                                                                              |
+| storageAutoscale.maxStorageSize      | Body | Number  | Auto scaling maximum size (GB)                                                                             |
+| storageAutoscale.cooldownTime        | Body | Number  | Auto scaling cooldown time (minutes)                                                                       |
 
 <details><summary>Example</summary>
 <p>
@@ -1957,11 +1962,11 @@ This API does not require a request body.
 PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                           | 설명           |
+| Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -1970,11 +1975,11 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 | dbInstanceId                         | URL  | UUID    | O        | DB instance identifier                                                                                            |
 | storageSize                          | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: Current value<br/>- Maximum value: `2048`                            |
 | useOnlineFailover                    | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
-| storageAutoscale                     | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                 |
-| storageAutoscale.useStorageAutoscale | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                     |
-| storageAutoscale.threshold           | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                       |
-| storageAutoscale.maxStorageSize      | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                 |
-| storageAutoscale.cooldownTime        | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                 |
+| storageAutoscale                     | Body | Object  | X        |Block Storage Auto Scaling Objects                                                                                                 |
+| storageAutoscale.useStorageAutoscale | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                     |
+| storageAutoscale.threshold           | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                       |
+| storageAutoscale.maxStorageSize      | Body | Number  | X        | Auto scaling maximum size (GB)<br/>- Maximum value: `4096`                                                                                 |
+| storageAutoscale.cooldownTime        | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                 |
 
 #### Response
 
@@ -1990,11 +1995,11 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 GET /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명            |
+| Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -2053,11 +2058,11 @@ This API does not require a request body.
 PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                           | 설명           |
+| Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -2106,11 +2111,11 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 GET /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명            |
+| Permission Name                                       | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -2171,11 +2176,11 @@ This API does not require a request body.
 PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                           | 설명           |
+| Permission Name                               | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -2198,11 +2203,11 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 GET /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                             | 설명                  |
+| Permission Name                                 | Description                  |
 |-------------------------------------------------|---------------------|
-| RDSforMySQL:DbInstanceUser.List | DB 인스턴스 내 사용자 목록 보기 |
+| RDSforMySQL:DbInstanceUser.List | List of users in DB instance |
 
 #### Request
 
@@ -2265,11 +2270,11 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명                 |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceUser.Create | DB 인스턴스 내 사용자 생성하기 |
+| RDSforMySQL:DbInstanceUser.Create | Create users in DB instance |
 
 #### Request
 
@@ -2317,11 +2322,11 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명                 |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceUser.Modify | DB 인스턴스 내 사용자 수정하기 |
+| RDSforMySQL:DbInstanceUser.Modify | Modify users in DB instance |
 
 #### Request
 
@@ -2364,11 +2369,11 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명                 |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceUser.Delete | DB 인스턴스 내 사용자 삭제하기 |
+| RDSforMySQL:DbInstanceUser.Delete | Delete users in DB instance |
 
 #### Request
 
@@ -2393,11 +2398,11 @@ This API does not require a request body.
 GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명                  |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|---------------------|
-| RDSforMySQL:DbInstanceSchema.List | DB 인스턴스 내 스키마 목록 보기 |
+| RDSforMySQL:DbInstanceSchema.List | List of schemas in DB instance |
 
 #### Request
 
@@ -2449,11 +2454,11 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                 | 설명                 |
+| Permission Name                                           | Description           |
 |-----------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceSchema.Create | DB 인스턴스 내 스키마 생성하기 |
+| RDSforMySQL:DbInstanceSchema.Create | Create schemas in DB instance |
 
 #### Request
 
@@ -2476,11 +2481,11 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                 | 설명                 |
+| Permission Name                                           | Description           |
 |-----------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceSchema.Delete | DB 인스턴스 내 스키마 삭제하기 |
+| RDSforMySQL:DbInstanceSchema.Delete | Delete schemas in DB instance |
 
 #### Request
 
@@ -2505,11 +2510,11 @@ This API does not require a request body.
 GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                            | 설명                    |
+| Permission Name                                           | Description           |
 |------------------------------------------------|-----------------------|
-| RDSforMySQL:DbInstanceLog.List | DB 인스턴스 내 로그 파일 목록 보기 |
+| RDSforMySQL:DbInstanceLog.List | List of log files in DB instance |
 
 #### Request
 
@@ -2563,11 +2568,11 @@ This API does not require a request body.
 POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                              | 설명                   |
+| Permission Name                                           | Description           |
 |--------------------------------------------------|----------------------|
-| RDSforMySQL:DbInstanceLog.Export | DB 인스턴스 내 로그 파일 내보내기 |
+| RDSforMySQL:DbInstanceLog.Export | Export log files in DB instance |
 
 #### Request
 
@@ -2590,7 +2595,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
+    "targetContainer": "container",
     "objectPath": "logs/backup"
 }
 ```
@@ -2624,11 +2629,11 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 GET /v4.0/backups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                     | 설명       |
+| Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMySQL:Backup.List | 백업 목록 조회 |
+| RDSforMySQL:Backup.List | Retrieve Backup List |
 
 #### Request
 
@@ -2698,11 +2703,11 @@ This API does not require a request body.
 POST /v4.0/backups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                       | 설명      |
+| Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMySQL:Backup.Create | 백업 생성하기 |
+| RDSforMySQL:Backup.Create | Create backup |
 
 #### Common Request
 
@@ -2768,11 +2773,11 @@ POST /v4.0/backups
 POST /v4.0/backups/{backupId}/export
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                       | 설명      |
+| Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMySQL:Backup.Export | 백업 내보내기 |
+| RDSforMySQL:Backup.Export | Export backup |
 
 #### Request
 
@@ -2793,8 +2798,8 @@ POST /v4.0/backups/{backupId}/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
+    "targetContainer": "container",
+    "objectPath": "backups/backup_file"
 }
 ```
 
@@ -2815,18 +2820,19 @@ POST /v4.0/backups/{backupId}/export
 POST /v4.0/backups/{backupId}/restore
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명      |
+| Permission Name                                           | Description           |
 |--------------------------------------------|---------|
-| RDSforMySQL:Backup.Restore | 백업 복원하기 |
+| RDSforMySQL:Backup.Restore | Restore backup |
 
 #### Request
 
 | Name                                         | Type | Format  | Required | Description                                                                                                           |
 |----------------------------------------------|------|---------|----------|-----------------------------------------------------------------------------------------------------------------------|
 | backupId                                     | URL  | UUID    | O        | Backup identifier                                                                                                     |
-| dbInstanceName                               | Body | String  | O        | Name to identify DB instances                                                                                         |
+| dbInstanceName                               | Body | String  | O        | Master name to identify DB instances                                                                                  |
+| dbInstanceCandidateName                      | Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description                                  | Body | String  | X        | Additional information on DB instances                                                                                |
 | dbFlavorId                                   | Body | UUID    | O        | Identifier of DB instance specifications                                                                              |
 | dbPort                                       | Body | Integer | O        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                      |
@@ -2837,7 +2843,7 @@ POST /v4.0/backups/{backupId}/restore
 | pingInterval                                 | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
 | useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                              |
 | useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                              | 
-| useSlowQueryAnalysis                         | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                    |
+| useSlowQueryAnalysis                         | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                                    |
 | network                                      | Body | Object  | O        | Network information objects                                                                                           |
 | network.subnetId                             | Body | UUID    | O        | Subnet identifier                                                                                                     |
 | network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                              |
@@ -2845,11 +2851,11 @@ POST /v4.0/backups/{backupId}/restore
 | storage                                      | Body | Object  | O        | Storage information objects                                                                                           |    
 | storage.storageType                          | Body | Enum    | O        | Block Storage Type<br/>- Example: `General SSD`                                                                       |
 | storage.storageSize                          | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                         |
-| storage.storageAutoscale                     | Body | Object  | X        | 데이터 스토리지 자동 확장 객체                                                                                                     |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | 스토리지 자동 확장 여부                                                                                                         |
-| storage.storageAutoscale.threshold           | Body | Number  | X        | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                           |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                                                                     |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                     |
+| storage.storageAutoscale                     | Body | Object  | X        | Block Storage Auto Scaling Objects                                                                                                        |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                         |
+| storage.storageAutoscale.threshold           | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                           |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | Auto scaling maximum size (GB)<br/>- Maximum value: `4096`                                                                                     |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                     |
 | backup                                       | Body | Object  | O        | Backup information objects                                                                                            |
 | backup.backupPeriod                          | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                           |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                            |
@@ -2907,11 +2913,11 @@ POST /v4.0/backups/{backupId}/restore
 DELETE /v4.0/backups/{backupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                       | 설명      |
+| Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMySQL:Backup.Delete | 백업 삭제하기 |
+| RDSforMySQL:Backup.Delete | Delete backup |
 
 #### Request
 
@@ -2946,11 +2952,11 @@ This API does not require a request body.
 GET /v4.0/db-security-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                              | 설명             |
+| Permission Name                                           | Description           |
 |--------------------------------------------------|----------------|
-| RDSforMySQL:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
+| RDSforMySQL:DbSecurityGroup.List | List DB security groups |
 
 #### Request
 
@@ -3002,11 +3008,12 @@ This API does not require a request body.
 GET /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                             | 설명             |
+| Permission Name                                           | Description           |
 |-------------------------------------------------|----------------|
-| RDSforMySQL:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
+| RDSforMySQL:DbSecurityGroup.Get | List DB security group details
+ |
 
 #### Request
 
@@ -3087,11 +3094,11 @@ This API does not require a request body.
 POST /v4.0/db-security-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                | 설명            |
+| Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMySQL:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
+| RDSforMySQL:DbSecurityGroup.Create | Create DB security group |
 
 #### Request
 
@@ -3148,11 +3155,11 @@ POST /v4.0/db-security-groups
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                | 설명            |
+| Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMySQL:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
+| RDSforMySQL:DbSecurityGroup.Modify | Modify DB security group |
 
 #### Request
 
@@ -3204,11 +3211,11 @@ This API does not return a response body.
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                | 설명            |
+| Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMySQL:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
+| RDSforMySQL:DbSecurityGroup.Delete | Delete DB security group |
 
 #### Request
 
@@ -3246,11 +3253,11 @@ This API does not return a response body.
 POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                    | 설명               |
+| Permission Name                                        | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
+| RDSforMySQL:DbSecurityGroupRule.Create | Create DB security group rule |
 
 #### Request
 
@@ -3261,7 +3268,7 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
-| port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
+| port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` and `maxPort` are not required.<br/>- `PORT`: Sets to specified port value. The `minPort` and `maxPort` values must be the same.<br/>- `PORT_RANGE`: Sets to specified port range. |
 | port.minPort      | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
@@ -3299,11 +3306,11 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                    | 설명               |
+| Permission Name                                        | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMySQL:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
+| RDSforMySQL:DbSecurityGroupRule.Modify | Modify DB security group rule |
 
 #### Request
 
@@ -3315,7 +3322,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
-| port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
+| port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` and `maxPort` are not required.<br/>- `PORT`: Sets to specified port value. The `minPort` and `maxPort` values must be the same.<br/>- `PORT_RANGE`: Sets to specified port range. |
 | port.minPort      | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
@@ -3351,11 +3358,11 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                    | 설명               |
+| Permission Name                                           | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 삭제하기 |
+| RDSforMySQL:DbSecurityGroupRule.Create | Delete DB security group rule |
 
 #### Request
 
@@ -3382,11 +3389,11 @@ This API does not require a request body.
 GET /v4.0/parameter-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                             | 설명            |
+| Permission Name                                           | Description           |
 |-------------------------------------------------|---------------|
-| RDSforMySQL:ParameterGroup.List | 파라미터 그룹 목록 보기 |
+| RDSforMySQL:ParameterGroup.List | List parameter groups |
 
 #### Request
 
@@ -3445,11 +3452,11 @@ This API does not require a request body.
 GET /v4.0/parameter-groups/{parameterGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                            | 설명            |
+| Permission Name                                | Description           |
 |------------------------------------------------|---------------|
-| RDSforMySQL:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
+| RDSforMySQL:ParameterGroup.Get | List parameter group details |
 
 #### Request
 
@@ -3526,11 +3533,11 @@ This API does not require a request body.
 POST /v4.0/parameter-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명           |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Create | 파라미터 그룹 생성하기 |
+| RDSforMySQL:ParameterGroup.Create | Create parameter group |
 
 #### Request
 
@@ -3567,11 +3574,11 @@ POST /v4.0/parameter-groups
 POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                             | 설명           |
+| Permission Name                                           | Description           |
 |-------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
+| RDSforMySQL:ParameterGroup.Copy | Copy parameter group |
 
 #### Request
 
@@ -3608,11 +3615,11 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 PUT /v4.0/parameter-groups/{parameterGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명           |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
+| RDSforMySQL:ParameterGroup.Modify | Modify parameter group |
 
 #### Request
 
@@ -3662,11 +3669,11 @@ This API does not return a response body.
 PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명           |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
+| RDSforMySQL:ParameterGroup.Modify | Modify parameter group |
 
 #### Request
 
@@ -3722,11 +3729,11 @@ This API does not return a response body.
 PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                              | 설명            |
+| Permission Name                                           | Description           |
 |--------------------------------------------------|---------------|
-| RDSforMySQL:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
+| RDSforMySQL:ParameterGroup.Reset | Reset parameter group |
 
 #### Request
 
@@ -3762,11 +3769,11 @@ This API does not return a response body.
 DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명           |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
+| RDSforMySQL:ParameterGroup.Delete | Delete parameter group |
 
 #### Request
 
@@ -3806,11 +3813,11 @@ This API does not return a response body.
 GET /v4.0/user-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                        | 설명           |
+| Permission Name                                           | Description           |
 |--------------------------------------------|--------------|
-| RDSforMySQL:UserGroup.List | 사용자 그룹 목록 보기 |
+| RDSforMySQL:UserGroup.List | List user groups |
 
 #### Request
 
@@ -3858,11 +3865,11 @@ This API does not require a request body.
 GET /v4.0/user-groups/{userGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                       | 설명           |
+| Permission Name                                           | Description           |
 |-------------------------------------------|--------------|
-| RDSforMySQL:UserGroup.Get | 사용자 그룹 상세 보기 |
+| RDSforMySQL:UserGroup.Get | List user group details |
 
 #### Request
 
@@ -3918,11 +3925,11 @@ This API does not require a request body.
 POST /v4.0/user-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                          | 설명          |
+| Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMySQL:UserGroup.Create | 사용자 그룹 생성하기 |
+| RDSforMySQL:UserGroup.Create | Create user group |
 
 #### Request
 
@@ -3968,11 +3975,11 @@ POST /v4.0/user-groups
 PUT /v4.0/user-groups/{userGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                          | 설명          |
+| Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMySQL:UserGroup.Modify | 사용자 그룹 수정하기 |
+| RDSforMySQL:UserGroup.Modify | Modify user group|
 
 #### Request
 
@@ -4027,11 +4034,11 @@ This API does not return a response body.
 DELETE /v4.0/user-groups/{userGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                          | 설명          |
+| Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMySQL:UserGroup.Delete | 사용자 그룹 삭제하기 |
+| RDSforMySQL:UserGroup.Delete | Delete user group |
 
 #### Request
 
@@ -4069,11 +4076,11 @@ This API does not return a response body.
 GET /v4.0/notification-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                | 설명          |
+| Permission Name                                           | Description           |
 |----------------------------------------------------|-------------|
-| RDSforMySQL:NotificationGroup.List | 알림 그룹 목록 보기 |
+| RDSforMySQL:NotificationGroup.List | List notification groups |
 
 #### Request
 
@@ -4127,11 +4134,11 @@ This API does not require a request body.
 GET /v4.0/notification-groups/{notificationGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                               | 설명          |
+| Permission Name                                           | Description           |
 |---------------------------------------------------|-------------|
-| RDSforMySQL:NotificationGroup.Get | 알림 그룹 상세 보기 |
+| RDSforMySQL:NotificationGroup.Get | List notification groups |
 
 #### Request
 
@@ -4202,11 +4209,11 @@ This API does not require a request body.
 POST /v4.0/notification-groups
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                  | 설명         |
+| Permission Name                                      | Description           |
 |------------------------------------------------------|------------|
-| RDSforMySQL:NotificationGroup.Create | 알림 그룹 생성하기 |
+| RDSforMySQL:NotificationGroup.Create | Create notification group |
 
 #### Request
 
@@ -4253,11 +4260,11 @@ POST /v4.0/notification-groups
 PUT /v4.0/notification-groups/{notificationGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                  | 설명         |
+| Permission Name                                           | Description           |
 |------------------------------------------------------|------------|
-| RDSforMySQL:NotificationGroup.Modify | 알림 그룹 수정하기 |
+| RDSforMySQL:NotificationGroup.Modify | Modify notification group |
 
 #### Request
 
@@ -4315,11 +4322,11 @@ This API does not return a response body.
 DELETE /v4.0/notification-groups/{notificationGroupId}
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                                  | 설명         |
+| Permission Name                                      | Description           |
 |------------------------------------------------------|------------|
-| RDSforMySQL:NotificationGroup.Delete | 알림 그룹 삭제하기 |
+| RDSforMySQL:NotificationGroup.Delete | Delete notification group |
 
 #### Request
 
@@ -4359,11 +4366,11 @@ This API does not return a response body.
 GET /v4.0/metrics
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                     | 설명       |
+| Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMySQL:Metric.List | 통계 정보 조회 |
+| RDSforMySQL:Metric.List | List metric information |
 
 #### Request
 
@@ -4407,11 +4414,11 @@ This API does not require a request body.
 GET /v4.0/metric-statistics
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                     | 설명       |
+| Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMySQL:Metric.List | 통계 정보 조회 |
+| RDSforMySQL:Metric.List | List metric information |
 
 #### Request
 
@@ -4488,11 +4495,11 @@ Events can be categorized into categories, which are shown below.
 GET /v4.0/events
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                    | 설명        |
+| Permission Name                                           | Description           |
 |----------------------------------------|-----------|
-| RDSforMySQL:Event.List | 이벤트 목록 보기 |
+| RDSforMySQL:Event.List | List Events |
 
 #### Request
 
@@ -4576,11 +4583,11 @@ This API does not require a request body.
 GET /v4.0/event-codes
 ```
 
-#### 필요 권한
+#### Required permissions
 
-| 권한명                                    | 설명        |
+| Permission Name                                           | Description           |
 |----------------------------------------|-----------|
-| RDSforMySQL:Event.List | 이벤트 목록 보기 |
+| RDSforMySQL:Event.List | List Events |
 
 #### Request
 

@@ -800,23 +800,24 @@ POST /v4.0/db-instances
 
 #### リクエスト
 
-| 名前                   | 種類 | 形式    | 必須 | 説明                                                                |
-|------------------------|------|---------|----|---------------------------------------------------------------------|
-| dbInstanceName         | Body | String  | O  | DBインスタンスを識別できる名前                                              |
-| description            | Body | String  | X  | DBインスタンスの追加情報                                                 |
-| dbFlavorId             | Body | UUID    | O  | DBインスタンス仕様の識別子                                                   |
-| dbVersion              | Body | Enum    | O  | DBエンジンタイプ                                                          |
-| dbPort                 | Body | Number  | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |
-| dbUserName             | Body | String  | O  | DBユーザーアカウント名                                                        |
-| dbPassword             | Body | String  | O  | DBユーザーアカウント暗号<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                     |
-| parameterGroupId       | Body | UUID    | O  | パラメータグループの識別子                                                      |
-| dbSecurityGroupIds     | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                  ||network|Body|Object|O|ネットワーク情報オブジェクト|
-| userGroupIds           | Body | Array   | X  | ユーザーグループの識別子リスト                                                    |
-| useHighAvailability    | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                       |
-| pingInterval           | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
-| useDefaultNotification | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                      |
-| useDeletionProtection  | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         |
-| useSlowQueryAnalysis   | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                  |
+| 名前                     | 種類   | 形式     | 必須 | 説明                                                                 |
+|-------------------------|-------|---------|----|---------------------------------------------------------------------|
+| dbInstanceName          | Body  | String  | O  | DBインスタンスを識別できる マスター名                                           |
+| dbInstanceCandidateName | Body  | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
+| description             | Body  | String  | X  | DBインスタンスに関する追加情報                                                  |
+| dbFlavorId              | Body  | UUID    | O  | DBインスタンス仕様の識別子                                                    |
+| dbVersion               | Body  | Enum    | O  | DBエンジンタイプ                                                           |
+| dbPort                  | Body  | Number  | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |
+| dbUserName              | Body  | String  | O  | DBユーザーアカウント名                                                         |
+| dbPassword              | Body  | String  | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                     |
+| parameterGroupId        | Body  | UUID    | O  | パラメータグループの識別子                                                       |
+| dbSecurityGroupIds      | Body  | Array   | X  | DBセキュリティグループの識別子リスト                                                   |
+| userGroupIds            | Body  | Array   | X  | ユーザーグループの識別子リスト                                                     |
+| useHighAvailability     | Body  | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                       |
+| pingInterval            | Body  | Number  | X  | 高可用性使用時のPing間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| useDefaultNotification  | Body  | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                      |
+| useDeletionProtection   | Body  | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         |
+| useSlowQueryAnalysis    | Body  | Boolean | X  | スロークエリ分析の有無<br/>- デフォルト値: `true`                                  |
 | authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                     |
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                |
@@ -903,12 +904,13 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 #### リクエスト
 
-| 名前               | 種類 | 形式    | 必須 | 説明                                                                      |
-|--------------------|------|---------|----|---------------------------------------------------------------------------|
-| dbInstanceId       | URL  | UUID    | O  | DBインスタンスの識別子                                                            |
-| dbInstanceName     | Body | String  | X  | DBインスタンスを識別できる名前                                                             |
-| description        | Body | String  | X  | DBインスタンスの追加情報                                                                |
-| dbPort             | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                |
+| 名前                     | 種類  | 形式     | 必須 | 説明                                         |
+|-------------------------|------|---------|----|---------------------------------------------|
+| dbInstanceId            | URL  | UUID    | O  | DBインスタンスの識別子                               |
+| dbInstanceName          | Body | String  | X  | DBインスタンスを識別できる マスター名                   |
+| dbInstanceCandidateName | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値) |
+| description             | Body | String  | X  | DBインスタンスに関する追加情報                          |
+| dbPort                  | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`  |
 | dbVersion          | Body | Enum    | X  | DBエンジンタイプ                                                                                                                            |
 | useDummy           | Body | Boolean | X  | 単一DBインスタンスのDBバージョンアップグレード時にダミーを使用するかどうか<br/>Default: `false`                  |
 | useSlowQueryAnalysis | Body | Boolean  | X | Slow query分析を行うかどうか |
@@ -1112,7 +1114,8 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | 名前                                         | 種類 | 形式    | 必須 | 説明                                                                      |
 |----------------------------------------------|------|---------|----|---------------------------------------------------------------------------|
 | dbInstanceId                                 | URL  | UUID    | O  | DBインスタンスの識別子                                                            |
-| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる名前                                                    |
+| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる マスター名                                                 |
+| dbInstanceCandidateName                      | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                               |
 | description                                  | Body | String  | X  | DBインスタンスの追加情報                                                       |
 | dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子<br/>- デフォルト値:原本DBインスタンス値                                 |
 | dbPort                                       | Body | Number  | X  | DBポート<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `3306`<br/>- 最大値: `43306`        |
@@ -1393,7 +1396,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | dbInstanceId                                        | URL  | UUID    | O  | DBインスタンスの識別子                                                                                                                                                          |
 | restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                              |
 | restore.restoreType                                 | Body | Enum    | O  | 復元タイプの種類<br><ul><li>`TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ</li><li>`BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ</li><li>`BACKUP`:既存に作成したバックアップを利用したスナップショット復元タイプ</li></ul>                                                                                                                                                                                                                                                                                                            |
-| dbInstanceName                                      | Body | String  | O  | DBインスタンスを識別できる名前                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| dbInstanceName                                      | Body | String  | O  | DBインスタンスを識別できる マスター名                                                                                                                                               |
+| dbInstanceCandidateName                             | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                                                                                                                             |
 | description                                         | Body | String  | X  | DBインスタンスに対する追加情報                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | dbFlavorId                                          | Body | UUID    | O  | DBインスタンス仕様の識別子                                                                                                                                                       |
 | dbPort                                              | Body | Number  | O  | DBポート<br><ul><li>最小値: `3306`</li><li>最大値: `43306`</li></ul>                                                                                                             |
@@ -1617,7 +1621,8 @@ POST /v4.0/db-instances/restore-from-obs
 | restore.targetContainer                             | Body | String  | O  | バックアップが保存されたオブジェクトストレージのコンテナ                                                              |
 | restore.objectPath                                  | Body | String  | O  | コンテナに保存されたバックアップのパス                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | dbVersion                                           | Body | Enum    | O  | DBエンジンタイプ                                                                             |
-| dbInstanceName                                      | Body | String  | O  | DBインスタンスを識別できる名前                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| dbInstanceName                                      | Body | String  | O  | DBインスタンスを識別できる マスター名                                                              |
+| dbInstanceCandidateName                             | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                                            |
 | description                                         | Body | String  | X  | DBインスタンスに対する追加情報                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | dbFlavorId                                          | Body | UUID    | O  | DBインスタンス仕様の識別子                                                                      |
 | dbPort                                              | Body | Number  | O  | DBポート<br><ul><li>最小値: `3306`</li><li>最大値: `43306`</li></ul>                            |
@@ -2591,7 +2596,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
+    "targetContainer": "container",
     "objectPath": "logs/backup"
 }
 ```
@@ -2794,8 +2799,8 @@ POST /v4.0/backups/{backupId}/export
     "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
     "username": "gildong.hong@nhn.com",
     "password": "password",
-    "targetContainer": "/container",
-    "objectPath": "/backups/backup_file"
+    "targetContainer": "container",
+    "objectPath": "backups/backup_file"
 }
 ```
 
@@ -2830,7 +2835,8 @@ POST /v4.0/backups/{backupId}/restore
 | 名前                                         | 種類 | 形式    | 必須 | 説明                                                                |
 |----------------------------------------------|------|---------|----|---------------------------------------------------------------------|
 | backupId                                     | URL  | UUID    | O  | バックアップの識別子                                                           |
-| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる名前                                              |
+| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる マスター名                                           |
+| dbInstanceCandidateName                      | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
 | description                                  | Body | String  | X  | DBインスタンスの追加情報                                                 |
 | dbFlavorId                                   | Body | UUID    | O  | DBインスタンス仕様の識別子                                                   |
 | dbPort                                       | Body | Integer | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |

@@ -1,0 +1,23 @@
+{
+    "engine": {
+        "lowerCase": "mysql",
+        "upperCase": "MYSQL",
+        "pascalCase": "MySQL",
+        "sampleDbVersionCode": "MYSQL_V8028",
+        "sampleDbVersionName": "MySQL 8.0.28"
+    },
+    "env": "ngoic",
+    "url": {
+        "cdn": "https://static-station.ngoic.com/v1/AUTH_c8bd5293535a46f8bc6705b349f67ea3/cdn/prod_rds/mysql"
+    },
+    "regions": [
+        {
+            "text": {
+                "ko": "한국(판교) 리전",
+                "en": "Korea (Pangyo) region",
+                "ja": "韓国(パンギョ)リージョン"
+            },
+            "endpoint": ""
+        }
+    ]
+}
