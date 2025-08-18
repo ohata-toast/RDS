@@ -2817,6 +2817,9 @@ POST /v3.0/db-security-groups
 | rules.port.minPort  | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
 | rules.port.maxPort  | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
+
 <details><summary>예시</summary>
 <p>
 
@@ -2956,6 +2959,9 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 | cidr              | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
 
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
+
 <details><summary>예시</summary>
 <p>
 
@@ -3003,6 +3009,9 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.minPort      | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
 | port.maxPort      | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 | cidr              | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
+
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
 
 <details><summary>예시</summary>
 <p>
