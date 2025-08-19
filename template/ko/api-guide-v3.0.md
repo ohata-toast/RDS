@@ -75,6 +75,10 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | MYSQL_V8035  | O        | O               |
 | MYSQL_V8036  | O        | O               |
 | MYSQL_V8040  | O        | O               |
+| MYSQL_V8041  | O        | O               |
+| MYSQL_V8042  | O        | O               |
+| MYSQL_V8043  | O        | O               |
+| MYSQL_V8405  | O        | O               |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 | DB 엔진 유형        | 생성 가능 여부 | OBS 로부터 복원 가능 여부 |
@@ -83,8 +87,11 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | MARIADB_V10611  | O        | O                |
 | MARIADB_V10612  | O        | O                |
 | MARIADB_V10616  | O        | O                |
+| MARIADB_V10622  | O        | O                |
 | MARIADB_V101107 | O        | O                |
 | MARIADB_V101108 | O        | O                |
+| MARIADB_V101113 | O        | O                |
+| MARIADB_V11407  | O        | O                |
 {{/if}}
 
 * ENUM 타입의 dbVersion 필드에 대해 해당 값을 사용할 수 있습니다.

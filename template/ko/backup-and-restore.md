@@ -31,6 +31,10 @@ DB 엔진 버전에 따른 Percona XtraBackup 버전은 아래와 같습니다.
 | 8.0.35   | 8.0.35        |
 | 8.0.36   | 8.0.35        |
 | 8.0.40   | 8.0.35        |
+| 8.0.41   | 8.0.35        |
+| 8.0.42   | 8.0.35        |
+| 8.0.43   | 8.0.35        |
+| 8.4.5    | 8.4.0         |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
