@@ -37,8 +37,9 @@ DB 엔진 버전에 따른 Percona XtraBackup 버전은 아래와 같습니다.
 | 8.4.5    | 8.4.0         |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://docs.percona.com/percona-xtrabackup/2.4/
+  * https://docs.percona.com/percona-xtrabackup/8.0/
+  * https://docs.percona.com/percona-xtrabackup/8.4/
 
 > [참고]
 > 2023년 8월 17일 XtraBackup 유틸리티의 버전이 업그레이드되었습니다. 이전 백업에 사용된 XtraBackup 버전은 콘솔에서 확인할 수 있습니다.
