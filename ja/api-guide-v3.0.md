@@ -2750,6 +2750,9 @@ POST /v3.0/db-security-groups
 | rules.port.minPort  | Body | Number | X  | 最小ポート範囲<br/>- 最小値: 1                                                                                                                                                                 |
 | rules.port.maxPort  | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                             |
 
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
+
 <details><summary>例</summary>
 <p>
 
@@ -2889,6 +2892,9 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                             |
 | cidr              | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                               |
 
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
+
 <details><summary>例</summary>
 <p>
 
@@ -2936,6 +2942,9 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.minPort      | Body | Number | X  | 最小ポート範囲<br/>- 最小値: 1                                                                                                                                                                 |
 | port.maxPort      | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                             |
 | cidr              | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                               |
+
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
 
 <details><summary>例</summary>
 <p>
