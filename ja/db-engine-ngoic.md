@@ -10,7 +10,12 @@ MySQLの場合、バージョン番号はバージョン= X.Y.Zで構成され�
 
 | バージョン                | 備考                                                   |
 |----------------------|------------------------------------------------------|
+| <strong>8.4</strong> |                                                      |
+| MySQL 8.4.5          |                                                      |
 | <strong>8.0</strong> |                                                      |
+| MySQL 8.0.43         |                                                      |
+| MySQL 8.0.42         |                                                      |
+| MySQL 8.0.41         |                                                      |
 | MySQL 8.0.40         |                                                      |
 | MySQL 8.0.36         |                                                      |
 | MySQL 8.0.35         |                                                      |
@@ -75,6 +80,17 @@ DBバージョンアップグレードの事前点検については、次の方
 - [8.0で削除された機能ガイド](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
 
+#### MySQL 8.0에서 MySQL 8.4로 업그레이드하기 위한 사전 점검
+
+MySQL 8.4로 업그레이드하기 위해서는 MySQL 8.0으로 업그레이드가 돼 있어야 합니다. `8.0`에서 `8.4` 버전으로 메이저 버전 DB 엔진 업그레이드를 진행하는 경우 문제 발생이 예상되는 일부 항목에 대한 사전 점검 과정이 필요합니다.
+
+콘솔에서 `DB 엔진 업그레이드 사전 확인`을 통해 업그레이드 체커로 검출된 항목을 확인할 수 있고 에러로 검출된 항목은 반드시 처리해야 합니다. 자세한 설명은 MySQL 홈페이지를 참고합니다.
+- [업그레이드 체커 가이드](https://dev.mysql.com/doc/mysql-shell/8.4/en/mysql-shell-utilities-upgrade.html#mysql-utilities-upgrade-checks)
+
+또한, 8.4에서 제거 혹은 변경된 사항에 관해 확인이 필요합니다.
+- [비호환 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
+- [8.4에서 제거된 기능 가이드](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
+
 
 #### ダミーDBインスタンスを使用したDBエンジンバージョンアップグレード 
 
@@ -110,7 +126,12 @@ DBインスタンスが高可用性で構成されている場合、予備マス
 #### サポートバージョン
 | MySQLバージョン                 | サーバー監査プラグインサポートの有無 |
 |----------------------------|--------------------|
+| <strong>8.4</strong>       |                    |
+| MySQL 8.4.5                | O                  |
 | <strong>8.0</strong>       |                    |
+| MySQL 8.0.43               | O                  |
+| MySQL 8.0.42               | O                  |
+| MySQL 8.0.41               | O                  |
 | MySQL 8.0.40               | O                  |
 | MySQL 8.0.36               | O                  |
 | MySQL 8.0.35               | O                  |

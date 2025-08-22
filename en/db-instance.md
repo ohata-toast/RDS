@@ -35,6 +35,9 @@ The versions specified below are available.
 | <strong>8.4</strong> |                                                                                                                   |
 | MySQL 8.4.5          |                                                                                                                   |
 | <strong>8.0</strong> |                                                                                                                   |
+| MySQL 8.0.43         |                                                                                                                   |
+| MySQL 8.0.42         |                                                                                                                   |
+| MySQL 8.0.41         |                                                                                                                   |
 | MySQL 8.0.40         |                                                                                                                   |
 | MySQL 8.0.36         |                                                                                                                   |
 | MySQL 8.0.35         |                                                                                                                   |
@@ -785,7 +788,7 @@ mysql> CALL mysql.tcrds_process_kill(processlist_id );
 mysql> CALL mysql.tcrds_current_lock();
 ```
 
-### tcrds_repl_changemaster (8.4 이전)
+### tcrds_repl_changemaster (8.4 이전) 
 
 * Used to import external MySQL DBs into NHN Cloud RDS using replication.
 * Replication configuration of NHN Cloud RDS is done with **Create replication** of the console.
@@ -808,6 +811,29 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 
 > [Caution] The account for replication must be created in MySQL of the replication target (Master).
 
+### tcrds_repl_changesource (8.4 이후)
+
+* 복제를 이용해 외부 MySQL DB를 NHN Cloud RDS로 가져올 때 사용합니다.
+* NHN Cloud RDS의 복제 구성은 콘솔의 **복제본 생성**으로 할 수 있습니다.
+
+```
+mysql> CALL mysql.tcrds_repl_changesource (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, SOURCE_LOG_FILE, SOURCE_LOG_POS);
+```
+
+* 파라미터 설명
+    * master_instance_ip: 복제 대상(Master) 서버의 IP
+    * master_instance_port: 복제 대상(Master) 서버의 MySQL 포트
+    * user_id_for_replication: 복제 대상(Master) 서버의 MySQL에 접속할 복제용 계정
+    * password_for_replication_user: 복제용 계정 패스워드
+    * SOURCE_LOG_FILE: 복제 대상(Master)의 binary log 파일명
+    * SOURCE_LOG_POS: 복제 대상(Master)의 binary log 포지션
+
+```
+ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
+> [주의] 복제용 계정이 복제 대상(Master) MySQL에 생성되어 있어야 합니다.
+
 ### tcrds_repl_init
 
 * Reset MySQL replication information.
@@ -816,7 +842,7 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 mysql> CALL mysql.tcrds_repl_init();
 ```
 
-### tcrds_repl_slave_stop
+### tcrds_repl_slave_stop (8.4 이전)
 
 * Stop MySQL replication.
 
@@ -824,7 +850,15 @@ mysql> CALL mysql.tcrds_repl_init();
 mysql> CALL mysql.tcrds_repl_slave_stop();
 ```
 
-### tcrds_repl_slave_start
+### tcrds_repl_replica_stop (8.4 이후)
+
+* Stop MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_replica_stop();
+```
+
+### tcrds_repl_slave_start (8.4 이전)
 
 * Start MySQL replication.
 
@@ -833,16 +867,27 @@ mysql> CALL mysql.tcrds_repl_slave_start();
 
 ```
 
+### tcrds_repl_replica_start (8.4 이후)
+
+* Start MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_replica_start();
+
+```
+
 ### tcrds_repl_skip_repl_error
 
-* Run SQL_SLAVE_SKIP_COUNTER=1. When the following duplicate key error happens, run tcrds_repl_skip_repl_error procedure to resolve the replication error.
+* 다음과 같은 Duplicate key 오류 발생 시 tcrds_repl_skip_repl_error 프로시저를 실행하면 복제 오류를 해결할 수 있습니다.
+    * 8.4 이전: SQL_SLAVE_SKIP_COUNTER=1을 수행합니다.
+    * 8.4 이후: SQL_REPLICA_SKIP_COUNTER=1을 수행합니다.
 * `MySQL error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
 mysql> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
-### tcrds_repl_next_changemaster
+### tcrds_repl_next_changemaster (8.4 이전)
 
 * Changes replication information to read the next binary log of master.
 * When the following replication errors happens, run tcrds_repl_next_changemaster procedure to resolve the replication errors.
@@ -851,6 +896,17 @@ e.g. MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal err
 
 ```
 mysql> CALL mysql.tcrds_repl_next_changemaster();
+```
+
+### tcrds_repl_next_changesource (8.4 이후)
+
+* Master의 다음 바이너리(binary log) 로그를 읽을 수 있도록 복제 정보를 변경합니다.
+* 다음과 같은 복제 오류 발생 시 tcrds_repl_next_changesource 프로시저를 실행하면 복제 오류를 해결할 수 있습니다.
+
+예) MySQL error code 1236 (ER_SOURCE_FATAL_ERROR_READING_BINLOG): Got fatal error from source when reading data from binary log
+
+```
+mysql> CALL mysql.tcrds_repl_next_changesource();
 ```
 
 ### tcrds_innodb_monitor_reset
@@ -975,18 +1031,34 @@ mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={e
 * Create an account for replication on the NHN Cloud RDS instance.
 * Before setting up a new replication, run the query below to initialize existing replication information that may exist. When you run RESET SLAVE, the existing replication information is initialized.
 
+##### 8.4 이전
 ```
 STOP SLAVE;
 
 RESET SLAVE;
 ```
 
+##### 8.4 이후
+```
+STOP REPLICA;
+
+RESET REPLICA;
+```
+
 * Run the query on the external DB as shown below, using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
+##### 8.4 이전
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
 
 START SLAVE;
+```
+
+##### 8.4 이후
+```
+CHANGE REPLICATION SOURCE TO source_host = '{rds_master_instance_floating_ip}', source_user='{user_id_for_replication}', source_password='{password_forreplication_user}', source_port ={rds_master_instance_port}, source_log_file ='{SOURCE_LOG_FILE}', source_log_pos = {SOURCE_LOG_POS};
+
+START REPLICA;
 ```
 
 * If the source data of the external DB and the NHN Cloud RDS instance are identical, use the STOP SLAVE command to the external DB to terminate the replication
@@ -1035,22 +1107,41 @@ mysql -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_p
 
 * Create an account for replication on an external MySQL instance.
 
+##### 8.4 이전
 ```
 mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
 mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
+##### 8.4 이후
+```
+mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
+mysql> GRANT REPLICATION CLIENT, REPLICATION REPLICA ON *.* TO 'user_id_for_replication'@'{external_db_host}';
+```
+
 * Run a query on NHN Cloud RDS as follows,
   using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
+##### 8.4 이전
 ```
 mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
 ```
 
+##### 8.4 이후
+```
+mysql> call mysql.tcrds_repl_changesource ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','SOURCE_LOG_FILE',SOURCE_LOG_POS );
+```
+
 * To start replication, execute the following procedure.
 
+##### 8.4 이전
 ```
 mysql> call mysql.tcrds_repl_slave_start;
+```
+
+##### 8.4 이후
+```
+mysql> call mysql.tcrds_repl_replica_start;
 ```
 
 * When original data of NHN Cloud RDS instance become same as the external database, close replication by using the command as below.
