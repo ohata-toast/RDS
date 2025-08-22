@@ -32,6 +32,8 @@ NHN Cloud has divided the entire system into several availability zones to prepa
 The versions specified below are available.
 | Version              | Note                                                                                                              |
 |----------------------|-------------------------------------------------------------------------------------------------------------------|
+| <strong>8.4</strong> |                                                                                                                   |
+| MySQL 8.4.5          |                                                                                                                   |
 | <strong>8.0</strong> |                                                                                                                   |
 | MySQL 8.0.40         |                                                                                                                   |
 | MySQL 8.0.36         |                                                                                                                   |
@@ -783,7 +785,7 @@ mysql> CALL mysql.tcrds_process_kill(processlist_id );
 mysql> CALL mysql.tcrds_current_lock();
 ```
 
-### tcrds_repl_changemaster
+### tcrds_repl_changemaster (8.4 이전)
 
 * Used to import external MySQL DBs into NHN Cloud RDS using replication.
 * Replication configuration of NHN Cloud RDS is done with **Create replication** of the console.
