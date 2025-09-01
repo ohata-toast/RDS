@@ -101,13 +101,13 @@ GTID모드에서는 enforce_gtid_consistency=ON 으로 할때 다음 제약들�
     * MyISAM과 같은 비 트랜잭션 저장 엔진과 관련된 업데이트를 INNODB 와 같이 트랜젝션을 지원하는 저장엔진을 사용하는 업데이트와 한 트랜젝션에서 수행할 수 없습니다.
     * 소스와 복제본이 동일한 테이블이 다른 스토리지 엔진을 사용하는 경우에도 문제가 발생합니다.
     * 비 트랜잭션 테이블에서 작동하도록 정의된 트리거가 동일 유형의 문제를 일으킬 수 있습니다.
-2. CREATE TABLE ... SELECT 구문
+2. CREATE TABLE ... SELECT 구문(8.0.21 이전 버전의 경우)
 3. binlog_format이 STATEMENT 일때, 트랜잭션/프로시저/함수/트리거 내부에서 임시테이블을 생성/삭제 할 수 없습니다.
 
 ### 고객 권장 사전 조치
 
 1. 가능하면 MyISAM과 같은 비트랜잭션 저장 엔진을 사용하지 마세요. 사용한다면 INNODB 같은 트랜젝션 저장엔진과 한 트랜젝션에서 업데이트를 수행하지 마세요.
-2. CREATE TABLE ... SELECT 구문을 사용하지 마세요.
+2. CREATE TABLE ... SELECT 구문(8.0.21 이전 버전의 경우)을 사용하지 마세요.
     ```
     예시)  
     create table tbl_backup as select * from tbl_ori; 
