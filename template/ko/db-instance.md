@@ -860,7 +860,7 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
     * SOURCE_LOG_POS: 복제 대상(Master)의 binary log 포지션
 
 ```
-ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+예:  call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
 ```
 
 > [주의] 복제용 계정이 복제 대상(Master) {{engine.pascalCase}}에 생성되어 있어야 합니다.
