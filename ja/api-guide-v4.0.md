@@ -2,9 +2,9 @@
 
 | リージョン      | エンドポイント                                       |
 |-----------|-----------------------------------------------|
-| 한국(판교) 리전 | https://kr1-rds-mysql.api.nhncloudservice.com |
-| 한국(평촌) 리전 | https://kr2-rds-mysql.api.nhncloudservice.com |
-| 일본 리전 | https://jp1-rds-mysql.api.nhncloudservice.com |
+| 韓国(パンギョ)リージョン | https://kr1-rds-mysql.api.nhncloudservice.com |
+| 韓国(ピョンチョン)リージョン | https://kr2-rds-mysql.api.nhncloudservice.com |
+| 日本リージョン | https://jp1-rds-mysql.api.nhncloudservice.com |
 
 ## 認証及び権限
 
@@ -56,24 +56,28 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 
 ## DBエンジンタイプ
 
-| DBエンジンタイプ | 作成可否 | OBSから復元可否 |
-|--------------|----------|-----------------|
-| MYSQL\_V5633 | X        | X               |
-| MYSQL\_V5715 | O        | O               |
-| MYSQL\_V5719 | O        | O               |
-| MYSQL\_V5726 | O        | O               |
-| MYSQL\_V5731 | X        | X               |
-| MYSQL\_V5733 | O        | X               |
-| MYSQL\_V5737 | O        | O               |
-| MYSQL\_V8018 | O        | O               |
-| MYSQL\_V8023 | O        | O               |
-| MYSQL\_V8028 | O        | O               |
-| MYSQL\_V8032 | O        | O               |
-| MYSQL\_V8033 | O        | O               |
-| MYSQL\_V8034 | O        | O               |
-| MYSQL_V8035  | O        | O               |
-| MYSQL_V8036  | O        | O               |
-| MYSQL_V8040  | O        | O               |
+| DBエンジンタイプ | 作成可否 | OBSからの復元可否 | 認証プラグインサポート |
+|--------------|----------|-----------------|--------|
+| MYSQL\_V5633 | X        | X               | NATIVE |
+| MYSQL\_V5715 | O        | O               | NATIVE |
+| MYSQL\_V5719 | O        | O               | NATIVE |
+| MYSQL\_V5726 | O        | O               | NATIVE |
+| MYSQL\_V5731 | X        | X               | NATIVE |
+| MYSQL\_V5733 | O        | X               | NATIVE, SHA256 |
+| MYSQL\_V5737 | O        | O               | NATIVE, SHA256 |
+| MYSQL\_V8018 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8023 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8028 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8032 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8033 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8034 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8035  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8036  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8040  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8041  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8042  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8043  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8405  | O        | O               | CACHING_SHA2 |
 
 * ENUMタイプのdbVersionフィールドに対して該当値を使用できます。
 * バージョンによって作成または復元が不可能な場合があります。
@@ -820,7 +824,7 @@ POST /v4.0/db-instances
 | useDefaultNotification  | Body  | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                      |
 | useDeletionProtection   | Body  | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         |
 | useSlowQueryAnalysis    | Body  | Boolean | X  | スロークエリ分析の有無<br/>- デフォルト値: `true`                                  |
-| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                     |
+| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                                     |
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                |
 | network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                  |
@@ -2230,7 +2234,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.host                 | Body | String   | DBユーザーアカウントのホスト名                                                                                                         |
 | dbUsers.authorityType        | Body | Enum     | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>            |
 | dbUsers.dbUserStatus         | Body | Enum     | DBユーザーの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `UPDATING`:修正中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み |
-| dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password     |
+| dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`     |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 | dbUsers.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 | dbUsers.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
@@ -2288,7 +2292,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                      |
 | host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                                     |
 | authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>        |
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [注意]
@@ -2339,7 +2343,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O  | DBユーザーの識別子                                                                                                           |
 | dbPassword           | Body | String | X  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                      |
 | authorityType        | Body | Enum   | X  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>        |
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [注意]
@@ -3121,8 +3125,8 @@ POST /v4.0/db-security-groups
 | rules.port.minPort  | Body | Number | X  | 最小ポート範囲<br/>- 最小値: 1                                                                                                                                                                 |
 | rules.port.maxPort  | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                                |
 
-> [주의]
-> DB 포트는 송신 방향으로 설정할 수 없습니다.
+> [注意]
+> DBポートは送信方向(アウトバウンド)には設定できません。
 
 <details><summary>例</summary>
 <p>
@@ -3281,8 +3285,8 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                                |
 | cidr              | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                                    |
 
-> [주의]
-> DB 포트는 송신 방향으로 설정할 수 없습니다.
+> [注意]
+> DBポートは送信方向(アウトバウンド)には設定できません。
 
 <details><summary>例</summary>
 <p>
@@ -3338,8 +3342,8 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.maxPort      | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                                |
 | cidr              | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                                    |
 
-> [주의]
-> DB 포트는 송신 방향으로 설정할 수 없습니다.
+> [注意]
+> DBポートは送信方向(アウトバウンド)には設定できません。
 
 <details><summary>例</summary>
 <p>
