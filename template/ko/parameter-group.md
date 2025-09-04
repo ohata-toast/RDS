@@ -83,7 +83,7 @@ ramSizeByte * 6 / 10
 
 ## GTID 제약 조건
 
-GTID모드에서는 enforce_gtid_consistency=ON 으로 할때 다음 제약들이 적용됩니다. 참고 : [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
+GTID(global transaction identifier) 모드에서는 enforce_gtid_consistency=ON으로 할 때 다음 제약들이 적용됩니다. 참고: [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
 
 ### ENFORCE_GTID_CONSISTENCY
 
