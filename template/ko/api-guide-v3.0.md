@@ -81,7 +81,7 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | MYSQL_V8405  | O        | O               | CACHING_SHA2 |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| DB 엔진 유형        | 생성 가능 여부 | OBS 로부터 복원 가능 여부 | 인증 플러그인 지원 정보 |
+| DB 엔진 유형        | 생성 가능 여부 | OBS로부터 복원 가능 여부 | 인증 플러그인 지원 정보 |
 |-----------------|----------|------------------|--|
 | MARIADB_V10330  | O        | O                | NATIVE, ED25519 |
 | MARIADB_V10611  | O        | O                | NATIVE, ED25519 |
