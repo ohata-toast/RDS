@@ -81,7 +81,7 @@ ramSizeByte * 6 / 10
 
 콘솔에서 파라미터 그룹을 선택한 뒤 **파라미터 편집**을 클릭해 파라미터를 변경할 수 있습니다. 변경할 수 없는 파라미터는 값이 일반 텍스트로 나타나며, 변경할 수 있는 파라미터는 값을 변경할 수 있는 INPUT이 나타납니다. 편집 화면에서 **변경 사항 미리 보기**를 클릭하면 변경된 파라미터를 확인할 수 있는 별도의 팝업 화면이 표시되며, **재설정**을 누르면 변경하기 전으로 되돌릴 수 있습니다. 편집 모드에서 변경한 모든 값은 **변경 사항 저장**을 클릭해야 파라미터 그룹에 반영됩니다. 변경된 파라미터 그룹의 DB 인스턴스 반영은 [파라미터 그룹 적용](parameter-group/#apply) 항목을 참고합니다.
 
-## GTID 제약조건
+## GTID 제약 조건
 
 GTID모드에서는 enforce_gtid_consistency=ON 으로 할때 다음 제약들이 적용됩니다. 참고 : [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
 
