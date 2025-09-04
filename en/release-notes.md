@@ -1,20 +1,20 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2025. 09. 09.
+### September 09, 2025
 
-#### 기능 추가 및 개선
+#### Feature Updates
 
-- MySQL 8.4 LTS 버전 추가
-- MySQL 8.0.41, 8.0.42, 8.0.43 버전 추가
+- Added MySQL 8.4 LTS version
+- Added MySQL 8.0.41, 8.0.42, 8.0.43 version
 
-#### 버그 수정
+#### Bug Fixes
 
-- 이미 생성된 고가용성 인스턴스 클릭 후, 고가용성 인스턴스 생성 시 예비 마스터 이름이 입력된 채로 노출되는 현상 수정
-- 고가용성에 추가된 읽기 복제본 이름을 수정할 수 없는 현상 수정
-- DB 인스턴스에 VIP 추가가 불가능한 상황에서 드롭다운 메뉴의 [VIP 추가] 메뉴가 활성화되는 현상 수정
-- DHCP 갱신 실패 시 내부 IP가 간헐적으로 사라지는 현상 수정
-- 고가용성 인스턴스에 읽기 복제본 생성 중 실패할 경우 고가용성이 중단되는 현상 수정
-- 같은 조직에서 구독한 이벤트가 여러 개 발생할 경우, 구독 알림이 동작하지 않는 현상 수정
+- Fixed an issue where the standby master name was displayed with the current name entered when creating a high-availability instance after clicking on an already created high-availability instance.
+- Fixed an issue where the name of a read replica added to high-availability could not be modified.
+- Fixed an issue where the [Add VIP] drop-down menu was activated when adding a VIP to a DB instance was not possible.
+- Fixed an issue where the internal IP would intermittently disappear when DHCP renewal failed.
+- Fixed an issue where high-availability would stop functioning if a read replica creation failed on a high-availability instance.
+- Fixed an issue where subscription notifications would not work when multiple events subscribed to by the same organization occurred.
 
 ### July 15, 2025
 
@@ -133,7 +133,7 @@
 * Added DB schema & user-directed control settings
 * Improved to better identify connected notification groups
   * Exposed connected notification group information on the DB instance view details screen
-* Added MySQL 8.0.35 version
+* `Added MySQL 8.0.35 version`
 
 ### January 9, 2024
 

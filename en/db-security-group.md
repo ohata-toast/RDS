@@ -32,8 +32,8 @@ You can create multiple DB security rules in one DB security group. When you set
 | Remote      | You can set the IP address range. If the direction of the rule is 'outbound', the traffic destination is remote; if 'inbound', the traffic source is remote.<br/>Depending on the direction of the rule, compares whether the traffic source or destination is IP address or range.. | 
 | Description | You can add a description for DB security group rules.                                                                                                                                                                                                                               |
 
-> [주의]
-> DB 포트는 송신 방향으로 설정할 수 없습니다.
+> [Caution]
+> DB port cannot be set to transmit direction.
 
 ### Change DB Security Rules
 
