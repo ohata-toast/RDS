@@ -30,10 +30,15 @@ DBエンジンバージョン別のPercona XtraBackupバージョンは次のと
 | 8.0.35     | 8.0.35          |
 | 8.0.36     | 8.0.35          |
 | 8.0.40     | 8.0.35          |
+| 8.0.41     | 8.0.35          |
+| 8.0.42     | 8.0.35          |
+| 8.0.43     | 8.0.35          |
+| 8.4.5      | 8.4.0           |
 
 * XtraBackupのインストールに関する詳しい説明はPercona Webサイトを参照します。
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://docs.percona.com/percona-xtrabackup/8.4/
 
 > [参考]
 > 2023年8月17日XtraBackupユーティリティのバージョンがアップグレードされました。以前バックアップに使用されたXtraBackupバージョンはWebコンソールで確認できます。

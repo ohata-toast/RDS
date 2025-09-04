@@ -54,14 +54,17 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 ## DB 엔진 유형
 
-| DB 엔진 유형        | 생성 가능 여부 | OBS 로부터 복원 가능 여부 |
-|-----------------|----------|------------------|
-| MARIADB_V10330  | O        | O                |
-| MARIADB_V10611  | O        | O                |
-| MARIADB_V10612  | O        | O                |
-| MARIADB_V10616  | O        | O                |
-| MARIADB_V101107 | O        | O                |
-| MARIADB_V101108 | O        | O                |
+| DB 엔진 유형        | 생성 가능 여부 | OBS로부터 복원 가능 여부 | 인증 플러그인 지원 정보 |
+|-----------------|----------|------------------|--|
+| MARIADB_V10330  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10611  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10612  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10616  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10622  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101107 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101108 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101113 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V11407  | O        | O                | NATIVE, ED25519 |
 
 * ENUM 타입의 dbVersion 필드에 대해 해당 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능한 경우가 있을 수 있습니다.
@@ -763,6 +766,7 @@ POST /v3.0/db-instances
 | pingInterval            | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 | useDefaultNotification  | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
 | useDeletionProtection   | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
+| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
@@ -2006,6 +2010,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.host                 | Body | String   | DB 사용자 계정의 호스트 이름                                                                                                           |
 | dbUsers.authorityType        | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
 | dbUsers.dbUserStatus         | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
+| authenticationPlugin         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 | dbUsers.createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 | dbUsers.updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 
@@ -2053,6 +2058,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                         |
 | host                 | Body | String | O  | DB 사용자 계정의 호스트명<br/>- 예시: `1.1.1.%`                                                                                     |
 | authorityType        | Body | Enum   | O  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>        |
+| authenticationPlugin | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 
 <details><summary>예시</summary>
 <p>
@@ -2091,6 +2097,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O  | DB 사용자의 식별자                                                                                                             |
 | dbPassword           | Body | String | X  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                         |
 | authorityType        | Body | Enum   | X  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>        |
+| authenticationPlugin | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 
 <details><summary>예시</summary>
 <p>
@@ -2710,6 +2717,9 @@ POST /v3.0/db-security-groups
 | rules.port.minPort  | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
 | rules.port.maxPort  | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
+
 <details><summary>예시</summary>
 <p>
 
@@ -2849,6 +2859,9 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 | cidr              | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
 
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
+
 <details><summary>예시</summary>
 <p>
 
@@ -2896,6 +2909,9 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.minPort      | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
 | port.maxPort      | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 | cidr              | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
+
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
 
 <details><summary>예시</summary>
 <p>

@@ -3069,6 +3069,9 @@ POST /v4.0/db-security-groups
 | rules.port.minPort  | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | rules.port.maxPort  | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
+
 <details><summary>Example</summary>
 <p>
 
@@ -3226,6 +3229,9 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
+
 <details><summary>Example</summary>
 <p>
 
@@ -3279,6 +3285,9 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.minPort      | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
+
+> [주의]
+> DB 포트는 송신 방향으로 설정할 수 없습니다.
 
 <details><summary>Example</summary>
 <p>

@@ -30,14 +30,17 @@ NHN Cloudは、物理的なハードウェアの問題で生じる障害に備�
 ### DBエンジン
 
 以下に明示されたバージョンを使用できます。
-| バージョン              | 備考 |
-|-----------------|----|
-| MariaDB 10.11.8 |    |
-| MariaDB 10.11.7 |    |
-| MariaDB 10.6.16 |    |
-| MariaDB 10.6.12 |    |
-| MariaDB 10.6.11 |    |
-| MariaDB 10.3.30 |    |
+| バージョン               | 備考 |
+|------------------|----|
+| MariaDB 11.4.7   |    |
+| MariaDB 10.11.13 |    |
+| MariaDB 10.11.8  |    |
+| MariaDB 10.11.7  |    |
+| MariaDB 10.6.22  |    |
+| MariaDB 10.6.16  |    |
+| MariaDB 10.6.12  |    |
+| MariaDB 10.6.11  |    |
+| MariaDB 10.3.30  |    |
 
 ### DBインスタンスタイプ
 
@@ -718,7 +721,7 @@ mariadb> CALL mysql.tcrds_process_kill(processlist_id );
 mariadb> CALL mysql.tcrds_current_lock();
 ```
 
-### tcrds_repl_changemaster
+### tcrds_repl_changemaster (8.4 이전)
 
 * 複製を利用して外部MariaDB DBをNHN Cloud RDSにインポートする時使います。
 * NHN Cloud RDSの複製構成は、コンソールの**複製の作成**で行うことができます。
@@ -741,6 +744,27 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 
 > [注意]複製用アカウントが複製対象(Master) MariaDBに作成されている必要があります。
 
+### tcrds_repl_changesource (8.4 이후)
+
+* 복제를 이용해 외부 MariaDB DB를 NHN Cloud RDS로 가져올 때 사용합니다.
+* NHN Cloud RDS의 복제 구성은 콘솔의 **복제본 생성**으로 할 수 있습니다.
+
+```
+mariadb> CALL mysql.tcrds_repl_changesource (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, SOURCE_LOG_FILE, SOURCE_LOG_POS);
+```
+
+* 파라미터 설명
+    * master_instance_ip: 복제 대상(Master) 서버의 IP
+    * master_instance_port: 복제 대상(Master) 서버의 MariaDB 포트
+    * user_id_for_replication: 복제 대상(Master) 서버의 MariaDB에 접속할 복제용 계정
+    * password_for_replication_user: 복제용 계정 패스워드
+    * SOURCE_LOG_FILE: 복제 대상(Master)의 binary log 파일명
+    * SOURCE_LOG_POS: 복제 대상(Master)의 binary log 포지션
+
+```
+ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
 ### tcrds_repl_init
 
 * MariaDB複製情報を初期化します。
@@ -749,7 +773,7 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 mariadb> CALL mysql.tcrds_repl_init();
 ```
 
-### tcrds_repl_slave_stop
+### tcrds_repl_slave_stop (8.4 이전)
 
 * MariaDBの複製を止めます。
 
@@ -757,7 +781,15 @@ mariadb> CALL mysql.tcrds_repl_init();
 mariadb> CALL mysql.tcrds_repl_slave_stop();
 ```
 
-### tcrds_repl_slave_start
+### tcrds_repl_replica_stop (8.4 이후)
+
+* MariaDBの複製を止めます。
+
+```
+mariadb> CALL mysql.tcrds_repl_replica_stop();
+```
+
+### tcrds_repl_slave_start (8.4 이전)
 
 * MariaDBの複製を開始します。
 
@@ -766,16 +798,27 @@ mariadb> CALL mysql.tcrds_repl_slave_start();
 
 ```
 
+### tcrds_repl_replica_start (8.4 이후)
+
+* MariaDBの複製を開始します。
+
+```
+mariadb> CALL mysql.tcrds_repl_replica_start();
+
+```
+
 ### tcrds_repl_skip_repl_error
 
-* SQL_SLAVE_SKIP_COUNTER=1を実行します。次のようなDuplicate keyエラー発生時、tcrds_repl_skip_repl_errorプロシージャを実行すると、複製エラーを解決できます。
+* 다음과 같은 Duplicate key 오류 발생 시 tcrds_repl_skip_repl_error 프로시저를 실행하면 복제 오류를 해결할 수 있습니다.
+    * 8.4 이전: SQL_SLAVE_SKIP_COUNTER=1을 수행합니다.
+    * 8.4 이후: SQL_REPLICA_SKIP_COUNTER=1을 수행합니다.
 * `MariaDB error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
 mariadb> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
-### tcrds_repl_next_changemaster
+### tcrds_repl_next_changemaster (8.4 이전)
 
 * Masterの次のバイナリ(binary log)ログを読めるように複製情報を変更します。
 * 次のような複製エラーが発生した場合、tcrds_repl_next_changemasterプロシージャを実行すると、複製エラーを解決できます。
@@ -784,6 +827,17 @@ mariadb> CALL mysql.tcrds_repl_skip_repl_error();
 
 ```
 mariadb> CALL mysql.tcrds_repl_next_changemaster();
+```
+
+### tcrds_repl_next_changesource (8.4 이후)
+
+* Master의 다음 바이너리(binary log) 로그를 읽을 수 있도록 복제 정보를 변경합니다.
+* 다음과 같은 복제 오류 발생 시 tcrds_repl_next_changesource 프로시저를 실행하면 복제 오류를 해결할 수 있습니다.
+
+예) MariaDB error code 1236 (ER_SOURCE_FATAL_ERROR_READING_BINLOG): Got fatal error from source when reading data from binary log
+
+```
+mariadb> CALL mysql.tcrds_repl_next_changesource();
 ```
 
 ### tcrds_innodb_monitor_reset
@@ -907,18 +961,34 @@ mysql -h{external_db_host} -u{exteranl_db_id} -p{external_db_password} --port={e
 * NHN Cloud RDSインスタンスで複製に使用するアカウントを作成します。
 * 新しく複製を設定する前に、もしかしたら存在するかもしれない既存のレプリケーション情報を初期化するために下記のクエリを実行します。この時、RESET SLAVEを実行すると、既存の複製情報が初期化されます。
 
+##### 8.4 이전
 ```
 STOP SLAVE;
 
 RESET SLAVE;
 ```
 
+##### 8.4 이후
+```
+STOP REPLICA;
+
+RESET REPLICA;
+```
+
 * 複製に使うアカウント情報と、先ほど別に記録しておいたMASTER_LOG_FILEとMASTER_LOG_POSを使って外部DBに下記のようにクエリを実行します。
 
+##### 8.4 이전
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
 
 START SLAVE;
+```
+
+##### 8.4 이후
+```
+CHANGE REPLICATION SOURCE TO source_host = '{rds_master_instance_floating_ip}', source_user='{user_id_for_replication}', source_password='{password_forreplication_user}', source_port ={rds_master_instance_port}, source_log_file ='{SOURCE_LOG_FILE}', source_log_pos = {SOURCE_LOG_POS};
+
+START REPLICA;
 ```
 
 * 外部DBとNHN Cloud RDSインスタンスの原本データが同じになったら、外部DBにSTOP SLAVEコマンドを利用して複製を終了します。
@@ -966,21 +1036,40 @@ mysql -h{rds_master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_po
 
 * 外部MariaDBインスタンスで複製に使うアカウントを作成します。
 
+##### 8.4 이전
 ```
 mariadb> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
 mariadb> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
+##### 8.4 이후
+```
+mariadb> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
+mariadb> GRANT REPLICATION CLIENT, REPLICATION REPLICA ON *.* TO 'user_id_for_replication'@'{external_db_host}';
+```
+
 * レプリケーションに使うアカウント情報と先に記録しておいたMASTER_LOG_FILE, MASTER_LOG_POSを利用してNHN Cloud RDSに次のようにクエリを実行します。
 
+##### 8.4 이전
 ```
 mariadb> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
 ```
 
+##### 8.4 이후
+```
+mariadb> call mysql.tcrds_repl_changesource ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','SOURCE_LOG_FILE',SOURCE_LOG_POS );
+```
+
 * レプリケーションを開始するには下記のプロシージャを実行します。
 
+##### 8.4 이전
 ```
 mariadb> call mysql.tcrds_repl_slave_start;
+```
+
+##### 8.4 이후
+```
+mariadb> call mysql.tcrds_repl_replica_start;
 ```
 
 * 外部DBとNHN Cloud RDSインスタンスの元データが同じになったら、下記のコマンドを利用して複製を終了します。
