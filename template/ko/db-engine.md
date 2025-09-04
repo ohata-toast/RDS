@@ -87,7 +87,7 @@ MySQL 8.4로 업그레이드하려면 먼저 MySQL 8.0으로 업그레이드된 
 콘솔의 **DB 엔진 업그레이드 사전 확인**에서 업그레이드 체커로 검출된 항목을 확인할 수 있으며, 오류로 검출된 항목은 반드시 처리해야 합니다. 자세한 설명은 MySQL 홈페이지를 참고합니다.
 - [업그레이드 체커 가이드](https://dev.mysql.com/doc/mysql-shell/8.4/en/mysql-shell-utilities-upgrade.html#mysql-utilities-upgrade-checks)
 
-또한, 8.4에서 제거 혹은 변경된 사항에 관해 확인이 필요합니다.
+또한 8.4 버전에서 제거 또는 변경된 사항에 대한 확인이 필요합니다.
 - [비호환 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [8.4에서 제거된 기능 가이드](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
