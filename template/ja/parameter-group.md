@@ -81,6 +81,7 @@ ramSizeByte * 6 / 10
 
 コンソールでパラメータグループを選択した後、**パラメータ編集**をクリックしてパラメータを変更できます。変更できないパラメータは、値が一般テキストで表示され、変更できるパラメータは、値を変更できるINPUTが表示されます。編集画面で**変更内容のプレビュー**をクリックすると、変更されたパラメータを確認できる別のポップアップ画面が表示され、**リセット**を押すと、変更する前に戻すことができます。編集モードで変更したすべての値は、**変更を保存**をクリックするとパラメータグループに反映されます。変更されたパラメータグループのDBインスタンスへの反映は[パラメータグループ適用](parameter-group/#apply)項目を参照してください。
 
+{{#if (eq engine.lowerCase "mysql")}}
 ## GTIDの制約条件
 
 GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が適用されます。参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
@@ -141,3 +142,4 @@ GTIDを円滑に適用するためには、gtid_mode(GTIDの適用手順)とenfo
 > * 各手順でパラメータグループを変更した後は、必ず[パラメータグループの変更内容を適用](parameter-group/#apply)を実行する必要があります。
 > * gtid_modeとenforce_gtid_consistencyパラメータを変更する際、DBインスタンスの再起動が必要になる場合があります。
 > * GTIDの適用解除は、適用の逆の手順で進めます。
+{{/if}}
