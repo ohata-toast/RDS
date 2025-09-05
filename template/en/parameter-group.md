@@ -145,4 +145,4 @@ Note : [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-e
 > * After changing the parameter group at each step, you must always perform [Apply parameter group changes] (parameter-group/#apply).
 > * Changing the gtid_mode and enforce_gtid_consistency parameters may require a DB instance restart.
 > * Disabling GTIDs is done in the reverse order of applying them.
-{{/if}
+{{/if}}
