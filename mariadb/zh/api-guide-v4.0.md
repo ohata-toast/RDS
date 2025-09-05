@@ -1,8 +1,10 @@
-## Database > RDS for MariaDB > API Guide
+## Database > RDS for MySQL > API Guide
 
 | Region | Endpoint |
 |--------|----------|
-| Korea (Pangyo) region | https://kr1-rds-mariadb.api.nhncloudservice.com |
+| Korea (Pangyo) region | https://kr1-rds-mysql.api.nhncloudservice.com |
+| Korea (Pyeongchon) region | https://kr2-rds-mysql.api.nhncloudservice.com |
+| Japan region | https://jp1-rds-mysql.api.nhncloudservice.com |
 
 ## Authentication and Authorization
 
@@ -11,13 +13,13 @@ The issued token must be included in the request header along with the Appkey.
 
 | Name                | Type   | Format | Required | Description                                           |
 |---------------------|--------|--------|----|-------------------------------------------------------------|
-| X-TC-APP-KEY        | Header | String | O  | Appkey of RDS for MariaDB or integrated Appkey for project |
+| X-TC-APP-KEY        | Header | String | O  | Appkey of RDS for MySQL or integrated Appkey for project |
 | X-NHN-AUTHORIZATION | Header | String | O  | Bearer type token issued with the Public API                           |
 
-In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for MariaDB ADMIN` and `RDS for MariaDB VIEWER`.
+In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for MySQL ADMIN` and `RDS for MySQL VIEWER`.
 
-* `RDS for MariaDB ADMIN permission holders` can use all available features as before.
-* `RDS for MariaDB MEMBER permission holders` can use read-only feature.
+* `RDS for MySQL ADMIN permission holders` can use all available features as before.
+* `RDS for MySQL MEMBER permission holders` can use read-only feature.
     * Cannot use any features aimed at DB instances or create, modify, or delete any DB instance.
     * But, notification group and user group-related features are available.
 
@@ -54,13 +56,23 @@ The API responds with "200 OK" to all API requests. For more information on the 
 ## DB engine type
 
 | DB engine type | Available for creation | Available for restoration from OBS |
-|-----------------|----------|------------------|
-| MARIADB_V10330  | O        | O                |
-| MARIADB_V10611  | O        | O                |
-| MARIADB_V10612  | O        | O                |
-| MARIADB_V10616  | O        | O                |
-| MARIADB_V101107 | O        | O                |
-| MARIADB_V101108 | O        | O                |
+| -------- | -------- | ---------------- |
+| MYSQL_V5633 | X | X |
+| MYSQL_V5715 | O | O |
+| MYSQL_V5719 | O | O |
+| MYSQL_V5726 | O | O |
+| MYSQL_V5731 | X | X |
+| MYSQL_V5733 | O | X |
+| MYSQL_V5737 | O | O |
+| MYSQL_V8018 | O | O |
+| MYSQL_V8023 | O | O |
+| MYSQL_V8028 | O | O |
+| MYSQL_V8032 | O | O |
+| MYSQL_V8033 | O | O |
+| MYSQL_V8034 | O | O |
+| MYSQL_V8035 | O | O |
+| MYSQL_V8036 | O | O |
+| MYSQL_V8040 | O | O |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -77,7 +89,7 @@ GET /v4.0/project/regions
 
 | Permission Name                                     | Description         |
 |-----------------------------------------|------------|
-| RDSforMariaDB:Project.Get | Query project information |
+| RDSforMySQL:Project.Get | Query project information |
 
 #### Request
 
@@ -88,7 +100,7 @@ This API does not require a request body.
 | Name    | Type | Format | Description |
 |---------|------|--------|-------------|
 | regions | Body | Array  | Region list |
-| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) |
+| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region<br/>`KR2`: Korea (Pyeongchon) Region<br/>`JP1`: Japan (Tokyo) Region |
 | regions.isEnabled  | Body | Boolean | Whether to enable a region                                                                 |
 
 <details><summary>Example</summary>
@@ -104,6 +116,14 @@ This API does not require a request body.
     "regions": [
         {
             "regionCode": "KR1",
+            "isEnabled": true
+        },
+        {
+            "regionCode": "KR2",
+            "isEnabled": true
+        },
+        {
+            "regionCode": "JP1",
             "isEnabled": true
         }
     ]
@@ -124,7 +144,7 @@ GET /v4.0/project/members
 
 | Permission Name                                      | Description         |
 |-----------------------------------------|------------|
-| RDSforMariaDB:Project.Get | Query project information |
+| RDSforMySQL:Project.Get | Query project information |
 
 #### Request
 
@@ -178,7 +198,7 @@ GET /v4.0/db-flavors
 
 | Permission Name                                       | Description               |
 |-------------------------------------------|------------------|
-| RDSforMariaDB:DbFlavor.List | List DB Instance Specifications |
+| RDSforMySQL:DbFlavor.List | List DB Instance Specifications |
 
 #### Request
 
@@ -232,7 +252,7 @@ GET /v4.0/network/subnets
 
 | Permission Name                                     | Description        |
 |------------------------------------------|-----------|
-| RDSforMariaDB:Network.List | List subnets |
+| RDSforMySQL:Network.List | List subnets |
 
 #### Request
 
@@ -288,7 +308,7 @@ GET /v4.0/db-versions
 
 | Permission Name                                        | Description          |
 |--------------------------------------------|-------------|
-| RDSforMariaDB:DbVersion.List | List DB Engines |
+| RDSforMySQL:DbVersion.List | List DB Engines |
 
 #### Request
 
@@ -315,8 +335,8 @@ This API does not require a request body.
     },
     "dbVersions": [
         {
-            "dbVersion": "MARIADB_V10330",
-            "dbVersionName": "Maria DB 10.3.30",
+            "dbVersion": "MYSQL_V8028",
+            "dbVersionName": "MySQL 8.0.28",
             "restorableFromObs": true
         }
     ]
@@ -340,7 +360,7 @@ GET /v4.0/storage-types
 
 | Permission Name                                      | Description                |
 |------------------------------------------|-------------------|
-| RDSforMariaDB:Storage.List | List data storage types |
+| RDSforMySQL:Storage.List | List data storage types |
 
 #### Request
 
@@ -403,7 +423,7 @@ GET /v4.0/jobs/{jobId}
 
 | Permission Name                                 | Description          |
 |-------------------------------------|-------------|
-| RDSforMariaDB:Job.Get | List Task Details |
+| RDSforMySQL:Job.Get | List Task Details |
 
 #### Request
 
@@ -465,7 +485,7 @@ GET /v4.0/db-instance-groups
 
 | Permission Name                                              | Description               |
 |--------------------------------------------------|------------------|
-| RDSforMariaDB:DbInstanceGroup.List | List DB Instances |
+| RDSforMySQL:DbInstanceGroup.List | List DB Instances |
 
 #### Request
 
@@ -517,7 +537,7 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 | Permission Name                                             | Description               |
 |-------------------------------------------------|------------------|
-| RDSforMariaDB:DbInstanceGroup.Get | List DB Instance Group Details |
+| RDSforMySQL:DbInstanceGroup.Get | List DB Instance Group Details |
 
 
 #### Request
@@ -627,7 +647,7 @@ GET /v4.0/db-instances
 
 | Permission Name                                         | Description            |
 |---------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.List | List DB instances |
+| RDSforMySQL:DbInstance.List | List DB instances |
 
 #### Request
 
@@ -666,7 +686,7 @@ This API does not require a request body.
             "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
             "dbInstanceName": "db-instance",
             "description": null,
-            "dbVersion": "MARIADB_V10330",
+            "dbVersion": "MYSQL_V8028",
             "dbPort": 10000,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -693,7 +713,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 | Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | List DB Instance Details |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -743,7 +763,7 @@ This API does not require a request body.
     "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
     "dbInstanceName": "db-instance",
     "description": null,
-    "dbVersion": "MARIADB_V10330",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -778,7 +798,7 @@ POST /v4.0/db-instances
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Create | Create DB Instance |
+| RDSforMySQL:DbInstance.Create | Create DB Instance |
 
 #### Request
 
@@ -800,6 +820,8 @@ POST /v4.0/db-instances
 | useDefaultNotification | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                              |
 | useDeletionProtection  | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                              |
 | useSlowQueryAnalysis   | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                 |
+| authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
+| tlsOption                                | Body | Enum    | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                                              |
 | network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                         | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
 | network.usePublicAccess                  | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                                                                                                                                                  |
@@ -816,6 +838,7 @@ POST /v4.0/db-instances
 | backup.backupPeriod                      | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
 | backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
+| backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                   | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -829,7 +852,7 @@ POST /v4.0/db-instances
     "dbInstanceName": "db-instance",
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbVersion": "MARIADB_V10330",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbUserName": "db-user",
     "dbPassword": "password",
@@ -879,7 +902,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 | Permission Name                               | Description  |
 |-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | Modify DB Instance |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -890,6 +913,8 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbInstanceCandidateName| Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description        | Body | String  | X        | Additional information on DB instances                                                                            |
 | dbPort             | Body | Number  | X        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                  |
+| dbVersion          | Body | Enum    | X        | DB engine type                                                                                                    |
+| useDummy           | Body | Boolean | X        | Whether to use dummies when upgrading the DB version of a single DB instance<br/>Default: `false`                 |
 | useSlowQueryAnalysis | Body | Boolean  | X | Whether to analyze slow queries |
 | dbFlavorId         | Body | UUID    | X        | Identifier of DB instance specifications                                                                          |
 | parameterGroupId   | Body | UUID    | X        | Parameter group identifier                                                                                        |
@@ -931,7 +956,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Delete | Delete DB instance |
+| RDSforMySQL:DbInstance.Delete | Delete DB instance |
 
 #### Request
 
@@ -959,7 +984,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 
 | Permission Name                                            | Description            |
 |------------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Restart | Restart DB Instance |
+| RDSforMySQL:DbInstance.Restart | Restart DB Instance |
 
 #### Request
 
@@ -985,7 +1010,7 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 
 | Permission Name                                                 | Description               |
 |-----------------------------------------------------|------------------|
-| RDSforMariaDB:DbInstance.ForceRestart | Force Restart DB instance |
+| RDSforMySQL:DbInstance.ForceRestart | Force Restart DB instance |
 
 #### Request
 
@@ -1027,7 +1052,7 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 
 | Permission Name                              | Description           |
 |----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Start | Start DB Instance |
+| RDSforMySQL:DbInstance.Start | Start DB Instance |
 
 #### Request
 
@@ -1055,7 +1080,7 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 | Permission Name                                         | Description            |
 |---------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Stop | Stop DB Instance |
+| RDSforMySQL:DbInstance.Stop | Stop DB Instance |
 
 #### Request
 
@@ -1083,7 +1108,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 | Permission Name                                  | Description           |
 |--------------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Replicate | Replicate DB Instance |
+| RDSforMySQL:DbInstance.Replicate | Replicate DB Instance |
 
 #### Request
 
@@ -1116,6 +1141,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`   |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`     |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`   |
+| backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region<br/>- Default: Original DB instance value                                                                                                                                    |
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                 |
 | backup.backupSchedules                   | Body | Array   | X        | Scheduled auto backup list                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | X        | Backup started time<br/>- Example: `00:00:00`<br/>- Default: Original DB instance value                                                                                                                                                                                                                             |
@@ -1159,7 +1185,7 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 
 | Permission Name                                            | Description           |
 |------------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Promote | Promote DB Instance |
+| RDSforMySQL:DbInstance.Promote | Promote DB Instance |
 
 #### Request
 
@@ -1187,7 +1213,7 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 
 | Permission Name                                            | Description            |
 |------------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Rebuild | Rebuild DB Instance |
+| RDSforMySQL:DbInstance.Rebuild | Rebuild DB Instance |
 
 #### Request
 
@@ -1215,7 +1241,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 
 | Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | List DB Instance Details |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -1269,7 +1295,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 				"backupStatus": "COMPLETED",
 				"dbInstanceId": "dba1be25-9429-4589-9716-7fb6daad7cb9",
 				"dbInstanceName": "original-db-instance-name",
-				"dbVersion": "MARIADB_V10330",
+				"dbVersion": "MYSQL_V8028",
 				"backupType": "MANUAL",
 				"backupSize": 8299904,
 				"useBackupLock": true,
@@ -1302,7 +1328,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 | Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | List DB Instance Details |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Common Request
 
@@ -1362,7 +1388,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | Permission Name                                            | Description           |
 |------------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Restore | Restore DB Instance |
+| RDSforMySQL:DbInstance.Restore | Restore DB Instance |
 
 #### Common Request
 
@@ -1400,6 +1426,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                |
 | backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                           |
+| backup.replicationRegion                            | Body | Enum    | X        | Backup replication region<br><ul><li>- `KR1`: Korea (Pangyo) Region</li><li>- `KR2`: Korea (Pyeongchon) Region</li><li>- `JP1`: Japan (Tokyo) Region</li></ul>                                                                                                                                                   |
 | backup.useBackupLock                                | Body | Boolean | X        | Whether to use table lock<br><ul><li>Default: `true`</li></ul>                                                                                                                                                                                                                                                   |
 | backup.backupSchedules                              | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                                                       |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O        | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                    |
@@ -1582,7 +1609,7 @@ POST /v4.0/db-instances/restore-from-obs
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------------|-------------------------|
-| RDSforMariaDB:DbInstance.RestoreFromObs | Restore a DB instance from object storage |
+| RDSforMySQL:DbInstance.RestoreFromObs | Restore a DB instance from object storage |
 
 #### Request
 
@@ -1624,6 +1651,7 @@ POST /v4.0/db-instances/restore-from-obs
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                               |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                              |
 | backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                         |
+| backup.replicationRegion                            | Body | Enum    | X        | Backup replication region<br><ul><li>- `KR1`: Korea (Pangyo) Region</li><li>- `KR2`: Korea (Pyeongchon) Region</li><li>- `JP1`: Japan (Tokyo) Region</li></ul>                                                                                                                                                |
 | backup.useBackupLock                                | Body | Boolean | X        | Whether to use table lock<br><ul><li>Default: `true`</li></ul>                                                                                                                                                                                                                                                |
 | backup.backupSchedules                              | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                                                    |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O        | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                 |
@@ -1640,7 +1668,7 @@ POST /v4.0/db-instances/restore-from-obs
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
     "dbPort": 10000,
-    "dbVersion": "MARIADB_V10330",
+    "dbVersion": "MYSQL_V8028",
     "dbUserName": "db-user",
     "dbPassword": "password",
     "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
@@ -1698,7 +1726,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | Modify DB Instance |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -1739,7 +1767,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 
 | Permission Name                                     | Description        |
 |-----------------------------------------------------|-----------|
-| RDSforMariaDB:HighAvailability.Modify | Modify high availability |
+| RDSforMySQL:HighAvailability.Modify | Modify high availability |
 
 #### Request
 
@@ -1767,7 +1795,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 
 | Permission Name                                     | Description           |
 |-----------------------------------------------------|--------------|
-| RDSforMariaDB:HighAvailability.Resume | Restart high availability |
+| RDSforMySQL:HighAvailability.Resume | Restart high availability |
 
 #### Request
 
@@ -1795,7 +1823,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 
 | Permission Name                                    | Description           |
 |----------------------------------------------------|--------------|
-| RDSforMariaDB:HighAvailability.Pause | Pause high availability |
+| RDSforMySQL:HighAvailability.Pause | Pause high availability |
 
 #### Request
 
@@ -1823,7 +1851,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 
 | Permission Name                                     | Description           |
 |-----------------------------------------------------|-----------|
-| RDSforMariaDB:HighAvailability.Repair | Recover high availability |
+| RDSforMySQL:HighAvailability.Repair | Recover high availability |
 
 #### Request
 
@@ -1851,7 +1879,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 
 | Permission Name                                    | Description           |
 |----------------------------------------------------|-----------|
-| RDSforMariaDB:HighAvailability.Split | Separate high availability |
+| RDSforMySQL:HighAvailability.Split | Separate high availability |
 
 #### Request
 
@@ -1879,7 +1907,7 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | Permission Name                            | Description           |
 |--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | List DB Instance Details |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -1940,7 +1968,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | Modify DB Instance |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -1973,7 +2001,7 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 | Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | List DB Instance Details |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -2036,7 +2064,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | Modify DB Instance |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -2046,6 +2074,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                      | Body | Number  | X        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
 | backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
+| replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | useBackupLock                     | Body | Boolean | X        | Whether to use table lock                                                                                                                                                                                                                                                 |
 | backupSchedules                   | Body | Array   | X        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -2088,7 +2117,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 | Permission Name                                       | Description            |
 |--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | List DB Instance Details |
+| RDSforMySQL:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -2130,7 +2159,7 @@ This API does not require a request body.
     },
     "endPoints": [
         {
-            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mariadb.rds.nhncloudservice.com",
+            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
             "ipAddress": "192.168.0.2",
             "endPointType": "INTERNAL"
         }
@@ -2153,7 +2182,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 | Permission Name                               | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | Modify DB Instance |
+| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -2180,7 +2209,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 
 | Permission Name                                 | Description                  |
 |-------------------------------------------------|---------------------|
-| RDSforMariaDB:DbInstanceUser.List | List of users in DB instance |
+| RDSforMySQL:DbInstanceUser.List | List of users in DB instance |
 
 #### Request
 
@@ -2200,6 +2229,8 @@ This API does not require a request body.
 | dbUsers.host                 | Body | String   | DB user account host name                                                                                                                                                |
 | dbUsers.authorityType        | Body | Enum     | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
 | dbUsers.dbUserStatus         | Body | Enum     | DB user current status<br/>- `STABLE`: Created<br/>(CREATING: Creating,<br/>- `UPDATING`: Modifying<br/>DELETING: Deleting,<br/>- `DELETED`: Deleted                     |
+| dbUsers.authenticationPlugin | Body | Enum     | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 | dbUsers.createdYmdt          | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                       |
 | dbUsers.updatedYmdt          | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
 
@@ -2220,6 +2251,8 @@ This API does not require a request body.
             "host": "%",
             "authorityType": "DDL",
             "dbUserStatus": "STABLE",
+            "authenticationPlugin": "NATIVE",
+            "tlsOption": "NONE",
             "createdYmdt": "2023-03-17T14:02:29+09:00",
             "updatedYmdt": "2023-03-17T14:02:31+09:00"
         }
@@ -2243,7 +2276,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceUser.Create | Create users in DB instance |
+| RDSforMySQL:DbInstanceUser.Create | Create users in DB instance |
 
 #### Request
 
@@ -2254,6 +2287,11 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                                                                            |
 | host                 | Body | String | O        | DB user account host name<br/>- Example: `1.1.1.%`                                                                                                                       |
 | authorityType        | Body | Enum   | O        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
+
+> [Caution]
+> Only DB instances whose `supportAuthenticationPlugin` value is true can set the values of `authenticationPlugin` and `tlsOption`.
 
 <details><summary>Example</summary>
 <p>
@@ -2263,7 +2301,9 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
     "dbUserName": "db-user",
     "dbPassword": "password",
     "host": "1.1.1.%",
-    "authorityType": "CRUD"
+    "authorityType": "CRUD",
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE"
 }
 ```
 
@@ -2288,7 +2328,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceUser.Modify | Modify users in DB instance |
+| RDSforMySQL:DbInstanceUser.Modify | Modify users in DB instance |
 
 #### Request
 
@@ -2298,6 +2338,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O        | DB user identifier                                                                                                                                                       |
 | dbPassword           | Body | String | X        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                                                                            |
 | authorityType        | Body | Enum   | X        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
+
+> [Caution]
+> Only DB instances whose `supportAuthenticationPlugin` value is true can modify the values of `authenticationPlugin` and `tlsOption`.
+> The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
 
 <details><summary>Example</summary>
 <p>
@@ -2329,7 +2375,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceUser.Delete | Delete users in DB instance |
+| RDSforMySQL:DbInstanceUser.Delete | Delete users in DB instance |
 
 #### Request
 
@@ -2358,7 +2404,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|---------------------|
-| RDSforMariaDB:DbInstanceSchema.List | List of schemas in DB instance |
+| RDSforMySQL:DbInstanceSchema.List | List of schemas in DB instance |
 
 #### Request
 
@@ -2414,7 +2460,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceSchema.Create | Create schemas in DB instance |
+| RDSforMySQL:DbInstanceSchema.Create | Create schemas in DB instance |
 
 #### Request
 
@@ -2441,7 +2487,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceSchema.Delete | Delete schemas in DB instance |
+| RDSforMySQL:DbInstanceSchema.Delete | Delete schemas in DB instance |
 
 #### Request
 
@@ -2470,7 +2516,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 | Permission Name                                           | Description           |
 |------------------------------------------------|-----------------------|
-| RDSforMariaDB:DbInstanceLog.List | List of log files in DB instance |
+| RDSforMySQL:DbInstanceLog.List | List of log files in DB instance |
 
 #### Request
 
@@ -2528,7 +2574,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 | Permission Name                                           | Description           |
 |--------------------------------------------------|----------------------|
-| RDSforMariaDB:DbInstanceLog.Export | Export log files in DB instance |
+| RDSforMySQL:DbInstanceLog.Export | Export log files in DB instance |
 
 #### Request
 
@@ -2589,7 +2635,7 @@ GET /v4.0/backups
 
 | Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMariaDB:Backup.List | Retrieve Backup List |
+| RDSforMySQL:Backup.List | Retrieve Backup List |
 
 #### Request
 
@@ -2614,6 +2660,7 @@ This API does not require a request body.
 | backups.backupStatus | Body | Enum     | Backup current status                               |
 | backups.dbInstanceId | Body | UUID     | Original DB instance identifier                     |
 | backups.dbVersion    | Body | Enum     | DB engine type                                      |
+| backups.utilVersion  | Body | String   | Version of the xtrabackup utility used for backup   |
 | backups.backupType   | Body | Enum     | Backup type                                         |
 | backups.backupSize   | Body | Number   | Backup size (Byte)                                  |
 | createdYmdt          | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)  |
@@ -2636,7 +2683,8 @@ This API does not require a request body.
             "backupName": "backup",
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-            "dbVersion": "MARIADB_V10330",
+            "dbVersion": "MYSQL_V8028",
+            "utilVersion": "8.0.28",
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",
@@ -2661,7 +2709,7 @@ POST /v4.0/backups
 
 | Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMariaDB:Backup.Create | Create backup |
+| RDSforMySQL:Backup.Create | Create backup |
 
 #### Common Request
 
@@ -2731,7 +2779,7 @@ POST /v4.0/backups/{backupId}/export
 
 | Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMariaDB:Backup.Export | Export backup |
+| RDSforMySQL:Backup.Export | Export backup |
 
 #### Request
 
@@ -2778,7 +2826,7 @@ POST /v4.0/backups/{backupId}/restore
 
 | Permission Name                                           | Description           |
 |--------------------------------------------|---------|
-| RDSforMariaDB:Backup.Restore | Restore backup |
+| RDSforMySQL:Backup.Restore | Restore backup |
 
 #### Request
 
@@ -2814,6 +2862,7 @@ POST /v4.0/backups/{backupId}/restore
 | backup.backupPeriod                          | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                           |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                            |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                          |
+| backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                   | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -2870,7 +2919,7 @@ DELETE /v4.0/backups/{backupId}
 
 | Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMariaDB:Backup.Delete | Delete backup |
+| RDSforMySQL:Backup.Delete | Delete backup |
 
 #### Request
 
@@ -2909,7 +2958,7 @@ GET /v4.0/db-security-groups
 
 | Permission Name                                           | Description           |
 |--------------------------------------------------|----------------|
-| RDSforMariaDB:DbSecurityGroup.List | List DB security groups |
+| RDSforMySQL:DbSecurityGroup.List | List DB security groups |
 
 #### Request
 
@@ -2965,7 +3014,7 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------|----------------|
-| RDSforMariaDB:DbSecurityGroup.Get | List DB security group details
+| RDSforMySQL:DbSecurityGroup.Get | List DB security group details
  |
 
 #### Request
@@ -3051,7 +3100,7 @@ POST /v4.0/db-security-groups
 
 | Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMariaDB:DbSecurityGroup.Create | Create DB security group |
+| RDSforMySQL:DbSecurityGroup.Create | Create DB security group |
 
 #### Request
 
@@ -3069,8 +3118,8 @@ POST /v4.0/db-security-groups
 | rules.port.minPort  | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | rules.port.maxPort  | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 
-> [주의]
-> DB 포트는 송신 방향으로 설정할 수 없습니다.
+> [Caution]
+> DB port cannot be set to transmit direction.
 
 <details><summary>Example</summary>
 <p>
@@ -3115,7 +3164,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMariaDB:DbSecurityGroup.Modify | Modify DB security group |
+| RDSforMySQL:DbSecurityGroup.Modify | Modify DB security group |
 
 #### Request
 
@@ -3171,7 +3220,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMariaDB:DbSecurityGroup.Delete | Delete DB security group |
+| RDSforMySQL:DbSecurityGroup.Delete | Delete DB security group |
 
 #### Request
 
@@ -3213,7 +3262,7 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 | Permission Name                                        | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMariaDB:DbSecurityGroupRule.Create | Create DB security group rule |
+| RDSforMySQL:DbSecurityGroupRule.Create | Create DB security group rule |
 
 #### Request
 
@@ -3229,8 +3278,8 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 
-> [주의]
-> DB 포트는 송신 방향으로 설정할 수 없습니다.
+> [Caution]
+> DB port cannot be set to transmit direction.
 
 <details><summary>Example</summary>
 <p>
@@ -3269,7 +3318,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 | Permission Name                                        | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMariaDB:DbSecurityGroupRule.Modify | Modify DB security group rule |
+| RDSforMySQL:DbSecurityGroupRule.Modify | Modify DB security group rule |
 
 #### Request
 
@@ -3286,8 +3335,8 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 
-> [주의]
-> DB 포트는 송신 방향으로 설정할 수 없습니다.
+> [Caution]
+> DB port cannot be set to transmit direction.
 
 <details><summary>Example</summary>
 <p>
@@ -3324,7 +3373,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 | Permission Name                                           | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMariaDB:DbSecurityGroupRule.Create | Delete DB security group rule |
+| RDSforMySQL:DbSecurityGroupRule.Create | Delete DB security group rule |
 
 #### Request
 
@@ -3355,7 +3404,7 @@ GET /v4.0/parameter-groups
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------|---------------|
-| RDSforMariaDB:ParameterGroup.List | List parameter groups |
+| RDSforMySQL:ParameterGroup.List | List parameter groups |
 
 #### Request
 
@@ -3393,7 +3442,7 @@ This API does not require a request body.
             "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
             "parameterGroupName": "parameter-group",
             "description": null,
-            "dbVersion": "MARIADB_V10330",
+            "dbVersion": "MYSQL_V8028",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-02-31T15:28:17+09:00",
             "updatedYmdt": "2023-02-31T15:28:17+09:00"
@@ -3418,7 +3467,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 
 | Permission Name                                | Description           |
 |------------------------------------------------|---------------|
-| RDSforMariaDB:ParameterGroup.Get | List parameter group details |
+| RDSforMySQL:ParameterGroup.Get | List parameter group details |
 
 #### Request
 
@@ -3463,7 +3512,7 @@ This API does not require a request body.
     "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
     "parameterGroupName": "parameter-group",
     "description": null,
-    "dbVersion": "MARIADB_V10330",
+    "dbVersion": "MYSQL_V8028",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
@@ -3499,7 +3548,7 @@ POST /v4.0/parameter-groups
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMariaDB:ParameterGroup.Create | Create parameter group |
+| RDSforMySQL:ParameterGroup.Create | Create parameter group |
 
 #### Request
 
@@ -3515,7 +3564,7 @@ POST /v4.0/parameter-groups
 ```json
 {
     "parameterGroupName": "parameter-group",
-    "dbVersion": "MARIADB_V10330"
+    "dbVersion": "MYSQL_V8028"
 }
 ```
 
@@ -3540,7 +3589,7 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------|--------------|
-| RDSforMariaDB:ParameterGroup.Copy | Copy parameter group |
+| RDSforMySQL:ParameterGroup.Copy | Copy parameter group |
 
 #### Request
 
@@ -3581,7 +3630,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMariaDB:ParameterGroup.Modify | Modify parameter group |
+| RDSforMySQL:ParameterGroup.Modify | Modify parameter group |
 
 #### Request
 
@@ -3635,7 +3684,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMariaDB:ParameterGroup.Modify | Modify parameter group |
+| RDSforMySQL:ParameterGroup.Modify | Modify parameter group |
 
 #### Request
 
@@ -3695,7 +3744,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 
 | Permission Name                                           | Description           |
 |--------------------------------------------------|---------------|
-| RDSforMariaDB:ParameterGroup.Reset | Reset parameter group |
+| RDSforMySQL:ParameterGroup.Reset | Reset parameter group |
 
 #### Request
 
@@ -3735,7 +3784,7 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMariaDB:ParameterGroup.Delete | Delete parameter group |
+| RDSforMySQL:ParameterGroup.Delete | Delete parameter group |
 
 #### Request
 
@@ -3779,7 +3828,7 @@ GET /v4.0/user-groups
 
 | Permission Name                                           | Description           |
 |--------------------------------------------|--------------|
-| RDSforMariaDB:UserGroup.List | List user groups |
+| RDSforMySQL:UserGroup.List | List user groups |
 
 #### Request
 
@@ -3831,7 +3880,7 @@ GET /v4.0/user-groups/{userGroupId}
 
 | Permission Name                                           | Description           |
 |-------------------------------------------|--------------|
-| RDSforMariaDB:UserGroup.Get | List user group details |
+| RDSforMySQL:UserGroup.Get | List user group details |
 
 #### Request
 
@@ -3891,7 +3940,7 @@ POST /v4.0/user-groups
 
 | Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMariaDB:UserGroup.Create | Create user group |
+| RDSforMySQL:UserGroup.Create | Create user group |
 
 #### Request
 
@@ -3941,7 +3990,7 @@ PUT /v4.0/user-groups/{userGroupId}
 
 | Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMariaDB:UserGroup.Modify | Modify user group|
+| RDSforMySQL:UserGroup.Modify | Modify user group|
 
 #### Request
 
@@ -4000,7 +4049,7 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 | Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMariaDB:UserGroup.Delete | Delete user group |
+| RDSforMySQL:UserGroup.Delete | Delete user group |
 
 #### Request
 
@@ -4042,7 +4091,7 @@ GET /v4.0/notification-groups
 
 | Permission Name                                           | Description           |
 |----------------------------------------------------|-------------|
-| RDSforMariaDB:NotificationGroup.List | List notification groups |
+| RDSforMySQL:NotificationGroup.List | List notification groups |
 
 #### Request
 
@@ -4100,7 +4149,7 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|-------------|
-| RDSforMariaDB:NotificationGroup.Get | List notification groups |
+| RDSforMySQL:NotificationGroup.Get | List notification groups |
 
 #### Request
 
@@ -4175,7 +4224,7 @@ POST /v4.0/notification-groups
 
 | Permission Name                                      | Description           |
 |------------------------------------------------------|------------|
-| RDSforMariaDB:NotificationGroup.Create | Create notification group |
+| RDSforMySQL:NotificationGroup.Create | Create notification group |
 
 #### Request
 
@@ -4226,7 +4275,7 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 
 | Permission Name                                           | Description           |
 |------------------------------------------------------|------------|
-| RDSforMariaDB:NotificationGroup.Modify | Modify notification group |
+| RDSforMySQL:NotificationGroup.Modify | Modify notification group |
 
 #### Request
 
@@ -4288,7 +4337,7 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 | Permission Name                                      | Description           |
 |------------------------------------------------------|------------|
-| RDSforMariaDB:NotificationGroup.Delete | Delete notification group |
+| RDSforMySQL:NotificationGroup.Delete | Delete notification group |
 
 #### Request
 
@@ -4332,7 +4381,7 @@ GET /v4.0/metrics
 
 | Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMariaDB:Metric.List | List metric information |
+| RDSforMySQL:Metric.List | List metric information |
 
 #### Request
 
@@ -4380,7 +4429,7 @@ GET /v4.0/metric-statistics
 
 | Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMariaDB:Metric.List | List metric information |
+| RDSforMySQL:Metric.List | List metric information |
 
 #### Request
 
@@ -4461,7 +4510,7 @@ GET /v4.0/events
 
 | Permission Name                                           | Description           |
 |----------------------------------------|-----------|
-| RDSforMariaDB:Event.List | List Events |
+| RDSforMySQL:Event.List | List Events |
 
 #### Request
 
@@ -4549,7 +4598,7 @@ GET /v4.0/event-codes
 
 | Permission Name                                           | Description           |
 |----------------------------------------|-----------|
-| RDSforMariaDB:Event.List | List Events |
+| RDSforMySQL:Event.List | List Events |
 
 #### Request
 

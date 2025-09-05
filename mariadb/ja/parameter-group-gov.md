@@ -81,64 +81,63 @@ ramSizeByte * 6 / 10
 
 コンソールでパラメータグループを選択した後、**パラメータ編集**をクリックしてパラメータを変更できます。変更できないパラメータは、値が一般テキストで表示され、変更できるパラメータは、値を変更できるINPUTが表示されます。編集画面で**変更内容のプレビュー**をクリックすると、変更されたパラメータを確認できる別のポップアップ画面が表示され、**リセット**を押すと、変更する前に戻すことができます。編集モードで変更したすべての値は、**変更を保存**をクリックするとパラメータグループに反映されます。変更されたパラメータグループのDBインスタンスへの反映は[パラメータグループ適用](parameter-group/#apply)項目を参照してください。
 
-## GTID 제약조건
+## GTIDの制約条件
 
-GTID모드에서는 enforce_gtid_consistency=ON 으로 할때 다음 제약들이 적용됩니다. 참고 : [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
+GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が適用されます。参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
 
 ### ENFORCE_GTID_CONSISTENCY
 
-* OFF : 제약대상 쿼리 허용
-* WARN : 제약대상 쿼리를 허용하지만 warning 발생
-* ON : 제약대상 쿼리 허용안함
+* OFF:制約対象クエリを許可
+* WARN:制約対象クエリを許可するが、warning(警告)が発生
+* ON:制約対象クエリを許可しない
 
-### 고객 영향도
+### お客様への影響
 
-> GTID를 이용한 복제의 아래 제한 사항에 해당 하는 쿼리를 사용 할 수 없게 됩니다 (에러가 발생합니다)
+> GTIDを利用したレプリケーションでは、以下の制限事項に該当するクエリは使用できなくなります(エラーが発生します)。
+1. 非トランザクションストレージエンジンに関連する更新
+    * MyISAMのような非トランザクションストレージエンジンに関連する更新と、InnoDBのようなトランザクションをサポートするストレージエンジンを使用する更新を、一つのトランザクション内で実行することはできません。
+    * ソースとレプリカで、同じテーブルが異なるストレージエンジンを使用している場合にも問題が発生します。
+    * 非トランザクションテーブルで動作するように定義されたトリガーが、同様の問題を引き起こす可能性があります。
+2. CREATE TABLE ... SELECT構文(8.0.21以前のバージョンの場合)
+3. binlog_formatがSTATEMENTの場合、トランザクション/プロシージャ/関数/トリガーの内部で一時テーブルを作成/削除することはできません。
 
-1. 비 트랜잭션 저장 엔진과 관련된 업데이트
-    * MyISAM과 같은 비 트랜잭션 저장 엔진과 관련된 업데이트를 INNODB 와 같이 트랜젝션을 지원하는 저장엔진을 사용하는 업데이트와 한 트랜젝션에서 수행할 수 없습니다.
-    * 소스와 복제본이 동일한 테이블이 다른 스토리지 엔진을 사용하는 경우에도 문제가 발생합니다.
-    * 비 트랜잭션 테이블에서 작동하도록 정의된 트리거가 동일 유형의 문제를 일으킬 수 있습니다.
-2. CREATE TABLE ... SELECT 구문(8.0.21 이전 버전의 경우)
-3. binlog_format이 STATEMENT 일때, 트랜잭션/프로시저/함수/트리거 내부에서 임시테이블을 생성/삭제 할 수 없습니다.
+### お客様に推奨される事前措置
 
-### 고객 권장 사전 조치
-
-1. 가능하면 MyISAM과 같은 비트랜잭션 저장 엔진을 사용하지 마세요. 사용한다면 INNODB 같은 트랜젝션 저장엔진과 한 트랜젝션에서 업데이트를 수행하지 마세요.
-2. CREATE TABLE ... SELECT 구문(8.0.21 이전 버전의 경우)을 사용하지 마세요.
+1. 可能な限り、MyISAMのような非トランザクションストレージエンジンは使用しないでください。使用する場合は、InnoDBのようなトランザクションストレージエンジンとの更新を一つのトランザクションで実行しないでください。
+2. CREATE TABLE ... SELECT構文(8.0.21以前のバージョンの場合)は使用しないでください。
     ```
-    예시)  
+   例)  
     create table tbl_backup as select * from tbl_ori; 
-    를 다음과 같이 변형해야 합니다.
+    を次のように変える必要があります。
     create table tbl_backup like tbl_ori; insert tbl_backup select * from tbl_ori;
     ```
 
-## GTID 적용단계
+## GTID適用手順
 
 ### gtid_mode
 
-| 값 | Source 에서 동작 | Replica에서 동작 |
-| :--- | :----------- | :----------- |
-| OFF | GTID 미적용 | GTID 처리 불가 |
-| OFF_PERMISSIVE | GTID 도 처리 가능 | GTID 도 처리 가능 |
-| ON_PERMISSIVE | GTID 적용 | GTID 적용 |
-| ON | GTID만 처리 | GTID만 처리 |
+| 値              | ソースでの動作   | レプリカでの動作  |
+|:---------------|:----------|:----------|
+| OFF            | GTID未適用   | GTID処理不可  |
+| OFF_PERMISSIVE | GTIDも処理可能 | GTIDも処理可能 |
+| ON_PERMISSIVE  | GTID適用    | GTID適用    |
+| ON             | GTIDのみ処理  | GTIDのみ処理  |
 
-### RDS에서 GTID 적용 절차
+### RDSでのGTID適用手順
 
-GTID를 원활하게 적용하기 위해서, gtid_mode (gtid의 적용단계) 와 enforce_gtid_consistency(쿼리적용 제한단계) 를 파라미터 그룹을 통해 다음 순서로 적용해야 합니다.
-참고 : [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
+GTIDを円滑に適用するためには、gtid_mode(GTIDの適用手順)とenforce_gtid_consistency(クエリ適用の制限手順)を、パラメータグループを通じて次の順序で適用する必要があります。
+参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
 
-| 단계 | 대상 | 파라미터 설정 | 동작 | 비고 |
-| :--- | :--- | :--- | :--- | :--- |
-| 1 | 모든 DB 인스턴스 | enforce_gtid_consistency = WARN | GTID적용시 문제가 되는 SQL에 warning 발생 확인. | 파라미터 그룹 변경 후 적용.<br>문제가 예상되는 SQL을 warning에서 확인하고 <br>APP에서 수정합니다.<br>더이상 warning이 발생하지 않을때까지 지속합니다. |
-| 2 | 모든 DB 인스턴스 | enforce_gtid_consistency = ON | 문제가 되는 SQL에 에러 발생 | 파라미터 그룹 변경 후 적용.<br>더이상 GTID에서 문제가 되는 쿼리가 수행되지 못합니다. |
-| 3 | 모든 DB 인스턴스 | gtid_mode = OFF_PERMISSIVE | Replica가 GTID를 처리할 수 있도록 준비 | 파라미터 그룹 변경 후 적용.<br>모든 Replica가 먼저 OFF_PERMISSIVE가 되어야만 문제가 발생하지 않습니다. |
-| 4 | 모든 DB 인스턴스 | gtid_mode = ON_PERMISSIVE | Source가 GTID를 생성 | 파라미터 그룹 변경 후 적용. |
-| 5 | 모든 DB 인스턴스 | - | 잔여 ANONYMOUS 트랜잭션 확인 | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>모든 서버에서 결과 0이 최소 1번은 나와야 합니다. |
-| 6 | 모든 DB 인스턴스 | gtid_mode = ON | 모든 트랜젝션은 GTID만 사용 | 파라미터 그룹 변경 후 적용. |
+| 手順 | 対象          | パラメータ設定                         | 動作                                      | 備考                                                                                         |
+|:---|:------------|:--------------------------------|:----------------------------------------|:-------------------------------------------------------------------------------------------|
+| 1  | 全てのDBインスタンス | enforce_gtid_consistency = WARN | GTID適用時に問題となるSQLでwarning(警告)が発生することを確認。 | パラメータグループ変更後に適用。<br>問題が予想されるSQLを警告で確認し、<br>APP側で修正します。<br>警告が発生しなくなるまで継続します。               |
+| 2  | 全てのDBインスタンス | enforce_gtid_consistency = ON   | 問題となるSQLでエラーが発生。                        | パラメータグループ変更後に適用。<br>これ以降、GTIDで問題となるクエリは実行できなくなります。                                         |
+| 3  | 全てのDBインスタンス | gtid_mode = OFF_PERMISSIVE      | レプリカがGTIDを処理できるよう準備。                    | パラメータグループ変更後に適用。<br>全てのレプリカが先にOFF_PERMISSIVEになることで、問題の発生を防ぎます。                             |
+| 4  | 全てのDBインスタンス | gtid_mode = ON_PERMISSIVE       | ソースがGTIDを生成。                            | パラメータグループ変更後に適用。                                                                           |
+| 5  | 全てのDBインスタンス | -                               | 残留ANONYMOUSトランザクションの確認。                 | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>全てのサーバーで結果が0になることが、最低1回は必要です。 |
+| 6  | 全てのDBインスタンス | gtid_mode = ON                  | 全てのトランザクションがGTIDのみを使用。                  | パラメータグループ変更後に適用。                                                                           |
 
-> [주의]
-> * 각 단계에서 파라미터 그룹 변경 후에는 반드시 [파라미터 그룹 변경 사항 적용](parameter-group/#apply)을 수행해야 합니다.
-> * gtid_mode와 enforce_gtid_consistency 파라미터 변경 시 DB 인스턴스 재시작이 필요할 수 있습니다.
-> * GTID 적용해제는 적용의 역순으로 진행합니다.
+> [注意]
+> * 各手順でパラメータグループを変更した後は、必ず[パラメータグループの変更内容を適用](parameter-group/#apply)を実行する必要があります。
+> * gtid_modeとenforce_gtid_consistencyパラメータを変更する際、DBインスタンスの再起動が必要になる場合があります。
+> * GTIDの適用解除は、適用の逆の手順で進めます。

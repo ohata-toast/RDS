@@ -117,26 +117,26 @@ GTID(global transaction identifier) 모드에서는 enforce_gtid_consistency=ON�
 
 ### gtid_mode
 
-| 값 | Source에서 동작 | Replica에서 동작 |
-| :--- | :----------- | :----------- |
-| OFF | GTID 미적용 | GTID 처리 불가 |
-| OFF_PERMISSIVE | GTID도 처리 가능 | GTID도 처리 가능 |
-| ON_PERMISSIVE | GTID 적용 | GTID 적용 |
-| ON | GTID만 처리 | GTID만 처리 |
+| 값              | Source에서 동작 | Replica에서 동작 |
+|:---------------|:------------|:-------------|
+| OFF            | GTID 미적용    | GTID 처리 불가   |
+| OFF_PERMISSIVE | GTID도 처리 가능 | GTID도 처리 가능  |
+| ON_PERMISSIVE  | GTID 적용     | GTID 적용      |
+| ON             | GTID만 처리    | GTID만 처리     |
 
 ### RDS에서 GTID 적용 절차
 
 GTID를 원활하게 적용하기 위해 gtid_mode(gtid의 적용 단계)와 enforce_gtid_consistency(쿼리 적용 제한 단계)를 파라미터 그룹을 통해 다음 순서로 적용해야 합니다.
 - 참고: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
 
-| 단계 | 대상 | 파라미터 설정 | 동작 | 비고 |
-| :--- | :--- | :--- | :--- | :--- |
-| 1 | 모든 DB 인스턴스 | enforce_gtid_consistency = WARN | GTID 적용 시 문제가 되는 SQL에 warning 발생 확인. | 파라미터 그룹 변경 후 적용.<br>문제가 예상되는 SQL을 warning에서 확인하고 <br>APP에서 수정합니다.<br>더 이상 warning이 발생하지 않을 때까지 지속합니다. |
-| 2 | 모든 DB 인스턴스 | enforce_gtid_consistency = ON | 문제가 되는 SQL에 오류 발생 | 파라미터 그룹 변경 후 적용.<br>더 이상 GTID에서 문제가 되는 쿼리가 수행되지 못합니다. |
-| 3 | 모든 DB 인스턴스 | gtid_mode = OFF_PERMISSIVE | Replica가 GTID를 처리할 수 있도록 준비 | 파라미터 그룹 변경 후 적용.<br>모든 Replica가 먼저 OFF_PERMISSIVE가 되어야만 문제가 발생하지 않습니다. |
-| 4 | 모든 DB 인스턴스 | gtid_mode = ON_PERMISSIVE | Source가 GTID를 생성 | 파라미터 그룹 변경 후 적용. |
-| 5 | 모든 DB 인스턴스 | - | 잔여 ANONYMOUS 트랜잭션 확인 | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>모든 서버에서 결과 0이 최소 1번은 나와야 합니다. |
-| 6 | 모든 DB 인스턴스 | gtid_mode = ON | 모든 트랜젝션은 GTID만 사용 | 파라미터 그룹 변경 후 적용. |
+| 단계 | 대상         | 파라미터 설정                         | 동작                                   | 비고                                                                                                    |
+|:---|:-----------|:--------------------------------|:-------------------------------------|:------------------------------------------------------------------------------------------------------|
+| 1  | 모든 DB 인스턴스 | enforce_gtid_consistency = WARN | GTID 적용 시 문제가 되는 SQL에 warning 발생 확인. | 파라미터 그룹 변경 후 적용.<br>문제가 예상되는 SQL을 warning에서 확인하고 <br>APP에서 수정합니다.<br>더 이상 warning이 발생하지 않을 때까지 지속합니다. |
+| 2  | 모든 DB 인스턴스 | enforce_gtid_consistency = ON   | 문제가 되는 SQL에 오류 발생                    | 파라미터 그룹 변경 후 적용.<br>더 이상 GTID에서 문제가 되는 쿼리가 수행되지 못합니다.                                                 |
+| 3  | 모든 DB 인스턴스 | gtid_mode = OFF_PERMISSIVE      | Replica가 GTID를 처리할 수 있도록 준비          | 파라미터 그룹 변경 후 적용.<br>모든 Replica가 먼저 OFF_PERMISSIVE가 되어야만 문제가 발생하지 않습니다.                                |
+| 4  | 모든 DB 인스턴스 | gtid_mode = ON_PERMISSIVE       | Source가 GTID를 생성                     | 파라미터 그룹 변경 후 적용.                                                                                      |
+| 5  | 모든 DB 인스턴스 | -                               | 잔여 ANONYMOUS 트랜잭션 확인                 | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>모든 서버에서 결과 0이 최소 1번은 나와야 합니다.            |
+| 6  | 모든 DB 인스턴스 | gtid_mode = ON                  | 모든 트랜젝션은 GTID만 사용                    | 파라미터 그룹 변경 후 적용.                                                                                      |
 
 > [주의]
 > * 각 단계에서 파라미터 그룹 변경 후에는 반드시 [파라미터 그룹 변경 사항 적용](parameter-group/#apply)을 수행해야 합니다.
