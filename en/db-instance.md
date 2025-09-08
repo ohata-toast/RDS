@@ -201,8 +201,8 @@ Starting with DB instances created after the May 2025 maintenance, VIP (Virtual 
 For DB instances created before the May 2025 maintenance, you can add a VIP by selecting `Add VIP` in the web console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the candidate master, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
 
 > [참고]
-> 2025년 9월 점검 이후 일본 리전 및 공공 일부 프로젝트에서는 더 이상 VIP 를 지원하지 않습니다. (다른 서브넷에 속한 인스턴스 혹은 DB 인스턴스에서 VIP 로 접속이 되지 않습니다.)
-> VIP 를 지원하지 않는 환경에서는 2025년 5월 점검 이후 생성된 VIP 는 삭제 되지는 않지만, 더 이상 웹 콘솔에서 확인할 수 없습니다.
+> 2025년 9월 점검 이후 일본(도쿄) 리전 및 공공 일부 프로젝트에서는 더 이상 VIP를 지원하지 않습니다. (다른 서브넷에 속한 인스턴스 또는 DB 인스턴스에서 VIP로 접속할 수 없습니다.)
+> VIP를 지원하지 않는 환경에서는 2025년 5월 점검 이후 생성된 VIP는 삭제되지 않지만, 더 이상 콘솔에서 확인할 수 없습니다.
 
 ### Log
 
