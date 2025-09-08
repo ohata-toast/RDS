@@ -58,34 +58,41 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 ## DBエンジンタイプ
 
 {{#if (eq engine.lowerCase "mysql")}}
-| DBエンジンタイプ | 作成可否 | OBSから復元可否 |
-| -------- | -------- | ---------------- |
-| MYSQL\_V5633 | X | X |
-| MYSQL\_V5715 | O | O |
-| MYSQL\_V5719 | O | O |
-| MYSQL\_V5726 | O | O |
-| MYSQL\_V5731 | X | X |
-| MYSQL\_V5733 | O | X |
-| MYSQL\_V5737 | O | O |
-| MYSQL\_V8018 | O | O |
-| MYSQL\_V8023 | O | O |
-| MYSQL\_V8028 | O | O |
-| MYSQL\_V8032 | O | O |
-| MYSQL\_V8033 | O | O |
-| MYSQL\_V8034 | O | O |
-| MYSQL_V8035 | O | O |
-| MYSQL_V8036 | O | O |
-| MYSQL_V8040 | O | O |
+| DBエンジンタイプ | 作成可否 | OBSからの復元可否 | 認証プラグインサポート情報 |
+|--------------|----------|-----------------|--------|
+| MYSQL\_V5633 | X        | X               | NATIVE |
+| MYSQL\_V5715 | O        | O               | NATIVE |
+| MYSQL\_V5719 | O        | O               | NATIVE |
+| MYSQL\_V5726 | O        | O               | NATIVE |
+| MYSQL\_V5731 | X        | X               | NATIVE |
+| MYSQL\_V5733 | O        | X               | NATIVE, SHA256 |
+| MYSQL\_V5737 | O        | O               | NATIVE, SHA256 |
+| MYSQL\_V8018 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8023 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8028 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8032 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8033 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8034 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8035  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8036  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8040  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8041  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8042  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8043  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8405  | O        | O               | CACHING_SHA2 |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| DBエンジンタイプ | 作成可否 | OBSから復元可否 |
-|-----------------|----------|------------------|
-| MARIADB_V10330  | O        | O                |
-| MARIADB_V10611  | O        | O                |
-| MARIADB_V10612  | O        | O                |
-| MARIADB_V10616  | O        | O                |
-| MARIADB_V101107 | O        | O                |
-| MARIADB_V101108 | O        | O                |
+| DBエンジンタイプ | 作成可否 | OBSからの復元可否 | 認証プラグインサポート情報 |
+|-----------------|----------|------------------|-----------------|
+| MARIADB_V10330  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10611  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10612  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10616  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10622  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101107 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101108 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101113 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V11407  | O        | O                | NATIVE, ED25519 |
 {{/if}}
 
 * ENUMタイプのdbVersionフィールドに対して該当値を使用できます。
@@ -793,26 +800,26 @@ POST /v3.0/db-instances
 
 #### リクエスト
 
-| 名前                     | 種類   | 形式     | 必須 | 説明                                                                 |
-|-------------------------|-------|---------|----|---------------------------------------------------------------------|
-| dbInstanceName          | Body  | String  | O  | DBインスタンスを識別できる マスター名                                           |
-| dbInstanceCandidateName | Body  | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
-| description             | Body  | String  | X  | DBインスタンスに関する追加情報                                                  |
-| dbFlavorId              | Body  | UUID    | O  | DBインスタンス仕様の識別子                                                    |
-| dbVersion               | Body  | Enum    | O  | DBエンジンタイプ                                                           |
-| dbPort                  | Body  | Number  | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |
-| dbUserName              | Body  | String  | O  | DBユーザーアカウント名                                                         |
-| dbPassword              | Body  | String  | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                     |
-| parameterGroupId        | Body  | UUID    | O  | パラメータグループの識別子                                                       |
-| dbSecurityGroupIds      | Body  | Array   | X  | DBセキュリティグループの識別子リスト                                                   |
-| userGroupIds            | Body  | Array   | X  | ユーザーグループの識別子リスト                                                     |
-| useHighAvailability     | Body  | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                       |
-| pingInterval            | Body  | Number  | X  | 高可用性使用時のPing間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
-| useDefaultNotification  | Body  | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                      |
-| useDeletionProtection   | Body  | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         |
-| useSlowQueryAnalysis    | Body  | Boolean | X  | スロークエリの分析有無<br/>- デフォルト値: `true`                                  |
+| 名前                                       | 種類   | 形式      | 必須 | 説明                                                                                                                                                                                                                             |
+|------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceName                           | Body | String  | O  | DBインスタンスを識別できる マスター名                                                                                                                                                                                                           |
+| dbInstanceCandidateName                  | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                                                                                                                                                                                        |
+| description                              | Body | String  | X  | DBインスタンスに関する追加情報                                                                                                                                                                                                               |
+| dbFlavorId                               | Body | UUID    | O  | DBインスタンス仕様の識別子                                                                                                                                                                                                                 |
+| dbVersion                                | Body | Enum    | O  | DBエンジンタイプ                                                                                                                                                                                                                      |
+| dbPort                                   | Body | Number  | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                                                                                                     |
+| dbUserName                               | Body | String  | O  | DBユーザーアカウント名                                                                                                                                                                                                                   |
+| dbPassword                               | Body | String  | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                                                                                                                             |
+| parameterGroupId                         | Body | UUID    | O  | パラメータグループの識別子                                                                                                                                                                                                                  |
+| dbSecurityGroupIds                       | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                                                                            |
+| userGroupIds                             | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                                |
+| useHighAvailability                      | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
+| pingInterval                             | Body | Number  | X  | 高可用性使用時のPing間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                            |
+| useDefaultNotification                   | Body | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                                                                                                                                                                                |
+| useDeletionProtection                    | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                                                                                                                                                                                  |
+| useSlowQueryAnalysis                     | Body | Boolean | X  | スロークエリの分析有無<br/>- デフォルト値: `true`                                                                                                                                                                                               |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin                     | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`                                                                                                                                                                                                 |
+| authenticationPlugin                     | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                           |
 | tlsOption                                | Body | Enum    | X  | TLS Option<br/>- デフォルト値: `NONE`                                                                                                                                                                                                |
 {{/if}}
 | network                                  | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
@@ -2058,20 +2065,20 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 
 #### レスポンス
 
-| 名前                           | 種類   | 形式       | 説明                                                                                                                      |
-|------------------------------|------|----------|-------------------------------------------------------------------------------------------------------------------------|
-| dbUsers                      | Body | Array    | DBユーザーリスト                                                                                                               |
-| dbUsers.dbUserId             | Body | UUID     | DBユーザーの識別子                                                                                                              |
-| dbUsers.dbUserName           | Body | String   | DBユーザーアカウント名                                                                                                            |
-| dbUsers.host                 | Body | String   | DBユーザーアカウントのホスト名                                                                                                        |
-| dbUsers.authorityType        | Body | Enum     | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                  |
-| dbUsers.dbUserStatus         | Body | Enum     | DBユーザーの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `UPDATING`:修正中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み     |
+| 名前                           | 種類   | 形式       | 説明                                                                                                                          |
+|------------------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+| dbUsers                      | Body | Array    | DBユーザーリスト                                                                                                                   |
+| dbUsers.dbUserId             | Body | UUID     | DBユーザーの識別子                                                                                                                  |
+| dbUsers.dbUserName           | Body | String   | DBユーザーアカウント名                                                                                                                |
+| dbUsers.host                 | Body | String   | DBユーザーアカウントのホスト名                                                                                                            |
+| dbUsers.authorityType        | Body | Enum     | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                      |
+| dbUsers.dbUserStatus         | Body | Enum     | DBユーザーの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `UPDATING`:修正中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み         |
 {{#if (eq engine.lowerCase "mysql")}}
-| dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
-| dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
+| dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 {{/if}}
-| dbUsers.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                        |
-| dbUsers.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                        |
+| dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
+| dbUsers.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                            |
+| dbUsers.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                            |
 
 <details><summary>例</summary>
 <p>
@@ -2114,16 +2121,16 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 #### リクエスト
 
-| 名前                   | 種類   | 形式     | 必須 | 説明                                                                                                                      |
-|----------------------|------|--------|----|-------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId         | URL  | UUID   | O  | DBインスタンスの識別子                                                                                                            |
-| dbUserName           | Body | String | O  | DBユーザーアカウント名<br/>- 最小長さ: `1`<br/>- 最大長さ: `32`                                                                           |
-| dbPassword           | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                      |
-| host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                                     |
-| authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                  |
+| 名前                   | 種類   | 形式     | 必須 | 説明                                                                                                                          |
+|----------------------|------|--------|----|-----------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId         | URL  | UUID   | O  | DBインスタンスの識別子                                                                                                                |
+| dbUserName           | Body | String | O  | DBユーザーアカウント名<br/>- 最小長さ: `1`<br/>- 最大長さ: `32`                                                                               |
+| dbPassword           | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                          |
+| host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                                         |
+| authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                      |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
-| tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
+| tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 
 > [注意]
 > DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を設定できます。
@@ -2167,15 +2174,15 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 #### リクエスト
 
-| 名前                   | 種類   | 形式     | 必須 | 説明                                                                                                                      |
-|----------------------|------|--------|----|-------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId         | URL  | UUID   | O  | DBインスタンスの識別子                                                                                                            |
-| dbUserId             | URL  | UUID   | O  | DBユーザーの識別子                                                                                                              |
-| dbPassword           | Body | String | X  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                      |
-| authorityType        | Body | Enum   | X  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                  |
+| 名前                   | 種類   | 形式     | 必須 | 説明                                                                                                                          |
+|----------------------|------|--------|----|-----------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId         | URL  | UUID   | O  | DBインスタンスの識別子                                                                                                                |
+| dbUserId             | URL  | UUID   | O  | DBユーザーの識別子                                                                                                                  |
+| dbPassword           | Body | String | X  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                          |
+| authorityType        | Body | Enum   | X  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                      |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
-| tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
+| tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 
 > [注意]
 > DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を修正できます。
@@ -2808,6 +2815,9 @@ POST /v3.0/db-security-groups
 | rules.port.minPort  | Body | Number | X  | 最小ポート範囲<br/>- 最小値: 1                                                                                                                                                                 |
 | rules.port.maxPort  | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                             |
 
+> [注意]
+> DBポートは送信方向(アウトバウンド)には設定できません。
+
 <details><summary>例</summary>
 <p>
 
@@ -2947,6 +2957,9 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                             |
 | cidr              | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                               |
 
+> [注意]
+> DBポートは送信方向(アウトバウンド)には設定できません。
+
 <details><summary>例</summary>
 <p>
 
@@ -2994,6 +3007,9 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.minPort      | Body | Number | X  | 最小ポート範囲<br/>- 最小値: 1                                                                                                                                                                 |
 | port.maxPort      | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                             |
 | cidr              | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                               |
+
+> [注意]
+> DBポートは送信方向(アウトバウンド)には設定できません。
 
 <details><summary>例</summary>
 <p>

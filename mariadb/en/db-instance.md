@@ -1,8 +1,8 @@
-## Database > RDS for MariaDB > DB Instance
+## Database > RDS for MySQL > DB Instance
 
 ## DB Instance
 
-DB instance is a concept that encompasses virtual equipment and installed MariaDB, a unit of MariaDB provided by RDS for MariaDB.
+DB instance is a concept that encompasses virtual equipment and installed MySQL, a unit of MySQL provided by RDS for MySQL.
 You do not have direct access to the operating system of the DB instance, but only to the database through the port you entered when you created the DB instance. The available port ranges have the following restrictions.
 
 * The available port range is between 3306 and 43306.
@@ -30,14 +30,34 @@ NHN Cloud has divided the entire system into several availability zones to prepa
 ### DB Engine
 
 The versions specified below are available.
-| Version              | Note |
-|-----------------|----|
-| MariaDB 10.11.8 |    |
-| MariaDB 10.11.7 |    |
-| MariaDB 10.6.16 |    |
-| MariaDB 10.6.12 |    |
-| MariaDB 10.6.11 |    |
-| MariaDB 10.3.30 |    |
+| Version              | Note                                                                                                              |
+|----------------------|-------------------------------------------------------------------------------------------------------------------|
+| <strong>8.4</strong> |                                                                                                                   |
+| MySQL 8.4.5          |                                                                                                                   |
+| <strong>8.0</strong> |                                                                                                                   |
+| MySQL 8.0.43         |                                                                                                                   |
+| MySQL 8.0.42         |                                                                                                                   |
+| MySQL 8.0.41         |                                                                                                                   |
+| MySQL 8.0.40         |                                                                                                                   |
+| MySQL 8.0.36         |                                                                                                                   |
+| MySQL 8.0.35         |                                                                                                                   |
+| MySQL 8.0.34         |                                                                                                                   | 
+| MySQL 8.0.33         |                                                                                                                   |
+| MySQL 8.0.32         |                                                                                                                   | 
+| MySQL 8.0.28         |                                                                                                                   | 
+| MySQL 8.0.23         |                                                                                                                   |
+| MySQL 8.0.18         |                                                                                                                   |
+| <strong>5.7</strong> |                                                                                                                   |
+| MySQL 5.7.37         |                                                                                                                   |
+| MySQL 5.7.33         | You cannot restore a DB instance from an external backup.                                                         |
+| MySQL 5.7.26         |                                                                                                                   |
+| MySQL 5.7.19         |                                                                                                                   |
+| MySQL 5.7.15         |                                                                                                                   |
+| <strong>5.6</strong> |                                                                                                                   |
+| MySQL 5.6.33         | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
+
+For the DB engine, version upgrades are possible through the modification feature of console after creation.
+Details about DB engine can be found in [DB Engine](db-engine/).
 
 ### DB Instance Type
 
@@ -127,7 +147,7 @@ If you activate deletion protection, you can protect DB instances from accidenta
 
 You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
 
-![db-instance-list_en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-list_en.png)
+![db-instance-list_en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-list_en.png)
 
 ❶ You can change DB instance screen mode.  
 ❷ By clicking on the button, you can open or close a DB instance that belongs to a group.  
@@ -152,7 +172,7 @@ The status of the DB instance consists of the following values and changes depen
 
 Search conditions that can be changed are as follows.
 
-![db-instance-filter_en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-filter_en.png)
+![db-instance-filter_en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-filter_en.png)
 
 ❶ You can search for DB instances with filtering conditions that require parameter changes to be applied.
 
@@ -160,7 +180,7 @@ Search conditions that can be changed are as follows.
 
 You can select a DB instance to view the details.
 
-![db-instance-detail_en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-detail_en.png)
+![db-instance-detail_en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail_en.png)
 
 ❶ When you click on the domain of the connection information, a pop-up window appears to confirm the IP address.
 ❷ When you click on DB Security Group, a pop-up window appears where you can check DB security rules.
@@ -180,6 +200,10 @@ Starting with DB instances created after the May 2025 maintenance, VIP (Virtual 
 
 For DB instances created before the May 2025 maintenance, you can add a VIP by selecting `Add VIP` in the web console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the candidate master, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
 
+> [Note]
+> After the maintenance in September 2025, VIP will no longer be supported in the Japan (Tokyo) region and some public projects. (You cannot connect to a VIP from an instance or DB instance in a different subnet.)
+> In environments that do not support VIPs, VIPs created after the May 2025 maintenance will not be deleted, but will no longer be visible in the console.
+
 ### Log
 
 You can view and download various log files from Log tab of DB instance. Log files are rotated to the settings set as below. Some log files can be enabled or disabled in the parameter group.
@@ -190,9 +214,9 @@ You can view and download various log files from Log tab of DB instance. Log fil
 | slow_query.log   | 40 of 100MB | fixed    | `slow_query_log`                                                       |
 | general_log.log  | 40 of 100MB | fixed    | `general_log`                                                          |
 | server_audit.log | 30 of 20MB  | Changeable | `server_audit_logging`<br />`server_audit_file_rotations`              |
-| mysql-bin.xxxxxx | 5 days         | Changeable | `binlog_expire_logs_seconds` |
+| mysql-bin.xxxxxx | 5 days         | Changeable | `binlog_expire_logs_seconds` (8.X version)<br />`expire_logs_days` (5.X version) |
 
-![db-instance-detail-log_en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-detail-log_en.png)
+![db-instance-detail-log_en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-log_en.png)
 
 ❶ Click on **View Logs** and you will see a pop-up window where you can check the contents of the log file. You can check logs up to 65,535 Bytes.
 ❷ When **Import** is clicked, the request is made to download the log file for DB instance.
@@ -204,7 +228,7 @@ Click on **Download** to charge Internet traffic as the size of the log file.
 
 ❹ For binary logs, you can download them in two forms. Click on **Import** and you will see a pop-up window where you can select the type of binary log.
 
-![db-instance-detail-log-bin_en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-detail-log-bin_en.png)
+![db-instance-detail-log-bin_en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-log-bin_en.png)
 
 ❺ Select to use the mysqlbinlog utility to convert the binary log into SQL file and then download it.
 
@@ -214,7 +238,7 @@ DB instance's **DB Schema and User** tab allows you to query and control the sch
 
 #### DB schema created
 
-![db-instance-detail-schema_en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-detail-schema_en.png)
+![db-instance-detail-schema_en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-schema_en.png)
 
 ❶ Click on **Create** and a pop-up window will appear where you can enter the name of DB schema.
 ❷ You can create a DB schema by entering the DB schema name and clicking on **Confirm**.
@@ -228,14 +252,14 @@ You cannot modify the name of DB schema that has created.
 
 #### DB schema deleted
 
-![db-instance-detail-schema-delete-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-detail-schema-delete-en.png)
+![db-instance-detail-schema-delete-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-schema-delete-en.png)
 
 ❶ Select DB schema you want to delete and click on the drop-down menu.
 ❷ Click on **Delete** menu and pop-up window will appear to confirm deletion. You can request to delete by clicking on **Confirm**.
 
 #### Create a user
 
-![db-instance-detail-user-create-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-detail-user-create-en.png)
+![db-instance-detail-user-create-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-create-en.png)
 
 ❶ Click on **+Create** and you'll see the Add User pop-up window.
 ❷ Enter a user ID.
@@ -279,10 +303,45 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 * You cannot check what permissions are in the CUSTOM permission template.
 * If you change from one CUSTOM permission template to another permission template, you cannot change back to a CUSTOM permission template.
 
+❻ Select the plug-in to apply to user authentication. The following plug-ins are available for each version.
+
+| Authentication Plugin | Supported Versions                            |
+|-----------------------|-----------------------------------------------|
+| mysql_native_password | All versions                                  |
+| sha256_password       | 5.7.33 version or later and below 8.0 version |
+| caching_sha2_password | 8.0 version or later                          |
+
+❼ Select the connection encryption option for DB instances.
+
+| TLS Option | Description                                                                                                                                          |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| NONE       | Encrypted connections are not applied.                                                                                                               |
+| SSL        | Encrypted connections are applied.                                                                                                                   |
+| X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the console. |
+
+> [Note]
+User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and later versions.
+
+#### Download Authentication Certificate
+
+If you set TLS option for your account to X509, you need a certificate to access the DB instance.
+
+![db-instance-detail-user-cert-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-cert-en.png)
+![db-instance-detail-user-cert-down-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-cert-down-en.png)
+
+❶ Select the DB instance to which you want to download the certificate.
+❷ Click on drop-down menu.
+❸ Click on **Download Certificate** and you will see a pop-up window where you can download the certificate.
+❹ Click on **Import** at the bottom of the file you want to download.
+❺ When you are ready to download, the **Download** button appears. Click to download the certificate file.
+
+> [Caution]
+When **Import** is clicked, the certificate file will be uploaded to backup storage for approximately 5 minutes, and the backup storage capacity will be charged to the size of the certificate file.
+Click on**Download** to charge Internet traffic as much as the size of the certificate file.
 
 #### Edit users
 
-![db-instance-detail-user-modify-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-detail-user-modify-en.png)
+![db-instance-detail-user-modify-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-modify-en.png)
 
 ❶ Click on **Modify** on the user row you want to modify and you will see a pop-up window where you can modify your information.
 ❷ If you do not enter Password, it will not be changed.
@@ -290,7 +349,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 #### Deleting a user
 
-![db-instance-detail-user-delete-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-detail-user-delete-en.png)
+![db-instance-detail-user-delete-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-detail-user-delete-en.png)
 
 ❶ Select the user you want to delete and click on the drop-down menu.
 ❷ Click on **Delete** and **Confirm Delete** pop-up window will appear. You can request deletion by clicking on **Confirm**.
@@ -320,13 +379,13 @@ You can easily change various items in DB instances created through console. Cha
 
 For high availability DB instances, if there are any changes to items that need to be restarted, it provides a restart capability using failover to increase stability and reduce disconnected time.
 
-![modify-ha-popup-en](https://static.toastoven.net/prod_rds/mariadb/24.11.12/modify-ha-popup-en.png)
+![modify-ha-popup-en](https://static.toastoven.net/prod_rds/mysql/24.11.12/modify-ha-popup-en.png)
 
 If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
 
 ### DB Schema & Direct User Control
 
-RDS for MariaDB provides management from the console to make it easier to manage DB schemas and users, but it also provides the feature to set up so that users can control themselves. Direct control grants all currently created users the following privileges.
+RDS for MySQL provides management from the console to make it easier to manage DB schemas and users, but it also provides the feature to set up so that users can control themselves. Direct control grants all currently created users the following privileges.
 
 ```sql
 GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
@@ -342,7 +401,7 @@ Supports DB instance operating system upgrades. By upgrading the operating syste
 Caution is required when upgrading the operating system because it may result in service disruption. Highly available DB instances can minimize service disruption through failover.
 
 You can check the operating system information of the current DB instance on the DB instance details screen.
-![db-instance-os-upgrade-en.png](https://static.toastoven.net/prod_rds/mariadb/24.06.11/db-instance-os-upgrade-en.png)
+![db-instance-os-upgrade-en.png](https://static.toastoven.net/prod_rds/mysql/24.06.11/db-instance-os-upgrade-en.png)
 
 ❶ You can check the operating system information of the DB instance.
 ❷ If the operating system is eligible for version upgrade, the **OS Version Upgrade** button appears.
@@ -350,10 +409,10 @@ You can check the operating system information of the current DB instance on the
 Operating system version upgrades behave differently depending on whether you are in a highly available configuration or not. For high availability, the operating system version upgrade is performed using failover. For non-high availability, the operating system version upgrade is performed by restarting the DB instance.
 
 When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
-![db-instance-os-upgrade-single-popup-en.png](https://static.toastoven.net/prod_rds/mariadb/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
+![db-instance-os-upgrade-single-popup-en.png](https://static.toastoven.net/prod_rds/mysql/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
 
 When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual failover item](db-instance/#manual-failover) of High Availability DB Instances.
-![os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/mariadb/24.11.12/os-upgrade-ha-popup-en.png)
+![os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/mysql/24.11.12/os-upgrade-ha-popup-en.png)
 
 ## Delete DB Instance
 
@@ -372,8 +431,8 @@ You can use backups to restore data to any point in time. Restore always creates
 If the capacity of the data storage is insufficient due to the excessive generation of binary logs from rapid load, you can delete the binary logs using Secure Capacity feature in console. When you select Secure Capacity in console, you will see a pop-up window where you can select the binary logs for DB instance.
 Select the binary log and press **Confirm** to delete all binary logs created prior to the selected item. The Secure Capacity is a feature that temporarily secures capacity. If you keep running out of capacity, you must set the storage period for the binary log or expand the size of the data storage to match your service load.
 
-> [Note]
-> You can set the storage period for binary logs with the `binlog_expire_logs_seconds` parameter.
+> [Note] 
+> You can set the storage period for binary logs with the `expire_logs_days` in MySQL 5.7 and later and the `binlog_expire_logs_seconds` parameter in MySQL 5.8 and later.
 
 ## Expand Storage Size
 
@@ -401,7 +460,7 @@ Even if the settings for a parameter group associated with DB instance change, t
 
 You can apply changes in a parameter group to DB instance by using one of the following methods.
 
-![db-instance-list-parameter-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-list-parameter-en.png)
+![db-instance-list-parameter-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-list-parameter-en.png)
 
 ❶ Click on **Parameters** of the DB instance or
 ❷ Select the DB instance and click on **Apply Parameter Group Changes** from the drop-down menu, or click
@@ -411,13 +470,13 @@ If the parameters in the parameter group that require restart are changed, the D
 
 High availability DB instances provide restart feature using failover to increase stability and reduce disconnected time.
 
-![db-instance-parameter-ha-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-parameter-ha-en.png)
+![db-instance-parameter-ha-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-parameter-ha-en.png)
 
 If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
 
 ## Recover from backup in object storage
 
-You can upload an external MariaDB backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for MariaDB. For more information, refer to [Restore with External MariaDB Backup](backup-and-restore/#restore-from-external).
+You can upload an external MySQL backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for MySQL. For more information, refer to [Restore with External MySQL Backup](backup-and-restore/#restore-from-external).
 
 ## Export backup files to the object storage after backup
 
@@ -446,7 +505,7 @@ Backup storage charges can be as much as the size of a binary log required for t
 
 To create a read replica from the console,
 
-![db-instance-replica-create-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-replica-create-en.png)
+![db-instance-replica-create-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-replica-create-en.png)
 
 ❶ Select the source DB instance and click on **Create Read Replica**
 
@@ -523,7 +582,7 @@ Read replicas can be stopped for several reasons. If the status of the read repl
 of `Last_Errno` is 1062, you can call the Procedure below until the error disappears.
 
 ```
-mariadb> CALL mysql.tcrds_repl_skip_repl_error();
+mysql> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
 ### Rebuild Read Replica
@@ -535,17 +594,17 @@ Connection information (domain, IP) does not change after rebuilding.
 
 ## Restart DB instance
 
-You can restart a DB instance when you restart MariaDB or want to manually do failover a high availability DB instance. We recommend that you perform it during low service load times to minimize restart times. For high availability DB instances, if restarting with failover is not enabled, restart the candidate master first, then restart the master. For restarting with failover feature, refer to [Manual Failover](#_42) item.
+You can restart a DB instance when you restart MySQL or want to manually do failover a high availability DB instance. We recommend that you perform it during low service load times to minimize restart times. For high availability DB instances, if restarting with failover is not enabled, restart the candidate master first, then restart the master. For restarting with failover feature, refer to [Manual Failover](#_42) item.
 
 To restart a DB instance from the console
 
-![db-instance-restart-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-restart-en.png)
+![db-instance-restart-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-restart-en.png)
 
 ❶ Select the DB instance you want to restart and click on **Restart DB instance** menu from the drop-down menu.
 
 ## DB instance force restart
 
-If MariaDB in the DB instance is not working properly, you can force a restart. For forced restart, issue a SIGTERM command in MariaDB and wait 10 minutes for it to shut down normally. If MariaDB shuts down normally within 10 minutes, reboot the virtual machine afterward. If it does not shut down normally within 10 minutes, force a reboot of the virtual machine. If the virtual machine is forced to reboot, some of the transactions you are working on might be lost and the data volume might be corrupted, making recovery impossible. After a forced restart, the state of the DB instance might not return to the available state. Contact Customer Center if this situation occurs.
+If MySQL in the DB instance is not working properly, you can force a restart. For forced restart, issue a SIGTERM command in MySQL and wait 10 minutes for it to shut down normally. If MySQL shuts down normally within 10 minutes, reboot the virtual machine afterward. If it does not shut down normally within 10 minutes, force a reboot of the virtual machine. If the virtual machine is forced to reboot, some of the transactions you are working on might be lost and the data volume might be corrupted, making recovery impossible. After a forced restart, the state of the DB instance might not return to the available state. Contact Customer Center if this situation occurs.
 
 > [Caution] Because there is a possibility of data loss or data volume corruption, this feature should not be used except in urgent and unavoidable circumstances.
 
@@ -554,7 +613,7 @@ For high availability DB instances, you cannot force restart.
 
 To force restart a DB instance, from the console
 
-![db-instance-restart-force-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-restart-force-en.png)
+![db-instance-restart-force-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-restart-force-en.png)
 
 ❶ Select the DB instance for which you want a forced restart and from the drop-down menu, click on **Force Restart DB instance** menu.
 
@@ -562,11 +621,11 @@ To force restart a DB instance, from the console
 
 Enabling Delete Protection protects DB instances from being accidentally deleted. You cannot delete DB instances until Delete Protection is disabled. To change Delete Protection settings
 
-![db-instance-deletion-protection-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-deletion-protection-en.png)
+![db-instance-deletion-protection-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-deletion-protection-en.png)
 
 ❶ If you select the DB instance for which you want to change the Deletion Protection settings and click on **Change Deletion Protection Settings** menu from the drop-down menu, a pop-up window will appear.
 
-![deletion-protection-popup-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/deletion-protection-popup-en.png)
+![deletion-protection-popup-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/deletion-protection-popup-en.png)
 
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
@@ -576,7 +635,7 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
 
 > [Note]
-> For high availability DB instances, if you set to use MariaDB query statement to force replication from another DB instance or from a master in external MariaDB, high availability and some features do not work properly.
+> For high availability DB instances, if you set to use MySQL query statement to force replication from another DB instance or from a master in external MySQL, high availability and some features do not work properly.
 
 ### Failure Detection
 
@@ -613,7 +672,7 @@ If the failed over master fails to recover, you can re-enable the high availabil
 
 To recover a failover master, from the console
 
-![db-instance-failover-repair-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-failover-repair-en.png)
+![db-instance-failover-repair-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-failover-repair-en.png)
 
 ❶ Select the failover master you want to recover from and click on **Recover 	
 Failed Over Master** menu from the drop-down menu.
@@ -636,7 +695,7 @@ Backup storage charges can be as much as the size of the binary log required for
 
 To rebuild a failover master, from the console
 
-![db-instance-failover-rebuild-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-failover-rebuild-en.png)
+![db-instance-failover-rebuild-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-failover-rebuild-en.png)
 
 ❶ Select the failover master you want to rebuild and click on **Rebuild failover master** menu from the drop-down menu.
 
@@ -646,7 +705,7 @@ If recovery of a failed over master fails and data correction is required, you c
 
 To separate failover master, from the console
 
-![db-instance-failover-split-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-failover-split-en.png)
+![db-instance-failover-split-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-failover-split-en.png)
 
 ❶ Select the failed master you want to isolate and click on **Separate failed over master** menu from the drop-down menu.
 
@@ -679,7 +738,7 @@ Because all binary logs are deleted during the failover process, you can proceed
 
 You can apply changes to the candidate master first and then observe the trend, or you can control when you want to perform a failover at the exact time from the console. When you select Failover Manual Control, the ❶ console displays the **Failover** button after the candidate master restarts. Click on this button to activate the failover, which can wait up to 5 days for the failover to occur. If the failover is not enabled within five days, the task will be automatically cancelled.
 
-![db-instance-ha-wait-manual-failover-en](https://static.toastoven.net/prod_rds/mariadb/24.03.12/db-instance-ha-wait-manual-failover-en.png)
+![db-instance-ha-wait-manual-failover-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-ha-wait-manual-failover-en.png)
 
 > [Caution]
 While waiting for a failover, no automatic failover occurs.
@@ -700,9 +759,9 @@ High availability features can be temporarily stopped in situations where a temp
 
 Candidate master replication can be disrupted due to a variety of reasons, such as network disconnection, incorrect FEDERATED engine use, and replication settings from other masters. Candidate masters in a Stopped Replication state do not perform automatic failover. To resolve a backup master's Stopped Replication, the candidate master needs to be rebuilt. When rebuilding a candidate master, it removes all of the candidate master's databases and rebuilds them based on the master's database. In this process, if the backup file required for rebuilding does not exist in the master database, the backup is performed on the master, which can cause performance degradation.
 
-## MariaDB Procedure
+## MySQL Procedure
 
-RDS for MariaDB provides its own procedures for performing some of the features that are restricted from user accounts to provide user convenience.
+RDS for MySQL provides its own procedures for performing some of the features that are restricted from user accounts to provide user convenience.
 
 ### tcrds_active_process
 
@@ -710,7 +769,7 @@ RDS for MariaDB provides its own procedures for performing some of the features 
 * Data output is displayed in order of longest performance time to shortest, and the query value (SQL) is displayed up to hundred digits.
 
 ```
-mariadb> CALL mysql.tcrds_active_process();
+mysql> CALL mysql.tcrds_active_process();
 ```
 
 ### tcrds_process_kill
@@ -719,7 +778,7 @@ mariadb> CALL mysql.tcrds_active_process();
 * Process ID to end can be checked in information_schema.processlist, and the process information can be checked using the tcrds_active_process and tcrds_current_lock procedures.
 
 ```
-mariadb> CALL mysql.tcrds_process_kill(processlist_id );
+mysql> CALL mysql.tcrds_process_kill(processlist_id );
 ```
 
 ### tcrds_current_lock
@@ -730,22 +789,22 @@ mariadb> CALL mysql.tcrds_process_kill(processlist_id );
 * To force shutdown a process that occupies a lock, check the (B)PROCESS column and perform call tcrds_process_kill(process_id).
 
 ```
-mariadb> CALL mysql.tcrds_current_lock();
+mysql> CALL mysql.tcrds_current_lock();
 ```
 
-### tcrds_repl_changemaster
+### tcrds_repl_changemaster (before 8.4) 
 
-* Used to import external MariaDB DBs into NHN Cloud RDS using replication.
+* Used to import external MySQL DBs into NHN Cloud RDS using replication.
 * Replication configuration of NHN Cloud RDS is done with **Create replication** of the console.
 
 ```
-mariadb> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
+mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
 ```
 
 * Explaining parameter
   * master_instance_ip : IP of replication target (Master) server
-  * master_instance_port: MariaDB port on the replication target (Master) server
-  * user_id_for_replication: an account for replication to access MariaDB on the replication target (Master) server
+  * master_instance_port: MySQL port on the replication target (Master) server
+  * user_id_for_replication: an account for replication to access MySQL on the replication target (Master) server
   * password_for_replication_user : Password of account for replication
   * MASTER_LOG_FILE : Binary log file name of replication target (Master)
   * MASTER_LOG_POS : Binary log file position of replication target (Master)
@@ -754,51 +813,104 @@ mariadb> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instanc
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
 ```
 
-> [Caution] The account for replication must be created in MariaDB of the replication target (Master).
+> [Caution] The account for replication must be created in MySQL of the replication target (Master).
+
+### tcrds_repl_changesource (after 8.4)
+
+* Used when importing an external MySQL DB to NHN Cloud RDS using replication.
+* Replication configuration for NHN Cloud RDS can be done through **Create Replica** in the console.
+
+```
+mysql> CALL mysql.tcrds_repl_changesource (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, SOURCE_LOG_FILE, SOURCE_LOG_POS);
+```
+
+* Parameter Details
+    * master_instance_ip: IP of the replication target (Master) server
+    * master_instance_port: MySQL of the replication target (Master) server
+    * user_id_for_replication: Replication account to connect to MySQL on the replication target (Master) server
+    * password_for_replication_user: account passowrd for replication
+    * SOURCE_LOG_FILE: Binary log file name of the replication target (Master)
+    * SOURCE_LOG_POS: binary log position of the replication target (Master)
+
+```
+ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
+> [Caution] The replication account must be created in the MYSQL.
 
 ### tcrds_repl_init
 
-* Reset MariaDB replication information.
+* Reset MySQL replication information.
 
 ```
-mariadb> CALL mysql.tcrds_repl_init();
+mysql> CALL mysql.tcrds_repl_init();
 ```
 
-### tcrds_repl_slave_stop
+### tcrds_repl_slave_stop (before 8.4)
 
-* Stop MariaDB replication.
-
-```
-mariadb> CALL mysql.tcrds_repl_slave_stop();
-```
-
-### tcrds_repl_slave_start
-
-* Start MariaDB replication.
+* Stop MySQL replication.
 
 ```
-mariadb> CALL mysql.tcrds_repl_slave_start();
+mysql> CALL mysql.tcrds_repl_slave_stop();
+```
+
+### tcrds_repl_replica_stop (after 8.4)
+
+* Stop MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_replica_stop();
+```
+
+### tcrds_repl_slave_start (before 8.4)
+
+* Start MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_slave_start();
+
+```
+
+### tcrds_repl_replica_start (after 8.4)
+
+* Start MySQL replication.
+
+```
+mysql> CALL mysql.tcrds_repl_replica_start();
 
 ```
 
 ### tcrds_repl_skip_repl_error
 
-* Run SQL_SLAVE_SKIP_COUNTER=1. When the following duplicate key error happens, run tcrds_repl_skip_repl_error procedure to resolve the replication error.
-* `MariaDB error code 1062: 'Duplicate entry ? for key ?'`
+* If you run the TCRDS_REPL_SKIP_REPL_ERROR procedure when the Duplicate Key error occurs, you can address the replica error.
+    * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
+    * After 8.4: perform SQL_REPLICA_SKIP_COUNTER=1.
+* `MySQL error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
-mariadb> CALL mysql.tcrds_repl_skip_repl_error();
+mysql> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
-### tcrds_repl_next_changemaster
+### tcrds_repl_next_changemaster (before 8.4)
 
 * Changes replication information to read the next binary log of master.
 * When the following replication errors happens, run tcrds_repl_next_changemaster procedure to resolve the replication errors.
 
-e.g. MariaDB error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
+e.g. MySQL error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG): Got fatal error from master when reading data from binary log
 
 ```
-mariadb> CALL mysql.tcrds_repl_next_changemaster();
+mysql> CALL mysql.tcrds_repl_next_changemaster();
+```
+
+### tcrds_repl_next_changesource (after 8.4)
+
+* Change the replication information so that you can read the next binary log log.
+* If you run the TCRDS_REXT_CHANGESOURCE procedure when the following replication error occurs, you can issue the replication error.
+
+e.g. MySQL error code 1236 (ER_SOURCE_FATAL_ERROR_READING_BINLOG): Got fatal error from source when reading data from binary log
+
+```
+mysql> CALL mysql.tcrds_repl_next_changesource();
 ```
 
 ### tcrds_innodb_monitor_reset
@@ -808,7 +920,7 @@ mariadb> CALL mysql.tcrds_repl_next_changemaster();
 * innodb_monitor_enable, innodb_monitor_disable provides RDS parameter.
 
 ```
-mariadb> CALL mysql.tcrds_innodb_monitor_reset('{counter-name|module_name|pattern|all}');
+mysql> CALL mysql.tcrds_innodb_monitor_reset('{counter-name|module_name|pattern|all}');
 ```
 
 ```
@@ -823,7 +935,7 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 * Run the following query: `SET GLOBAL innodb_monitor_reset_all = '{counter-name|module_name|pattern|all}';`.
 
 ```
-mariadb> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
+mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
 ```
 
 ### tcrds_foreign_key_checks
@@ -831,13 +943,13 @@ mariadb> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pa
 * Run the following query: `SET GLOBAL foreign_key_checks ='ON|OFF';`.
 
 ```
-mariadb> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
+mysql> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
 ```
 
 ## Data Migration
 
 * RDS can be exported as data to or imported from NHN Cloud RDS using mysqldump.
-* The mysqldump utility is provided by default when mariadb is installed.
+* The mysqldump utility is provided by default when mysql is installed.
 
 ### Export using mysqldump
 
@@ -852,7 +964,7 @@ mariadb> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
-#### Exporting in mariadb db out of NHN Cloud RDS
+#### Exporting in mysql db out of NHN Cloud RDS
 
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
@@ -923,18 +1035,34 @@ mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={e
 * Create an account for replication on the NHN Cloud RDS instance.
 * Before setting up a new replication, run the query below to initialize existing replication information that may exist. When you run RESET SLAVE, the existing replication information is initialized.
 
+##### Before 8.4
 ```
 STOP SLAVE;
 
 RESET SLAVE;
 ```
 
+##### After 8.4
+```
+STOP REPLICA;
+
+RESET REPLICA;
+```
+
 * Run the query on the external DB as shown below, using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
+##### Before 8.4
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
 
 START SLAVE;
+```
+
+##### After 8.4
+```
+CHANGE REPLICATION SOURCE TO source_host = '{rds_master_instance_floating_ip}', source_user='{user_id_for_replication}', source_password='{password_forreplication_user}', source_port ={rds_master_instance_port}, source_log_file ='{SOURCE_LOG_FILE}', source_log_pos = {SOURCE_LOG_POS};
+
+START REPLICA;
 ```
 
 * If the source data of the external DB and the NHN Cloud RDS instance are identical, use the STOP SLAVE command to the external DB to terminate the replication
@@ -943,9 +1071,9 @@ START SLAVE;
 
 * You can import external DBs into NHN Cloud RDS using replication.
 * NHN Cloud RDS version has to be the same as or later than the external DB version.
-* Connect the data to an external MariaDB instance to which it is exported.
-* Use the command below to back up data from an external MariaDB instance.
-* To import data from external MariaDB instance (master)
+* Connect the data to an external MySQL instance to which it is exported.
+* Use the command below to back up data from an external MySQL instance.
+* To import data from external MySQL instance (master)
 
 ```
 mysqldump -h{master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --master-data=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
@@ -981,30 +1109,49 @@ replicate-ignore-db=rds_maintenance
 mysql -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} < {local_path_and_file_name}
 ```
 
-* Create an account for replication on an external MariaDB instance.
+* Create an account for replication on an external MySQL instance.
 
+##### Before 8.4
 ```
-mariadb> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
-mariadb> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
+mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
+mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
+```
+
+##### After 8.4
+```
+mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
+mysql> GRANT REPLICATION CLIENT, REPLICATION REPLICA ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
 * Run a query on NHN Cloud RDS as follows,
   using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
+##### Before 8.4
 ```
-mariadb> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
+mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
+```
+
+##### After 8.4
+```
+mysql> call mysql.tcrds_repl_changesource ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','SOURCE_LOG_FILE',SOURCE_LOG_POS );
 ```
 
 * To start replication, execute the following procedure.
 
+##### Before 8.4
 ```
-mariadb> call mysql.tcrds_repl_slave_start;
+mysql> call mysql.tcrds_repl_slave_start;
+```
+
+##### After 8.4
+```
+mysql> call mysql.tcrds_repl_replica_start;
 ```
 
 * When original data of NHN Cloud RDS instance become same as the external database, close replication by using the command as below.
 
 ```
-mariadb> call mysql.tcrds_repl_init();
+mysql> call mysql.tcrds_repl_init();
 ```
 
 ## Delete Registry Account
@@ -1023,11 +1170,11 @@ Navigate to the project where the specified DB instance to be checked.
 
 Those with the migration button next to name are the maintenance targets.
 
-![rds_planed_migration_0](https://static.toastoven.net/prod_rds/mariadb/planned_migration_alarm/image0_en.png)
+![rds_planed_migration_0](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/image0_en.png)
 
 You can view the detailed inspection schedule by moving the mouse pointer over the migration button.
 
-![rds_planed_migration_1](https://static.toastoven.net/prod_rds/mariadb/planned_migration_alarm/image1_en.png)
+![rds_planed_migration_1](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/image1_en.png)
 
 #### 2. Make sure you close any application programs that are running on the DB instance.
 
@@ -1036,13 +1183,13 @@ If it is inevitable to affect the service, please contact NHN Cloud Customer Cen
 
 #### 3. Select a DB instance for maintenance, click migration, and click OK on window asking of migration.
 
-![rds_planed_migration_2](https://static.toastoven.net/prod_rds/mariadb/planned_migration_alarm/image2_en.png)
+![rds_planed_migration_2](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/image2_en.png)
 
 #### 4. Wait for the DB instance migration to finish.
 
 If the DB instance state does not change, do 'refresh'.
 
-![rds_planed_migration_3](https://static.toastoven.net/prod_rds/mariadb/planned_migration_alarm/image3_en.png)
+![rds_planed_migration_3](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/image3_en.png)
 
 No operations can be performed on the DB instance while migration is in progress.
 If the DB instance migration is not completed normally, it is automatically reported to the administrator, and NHN Cloud will contact you.

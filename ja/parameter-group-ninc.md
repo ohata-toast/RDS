@@ -80,3 +80,64 @@ ramSizeByte * 6 / 10
 ### パラメータの変更
 
 コンソールでパラメータグループを選択した後、**パラメータ編集**をクリックしてパラメータを変更できます。変更できないパラメータは、値が一般テキストで表示され、変更できるパラメータは、値を変更できるINPUTが表示されます。編集画面で**変更内容のプレビュー**をクリックすると、変更されたパラメータを確認できる別のポップアップ画面が表示され、**リセット**を押すと、変更する前に戻すことができます。編集モードで変更したすべての値は、**変更を保存**をクリックするとパラメータグループに反映されます。変更されたパラメータグループのDBインスタンスへの反映は[パラメータグループ適用](parameter-group/#apply)項目を参照してください。
+
+## GTIDの制約条件
+
+GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が適用されます。参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
+
+### ENFORCE_GTID_CONSISTENCY
+
+* OFF:制約対象クエリを許可
+* WARN:制約対象クエリを許可するが、warning(警告)が発生
+* ON:制約対象クエリを許可しない
+
+### お客様への影響
+
+> GTIDを利用したレプリケーションでは、以下の制限事項に該当するクエリは使用できなくなります(エラーが発生します)。
+1. 非トランザクションストレージエンジンに関連する更新
+    * MyISAMのような非トランザクションストレージエンジンに関連する更新と、InnoDBのようなトランザクションをサポートするストレージエンジンを使用する更新を、一つのトランザクション内で実行することはできません。
+    * ソースとレプリカで、同じテーブルが異なるストレージエンジンを使用している場合にも問題が発生します。
+    * 非トランザクションテーブルで動作するように定義されたトリガーが、同様の問題を引き起こす可能性があります。
+2. CREATE TABLE ... SELECT構文(8.0.21以前のバージョンの場合)
+3. binlog_formatがSTATEMENTの場合、トランザクション/プロシージャ/関数/トリガーの内部で一時テーブルを作成/削除することはできません。
+
+### お客様に推奨される事前措置
+
+1. 可能な限り、MyISAMのような非トランザクションストレージエンジンは使用しないでください。使用する場合は、InnoDBのようなトランザクションストレージエンジンとの更新を一つのトランザクションで実行しないでください。
+2. CREATE TABLE ... SELECT構文(8.0.21以前のバージョンの場合)は使用しないでください。
+    ```
+   例)  
+    create table tbl_backup as select * from tbl_ori; 
+    を次のように変える必要があります。
+    create table tbl_backup like tbl_ori; insert tbl_backup select * from tbl_ori;
+    ```
+
+## GTID適用手順
+
+### gtid_mode
+
+| 値              | ソースでの動作   | レプリカでの動作  |
+|:---------------|:----------|:----------|
+| OFF            | GTID未適用   | GTID処理不可  |
+| OFF_PERMISSIVE | GTIDも処理可能 | GTIDも処理可能 |
+| ON_PERMISSIVE  | GTID適用    | GTID適用    |
+| ON             | GTIDのみ処理  | GTIDのみ処理  |
+
+### RDSでのGTID適用手順
+
+GTIDを円滑に適用するためには、gtid_mode(GTIDの適用手順)とenforce_gtid_consistency(クエリ適用の制限手順)を、パラメータグループを通じて次の順序で適用する必要があります。
+参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
+
+| 手順 | 対象          | パラメータ設定                         | 動作                                      | 備考                                                                                         |
+|:---|:------------|:--------------------------------|:----------------------------------------|:-------------------------------------------------------------------------------------------|
+| 1  | 全てのDBインスタンス | enforce_gtid_consistency = WARN | GTID適用時に問題となるSQLでwarning(警告)が発生することを確認。 | パラメータグループ変更後に適用。<br>問題が予想されるSQLを警告で確認し、<br>APP側で修正します。<br>警告が発生しなくなるまで継続します。               |
+| 2  | 全てのDBインスタンス | enforce_gtid_consistency = ON   | 問題となるSQLでエラーが発生。                        | パラメータグループ変更後に適用。<br>これ以降、GTIDで問題となるクエリは実行できなくなります。                                         |
+| 3  | 全てのDBインスタンス | gtid_mode = OFF_PERMISSIVE      | レプリカがGTIDを処理できるよう準備。                    | パラメータグループ変更後に適用。<br>全てのレプリカが先にOFF_PERMISSIVEになることで、問題の発生を防ぎます。                             |
+| 4  | 全てのDBインスタンス | gtid_mode = ON_PERMISSIVE       | ソースがGTIDを生成。                            | パラメータグループ変更後に適用。                                                                           |
+| 5  | 全てのDBインスタンス | -                               | 残留ANONYMOUSトランザクションの確認。                 | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>全てのサーバーで結果が0になることが、最低1回は必要です。 |
+| 6  | 全てのDBインスタンス | gtid_mode = ON                  | 全てのトランザクションがGTIDのみを使用。                  | パラメータグループ変更後に適用。                                                                           |
+
+> [注意]
+> * 各手順でパラメータグループを変更した後は、必ず[パラメータグループの変更内容を適用](parameter-group/#apply)を実行する必要があります。
+> * gtid_modeとenforce_gtid_consistencyパラメータを変更する際、DBインスタンスの再起動が必要になる場合があります。
+> * GTIDの適用解除は、適用の逆の手順で進めます。

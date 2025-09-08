@@ -11,9 +11,10 @@ high-availability configuration or back up only increments of data since the pre
 > However, backups can be performed on the master even if it is a high availability DB instance in the following cases.
 > * If a backup cannot be performed due to a candidate master failure.
 > * If you do not have a read replica in a situation where you need a backup taken from a DB instance other than the candidate master for rebuilding the candidate master and you do not have a read replica
-    RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
 
 {{#if (eq engine.lowerCase "mysql")}}
+RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
+
 | MySQL version | XtraBackup version |
 |---------------|--------------------|
 | 5.7.15        | 2.4.28             |
@@ -30,10 +31,15 @@ high-availability configuration or back up only increments of data since the pre
 | 8.0.35        | 8.0.35             |
 | 8.0.36        | 8.0.35             |
 | 8.0.40        | 8.0.35             |
+| 8.0.41        | 8.0.35             |
+| 8.0.42        | 8.0.35             |
+| 8.0.43        | 8.0.35             |
+| 8.4.5         | 8.4.0              |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://docs.percona.com/percona-xtrabackup/8.4/
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.

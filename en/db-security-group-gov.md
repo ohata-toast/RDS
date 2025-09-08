@@ -32,6 +32,9 @@ You can create multiple DB security rules in one DB security group. When you set
 | Remote      | You can set the IP address range. If the direction of the rule is 'outbound', the traffic destination is remote; if 'inbound', the traffic source is remote.<br/>Depending on the direction of the rule, compares whether the traffic source or destination is IP address or range.. | 
 | Description | You can add a description for DB security group rules.                                                                                                                                                                                                                               |
 
+> [Caution]
+> DB port cannot be set to transmit direction.
+
 ### Change DB Security Rules
 
 When changes occur, such as creating, modifying, or deleting DB security rules, the changes are applied sequentially to the DB instances attached with the DB security group. You cannot add new DB security rules to DB security group or modify or delete other DB security rules until they are applied to all DB instances attached with DB security group.

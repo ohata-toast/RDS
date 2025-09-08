@@ -1,4 +1,4 @@
-## Database > RDS for MariaDB > DB Security Group
+## Database > RDS for MySQL > DB Security Group
 
 ## DB Security Group
 
@@ -31,6 +31,9 @@ You can create multiple DB security rules in one DB security group. When you set
 | Port        | Set the port to which rules apply. You can enter a single port or a port range, or select the DB port. When you select the DB port, the DB port of the DB instance is automatically entered.                                                                                         | 
 | Remote      | You can set the IP address range. If the direction of the rule is 'outbound', the traffic destination is remote; if 'inbound', the traffic source is remote.<br/>Depending on the direction of the rule, compares whether the traffic source or destination is IP address or range.. | 
 | Description | You can add a description for DB security group rules.                                                                                                                                                                                                                               |
+
+> [Caution]
+> DB port cannot be set to transmit direction.
 
 ### Change DB Security Rules
 

@@ -1,8 +1,8 @@
-## Database > RDS for MariaDB > Parameter Group
+## Database > RDS for MySQL > Parameter Group
 
 ## Parameter Group
 
-To apply the settings of MariaDB installed on a DB instance, RDS for MariaDB provides the parameter group feature. A parameter group is a set of parameters for which you can set MariaDB. When the service is enabled, the default parameter group is provided for each DB engine version. The default parameter group is provided by `default.{DB Engine Version Name}` and is configured with the recommended default parameter values for each version. Default parameter group can be modified and deleted the same
+To apply the settings of MySQL installed on a DB instance, RDS for MySQL provides the parameter group feature. A parameter group is a set of parameters for which you can set MySQL. When the service is enabled, the default parameter group is provided for each DB engine version. The default parameter group is provided by `default.{DB Engine Version Name}` and is configured with the recommended default parameter values for each version. Default parameter group can be modified and deleted the same
 as other parameter groups.
 
 ### Create Parameter Group
@@ -82,3 +82,4 @@ ramSizeByte * 6 / 10
 
 You can change the parameters by selecting a parameter group from the console and pressing the **Edit Parameters** button. For parameters that cannot be changed, the value appears in plain text, and for parameters that can be changed, the INPUT that can be changed appears. When you press the `Preview Changes` button on the edit screen, a separate pop-up screen will be displayed to view the changed parameters, press the `Reset` button to return to the time before the change. All changes made
 in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#apply).
+
