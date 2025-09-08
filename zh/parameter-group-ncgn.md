@@ -119,27 +119,26 @@ In GTID mode, the following constraints are applied when doing enforce_gtid_cons
 
 ### gtid_mode
 
-| Value | Work from Source | Work from Replica |
-| :--- | :----------- | :----------- |
-| OFF | GTID not applied | GTID processing impossible |
+| Value          | Work from Source              | Work from Replica             |
+|:---------------|:------------------------------|:------------------------------|
+| OFF            | GTID not applied              | GTID processing impossible    |
 | OFF_PERMISSIVE | GTID processing also possible | GTID processing also possible |
-| ON_PERMISSIVE | GTID applied | GTID applied |
-| ON | GTID only processed | GTID only processed |
+| ON_PERMISSIVE  | GTID applied                  | GTID applied                  |
+| ON             | GTID only processed           | GTID only processed           |
 
 ### GTID Application Process in RDS
 
 To apply GTID smoothly, gtid_mode (gtid application stage) and enforce_gtid_consistency (query application restriction stage) must be applied in the following order through parameter groups:
 Note : [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
 
-| Stage | Target | Parameter Setting | Action | Note |
-| :--- | :--- | :--- | :--- | :--- |
-| 1 | Every DB instance | enforce_gtid_consistency = WARN | Check for warnings in problematic SQL when applying GTID. | Change the parameter group and apply.<br>Check for potentially problematic SQL in the warnings <br>and correct it in the APP.<br>Continue until no more warnings are generated. |
-| 2 | Every DB instance | enforce_gtid_consistency = ON | Errors occur in problematic SQL. | Change the parameter group and apply.<br>Problematic queries can no longer be executed with GTID. |
-| 3 | Every DB instance | gtid_mode = OFF_PERMISSIVE | Prepare Replicas to Handle GTIDs | Change the parameter group and apply.<br>All replicas must first become OFF_PERMISSIVE to avoid issues. |
-| 4 | Every DB instance | gtid_mode = ON_PERMISSIVE | Source generates GTID | Change the parameter group and apply. |
-| 5 | Every DB instance | - | Check for Remaining ANONYMOUS Transactions | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>모All servers must return a result of 0 at least once.
- |
-| 6 | Every DB instance | gtid_mode = ON | All transactions use only GTID | Change the parameter group and apply. |
+| Stage | Target            | Parameter Setting               | Action                                                    | Note                                                                                                                                                                            |
+|:------|:------------------|:--------------------------------|:----------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     | Every DB instance | enforce_gtid_consistency = WARN | Check for warnings in problematic SQL when applying GTID. | Change the parameter group and apply.<br>Check for potentially problematic SQL in the warnings <br>and correct it in the APP.<br>Continue until no more warnings are generated. |
+| 2     | Every DB instance | enforce_gtid_consistency = ON   | Errors occur in problematic SQL.                          | Change the parameter group and apply.<br>Problematic queries can no longer be executed with GTID.                                                                               |
+| 3     | Every DB instance | gtid_mode = OFF_PERMISSIVE      | Prepare Replicas to Handle GTIDs                          | Change the parameter group and apply.<br>All replicas must first become OFF_PERMISSIVE to avoid issues.                                                                         |
+| 4     | Every DB instance | gtid_mode = ON_PERMISSIVE       | Source generates GTID                                     | Change the parameter group and apply.                                                                                                                                           |
+| 5     | Every DB instance | -                               | Check for Remaining ANONYMOUS Transactions                | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>모All servers must return a result of 0 at least once.                                                              |
+| 6     | Every DB instance | gtid_mode = ON                  | All transactions use only GTID                            | Change the parameter group and apply.                                                                                                                                           |
 
 > [Warning]
 > * After changing the parameter group at each step, you must always perform [Apply parameter group changes] (parameter-group/#apply).
