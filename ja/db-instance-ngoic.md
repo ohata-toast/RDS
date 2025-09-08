@@ -13,8 +13,8 @@ DBインスタンス名は下記のような制約事項があります。
 * DBインスタンス名はリージョンごとに一意でなければなりません。
 * DBインスタンス名は1～100文字の間の英字、数字、一部の記号(-, _, .)のみ使用でき、最初の文字は英字のみ使用できます。
 
-> [참고]
-> 2025년 7월 점검 이후부터 고가용성 DB 인스턴스의 경우 마스터뿐만 아니라 예비 마스터의 이름도 입력하도록 변경되었습니다. 예비 마스터의 이름도 마스터와 동일한 제약사항을 가지며 마스터와 예비 마스터의 이름은 서로 달라야 합니다. 점검 이전 생성한 DB 인스턴스의 경우 예비 마스터의 이름은 마스터와 동일합니다.
+> [参考]
+> 2025年7月のメンテナンス以降、高可用性DBインスタンスの場合、マスターだけでなくスタンバイマスターの名前も入力するよう変更されました。スタンバイマスターの名前もマスターと同じ制約事項を持ち、マスターとスタンバイマスターの名前は互いに異なる必要があります。メンテナンス以前に作成したDBインスタンスの場合、スタンバイマスターの名前はマスターと同じです。
 
 ## DBインスタンス作成
 
@@ -30,26 +30,31 @@ NHN Cloudは、物理的なハードウェアの問題で生じる障害に備�
 ### DBエンジン
 
 以下に明示されたバージョンを使用できます。
-| バージョン                | 備考                                                   |
-|----------------------|------------------------------------------------------|
-| <strong>8.0</strong> |                                                      |
-| MySQL 8.0.40         |                                                      |
-| MySQL 8.0.36         |                                                      |
-| MySQL 8.0.35         |                                                      |
-| MySQL 8.0.34         |                                                      | 
-| MySQL 8.0.33         |                                                      |
-| MySQL 8.0.32         |                                                      | 
-| MySQL 8.0.28         |                                                      | 
-| MySQL 8.0.23         |                                                      |
-| MySQL 8.0.18         |                                                      |
-| <strong>5.7</strong> |                                                      |
-| MySQL 5.7.37         |                                                      |
-| MySQL 5.7.33         | 外部のバックアップでDBインスタンスを復元できません。                          |
-| MySQL 5.7.26         |                                                      |
-| MySQL 5.7.19         |                                                      |
-| MySQL 5.7.15         |                                                      |
-| <strong>5.6</strong> |                                                      |
-| MySQL 5.6.33         | 新規DBインスタンスを作成できません。既存DBインスタンスのリードレプリカ作成、復元のみサポートします。 |
+| バージョン        | 備考                                                   |
+|--------------|------------------------------------------------------|
+| **8.4**      |                                                      |
+| MySQL 8.4.5  |                                                      |
+| **8.0**      |                                                      |
+| MySQL 8.0.43 |                                                      |
+| MySQL 8.0.42 |                                                      |
+| MySQL 8.0.41 |                                                      |
+| MySQL 8.0.40 |                                                      |
+| MySQL 8.0.36 |                                                      |
+| MySQL 8.0.35 |                                                      |
+| MySQL 8.0.34 |                                                      | 
+| MySQL 8.0.33 |                                                      |
+| MySQL 8.0.32 |                                                      | 
+| MySQL 8.0.28 |                                                      | 
+| MySQL 8.0.23 |                                                      |
+| MySQL 8.0.18 |                                                      |
+| **5.7**      |                                                      |
+| MySQL 5.7.37 |                                                      |
+| MySQL 5.7.33 | 外部のバックアップでDBインスタンスを復元できません。                          |
+| MySQL 5.7.26 |                                                      |
+| MySQL 5.7.19 |                                                      |
+| MySQL 5.7.15 |                                                      |
+| **5.6**      |                                                      |
+| MySQL 5.6.33 | 新規DBインスタンスを作成できません。既存DBインスタンスのリードレプリカ作成、復元のみサポートします。 |
 
 DBエンジンの場合、作成後、コンソールの修正機能でバージョンアップが可能です。
 DBエンジンの詳細は[DBエンジン](db-engine/)で確認できます。
@@ -188,9 +193,14 @@ Floating IPを作成した場合、外部ドメインを追加で発行します
 
 ### Virtual IP
 
-2025년 5월 점검 이후 생성한 DB 인스턴스는 VIP(Virtual IP)를 지원합니다. VIP는 사용자 VPC 서브넷에 속한 IP 주소를 가리킵니다. 고가용성 DB 인스턴스의 경우 VIP는 항상 현재 시점의 마스터를 가리킵니다. 응용 프로그램의 접속 정보는 반드시 VIP를 직접 사용하거나 VIP를 가리키는 내부 (VIP) 도메인을 사용해야 합니다.
 
-2025년 5월 이전에 생성한 DB 인스턴스의 경우 웹 콘솔의 `VIP 추가` 메뉴를 클릭하여 VIP를 추가할 수 있습니다. VIP를 추가하면 기존 내부 도메인과 내부 (VIP) 도메인이 함께 제공됩니다. 단, 장애 조치가 발생하면 VIP는 예비 마스터를 가리키게 되지만 내부 도메인의 경우 때에 따라 예비 마스터를 가리키지 않을 수 있습니다. 따라서 VIP를 추가하면 반드시 응용 프로그램의 접속 정보를 VIP 혹인 내부 (VIP) 도메인을 사용하도록 수정해야 합니다.
+2025年5月のメンテナンス以降に作成したDBインスタンスは、VIP(Virtual IP)をサポートします。VIPは、ユーザーのVPCサブネットに属するIPアドレスを指します。高可用性DBインスタンスの場合、VIPは常に現在のマスターを指します。アプリケーションの接続情報は、必ずVIPを直接使用するか、VIPを指す内部(VIP)ドメインを使用しなければなりません。
+
+2025年5月以前に作成したDBインスタンスの場合、Webコンソールの`VIP追加`メニューをクリックしてVIPを追加できます。VIPを追加すると、既存の内部ドメインと内部(VIP)ドメインが併せて提供されます。ただし、フェイルオーバーが発生した場合、VIPはスタンバイマスターを指すようになりますが、内部ドメインは状況によってはスタンバイマスターを指さないことがあります。そのため、VIPを追加した場合は、必ずアプリケーションの接続情報をVIPまたは内部(VIP)ドメインを使用するよう修正する必要があります。
+
+> [참고]
+> 2025년 9월 점검 이후 일본(도쿄) 리전 및 공공 일부 프로젝트에서는 더 이상 VIP를 지원하지 않습니다. (다른 서브넷에 속한 인스턴스 또는 DB 인스턴스에서 VIP로 접속할 수 없습니다.)
+> VIP를 지원하지 않는 환경에서는 2025년 5월 점검 이후 생성된 VIP는 삭제되지 않지만, 더 이상 콘솔에서 확인할 수 없습니다.
 
 ### ログ
 
@@ -768,7 +778,7 @@ mysql> CALL mysql.tcrds_process_kill(processlist_id );
 mysql> CALL mysql.tcrds_current_lock();
 ```
 
-### tcrds_repl_changemaster
+### tcrds_repl_changemaster (8.4以前)
 
 * 複製を利用して外部MySQL DBをNHN Cloud RDSにインポートする時使います。
 * NHN Cloud RDSの複製構成は、コンソールの**複製の作成**で行うことができます。
@@ -791,6 +801,27 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 
 > [注意]複製用アカウントが複製対象(Master) MySQLに作成されている必要があります。
 
+### tcrds_repl_changesource (8.4以降)
+
+* レプリケーションを利用して外部のMySQL DBをNHN Cloud RDSにインポートする際に使用します。
+* NHN Cloud RDSのレプリケーション構成は、コンソールの**レプリカ作成**で行うことができます。
+
+```
+mysql> CALL mysql.tcrds_repl_changesource (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, SOURCE_LOG_FILE, SOURCE_LOG_POS);
+```
+
+* パラメータの説明
+    * master_instance_ip:レプリケーション元(マスター)サーバーのIP
+    * master_instance_port:レプリケーション元(マスター)サーバーのMySQLポート
+    * user_id_for_replication:レプリケーション元(マスター)サーバーのMySQLに接続するためのレプリケーション用アカウント
+    * password_for_replication_user:レプリケーション用アカウントのパスワード
+    * SOURCE_LOG_FILE:レプリケーション元(マスター)のバイナリログファイル名
+    * SOURCE_LOG_POS:レプリケーション元(マスター)のバイナリログポジション
+
+```
+ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
+```
+
 ### tcrds_repl_init
 
 * MySQL複製情報を初期化します。
@@ -799,7 +830,7 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 mysql> CALL mysql.tcrds_repl_init();
 ```
 
-### tcrds_repl_slave_stop
+### tcrds_repl_slave_stop (8.4以前)
 
 * MySQLの複製を止めます。
 
@@ -807,7 +838,15 @@ mysql> CALL mysql.tcrds_repl_init();
 mysql> CALL mysql.tcrds_repl_slave_stop();
 ```
 
-### tcrds_repl_slave_start
+### tcrds_repl_replica_stop (8.4以降)
+
+* MySQLの複製を止めます。
+
+```
+mysql> CALL mysql.tcrds_repl_replica_stop();
+```
+
+### tcrds_repl_slave_start (8.4以前)
 
 * MySQLの複製を開始します。
 
@@ -816,16 +855,27 @@ mysql> CALL mysql.tcrds_repl_slave_start();
 
 ```
 
+### tcrds_repl_replica_start (8.4以降)
+
+* MySQLの複製を開始します。
+
+```
+mysql> CALL mysql.tcrds_repl_replica_start();
+
+```
+
 ### tcrds_repl_skip_repl_error
 
-* SQL_SLAVE_SKIP_COUNTER=1を実行します。次のようなDuplicate keyエラー発生時、tcrds_repl_skip_repl_errorプロシージャを実行すると、複製エラーを解決できます。
+* 以下のようなDuplicate keyエラーが発生した場合、tcrds_repl_skip_repl_errorプロシージャを実行するとレプリケーションエラーを解決できます。
+    * 8.4以前: SQL_SLAVE_SKIP_COUNTER=1を実行します。
+    * 8.4以降: `SQL_REPLICA_SKIP_COUNTER=1`を実行します。
 * `MySQL error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
 mysql> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
-### tcrds_repl_next_changemaster
+### tcrds_repl_next_changemaster (8.4以前)
 
 * Masterの次のバイナリ(binary log)ログを読めるように複製情報を変更します。
 * 次のような複製エラーが発生した場合、tcrds_repl_next_changemasterプロシージャを実行すると、複製エラーを解決できます。
@@ -834,6 +884,17 @@ mysql> CALL mysql.tcrds_repl_skip_repl_error();
 
 ```
 mysql> CALL mysql.tcrds_repl_next_changemaster();
+```
+
+### tcrds_repl_next_changesource (8.4以降)
+
+* マスターの次のバイナリログ(binary log)を読み取れるようにレプリケーション情報を変更します。
+* 以下のようなレプリケーションエラーが発生した場合、`tcrds_repl_next_changesource`プロシージャを実行するとエラーを解決できます。
+
+例) MySQL error code 1236 (ER_SOURCE_FATAL_ERROR_READING_BINLOG): Got fatal error from source when reading data from binary log
+
+```
+mysql> CALL mysql.tcrds_repl_next_changesource();
 ```
 
 ### tcrds_innodb_monitor_reset
@@ -957,18 +1018,34 @@ mysql -h{external_db_host} -u{exteranl_db_id} -p{external_db_password} --port={e
 * NHN Cloud RDSインスタンスで複製に使用するアカウントを作成します。
 * 新しく複製を設定する前に、もしかしたら存在するかもしれない既存のレプリケーション情報を初期化するために下記のクエリを実行します。この時、RESET SLAVEを実行すると、既存の複製情報が初期化されます。
 
+##### 8.4以前
 ```
 STOP SLAVE;
 
 RESET SLAVE;
 ```
 
+##### 8.4以降
+```
+STOP REPLICA;
+
+RESET REPLICA;
+```
+
 * 複製に使うアカウント情報と、先ほど別に記録しておいたMASTER_LOG_FILEとMASTER_LOG_POSを使って外部DBに下記のようにクエリを実行します。
 
+##### 8.4以前
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
 
 START SLAVE;
+```
+
+##### 8.4以降
+```
+CHANGE REPLICATION SOURCE TO source_host = '{rds_master_instance_floating_ip}', source_user='{user_id_for_replication}', source_password='{password_forreplication_user}', source_port ={rds_master_instance_port}, source_log_file ='{SOURCE_LOG_FILE}', source_log_pos = {SOURCE_LOG_POS};
+
+START REPLICA;
 ```
 
 * 外部DBとNHN Cloud RDSインスタンスの原本データが同じになったら、外部DBにSTOP SLAVEコマンドを利用して複製を終了します。
@@ -1016,21 +1093,40 @@ mysql -h{rds_master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_po
 
 * 外部MySQLインスタンスで複製に使うアカウントを作成します。
 
+##### 8.4以前
 ```
 mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
 mysql> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
+##### 8.4以降
+```
+mysql> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
+mysql> GRANT REPLICATION CLIENT, REPLICATION REPLICA ON *.* TO 'user_id_for_replication'@'{external_db_host}';
+```
+
 * レプリケーションに使うアカウント情報と先に記録しておいたMASTER_LOG_FILE, MASTER_LOG_POSを利用してNHN Cloud RDSに次のようにクエリを実行します。
 
+##### 8.4以前
 ```
 mysql> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
 ```
 
+##### 8.4以降
+```
+mysql> call mysql.tcrds_repl_changesource ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','SOURCE_LOG_FILE',SOURCE_LOG_POS );
+```
+
 * レプリケーションを開始するには下記のプロシージャを実行します。
 
+##### 8.4以前
 ```
 mysql> call mysql.tcrds_repl_slave_start;
+```
+
+##### 8.4以降
+```
+mysql> call mysql.tcrds_repl_replica_start;
 ```
 
 * 外部DBとNHN Cloud RDSインスタンスの元データが同じになったら、下記のコマンドを利用して複製を終了します。

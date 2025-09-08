@@ -1,8 +1,10 @@
-## Database > RDS for MariaDB > API Guide
+## Database > RDS for MySQL > API Guide
 
 | Region | Endpoint |
 |--------|----------|
-| Korea (Pangyo) region | https://kr1-rds-mariadb.api.gov-nhncloudservice.com |
+| Korea (Pangyo) region | https://kr1-rds-mysql.api.nhncloudservice.com |
+| Korea (Pyeongchon) region | https://kr2-rds-mysql.api.nhncloudservice.com |
+| Japan region | https://jp1-rds-mysql.api.nhncloudservice.com |
 
 ## Authentication and Authorization
 
@@ -11,14 +13,14 @@ The created Key must be included in the request Header.
 
 | Name                       | Type   | Format | Required | Description                                                              |
 |----------------------------|--------|--------|----------|--------------------------------------------------------------------------|
-| X-TC-APP-KEY               | Header | String | O        | Appkey of RDS for MariaDB or integrated Appkey for project |
+| X-TC-APP-KEY               | Header | String | O        | Appkey of RDS for MySQL or integrated Appkey for project |
 | X-TC-AUTHENTICATION-ID     | Header | String | O        | User Access Key ID in API Security Settings menu                         |
 | X-TC-AUTHENTICATION-SECRET | Header | String | O        | Secret Access Key in API Security Settings menu                          |
 
-In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for MariaDB ADMIN` and `RDS for MariaDB VIEWER`.
+In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for MySQL ADMIN` and `RDS for MySQL VIEWER`.
 
-* `RDS for MariaDB ADMIN permission holders` can use all available features as before.
-* `RDS for MariaDB MEMBER permission holders` can use read-only feature.
+* `RDS for MySQL ADMIN permission holders` can use all available features as before.
+* `RDS for MySQL MEMBER permission holders` can use read-only feature.
     * Cannot use any features aimed at DB instances or create, modify, or delete any DB instance.
     * But, notification group and user group-related features are available.
 
@@ -55,13 +57,23 @@ The API responds with "200 OK" to all API requests. For more information on the 
 ## DB engine type
 
 | DB engine type | Available for creation | Available for restoration from OBS |
-|-----------------|----------|------------------|
-| MARIADB_V10330  | O        | O                |
-| MARIADB_V10611  | O        | O                |
-| MARIADB_V10612  | O        | O                |
-| MARIADB_V10616  | O        | O                |
-| MARIADB_V101107 | O        | O                |
-| MARIADB_V101108 | O        | O                |
+| -------- | -------- | ---------------- |
+| MYSQL_V5633 | X | X |
+| MYSQL_V5715 | O | O |
+| MYSQL_V5719 | O | O |
+| MYSQL_V5726 | O | O |
+| MYSQL_V5731 | X | X |
+| MYSQL_V5733 | O | X |
+| MYSQL_V5737 | O | O |
+| MYSQL_V8018 | O | O |
+| MYSQL_V8023 | O | O |
+| MYSQL_V8028 | O | O |
+| MYSQL_V8032 | O | O |
+| MYSQL_V8033 | O | O |
+| MYSQL_V8034 | O | O |
+| MYSQL_V8035 | O | O |
+| MYSQL_V8036 | O | O |
+| MYSQL_V8040 | O | O |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -83,7 +95,7 @@ This API does not require a request body.
 | Name    | Type | Format | Description |
 |---------|------|--------|-------------|
 | regions | Body | Array  | Region list |
-| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) |
+| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region<br/>`KR2`: Korea (Pyeongchon) Region<br/>`JP1`: Japan (Tokyo) Region |
 | regions.isEnabled  | Body | Boolean | Whether to enable a region                                                                 |
 
 <details><summary>Example</summary>
@@ -99,6 +111,14 @@ This API does not require a request body.
     "regions": [
         {
             "regionCode": "KR1",
+            "isEnabled": true
+        },
+        {
+            "regionCode": "KR2",
+            "isEnabled": true
+        },
+        {
+            "regionCode": "JP1",
             "isEnabled": true
         }
     ]
@@ -286,8 +306,8 @@ This API does not require a request body.
     },
     "dbVersions": [
         {
-            "dbVersion": "MARIADB_V10330",
-            "dbVersionName": "Maria DB 10.3.30",
+            "dbVersion": "MYSQL_V8028",
+            "dbVersionName": "MySQL 8.0.28",
             "restorableFromObs": true
         }
     ]
@@ -643,7 +663,7 @@ This API does not require a request body.
             "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
             "dbInstanceName": "db-instance",
             "description": null,
-            "dbVersion": "MARIADB_V10330",
+            "dbVersion": "MYSQL_V8028",
             "dbPort": 10000,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -713,7 +733,7 @@ This API does not require a request body.
     "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
     "dbInstanceName": "db-instance",
     "description": null,
-    "dbVersion": "MARIADB_V10330",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -762,6 +782,8 @@ POST /v3.0/db-instances
 | pingInterval                             | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                                                                                                                                                     |
 | useDefaultNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                  |
 | useDeletionProtection                    | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                                                                                                                                                                                  |
+| authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
+| tlsOption                                | Body | Enum    | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                                              |
 | network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                         | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
 | network.usePublicAccess                  | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                                                                                                                                                  |
@@ -773,6 +795,7 @@ POST /v3.0/db-instances
 | backup.backupPeriod                      | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
 | backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
+| backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                   | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -786,7 +809,7 @@ POST /v3.0/db-instances
     "dbInstanceName": "db-instance",
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbVersion": "MARIADB_V10330",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbUserName": "db-user",
     "dbPassword": "password",
@@ -841,6 +864,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbInstanceCandidateName  | Body | String  | X        | Candidate name to identify DB instances                                                                     |
 | description        | Body | String  | X        | Additional information on DB instances                                                                            |
 | dbPort             | Body | Number  | X        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                  |
+| dbVersion          | Body | Enum    | X        | DB engine type                                                                                                    |
+| useDummy           | Body | Boolean | X        | Whether to use dummies when upgrading the DB version of a single DB instance<br/>Default: `false`                 |
 | dbFlavorId         | Body | UUID    | X        | Identifier of DB instance specifications                                                                          |
 | parameterGroupId   | Body | UUID    | X        | Parameter group identifier                                                                                        |
 | dbSecurityGroupIds | Body | Array   | X        | DB security group identifiers                                                                                     |
@@ -1086,6 +1111,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod                      | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
 | backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
+| backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region<br/>- Default: Original DB instance value                                                                                                                                    |
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                 |
 | backup.backupSchedules                   | Body | Array   | X        | Scheduled auto backup list                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | X        | Backup started time<br/>- Example: `00:00:00`<br/>- Default: Original DB instance value                                                                                                                                                                                                                             |
@@ -1199,7 +1225,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 				"backupStatus": "COMPLETED",
 				"dbInstanceId": "dba1be25-9429-4589-9716-7fb6daad7cb9",
 				"dbInstanceName": "original-db-instance-name",
-				"dbVersion": "MARIADB_V10330",
+				"dbVersion": "MYSQL_V8028",
 				"backupType": "MANUAL",
 				"backupSize": 8299904,
 				"useBackupLock": true,
@@ -1311,6 +1337,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                |
 | backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                           |
+| backup.replicationRegion                            | Body | Enum    | X        | Backup replication region<br><ul><li>- `KR1`: Korea (Pangyo) Region</li><li>- `KR2`: Korea (Pyeongchon) Region</li><li>- `JP1`: Japan (Tokyo) Region</li></ul>                                                                                                                                                   |
 | backup.useBackupLock                                | Body | Boolean | X        | Whether to use table lock<br><ul><li>Default: `true`</li></ul>                                                                                                                                                                                                                                                   |
 | backup.backupSchedules                              | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                                                       |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O        | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                    |
@@ -1523,6 +1550,7 @@ POST /v3.0/db-instances/restore-from-obs
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                              |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                             |
 | backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                        |
+| backup.replicationRegion                            | Body | Enum    | X        | Backup replication region<br><ul><li>- `KR1`: Korea (Pangyo) Region</li><li>- `KR2`: Korea (Pyeongchon) Region</li><li>- `JP1`: Japan (Tokyo) Region</li></ul>                                                                                                                                                |
 | backup.useBackupLock                                | Body | Boolean | X        | Whether to use table lock<br><ul><li>Default: `true`</li></ul>                                                                                                                                                                                                                                                |
 | backup.backupSchedules                              | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                                                    |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O        | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                 |
@@ -1539,7 +1567,7 @@ POST /v3.0/db-instances/restore-from-obs
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
     "dbPort": 10000,
-    "dbVersion": "MARIADB_V10330",
+    "dbVersion": "MYSQL_V8028",
     "dbUserName": "db-user",
     "dbPassword": "password",
     "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
@@ -1869,6 +1897,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                      | Body | Number  | X        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
 | backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
+| replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | useBackupLock                     | Body | Boolean | X        | Whether to use table lock                                                                                                                                                                                                                                                 |
 | backupSchedules                   | Body | Array   | X        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -1947,7 +1976,7 @@ This API does not require a request body.
     },
     "endPoints": [
         {
-            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mariadb.rds.nhncloudservice.com",
+            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
             "ipAddress": "192.168.0.2",
             "endPointType": "INTERNAL"
         }
@@ -2005,6 +2034,8 @@ This API does not require a request body.
 | dbUsers.host                 | Body | String   | DB user account host name                                                                                                                                                |
 | dbUsers.authorityType        | Body | Enum     | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
 | dbUsers.dbUserStatus         | Body | Enum     | DB user current status<br/>- `STABLE`: Created<br/>(CREATING: Creating,<br/>- `UPDATING`: Modifying<br/>DELETING: Deleting,<br/>- `DELETED`: Deleted                     |
+| dbUsers.authenticationPlugin | Body | Enum     | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 | dbUsers.createdYmdt          | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                       |
 | dbUsers.updatedYmdt          | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
 
@@ -2025,6 +2056,8 @@ This API does not require a request body.
             "host": "%",
             "authorityType": "DDL",
             "dbUserStatus": "STABLE",
+            "authenticationPlugin": "NATIVE",
+            "tlsOption": "NONE",
             "createdYmdt": "2023-03-17T14:02:29+09:00",
             "updatedYmdt": "2023-03-17T14:02:31+09:00"
         }
@@ -2052,6 +2085,11 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                                                                            |
 | host                 | Body | String | O        | DB user account host name<br/>- Example: `1.1.1.%`                                                                                                                       |
 | authorityType        | Body | Enum   | O        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
+
+> [Caution]
+> Only DB instances whose `supportAuthenticationPlugin` value is true can set the values of `authenticationPlugin` and `tlsOption`.
 
 <details><summary>Example</summary>
 <p>
@@ -2061,7 +2099,9 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
     "dbUserName": "db-user",
     "dbPassword": "password",
     "host": "1.1.1.%",
-    "authorityType": "CRUD"
+    "authorityType": "CRUD",
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE"
 }
 ```
 
@@ -2090,6 +2130,12 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O        | DB user identifier                                                                                                                                                       |
 | dbPassword           | Body | String | X        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                                                                            |
 | authorityType        | Body | Enum   | X        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
+
+> [Caution]
+> Only DB instances whose `supportAuthenticationPlugin` value is true can modify the values of `authenticationPlugin` and `tlsOption`.
+> The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
 
 <details><summary>Example</summary>
 <p>
@@ -2364,6 +2410,7 @@ This API does not require a request body.
 | backups.backupStatus | Body | Enum     | Backup current status                               |
 | backups.dbInstanceId | Body | UUID     | Original DB instance identifier                     |
 | backups.dbVersion    | Body | Enum     | DB engine type                                      |
+| backups.utilVersion  | Body | String   | Version of the xtrabackup utility used for backup   |
 | backups.backupType   | Body | Enum     | Backup type                                         |
 | backups.backupSize   | Body | Number   | Backup size (Byte)                                  |
 | createdYmdt          | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)  |
@@ -2386,7 +2433,8 @@ This API does not require a request body.
             "backupName": "backup",
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-            "dbVersion": "MARIADB_V10330",
+            "dbVersion": "MYSQL_V8028",
+            "utilVersion": "8.0.28",
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",
@@ -2476,6 +2524,7 @@ POST /v3.0/backups/{backupId}/restore
 | backup.backupPeriod                      | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
 | backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
+| backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                   | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -2706,6 +2755,9 @@ POST /v3.0/db-security-groups
 | rules.port.minPort  | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | rules.port.maxPort  | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 
+> [Caution]
+> DB port cannot be set to transmit direction.
+
 <details><summary>Example</summary>
 <p>
 
@@ -2845,6 +2897,9 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 
+> [Caution]
+> DB port cannot be set to transmit direction.
+
 <details><summary>Example</summary>
 <p>
 
@@ -2892,6 +2947,9 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.minPort      | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
+
+> [Caution]
+> DB port cannot be set to transmit direction.
 
 <details><summary>Example</summary>
 <p>
@@ -2985,7 +3043,7 @@ This API does not require a request body.
             "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
             "parameterGroupName": "parameter-group",
             "description": null,
-            "dbVersion": "MARIADB_V10330",
+            "dbVersion": "MYSQL_V8028",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-02-31T15:28:17+09:00",
             "updatedYmdt": "2023-02-31T15:28:17+09:00"
@@ -3049,7 +3107,7 @@ This API does not require a request body.
     "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
     "parameterGroupName": "parameter-group",
     "description": null,
-    "dbVersion": "MARIADB_V10330",
+    "dbVersion": "MYSQL_V8028",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
@@ -3095,7 +3153,7 @@ POST /v3.0/parameter-groups
 ```json
 {
     "parameterGroupName": "parameter-group",
-    "dbVersion": "MARIADB_V10330"
+    "dbVersion": "MYSQL_V8028"
 }
 ```
 

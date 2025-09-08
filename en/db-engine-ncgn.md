@@ -10,7 +10,12 @@ The versions specified below are available.
 
 | Version              | Note                                                                                                              |
 |----------------------|-------------------------------------------------------------------------------------------------------------------|
+| <strong>8.4</strong> |                                                                                                                   |
+| MySQL 8.4.5          |                                                                                                                   |
 | <strong>8.0</strong> |                                                                                                                   |
+| MySQL 8.0.43         |                                                                                                                   |
+| MySQL 8.0.42         |                                                                                                                   |
+| MySQL 8.0.41         |                                                                                                                   |
 | MySQL 8.0.40         |                                                                                                                   |
 | MySQL 8.0.36         |                                                                                                                   |
 | MySQL 8.0.35         |                                                                                                                   |
@@ -75,6 +80,17 @@ Also, you must check items that have been removed or changed in 8.0.
 - [Features Removed in MySQL8.0](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
 
+#### Pre-check for Upgrading MySQL 8.0 to MySQL 8.4
+
+To upgrade to MySQL 8.4, you must have already upgraded to MySQL 8.0. When upgrading a major version of the DB engine from `8.0` to `8.4`, a pre-check process is required for some items that are expected to cause problems.
+
+You can check the items detected by the upgrade checker through `DB Engine Upgrade Pre-Check` in the console, and any items detected as errors must be addressed. For more details, please refer to the MySQL hompage.
+- [Upgrade Checker Guide](https://dev.mysql.com/doc/mysql-shell/8.4/en/mysql-shell-utilities-upgrade.html#mysql-utilities-upgrade-checks)
+
+Also, you must check what has been removed or changed in 8.4.
+- [Guide to Incompatible Changes](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
+- [Guide to Features Removed in 8.4](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
+
 
 #### Upgrading the DB Engine Version Using a Dummy DB Instance 
 
@@ -107,7 +123,12 @@ This plugin may not be supported by all versions of MySQL and will be unavailabl
 #### Supported Versions
 | MySQL version        | Whether to support server audit plugins |
 |----------------------|-----------------------------------------|
+| <strong>8.4</strong> |                                         |
+| MySQL 8.4.5          | O                                       |
 | <strong>8.0</strong> |                                         |
+| MySQL 8.0.43         | O                                       |
+| MySQL 8.0.42         | O                                       |
+| MySQL 8.0.41         | O                                       |
 | MySQL 8.0.40         | O                                       |
 | MySQL 8.0.36         | O                                       |
 | MySQL 8.0.35         | O                                       |

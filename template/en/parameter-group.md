@@ -1,8 +1,8 @@
-## Database > RDS for {{engine.pascalCase}} > Parameter Group
+## Database > RDS for MySQL > Parameter Group
 
 ## Parameter Group
 
-To apply the settings of {{engine.pascalCase}} installed on a DB instance, RDS for {{engine.pascalCase}} provides the parameter group feature. A parameter group is a set of parameters for which you can set {{engine.pascalCase}}. When the service is enabled, the default parameter group is provided for each DB engine version. The default parameter group is provided by `default.{DB Engine Version Name}` and is configured with the recommended default parameter values for each version. Default parameter group can be modified and deleted the same
+To apply the settings of MySQL installed on a DB instance, RDS for MySQL provides the parameter group feature. A parameter group is a set of parameters for which you can set MySQL. When the service is enabled, the default parameter group is provided for each DB engine version. The default parameter group is provided by `default.{DB Engine Version Name}` and is configured with the recommended default parameter values for each version. Default parameter group can be modified and deleted the same
 as other parameter groups.
 
 ### Create Parameter Group
@@ -82,3 +82,67 @@ ramSizeByte * 6 / 10
 
 You can change the parameters by selecting a parameter group from the console and pressing the **Edit Parameters** button. For parameters that cannot be changed, the value appears in plain text, and for parameters that can be changed, the INPUT that can be changed appears. When you press the `Preview Changes` button on the edit screen, a separate pop-up screen will be displayed to view the changed parameters, press the `Reset` button to return to the time before the change. All changes made
 in edit mode are reflected in the parameter group by pressing the `Save Changes` button. For information about reflecting DB instances of changed parameter groups, refer to the [Apply Parameter Groups](parameter-group/#apply).
+
+{{#if (eq engine.lowerCase "mysql")}}
+## GTID Constraints
+
+In GTID mode, the following constraints are applied when doing enforce_gtid_consistency = ON. Note ll: [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
+
+### ENFORCE_GTID_CONSISTENCY
+
+* OFF : allow query for constraint targets
+* WARN : allow query for constraint targets but occur warning
+* ON : not allow query for constraint targets
+
+### Customer Impact
+
+> Queries that fall under the following limitations of replication using GTID will not be allowed (an error will occur):
+
+1. Updates related to non-transactional storage engines
+    * Updates involving a non-transactional storage engine, such as MyISAM, cannot be performed in the same transaction as updates using a transactional storage engine, such as INNODB.
+    * Issues also occur when the source and replica have the same table but use different storage engines.
+    * Triggers defined to operate on non-transactional tables can cause the same type of issue.
+2. CREATE TABLE ... SELECT syntax (for versions prior to 8.0.21)
+3. When binlog_format is STATEMENT, temporary tables cannot be created/dropped inside transactions/procedures/functions/triggers.
+
+### Customer Recommended Precautions
+
+1. If you do use a transactional storage engine like INNODB, do not perform updates in one transaction. If you do use a transactional storage engine like INNODB, do not perform updates in one transaction.
+2. Do not use the CREATE TABLE ... SELECT statement (for versions prior to 8.0.21).
+    ```
+    e.g.  
+    create table tbl_backup as select * from tbl_ori; 
+    should be changed as below:
+    create table tbl_backup like tbl_ori; insert tbl_backup select * from tbl_ori;
+    ```
+
+## GTID Application Stage
+
+### gtid_mode
+
+| Value          | Work from Source              | Work from Replica             |
+|:---------------|:------------------------------|:------------------------------|
+| OFF            | GTID not applied              | GTID processing impossible    |
+| OFF_PERMISSIVE | GTID processing also possible | GTID processing also possible |
+| ON_PERMISSIVE  | GTID applied                  | GTID applied                  |
+| ON             | GTID only processed           | GTID only processed           |
+
+### GTID Application Process in RDS
+
+To apply GTID smoothly, gtid_mode (gtid application stage) and enforce_gtid_consistency (query application restriction stage) must be applied in the following order through parameter groups:
+Note : [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
+
+| Stage | Target            | Parameter Setting               | Action                                                    | Note                                                                                                                                                                            |
+|:------|:------------------|:--------------------------------|:----------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     | Every DB instance | enforce_gtid_consistency = WARN | Check for warnings in problematic SQL when applying GTID. | Change the parameter group and apply.<br>Check for potentially problematic SQL in the warnings <br>and correct it in the APP.<br>Continue until no more warnings are generated. |
+| 2     | Every DB instance | enforce_gtid_consistency = ON   | Errors occur in problematic SQL.                          | Change the parameter group and apply.<br>Problematic queries can no longer be executed with GTID.                                                                               |
+| 3     | Every DB instance | gtid_mode = OFF_PERMISSIVE      | Prepare Replicas to Handle GTIDs                          | Change the parameter group and apply.<br>All replicas must first become OFF_PERMISSIVE to avoid issues.                                                                         |
+| 4     | Every DB instance | gtid_mode = ON_PERMISSIVE       | Source generates GTID                                     | Change the parameter group and apply.                                                                                                                                           |
+| 5     | Every DB instance | -                               | Check for Remaining ANONYMOUS Transactions                | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>모All servers must return a result of 0 at least once.                                                              |
+| 6     | Every DB instance | gtid_mode = ON                  | All transactions use only GTID                            | Change the parameter group and apply.                                                                                                                                           |
+
+> [Warning]
+> * After changing the parameter group at each step, you must always perform [Apply parameter group changes] (parameter-group/#apply).
+> * Changing the gtid_mode and enforce_gtid_consistency parameters may require a DB instance restart.
+> * Disabling GTIDs is done in the reverse order of applying them.
+{{/if}}
