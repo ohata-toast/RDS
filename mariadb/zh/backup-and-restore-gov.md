@@ -75,6 +75,28 @@ When incremental backups are scheduled according to [Auto Backup Strategy](#Set-
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
 
+## 스냅숏 백업
+
+기존 백업 방식은 백업 애플리케이션이 DB 인스턴스에서 실행되어 백업 중 성능 저하가 발생할 수 있었으나, **스토리지 스냅숏 백업**은 고가용성이 정상 상태로 활성화되어 있는 경우에 한해 Cinder 스토리지 스냅숏을 활용하여 백업을 수행합니다.
+스냅숏 생성 후 공용 백업 서버에서 데이터 유효성 검사 및 파일 변환을 수행하므로 백업 중에도 DB 인스턴스의 성능에 영향을 주지 않습니다.
+
+주요 특징
+* 성능 유지: 백업 수행 중에도 DB 인스턴스의 성능이 100% 유지됩니다.
+* 안정성 향상: 별도의 검증 프로세스를 통해 백업 데이터의 신뢰성을 보장합니다.
+* 고가용성 일시 정지: 스냅숏 생성 시점에는 데이터 일관성을 위해 고가용성 기능이 일시 정지될 수 있습니다.
+
+### 요금 체계
+
+스냅숏 백업은 기존 백업과 달리 백업 수행을 위해 사용된 리소스 비용이 별도로 청구됩니다.
+
+| 구분 | 기존 백업 방식 | 스냅숏 백업 방식                 |
+| --- | --- |---------------------------|
+| 청구 방식 | DB 인스턴스 사용 요금에 포함(별도 청구 없음) | 백업 전용 리소스 비용 별도 청구        |
+| 과금 대상 | OBS 업로드 비용(별도) | 공용 백업 서버 + 볼륨 + 스냅숏 + OBS |
+
+* 공용 백업 서버 요금: 백업 데이터의 검증 및 변환을 위해 사용하는 공용 백업 서버의 사용 요금입니다.
+  * 공용 리소스를 사용하더라도 각 고객이 실제 사용한 시간에 대해 과금됩니다.
+
 ## Backup Settings
 
 When creating and modifying DB instances, you can specify settings that will be applied to backups.

@@ -4,6 +4,17 @@
 |-----------|-----------------------------------------------|
 | 한국(판교) 리전 | https://kr1-rds-mariadb.api.nhncloudservice.com |
 
+
+## 인증 및 권한
+
+RDS for MariaDB API를 사용하려면 Appkey 또는 프로젝트 통합 Appkey가 필요합니다.
+
+Appkey는 NHN Cloud의 각 서비스별로 발급되는 고유 인증 키이며, 프로젝트 통합 Appkey는 NHN Cloud에서 하나의 프로젝트 내 여러 서비스에 대해 공통으로 사용할 수 있는 인증 키입니다.
+
+
+
+Appkey 확인 및 사용에 대한 자세한 내용은 [Appkey](/nhncloud/ko/public-api/appkey)를 참고하세요. 프로젝트 통합 Appkey 생성 및 사용에 대한 자세한 내용은 [프로젝트 통합 Appkey](/nhncloud/ko/public-api/project-integrated-appkey)를 참고하세요.
+
 ## Monitoring
 
 ### Metric 조회
@@ -18,7 +29,7 @@ GET /v2.0/metrics
 
 | 이름           | 종류  | 형식     | 필수 | 설명                          |
 |--------------|-----|--------|----|-----------------------------|
-| X-TC-APP-KEY | URL | String | O  | 상품 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY | URL | String | O  | RDS for MariaDB Appkey 또는 프로젝트 통합 Appkey |
 
 #### 응답
 
@@ -49,7 +60,7 @@ GET /rds/api/v2.0/metric-statistics
 
 | 이름           | 종류  | 형식     | 필수 | 설명                          |
 |--------------|-----|--------|----|-----------------------------|
-| X-TC-APP-KEY | URL | String | O  | 상품 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY | URL | String | O  | RDS for MariaDB Appkey 또는 프로젝트 통합 Appkey |
 
 #### 요청
 
