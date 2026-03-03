@@ -1,47 +1,84 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2025. 09. 09.
+### January 15, 2026
 
-#### 기능 추가 및 개선
+#### Feature Updates
 
-- MySQL 8.4 LTS 버전 추가
-- MySQL 8.0.41, 8.0.42, 8.0.43 버전 추가
+- Added maintenance feature
+  - Applied various DB instance modifications during your scheduled maintenance duration
+- Updated to grant ROLE_ADMIN privileges when the Direct Control for DB Schemas & Users setting is enabled
+- Added MySQL 8.0.44, 8.4.7 version
 
-#### 버그 수정
+#### Bug Fixes
 
-- 이미 생성된 고가용성 인스턴스 클릭 후, 고가용성 인스턴스 생성 시 예비 마스터 이름이 입력된 채로 노출되는 현상 수정
-- 고가용성에 추가된 읽기 복제본 이름을 수정할 수 없는 현상 수정
-- DB 인스턴스에 VIP 추가가 불가능한 상황에서 드롭다운 메뉴의 [VIP 추가] 메뉴가 활성화되는 현상 수정
-- DHCP 갱신 실패 시 내부 IP가 간헐적으로 사라지는 현상 수정
-- 고가용성 인스턴스에 읽기 복제본 생성 중 실패할 경우 고가용성이 중단되는 현상 수정
-- 같은 조직에서 구독한 이벤트가 여러 개 발생할 경우, 구독 알림이 동작하지 않는 현상 수정
+- Fixed an issue where the authentication plugin was not selected by default when adding a user on MySQL 8.4 DB instances.
 
-### 2025. 07. 15.
+### November 13, 2025
 
-#### 기능 추가 및 개선
+#### Feature Updates
 
-- DB 보안 그룹의 송신 규칙으로 DB 포트 타입을 지정할 수 없도록 개선
-- 고가용성 DB 인스턴스의 예비 마스터 이름도 입력하도록 수정
-- Resource Watcher 서비스에서 DB 인스턴스 리소스 확인이 가능하도록 개선
-- 장애 조치된 마스터도 삭제하기 전까지 정상 과금하도록 수정
-- 바이너리 로그가 없어서 장애 조치된 마스터를 복구하지 못하는 경우 정확한 오류 메시지를 노출하도록 개선
+- Added version MySQL 8.4.6
+- Improved to record the cause of backup failure due to Lock acquisition failure in the event log.
+- Improved to display a warning message related to the password plugin when upgrading to version 8.4.
+- Fixed to allow creation of cross-region read replicas in subnets that do not have region peering set up.
 
-#### 버그 수정
+#### Bug Fixes
 
-- 백업 내보내기 시 경로에 특수 문자가 포함되면 백업이 실패하는 문제 수정
-- 사용자 그룹 삭제 시 이벤트 구독에서 해당 사용자 그룹이 삭제되지 않는 문제 수정
-- 중복된 알림 그룹 삭제 시 정확한 오류 메시지를 노출하도록 개선
+- Fixed an issue where the failover status persisted when failover failed.
+- Fixed an issue where DB instances stopped before the July deployment could not be started.
+- Fixed an issue where unusable values could be used in server_audit_events.
+- Fixed an issue where the latest parameter group would not be applied after selecting multiple DB instances when using a different parameter group for read replicas.
+- Fixed an issue where an error notification modal would be displayed when deselecting a master in a group with read replicas in a different region.
+- Fixed an issue where unchangeable values would be changed when resetting a parameter group.
 
-### 2025. 05. 15.
+### September 11, 2025
 
-#### 기능 추가 및 개선
+#### Feature Updates
 
-* VIP(Virtual IP)를 사용할 수 있도록 개선
-  * 신규로 생성하는 DB 인스턴스부터 VIP를 발급하며, VIP는 항상 마스터 DB 인스턴스를 바라보도록 설정됩니다. 기존 DB 인스턴스는 콘솔에서 [VIP 추가] 버튼을 클릭해 직접 발급할 수 있습니다.
-* 고가용성이 비정상인 상황에서 콘솔을 통해 명시적으로 중지할 수 있도록 개선
-* 감시 설정에 소수값을 입력할 수 있도록 개선
-* 사용자 그룹 이름에 한글을 입력할 수 있도록 개선
-* DB 인스턴스의 파라미터 그룹 변경 시 변경 내역 모달 창에서 재시작 여부를 확인할 수 있도록 개선
+- Added MySQL 8.4 LTS version
+- Added MySQL 8.0.41, 8.0.42, 8.0.43 version
+
+#### Bug Fixes
+
+- Fixed an issue where the standby master name was displayed with the current name entered when creating a high-availability instance after clicking on an already created high-availability instance.
+- Fixed an issue where the name of a read replica added to high-availability could not be modified.
+- Fixed an issue where the [Add VIP] drop-down menu was activated when adding a VIP to a DB instance was not possible.
+- Fixed an issue where the internal IP would intermittently disappear when DHCP renewal failed.
+- Fixed an issue where high-availability would stop functioning if a read replica creation failed on a high-availability instance.
+- Fixed an issue where subscription notifications would not work when multiple events subscribed to by the same organization occurred.
+
+### July 17, 2025
+
+#### Added Features and Updates
+
+- Improved to disallow specifying the DB port type in egress rules of DB security groups
+- Changed to require entering the name of the candidate master for high-availability DB instances
+- Improved to allow DB instance resources to be checked in Resource Watcher
+- Fixed billing so that the failover master is charged normally until it is deleted
+- Improved to display accurate error messages when failover masters cannot be recovered due to missing binary logs
+
+#### Bug Fixes
+
+- Fixed an issue where backup failed when special characters were included in the export path
+- Fixed an issue where the user group was not deleted from event subscriptions when the user group was deleted
+- Improved to display accurate error messages when deleting duplicate notification groups
+
+### May 15, 2025
+
+#### Added Features and Updates
+
+* Improved to support using VIP (Virtual IP)
+  * VIP is now issued for newly created DB instances and is always configured to point to the master DB instance. For existing DB instances, VIPs can be issued manually by clicking the [Add VIP] button in the console
+* Improved to allow explicitly disabling High Availability via the console when it is in an abnormal state
+* Improved to allow entering decimal values in monitoring settings
+* Improved to allow entering Korean characters in user group names
+* Improved the change history modal window to check whether to restart when changing parameter groups on DB instances
+
+#### Bug Fixes
+
+* Fixed an issue where you could enter invalid values in the event source when creating event subscriptions via the Open API
+* Fixed an issue where the status of DB instances was intermittently not updated
+* Fixed an issue where an unknown error modal window was sometimes exposed
 
 ### April 16, 2025
 

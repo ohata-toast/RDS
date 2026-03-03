@@ -34,11 +34,13 @@ Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL L
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
+{{#if (eq env "public")}}
 | MySQL 5.7.26         |                                                           |
 | MySQL 5.7.19         |                                                           |
 | MySQL 5.7.15         |                                                           |
 | <strong>5.6</strong> |                                                           |
 | MySQL 5.6.33         | This version is no longer supported.                      |
+{{/if}}
 
 
 ### Manage DB Engine Version

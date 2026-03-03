@@ -110,9 +110,6 @@ The following items apply only to auto backups.
 > [Caution]
 > Incrementally created backups are deleted when the baseline backup is deleted, even if the auto backup retention period has not passed.
 
-**Auto Backup Replication Region**
-
-* Set the auto backup file to be replicated to backup storage in another region. Auto Backup replication regions are features for disaster recovery that replicate and manage auto backup files from the original region equally to the destination region. Replication occurs in the background at regular intervals. When you set up an auto backup replication region, you are charged with inter-regional replication traffic, and the destination region is charged additionally for backup storage usage.
 
 **Number of Auto Backup Retries**
 

@@ -55,11 +55,6 @@ MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
-| MySQL 5.7.26         |                                                           |
-| MySQL 5.7.19         |                                                           |
-| MySQL 5.7.15         |                                                           |
-| <strong>5.6</strong> |                                                           |
-| MySQL 5.6.33         | This version is no longer supported.                      |
 
 For the DB engine, version upgrades are possible through the modification feature of the console after creation.
 Details about DB engine can be found in [DB Engine](db-engine-gov/).
@@ -660,12 +655,6 @@ When you create a read replica, you cannot change the items listed below because
 * Data Storage Type
 * User VPC Sub-nets
 
-#### Read Replica Region
-
-If you support region peering when you select a region to create a read replica, you can create a read replica on a sub-net belonging to a different region VPC by connecting region peering between VPCs that exist in different regions. However, selecting a region that is different from the region of the original DB instance might cause replication delays and does not support DB version upgrades.
-
-> [Caution]
-If the route settings are incorrect, even if the region peering is connected, the creation of a read replica might fail or the replication might be interrupted.
 
 #### Availability Zone
 

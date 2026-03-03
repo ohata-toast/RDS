@@ -604,12 +604,6 @@ When you create a read replica, you cannot change the items listed below because
 * Data Storage Type
 * User VPC Sub-nets
 
-#### Read Replica Region
-
-If you support region peering when you select a region to create a read replica, you can create a read replica on a sub-net belonging to a different region VPC by connecting region peering between VPCs that exist in different regions. However, selecting a region that is different from the region of the original DB instance might cause replication delays and does not support DB version upgrades.
-
-> [Caution]
-If the route settings are incorrect, even if the region peering is connected, the creation of a read replica might fail or the replication might be interrupted.
 
 #### Availability Zone
 

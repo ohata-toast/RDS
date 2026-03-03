@@ -1,15 +1,84 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2025. 05. 13.
+### January 13, 2026
 
-#### 기능 추가 및 개선
+#### Feature Updates
 
-* VIP(Virtual IP)를 사용할 수 있도록 개선
-  * 신규로 생성하는 DB 인스턴스부터 VIP를 발급하며, VIP는 항상 마스터 DB 인스턴스를 바라보도록 설정됩니다. 기존 DB 인스턴스는 콘솔에서 [VIP 추가] 버튼을 클릭해 직접 발급할 수 있습니다.
-* 고가용성이 비정상인 상황에서 콘솔을 통해 명시적으로 중지할 수 있도록 개선
-* 감시 설정에 소수값을 입력할 수 있도록 개선
-* 사용자 그룹 이름에 한글을 입력할 수 있도록 개선
-* DB 인스턴스의 파라미터 그룹 변경 시 변경 내역 모달 창에서 재시작 여부를 확인할 수 있도록 개선
+- Added maintenance feature
+  - Applied various DB instance modifications during your scheduled maintenance duration
+- Updated to grant ROLE_ADMIN privileges when the Direct Control for DB Schemas & Users setting is enabled
+- Added MySQL 8.0.44, 8.4.7 version
+
+#### Bug Fixes
+
+- Fixed an issue where the authentication plugin was not selected by default when adding a user on MySQL 8.4 DB instances.
+
+### November 11, 2025
+
+#### Feature Updates
+
+- Added version MySQL 8.4.6
+- Improved to record the cause of backup failure due to Lock acquisition failure in the event log.
+- Improved to display a warning message related to the password plugin when upgrading to version 8.4.
+- Fixed to allow creation of cross-region read replicas in subnets that do not have region peering set up.
+
+#### Bug Fixes
+
+- Fixed an issue where the failover status persisted when failover failed.
+- Fixed an issue where DB instances stopped before the July deployment could not be started.
+- Fixed an issue where unusable values could be used in server_audit_events.
+- Fixed an issue where the latest parameter group would not be applied after selecting multiple DB instances when using a different parameter group for read replicas.
+- Fixed an issue where an error notification modal would be displayed when deselecting a master in a group with read replicas in a different region.
+- Fixed an issue where unchangeable values would be changed when resetting a parameter group.
+
+### September 09, 2025
+
+#### Feature Updates
+
+- Added MySQL 8.4 LTS version
+- Added MySQL 8.0.41, 8.0.42, 8.0.43 version
+
+#### Bug Fixes
+
+- Fixed an issue where the standby master name was displayed with the current name entered when creating a high-availability instance after clicking on an already created high-availability instance.
+- Fixed an issue where the name of a read replica added to high-availability could not be modified.
+- Fixed an issue where the [Add VIP] drop-down menu was activated when adding a VIP to a DB instance was not possible.
+- Fixed an issue where the internal IP would intermittently disappear when DHCP renewal failed.
+- Fixed an issue where high-availability would stop functioning if a read replica creation failed on a high-availability instance.
+- Fixed an issue where subscription notifications would not work when multiple events subscribed to by the same organization occurred.
+
+### July 15, 2025
+
+#### Added Features and Updates
+
+- Improved to disallow specifying the DB port type in egress rules of DB security groups
+- Changed to require entering the name of the candidate master for high-availability DB instances
+- Improved to allow DB instance resources to be checked in Resource Watcher
+- Fixed billing so that the failover master is charged normally until it is deleted
+- Improved to display accurate error messages when failover masters cannot be recovered due to missing binary logs
+
+#### Bug Fixes
+
+- Fixed an issue where backup failed when special characters were included in the export path
+- Fixed an issue where the user group was not deleted from event subscriptions when the user group was deleted
+- Improved to display accurate error messages when deleting duplicate notification groups
+
+### May 13, 2025
+
+#### Added Features and Updates
+
+* Improved to support using VIP (Virtual IP)
+  * VIP is now issued for newly created DB instances and is always configured to point to the master DB instance. For existing DB instances, VIPs can be issued manually by clicking the [Add VIP] button in the console
+* Improved to allow explicitly disabling High Availability via the console when it is in an abnormal state
+* Improved to allow entering decimal values in monitoring settings
+* Improved to allow entering Korean characters in user group names
+* Improved the change history modal window to check whether to restart when changing parameter groups on DB instances
+
+#### Bug Fixes
+
+* Fixed an issue where you could enter invalid values in the event source when creating event subscriptions via the Open API
+* Fixed an issue where the status of DB instances was intermittently not updated
+* Fixed an issue where an unknown error modal window was sometimes exposed
 
 ### April 16, 2025
 
