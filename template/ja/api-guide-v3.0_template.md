@@ -1,8 +1,8 @@
 ## Database > RDS for {{engine.pascalCase}} > APIガイド
 
-## RDS for {{engine.pascalCase}} API 공통 정보
+## RDS for {{engine.pascalCase}} API共通情報
 
-### API 엔드포인트
+### APIエンドポイント
 
 | リージョン           | エンドポイント                                       |
 |-----------------|-----------------------------------------------|
@@ -22,6 +22,7 @@ User Access KeyとSecret Access Keyは、コンソールのAPIセキュリティ
 | X-TC-APP-KEY               | Header | String | O  | RDS for {{engine.pascalCase}}サービスのAppkeyまたはプロジェクト統合Appkey |
 | X-TC-AUTHENTICATION-ID     | Header | String | O  | APIセキュリティ設定メニューのUser Access Key ID                        |
 | X-TC-AUTHENTICATION-SECRET | Header | String | O  | APIセキュリティ設定メニューのSecret Access Key                         |
+
 
 またプロジェクトメンバーのロールによって呼び出すことができるAPIが制限されます。 `RDS for {{engine.pascalCase}} ADMIN`、`RDS for {{engine.pascalCase}} VIEWER`に区分して権限を付与できます。
 
