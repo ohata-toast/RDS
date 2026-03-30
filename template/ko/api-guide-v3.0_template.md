@@ -126,7 +126,7 @@ GET /v3.0/project/regions
 |--------------------|------|---------|----------------------------------------------------------------------------|
 | regions            | Body | Array   | 리전 목록                                                                      |
 {{#if (eq engine.lowerCase "mysql")}}
-| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전                                               |
+| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전 |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 | regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전 |
@@ -585,9 +585,9 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | dbInstances.dbInstanceId     | Body | UUID     | DB 인스턴스의 식별자                                                                                                                          |
 | dbInstances.dbInstanceType   | Body | Enum     | DB 인스턴스의 역할 타입<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 조치된 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
 | dbInstances.dbInstanceStatus | Body | Enum     | DB 인스턴스의 현재 상태                                                                                                                        |
+| dbInstances.dbInstanceName | Body | String | DB 인스턴스를 식별할 수 있는 이름 |
 | createdYmdt                  | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 | updatedYmdt                  | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
-| dbInstances.dbInstanceName | Body | String | DB 인스턴스를 식별할 수 있는 이름 |
 
 <details><summary>예시</summary>
 <p>
@@ -2015,12 +2015,12 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
 | subnet.subnetId        | Body | UUID   | 서브넷의 식별자                                                                                                                                |
 | subnet.subnetName      | Body | String | 서브넷을 식별할 수 있는 이름                                                                                                                        |
 | subnet.subnetCidr      | Body | String | 서브넷의 CIDR                                                                                                                               |
+| subnet.availableIpCount | Body | Number | 사용 가능한 IP 수 |
+| subnet.usingGateway | Body | Boolean | 게이트웨이 사용 여부 |
 | endPoints              | Body | Array  | 접속 정보 목록                                                                                                                                |
 | endPoints.domain       | Body | String | 도메인                                                                                                                                     |
 | endPoints.ipAddress    | Body | String | IP 주소                                                                                                                                   |
 | endPoints.endPointType | Body | Enum   | 접속 정보 타입<br>-`EXTERNAL`: 외부 접속 도메인<br>-`INTERNAL`: 내부 접속 도메인<br>-`PUBLIC`: (Deprecated) 외부 접속 도메인<br>-`PRIVATE`: (Deprecated) 내부 접속 도메인 |
-| subnet.availableIpCount | Body | Number | 사용 가능한 IP 수 |
-| subnet.usingGateway | Body | Boolean | 게이트웨이 사용 여부 |
 
 <details><summary>예시</summary>
 <p>
@@ -2099,7 +2099,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.authorityType        | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
 | dbUsers.dbUserStatus         | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
 {{#if (eq engine.lowerCase "mysql")}}
-| dbUsers.authenticationPlugin | Body | Enum     | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                    |
+| dbUsers.authenticationPlugin | Body | Enum     | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`     |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
@@ -2501,17 +2501,17 @@ GET /v3.0/backups
 {{/if}}
 | backups.backupType   | Body | Enum     | 백업 유형                             |
 | backups.backupSize   | Body | Number   | 백업의 크기(Byte)                      |
-| createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | backups.backupPeriod | Body | Number | 백업 보관 기간(일) |
 | backups.backupRetryCount | Body | Number | 백업 재시도 횟수 |
 | backups.backupSchedules | Body | Array | 백업 스케쥴 목록 |
-| backups.backupSchedules.backupWndBgnTime | Body | String | 백업 시작 시각 |
-| backups.backupSchedules.backupWndDuration | Body | Enum | 백업 Duration |
 | backups.ftwrlWaitTimeout | Body | Number | 쿼리 지연 대기 시간(초) |
 | backups.replicationRegion | Body | Enum | 백업 복제 리전 |
 | backups.useBackupLock | Body | Boolean | 테이블 잠금 사용 여부 |
+| createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
+| backups.backupSchedules.backupWndBgnTime | Body | String | 백업 시작 시각 |
+| backups.backupSchedules.backupWndDuration | Body | Enum | 백업 Duration |
 <details><summary>예시</summary>
 <p>
 
@@ -2793,14 +2793,14 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 | rules.updatedYmdt   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
 | createdYmdt         | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
 | updatedYmdt         | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
-| dbSecurityGroup | Body | Object |  |
+
+| dbSecurityGroup | Body | Object | DB 보안 그룹 |
 | dbSecurityGroup.createdYmdt | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbSecurityGroup.dbSecurityGroupId | Body | UUID | DB 보안 그룹의 식별자 |
 | dbSecurityGroup.dbSecurityGroupName | Body | String | DB 보안 그룹을 식별할 수 있는 이름 |
 | dbSecurityGroup.description | Body | String | DB 보안 그룹에 대한 추가 정보 |
 | dbSecurityGroup.progressStatus | Body | Enum | DB 보안 그룹의 현재 진행 상태 |
 | dbSecurityGroup.updatedYmdt | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-
 <details><summary>예시</summary>
 <p>
 
@@ -3801,10 +3801,10 @@ GET /v3.0/notification-groups/{notificationGroupId}
 | userGroups                 | Body | Array    | 사용자 그룹 목록                         |
 | userGroups.userGroupId     | Body | UUID     | 사용자 그룹의 식별자                       |
 | userGroups.userGroupName   | Body | String   | 사용자 그룹을 식별할 수 있는 이름               |
-| createdYmdt                | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt                | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | userGroups.createdYmdt | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | userGroups.updatedYmdt | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| createdYmdt                | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt                | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -3997,7 +3997,7 @@ GET /v3.0/metrics
 | 이름                  | 종류   | 형식     | 설명        |
 |---------------------|------|--------|-----------|
 | metrics             | Body | Array  | Metric 목록 |
-| metrics.measureName | Body | Enum   | 측정 항목 유형  |
+| metrics.measureName | Body | Enum   | 조회 지표 유형  |
 | metrics.unit        | Body | String | 측정값 단위    |
 
 <details><summary>예시</summary>
@@ -4045,7 +4045,7 @@ GET /v3.0/metric-statistics
 | 이름                                | 종류   | 형식        | 설명       |
 |-----------------------------------|------|-----------|----------|
 | metricStatistics                  | Body | Array     | 통계 정보 목록 |
-| metricStatistics.measureName      | Body | Enum      | 측정 항목 유형 |
+| metricStatistics.measureName      | Body | Enum      | 조회 지표 유형 |
 | metricStatistics.unit             | Body | String    | 측정값 단위   |
 | metricStatistics.values           | Body | Array     | 측정값 목록   |
 | metricStatistics.values.timestamp | Body | Timestamp | 측정 시간    |
