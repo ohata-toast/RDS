@@ -858,6 +858,7 @@ POST /v4.0/db-instances
 | userGroupIds            | Body  | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
 | useHighAvailability     | Body  | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
 | pingInterval            | Body  | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| pingType                | Body  | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- 기본값: `INSERT`<br/>- `INSERT`<br/>- `SELECT` |
 | useDefaultNotification  | Body  | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
 | useDeletionProtection   | Body  | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
 | useSlowQueryAnalysis    | Body  | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
@@ -1465,6 +1466,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | userGroupIds                                        | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                       |
 | useHighAvailability                                 | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                        |
 | pingInterval                                        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                  |
+| pingType                                            | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- 기본값: `INSERT`<br/>- `INSERT`<br/>- `SELECT`                                                                                  |
 | useDefaultNotification                              | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                       |
 | useDeletionProtection                               | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                                                                                             |
 | useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                                   |
@@ -1692,6 +1694,7 @@ POST /v4.0/db-instances/restore-from-obs
 | userGroupIds                                        | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                         |
 | useHighAvailability                                 | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                           |
 | pingInterval                                        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| pingType                                            | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- 기본값: `INSERT`<br/>- `INSERT`<br/>- `SELECT` |
 | useDefaultNotification                              | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                          |
 | useDeletionProtection                               | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                               |
 | useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                                     |
@@ -1819,6 +1822,80 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
+### 고가용성 상태
+
+| 상태                               | 설명                              |
+|----------------------------------|---------------------------------|
+| `CREATED`                        | 고가용성이 생성된 경우                    |
+| `STABLE`                         | 고가용성이 정상인 경우                    |
+| `PAUSING`                        | 고가용성이 일시 중지 중인 경우               |
+| `PAUSED`                         | 고가용성이 일시 중지된 경우                 |
+| `PAUSED_DUE_TO_TASK`             | 작업으로 인해 고가용성이 일시 중지된 경우         |
+| `DISABLE_MASTER_IN_REPLICATION`  | 마스터 비정상 복제 감지로 고가용성이 중단된 경우     |
+| `DISABLE_MHA_PROCESS`            | 고가용성 프로세스가 중단된 경우               |
+| `DISABLE_REPLICATION_STOP`       | 복제 중단으로 인해 고가용성이 중단된 경우         |
+| `DISABLE_REPLICATION_DELAY`      | 복제 지연으로 인해 고가용성이 중단된 경우         |
+| `MASTER_FAILURE_DETECTION`       | 마스터 장애가 감지된 경우                  |
+| `FAILOVER_STARTED`               | 장애 조치가 시작된 경우                   |
+| `FAILOVER_FAILED`                | 장애 조치가 실패한 경우                   |
+| `FAILOVER_COMPLETED`             | 장애 조치가 완료된 경우                   |
+| `DELETED`                        | 고가용성이 삭제된 경우                    |
+
+---
+
+### 고가용성 정보 보기
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/high-availability
+```
+
+#### 필요 권한
+
+| 권한명                                              | 설명         |
+|----------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+#### 응답
+
+| 이름                  | 종류   | 형식      | 설명                                                                                                                  |
+|---------------------|------|---------|---------------------------------------------------------------------------------------------------------------------|
+| useHighAvailability | Body | Boolean | 고가용성 사용 여부                                                                                                          |
+| haStatus            | Body | Enum    | 고가용성 상태                                                                                                          |
+| pingInterval        | Body | Number  | Ping 간격(초)                                                                                                          |
+| pingType            | Body | Enum    | Ping 타입<br/>- `INSERT`<br/>- `SELECT`                                                                                |
+
+<details><summary>예시</summary>
+
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "useHighAvailability": true,
+    "haStatus": "STABLE",
+    "pingInterval": 3,
+    "pingType": "INSERT"
+}
+```
+
+</p>
+
+</details>
+
+---
+
 ### 고가용성 수정하기
 
 ```http
@@ -1838,6 +1915,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | dbInstanceId        | URL  | UUID    | O  | DB 인스턴스의 식별자                                         |
 | useHighAvailability | Body | Boolean | O  | 고가용성 사용 여부                                           |
 | pingInterval        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| pingType            | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- `INSERT`<br/>- `SELECT` |
 | dbInstanceCandidateName        | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 고가용성 사용 시 필수값 |
 
 #### 응답
@@ -3303,6 +3381,7 @@ POST /v4.0/backups/{backupId}/restore
 | userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
 | useHighAvailability                          | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
 | pingInterval                                 | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| pingType                                     | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- 기본값: `INSERT`<br/>- `INSERT`<br/>- `SELECT` |
 | useDefaultNotification                       | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
 | useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         | 
 | useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
