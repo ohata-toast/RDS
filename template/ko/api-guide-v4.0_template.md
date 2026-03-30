@@ -130,7 +130,7 @@ GET /v4.0/project/regions
 |--------------------|------|---------|----------------------------------------------------------------------------|
 | regions            | Body | Array   | 리전 목록                                                                      |
 {{#if (eq engine.lowerCase "mysql")}}
-| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전 |
+| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전                                               |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 | regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전 |
@@ -1326,7 +1326,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.dbVersion      | Body | String   | DB 엔진 유형                                                                                                                                                                     |
 | restorableBackups.backup.failoverCount  | Body | Number   | 장애 조치 횟수                                                                                                                                                                     |
 | restorableBackups.backup.binLogFileName | Body | String   | 바이너리 로그 파일 이름                                                                                                                                                                |
-| restorableBackups.backup.binLogPosition | Body | Number   | 바이너리 로그 파일 위치                                                                                                                                                                |
+| restorableBackups.backup.binLogPosition | Body | Number   | 바이너리 로그 위치                                                                                                                                                                   |
 | restorableBackups.backup.createdYmdt    | Body | DateTime | 백업 생성 일시                                                                                                                                                                     |
 | restorableBackups.backup.updatedYmdt    | Body | DateTime | 백업 갱신 일시                                                                                                                                                                     |
 | restorableBackups.restorableBinLogs     | Body | Array    | 해당 백업을 이용하여 복원 가능한 바이너리 로그 이름 목록                                                                                                                                             |
@@ -2199,7 +2199,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 | availabilityZone       | Body | Enum   | DB 인스턴스를 생성할 가용성 영역                                                                                                                     |
 | subnet                 | Body | Object | 서브넷 객체                                                                                                                                  |
 | subnet.subnetId        | Body | UUID   | 서브넷의 식별자                                                                                                                                |
-| subnet.subnetName      | Body | UUID   | 서브넷을 식별할 수 있는 이름                                                                                                                        |
+| subnet.subnetName      | Body | String | 서브넷을 식별할 수 있는 이름                                                                                                                        |
 | subnet.subnetCidr      | Body | UUID   | 서브넷의 CIDR                                                                                                                               |
 | endPoints              | Body | Array  | 접속 정보 목록                                                                                                                                |
 | endPoints.domain       | Body | String | 도메인                                                                                                                                     |
@@ -2295,7 +2295,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.authorityType        | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
 | dbUsers.dbUserStatus         | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
 {{#if (eq engine.lowerCase "mysql")}}
-| dbUsers.authenticationPlugin | Body | Enum     | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`     |
+| dbUsers.authenticationPlugin | Body | Enum     | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                    |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
@@ -3098,6 +3098,8 @@ GET /v4.0/backups
 | backups.backupSize   | Body | Number   | 백업의 크기(Byte)                      |
 | createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| backups.createdYmdt | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| backups.updatedYmdt | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -3442,6 +3444,7 @@ GET /v4.0/db-security-groups
 | dbSecurityGroups.progressStatus      | Body | Enum     | DB 보안 그룹의 현재 진행 상태                |
 | dbSecurityGroups.createdYmdt         | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbSecurityGroups.updatedYmdt         | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| totalCounts | Body | Number | 전체 DB 보안 그룹 목록 수 |
 
 <details><summary>예시</summary>
 <p>
@@ -3513,6 +3516,25 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 | rules.updatedYmdt   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
 | createdYmdt         | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
 | updatedYmdt         | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
+| dbSecurityGroup | Body | Object |  |
+| dbSecurityGroup.createdYmdt | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| dbSecurityGroup.dbSecurityGroupId | Body | UUID | DB 보안 그룹의 식별자 |
+| dbSecurityGroup.dbSecurityGroupName | Body | String | DB 보안 그룹을 식별할 수 있는 이름 |
+| dbSecurityGroup.description | Body | String | DB 보안 그룹에 대한 추가 정보 |
+| dbSecurityGroup.progressStatus | Body | Enum | DB 보안 그룹의 현재 진행 상태 |
+| dbSecurityGroup.rules | Body | Array | DB 보안 그룹 규칙 목록 |
+| dbSecurityGroup.rules.cidr | Body | String | 허용할 트래픽의 원격 소스 |
+| dbSecurityGroup.rules.createdYmdt | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| dbSecurityGroup.rules.description | Body | String | DB 보안 그룹 규칙에 대한 추가 정보 |
+| dbSecurityGroup.rules.direction | Body | Enum | 통신 방향 |
+| dbSecurityGroup.rules.etherType | Body | Enum | Ether 타입 |
+| dbSecurityGroup.rules.port | Body | Object |  |
+| dbSecurityGroup.rules.port.maxPort | Body | Number | 최대 포트 범위 |
+| dbSecurityGroup.rules.port.minPort | Body | Number | 최소 포트 범위 |
+| dbSecurityGroup.rules.port.portType | Body | Enum | 포트 타입 |
+| dbSecurityGroup.rules.ruleId | Body | UUID | DB 보안 그룹 규칙의 식별자 |
+| dbSecurityGroup.rules.updatedYmdt | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| dbSecurityGroup.updatedYmdt | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -3892,6 +3914,8 @@ GET /v4.0/parameter-groups
 | parameterGroups.parameterGroupStatus | Body | Enum     | 파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요 |
 | parameterGroups.createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                 |
 | parameterGroups.updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                 |
+| parameterGroups.parameterGroupType | Body | Enum | 파라미터 그룹 유형 |
+| totalCounts | Body | Number | 전체 이벤트 구독 목록 수 |
 
 <details><summary>예시</summary>
 <p>
@@ -4309,6 +4333,7 @@ GET /v4.0/user-groups
 | userGroups.userGroupName | Body | String   | 사용자 그룹을 식별할 수 있는 이름               |
 | userGroups.createdYmdt   | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | userGroups.updatedYmdt   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| totalCounts | Body | Number | 전체 사용자 그룹 목록 수 |
 
 <details><summary>예시</summary>
 <p>
@@ -4858,7 +4883,7 @@ GET /v4.0/metrics
 | 이름                  | 종류   | 형식     | 설명        |
 |---------------------|------|--------|-----------|
 | metrics             | Body | Array  | Metric 목록 |
-| metrics.measureName | Body | Enum   | 조회 지표 유형  |
+| metrics.measureName | Body | Enum   | 측정 항목 유형  |
 | metrics.unit        | Body | String | 측정값 단위    |
 
 <details><summary>예시</summary>
@@ -5004,7 +5029,7 @@ GET /v4.0/events
 | events.sourceId          | Body | String   | 이벤트 소스의 식별자                           |
 | events.sourceName        | Body | String   | 이벤트 소스를 식별할 수 있는 이름                   |
 | events.messages          | Body | Array    | 이벤트 메시지 목록                            |
-| events.messages.langCode | Body | String   | 언어 코드                                 |
+| events.messages.langCode | Body | Enum     | 언어 코드                                 |
 | events.messages.message  | Body | String   | 이벤트 메시지                               |
 | events.eventYmdt         | Body | DateTime | 이벤트 발생 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
