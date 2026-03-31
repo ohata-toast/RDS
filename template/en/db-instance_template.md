@@ -984,12 +984,12 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 ```
 
 * Explaining parameter
-  * master_instance_ip : IP of replication target (Master) server
-  * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
-  * user_id_for_replication: an account for replication to access {{engine.pascalCase}} on the replication target (Master) server
-  * password_for_replication_user : Password of account for replication
-  * MASTER_LOG_FILE : Binary log file name of replication target (Master)
-  * MASTER_LOG_POS : Binary log file position of replication target (Master)
+    * master_instance_ip : IP of replication target (Master) server
+    * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
+    * user_id_for_replication: an account for replication to access {{engine.pascalCase}} on the replication target (Master) server
+    * password_for_replication_user : Password of account for replication
+    * MASTER_LOG_FILE : Binary log file name of replication target (Master)
+    * MASTER_LOG_POS : Binary log file position of replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1007,12 +1007,12 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 ```
 
 * Parameter Details
-    * master_instance_ip: IP of the replication target (Master) server
-    * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
-    * user_id_for_replication: Replication account to connect to {{engine.pascalCase}} on the replication target (Master) server
-    * password_for_replication_user: account passowrd for replication
-    * SOURCE_LOG_FILE: Binary log file name of the replication target (Master)
-    * SOURCE_LOG_POS: binary log position of the replication target (Master)
+      * master_instance_ip: IP of the replication target (Master) server
+      * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
+      * user_id_for_replication: Replication account to connect to {{engine.pascalCase}} on the replication target (Master) server
+      * password_for_replication_user: account passowrd for replication
+      * SOURCE_LOG_FILE: Binary log file name of the replication target (Master)
+      * SOURCE_LOG_POS: binary log position of the replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1065,8 +1065,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 ### tcrds_repl_skip_repl_error
 
 * If you run the TCRDS_REPL_SKIP_REPL_ERROR procedure when the Duplicate Key error occurs, you can address the replica error.
-    * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
-    * After 8.4: perform SQL_REPLICA_SKIP_COUNTER=1.
+      * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
+      * After 8.4: perform SQL_REPLICA_SKIP_COUNTER=1.
 * `{{engine.pascalCase}} error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
@@ -1172,7 +1172,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### When `ERROR 1418` occurs during data importing
 
 * `ERROR 1418` occurs when the function declaration in the mysqldump file does not contain NO SQL, READS SQL DATA, or DETERMINISTIC and binary logging is enabled.
-  * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
+    * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
 * To resolve this, Parameter value of `log_bin_trust_function_creators` of DB instance to which you want to apply mysqldump file should be changed to `1`.
 
 ### Export by using replication
@@ -1387,15 +1387,15 @@ When using Federated Storage Engine, make sure you consider the following.
 #### For configuration using RDS as a local node
 
 * Make sure you need to allow the outbound direction to remote nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
 * When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
-  * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
-  * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
-  * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
+    * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
+    * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
+    * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
 
 #### For configuration using RDS as a remote node
 
 * Make sure you need to allow the inbound direction to local nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.

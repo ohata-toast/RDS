@@ -979,12 +979,12 @@ RDS for {{engine.pascalCase}}은 사용자의 편의를 제공하기 위하여 �
 ```
 
 * 파라미터 설명
-  * master_instance_ip: 복제 대상(Master) 서버의 IP
-  * master_instance_port: 복제 대상(Master) 서버의 {{engine.pascalCase}} 포트
-  * user_id_for_replication: 복제 대상(Master) 서버의 {{engine.pascalCase}}에 접속할 복제용 계정
-  * password_for_replication_user: 복제용 계정 패스워드
-  * MASTER_LOG_FILE: 복제 대상(Master)의 binary log 파일명
-  * MASTER_LOG_POS: 복제 대상(Master)의 binary log 포지션
+    * master_instance_ip: 복제 대상(Master) 서버의 IP
+    * master_instance_port: 복제 대상(Master) 서버의 {{engine.pascalCase}} 포트
+    * user_id_for_replication: 복제 대상(Master) 서버의 {{engine.pascalCase}}에 접속할 복제용 계정
+    * password_for_replication_user: 복제용 계정 패스워드
+    * MASTER_LOG_FILE: 복제 대상(Master)의 binary log 파일명
+    * MASTER_LOG_POS: 복제 대상(Master)의 binary log 포지션
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1002,12 +1002,12 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 ```
 
 * 파라미터 설명
-    * master_instance_ip: 복제 대상(Master) 서버의 IP
-    * master_instance_port: 복제 대상(Master) 서버의 {{engine.pascalCase}} 포트
-    * user_id_for_replication: 복제 대상(Master) 서버의 {{engine.pascalCase}}에 접속할 복제용 계정
-    * password_for_replication_user: 복제용 계정 패스워드
-    * SOURCE_LOG_FILE: 복제 대상(Master)의 binary log 파일명
-    * SOURCE_LOG_POS: 복제 대상(Master)의 binary log 포지션
+      * master_instance_ip: 복제 대상(Master) 서버의 IP
+      * master_instance_port: 복제 대상(Master) 서버의 {{engine.pascalCase}} 포트
+      * user_id_for_replication: 복제 대상(Master) 서버의 {{engine.pascalCase}}에 접속할 복제용 계정
+      * password_for_replication_user: 복제용 계정 패스워드
+      * SOURCE_LOG_FILE: 복제 대상(Master)의 binary log 파일명
+      * SOURCE_LOG_POS: 복제 대상(Master)의 binary log 포지션
 
 ```
 예:  call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1060,8 +1060,8 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 ### tcrds_repl_skip_repl_error
 
 * 다음과 같은 Duplicate key 오류 발생 시 tcrds_repl_skip_repl_error 프로시저를 실행하면 복제 오류를 해결할 수 있습니다.
-  * 8.4 이전: SQL_SLAVE_SKIP_COUNTER=1을 수행합니다.
-  * 8.4 이후: SQL_REPLICA_SKIP_COUNTER=1을 수행합니다.
+    * 8.4 이전: SQL_SLAVE_SKIP_COUNTER=1을 수행합니다.
+    * 8.4 이후: SQL_REPLICA_SKIP_COUNTER=1을 수행합니다.
 * `{{engine.pascalCase}} error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
@@ -1165,7 +1165,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### 데이터 가져오는 도중 `ERROR 1418` 오류가 발생할 경우
 
 * `ERROR 1418` 오류는 mysqldump 파일의 함수 선언에 NO SQL, READS SQL DATA, DETERMINISTIC이 없으며 바이너리 로그가 활성화된 상태일 때 발생합니다.
-  * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) 문서를 참고합니다.
+    * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) 문서를 참고합니다.
 * 이를 해결하기 위해서는 mysqldump 파일을 적용할 DB 인스턴스의 `log_bin_trust_function_creators` 파라미터의 값을 `1`로 변경해야 합니다.
 
 ### 복제를 이용하여 내보내기
@@ -1379,15 +1379,15 @@ Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다
 #### 로컬 노드로써 RDS를 이용하는 구성의 경우
 
 * 리모트 노드로의 송신을 허용하는 설정이 필요합니다.
-  * DB 보안 그룹에서 규칙을 추가할 수 있습니다.
-  * 자세한 사항은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
+    * DB 보안 그룹에서 규칙을 추가할 수 있습니다.
+    * 자세한 사항은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
 * 만약 로컬 노드 역할의 RDS에 Read Only Slave를 추가한 구성으로 사용할 경우 파라미터의 replicate-ignore-table에 federated 설정된 테이블을 명시해야 합니다.
-  * Read Only Slave를 구성할 경우 federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
-  * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 오류 등으로 인한 복제 중단이 발생할 수 있습니다.
-  * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table에 설정이 필요합니다.
+    * Read Only Slave를 구성할 경우 federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라보게 됩니다.
+    * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 오류 등으로 인한 복제 중단이 발생할 수 있습니다.
+    * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table에 설정이 필요합니다.
 
 #### 리모트 노드로써 RDS를 이용하는 구성의 경우
 
 * 로컬 노드에서의 수신을 허용하는 설정이 필요합니다.
-  * DB 보안 그룹에서 규칙을 추가할 수 있습니다.
-  * 자세한 사항은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
+    * DB 보안 그룹에서 규칙을 추가할 수 있습니다.
+    * 자세한 사항은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.

@@ -37,9 +37,9 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 | 8.4.5         | 8.4.0              |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
-  * https://docs.percona.com/percona-xtrabackup/2.4/
-  * https://docs.percona.com/percona-xtrabackup/8.0/
-  * https://docs.percona.com/percona-xtrabackup/8.4/
+      * https://docs.percona.com/percona-xtrabackup/2.4/
+      * https://docs.percona.com/percona-xtrabackup/8.0/
+      * https://docs.percona.com/percona-xtrabackup/8.4/
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.
@@ -128,7 +128,7 @@ Unlike existing backup methods, Snapshot Backup incurs separate charges for the 
 | Billable item | OBS upload fee (billed separately) | Shared backup server + volume + snapshot + OBS |
 
 * Shared backup server fee: This fee covers the use of backup servers for data validation and file conversion.
-  * Even when using shared resources, you are billed only for the actual time used during your backup operations.
+    * Even when using shared resources, you are billed only for the actual time used during your backup operations.
 
 ## Backup Settings
 
@@ -183,9 +183,9 @@ The following items apply only to auto backups.
 **Auto Backup Strategy**
 
 * You can specify a strategy for performing auto backups.
-  * Daily full backup: Back up your entire data every day.
-  * Daily full and incremental backups: One full backup of your data each day, and multiple incremental backups.
-  * Weekly full backups and daily incremental backups: One full backup of your data on certain days of the week, and one incremental backup on the remaining days of the week.
+    * Daily full backup: Back up your entire data every day.
+    * Daily full and incremental backups: One full backup of your data each day, and multiple incremental backups.
+    * Weekly full backups and daily incremental backups: One full backup of your data on certain days of the week, and one incremental backup on the remaining days of the week.
 
 **All Data Backup Days**
 
