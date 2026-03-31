@@ -66,13 +66,13 @@ When creating a manual backup, you must specify a name for the backup, with the 
 
 **Create a Manual Incremental Backup**
 
-❸ You can create an incremental backup by selecting a baseline backup from the backup list and then clicking **Create incremental backup**. Some backups cannot be selected as a baseline backup; for a detailed description of baseline [backups](#기준-백업), see [Baseline backups](#기준-백업).
+❸ You can create an incremental backup by selecting a baseline backup from the backup list and then clicking **Create incremental backup**. Some backups cannot be selected as a baseline backup; for a detailed description of baseline [backups](#baseline-backup), see [Baseline backups](#baseline-backup).
 
 
 ### Auto Backup
 
 In addition to performing backups manually, auto backups can occur when required for restore operations or based on scheduled auto backup settings.
-For settings that apply during auto backups, see [Auto Backup Settings](#자동-백업-설정).
+For settings that apply during auto backups, see [Auto Backup Settings](#set-auto-backup).
 
 ## Backup Method
 
@@ -91,7 +91,7 @@ When restoring to an incremental backup, the restore proceeds from the first ful
 > [Caution]
 > Restoring from incremental backups may take more time than restoring from a full backup, which is proportional to the sum of the capacity of the incremental backups required for the restore.
 
-#### Baseline Backup
+#### <a id="baseline-backup"></a>Baseline Backup
 
 Incremental backups require a backup to baseline data changes on. An incremental backup can also be the baseline backup for a new incremental backup.
 
@@ -151,7 +151,7 @@ The following topics are common to both auto and manual backups.
 * When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query delay wait time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
 
-### Set Auto Backup
+### <a id="set-auto-backup"></a>Set Auto Backup
 
 The following items apply only to auto backups.
 
@@ -198,7 +198,7 @@ The following items apply only to auto backups.
 > [Caution]
 > A backup might not be performed in some situations, such as when a previous backup does not terminate.
 > If no incremental baseline backup exists, a full backup might be performed even though it is the scheduled turn to perform an incremental backup.
-> For a detailed description of incremental baseline backups, see [Baseline Backup](#기준-백업).
+> For a detailed description of incremental baseline backups, see [Baseline Backup](#baseline-backup).
 
 ### Backup Storage and Pricing
 
