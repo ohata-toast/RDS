@@ -69,17 +69,28 @@ DBエンジンの詳細は[DBエンジン](db-engine/)で確認できます。
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 
-| バージョン            | 備考 |
-|------------------|----|
-| MariaDB 11.4.7   |    |
-| MariaDB 10.11.13 |    |
-| MariaDB 10.11.8  |    |
-| MariaDB 10.11.7  |    |
-| MariaDB 10.6.22  |    |
-| MariaDB 10.6.16  |    |
-| MariaDB 10.6.12  |    |
-| MariaDB 10.6.11  |    |
-| MariaDB 10.3.30  |    |
+| バージョン                  | 備考 |
+|------------------------|----|
+| <strong>11.8</strong>  |    |
+| MariaDB 11.8.6         |    |
+| <strong>11.4</strong>  |    |
+| MariaDB 11.4.10        |    |
+| MariaDB 11.4.7         |    |
+| <strong>10.11</strong> |    |
+| MariaDB 10.11.16       |    |
+| MariaDB 10.11.13       |    |
+| MariaDB 10.11.8        |    |
+| MariaDB 10.11.7        |    |
+| <strong>10.6</strong>  |    |
+| MariaDB 10.6.25        |    |
+| MariaDB 10.6.22        |    |
+| MariaDB 10.6.16        |    |
+| MariaDB 10.6.12        |    |
+| MariaDB 10.6.11        |    |
+| <strong>10.3</strong>  |    |
+| MariaDB 10.3.30        |    |
+
+DBエンジンの詳細は[DBエンジン](db-engine/)で確認できます。
 {{/if}}
 
 ### DBインスタンスタイプ

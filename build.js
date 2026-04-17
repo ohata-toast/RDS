@@ -65,12 +65,12 @@ const allConfigs = [
     {
         engine: 'mariadb',
         env: 'public',
-        exclusionDocs: ['db-engine']
+        exclusionDocs: []
     },
     {
         engine: 'mariadb',
         env: 'gov',
-        exclusionDocs: ['db-engine']
+        exclusionDocs: []
     }
 ];
 

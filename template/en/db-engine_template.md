@@ -1,5 +1,6 @@
 ## Database > RDS for {{engine.pascalCase}} > DB Engine
 
+{{#if (eq engine.lowerCase "mysql")}}
 ## DB Engine
 
 In MySQL, the version number consists of version = `X.Y.Z` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
@@ -168,3 +169,79 @@ For DB instances created before May 10, 2022, the DB instance will be replaced w
 | MySQL 5.7.15         | X                                       |
 | <strong>MySQL 5.6</strong> |                                         |
 | MySQL 5.6.33         | O                                       |
+{{/if}}
+
+{{#if (eq engine.lowerCase "mariadb")}}
+## DB 엔진
+
+MariaDB에서 버전 번호는 버전 = `X.Y.Z`로 구성됩니다. NHN Cloud의 RDS for MariaDB에서는 `X.Y`의 경우 메이저 버전을, `Z`는 마이너 버전을 나타냅니다.
+
+### RDS에서 제공하는 DB 엔진 버전
+
+아래에 명시된 버전을 사용할 수 있습니다. 신규 DB 인스턴스 생성 및 읽기 복제본 추가는 메이저 버전당 상위 7개 마이너 버전까지만 지원합니다.
+
+| 버전                     | 비고 |
+|------------------------|----|
+| <strong>11.8</strong>  |    |
+| MariaDB 11.8.6         |    |
+| <strong>11.4</strong>  |    |
+| MariaDB 11.4.10        |    |
+| MariaDB 11.4.7         |    |
+| <strong>10.11</strong> |    |
+| MariaDB 10.11.16       |    |
+| MariaDB 10.11.13       |    |
+| MariaDB 10.11.8        |    |
+| MariaDB 10.11.7        |    |
+| <strong>10.6</strong>  |    |
+| MariaDB 10.6.25        |    |
+| MariaDB 10.6.22        |    |
+| MariaDB 10.6.16        |    |
+| MariaDB 10.6.12        |    |
+| MariaDB 10.6.11        |    |
+| <strong>10.3</strong>  |    |
+| MariaDB 10.3.30        |    |
+
+### DB 엔진 버전 관리
+
+DB 인스턴스 생성 이후, 해당 DB 인스턴스 수정과 함께 DB 엔진 버전 변경을 진행할 수 있습니다.
+
+> [주의]
+> DB 버전 변경 시도 시 업그레이드만 지원하며, 다운그레이드는 지원하지 않습니다.
+
+DB 엔진 버전 업그레이드가 진행될 경우, 메이저 버전 번호만 변경되는 경우는 메이저 버전 업그레이드로, 마이너 버전 번호만 변경되는 경우는 마이너 버전 업그레이드로 간주합니다.
+DB 엔진 메이저 버전 업그레이드 시도 시에는 바로 다음의 메이저 버전의 DB 엔진 버전에 대해 업그레이드가 가능합니다.
+
+#### 사전 점검
+
+DB 엔진 메이저 버전 업그레이드를 진행하기 전에, 다음 사항을 사전에 확인하는 것을 권장합니다.
+
+- `mariadb-check --check-upgrade`를 통해 버전에 종속되는 테이블이 없는지 확인합니다. 버전 종속 테이블이 발견되면 `--auto-repair` 옵션으로 자동 업데이트할 수 있습니다.
+- 공식 업그레이드 문서를 참고하여 대상 버전의 비호환 변경 사항을 확인합니다.
+
+콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용하여 사전 점검 결과를 확인할 수 있습니다. 개별 DB 인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다.
+
+#### MariaDB 11.4에서 MariaDB 11.8로 업그레이드 시 확인 사항
+
+MariaDB 11.8로 업그레이드하려면 먼저 MariaDB 11.4로 업그레이드된 상태여야 합니다. `11.4`에서 `11.8` 버전으로 메이저 버전 업그레이드를 진행하는 경우 아래 사항을 확인해야 합니다.
+
+- **System-Versioned 테이블**: System-Versioned 테이블이 존재하는 경우 업그레이드는 가능하지만, 확장된 타임스탬프 범위로의 업데이트가 필요하여 업그레이드 시간이 길어질 수 있습니다.
+
+자세한 내용은 아래 공식 문서를 참고합니다.
+- [MariaDB 11.4에서 11.8로 업그레이드 경로](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/upgrading/mariadb-community-server-upgrade-paths/upgrading-from-mariadb-11-4-to-mariadb-11-8)
+- [MariaDB 11.8 릴리스 노트](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
+
+#### 더미 DB 인스턴스를 사용한 DB 엔진 버전 업그레이드 
+
+DB 인스턴스 수정 화면에서 DB 엔진 버전 변경을 시도할 때 더미 DB 인스턴스 사용 여부를 선택해 버전 업그레이드 과정에서의 고가용성을 가져올 수 있습니다. 더미 DB 인스턴스 사용을 선택하면 DB 버전 업그레이드를 위한 예비 마스터가 생성됩니다. 
+
+> [주의]
+> 더미 DB 인스턴스의 경우 업그레이드 과정 중 임시 예비 마스터를 생성하므로, 해당 옵션은 고가용성 구성이 아닌 경우에만 사용할 수 있습니다.
+
+#### 고가용성 DB 인스턴스 업그레이드 시 장애 조치 수동 제어
+
+DB 인스턴스가 고가용성으로 구성되어 있을 때 예비 마스터의 엔진 버전을 먼저 업그레이드한 뒤 장애 조치를 사용하여 예비 마스터를 마스터로 승격시킵니다. 장애 조치는 마스터의 서비스를 잠깐 중단시키기 때문에 사용자가 원하는 시점에 장애 조치를 시작할 수 있습니다.
+버전 업그레이드 시 장애 조치 수동 제어 설정을 사용하면 사용자가 콘솔에서 직접 장애 조치를 시작할 수 있습니다.
+
+> [주의]
+> 장애 조치 수동 제어는 60시간 이상 트리거 되지 않으면 자동으로 업그레이드 작업이 취소됩니다.
+{{/if}}
