@@ -529,7 +529,8 @@ You can easily change various items in DB instances created through console. Cha
 | DB Instance Type   | Yes        | Yes                       |
 | Data Storage Type  | No      |                         |
 | Whether high availability or not      | Yes        | No                     |
-| PING interval      | Yes        | No                     | 
+| PING interval      | Yes        | No                     |
+| Ping 방식      | 예        | 아니오                     |
 | Name           | Yes        | No                     |
 | Description           | Yes        | No                     |
 | DB port        | Yes        | Yes                       |
