@@ -2,11 +2,12 @@
 
 ## DB 엔진
 
-MySQL에서 버전 번호는 버전 = `X.Y.Z`로 구성됩니다. NHN Cloud의 RDS for MySQL에서는 `X.Y`의 경우 메이저 버전을, `Z`는 마이너 버전을 나타냅니다.
+{{engine.pascalCase}}에서 버전 번호는 버전 = `X.Y.Z`로 구성됩니다. NHN Cloud의 RDS for {{engine.pascalCase}}에서는 `X.Y`의 경우 메이저 버전을, `Z`는 마이너 버전을 나타냅니다.
 
 ### RDS에서 제공하는 DB 엔진 버전
 
 아래에 명시된 버전을 사용할 수 있습니다. 신규 DB 인스턴스 생성 및 읽기 복제본 추가는 메이저 버전당 상위 7개 마이너 버전까지만 지원합니다.
+{{#if (eq engine.lowerCase "mysql")}}
 MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료되었습니다. 해당 버전의 DB 인스턴스는 최신 버전으로 업그레이드할 것을 권장합니다.
 
 - 참고: [https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions](https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions)
@@ -41,6 +42,30 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | <strong>5.6</strong> |                                |
 | MySQL 5.6.33         | 지원이 종료된 버전입니다.                 |
 {{/if}}
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+
+| 버전                     | 비고 |
+|------------------------|----|
+| <strong>11.8</strong>  |    |
+| MariaDB 11.8.6         |    |
+| <strong>11.4</strong>  |    |
+| MariaDB 11.4.10        |    |
+| MariaDB 11.4.7         |    |
+| <strong>10.11</strong> |    |
+| MariaDB 10.11.16       |    |
+| MariaDB 10.11.13       |    |
+| MariaDB 10.11.8        |    |
+| MariaDB 10.11.7        |    |
+| <strong>10.6</strong>  |    |
+| MariaDB 10.6.25        |    |
+| MariaDB 10.6.22        |    |
+| MariaDB 10.6.16        |    |
+| MariaDB 10.6.12        |    |
+| MariaDB 10.6.11        |    |
+| <strong>10.3</strong>  |    |
+| MariaDB 10.3.30        |    |
+{{/if}}
 
 ### DB 엔진 버전 관리
 DB 인스턴스 생성 이후, 해당 DB 인스턴스 수정과 함께 DB 엔진 버전 변경을 진행할 수 있습니다.
@@ -51,6 +76,7 @@ DB 인스턴스 생성 이후, 해당 DB 인스턴스 수정과 함께 DB 엔진
 DB 엔진 버전 업그레이드가 진행될 경우, 메이저 버전 번호만 변경되는 경우는 메이저 버전 업그레이드로, 마이너 버전 번호만 변경되는 경우는 마이너 버전 업그레이드로 간주합니다.
 DB 엔진 메이저 버전 업그레이드 시도 시에는 바로 다음의 메이저 버전의 DB 엔진 버전에 대해 업그레이드가 가능합니다.
 
+{{#if (eq engine.lowerCase "mysql")}}
 #### MySQL 5.7에서 MySQL 8.0으로 업그레이드하기 위한 사전 점검
 
 MySQL 8.0과 MySQL 5.7은 상당수의 비호환성 요소가 포함되어 있습니다. 따라서 `5.7`에서 `8.0` 버전으로 메이저 버전 DB 엔진 업그레이드를 진행하는 경우 문제가 발생할 수 있습니다. 이에 문제 발생이 예상되는 일부 항목에 대한 사전 점검 과정이 필요합니다. 다음은 사전 점검이 필요한 항목입니다.
@@ -107,6 +133,28 @@ MySQL 8.0.18 버전은 직접 MySQL 8.4로 업그레이드할 수 없습니다.
 2.	이후 MySQL 8.4 버전으로 업그레이드
 
 이는 MySQL 8.4 버전에서 요구하는 최소 호환 버전이 8.0.23 이상이기 때문이며, 해당 버전보다 낮은 환경에서는 메타데이터 및 내부 스키마 구조의 호환성이 보장되지 않습니다.
+{{/if}}
+
+{{#if (eq engine.lowerCase "mariadb")}}
+#### 사전 점검
+
+DB 엔진 메이저 버전 업그레이드를 진행하기 전에, 다음 사항을 사전에 확인하는 것을 권장합니다.
+
+- `mariadb-check --check-upgrade`를 통해 버전에 종속되는 테이블이 없는지 확인합니다. 버전 종속 테이블이 발견되면 `--auto-repair` 옵션으로 자동 업데이트할 수 있습니다.
+- 공식 업그레이드 문서를 참고하여 대상 버전의 비호환 변경 사항을 확인합니다.
+
+콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용하여 사전 점검 결과를 확인할 수 있습니다. 개별 DB 인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다.
+
+#### MariaDB 11.4에서 MariaDB 11.8로 업그레이드 시 확인 사항
+
+MariaDB 11.8로 업그레이드하려면 먼저 MariaDB 11.4로 업그레이드된 상태여야 합니다. `11.4`에서 `11.8` 버전으로 메이저 버전 업그레이드를 진행하는 경우 아래 사항을 확인해야 합니다.
+
+- **System-Versioned 테이블**: System-Versioned 테이블이 존재하는 경우 업그레이드는 가능하지만, 확장된 타임스탬프 범위로의 업데이트가 필요하여 업그레이드 시간이 길어질 수 있습니다.
+
+자세한 내용은 아래 공식 문서를 참고합니다.
+- [MariaDB 11.4에서 11.8로 업그레이드 경로](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/upgrading/mariadb-community-server-upgrade-paths/upgrading-from-mariadb-11-4-to-mariadb-11-8)
+- [MariaDB 11.8 릴리스 노트](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
+{{/if}}
 
 #### 더미 DB 인스턴스를 사용한 DB 엔진 버전 업그레이드 
 
@@ -123,6 +171,7 @@ DB 인스턴스가 고가용성으로 구성되어 있을 때 예비 마스터�
 > [주의]
 > 장애 조치 수동 제어는 60시간 이상 트리거 되지 않으면 자동으로 업그레이드 작업이 취소됩니다.
 
+{{#if (eq engine.lowerCase "mysql")}}
 ### 노후 운영체제를 사용하는 경우
 
 2022년 5월 10일 이전에 생성된 DB 인스턴스의 경우 내부 운영체제가 노후되어 DB 버전을 업그레이드하는 경우 DB 인스턴스가 교체됩니다. 교체 과정에서 DB 인스턴스의 식별자 및 내부 IP 주소가 변경됩니다. 알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동으로 교체됩니다. 단일 DB 인스턴스의 경우 DB 버전 변경 시 반드시 더미 DB 인스턴스를 사용해야 합니다. 고가용성 DB 인스턴스의 경우 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 마스터와 예비 마스터의 역할이 변경됩니다. 마스터의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하는 것을 권장합니다.  
@@ -168,3 +217,4 @@ DB 인스턴스가 고가용성으로 구성되어 있을 때 예비 마스터�
 | MySQL 5.7.15               | X                |
 | <strong>MySQL 5.6</strong> |                  |
 | MySQL 5.6.33               | O                |
+{{/if}}
