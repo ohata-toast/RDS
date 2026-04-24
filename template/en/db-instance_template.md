@@ -82,13 +82,13 @@ Details about DB engine can be found in [DB Engine](db-engine/).
 | MariaDB 10.11.8          |      |
 | MariaDB 10.11.7          |      |
 | <strong>10.6</strong>    |      |
-| MariaDB 10.6.25          |      |
-| MariaDB 10.6.22          |      |
-| MariaDB 10.6.16          |      |
-| MariaDB 10.6.12          |      |
-| MariaDB 10.6.11          |      |
+| MariaDB 10.6.25          | Creation and read replicas unsupported     |
+| MariaDB 10.6.22          | Creation and read replicas unsupported     |
+| MariaDB 10.6.16          | Creation and read replicas unsupported     |
+| MariaDB 10.6.12          | Creation and read replicas unsupported     |
+| MariaDB 10.6.11          | Creation and read replicas unsupported     |
 | <strong>10.3</strong>    |      |
-| MariaDB 10.3.30          |      |
+| MariaDB 10.3.30          | Creation and read replicas unsupported     |
 
 Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
@@ -1412,10 +1412,11 @@ When using Federated Storage Engine, make sure you consider the following.
     * You can add rules from DB security group.
     * Refer to [DB Security Group](db-security-group/) for more information.
 
-### 부록3. 보안 패치 기능
+<a id="security-patch"></a>
+### 부록3. 보안 패치
 
 NHN Cloud는 DB 인스턴스 운영체제에서 발견된 보안 취약점(CVE)을 주기적으로 관리하여, 영향받는 DB 인스턴스에 보안 패치 유지 관리 작업을 제공합니다.
-보안 패치는 현재 DB 인스턴스가 사용 중인 DB 이미지를 취약점이 해결된 신규 이미지로 업그레이드하는 방식으로 동작합니다.
+보안 패치는 현재 DB 인스턴스의 취약점을 해결한 최신 보안 업데이트를 적용하는 방식으로 동작합니다
 아래 가이드에 따라 콘솔에 있는 보안 패치 기능을 이용하십시오.
 보안 패치 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
 
