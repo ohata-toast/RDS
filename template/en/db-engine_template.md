@@ -171,14 +171,14 @@ The manual control of failover during version upgrade allows you to initiate fai
 > [Caution]
 > If manual control of failover is not triggered for more than 60 hours, the upgrade operation is automatically cancelled.
 
-{{#if (eq engine.lowerCase "mysql")}}
 ### When using an Outdated Operating System
 
-For DB instances created before May 10, 2022, the DB instance will be replaced when the internal operating system is outdated so the DB version is upgraded. During the replacement process, the DB instance's identifier and internal IP address will be changed. The monitored instances in notification groups and event sources in event subscriptions are automatically replaced with the changed identifiers. For a single DB instance, you must use a dummy DB instance when changing DB versions. For high-availability DB instances, the roles of the master and spare master are changed using failover during the DB instance replacement process. Failover may fail if the master is heavily loaded, so it is recommended that you perform DB version change during off-peak hours.  
+내부 운영체제가 노후된 DB 인스턴스의 경우 DB 버전을 업그레이드하기 전 VM 교체를 동반한 운영체제 버전 업그레이드가 필요합니다.  알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동으로 교체됩니다. 단일 DB 인스턴스의 경우 DB 버전 변경 시 더미 DB 인스턴스를 사용을 권장합니다. 고가용성 DB 인스턴스의 경우 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 마스터와 예비 마스터의 역할이 변경됩니다. 마스터의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하는 것을 권장합니다.  
 
 > [Caution]
 > Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
 
+{{#if (eq engine.lowerCase "mysql")}}
 ## Options for MySQL
 
 ### Support for the MariaDB Server Audit plugin for MySQL
