@@ -69,17 +69,28 @@ Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 
-| Version          | Note |
-|------------------|------|
-| MariaDB 11.4.7   |      |
-| MariaDB 10.11.13 |      |
-| MariaDB 10.11.8  |      |
-| MariaDB 10.11.7  |      |
-| MariaDB 10.6.22  |      |
-| MariaDB 10.6.16  |      |
-| MariaDB 10.6.12  |      |
-| MariaDB 10.6.11  |      |
-| MariaDB 10.3.30  |      |
+| Version                  | Note |
+|--------------------------|------|
+| <strong>11.8</strong>    |      |
+| MariaDB 11.8.6           |      |
+| <strong>11.4</strong>    |      |
+| MariaDB 11.4.10          |      |
+| MariaDB 11.4.7           |      |
+| <strong>10.11</strong>   |      |
+| MariaDB 10.11.16         |      |
+| MariaDB 10.11.13         |      |
+| MariaDB 10.11.8          |      |
+| MariaDB 10.11.7          |      |
+| <strong>10.6</strong>    |      |
+| MariaDB 10.6.25          | Creation and read replicas unsupported     |
+| MariaDB 10.6.22          | Creation and read replicas unsupported     |
+| MariaDB 10.6.16          | Creation and read replicas unsupported     |
+| MariaDB 10.6.12          | Creation and read replicas unsupported     |
+| MariaDB 10.6.11          | Creation and read replicas unsupported     |
+| <strong>10.3</strong>    |      |
+| MariaDB 10.3.30          | Creation and read replicas unsupported     |
+
+Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
 
 ### DB Instance Type
@@ -529,7 +540,8 @@ You can easily change various items in DB instances created through console. Cha
 | DB Instance Type   | Yes        | Yes                       |
 | Data Storage Type  | No      |                         |
 | Whether high availability or not      | Yes        | No                     |
-| PING interval      | Yes        | No                     | 
+| PING interval      | Yes        | No                     |
+| Ping 방식      | 예        | 아니오                     |
 | Name           | Yes        | No                     |
 | Description           | Yes        | No                     |
 | DB port        | Yes        | Yes                       |
@@ -984,12 +996,12 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 ```
 
 * Explaining parameter
-  * master_instance_ip : IP of replication target (Master) server
-  * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
-  * user_id_for_replication: an account for replication to access {{engine.pascalCase}} on the replication target (Master) server
-  * password_for_replication_user : Password of account for replication
-  * MASTER_LOG_FILE : Binary log file name of replication target (Master)
-  * MASTER_LOG_POS : Binary log file position of replication target (Master)
+    * master_instance_ip : IP of replication target (Master) server
+    * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
+    * user_id_for_replication: an account for replication to access {{engine.pascalCase}} on the replication target (Master) server
+    * password_for_replication_user : Password of account for replication
+    * MASTER_LOG_FILE : Binary log file name of replication target (Master)
+    * MASTER_LOG_POS : Binary log file position of replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1007,12 +1019,12 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 ```
 
 * Parameter Details
-    * master_instance_ip: IP of the replication target (Master) server
-    * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
-    * user_id_for_replication: Replication account to connect to {{engine.pascalCase}} on the replication target (Master) server
-    * password_for_replication_user: account passowrd for replication
-    * SOURCE_LOG_FILE: Binary log file name of the replication target (Master)
-    * SOURCE_LOG_POS: binary log position of the replication target (Master)
+      * master_instance_ip: IP of the replication target (Master) server
+      * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
+      * user_id_for_replication: Replication account to connect to {{engine.pascalCase}} on the replication target (Master) server
+      * password_for_replication_user: account passowrd for replication
+      * SOURCE_LOG_FILE: Binary log file name of the replication target (Master)
+      * SOURCE_LOG_POS: binary log position of the replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1065,8 +1077,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 ### tcrds_repl_skip_repl_error
 
 * If you run the TCRDS_REPL_SKIP_REPL_ERROR procedure when the Duplicate Key error occurs, you can address the replica error.
-    * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
-    * After 8.4: perform SQL_REPLICA_SKIP_COUNTER=1.
+      * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
+      * After 8.4: perform SQL_REPLICA_SKIP_COUNTER=1.
 * `{{engine.pascalCase}} error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
@@ -1172,7 +1184,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### When `ERROR 1418` occurs during data importing
 
 * `ERROR 1418` occurs when the function declaration in the mysqldump file does not contain NO SQL, READS SQL DATA, or DETERMINISTIC and binary logging is enabled.
-  * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
+    * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
 * To resolve this, Parameter value of `log_bin_trust_function_creators` of DB instance to which you want to apply mysqldump file should be changed to `1`.
 
 ### Export by using replication
@@ -1387,15 +1399,70 @@ When using Federated Storage Engine, make sure you consider the following.
 #### For configuration using RDS as a local node
 
 * Make sure you need to allow the outbound direction to remote nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
 * When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
-  * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
-  * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
-  * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
+    * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
+    * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
+    * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
 
 #### For configuration using RDS as a remote node
 
 * Make sure you need to allow the inbound direction to local nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
+
+<a id="security-patch"></a>
+### 부록3. 보안 패치
+
+NHN Cloud는 DB 인스턴스 운영체제에서 발견된 보안 취약점(CVE)을 주기적으로 관리하여, 영향받는 DB 인스턴스에 보안 패치 유지 관리 작업을 제공합니다.
+보안 패치는 현재 DB 인스턴스의 취약점을 해결한 최신 보안 업데이트를 적용하는 방식으로 동작합니다
+아래 가이드에 따라 콘솔에 있는 보안 패치 기능을 이용하십시오.
+보안 패치 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
+
+#### 1. 보안 패치 대상 DB 인스턴스를 확인합니다.
+
+**유지 관리**에서 **필수** 또는 **사용 가능**을 클릭하거나 **DB 인스턴스 상세**의 **유지 관리** 탭에서 보안 패치 유지 관리 작업이 있는지 확인할 수 있습니다.
+
+![patch-security-list-en]({{url.cdn}}/26.05.12/patch-security-list-en.png)
+
+❶ 보안 패치 유지 관리 **보기** 버튼 클릭
+❷ 현재 DB 이미지에 해당하는 보안 취약점 정보를 확인할 수 있습니다.
+
+![patch-security-detail-en]({{url.cdn}}/26.05.12/patch-security-detail-en.png)
+
+보안 패치를 진행 시 해결될 수 있는 보안 취약점 정보를 확인할 수 있습니다.
+
+![patch-security-popup-en]({{url.cdn}}/26.05.12/patch-security-popup-en.png)
+
+> [참고]
+> 취약점 심각도는 CRITICAL, HIGH, MEDIUM, LOW로 구분됩니다.
+
+#### 2. 보안 패치 대상 DB 인스턴스에 접속 중인 응용 프로그램을 확인합니다.
+
+보안 패치는 DB 인스턴스의 서비스 순단이 발생할 수 있습니다.
+고가용성 DB 인스턴스는 장애 조치를 통해 서비스 순단을 최소화할 수 있으며, 단일 DB 인스턴스는 재시작을 통해 보안 패치가 적용됩니다.
+DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취하십시오.
+
+#### 3. 보안 패치 적용 시점을 선택합니다.
+
+![patch-security-maintenance-en]({{url.cdn}}/26.05.12/patch-security-maintenance-en.png)
+
+❶ **즉시 적용**을 클릭해 보안 패치를 바로 적용할 수 있습니다.
+❷ **다음 유지 관리 기간에 적용**을 클릭해 지정된 유지 관리 기간에 보안 패치를 적용할 수 있습니다.
+
+고가용성 DB 인스턴스에 적용 시에는 아래 옵션을 함께 선택할 수 있습니다.
+
+* **사전 백업 실행**: 보안 패치 수행 전 백업을 자동으로 실행합니다.
+* **장애 조치 방식 선택**: 온라인 장애 조치, 수동 장애 조치 사용 여부를 선택합니다.
+* **복제 지연 대기**: 복제 지연이 해소될 때까지 대기한 후 보안 패치를 진행합니다.
+* **Read Only 모드**: 보안 패치 수행 중 Read Only 모드를 사용합니다.
+
+#### 4. 보안 패치가 완료될 때까지 대기합니다.
+
+DB 인스턴스 상태가 변경되지 않는다면 새로 고침하세요.
+
+![patch-security-running-en]({{url.cdn}}/26.05.12/patch-security-running-en.png)
+
+DB 인스턴스에 보안 패치가 진행되는 동안에는 아무런 조작을 할 수 없습니다.
+보안 패치가 정상적으로 완료되지 않으면 자동으로 재시도되며, 반복적으로 실패할 경우 관리자에게 보고되어 NHN Cloud에서 별도로 연락을 드립니다.

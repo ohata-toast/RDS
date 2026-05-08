@@ -69,17 +69,28 @@ DBエンジンの詳細は[DBエンジン](db-engine/)で確認できます。
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 
-| バージョン            | 備考 |
-|------------------|----|
-| MariaDB 11.4.7   |    |
-| MariaDB 10.11.13 |    |
-| MariaDB 10.11.8  |    |
-| MariaDB 10.11.7  |    |
-| MariaDB 10.6.22  |    |
-| MariaDB 10.6.16  |    |
-| MariaDB 10.6.12  |    |
-| MariaDB 10.6.11  |    |
-| MariaDB 10.3.30  |    |
+| バージョン                  | 備考 |
+|------------------------|----|
+| <strong>11.8</strong>  |    |
+| MariaDB 11.8.6         |    |
+| <strong>11.4</strong>  |    |
+| MariaDB 11.4.10        |    |
+| MariaDB 11.4.7         |    |
+| <strong>10.11</strong> |    |
+| MariaDB 10.11.16       |    |
+| MariaDB 10.11.13       |    |
+| MariaDB 10.11.8        |    |
+| MariaDB 10.11.7        |    |
+| <strong>10.6</strong>  |    |
+| MariaDB 10.6.25        | 新規に作成したりリードレプリカを追加することはできません。   |
+| MariaDB 10.6.22        | 新規に作成したりリードレプリカを追加することはできません。   |
+| MariaDB 10.6.16        | 新規に作成したりリードレプリカを追加することはできません。   |
+| MariaDB 10.6.12        | 新規に作成したりリードレプリカを追加することはできません。   |
+| MariaDB 10.6.11        | 新規に作成したりリードレプリカを追加することはできません。   |
+| <strong>10.3</strong>  |    |
+| MariaDB 10.3.30        | 新規に作成したりリードレプリカを追加することはできません。   |
+
+DBエンジンの詳細は[DBエンジン](db-engine/)で確認できます。
 {{/if}}
 
 ### DBインスタンスタイプ
@@ -529,6 +540,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 | データストレージ種類 | いいえ     |                         |
 | 高可用性の有無     | はい       | いいえ                    |
 | Ping間隔    | はい       | いいえ                    | 
+| Ping 방식      | 예        | 아니오                     |
 | 名前         | はい       | いいえ                    |
 | 説明         | はい       | いいえ                    |
 | DBポート      | はい       | はい                      |
@@ -978,12 +990,12 @@ RDS for {{engine.pascalCase}}はユーザーに利便性を提供するため、
 ```
 
 * パラメータの説明
-  * master_instance_ip:複製対象(Master)サーバーのIP
-  * master_instance_port:複製対象(Master)サーバーの{{engine.pascalCase}}ポート
-  * user_id_for_replication:複製対象(Master)サーバーの{{engine.pascalCase}}に接続する複製用アカウント
-  * password_for_replication_user:複製用アカウントパスワード
-  * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名
-  * MASTER_LOG_POS:複製対象(Master)のbinary logポジション
+    * master_instance_ip:複製対象(Master)サーバーのIP
+    * master_instance_port:複製対象(Master)サーバーの{{engine.pascalCase}}ポート
+    * user_id_for_replication:複製対象(Master)サーバーの{{engine.pascalCase}}に接続する複製用アカウント
+    * password_for_replication_user:複製用アカウントパスワード
+    * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名
+    * MASTER_LOG_POS:複製対象(Master)のbinary logポジション
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1001,12 +1013,12 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 ```
 
 * パラメータの説明
-    * master_instance_ip:レプリケーション元(マスター)サーバーのIP
-    * master_instance_port:レプリケーション元(マスター)サーバーの{{engine.pascalCase}}ポート
-    * user_id_for_replication:レプリケーション元(マスター)サーバーの{{engine.pascalCase}}に接続するためのレプリケーション用アカウント
-    * password_for_replication_user:レプリケーション用アカウントのパスワード
-    * SOURCE_LOG_FILE:レプリケーション元(マスター)のバイナリログファイル名
-    * SOURCE_LOG_POS:レプリケーション元(マスター)のバイナリログポジション
+      * master_instance_ip:レプリケーション元(マスター)サーバーのIP
+      * master_instance_port:レプリケーション元(マスター)サーバーの{{engine.pascalCase}}ポート
+      * user_id_for_replication:レプリケーション元(マスター)サーバーの{{engine.pascalCase}}に接続するためのレプリケーション用アカウント
+      * password_for_replication_user:レプリケーション用アカウントのパスワード
+      * SOURCE_LOG_FILE:レプリケーション元(マスター)のバイナリログファイル名
+      * SOURCE_LOG_POS:レプリケーション元(マスター)のバイナリログポジション
 
 ```
 ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1059,8 +1071,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 ### tcrds_repl_skip_repl_error
 
 * 以下のようなDuplicate keyエラーが発生した場合、tcrds_repl_skip_repl_errorプロシージャを実行するとレプリケーションエラーを解決できます。
-    * 8.4以前: SQL_SLAVE_SKIP_COUNTER=1を実行します。
-    * 8.4以降: `SQL_REPLICA_SKIP_COUNTER=1`を実行します。
+      * 8.4以前: SQL_SLAVE_SKIP_COUNTER=1を実行します。
+      * 8.4以降: `SQL_REPLICA_SKIP_COUNTER=1`を実行します。
 * `{{engine.pascalCase}} error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
@@ -1164,7 +1176,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### データのインポート中に`ERROR 1418`エラーが発生する場合
 
 * `ERROR 1418`エラーはmysqldumpファイルの関数宣言にNO SQL、READS SQL DATA, DETERMINISTICがなく、バイナリログが有効な状態の時に発生します。
-  * 詳細については[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
+    * 詳細については[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
 * これを解決するためには、mysqldumpファイルを適用するDBインスタンスの`log_bin_trust_function_creators`パラメータの値を`1`に変更する必要があります。
 
 ### 複製を利用してエクスポート
@@ -1378,15 +1390,70 @@ Federated Storage Engineを使用する場合、次を考慮する必要があ�
 #### ローカルノードとしてRDSを利用する構成の場合
 
 * リモートノードへの送信を許可する設定が必要です。
-  * DBセキュリティグループでルールを追加できます。
-  * 詳細については、 [DBセキュリティグループ](db-security-group/)項目を参照してください。
+    * DBセキュリティグループでルールを追加できます。
+    * 詳細については、 [DBセキュリティグループ](db-security-group/)項目を参照してください。
 * ローカルノード役割のRDSにRead Only Slaveを追加した構成で使用する場合は、パラメータのreplicate-ignore-tableにfederated設定されたテーブル名を指定する必要があります。
-  * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
-  * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
-  * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
+    * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
+    * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
+    * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
 
 #### リモートノードとしてRDSを利用する構成の場合
 
 * ローカルノードでの受信を許可する設定が必要です。
-  * DBセキュリティグループでルールを追加できます。
-  * 詳細については、 [DBセキュリティグループ](db-security-group/)項目を参照してください。
+    * DBセキュリティグループでルールを追加できます。
+    * 詳細については、 [DBセキュリティグループ](db-security-group/)項目を参照してください。
+
+<a id="security-patch"></a>
+### 부록3. 보안 패치
+
+NHN Cloud는 DB 인스턴스 운영체제에서 발견된 보안 취약점(CVE)을 주기적으로 관리하여, 영향받는 DB 인스턴스에 보안 패치 유지 관리 작업을 제공합니다.
+보안 패치는 현재 DB 인스턴스의 취약점을 해결한 최신 보안 업데이트를 적용하는 방식으로 동작합니다
+아래 가이드에 따라 콘솔에 있는 보안 패치 기능을 이용하십시오.
+보안 패치 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
+
+#### 1. 보안 패치 대상 DB 인스턴스를 확인합니다.
+
+**유지 관리**에서 **필수** 또는 **사용 가능**을 클릭하거나 **DB 인스턴스 상세**의 **유지 관리** 탭에서 보안 패치 유지 관리 작업이 있는지 확인할 수 있습니다.
+
+![patch-security-list-ja]({{url.cdn}}/26.05.12/patch-security-list-ja.png)
+
+❶ 보안 패치 유지 관리 **보기** 버튼 클릭
+❷ 현재 DB 이미지에 해당하는 보안 취약점 정보를 확인할 수 있습니다.
+
+![patch-security-detail-ja]({{url.cdn}}/26.05.12/patch-security-detail-ja.png)
+
+보안 패치를 진행 시 해결될 수 있는 보안 취약점 정보를 확인할 수 있습니다.
+
+![patch-security-popup-ja]({{url.cdn}}/26.05.12/patch-security-popup-ja.png)
+
+> [참고]
+> 취약점 심각도는 CRITICAL, HIGH, MEDIUM, LOW로 구분됩니다.
+
+#### 2. 보안 패치 대상 DB 인스턴스에 접속 중인 응용 프로그램을 확인합니다.
+
+보안 패치는 DB 인스턴스의 서비스 순단이 발생할 수 있습니다.
+고가용성 DB 인스턴스는 장애 조치를 통해 서비스 순단을 최소화할 수 있으며, 단일 DB 인스턴스는 재시작을 통해 보안 패치가 적용됩니다.
+DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취하십시오.
+
+#### 3. 보안 패치 적용 시점을 선택합니다.
+
+![patch-security-maintenance-ja]({{url.cdn}}/26.05.12/patch-security-maintenance-ja.png)
+
+❶ **즉시 적용**을 클릭해 보안 패치를 바로 적용할 수 있습니다.
+❷ **다음 유지 관리 기간에 적용**을 클릭해 지정된 유지 관리 기간에 보안 패치를 적용할 수 있습니다.
+
+고가용성 DB 인스턴스에 적용 시에는 아래 옵션을 함께 선택할 수 있습니다.
+
+* **사전 백업 실행**: 보안 패치 수행 전 백업을 자동으로 실행합니다.
+* **장애 조치 방식 선택**: 온라인 장애 조치, 수동 장애 조치 사용 여부를 선택합니다.
+* **복제 지연 대기**: 복제 지연이 해소될 때까지 대기한 후 보안 패치를 진행합니다.
+* **Read Only 모드**: 보안 패치 수행 중 Read Only 모드를 사용합니다.
+
+#### 4. 보안 패치가 완료될 때까지 대기합니다.
+
+DB 인스턴스 상태가 변경되지 않는다면 새로 고침하세요.
+
+![patch-security-running-ja]({{url.cdn}}/26.05.12/patch-security-running-ja.png)
+
+DB 인스턴스에 보안 패치가 진행되는 동안에는 아무런 조작을 할 수 없습니다.
+보안 패치가 정상적으로 완료되지 않으면 자동으로 재시도되며, 반복적으로 실패할 경우 관리자에게 보고되어 NHN Cloud에서 별도로 연락을 드립니다.
