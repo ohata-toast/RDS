@@ -26,7 +26,7 @@ RDS for MySQL은(는) API 호출 시 인증/인가를 위해 User Access Key 토
 * `RDS for MySQL ADMIN` 권한은 모든 기능을 사용 가능합니다.
 * `RDS for MySQL VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
     * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
-    * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
+    * 단, 알림 그룹 및 사용자 그룹 관련 기능은 사용 가능합니다.
 
 API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 오류가 발생합니다.
 
@@ -88,7 +88,7 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | MYSQL_V8407  | O        | O               | CACHING_SHA2 |
 | MYSQL_V8408  | O        | O               | CACHING_SHA2 |
 
-* ENUM 타입의 dbVersion 필드에 대해 해당 값을 사용할 수 있습니다.
+* ENUM 타입의 dbVersion 필드에서 해당 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능한 경우가 있을 수 있습니다.
 
 ## 프로젝트 정보
@@ -830,6 +830,7 @@ POST /v4.0/db-instances
 | userGroupIds            | Body  | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
 | useHighAvailability     | Body  | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
 | pingInterval            | Body  | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| pingType                | Body  | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- 기본값: `INSERT`<br/>- `INSERT`<br/>- `SELECT` |
 | useDefaultNotification  | Body  | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
 | useDeletionProtection   | Body  | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
 | useSlowQueryAnalysis    | Body  | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
@@ -837,7 +838,7 @@ POST /v4.0/db-instances
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
-| network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
+| network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: `false`                                                                                                                                                                                             |
 | network.availabilityZone                     | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                    |
 | storage                                      | Body | Object  | O  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                  |    
 | storage.storageType                          | Body | Enum    | O  | 데이터 스토리지 타입<br/>- 예시: `General SSD`                                                                                                                                                                                         |
@@ -1286,7 +1287,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.dbInstanceName | Body | String   | 원본 DB 인스턴스의 이름                                                                                                                                                               |
 | restorableBackups.backup.dbVersion      | Body | String   | DB 엔진 유형                                                                                                                                                                     |
 | restorableBackups.backup.failoverCount  | Body | Number   | 장애 조치 횟수                                                                                                                                                                     |
-| restorableBackups.backup.binLogFileName | Body | String   | 바이너리 로그 파일 이름                                                                                                                                                                |
+| restorableBackups.backup.binLogFileName | Body | String   | 바이너리 로그 파일명                                                                                                                                                                |
 | restorableBackups.backup.binLogPosition | Body | Number   | 바이너리 로그 파일 위치                                                                                                                                                                |
 | restorableBackups.backup.createdYmdt    | Body | DateTime | 백업 생성 일시                                                                                                                                                                     |
 | restorableBackups.backup.updatedYmdt    | Body | DateTime | 백업 갱신 일시                                                                                                                                                                     |
@@ -1426,6 +1427,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | userGroupIds                                        | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                       |
 | useHighAvailability                                 | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                        |
 | pingInterval                                        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                  |
+| pingType                                            | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- 기본값: `INSERT`<br/>- `INSERT`<br/>- `SELECT`                                                                                  |
 | useDefaultNotification                              | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                       |
 | useDeletionProtection                               | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                                                                                             |
 | useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                                   |
@@ -1449,13 +1451,13 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | backup.backupSchedules | Body | Array | X | 예정된 자동 백업 목록<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | backup.backupSchedules.backupWndBgnTime | Body | String | X | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| backup.backupSchedules.backupWndDuration | Body | Enum | X | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`<span style="color:#313338">: 30분</span><br/>- `ONE_HOUR`<span style="color:#313338">: 1시간</span><br/>- `ONE_HOUR_AND_HALF`<span style="color:#313338">: 1시간 30분</span><br/>- `TWO_HOURS`<span style="color:#313338">: 2시간</span><br/>- `TWO_HOURS_AND_HALF`<span style="color:#313338">: 2시간 30분</span><br/>- `THREE_HOURS`<span style="color:#313338">: 3시간</span> |
+| backup.backupSchedules.backupWndDuration | Body | Enum | X | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
 
 #### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
 
 | 이름                  | 종류   | 형식       | 필수 | 설명                                                                                             |
 |---------------------|------|----------|----|------------------------------------------------------------------------------------------------|
-| restore.restoreYmdt | Body | DateTime | O  | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>복원 정보 조회로 조회한 가장 최신의 복원 가능한 시간 이전에 대해서만 복원이 가능하다. |
+| restore.restoreYmdt | Body | DateTime | O  | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>복원 정보 조회로 조회한 가장 최신의 복원 가능한 시간 이전에 대해서만 복원이 가능합니다. |
 
 
 <details><summary>예시</summary>
@@ -1510,7 +1512,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | restore.binLog.binLogFileName | Body | String | O  | 복원에 사용할 바이너리 로그 이름 |
 | restore.binLog.binLogPosition | Body | Number | O  | 복원에 사용할 바이너리 로그 위치 |
 
-* 바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그에 대해 복원이 가능합니다.
+* 바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그를 복원할 수 있습니다.
 
 
 <details><summary>예시</summary>
@@ -1651,6 +1653,7 @@ POST /v4.0/db-instances/restore-from-obs
 | userGroupIds                                        | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                         |
 | useHighAvailability                                 | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                           |
 | pingInterval                                        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| pingType                                            | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- 기본값: `INSERT`<br/>- `INSERT`<br/>- `SELECT` |
 | useDefaultNotification                              | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                          |
 | useDeletionProtection                               | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                               |
 | useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                                     |
@@ -1674,7 +1677,7 @@ POST /v4.0/db-instances/restore-from-obs
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | backup.backupSchedules | Body | Array | O | 예정된 자동 백업 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`<span style="color:#313338">: 30분</span><br/>- `ONE_HOUR`<span style="color:#313338">: 1시간</span><br/>- `ONE_HOUR_AND_HALF`<span style="color:#313338">: 1시간 30분</span><br/>- `TWO_HOURS`<span style="color:#313338">: 2시간</span><br/>- `TWO_HOURS_AND_HALF`<span style="color:#313338">: 2시간 30분</span><br/>- `THREE_HOURS`<span style="color:#313338">: 3시간</span> |
+| backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
 
 
 
@@ -1776,6 +1779,80 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
+### 고가용성 상태
+
+| 상태                               | 설명                              |
+|----------------------------------|---------------------------------|
+| `CREATED`                        | 고가용성이 생성된 경우                    |
+| `STABLE`                         | 고가용성이 정상인 경우                    |
+| `PAUSING`                        | 고가용성이 일시 중지 중인 경우               |
+| `PAUSED`                         | 고가용성이 일시 중지된 경우                 |
+| `PAUSED_DUE_TO_TASK`             | 작업으로 인해 고가용성이 일시 중지된 경우         |
+| `DISABLE_MASTER_IN_REPLICATION`  | 마스터 비정상 복제 감지로 고가용성이 중단된 경우     |
+| `DISABLE_MHA_PROCESS`            | 고가용성 프로세스가 중단된 경우               |
+| `DISABLE_REPLICATION_STOP`       | 복제 중단으로 인해 고가용성이 중단된 경우         |
+| `DISABLE_REPLICATION_DELAY`      | 복제 지연으로 인해 고가용성이 중단된 경우         |
+| `MASTER_FAILURE_DETECTION`       | 마스터 장애가 감지된 경우                  |
+| `FAILOVER_STARTED`               | 장애 조치가 시작된 경우                   |
+| `FAILOVER_FAILED`                | 장애 조치가 실패한 경우                   |
+| `FAILOVER_COMPLETED`             | 장애 조치가 완료된 경우                   |
+| `DELETED`                        | 고가용성이 삭제된 경우                    |
+
+---
+
+### 고가용성 정보 보기
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/high-availability
+```
+
+#### 필요 권한
+
+| 권한명                                              | 설명         |
+|----------------------------------------------------|------------|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+#### 응답
+
+| 이름                  | 종류   | 형식      | 설명                                                                                                                  |
+|---------------------|------|---------|---------------------------------------------------------------------------------------------------------------------|
+| useHighAvailability | Body | Boolean | 고가용성 사용 여부                                                                                                          |
+| haStatus            | Body | Enum    | 고가용성 상태                                                                                                          |
+| pingInterval        | Body | Number  | Ping 간격(초)                                                                                                          |
+| pingType            | Body | Enum    | Ping 타입<br/>- `INSERT`<br/>- `SELECT`                                                                                |
+
+<details><summary>예시</summary>
+
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "useHighAvailability": true,
+    "haStatus": "STABLE",
+    "pingInterval": 3,
+    "pingType": "INSERT"
+}
+```
+
+</p>
+
+</details>
+
+---
+
 ### 고가용성 수정하기
 
 ```http
@@ -1795,6 +1872,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | dbInstanceId        | URL  | UUID    | O  | DB 인스턴스의 식별자                                         |
 | useHighAvailability | Body | Boolean | O  | 고가용성 사용 여부                                           |
 | pingInterval        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| pingType            | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- `INSERT`<br/>- `SELECT` |
 | dbInstanceCandidateName        | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 고가용성 사용 시 필수값 |
 
 #### 응답
@@ -2209,7 +2287,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 | 이름              | 종류   | 형식      | 필수 | 설명           |
 |-----------------|------|---------|----|--------------|
 | dbInstanceId    | URL  | UUID    | O  | DB 인스턴스의 식별자 |
-| usePublicAccess | Body | Boolean | O  | 외부 접속 가능  여부 |
+| usePublicAccess | Body | Boolean | O  | 외부 접속 가능 여부 |
 
 #### 응답
 
@@ -2552,7 +2630,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 | 이름                   | 종류   | 형식       | 설명                                                                                                                                                                                           |
 |----------------------|------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | logFiles             | Body | Array    | 로그 파일 목록                                                                                                                                                                                     |
-| logFiles.logFileName | Body | String   | 로그 파일 이름                                                                                                                                                                                     |
+| logFiles.logFileName | Body | String   | 로그 파일명                                                                                                                                                                                     |
 | logFiles.logFileType | Body | Enum     | 로그 파일 타입 종류<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
 | logFiles.logFileSize | Body | Number   | 로그 파일 크기(Byte)                                                                                                                                                                               |
 | logFiles.createdYmdt | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                                                            |
@@ -2603,7 +2681,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 | 이름           | 종류    | 형식     | 필수 | 설명                                                                                                                                                                                              |
 |--------------|-------|--------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId | URL   | UUID   | O  | DB 인스턴스의 식별자                                                                                                                                                                                    |
-| logFileName  | URL   | String | O  | 로그 파일 이름                                                                                                                                                                                        |
+| logFileName  | URL   | String | O  | 로그 파일명                                                                                                                                                                                        |
 | logFileType  | Query | Enum   | O  | 로그 파일 타입 종류<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
 
 #### 응답
@@ -2648,7 +2726,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 | 이름              | 종류   | 형식     | 필수 | 설명                             |
 |-----------------|------|--------|----|--------------------------------|
 | dbInstanceId    | URL  | UUID   | O  | DB 인스턴스의 식별자                   |
-| logFileNames    | Body | Array  | O  | 로그 파일 이름 목록<br/>- 최소 크기: `1`   |
+| logFileNames    | Body | Array  | O  | 로그 파일명 목록<br/>- 최소 크기: `1`   |
 | tenantId        | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 테넌트 ID   |
 | username        | Body | String | O  | NHN Cloud 계정 또는 IAM 계정 ID      |
 | password        | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 API 비밀번호 |
@@ -2706,7 +2784,7 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 | 이름                     | 종류   | 형식       | 설명                                |
 |------------------------|------|----------|-----------------------------------|
 | binLogs                | Body | Array    | BinLog 파일 목록                      |
-| binLogs.binLogFileName | Body | String   | BinLog 파일 이름                      |
+| binLogs.binLogFileName | Body | String   | BinLog 파일명                      |
 | binLogs.binLogFileSize | Body | Number   | BinLog 파일 크기(Byte)                |
 | binLogs.createdYmdt    | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
@@ -2752,7 +2830,7 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 | 이름                 | 종류   | 형식     | 필수 | 설명                                     |
 |--------------------|------|--------|----|----------------------------------------|
 | dbInstanceId       | URL  | UUID   | O  | DB 인스턴스의 식별자                           |
-| lastBinLogFileName | Body | String | O  | 삭제할 마지막 BinLog 파일 이름(해당 파일 직전까지 삭제됨) |
+| lastBinLogFileName | Body | String | O  | 삭제할 마지막 BinLog 파일명(해당 파일 직전까지 삭제됩니다) |
 
 <details><summary>예시</summary>
 <p>
@@ -2813,7 +2891,7 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 | 이름                           | 종류   | 형식       | 설명                                                                           |
 |------------------------------|------|----------|------------------------------------------------------------------------------|
 | certificates                 | Body | Array    | 인증서 파일 목록                                                                    |
-| certificates.fileName        | Body | String   | 인증서 파일 이름                                                                    |
+| certificates.fileName        | Body | String   | 인증서 파일명                                                                    |
 | certificates.certificateType | Body | Enum     | 인증서 타입<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
 | certificates.fileSize        | Body | Number   | 인증서 파일 크기(Byte)                                                              |
 | certificates.createdYmdt     | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                            |
@@ -2863,7 +2941,7 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 | dbInstanceId     | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                 |
 | certificateTypes | Body | Array  | O  | 업로드할 인증서 타입<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
 | tenantId         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 테넌트 ID                                                |
-| username         | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID                                                    |
+| username         | Body | String | O  | NHN Cloud 계정 또는 IAM 계정 ID                                                    |
 | password         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 API 비밀번호                                              |
 | targetContainer  | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 컨테이너                                                  |
 | objectPath       | Body | String | O  | 컨테이너에 저장될 인증서 파일의 경로                                                         |
@@ -3228,6 +3306,7 @@ POST /v4.0/backups/{backupId}/restore
 | userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                      |
 | useHighAvailability                          | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                       |
 | pingInterval                                 | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
+| pingType                                     | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- 기본값: `INSERT`<br/>- `INSERT`<br/>- `SELECT` |
 | useDefaultNotification                       | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
 | useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         | 
 | useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
@@ -3503,7 +3582,7 @@ POST /v4.0/db-security-groups
 | rules.etherType     | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
 | rules.cidr          | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
 | rules.port          | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
-| rules.port.portType | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
+| rules.port.portType | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 필요하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
 | rules.port.minPort  | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
 | rules.port.maxPort  | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 
@@ -3662,7 +3741,7 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | direction         | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             |
 | etherType         | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
 | port              | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
-| port.portType     | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
+| port.portType     | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 필요하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
 | port.minPort      | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
 | port.maxPort      | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 | cidr              | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
@@ -3719,7 +3798,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | direction         | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             |
 | etherType         | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
 | port              | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
-| port.portType     | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
+| port.portType     | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 필요하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
 | port.minPort      | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
 | port.maxPort      | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 | cidr              | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
@@ -3879,7 +3958,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 | parameters.parameterId        | Body | UUID     | 파라미터 식별자                                                                                               |
 | parameters.parameterFileGroup | Body | Enum     | 파라미터 파일 그룹 타입<br/>- `CLIENT`: client<br/>- `MYSQL`: mysql<br/>- `MYSQLD`: mysqld                       |
 | parameters.parameterName      | Body | String   | 파라미터 이름                                                                                                |
-| parameters.fileParameterName  | Body | String   | 파라미터 파일 이름                                                                                             |
+| parameters.fileParameterName  | Body | String   | 파라미터 파일명                                                                                             |
 | parameters.value              | Body | String   | 현재 설정된 값                                                                                               |
 | parameters.defaultValue       | Body | String   | 기본값                                                                                                    |
 | parameters.allowedValue       | Body | String   | 허용된 값                                                                                                  |
@@ -4336,8 +4415,8 @@ POST /v4.0/user-groups
 | 이름            | 종류   | 형식      | 필수 | 설명                                                        |
 |---------------|------|---------|----|-----------------------------------------------------------|
 | userGroupName | Body | String  | O  | 사용자 그룹을 식별할 수 있는 이름                                       |
-| memberIds     | Body | Array   | O  | 프로젝트 멤버의 식별자 목록 <br /> `selectAll`이 true인 경우 해당 필드 값은 무시됨 |
-| selectAll     | Body | Boolean | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨        |
+| memberIds     | Body | Array   | O  | 프로젝트 멤버의 식별자 목록 <br /> `selectAll`이 true인 경우 해당 필드 값은 무시됩니다 |
+| selectAll     | Body | Boolean | X  | 프로젝트 멤버 전체 여부 <br /> true인 경우 해당 그룹은 전체 멤버를 대상으로 설정됩니다        |
 
 <details><summary>예시</summary>
 <p>
@@ -4388,7 +4467,7 @@ PUT /v4.0/user-groups/{userGroupId}
 | userGroupId   | URL  | UUID    | O  | 사용자 그룹의 식별자                                        |
 | userGroupName | Body | String  | X  | 사용자 그룹을 식별할 수 있는 이름                                |
 | memberIds     | Body | Array   | X  | 프로젝트 멤버의 식별자 목록                                    |
-| selectAll     | Body | Boolean | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨 |
+| selectAll     | Body | Boolean | X  | 프로젝트 멤버 전체 여부 <br /> true인 경우 해당 그룹은 전체 멤버를 대상으로 설정됩니다 |
 
 <details><summary>예시</summary>
 <p>

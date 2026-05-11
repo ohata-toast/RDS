@@ -3,9 +3,7 @@
 ## DB Instance
 
 DB instance is a concept that encompasses virtual equipment and installed {{engine.pascalCase}}, a unit of {{engine.pascalCase}} provided by RDS for {{engine.pascalCase}}.
-You do not have direct access to the operating system of the DB instance, but only to the database through the port you entered when you created the DB instance. The available port ranges have the following restrictions.
-
-* The available port range is between 3306 and 43306.
+You do not have direct access to the operating system of the DB instance, but only to the database through the port you entered when you created the DB instance. The available port ranges have the following restrictions. The available port range is between 3306 and 43306.
 
 The DB instance is identified by the customer-assigned name and the automatically assigned 32-byte ID.
 DB instance name has the following restrictions.
@@ -18,7 +16,7 @@ DB instance name has the following restrictions.
 
 ## Create DB Instance
 
-You can create DB instance using the settings below.
+You can create DB instance with the following settings.
 
 ### Availability Zone
 
@@ -47,10 +45,10 @@ MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy
 | MySQL 8.0.40         |                                                           |
 | MySQL 8.0.36         |                                                           |
 | MySQL 8.0.35         |                                                           |
-| MySQL 8.0.34         | Creation and read replicas unsupported                    | 
-| MySQL 8.0.33         | Creation and read replicas unsupported                    | 
-| MySQL 8.0.32         | Creation and read replicas unsupported                    | 
-| MySQL 8.0.28         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.34         | Creation and read replicas unsupported                    |
+| MySQL 8.0.33         | Creation and read replicas unsupported                    |
+| MySQL 8.0.32         | Creation and read replicas unsupported                    |
+| MySQL 8.0.28         | Creation and read replicas unsupported                    |
 | MySQL 8.0.23         | Creation and read replicas unsupported                    |
 | MySQL 8.0.18         | Creation and read replicas unsupported                    |
 | <strong>5.7</strong> |                                                           |
@@ -69,17 +67,28 @@ Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 
-| Version          | Note |
-|------------------|------|
-| MariaDB 11.4.7   |      |
-| MariaDB 10.11.13 |      |
-| MariaDB 10.11.8  |      |
-| MariaDB 10.11.7  |      |
-| MariaDB 10.6.22  |      |
-| MariaDB 10.6.16  |      |
-| MariaDB 10.6.12  |      |
-| MariaDB 10.6.11  |      |
-| MariaDB 10.3.30  |      |
+| Version                  | Note |
+|------------------------|----|
+| <strong>11.8</strong>  |    |
+| MariaDB 11.8.6         |    |
+| <strong>11.4</strong>  |    |
+| MariaDB 11.4.10        |    |
+| MariaDB 11.4.7         |    |
+| <strong>10.11</strong> |    |
+| MariaDB 10.11.16       |    |
+| MariaDB 10.11.13       |    |
+| MariaDB 10.11.8        |    |
+| MariaDB 10.11.7        |    |
+| <strong>10.6</strong>  |    |
+| MariaDB 10.6.25        | Creation and read replicas unsupported   |
+| MariaDB 10.6.22        | Creation and read replicas unsupported   |
+| MariaDB 10.6.16        | Creation and read replicas unsupported   |
+| MariaDB 10.6.12        | Creation and read replicas unsupported   |
+| MariaDB 10.6.11        | Creation and read replicas unsupported   |
+| <strong>10.3</strong>  |    |
+| MariaDB 10.3.30        | Creation and read replicas unsupported   |
+
+Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
 
 ### DB Instance Type
@@ -97,7 +106,7 @@ When creating a DB instance, you must select an appropriate DB instance type acc
 The type of DB instance that you have already created can be easily changed through the console.
 
 > [Caution]
-> If you change the type of DB instance that you have already created, the DB instance will be terminated, resulting in a few minutes of downtime.
+> If you change the type of DB instance that you have already created, the DB instance will be terminated, causing a service downtime of several minutes.
 
 ### Data Storage
 
@@ -107,7 +116,7 @@ It stores the database's data files in data storage. DB instances support two ty
 > You cannot change the data storage type for DB instance that you have already created.
 
 > [Note]
-> To use more than 2TB of data storage, contact NHN Cloud Customer Center.
+> To use more than 2TB of data storage, contact NHN Cloud Customer Support.
 
 Because the following tasks increase the I/O usage of data storage, the performance of DB instance may be degraded during the process.
 
@@ -209,7 +218,7 @@ You can find the following information on the Maintenance tab of the DB instance
 * Upcoming maintenance tasks (Scheduled for the next duration)
 * Pending maintenance tasks
 
-Upcoming maintenance tasks can be excluded from the maintenance duration using the Hold or Delete buttons. For pending Provider maintenance tasks, you can manually apply them by selecting either **Apply Immediately** or **Apply in the Next Maintenance Duration**.
+Upcoming maintenance tasks can be excluded from the maintenance duration clicking the **Hold** or **Delete** buttons. For pending Provider maintenance tasks, you can manually apply them by selecting either **Apply Immediately** or **Apply in the Next Maintenance Duration**.
 
 #### Execution Order
 
@@ -292,7 +301,7 @@ If you created a floating IP, issue additional external domains. The external do
 
 Starting with DB instances created after the May 2025 maintenance, VIP (Virtual IP) is supported. The VIP is an IP address within the user's VPC subnet. For high-availability DB instances, the VIP is always the current master. Application connection information must use either the VIP directly or the internal (VIP) domain.
 
-For DB instances created before the May 2025 maintenance, you can add a VIP by selecting `Add VIP` in the web console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the candidate master, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
+For DB instances created before the May 2025 maintenance, you can add a VIP by selecting **Add VIP** in the web console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the candidate master, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
 
 > [Note]
 > After the maintenance in September 2025, VIP will no longer be supported in the Japan (Tokyo) region and some public projects. (You cannot connect to a VIP from an instance or DB instance in a different subnet.)
@@ -529,7 +538,8 @@ You can easily change various items in DB instances created through console. Cha
 | DB Instance Type   | Yes        | Yes                       |
 | Data Storage Type  | No      |                         |
 | Whether high availability or not      | Yes        | No                     |
-| PING interval      | Yes        | No                     | 
+| Ping interval      | Yes        | No                     |
+| Ping method      | Yes        | No                     |
 | Name           | Yes        | No                     |
 | Description           | Yes        | No                     |
 | DB port        | Yes        | Yes                       |
@@ -572,7 +582,7 @@ You can check the operating system information of the current DB instance on the
 ❶ You can check the operating system information of the DB instance.
 ❷ If the operating system is eligible for a version upgrade, the **OS Version Upgrade** button appears.
 
-Operating system version upgrades behave differently depending on whether you are in a highly available configuration. For high availability, the operating system version upgrade is performed using failover. For non-high availability, the operating system version upgrade is performed by restarting the DB instance.
+Operating system version upgrades behave differently depending on whether you are in a highly available configuration. For high availability instance, the operating system version upgrade is performed using failover. For non-high availability, the operating system version upgrade is performed by restarting the DB instance.
 
 When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
 The maintenance feature is also available when upgrading the operating system version of a single DB instance.
@@ -635,7 +645,8 @@ The amount of increase when the auto scale storage feature runs is set to the la
 
 ## Apply parameter group changes
 
-Changes made to a parameter group linked to a DB instance are not automatically applied to that instance. If the parameters currently applied to the DB instance differ from the settings in the linked parameter group, an **Apply Parameter Changes** maintenance task is created, and the maintenance status is updated.
+Changes made to a parameter group linked to a DB instance are not automatically applied to that instance.
+If the parameters currently applied to the DB instance differ from the settings in the linked parameter group, an **Apply Parameter Changes** maintenance task is created, and the maintenance status is updated.
 
 You can apply parameter group changes to a single DB instance or multiple DB instances using the following methods:
 
@@ -690,7 +701,7 @@ To create a read replica from the console,
 
 You can create a read replica using the settings below.
 
-#### Unchangeable items
+#### Non-Editable Items
 
 When you create a read replica, you cannot change the items listed below because they follow the settings of source DB instance.
 
@@ -785,7 +796,7 @@ To restart a DB instance from the console
 
 ## DB instance force restart
 
-If {{engine.pascalCase}} in the DB instance is not working properly, you can force a restart. For forced restart, issue a SIGTERM command in {{engine.pascalCase}} and wait 10 minutes for it to shut down normally. If {{engine.pascalCase}} shuts down normally within 10 minutes, reboot the virtual machine afterward. If it does not shut down normally within 10 minutes, force a reboot of the virtual machine. If the virtual machine is forced to reboot, some of the transactions you are working on might be lost and the data volume might be corrupted, making recovery impossible. After a forced restart, the state of the DB instance might not return to the available state. Contact Customer Center if this situation occurs.
+If {{engine.pascalCase}} in the DB instance is not working properly, you can force a restart. For forced restart, issue a SIGTERM command in {{engine.pascalCase}} and wait 10 minutes for it to shut down normally. If {{engine.pascalCase}} shuts down normally within 10 minutes, reboot the virtual machine afterward. If it does not shut down normally within 10 minutes, force a reboot of the virtual machine. If the virtual machine is forced to reboot, some of the transactions you are working on might be lost and the data volume might be corrupted, making recovery impossible. After a forced restart, the state of the DB instance might not return to the available state. Contact Customer Support if this situation occurs.
 
 > [Caution]
 > Because there is a possibility of data loss or data volume corruption, this feature should not be used except in urgent and unavoidable circumstances.
@@ -828,8 +839,7 @@ Candidate master has a process for detecting failures, which periodically detect
 
 ### Automatic Failover
 
-When the candidate master fails the master's health check four times in a row, it determines that the master is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed master to block external connections, and the candidate master will take over the role of the master. A record in the internal domain for access are changed from the failed master to the candidate master, so no changes to the
-application are required. When failover is completed, the type of failed over master changes to the failed over master and the type of candidate master changes to the master. No failover is performed until the failed over master is recovered or rebuilt. Promoted master takes over all automatic backups of the failover master. Point-in-time restoration using existing backups is not supported because the master changes during failover and all binary logs are deleted. You can restore point-in-time
+When the candidate master fails the master's health check four times in a row, it determines that the master is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed master to block external connections, and the candidate master will take over the role of the master. A record in the internal domain for access are changed from the failed master to the candidate master, so no changes to the application are required. When failover is completed, the type of failed over master changes to the failed over master and the type of candidate master changes to the master. No failover is performed until the failed over master is recovered or rebuilt. Promoted master takes over all automatic backups of the failover master. Point-in-time restoration using existing backups is not supported because the master changes during failover and all binary logs are deleted. You can restore point-in-time
 from the time the new backup was performed on the promoted master.
 
 > [Note]
@@ -984,12 +994,12 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 ```
 
 * Explaining parameter
-  * master_instance_ip : IP of replication target (Master) server
-  * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
-  * user_id_for_replication: an account for replication to access {{engine.pascalCase}} on the replication target (Master) server
-  * password_for_replication_user : Password of account for replication
-  * MASTER_LOG_FILE : Binary log file name of replication target (Master)
-  * MASTER_LOG_POS : Binary log file position of replication target (Master)
+    * master_instance_ip : IP of replication target (Master) server
+    * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
+    * user_id_for_replication: an account for replication to access {{engine.pascalCase}} on the replication target (Master) server
+    * password_for_replication_user : Password of account for replication
+    * MASTER_LOG_FILE : Binary log file name of replication target (Master)
+    * MASTER_LOG_POS : Binary log file position of replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1007,12 +1017,12 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 ```
 
 * Parameter Details
-    * master_instance_ip: IP of the replication target (Master) server
-    * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
-    * user_id_for_replication: Replication account to connect to {{engine.pascalCase}} on the replication target (Master) server
-    * password_for_replication_user: account passowrd for replication
-    * SOURCE_LOG_FILE: Binary log file name of the replication target (Master)
-    * SOURCE_LOG_POS: binary log position of the replication target (Master)
+      * master_instance_ip: IP of the replication target (Master) server
+      * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
+      * user_id_for_replication: Replication account to connect to {{engine.pascalCase}} on the replication target (Master) server
+      * password_for_replication_user: account passowrd for replication
+      * SOURCE_LOG_FILE: Binary log file name of the replication target (Master)
+      * SOURCE_LOG_POS: binary log position of the replication target (Master)
 
 ```
 ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1065,8 +1075,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 ### tcrds_repl_skip_repl_error
 
 * If you run the TCRDS_REPL_SKIP_REPL_ERROR procedure when the Duplicate Key error occurs, you can address the replica error.
-    * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
-    * After 8.4: perform SQL_REPLICA_SKIP_COUNTER=1.
+      * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
+      * After 8.4: perform SQL_REPLICA_SKIP_COUNTER=1.
 * `{{engine.pascalCase}} error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
@@ -1121,7 +1131,7 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 ```
 
 ### tcrds_foreign_key_checks
-* A procedure that controls the 'foreign_key_checks' variable that checks for foreign key constraints.
+* A procedure that controls the `foreign_key_checks` variable that checks for foreign key constraints.
 * Run the following query: `SET GLOBAL foreign_key_checks ='ON|OFF';`.
 
 ```
@@ -1161,19 +1171,19 @@ mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port
 * Import data from outside using the mysqldump command below.
 
 ```
-mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --set-gtid-purged=off --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
+mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --set-gtid-purged=off --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
 ```
 
 #### When `ERROR 1227` occurs during data importing
 
 * `ERROR 1227` occurs when a stored object (trigger, view, function, or event) in the mysqldump file has DEFINER definition.
-* To resolve this, delete the `DEFINER` part of the mysqldump file and proceed.
+* To resolve the error, delete the `DEFINER` part of the mysqldump file and proceed.
 
 #### When `ERROR 1418` occurs during data importing
 
 * `ERROR 1418` occurs when the function declaration in the mysqldump file does not contain NO SQL, READS SQL DATA, or DETERMINISTIC and binary logging is enabled.
-  * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
-* To resolve this, Parameter value of `log_bin_trust_function_creators` of DB instance to which you want to apply mysqldump file should be changed to `1`.
+    * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
+* To resolve the error, Parameter value of `log_bin_trust_function_creators` of DB instance to which you want to apply mysqldump file should be changed to `1`.
 
 ### Export by using replication
 
@@ -1269,7 +1279,7 @@ mysqldump -h{slave_instance_floating_ip} -u{db_id} -p{db_password} --port={db_po
 
 * Open the backup file to record MASTER_LOG_FILE and MASTER_LOG_POS from the footnote.
 * Verify that there is enough capacity on the client or computer to back up data from NHN Cloud RDS instance.
-* Add below option to the my.cnf (or my.ini for Windows) file of the external database.
+* Add the following option to the my.cnf (or my.ini for Windows) file of the external database.
 * Put a different value for Server ID, from the Server ID of parameter of NHN Cloud RDS Instance.
 
 ```
@@ -1284,7 +1294,7 @@ replicate-ignore-db=rds_maintenance
 * Restart external DB.
 * As importing over an external network can take a long time,
 * We recommend that you create an internal NHN Cloud Image, copy the backup file, and import it into NHN Cloud.
-* Enter the backed up file into NHN Cloud RDS with the command below.
+* Enter the backed up file into NHN Cloud RDS with the following command.
 * Replication configuration does not support DNS, so convert to IP and run.
 
 ```
@@ -1305,8 +1315,7 @@ mysql -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_p
 {{engine.lowerCase}}> GRANT REPLICATION CLIENT, REPLICATION REPLICA ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
-* Run a query on NHN Cloud RDS as follows,
-  using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
+* Run a query on NHN Cloud RDS as follows, using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
 ##### Before 8.4
 ```
@@ -1330,7 +1339,7 @@ mysql -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_p
 {{engine.lowerCase}}> call mysql.tcrds_repl_replica_start;
 ```
 
-* When original data of NHN Cloud RDS instance become same as the external database, close replication by using the command as below.
+* When original data of NHN Cloud RDS instance become same as the external database, close replication by using the following command:
 
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_init();
@@ -1344,7 +1353,7 @@ NHN Cloud periodically updates the hypervisor software of the DB instance to imp
 DB instances running on a hypervisor that requires maintenance must be migrated to the hypervisor where maintenance has been completed.
 
 You can start migrating DB instances from the NHN Cloud console.
-When you select a specific DB instance according to the parameter and migrate it, if the associated DB instance (for example, Slave instance) is also an inspection target, it proceeds with the migration together.
+When you select a specific DB instance according to the parameter and migrate it, if the associated DB instance (e.g., Slave instance) is also an inspection target, it proceeds with the migration together.
 Follow the guide below to use the migration feature on the console.
 Navigate to the project where the specified DB instance to be checked.
 
@@ -1362,7 +1371,7 @@ You can check for hypervisor migration tasks by clicking **Required** in the **M
 #### 2. Make sure you close any running applications on the DB instance.
 
 Take appropriate measures to avoid affecting services connected to the DB.
-If it is inevitable to affect the service, please contact NHN Cloud Customer Center, and we will guide you on appropriate measures.
+If it is inevitable to affect the service, please contact NHN Cloud Customer Support, and we will guide you on appropriate measures.
 
 #### 3. You can apply migration to DB instances targeted for maintenance.
 
@@ -1387,15 +1396,70 @@ When using Federated Storage Engine, make sure you consider the following.
 #### For configuration using RDS as a local node
 
 * Make sure you need to allow the outbound direction to remote nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
 * When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
-  * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
-  * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
-  * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
+    * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
+    * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
+    * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
 
 #### For configuration using RDS as a remote node
 
 * Make sure you need to allow the inbound direction to local nodes.
-  * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+    * You can add rules from DB security group.
+    * Refer to [DB Security Group](db-security-group/) for more information.
+
+<a id="security-patch"></a>
+### Appendix 3. Security Patch
+
+NHN Cloud는 DB 인스턴스 운영체제에서 발견된 보안 취약점(CVE)을 주기적으로 관리하여, 영향받는 DB 인스턴스에 보안 패치 유지 관리 작업을 제공합니다.
+보안 패치는 현재 DB 인스턴스의 취약점을 해결한 최신 보안 업데이트를 적용하는 방식으로 동작합니다
+아래 가이드에 따라 콘솔에 있는 보안 패치 기능을 이용하십시오.
+보안 패치 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
+
+#### 1. 보안 패치 대상 DB 인스턴스를 확인합니다.
+
+**유지 관리**에서 **필수** 또는 **사용 가능**을 클릭하거나 **DB 인스턴스 상세**의 **유지 관리** 탭에서 보안 패치 유지 관리 작업이 있는지 확인할 수 있습니다.
+
+![patch-security-list-en]({{url.cdn}}/26.05.12/patch-security-list-en.png)
+
+❶ 보안 패치 유지 관리 **보기** 버튼 클릭
+❷ 현재 DB 이미지에 해당하는 보안 취약점 정보를 확인할 수 있습니다.
+
+![patch-security-detail-en]({{url.cdn}}/26.05.12/patch-security-detail-en.png)
+
+보안 패치를 진행 시 해결될 수 있는 보안 취약점 정보를 확인할 수 있습니다.
+
+![patch-security-popup-en]({{url.cdn}}/26.05.12/patch-security-popup-en.png)
+
+> [참고]
+> 취약점 심각도는 CRITICAL, HIGH, MEDIUM, LOW로 구분됩니다.
+
+#### 2. 보안 패치 대상 DB 인스턴스에 접속 중인 응용 프로그램을 확인합니다.
+
+보안 패치는 DB 인스턴스의 서비스 순단이 발생할 수 있습니다.
+고가용성 DB 인스턴스는 장애 조치를 통해 서비스 순단을 최소화할 수 있으며, 단일 DB 인스턴스는 재시작을 통해 보안 패치가 적용됩니다.
+DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취하십시오.
+
+#### 3. 보안 패치 적용 시점을 선택합니다.
+
+![patch-security-maintenance-en]({{url.cdn}}/26.05.12/patch-security-maintenance-en.png)
+
+❶ **즉시 적용**을 클릭해 보안 패치를 바로 적용할 수 있습니다.
+❷ **다음 유지 관리 기간에 적용**을 클릭해 지정된 유지 관리 기간에 보안 패치를 적용할 수 있습니다.
+
+고가용성 DB 인스턴스에 적용 시에는 아래 옵션을 함께 선택할 수 있습니다.
+
+* **사전 백업 실행**: 보안 패치 수행 전 백업을 자동으로 실행합니다.
+* **장애 조치 방식 선택**: 온라인 장애 조치, 수동 장애 조치 사용 여부를 선택합니다.
+* **복제 지연 대기**: 복제 지연이 해소될 때까지 대기한 후 보안 패치를 진행합니다.
+* **Read Only 모드**: 보안 패치 수행 중 Read Only 모드를 사용합니다.
+
+#### 4. 보안 패치가 완료될 때까지 대기합니다.
+
+DB 인스턴스 상태가 변경되지 않는다면 새로 고침하세요.
+
+![patch-security-running-en]({{url.cdn}}/26.05.12/patch-security-running-en.png)
+
+DB 인스턴스에 보안 패치가 진행되는 동안에는 아무런 조작을 할 수 없습니다.
+보안 패치가 정상적으로 완료되지 않으면 자동으로 재시도되며, 반복적으로 실패할 경우 관리자에게 보고되어 NHN Cloud에서 별도로 연락을 드립니다.

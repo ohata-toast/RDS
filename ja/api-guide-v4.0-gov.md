@@ -828,6 +828,7 @@ POST /v4.0/db-instances
 | userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                     |
 | useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                 |
 | pingInterval                                 | Body | Number  | X  | 高可用性使用時のPing間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| pingType                                            | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- デフォルト値: `INSERT`<br/>- `INSERT`<br/>- `SELECT`        |
 | useDefaultNotification                       | Body | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                     |
 | useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                       |
 | useSlowQueryAnalysis                         | Body | Boolean | X  | スロークエリ分析の有無<br/>- デフォルト値: `true`                                    |
@@ -1424,6 +1425,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                        |
 | useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | pingInterval                                        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                  |
+| pingType                                            | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- デフォルト値: `INSERT`<br/>- `INSERT`<br/>- `SELECT`                                                                                      |
 | useDefaultNotification                              | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | useDeletionProtection                               | Body | Boolean | X  | 削除保護の有無<br>デフォルト値: `false`                                                                                                                                                |
 | useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                                                                                                                      |
@@ -1649,6 +1651,7 @@ POST /v4.0/db-instances/restore-from-obs
 | userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                       |
 | useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | pingInterval                                        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| pingType                                            | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- デフォルト値: `INSERT`<br/>- `INSERT`<br/>- `SELECT`       |
 | useDefaultNotification                              | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | useDeletionProtection                               | Body | Boolean | X  | 削除保護の有無<br>デフォルト値: `false`                                                               |
 | useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                                     |
@@ -1774,6 +1777,79 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
+### 高可用性の状態
+
+| 状態                               | 説明                               |
+|----------------------------------|---------------------------------|
+| `CREATED`                        | 高可用性が作成された場合                    |
+| `STABLE`                         | 高可用性が正常な場合                    |
+| `PAUSING`                        | 高可用性が一時停止中の場合               |
+| `PAUSED`                         | 高可用性が一時停止された場合                 |
+| `PAUSED_DUE_TO_TASK`             | タスクにより高可用性が一時停止された場合         |
+| `DISABLE_MASTER_IN_REPLICATION`  | マスターの異常なレプリケーションの検知により高可用性が中断された場合     |
+| `DISABLE_MHA_PROCESS`            | 高可用性プロセスが中断された場合               |
+| `DISABLE_REPLICATION_STOP`       | レプリケーションの中断により高可用性が中断された場合         |
+| `DISABLE_REPLICATION_DELAY`      | レプリケーションの遅延により高可用性が中断された場合         |
+| `MASTER_FAILURE_DETECTION`       | マスターの障害が検知された場合                 |
+| `FAILOVER_STARTED`               | フェイルオーバーが開始された場合                   |
+| `FAILOVER_FAILED`                | フェイルオーバーが失敗した場合                   |
+| `FAILOVER_COMPLETED`             | フェイルオーバーが完了した場合                   |
+| `DELETED`                        | 高可用性が削除された場合                   |
+
+---
+
+### 高可用性情報の照会
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/high-availability
+```
+
+#### 必要な権限
+
+| 権限名                                              | 説明         |
+|----------------------------------------------------|------------|
+| RDSforMySQL:DbInstance.Get | DBインスタンスの詳細照会 |
+
+#### リクエスト
+
+このAPIはリクエストボディを必要としません。
+
+| 名前           | 種類  | 形式   | 必須 | 説明           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前                  | 種類   | 形式      | 説明                                                                                                                  |
+|---------------------|------|---------|---------------------------------------------------------------------------------------------------------------------|
+| useHighAvailability | Body | Boolean | 高可用性の使用有無                                                                                                          |
+| haStatus            | Body | Enum    | 高可用性の状態                                                                                                          |
+| pingInterval        | Body | Number  | Ping間隔(秒)                                                                                                           |
+| pingType            | Body | Enum    | Pingタイプ<br/>- `INSERT`<br/>- `SELECT`                                                                                |                                                                                              |
+
+<details><summary>例</summary>
+
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "useHighAvailability": true,
+    "haStatus": "STABLE",
+    "pingInterval": 3,
+    "pingType": "INSERT"
+}
+```
+
+</p>
+
+</details>
+---
+
 ### 高可用性を修正する
 
 ```http
@@ -1793,6 +1869,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | dbInstanceId        | URL  | UUID    | O  | DBインスタンスの識別子                                       |
 | useHighAvailability | Body | Boolean | O  | 高可用性を使用するかどうか                                       |
 | pingInterval        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| pingType            | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- `INSERT`<br/>- `SELECT`         |
 | dbInstanceCandidateName | Body | String | O | DBインスタンスを識別できるスタンバイマスター名 |
 
 #### レスポンス
@@ -3228,6 +3305,7 @@ POST /v4.0/backups/{backupId}/restore
 | userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                    |
 | useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                       |
 | pingInterval                                 | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| pingType                                             | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- デフォルト値: `INSERT`<br/>- `INSERT`<br/>- `SELECT`      |
 | useDefaultNotification                       | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                      |
 | useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         | 
 | useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                  |
@@ -4959,7 +5037,7 @@ GET /v4.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DB 인스턴스 시작"
+                    "message": "DBインスタンスの起動"
                 },
                 {
                     "langCode": "ZH",
