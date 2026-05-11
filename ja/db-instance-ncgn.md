@@ -499,6 +499,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 | データストレージ種類 | いいえ     |                         |
 | 高可用性の有無     | はい       | いいえ                    |
 | Ping間隔    | はい       | いいえ                    | 
+| Ping方式       | はい        | いいえ                     |
 | 名前         | はい       | いいえ                    |
 | 説明         | はい       | いいえ                    |
 | DBポート      | はい       | はい                      |
@@ -934,12 +935,12 @@ mysql> CALL mysql.tcrds_repl_changemaster (master_instance_ip, master_instance_p
 ```
 
 * パラメータの説明
-  * master_instance_ip:複製対象(Master)サーバーのIP
-  * master_instance_port:複製対象(Master)サーバーのMySQLポート
-  * user_id_for_replication:複製対象(Master)サーバーのMySQLに接続する複製用アカウント
-  * password_for_replication_user:複製用アカウントパスワード
-  * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名
-  * MASTER_LOG_POS:複製対象(Master)のbinary logポジション
+    * master_instance_ip:複製対象(Master)サーバーのIP
+    * master_instance_port:複製対象(Master)サーバーのMySQLポート
+    * user_id_for_replication:複製対象(Master)サーバーのMySQLに接続する複製用アカウント
+    * password_for_replication_user:複製用アカウントパスワード
+    * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名
+    * MASTER_LOG_POS:複製対象(Master)のbinary logポジション
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -957,12 +958,12 @@ mysql> CALL mysql.tcrds_repl_changesource (master_instance_ip, master_instance_p
 ```
 
 * パラメータの説明
-    * master_instance_ip:レプリケーション元(マスター)サーバーのIP
-    * master_instance_port:レプリケーション元(マスター)サーバーのMySQLポート
-    * user_id_for_replication:レプリケーション元(マスター)サーバーのMySQLに接続するためのレプリケーション用アカウント
-    * password_for_replication_user:レプリケーション用アカウントのパスワード
-    * SOURCE_LOG_FILE:レプリケーション元(マスター)のバイナリログファイル名
-    * SOURCE_LOG_POS:レプリケーション元(マスター)のバイナリログポジション
+      * master_instance_ip:レプリケーション元(マスター)サーバーのIP
+      * master_instance_port:レプリケーション元(マスター)サーバーのMySQLポート
+      * user_id_for_replication:レプリケーション元(マスター)サーバーのMySQLに接続するためのレプリケーション用アカウント
+      * password_for_replication_user:レプリケーション用アカウントのパスワード
+      * SOURCE_LOG_FILE:レプリケーション元(マスター)のバイナリログファイル名
+      * SOURCE_LOG_POS:レプリケーション元(マスター)のバイナリログポジション
 
 ```
 ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -1015,8 +1016,8 @@ mysql> CALL mysql.tcrds_repl_replica_start();
 ### tcrds_repl_skip_repl_error
 
 * 以下のようなDuplicate keyエラーが発生した場合、tcrds_repl_skip_repl_errorプロシージャを実行するとレプリケーションエラーを解決できます。
-    * 8.4以前: SQL_SLAVE_SKIP_COUNTER=1を実行します。
-    * 8.4以降: `SQL_REPLICA_SKIP_COUNTER=1`を実行します。
+      * 8.4以前: SQL_SLAVE_SKIP_COUNTER=1を実行します。
+      * 8.4以降: `SQL_REPLICA_SKIP_COUNTER=1`を実行します。
 * `MySQL error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
@@ -1120,7 +1121,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### データのインポート中に`ERROR 1418`エラーが発生する場合
 
 * `ERROR 1418`エラーはmysqldumpファイルの関数宣言にNO SQL、READS SQL DATA, DETERMINISTICがなく、バイナリログが有効な状態の時に発生します。
-  * 詳細については[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
+    * 詳細については[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
 * これを解決するためには、mysqldumpファイルを適用するDBインスタンスの`log_bin_trust_function_creators`パラメータの値を`1`に変更する必要があります。
 
 ### 複製を利用してエクスポート
@@ -1334,15 +1335,70 @@ Federated Storage Engineを使用する場合、次を考慮する必要があ�
 #### ローカルノードとしてRDSを利用する構成の場合
 
 * リモートノードへの送信を許可する設定が必要です。
-  * DBセキュリティグループでルールを追加できます。
-  * 詳細については、 [DBセキュリティグループ](db-security-group-ncgn/)項目を参照してください。
+    * DBセキュリティグループでルールを追加できます。
+    * 詳細については、 [DBセキュリティグループ](db-security-group-ncgn/)項目を参照してください。
 * ローカルノード役割のRDSにRead Only Slaveを追加した構成で使用する場合は、パラメータのreplicate-ignore-tableにfederated設定されたテーブル名を指定する必要があります。
-  * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
-  * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
-  * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
+    * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
+    * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
+    * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
 
 #### リモートノードとしてRDSを利用する構成の場合
 
 * ローカルノードでの受信を許可する設定が必要です。
-  * DBセキュリティグループでルールを追加できます。
-  * 詳細については、 [DBセキュリティグループ](db-security-group-ncgn/)項目を参照してください。
+    * DBセキュリティグループでルールを追加できます。
+    * 詳細については、 [DBセキュリティグループ](db-security-group-ncgn/)項目を参照してください。
+
+<a id="security-patch"></a>
+### 付録3. セキュリティパッチ
+
+NHN Cloudは、DBインスタンスのOSで発見されたセキュリティの脆弱性(CVE)を定期的に管理し、影響を受けるDBインスタンスにセキュリティパッチのメンテナンス作業を提供します。
+セキュリティパッチは、現在のDBインスタンスの脆弱性を解決した最新のセキュリティアップデートを適用する方式で動作します。
+以下のガイドに従って、コンソールにあるセキュリティパッチ機能を利用してください。
+セキュリティパッチの対象として指定されたDBインスタンスがあるプロジェクトへ移動します。
+
+#### 1. セキュリティパッチの対象となるDBインスタンスを確認します。
+
+**メンテナンス**で**必須**または**利用可能**をクリックするか、**DBインスタンスの詳細**の**メンテナンス**タブで、セキュリティパッチのメンテナンス作業があるかを確認できます。
+
+![patch-security-list-ja](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-list-ja.png)
+
+❶ セキュリティパッチメンテナンスの**表示**ボタンをクリック
+❷ 現在のDBイメージに該当する、セキュリティの脆弱性情報を確認できます。
+
+![patch-security-detail-ja](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-detail-ja.png)
+
+セキュリティパッチを適用した際に解決されるセキュリティの脆弱性情報を確認できます。
+
+![patch-security-popup-ja](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-popup-ja.png)
+
+> [参考]
+> 脆弱性の深刻度は、CRITICAL、HIGH、MEDIUM、LOWに分類されます。
+
+#### 2. セキュリティパッチ対象のDBインスタンスに接続中のアプリケーションを確認します。
+
+セキュリティパッチにより、DBインスタンスのサービス瞬断が発生する可能性があります。
+高可用性DBインスタンスは、フェイルオーバーを通じてサービスの瞬断を最小限に抑えることができ、単一のDBインスタンスは再起動によってセキュリティパッチが適用されます。
+DBに接続されているサービスに影響を与えないよう、適切な措置を講じてください。
+
+#### 3. セキュリティパッチの適用タイミングを選択します。
+
+![patch-security-maintenance-ja](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-maintenance-ja.png)
+
+❶ **今すぐ適用**をクリックして、セキュリティパッチを直ちに適用できます。
+❷ **次のメンテナンス期間に適用**をクリックして、指定されたメンテナンス期間にセキュリティパッチを適用できます。
+
+高可用性DBインスタンスに適用する場合は、以下のオプションを一緒に選択できます。
+
+* **事前バックアップの実行**: セキュリティパッチを実行する前に、バックアップを自動で実行します。
+* **フェイルオーバー方式の選択**: オンラインフェイルオーバー、手動フェイルオーバーの使用有無を選択します。
+* **レプリケーション遅延の待機**: レプリケーションの遅延が解消されるまで待機した後、セキュリティパッチを適用します。
+* **Read Onlyモード**: セキュリティパッチの実行中にRead Onlyモードを使用します。
+
+#### 4. セキュリティパッチが完了するまで待機します。
+
+DBインスタンスの状態が変更されない場合は、更新してください。
+
+![patch-security-running-ja](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-running-ja.png)
+
+DBインスタンスへのセキュリティパッチ適用中は、一切の操作を行うことができません。
+セキュリティパッチが正常に完了しない場合は自動的に再試行され、繰り返し失敗する場合は管理者に報告され、NHN Cloudから別途ご連絡します。

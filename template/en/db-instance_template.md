@@ -80,15 +80,13 @@ Details about DB engine can be found in [DB Engine](db-engine/).
 | MariaDB 10.11.8        |    |
 | MariaDB 10.11.7        |    |
 | <strong>10.6</strong>  |    |
-| MariaDB 10.6.25        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.   |
-| MariaDB 10.6.22        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.   |
-| MariaDB 10.6.16        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.   |
-| MariaDB 10.6.12        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.   |
-| MariaDB 10.6.11        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.   |
+| MariaDB 10.6.25        | Creation and read replicas unsupported   |
+| MariaDB 10.6.22        | Creation and read replicas unsupported   |
+| MariaDB 10.6.16        | Creation and read replicas unsupported   |
+| MariaDB 10.6.12        | Creation and read replicas unsupported   |
+| MariaDB 10.6.11        | Creation and read replicas unsupported   |
 | <strong>10.3</strong>  |    |
-| MariaDB 10.3.30        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.   |
-
-DB 엔진에 관한 자세한 내용은 [DB 엔진](db-engine/)에서 확인할 수 있습니다.
+| MariaDB 10.3.30        | Creation and read replicas unsupported   |
 
 Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
