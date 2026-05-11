@@ -202,8 +202,8 @@ You can manage users as groups to receive notifications. Notification target mus
 * ❸ Press **x** to exclude added users.
 * ❹ If there are many users in the user list, you can limit the results by entering search criteria.
 * ❺ Add **all project members** to the notified users.
-  * When added, individual user additions are canceled.
-  * When sending an alarm using the user group, the alarm is sent to all project members at the time.
+    * When added, individual user additions are canceled.
+    * When sending an alarm using the user group, the alarm is sent to all project members at the time.
 * ❻ Click **OK** to add a user to the user group.
 
 ## Notification Group
