@@ -1,17 +1,15 @@
 ## Database > RDS for MySQL > Release Notes
 
-## 2026. 05. 12.
+## May 12, 2026
 
-### 기능 추가 및 개선
+### Feature Updates
 
-* 보안 패치 기능 추가
-  * OS에서 발견된 보안 취약점(CVE)에 대한 보안 패치를 유지 관리 작업으로 수행할 수 있습니다.
-  * 자세한 내용은 [보안 패치](/Database/RDS%20for%20MySQL/ko/db-instance/#security-patch) 문서를 참고하세요.
-* 고가용성 Ping 체크 방식에 기존 `INSERT` 외 `SELECT` 옵션 추가
-* MariaDB 10.6.25, 10.11.16, 11.4.10, 11.8.6 버전 추가
-* MariaDB 10.3, 10.6 EOL(End of Life)에 따른 신규 생성 제한
-* API v4.0 추가 및 변경
-  * 고가용성 정보 보기 API가 추가됩니다.
+* Added security patch feature
+    * Security patches for security vulnerabilities (CVEs) discovered in the OS can be performed as maintenance tasks.
+    * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/ko/db-instance/#security-patch) documentation.
+* Added `SELECT` option in addition to the existing `INSERT` option for high availability Ping check method
+* Added and updated API v4.0
+    * Added the View High Availability Information API.
 
 ## March 10, 2026
 

@@ -1,5 +1,16 @@
 ## Database > RDS for MySQL > Release Notes
 
+## May 14, 2026
+
+### Feature Updates
+
+* Added security patch feature
+    * Security patches for security vulnerabilities (CVEs) discovered in the OS can be performed as maintenance tasks.
+    * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/ko/db-instance/#security-patch) documentation.
+* Added `SELECT` option in addition to the existing `INSERT` option for high availability Ping check method
+* Added and updated API v4.0
+    * Added the View High Availability Information API.
+
 ## March 12, 2026
 
 ### Feature Updates

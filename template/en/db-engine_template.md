@@ -2,13 +2,13 @@
 
 ## DB Engine
 
-In {{engine.pascalCase}}, the version number consists of version = `X.Y.Z` In NHN Cloud's RDS for {{engine.pascalCase}}, `X.Y` represents the major version and `Z` represents the minor version.
+The version number of {{engine.pascalCase}} follows the `X.Y.Z` format. In NHN Cloud's RDS for {{engine.pascalCase}}, `X.Y` represents the major version and `Z` represents the minor version.
 
 ### DB engine version provided by RDS
 
 The versions specified below are available. New DB instance creation and read replicas are supported only for the top 7 minor versions per major version.
 {{#if (eq engine.lowerCase "mysql")}}
-Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL LTS policy. We recommend upgrading your DB instances to the latest version.
+Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We recommend upgrading your DB instances to the latest version.
 
 - Note: [https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions](https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions)
 
@@ -26,10 +26,10 @@ Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL L
 | MySQL 8.0.40         |                                                           |
 | MySQL 8.0.36         |                                                           |
 | MySQL 8.0.35         | Creation and read replicas unsupported                    |
-| MySQL 8.0.34         | Creation and read replicas unsupported                    | 
-| MySQL 8.0.33         | Creation and read replicas unsupported                    | 
-| MySQL 8.0.32         | Creation and read replicas unsupported                    | 
-| MySQL 8.0.28         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.34         | Creation and read replicas unsupported                    |
+| MySQL 8.0.33         | Creation and read replicas unsupported                    |
+| MySQL 8.0.32         | Creation and read replicas unsupported                    |
+| MySQL 8.0.28         | Creation and read replicas unsupported                    |
 | MySQL 8.0.23         | Creation and read replicas unsupported                    |
 | MySQL 8.0.18         | Creation and read replicas unsupported                    |
 | <strong>5.7</strong> |                                                           |
@@ -79,7 +79,7 @@ When attempting to upgrade the DB engine major version, you can upgrade to the n
 {{#if (eq engine.lowerCase "mysql")}}
 #### Pre-inspection for upgrading from MySQL 5.7 to MySQL 8.0
 
-MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doing a major version DB engine upgrade from `5.7` to version `8.0`, you may run into issues. Therefore, a pre-inspection process is required for some items that are expected to cause problems. The following items require prior inspection.
+MySQL 8.0 and MySQL 5.7 have several incompatibilities. So if you are doing a major version DB engine upgrade from `5.7` to version `8.0`, you may run into issues. Therefore, a pre-inspection process is required for some items that are expected to cause problems. The following items require prior inspection:
 
 - There must be no version upgrade disqualifications via `mysqlcheck`.
 - When checked through `INFORMATION_SCHEMA.VIEWS`, the column name must not exceed 64 characters.
@@ -114,7 +114,7 @@ Also, you must check items that have been removed or changed in 8.0.
 
 #### Pre-check for Upgrading MySQL 8.0 to MySQL 8.4
 
-To upgrade to MySQL 8.4, you must have already upgraded to MySQL 8.0. When upgrading a major version of the DB engine from `8.0` to `8.4`, a pre-check process is required for some items that are expected to cause problems.
+To upgrade to MySQL 8.4, you must have already upgraded to MySQL 8.0. When upgrading a major version of the DB engine from `8.0` to `8.4`, a pre-check is required for certain items that are expected to cause problems.
 
 You can check the items detected by the upgrade checker through `DB Engine Upgrade Pre-Check` in the console, and any items detected as errors must be addressed. For more details, please refer to the MySQL homepage.
 - [Upgrade Checker Guide](https://dev.mysql.com/doc/mysql-shell/8.4/en/mysql-shell-utilities-upgrade.html#mysql-utilities-upgrade-checks)
@@ -129,31 +129,31 @@ Direct upgrade from version 8.0.18 to MySQL 8.4 is not supported.
 The following conditions must be met to upgrade from 8.0.18 to 8.4:
 
 Upgrade Path
-1.	First, upgrade to MySQL 8.0.23 or higher
-2.	Then, upgrade to MySQL 8.4
+1. First, upgrade to MySQL 8.0.23 or higher
+2. Then, upgrade to MySQL 8.4
 
 This is because the minimum compatible version required by MySQL 8.4 is 8.0.23 or higher, and compatibility of metadata and internal schema structure is not guaranteed in environments lower than that version.
 {{/if}}
 
 {{#if (eq engine.lowerCase "mariadb")}}
-#### 사전 점검
+#### Pre-Check
 
-DB 엔진 메이저 버전 업그레이드를 진행하기 전에, 다음 사항을 사전에 확인하는 것을 권장합니다.
+Before proceeding with a DB engine major version upgrade, it is recommended to check the following in advance.
 
-- `mariadb-check --check-upgrade`를 통해 버전에 종속되는 테이블이 없는지 확인합니다. 버전 종속 테이블이 발견되면 `--auto-repair` 옵션으로 자동 업데이트할 수 있습니다.
-- 공식 업그레이드 문서를 참고하여 대상 버전의 비호환 변경 사항을 확인합니다.
+- Run `mariadb-check --check-upgrade` to verify that there are no version-dependent tables. If version-dependent tables are found, they can be automatically updated using the `--auto-repair` option.
+- Refer to the official upgrade documentation to check for incompatible changes in the target version.
 
-콘솔에서 DB 버전 업그레이드 시도 시 `DB 엔진 업그레이드 사전 확인` 버튼을 이용하여 사전 점검 결과를 확인할 수 있습니다. 개별 DB 인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log`를 통해 세부 내역 확인이 가능합니다.
+When attempting a DB version upgrade in the console, you can check the pre-check results using the **DB Engine Upgrade Pre-Check** button. Detailed information can also be found in the `db_version_upgrade_compatibility.log` file generated in the Log tab of the individual DB instance.
 
-#### MariaDB 11.4에서 MariaDB 11.8로 업그레이드 시 확인 사항
+#### Notes on Upgrading from MariaDB 11.4 to MariaDB 11.8
 
-MariaDB 11.8로 업그레이드하려면 먼저 MariaDB 11.4로 업그레이드된 상태여야 합니다. `11.4`에서 `11.8` 버전으로 메이저 버전 업그레이드를 진행하는 경우 아래 사항을 확인해야 합니다.
+To upgrade to MariaDB 11.8, the instance must first be upgraded to MariaDB 11.4. When performing a major version upgrade from `11.4` to `11.8`, the following must be checked.
 
-- **System-Versioned 테이블**: System-Versioned 테이블이 존재하는 경우 업그레이드는 가능하지만, 확장된 타임스탬프 범위로의 업데이트가 필요하여 업그레이드 시간이 길어질 수 있습니다.
+- **System-Versioned tables**: If System-Versioned tables exist, the upgrade is possible, but the upgrade time may be longer due to the need to update to the extended timestamp range.
 
-자세한 내용은 아래 공식 문서를 참고합니다.
-- [MariaDB 11.4에서 11.8로 업그레이드 경로](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/upgrading/mariadb-community-server-upgrade-paths/upgrading-from-mariadb-11-4-to-mariadb-11-8)
-- [MariaDB 11.8 릴리스 노트](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
+For more information, refer to the official documentation below:
+- [Upgrade path from MariaDB 11.4 to 11.8](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/upgrading/mariadb-community-server-upgrade-paths/upgrading-from-mariadb-11-4-to-mariadb-11-8)
+- [MariaDB 11.8 release notes](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
 {{/if}}
 
 #### Upgrading the DB Engine Version Using a Dummy DB Instance 
@@ -173,7 +173,7 @@ The manual control of failover during version upgrade allows you to initiate fai
 
 ### When using an Outdated Operating System
 
-내부 운영체제가 노후된 DB 인스턴스의 경우 DB 버전을 업그레이드하기 전 VM 교체를 동반한 운영체제 버전 업그레이드가 필요합니다.  알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동으로 교체됩니다. 단일 DB 인스턴스의 경우 DB 버전 변경 시 더미 DB 인스턴스를 사용을 권장합니다. 고가용성 DB 인스턴스의 경우 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 마스터와 예비 마스터의 역할이 변경됩니다. 마스터의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하는 것을 권장합니다.  
+For DB instances with an outdated internal operating system, an operating system version upgrade accompanied by VM replacement is required before upgrading the DB version. Monitored instances in notification groups and event sources in event subscriptions automatically update to the changed identifiers. For single DB instances, it is recommended to use a dummy DB instance when changing the DB version. For high availability DB instances, the roles of the master and standby master are changed using failover during the DB instance replacement process. If the master is under heavy load, failover may fail, so it is recommended to perform DB version changes during periods of low load.
 
 > [Caution]
 > Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
@@ -183,7 +183,7 @@ The manual control of failover during version upgrade allows you to initiate fai
 
 ### Support for the MariaDB Server Audit plugin for MySQL
 
-- RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances. 
+RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances.
 
 > [Caution]
 > This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
@@ -203,10 +203,10 @@ The manual control of failover during version upgrade allows you to initiate fai
 | MySQL 8.0.40               | O                                       |
 | MySQL 8.0.36               | O                                       |
 | MySQL 8.0.35               | O                                       |
-| MySQL 8.0.34               | O                                       | 
-| MySQL 8.0.33               | O                                       | 
-| MySQL 8.0.32               | O                                       | 
-| MySQL 8.0.28               | O                                       | 
+| MySQL 8.0.34               | O                                       |
+| MySQL 8.0.33               | O                                       |
+| MySQL 8.0.32               | O                                       |
+| MySQL 8.0.28               | O                                       |
 | MySQL 8.0.23               | O                                       |
 | MySQL 8.0.18               | X                                       |
 | <strong>5.7</strong>       |                                         |
@@ -215,6 +215,6 @@ The manual control of failover during version upgrade allows you to initiate fai
 | MySQL 5.7.26               | O                                       |
 | MySQL 5.7.19               | O                                       |
 | MySQL 5.7.15               | X                                       |
-| <strong>MySQL 5.6</strong> |                                         |
+| <strong>5.6</strong>       |                                         |
 | MySQL 5.6.33               | O                                       |
 {{/if}}

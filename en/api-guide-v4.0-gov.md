@@ -828,6 +828,7 @@ POST /v4.0/db-instances
 | userGroupIds            | Body | Array   | X        | User group identifiers                                                                                                |
 | useHighAvailability     | Body | Boolean | X        | Whether to use high availability<br/>- Default: `false`                                                                 |
 | pingInterval            | Body | Number  | X        | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| pingType                | Body | Enum    | X        | Ping type when using high availability<br/>- Default: `INSERT`<br/>- `INSERT`<br/>- `SELECT`                                         |
 | useDefaultNotification  | Body | Boolean | X        | Whether to use default notification<br/>- Default: `false`                                                              |
 | useDeletionProtection   | Body | Boolean | X        | Whether to protect against deletion<br/>- Default: `false`                                                              |
 | useSlowQueryAnalysis    | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                 |
@@ -1423,6 +1424,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | userGroupIds                                        | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                                        |
 | useHighAvailability                                 | Body | Boolean | X        | Whether to use high availability<br/>- Default: `false`                                                                                                                                                                                                                                       |
 | pingInterval                                        | Body | Number  | X        | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                                                                                                                                                                       |
+| pingType                                            | Body | Enum    | X        | Ping type when using high availability<br/>- Default: `INSERT`<br/>- `INSERT`<br/>- `SELECT`                                                                                                                                                                                                                  |
 | useDefaultNotification                              | Body | Boolean | X        | Whether to use default notification<br/>- Default: `false`                                                                                                                                                                                                                                    |
 | useDeletionProtection                               | Body | Boolean | X        | Whether to protect against deletion<br>Default: `false`                                                                                                                                                                                                                                       |
 | useSlowQueryAnalysis                                | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                                                                                                                                                                                         |
@@ -1446,7 +1448,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.useBackupLock                                | Body | Boolean | X        | Whether to use table lock<br/>- Default: `true`                                                                                                                                                                                                                                                   |
 | backup.backupSchedules                              | Body | Array   | X        | Scheduled auto backup list                                                                                                                                                                                                                                                                                       |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | X        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                                                    |
-| backup.backupSchedules.backupWndDuration            | Body | Enum    | X        | Backup duration<br>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`<span style="color:#313338">: 30 minutes</span><br/>- `ONE_HOUR`<span style="color:#313338">: 1 hour</span><br/>- `ONE_HOUR_AND_HALF`<span style="color:#313338">: 1.5 hour</span><br/>- `TWO_HOURS`<span style="color:#313338">: 2 hour</span><br/>- `TWO_HOURS_AND_HALF`<span style="color:#313338">: 2.5 hour</span><br/>- `THREE_HOURS`<span style="color:#313338">: 3 hour</span>    |
+| backup.backupSchedules.backupWndDuration            | Body | Enum    | X        | Backup duration<br>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour    |
 
 #### Request when restoring a point in time restoration using Timestamp (if restoreType is `TIMESTAMP`)
 
@@ -1648,6 +1650,7 @@ POST /v4.0/db-instances/restore-from-obs
 | userGroupIds                                        | Body | Array   | X        | User group identifiers                                                                                                                         |
 | useHighAvailability                                 | Body | Boolean | X        | Whether to use high availability<br/>- Default: `false`                                                                         |
 | pingInterval                                        | Body | Number  | X        | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| pingType                                            | Body | Enum    | X        | Ping type when using high availability<br/>- Default: `INSERT`<br/>- `INSERT`<br/>- `SELECT`                                     |
 | useDefaultNotification                              | Body | Boolean | X        | Whether to use default notification<br/>- Default: `false`                                                                      |
 | useDeletionProtection                               | Body | Boolean | X        | Whether to protect against deletion<br>Default: `false`                                                                                        |
 | useSlowQueryAnalysis                                | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                                                             |
@@ -1671,7 +1674,7 @@ POST /v4.0/db-instances/restore-from-obs
 | backup.useBackupLock                                | Body | Boolean | X        | Whether to use table lock<br/>- Default: `true`                                                                                                                                                                                                                                                |
 | backup.backupSchedules                              | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                                                    |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                                                 |
-| backup.backupSchedules.backupWndDuration            | Body | Enum    | O        | Backup duration<br>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`<span style="color:#313338">: 30 minutes</span><br/>- `ONE_HOUR`<span style="color:#313338">: 1 hour</span><br/>- `ONE_HOUR_AND_HALF`<span style="color:#313338">: 1.5 hour</span><br/>- `TWO_HOURS`<span style="color:#313338">: 2 hour</span><br/>- `TWO_HOURS_AND_HALF`<span style="color:#313338">: 2.5 hour</span><br/>- `THREE_HOURS`<span style="color:#313338">: 3 hour</span> |
+| backup.backupSchedules.backupWndDuration            | Body | Enum    | O        | Backup duration<br>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
 
 
 
@@ -1773,6 +1776,80 @@ This API does not return a response body.
 
 ---
 
+### High availability status
+
+| Status | Description |
+|----------------------------------|---------------------------------|
+| `CREATED` | High availability has been created |
+| `STABLE` | High availability is operating normally |
+| `PAUSING` | High availability is being paused |
+| `PAUSED` | High availability has been paused |
+| `PAUSED_DUE_TO_TASK` | High availability has been paused due to a task |
+| `DISABLE_MASTER_IN_REPLICATION` | High availability has been disabled due to detection of abnormal master replication |
+| `DISABLE_MHA_PROCESS` | The high availability process has been stopped |
+| `DISABLE_REPLICATION_STOP` | High availability has been disabled due to replication stoppage |
+| `DISABLE_REPLICATION_DELAY` | High availability has been disabled due to replication delay |
+| `MASTER_FAILURE_DETECTION` | A master failure has been detected |
+| `FAILOVER_STARTED` | Failover has started |
+| `FAILOVER_FAILED` | Failover has failed |
+| `FAILOVER_COMPLETED` | Failover has been completed |
+| `DELETED` | High availability has been deleted |
+
+---
+
+### View High Availability Information
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/high-availability
+```
+
+#### Required Permissions
+
+| Permission | Description |
+|----------------------------------------------------|------------|
+| RDSforMySQL:DbInstance.Get | View DB instance details |
+
+#### Request
+
+This API does not require a request body.
+
+| Name | Type | Format | Required | Description |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
+
+#### Response
+
+| Name | Type | Format | Description |
+|---------------------|------|---------|---------------------------------------------------------------------------------------------------------------------|
+| useHighAvailability | Body | Boolean | Whether high availability is enabled |
+| haStatus | Body | Enum | High availability status |
+| pingInterval | Body | Number | Ping interval (seconds) |
+| pingType | Body | Enum | Ping type<br/>- `INSERT`<br/>- `SELECT` |
+
+<details><summary>Example</summary>
+
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "useHighAvailability": true,
+    "haStatus": "STABLE",
+    "pingInterval": 3,
+    "pingType": "INSERT"
+}
+```
+
+</p>
+
+</details>
+
+---
+
 ### Modify High Availability
 
 ```http
@@ -1792,6 +1869,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | dbInstanceId        | URL  | UUID    | O        | DB instance identifier                                                                               |
 | useHighAvailability | Body | Boolean | O        | Whether to use high availability                                                                     |
 | pingInterval        | Body | Number  | X        | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| pingType            | Body | Enum    | X        | Ping type when using high availability<br/>- `INSERT`<br/>- `SELECT`                                              |
 | dbInstanceCandidateName        | Body | String  | O  | Name to identify DB instances<br/>- Required for using high availability |
 
 #### Response
@@ -2860,7 +2938,7 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 | dbInstanceId     | URL  | UUID   | O  | DB instance identifier                                                                 |
 | certificateTypes | Body | Array  | O  | Certificate type to upload<br/>- `CA_FILE`: CA certificate<br/>- `CERT_FILE`: Certificate<br/>- `KEY_FILE`: Secret key |
 | tenantId         | Body | String | O  | Tenant ID of object storage to store certificate file                                                |
-| username         | Body | String | O  | NHN Cloud member or IAM member ID                                                    |
+| username         | Body | String | O  | NHN Cloud account or IAM account ID                                                    |
 | password         | Body | String | O  | API password for object storage where certificate file is stored                                              |
 | targetContainer  | Body | String | O  | Object storage container where certificate file is stored                                                  |
 | objectPath       | Body | String | O  |
@@ -3225,6 +3303,7 @@ POST /v4.0/backups/{backupId}/restore
 | userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                                    |
 | useHighAvailability                          | Body | Boolean | X        | Whether to use high availability<br/>- Default: `false`                                                                                     |
 | pingInterval                                 | Body | Number  | X        | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                     |
+| pingType                                     | Body | Enum    | X        | Ping type when using high availability<br/>- Default: `INSERT`<br/>- `INSERT`<br/>- `SELECT`                                                               |
 | useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>- Default: `false`                                                                                  |
 | useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>- Default: `false`                                                                                  | 
 | useSlowQueryAnalysis                         | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                                     |
