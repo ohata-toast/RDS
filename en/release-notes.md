@@ -5,13 +5,11 @@
 ### Feature Updates
 
 * Added security patch feature
-  * Security patches for security vulnerabilities (CVEs) discovered in the OS can be performed as maintenance tasks.
-  * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/ko/db-instance/#security-patch) documentation.
+    * Security patches for security vulnerabilities (CVEs) discovered in the OS can be performed as maintenance tasks.
+    * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/ko/db-instance/#security-patch) documentation.
 * Added `SELECT` option in addition to the existing `INSERT` option for high availability Ping check method
-* Added MariaDB versions 10.6.25, 10.11.16, 11.4.10, and 11.8.6
-* Restricted creation of new instances due to MariaDB 10.3 and 10.6 EOL (End of Life)
 * Added and updated API v4.0
-  * Added the View High Availability Information API.
+    * Added the View High Availability Information API.
 
 ## March 10, 2026
 

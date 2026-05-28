@@ -8,8 +8,6 @@
     * OS에서 발견된 보안 취약점(CVE)에 대한 보안 패치를 유지 관리 작업으로 수행할 수 있습니다.
     * 자세한 내용은 [보안 패치](/Database/RDS%20for%20MySQL/ko/db-instance/#security-patch) 문서를 참고하세요.
 * 고가용성 Ping 체크 방식에 기존 `INSERT` 외 `SELECT` 옵션 추가
-* MariaDB 10.6.25, 10.11.16, 11.4.10, 11.8.6 버전 추가
-* MariaDB 10.3, 10.6 EOL(End of Life)에 따른 신규 생성 제한
 * API v4.0 추가 및 변경
     * 고가용성 정보 보기 API가 추가됩니다.
 
