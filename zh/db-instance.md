@@ -1368,54 +1368,54 @@ When using Federated Storage Engine, make sure you consider the following.
 <a id="security-patch"></a>
 ### Appendix 3. Security Patch
 
-NHN Cloud는 DB 인스턴스 운영체제에서 발견된 보안 취약점(CVE)을 주기적으로 관리하여, 영향받는 DB 인스턴스에 보안 패치 유지 관리 작업을 제공합니다.
-보안 패치는 현재 DB 인스턴스의 취약점을 해결한 최신 보안 업데이트를 적용하는 방식으로 동작합니다
-아래 가이드에 따라 콘솔에 있는 보안 패치 기능을 이용하십시오.
-보안 패치 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
+NHN Cloud periodically manages security vulnerabilities (CVEs) found in the operating systems of DB instances and provides security patch maintenance tasks for affected DB instances.
+Security patches work by applying the latest security updates that resolve the current vulnerabilities of DB instances.
+Follow the guide below to use the security patch feature in the console.
+Navigate to the project that contains the DB instances designated as security patch targets.
 
-#### 1. 보안 패치 대상 DB 인스턴스를 확인합니다.
+#### 1. Check the DB instances targeted for security patching.
 
-**유지 관리**에서 **필수** 또는 **사용 가능**을 클릭하거나 **DB 인스턴스 상세**의 **유지 관리** 탭에서 보안 패치 유지 관리 작업이 있는지 확인할 수 있습니다.
+You can check whether a security patch maintenance task exists by clicking **Required** or **Available** under **Maintenance**, or by checking the **Maintenance** tab in **DB Instance Details**.
 
 ![patch-security-list-en](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-list-en.png)
 
-❶ 보안 패치 유지 관리 **보기** 버튼 클릭
-❷ 현재 DB 이미지에 해당하는 보안 취약점 정보를 확인할 수 있습니다.
+❶ Click the **View** button for the security patch maintenance task.
+❷ You can check information on security vulnerabilities applicable to the current DB image.
 
 ![patch-security-detail-en](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-detail-en.png)
 
-보안 패치를 진행 시 해결될 수 있는 보안 취약점 정보를 확인할 수 있습니다.
+You can check information on security vulnerabilities that can be resolved by proceeding with the security patch.
 
 ![patch-security-popup-en](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-popup-en.png)
 
-> [참고]
-> 취약점 심각도는 CRITICAL, HIGH, MEDIUM, LOW로 구분됩니다.
+> [Note]
+> Vulnerability severity is classified as CRITICAL, HIGH, MEDIUM, or LOW.
 
-#### 2. 보안 패치 대상 DB 인스턴스에 접속 중인 응용 프로그램을 확인합니다.
+#### 2. Check the applications connected to the DB instances targeted for security patching.
 
-보안 패치는 DB 인스턴스의 서비스 순단이 발생할 수 있습니다.
-고가용성 DB 인스턴스는 장애 조치를 통해 서비스 순단을 최소화할 수 있으며, 단일 DB 인스턴스는 재시작을 통해 보안 패치가 적용됩니다.
-DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취하십시오.
+Security patching may cause a brief service interruption on the DB instance.
+For high-availability DB instances, service interruptions can be minimized through failover. For single DB instances, the security patch is applied through a restart.
+Take appropriate measures to avoid affecting services connected to the DB.
 
-#### 3. 보안 패치 적용 시점을 선택합니다.
+#### 3. Select when to apply the security patch.
 
 ![patch-security-maintenance-en](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-maintenance-en.png)
 
-❶ **즉시 적용**을 클릭해 보안 패치를 바로 적용할 수 있습니다.
-❷ **다음 유지 관리 기간에 적용**을 클릭해 지정된 유지 관리 기간에 보안 패치를 적용할 수 있습니다.
+❶ Click **Apply immediately** to apply the security patch right away.
+❷ Click **Apply at next maintenance window** to apply the security patch during the scheduled maintenance window.
 
-고가용성 DB 인스턴스에 적용 시에는 아래 옵션을 함께 선택할 수 있습니다.
+When applying to a high-availability DB instance, the following options can also be selected:
 
-* **사전 백업 실행**: 보안 패치 수행 전 백업을 자동으로 실행합니다.
-* **장애 조치 방식 선택**: 온라인 장애 조치, 수동 장애 조치 사용 여부를 선택합니다.
-* **복제 지연 대기**: 복제 지연이 해소될 때까지 대기한 후 보안 패치를 진행합니다.
-* **Read Only 모드**: 보안 패치 수행 중 Read Only 모드를 사용합니다.
+* **Run pre-backup**: Automatically runs a backup before performing the security patch.
+* **Select failover method**: Selects whether to use online failover or manual failover.
+* **Wait for replication lag**: Waits until replication lag is resolved before proceeding with the security patch.
+* **Read Only mode**: Uses read-only mode while the security patch is being performed.
 
-#### 4. 보안 패치가 완료될 때까지 대기합니다.
+#### 4. Wait until the security patch is complete.
 
-DB 인스턴스 상태가 변경되지 않는다면 새로 고침하세요.
+If the DB instance status does not change, refresh the page.
 
 ![patch-security-running-en](https://static.toastoven.net/prod_rds/mysql/26.05.12/patch-security-running-en.png)
 
-DB 인스턴스에 보안 패치가 진행되는 동안에는 아무런 조작을 할 수 없습니다.
-보안 패치가 정상적으로 완료되지 않으면 자동으로 재시도되며, 반복적으로 실패할 경우 관리자에게 보고되어 NHN Cloud에서 별도로 연락을 드립니다.
+No operations can be performed while a security patch is in progress on a DB instance.
+If the security patch does not complete successfully, it is automatically retried. If it fails repeatedly, the issue is reported to an administrator and NHN Cloud will contact you separately.
