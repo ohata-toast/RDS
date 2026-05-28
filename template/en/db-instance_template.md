@@ -1453,7 +1453,7 @@ Take appropriate measures to avoid affecting services connected to the DB.
 When applying to a high-availability DB instance, the following options can also be selected:
 
 * **Run pre-backup**: Automatically runs a backup before performing the security patch.
-* **Select failover method**: Select whether to use online failover or manual failover.
+* **Select failover method**: Selects whether to use online failover or manual failover.
 * **Wait for replication lag**: Waits until replication lag is resolved before proceeding with the security patch.
 * **Read Only mode**: Uses read-only mode while the security patch is being performed.
 
