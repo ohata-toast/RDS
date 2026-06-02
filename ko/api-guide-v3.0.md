@@ -4,13 +4,16 @@
 
 ### 인증 및 권한
 
-RDS for MySQL은(는) API 호출 시 인증/인가를 위해 User Access Key 토큰을 사용합니다. User Access Key 토큰은 User Access Key를 기반으로 발급되는 Bearer 타입의 일시적 액세스 토큰입니다. User Access Key 토큰 발급 및 사용에 대한 자세한 내용은 [User Access Key 토큰](/nhncloud/ko/public-api/user-access-key-token)을 참고하세요.
-발급 받은 토큰은 Appkey와 함께 요청 Header에 포함해야 합니다.
+RDS for MySQL API를 사용하려면 User Access Key가 필요합니다. User Access Key는 NHN Cloud 계정 또는 IAM 계정을 기반으로 발급되는 인증 키로, Secret Access Key와 함께 사용하여 API 요청에 대한 인증 수단으로 활용됩니다.
+
+User Access Key와 Secret Access Key는 콘솔의 **API 보안 설정**에서 발급할 수 있습니다. User Access Key 발급 및 사용에 대한 자세한 내용은 [User Access Key](/nhncloud/ko/public-api/user-access-key)를 참고하세요.
+생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | X-TC-APP-KEY | Header | String | O | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
-| X-NHN-AUTHORIZATION | Header | String | O | Public API로 발급 받은 Bearer 유형 토큰 |
+| X-TC-AUTHENTICATION-ID | Header | String | O | API 보안 설정 메뉴의 User Access Key ID |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O | API 보안 설정 메뉴의 Secret Access Key |
 
 또한 프로젝트 권한에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER` 역할에는 아래처럼 기본 권한이 부여돼 있고 프로젝트 내 역할 그룹 관리 메뉴에서 필요한 권한만 부여할 수 있습니다.
 
@@ -47,7 +50,6 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | resultCode | Number | 결과 코드<br/>- 성공: `0`<br/>- 실패: `0`이 아닌 값 |
 | resultMessage | String | 결과 메시지 |
 | isSuccessful | Boolean | 성공 여부 |
-
 ### API 엔드포인트
 
 | 리전 | 엔드포인트 |
@@ -89,21 +91,12 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 * ENUM 타입의 dbVersion 필드에 대해 해당 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능한 경우가 있을 수 있습니다.
 
-## DB 보안 그룹
+## 프로젝트 정보
 
-### DB 보안 그룹 진행 상태
-
-| 상태              | 설명           |
-|-----------------|--------------|
-| `NONE`          | 진행 중인 작업이 없음 |
-| `CREATING_RULE` | 규칙 정책 생성 중   |
-| `UPDATING_RULE` | 규칙 정책 수정 중   |
-| `DELETING_RULE` | 규칙 정책 삭제 중   |
-
-### DB 보안 그룹 목록 보기
+### 프로젝트 멤버 목록 보기
 
 ```http
-GET /v3.0/db-security-groups
+GET /v3.0/project/members
 ```
 
 #### 요청
@@ -114,13 +107,11 @@ GET /v3.0/db-security-groups
 
 | 이름 | 종류 | 형식 | 설명 |
 |-----|-----|-----|-----|
-| dbSecurityGroups | Body | Array | DB 보안 그룹 목록 |
-| dbSecurityGroups.dbSecurityGroupId | Body | String | DB 보안 그룹의 식별자 |
-| dbSecurityGroups.dbSecurityGroupName | Body | String | DB 보안 그룹을 식별할 수 있는 이름 |
-| dbSecurityGroups.description | Body | String | DB 보안 그룹에 대한 추가 정보 |
-| dbSecurityGroups.progressStatus | Body | Enum | DB 보안 그룹의 현재 진행 상태<br/>- NONE: `없음`<br/>- CREATING_RULE: `규칙 생성중`<br/>- UPDATING_RULE: `규칙 수정중`<br/>- DELETING_RULE: `규칙 삭제중`<br/>- APPLYING_DEFAULT_RULE: `기본 규칙 적용중` |
-| dbSecurityGroups.createdYmdt | Body | DateTime | 생성 일시 |
-| dbSecurityGroups.updatedYmdt | Body | DateTime | 수정 일시 |
+| members | Body | Array | 프로젝트 멤버 목록 |
+| members.memberId | Body | String | 프로젝트 멤버의 식별자 |
+| members.memberName | Body | String | 프로젝트 멤버의 이름 |
+| members.emailAddress | Body | String | 프로젝트 멤버의 이메일 주소 |
+| members.phoneNumber | Body | String | 프로젝트 멤버의 전화번호 |
 
 <details><summary>예시</summary>
 <p>
@@ -132,9 +123,9 @@ GET /v3.0/db-security-groups
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "dbSecurityGroups": [
+    "members": [
         {
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+            "phoneNumber": "phoneNumber-example"
         }
     ]
 }
@@ -145,38 +136,37 @@ GET /v3.0/db-security-groups
 
 ---
 
-### DB 보안 그룹 생성하기
+### 리전 목록 보기
 
 ```http
-POST /v3.0/db-security-groups
+GET /v3.0/project/regions
 ```
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupName | Body | String | O | DB 보안 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | Body | String | X | DB 보안 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
-| rules | Body | Array | O | DB 보안 그룹 규칙 목록 |
-| rules.direction | Body | Enum | O | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
-| rules.etherType | Body | Enum | O | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
-| rules.port | Body | Object | O | 포트 객체 |
-| rules.port.portType | Body | Enum | O | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
-| rules.port.minPort | Body | Number | X | 최소 포트 범위<br/>- 최솟값: `3306` |
-| rules.port.maxPort | Body | Number | X | 최대 포트 범위<br/>- 최댓값: `65535` |
-| rules.cidr | Body | String | O | CIDR |
-| rules.description | Body | String | X | 보안 그룹 규칙에 대한 추가 정보 |
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| regions | Body | Array | 리전 목록 |
+| regions.regionCode | Body | Enum | 리전 코드<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
+| regions.isEnabled | Body | Boolean | 리전의 활성화 여부 |
 
 <details><summary>예시</summary>
 <p>
 
 ```json
 {
-    "dbSecurityGroupName": "dbSecurityGroupName",
-    "description": "description-example",
-    "rules": [
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "regions": [
         {
-            "description": "description-example"
+            "isEnabled": false
         }
     ]
 }
@@ -185,88 +175,75 @@ POST /v3.0/db-security-groups
 </p>
 </details>
 
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| dbSecurityGroupId | Body | String | DB 보안 그룹의 식별자 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbSecurityGroupId": "dbSecurityGroupId-example"
-}
-```
-
-</p>
-</details>
-
 ---
 
-### DB 보안 그룹 삭제하기
+## DB 인스턴스 사양
+
+### DB 인스턴스 사양 목록 보기
 
 ```http
-DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
+GET /v3.0/db-flavors
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-
 #### 응답
 
-이 API는 응답 본문을 반환하지 않습니다.
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| dbFlavors | Body | Array | DB 인스턴스 사양 목록 |
+| dbFlavors.dbFlavorId | Body | String | DB 인스턴스 사양의 식별자 |
+| dbFlavors.dbFlavorName | Body | String | DB 인스턴스 사양 이름 |
+| dbFlavors.ram | Body | Number | 메모리 용량(MB) |
+| dbFlavors.vcpus | Body | Number | CPU 코어 수 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbFlavors": [
+        {
+            "vcpus": 1
+        }
+    ]
+}
+```
+
+</p>
+</details>
 
 ---
 
-### DB 보안 그룹 상세 보기
+## 네트워크
+
+### 서브넷 목록 보기
 
 ```http
-GET /v3.0/db-security-groups/{dbSecurityGroupId}
+GET /v3.0/network/subnets
 ```
 
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-
 #### 응답
 
 | 이름 | 종류 | 형식 | 설명 |
 |-----|-----|-----|-----|
-| dbSecurityGroup | Body | Object | DB 보안 그룹 |
-| dbSecurityGroup.dbSecurityGroupId | Body | String | DB 보안 그룹의 식별자 |
-| dbSecurityGroup.dbSecurityGroupName | Body | String | DB 보안 그룹을 식별할 수 있는 이름 |
-| dbSecurityGroup.description | Body | String | DB 보안 그룹에 대한 추가 정보 |
-| dbSecurityGroup.progressStatus | Body | Enum | DB 보안 그룹의 현재 진행 상태<br/>- NONE: `없음`<br/>- CREATING_RULE: `규칙 생성중`<br/>- UPDATING_RULE: `규칙 수정중`<br/>- DELETING_RULE: `규칙 삭제중`<br/>- APPLYING_DEFAULT_RULE: `기본 규칙 적용중` |
-| dbSecurityGroup.rules | Body | Array | DB 보안 그룹 규칙 목록 |
-| dbSecurityGroup.rules.ruleId | Body | String | DB 보안 그룹 규칙의 식별자 |
-| dbSecurityGroup.rules.description | Body | String | DB 보안 그룹 규칙에 대한 추가 정보 |
-| dbSecurityGroup.rules.direction | Body | Enum | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
-| dbSecurityGroup.rules.etherType | Body | Enum | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
-| dbSecurityGroup.rules.port | Body | Object | 포트 객체 |
-| dbSecurityGroup.rules.port.portType | Body | Enum | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
-| dbSecurityGroup.rules.port.minPort | Body | Number | 최소 포트 범위 |
-| dbSecurityGroup.rules.port.maxPort | Body | Number | 최대 포트 범위 |
-| dbSecurityGroup.rules.cidr | Body | String | CIDR |
-| dbSecurityGroup.rules.createdYmdt | Body | DateTime | 생성 일시 |
-| dbSecurityGroup.rules.updatedYmdt | Body | DateTime | 수정 일시 |
-| dbSecurityGroup.createdYmdt | Body | DateTime | 생성 일시 |
-| dbSecurityGroup.updatedYmdt | Body | DateTime | 수정 일시 |
+| subnets | Body | Array | 서브넷 목록 |
+| subnets.subnetId | Body | String | 서브넷의 식별자 |
+| subnets.subnetName | Body | String | 서브넷을 식별할 수 있는 이름 |
+| subnets.subnetCidr | Body | String | 서브넷의 CIDR |
+| subnets.usingGateway | Body | Boolean | 게이트웨이 사용 여부 |
+| subnets.availableIpCount | Body | Number | 사용 가능한 IP 수 |
 
 <details><summary>예시</summary>
 <p>
@@ -278,223 +255,11 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "dbSecurityGroup": {
-        "dbSecurityGroupId": "dbSecurityGroupId-example",
-        "dbSecurityGroupName": "dbSecurityGroupName-example",
-        "description": "description-example",
-        "progressStatus": "NONE",
-        "rules": [
-            {
-                "updatedYmdt": "2023-12-31T15:00:00+09:00"
-            }
-        ],
-        "createdYmdt": "2023-12-31T15:00:00+09:00",
-        "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-}
-```
-
-</p>
-</details>
-
----
-
-### DB 보안 그룹 수정하기
-
-```http
-PUT /v3.0/db-security-groups/{dbSecurityGroupId}
-```
-
-#### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-| dbSecurityGroupName | Body | String | X | DB 보안 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | Body | String | X | DB 보안 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "dbSecurityGroupName": "dbSecurityGroupName",
-    "description": "description-example"
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-### DB 보안 그룹 규칙 삭제하기
-
-```http
-DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-| ruleIds | Query | String | O |  |
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| jobId | Body | String | 작업의 식별자 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "jobId-example"
-}
-```
-
-</p>
-</details>
-
----
-
-### DB 보안 그룹 규칙 생성하기
-
-```http
-POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
-```
-
-#### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-| direction | Body | Enum | O | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
-| etherType | Body | Enum | O | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
-| port | Body | Object | O | 포트 객체 |
-| port.portType | Body | Enum | O | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
-| port.minPort | Body | Number | X | 최소 포트 범위<br/>- 최솟값: `3306` |
-| port.maxPort | Body | Number | X | 최대 포트 범위<br/>- 최댓값: `65535` |
-| cidr | Body | String | O | CIDR |
-| description | Body | String | X | DB 보안 그룹 규칙에 대한 추가 정보<br/>- 최대 길이: `200` |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "direction": "INGRESS",
-    "etherType": "IPV4",
-    "port": {
-        "portType": "ALL",
-        "minPort": 3306,
-        "maxPort": 1
-    },
-    "cidr": "cidr-example",
-    "description": "description-example"
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| jobId | Body | String | 작업의 식별자 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "jobId-example"
-}
-```
-
-</p>
-</details>
-
----
-
-### DB 보안 그룹 규칙 수정하기
-
-```http
-PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
-```
-
-#### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-| ruleId | URL | UUID | O |  |
-| direction | Body | Enum | O | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
-| etherType | Body | Enum | O | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
-| port | Body | Object | O | 포트 객체 |
-| port.portType | Body | Enum | O | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
-| port.minPort | Body | Number | X | 최소 포트 범위<br/>- 최솟값: `3306` |
-| port.maxPort | Body | Number | X | 최대 포트 범위<br/>- 최댓값: `65535` |
-| cidr | Body | String | O | CIDR |
-| description | Body | String | X | DB 보안 그룹 규칙에 대한 추가 정보<br/>- 최대 길이: `200` |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "direction": "INGRESS",
-    "etherType": "IPV4",
-    "port": {
-        "portType": "ALL",
-        "minPort": 3306,
-        "maxPort": 1
-    },
-    "cidr": "cidr-example",
-    "description": "description-example"
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| jobId | Body | String | 작업의 식별자 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "jobId-example"
+    "subnets": [
+        {
+            "availableIpCount": 1
+        }
+    ]
 }
 ```
 
@@ -539,6 +304,249 @@ GET /v3.0/db-versions
             "restorableFromObs": false
         }
     ]
+}
+```
+
+</p>
+</details>
+
+---
+
+## 데이터 스토리지
+
+### 스토리지 타입 목록 보기
+
+```http
+GET /v3.0/storage-types
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| storageTypes | Body | Array | 스토리지 타입 목록 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "storageTypes": []
+}
+```
+
+</p>
+</details>
+
+---
+
+### 스토리지 목록 보기
+
+```http
+GET /v3.0/storages
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| storages | Body | Array | 스토리지 목록 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "storages": []
+}
+```
+
+</p>
+</details>
+
+---
+
+## 작업 정보
+
+### 작업 상태
+
+| 상태명                | 설명                   |
+|--------------------|----------------------|
+| `PREPARING`        | 작업이 준비 중인 경우         |
+| `READY`            | 작업이 준비 완료된 경우        |
+| `RUNNING`          | 작업이 진행 중인 경우         |
+| `COMPLETED`        | 작업이 완료된 경우           |
+| `REGISTERED`       | 작업이 등록된 경우           |
+| `WAIT_TO_REGISTER` | 작업 등록 대기 중인 경우       |
+| `INTERRUPTED`      | 작업 진행 중 인터럽트가 발생한 경우 |
+| `CANCELED`         | 작업이 취소된 경우           |
+| `FAILED`           | 작업이 실패한 경우           |
+| `ERROR`            | 작업 진행 중 오류가 발생한 경우   |
+| `DELETED`          | 작업이 삭제된 경우           |
+| `FAIL_TO_READY`    | 작업 준비에 실패한 경우        |
+
+### 작업 정보 상세 보기
+
+```http
+GET /v3.0/jobs/{jobId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| jobId | URL | UUID | O |  |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| jobId | Body | String | 작업의 식별자 |
+| jobStatus | Body | Enum | 작업의 현재 상태<br/>- DELETED<br/>- CANNOT_PROGRESS<br/>- FAILED<br/>- ERROR<br/>- CANCELED<br/>- INTERRUPTED<br/>- COMPLETED<br/>- RUNNING<br/>- PREPARING<br/>- READY<br/>- CREATED<br/>- FAIL_TO_READY<br/>- REGISTERED<br/>- FAIL_TO_REGISTER<br/>- WAIT_TO_REGISTER |
+| resourceRelations | Body | Array | 연관 리소스 목록 |
+| resourceRelations.resourceType | Body | String | 연관 리소스 유형 |
+| resourceRelations.resourceId | Body | String | 연관 리소스의 식별자 |
+| createdYmdt | Body | DateTime | 생성 일시 |
+| updatedYmdt | Body | DateTime | 수정 일시 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "jobId-example",
+    "jobStatus": "DELETED",
+    "resourceRelations": [
+        {
+            "resourceId": "resourceId-example"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+```
+
+</p>
+</details>
+
+---
+
+## DB 인스턴스 그룹
+
+### DB 인스턴스 그룹 목록 보기
+
+```http
+GET /v3.0/db-instance-groups
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceGroups | Body | Array | DB 인스턴스 그룹 목록 |
+| dbInstanceGroups.dbInstanceGroupId | Body | String | DB 인스턴스 그룹의 식별자 |
+| dbInstanceGroups.replicationType | Body | Enum | DB 인스턴스 그룹의 복제 형태<br/>- STANDALONE: `고가용성 사용 안함`<br/>- HIGH_AVAILABILITY: `고가용성 사용` |
+| dbInstanceGroups.createdYmdt | Body | DateTime | 생성 일시 |
+| dbInstanceGroups.updatedYmdt | Body | DateTime | 수정 일시 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbInstanceGroups": [
+        {
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### DB 인스턴스 그룹 상세 보기
+
+```http
+GET /v3.0/db-instance-groups/{dbInstanceGroupId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceGroupId | URL | UUID | O |  |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceGroupId | Body | String | DB 인스턴스 그룹의 식별자 |
+| replicationType | Body | Enum | DB 인스턴스 그룹의 복제 형태<br/>- STANDALONE: `고가용성 사용 안함`<br/>- HIGH_AVAILABILITY: `고가용성 사용` |
+| dbInstances | Body | Array | DB 인스턴스 그룹에 속한 DB 인스턴스 목록 |
+| dbInstances.dbInstanceId | Body | String | DB 인스턴스의 식별자 |
+| dbInstances.dbInstanceType | Body | Enum | DB 인스턴스의 역할 타입<br/>- MASTER: `마스터`<br/>- FAILED_MASTER: `장애 마스터`<br/>- CANDIDATE_MASTER: `예비 마스터`<br/>- READ_ONLY_SLAVE: `읽기 복제본` |
+| dbInstances.dbInstanceStatus | Body | Enum | DB 인스턴스의 현재 상태<br/>- BEFORE_CREATE: `생성 이전 (회색)`<br/>- AVAILABLE: `사용 가능 (녹색)`<br/>- STORAGE_FULL: `용량 부족 (적색)`<br/>- FAIL_TO_CREATE: `생성 실패 (적색)`<br/>- FAIL_TO_CONNECT: `연결 실패 (적색)`<br/>- REPLICATION_STOP: `복제 중단 (적색)`<br/>- REPLICATION_DELAY: `복제 지연 (황색)`<br/>- FAILOVER: `장애 조치 완료 (적색)`<br/>- SHUTDOWN: `중지 됨 (회색)`<br/>- DELETED: `삭제됨 (회색)` |
+| createdYmdt | Body | DateTime | 생성 일시 |
+| updatedYmdt | Body | DateTime | 수정 일시 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbInstanceGroupId": "dbInstanceGroupId-example",
+    "replicationType": "STANDALONE",
+    "dbInstances": [
+        {
+            "dbInstanceStatus": "BEFORE_CREATE"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -2700,329 +2708,6 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
-## DB 인스턴스 그룹
-
-### DB 인스턴스 그룹 목록 보기
-
-```http
-GET /v3.0/db-instance-groups
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| dbInstanceGroups | Body | Array | DB 인스턴스 그룹 목록 |
-| dbInstanceGroups.dbInstanceGroupId | Body | String | DB 인스턴스 그룹의 식별자 |
-| dbInstanceGroups.replicationType | Body | Enum | DB 인스턴스 그룹의 복제 형태<br/>- STANDALONE: `고가용성 사용 안함`<br/>- HIGH_AVAILABILITY: `고가용성 사용` |
-| dbInstanceGroups.createdYmdt | Body | DateTime | 생성 일시 |
-| dbInstanceGroups.updatedYmdt | Body | DateTime | 수정 일시 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstanceGroups": [
-        {
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### DB 인스턴스 그룹 상세 보기
-
-```http
-GET /v3.0/db-instance-groups/{dbInstanceGroupId}
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbInstanceGroupId | URL | UUID | O |  |
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| dbInstanceGroupId | Body | String | DB 인스턴스 그룹의 식별자 |
-| replicationType | Body | Enum | DB 인스턴스 그룹의 복제 형태<br/>- STANDALONE: `고가용성 사용 안함`<br/>- HIGH_AVAILABILITY: `고가용성 사용` |
-| dbInstances | Body | Array | DB 인스턴스 그룹에 속한 DB 인스턴스 목록 |
-| dbInstances.dbInstanceId | Body | String | DB 인스턴스의 식별자 |
-| dbInstances.dbInstanceType | Body | Enum | DB 인스턴스의 역할 타입<br/>- MASTER: `마스터`<br/>- FAILED_MASTER: `장애 마스터`<br/>- CANDIDATE_MASTER: `예비 마스터`<br/>- READ_ONLY_SLAVE: `읽기 복제본` |
-| dbInstances.dbInstanceStatus | Body | Enum | DB 인스턴스의 현재 상태<br/>- BEFORE_CREATE: `생성 이전 (회색)`<br/>- AVAILABLE: `사용 가능 (녹색)`<br/>- STORAGE_FULL: `용량 부족 (적색)`<br/>- FAIL_TO_CREATE: `생성 실패 (적색)`<br/>- FAIL_TO_CONNECT: `연결 실패 (적색)`<br/>- REPLICATION_STOP: `복제 중단 (적색)`<br/>- REPLICATION_DELAY: `복제 지연 (황색)`<br/>- FAILOVER: `장애 조치 완료 (적색)`<br/>- SHUTDOWN: `중지 됨 (회색)`<br/>- DELETED: `삭제됨 (회색)` |
-| createdYmdt | Body | DateTime | 생성 일시 |
-| updatedYmdt | Body | DateTime | 수정 일시 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstanceGroupId": "dbInstanceGroupId-example",
-    "replicationType": "STANDALONE",
-    "dbInstances": [
-        {
-            "dbInstanceStatus": "BEFORE_CREATE"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
-}
-```
-
-</p>
-</details>
-
----
-
-## DB 인스턴스 사양
-
-### DB 인스턴스 사양 목록 보기
-
-```http
-GET /v3.0/db-flavors
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| dbFlavors | Body | Array | DB 인스턴스 사양 목록 |
-| dbFlavors.dbFlavorId | Body | String | DB 인스턴스 사양의 식별자 |
-| dbFlavors.dbFlavorName | Body | String | DB 인스턴스 사양 이름 |
-| dbFlavors.ram | Body | Number | 메모리 용량(MB) |
-| dbFlavors.vcpus | Body | Number | CPU 코어 수 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbFlavors": [
-        {
-            "vcpus": 1
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-## storages
-
-### 스토리지 목록 보기
-
-```http
-GET /v3.0/storages
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| storages | Body | Array | 스토리지 목록 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storages": []
-}
-```
-
-</p>
-</details>
-
----
-
-## 네트워크
-
-### 서브넷 목록 보기
-
-```http
-GET /v3.0/network/subnets
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| subnets | Body | Array | 서브넷 목록 |
-| subnets.subnetId | Body | String | 서브넷의 식별자 |
-| subnets.subnetName | Body | String | 서브넷을 식별할 수 있는 이름 |
-| subnets.subnetCidr | Body | String | 서브넷의 CIDR |
-| subnets.usingGateway | Body | Boolean | 게이트웨이 사용 여부 |
-| subnets.availableIpCount | Body | Number | 사용 가능한 IP 수 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "subnets": [
-        {
-            "availableIpCount": 1
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-## 데이터 스토리지
-
-### 스토리지 타입 목록 보기
-
-```http
-GET /v3.0/storage-types
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| storageTypes | Body | Array | 스토리지 타입 목록 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storageTypes": []
-}
-```
-
-</p>
-</details>
-
----
-
-## 모니터링
-
-### 통계 정보 조회
-
-```http
-GET /v3.0/metric-statistics
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-### Metric 목록 보기
-
-```http
-GET /v3.0/metrics
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| metrics | Body | Array | Metric 목록 |
-| metrics.measureName | Body | String | 조회 지표 유형 |
-| metrics.unit | Body | String | 측정값 단위 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "metrics": [
-        {
-            "unit": "unit-example"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
 ## 백업
 
 ### 백업 상태
@@ -3287,6 +2972,749 @@ POST /v3.0/backups/{backupId}/restore
 
 </p>
 </details>
+
+---
+
+## DB 보안 그룹
+
+### DB 보안 그룹 진행 상태
+
+| 상태              | 설명           |
+|-----------------|--------------|
+| `NONE`          | 진행 중인 작업이 없음 |
+| `CREATING_RULE` | 규칙 정책 생성 중   |
+| `UPDATING_RULE` | 규칙 정책 수정 중   |
+| `DELETING_RULE` | 규칙 정책 삭제 중   |
+
+### DB 보안 그룹 목록 보기
+
+```http
+GET /v3.0/db-security-groups
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| dbSecurityGroups | Body | Array | DB 보안 그룹 목록 |
+| dbSecurityGroups.dbSecurityGroupId | Body | String | DB 보안 그룹의 식별자 |
+| dbSecurityGroups.dbSecurityGroupName | Body | String | DB 보안 그룹을 식별할 수 있는 이름 |
+| dbSecurityGroups.description | Body | String | DB 보안 그룹에 대한 추가 정보 |
+| dbSecurityGroups.progressStatus | Body | Enum | DB 보안 그룹의 현재 진행 상태<br/>- NONE: `없음`<br/>- CREATING_RULE: `규칙 생성중`<br/>- UPDATING_RULE: `규칙 수정중`<br/>- DELETING_RULE: `규칙 삭제중`<br/>- APPLYING_DEFAULT_RULE: `기본 규칙 적용중` |
+| dbSecurityGroups.createdYmdt | Body | DateTime | 생성 일시 |
+| dbSecurityGroups.updatedYmdt | Body | DateTime | 수정 일시 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbSecurityGroups": [
+        {
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### DB 보안 그룹 생성하기
+
+```http
+POST /v3.0/db-security-groups
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupName | Body | String | O | DB 보안 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | Body | String | X | DB 보안 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+| rules | Body | Array | O | DB 보안 그룹 규칙 목록 |
+| rules.direction | Body | Enum | O | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
+| rules.etherType | Body | Enum | O | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
+| rules.port | Body | Object | O | 포트 객체 |
+| rules.port.portType | Body | Enum | O | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
+| rules.port.minPort | Body | Number | X | 최소 포트 범위<br/>- 최솟값: `3306` |
+| rules.port.maxPort | Body | Number | X | 최대 포트 범위<br/>- 최댓값: `65535` |
+| rules.cidr | Body | String | O | CIDR |
+| rules.description | Body | String | X | 보안 그룹 규칙에 대한 추가 정보 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "dbSecurityGroupName": "dbSecurityGroupName",
+    "description": "description-example",
+    "rules": [
+        {
+            "description": "description-example"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| dbSecurityGroupId | Body | String | DB 보안 그룹의 식별자 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbSecurityGroupId": "dbSecurityGroupId-example"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DB 보안 그룹 삭제하기
+
+```http
+DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+### DB 보안 그룹 상세 보기
+
+```http
+GET /v3.0/db-security-groups/{dbSecurityGroupId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| dbSecurityGroup | Body | Object | DB 보안 그룹 |
+| dbSecurityGroup.dbSecurityGroupId | Body | String | DB 보안 그룹의 식별자 |
+| dbSecurityGroup.dbSecurityGroupName | Body | String | DB 보안 그룹을 식별할 수 있는 이름 |
+| dbSecurityGroup.description | Body | String | DB 보안 그룹에 대한 추가 정보 |
+| dbSecurityGroup.progressStatus | Body | Enum | DB 보안 그룹의 현재 진행 상태<br/>- NONE: `없음`<br/>- CREATING_RULE: `규칙 생성중`<br/>- UPDATING_RULE: `규칙 수정중`<br/>- DELETING_RULE: `규칙 삭제중`<br/>- APPLYING_DEFAULT_RULE: `기본 규칙 적용중` |
+| dbSecurityGroup.rules | Body | Array | DB 보안 그룹 규칙 목록 |
+| dbSecurityGroup.rules.ruleId | Body | String | DB 보안 그룹 규칙의 식별자 |
+| dbSecurityGroup.rules.description | Body | String | DB 보안 그룹 규칙에 대한 추가 정보 |
+| dbSecurityGroup.rules.direction | Body | Enum | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
+| dbSecurityGroup.rules.etherType | Body | Enum | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
+| dbSecurityGroup.rules.port | Body | Object | 포트 객체 |
+| dbSecurityGroup.rules.port.portType | Body | Enum | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
+| dbSecurityGroup.rules.port.minPort | Body | Number | 최소 포트 범위 |
+| dbSecurityGroup.rules.port.maxPort | Body | Number | 최대 포트 범위 |
+| dbSecurityGroup.rules.cidr | Body | String | CIDR |
+| dbSecurityGroup.rules.createdYmdt | Body | DateTime | 생성 일시 |
+| dbSecurityGroup.rules.updatedYmdt | Body | DateTime | 수정 일시 |
+| dbSecurityGroup.createdYmdt | Body | DateTime | 생성 일시 |
+| dbSecurityGroup.updatedYmdt | Body | DateTime | 수정 일시 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbSecurityGroup": {
+        "dbSecurityGroupId": "dbSecurityGroupId-example",
+        "dbSecurityGroupName": "dbSecurityGroupName-example",
+        "description": "description-example",
+        "progressStatus": "NONE",
+        "rules": [
+            {
+                "updatedYmdt": "2023-12-31T15:00:00+09:00"
+            }
+        ],
+        "createdYmdt": "2023-12-31T15:00:00+09:00",
+        "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    }
+}
+```
+
+</p>
+</details>
+
+---
+
+### DB 보안 그룹 수정하기
+
+```http
+PUT /v3.0/db-security-groups/{dbSecurityGroupId}
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+| dbSecurityGroupName | Body | String | X | DB 보안 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | Body | String | X | DB 보안 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "dbSecurityGroupName": "dbSecurityGroupName",
+    "description": "description-example"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+### DB 보안 그룹 규칙 삭제하기
+
+```http
+DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+| ruleIds | Query | String | O |  |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| jobId | Body | String | 작업의 식별자 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "jobId-example"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DB 보안 그룹 규칙 생성하기
+
+```http
+POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+| direction | Body | Enum | O | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
+| etherType | Body | Enum | O | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
+| port | Body | Object | O | 포트 객체 |
+| port.portType | Body | Enum | O | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
+| port.minPort | Body | Number | X | 최소 포트 범위<br/>- 최솟값: `3306` |
+| port.maxPort | Body | Number | X | 최대 포트 범위<br/>- 최댓값: `65535` |
+| cidr | Body | String | O | CIDR |
+| description | Body | String | X | DB 보안 그룹 규칙에 대한 추가 정보<br/>- 최대 길이: `200` |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "direction": "INGRESS",
+    "etherType": "IPV4",
+    "port": {
+        "portType": "ALL",
+        "minPort": 3306,
+        "maxPort": 1
+    },
+    "cidr": "cidr-example",
+    "description": "description-example"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| jobId | Body | String | 작업의 식별자 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "jobId-example"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DB 보안 그룹 규칙 수정하기
+
+```http
+PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+| ruleId | URL | UUID | O |  |
+| direction | Body | Enum | O | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
+| etherType | Body | Enum | O | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
+| port | Body | Object | O | 포트 객체 |
+| port.portType | Body | Enum | O | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
+| port.minPort | Body | Number | X | 최소 포트 범위<br/>- 최솟값: `3306` |
+| port.maxPort | Body | Number | X | 최대 포트 범위<br/>- 최댓값: `65535` |
+| cidr | Body | String | O | CIDR |
+| description | Body | String | X | DB 보안 그룹 규칙에 대한 추가 정보<br/>- 최대 길이: `200` |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "direction": "INGRESS",
+    "etherType": "IPV4",
+    "port": {
+        "portType": "ALL",
+        "minPort": 3306,
+        "maxPort": 1
+    },
+    "cidr": "cidr-example",
+    "description": "description-example"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| jobId | Body | String | 작업의 식별자 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "jobId-example"
+}
+```
+
+</p>
+</details>
+
+---
+
+## 파라미터 그룹
+
+### 파라미터 그룹 목록 보기
+
+```http
+GET /v3.0/parameter-groups
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| parameterGroups | Body | Array | 파라미터 그룹 목록 |
+| parameterGroups.parameterGroupId | Body | String | 파라미터 그룹의 식별자 |
+| parameterGroups.parameterGroupName | Body | String | 파라미터 그룹을 식별할 수 있는 이름 |
+| parameterGroups.description | Body | String | 파라미터 그룹에 대한 추가 정보 |
+| parameterGroups.dbVersion | Body | Enum | DB 엔진 유형 |
+| parameterGroups.parameterGroupStatus | Body | Enum | 파라미터 그룹의 현재 상태<br/>- STABLE: `적용 완료`<br/>- NEED_TO_APPLY: `적용 필요`<br/>- DELETED: `삭제됨` |
+| parameterGroups.createdYmdt | Body | DateTime | 생성 일시 |
+| parameterGroups.updatedYmdt | Body | DateTime | 수정 일시 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "parameterGroups": [
+        {
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### 파라미터 그룹 생성하기
+
+```http
+POST /v3.0/parameter-groups
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| parameterGroupName | Body | String | O | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | Body | String | X | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+| dbVersion | Body | Enum | O | DB 엔진 유형 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example",
+    "dbVersion": "ENUM_VALUE"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| parameterGroupId | Body | String | 파라미터 그룹의 식별자 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "parameterGroupId": "parameterGroupId-example"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 파라미터 그룹 삭제하기
+
+```http
+DELETE /v3.0/parameter-groups/{parameterGroupId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+### 파라미터 그룹 상세 보기
+
+```http
+GET /v3.0/parameter-groups/{parameterGroupId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| parameterGroupId | Body | String | 파라미터 그룹의 식별자 |
+| parameterGroupName | Body | String | 파라미터 그룹을 식별할 수 있는 이름 |
+| description | Body | String | 파라미터 그룹에 대한 추가 정보 |
+| dbVersion | Body | Enum | DB 엔진 유형 |
+| parameterGroupStatus | Body | Enum | 파라미터 그룹의 현재 상태<br/>- STABLE: `적용 완료`<br/>- NEED_TO_APPLY: `적용 필요`<br/>- DELETED: `삭제됨` |
+| parameters | Body | Array | 파라미터 목록 |
+| parameters.parameterId | Body | String | 파라미터의 식별자 |
+| parameters.parameterFileGroup | Body | Enum | 파라미터 파일 그룹 타입<br/>- CLIENT<br/>- MYSQL<br/>- MYSQLD |
+| parameters.parameterName | Body | String | 파라미터 이름 |
+| parameters.fileParameterName | Body | String | 파라미터 파일 이름 |
+| parameters.value | Body | String | 현재 설정된 값 |
+| parameters.defaultValue | Body | String | 기본값 |
+| parameters.allowedValue | Body | String | 허용된 값 |
+| parameters.updateType | Body | Enum | 수정 타입<br/>- VARIABLE<br/>- CONSTANT<br/>- INIT_VARIABLE |
+| parameters.applyType | Body | Enum | 적용 타입<br/>- BOTH<br/>- SESSION<br/>- FILE |
+| createdYmdt | Body | DateTime | 생성 일시 |
+| updatedYmdt | Body | DateTime | 수정 일시 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "parameterGroupId": "parameterGroupId-example",
+    "parameterGroupName": "parameterGroupName-example",
+    "description": "description-example",
+    "dbVersion": "ENUM_VALUE",
+    "parameterGroupStatus": "STABLE",
+    "parameters": [
+        {
+            "applyType": "BOTH"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 파라미터 그룹 수정하기
+
+```http
+PUT /v3.0/parameter-groups/{parameterGroupId}
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+| parameterGroupName | Body | String | X | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | Body | String | X | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+### 파라미터 그룹 복사하기
+
+```http
+POST /v3.0/parameter-groups/{parameterGroupId}/copy
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+| parameterGroupName | Body | String | O | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | Body | String | X | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| parameterGroupId | Body | String | 파라미터 그룹의 식별자 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "parameterGroupId": "parameterGroupId-example"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 파라미터 수정하기
+
+```http
+PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+| modifiedParameters | Body | Array | O | 변경할 파라미터 목록 |
+| modifiedParameters.parameterId | Body | UUID | O | 파라미터의 식별자 |
+| modifiedParameters.value | Body | String | O | 변경할 파라미터 값 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "modifiedParameters": [
+        {
+            "value": "value-example"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+### 파라미터 그룹 재설정하기
+
+```http
+PUT /v3.0/parameter-groups/{parameterGroupId}/reset
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
@@ -3732,6 +4160,65 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 ---
 
+## 모니터링
+
+### 통계 정보 조회
+
+```http
+GET /v3.0/metric-statistics
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+### Metric 목록 보기
+
+```http
+GET /v3.0/metrics
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| metrics | Body | Array | Metric 목록 |
+| metrics.measureName | Body | String | 조회 지표 유형 |
+| metrics.unit | Body | String | 측정값 단위 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "metrics": [
+        {
+            "unit": "unit-example"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
 ## 이벤트
 
 ### 이벤트 카테고리
@@ -4029,493 +4516,6 @@ PUT /v3.0/event-subscriptions/{eventSubscriptionId}
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-## 작업 정보
-
-### 작업 상태
-
-| 상태명                | 설명                   |
-|--------------------|----------------------|
-| `PREPARING`        | 작업이 준비 중인 경우         |
-| `READY`            | 작업이 준비 완료된 경우        |
-| `RUNNING`          | 작업이 진행 중인 경우         |
-| `COMPLETED`        | 작업이 완료된 경우           |
-| `REGISTERED`       | 작업이 등록된 경우           |
-| `WAIT_TO_REGISTER` | 작업 등록 대기 중인 경우       |
-| `INTERRUPTED`      | 작업 진행 중 인터럽트가 발생한 경우 |
-| `CANCELED`         | 작업이 취소된 경우           |
-| `FAILED`           | 작업이 실패한 경우           |
-| `ERROR`            | 작업 진행 중 오류가 발생한 경우   |
-| `DELETED`          | 작업이 삭제된 경우           |
-| `FAIL_TO_READY`    | 작업 준비에 실패한 경우        |
-
-### 작업 정보 상세 보기
-
-```http
-GET /v3.0/jobs/{jobId}
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| jobId | URL | UUID | O |  |
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| jobId | Body | String | 작업의 식별자 |
-| jobStatus | Body | Enum | 작업의 현재 상태<br/>- DELETED<br/>- CANNOT_PROGRESS<br/>- FAILED<br/>- ERROR<br/>- CANCELED<br/>- INTERRUPTED<br/>- COMPLETED<br/>- RUNNING<br/>- PREPARING<br/>- READY<br/>- CREATED<br/>- FAIL_TO_READY<br/>- REGISTERED<br/>- FAIL_TO_REGISTER<br/>- WAIT_TO_REGISTER |
-| resourceRelations | Body | Array | 연관 리소스 목록 |
-| resourceRelations.resourceType | Body | String | 연관 리소스 유형 |
-| resourceRelations.resourceId | Body | String | 연관 리소스의 식별자 |
-| createdYmdt | Body | DateTime | 생성 일시 |
-| updatedYmdt | Body | DateTime | 수정 일시 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "jobId-example",
-    "jobStatus": "DELETED",
-    "resourceRelations": [
-        {
-            "resourceId": "resourceId-example"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
-}
-```
-
-</p>
-</details>
-
----
-
-## 파라미터 그룹
-
-### 파라미터 그룹 목록 보기
-
-```http
-GET /v3.0/parameter-groups
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| parameterGroups | Body | Array | 파라미터 그룹 목록 |
-| parameterGroups.parameterGroupId | Body | String | 파라미터 그룹의 식별자 |
-| parameterGroups.parameterGroupName | Body | String | 파라미터 그룹을 식별할 수 있는 이름 |
-| parameterGroups.description | Body | String | 파라미터 그룹에 대한 추가 정보 |
-| parameterGroups.dbVersion | Body | Enum | DB 엔진 유형 |
-| parameterGroups.parameterGroupStatus | Body | Enum | 파라미터 그룹의 현재 상태<br/>- STABLE: `적용 완료`<br/>- NEED_TO_APPLY: `적용 필요`<br/>- DELETED: `삭제됨` |
-| parameterGroups.createdYmdt | Body | DateTime | 생성 일시 |
-| parameterGroups.updatedYmdt | Body | DateTime | 수정 일시 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroups": [
-        {
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### 파라미터 그룹 생성하기
-
-```http
-POST /v3.0/parameter-groups
-```
-
-#### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| parameterGroupName | Body | String | O | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | Body | String | X | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
-| dbVersion | Body | Enum | O | DB 엔진 유형 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "parameterGroupName": "parameterGroupName",
-    "description": "description-example",
-    "dbVersion": "ENUM_VALUE"
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| parameterGroupId | Body | String | 파라미터 그룹의 식별자 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroupId": "parameterGroupId-example"
-}
-```
-
-</p>
-</details>
-
----
-
-### 파라미터 그룹 삭제하기
-
-```http
-DELETE /v3.0/parameter-groups/{parameterGroupId}
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-
-#### 응답
-
-이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-### 파라미터 그룹 상세 보기
-
-```http
-GET /v3.0/parameter-groups/{parameterGroupId}
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| parameterGroupId | Body | String | 파라미터 그룹의 식별자 |
-| parameterGroupName | Body | String | 파라미터 그룹을 식별할 수 있는 이름 |
-| description | Body | String | 파라미터 그룹에 대한 추가 정보 |
-| dbVersion | Body | Enum | DB 엔진 유형 |
-| parameterGroupStatus | Body | Enum | 파라미터 그룹의 현재 상태<br/>- STABLE: `적용 완료`<br/>- NEED_TO_APPLY: `적용 필요`<br/>- DELETED: `삭제됨` |
-| parameters | Body | Array | 파라미터 목록 |
-| parameters.parameterId | Body | String | 파라미터의 식별자 |
-| parameters.parameterFileGroup | Body | Enum | 파라미터 파일 그룹 타입<br/>- CLIENT<br/>- MYSQL<br/>- MYSQLD |
-| parameters.parameterName | Body | String | 파라미터 이름 |
-| parameters.fileParameterName | Body | String | 파라미터 파일 이름 |
-| parameters.value | Body | String | 현재 설정된 값 |
-| parameters.defaultValue | Body | String | 기본값 |
-| parameters.allowedValue | Body | String | 허용된 값 |
-| parameters.updateType | Body | Enum | 수정 타입<br/>- VARIABLE<br/>- CONSTANT<br/>- INIT_VARIABLE |
-| parameters.applyType | Body | Enum | 적용 타입<br/>- BOTH<br/>- SESSION<br/>- FILE |
-| createdYmdt | Body | DateTime | 생성 일시 |
-| updatedYmdt | Body | DateTime | 수정 일시 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroupId": "parameterGroupId-example",
-    "parameterGroupName": "parameterGroupName-example",
-    "description": "description-example",
-    "dbVersion": "ENUM_VALUE",
-    "parameterGroupStatus": "STABLE",
-    "parameters": [
-        {
-            "applyType": "BOTH"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
-}
-```
-
-</p>
-</details>
-
----
-
-### 파라미터 그룹 수정하기
-
-```http
-PUT /v3.0/parameter-groups/{parameterGroupId}
-```
-
-#### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-| parameterGroupName | Body | String | X | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | Body | String | X | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "parameterGroupName": "parameterGroupName",
-    "description": "description-example"
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-### 파라미터 그룹 복사하기
-
-```http
-POST /v3.0/parameter-groups/{parameterGroupId}/copy
-```
-
-#### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-| parameterGroupName | Body | String | O | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | Body | String | X | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "parameterGroupName": "parameterGroupName",
-    "description": "description-example"
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| parameterGroupId | Body | String | 파라미터 그룹의 식별자 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroupId": "parameterGroupId-example"
-}
-```
-
-</p>
-</details>
-
----
-
-### 파라미터 수정하기
-
-```http
-PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
-```
-
-#### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-| modifiedParameters | Body | Array | O | 변경할 파라미터 목록 |
-| modifiedParameters.parameterId | Body | UUID | O | 파라미터의 식별자 |
-| modifiedParameters.value | Body | String | O | 변경할 파라미터 값 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "modifiedParameters": [
-        {
-            "value": "value-example"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-### 파라미터 그룹 재설정하기
-
-```http
-PUT /v3.0/parameter-groups/{parameterGroupId}/reset
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-
-#### 응답
-
-이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-## 프로젝트 정보
-
-### 프로젝트 멤버 목록 보기
-
-```http
-GET /v3.0/project/members
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| members | Body | Array | 프로젝트 멤버 목록 |
-| members.memberId | Body | String | 프로젝트 멤버의 식별자 |
-| members.memberName | Body | String | 프로젝트 멤버의 이름 |
-| members.emailAddress | Body | String | 프로젝트 멤버의 이메일 주소 |
-| members.phoneNumber | Body | String | 프로젝트 멤버의 전화번호 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "members": [
-        {
-            "phoneNumber": "phoneNumber-example"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### 리전 목록 보기
-
-```http
-GET /v3.0/project/regions
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름 | 종류 | 형식 | 설명 |
-|-----|-----|-----|-----|
-| regions | Body | Array | 리전 목록 |
-| regions.regionCode | Body | Enum | 리전 코드<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
-| regions.isEnabled | Body | Boolean | 리전의 활성화 여부 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "regions": [
-        {
-            "isEnabled": false
-        }
-    ]
-}
-```
-
-</p>
-</details>
 
 ---
 
