@@ -125,6 +125,9 @@ GET /v3.0/project/members
     },
     "members": [
         {
+            "memberId": "memberId-example",
+            "memberName": "memberName-example",
+            "emailAddress": "emailAddress-example",
             "phoneNumber": "phoneNumber-example"
         }
     ]
@@ -166,6 +169,7 @@ GET /v3.0/project/regions
     },
     "regions": [
         {
+            "regionCode": "KR1",
             "isEnabled": false
         }
     ]
@@ -211,6 +215,9 @@ GET /v3.0/db-flavors
     },
     "dbFlavors": [
         {
+            "dbFlavorId": "dbFlavorId-example",
+            "dbFlavorName": "dbFlavorName-example",
+            "ram": 1,
             "vcpus": 1
         }
     ]
@@ -239,7 +246,7 @@ GET /v3.0/network/subnets
 | 이름 | 종류 | 형식 | 설명 |
 |-----|-----|-----|-----|
 | subnets | Body | Array | 서브넷 목록 |
-| subnets.subnetId | Body | String | 서브넷의 식별자 |
+| subnets.subnetId | Body | UUID | 서브넷의 식별자 |
 | subnets.subnetName | Body | String | 서브넷을 식별할 수 있는 이름 |
 | subnets.subnetCidr | Body | String | 서브넷의 CIDR |
 | subnets.usingGateway | Body | Boolean | 게이트웨이 사용 여부 |
@@ -257,6 +264,10 @@ GET /v3.0/network/subnets
     },
     "subnets": [
         {
+            "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+            "subnetName": "subnetName-example",
+            "subnetCidr": "subnetCidr-example",
+            "usingGateway": false,
             "availableIpCount": 1
         }
     ]
@@ -301,6 +312,8 @@ GET /v3.0/db-versions
     },
     "dbVersions": [
         {
+            "dbVersion": "dbVersion-example",
+            "dbVersionName": "dbVersionName-example",
             "restorableFromObs": false
         }
     ]
@@ -443,6 +456,7 @@ GET /v3.0/jobs/{jobId}
     "jobStatus": "DELETED",
     "resourceRelations": [
         {
+            "resourceType": "resourceType-example",
             "resourceId": "resourceId-example"
         }
     ],
@@ -490,6 +504,9 @@ GET /v3.0/db-instance-groups
     },
     "dbInstanceGroups": [
         {
+            "dbInstanceGroupId": "dbInstanceGroupId-example",
+            "replicationType": "STANDALONE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -542,6 +559,8 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
     "replicationType": "STANDALONE",
     "dbInstances": [
         {
+            "dbInstanceId": "dbInstanceId-example",
+            "dbInstanceType": "MASTER",
             "dbInstanceStatus": "BEFORE_CREATE"
         }
     ],
@@ -641,6 +660,16 @@ GET /v3.0/db-instances
     },
     "dbInstances": [
         {
+            "dbInstanceId": "dbInstanceId-example",
+            "dbInstanceGroupId": "dbInstanceGroupId-example",
+            "dbInstanceName": "dbInstanceName-example",
+            "description": "description-example",
+            "dbVersion": "ENUM_VALUE",
+            "dbPort": 1,
+            "dbInstanceType": "MASTER",
+            "dbInstanceStatus": "BEFORE_CREATE",
+            "progressStatus": "NONE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -735,6 +764,7 @@ POST /v3.0/db-instances
         "useBackupLock": true,
         "backupSchedules": [
             {
+                "backupWndBgnTime": "backupWndBgnTime-example",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -848,6 +878,7 @@ POST /v3.0/db-instances/restore-from-obs
         "useBackupLock": true,
         "backupSchedules": [
             {
+                "backupWndBgnTime": "backupWndBgnTime-example",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -1160,6 +1191,7 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
     "useBackupLock": false,
     "backupSchedules": [
         {
+            "backupWndBgnTime": "backupWndBgnTime-example",
             "backupWndDuration": "HALF_AN_HOUR"
         }
     ]
@@ -1203,6 +1235,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
     "useBackupLock": false,
     "backupSchedules": [
         {
+            "backupWndBgnTime": "backupWndBgnTime-example",
             "backupWndDuration": "HALF_AN_HOUR"
         }
     ]
@@ -1351,6 +1384,9 @@ GET /v3.0/db-instances/{dbInstanceId}/db-schemas
     },
     "dbSchemas": [
         {
+            "dbSchemaId": "dbSchemaId-example",
+            "dbSchemaName": "dbSchemaName-example",
+            "dbSchemaStatus": "STABLE",
             "createdYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -1493,6 +1529,14 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
     },
     "dbUsers": [
         {
+            "dbUserId": "dbUserId-example",
+            "dbUserName": "dbUserName-example",
+            "host": "host-example",
+            "authorityType": "CUSTOM",
+            "dbUserStatus": "STABLE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00",
+            "authenticationPlugin": "NATIVE",
             "tlsOption": "NONE"
         }
     ]
@@ -1956,6 +2000,9 @@ GET /v3.0/db-instances/{dbInstanceId}/log-files
     },
     "logFiles": [
         {
+            "logFileName": "logFileName-example",
+            "logFileType": "ERROR",
+            "logFileSize": 1,
             "createdYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -2073,6 +2120,8 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
     },
     "endPoints": [
         {
+            "domain": "domain-example",
+            "ipAddress": "ipAddress-example",
             "endPointType": "endPointType-example"
         }
     ]
@@ -2239,6 +2288,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
         "useBackupLock": false,
         "backupSchedules": [
             {
+                "backupWndBgnTime": "backupWndBgnTime-example",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -2489,6 +2539,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
         "useBackupLock": true,
         "backupSchedules": [
             {
+                "backupWndBgnTime": "backupWndBgnTime-example",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -2760,6 +2811,15 @@ GET /v3.0/backups
     "totalCounts": 1,
     "backups": [
         {
+            "backupId": "backupId-example",
+            "backupName": "backupName-example",
+            "backupStatus": "BACKING_UP",
+            "dbInstanceId": "dbInstanceId-example",
+            "dbVersion": "ENUM_VALUE",
+            "utilVersion": "utilVersion-example",
+            "backupType": "AUTO",
+            "backupSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -2940,6 +3000,7 @@ POST /v3.0/backups/{backupId}/restore
         "useBackupLock": true,
         "backupSchedules": [
             {
+                "backupWndBgnTime": "backupWndBgnTime-example",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -3020,6 +3081,11 @@ GET /v3.0/db-security-groups
     },
     "dbSecurityGroups": [
         {
+            "dbSecurityGroupId": "dbSecurityGroupId-example",
+            "dbSecurityGroupName": "dbSecurityGroupName-example",
+            "description": "description-example",
+            "progressStatus": "NONE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -3062,6 +3128,14 @@ POST /v3.0/db-security-groups
     "description": "description-example",
     "rules": [
         {
+            "direction": "INGRESS",
+            "etherType": "IPV4",
+            "port": {
+                "portType": "ALL",
+                "minPort": 3306,
+                "maxPort": 1
+            },
+            "cidr": "cidr-example",
             "description": "description-example"
         }
     ]
@@ -3171,6 +3245,17 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
         "progressStatus": "NONE",
         "rules": [
             {
+                "ruleId": "ruleId-example",
+                "description": "description-example",
+                "direction": "INGRESS",
+                "etherType": "IPV4",
+                "port": {
+                    "portType": "ALL",
+                    "minPort": 1,
+                    "maxPort": 1
+                },
+                "cidr": "cidr-example",
+                "createdYmdt": "2023-12-31T15:00:00+09:00",
                 "updatedYmdt": "2023-12-31T15:00:00+09:00"
             }
         ],
@@ -3426,6 +3511,12 @@ GET /v3.0/parameter-groups
     },
     "parameterGroups": [
         {
+            "parameterGroupId": "parameterGroupId-example",
+            "parameterGroupName": "parameterGroupName-example",
+            "description": "description-example",
+            "dbVersion": "ENUM_VALUE",
+            "parameterGroupStatus": "STABLE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -3563,6 +3654,14 @@ GET /v3.0/parameter-groups/{parameterGroupId}
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
+            "parameterId": "parameterId-example",
+            "parameterFileGroup": "CLIENT",
+            "parameterName": "parameterName-example",
+            "fileParameterName": "fileParameterName-example",
+            "value": "value-example",
+            "defaultValue": "defaultValue-example",
+            "allowedValue": "allowedValue-example",
+            "updateType": "VARIABLE",
             "applyType": "BOTH"
         }
     ],
@@ -3683,6 +3782,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 {
     "modifiedParameters": [
         {
+            "parameterId": "550e8400-e29b-41d4-a716-446655440000",
             "value": "value-example"
         }
     ]
@@ -3752,6 +3852,9 @@ GET /v3.0/user-groups
     },
     "userGroups": [
         {
+            "userGroupId": "userGroupId-example",
+            "userGroupName": "userGroupName-example",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -3962,6 +4065,12 @@ GET /v3.0/notification-groups
     },
     "notificationGroups": [
         {
+            "notificationGroupId": "notificationGroupId-example",
+            "notificationGroupName": "notificationGroupName-example",
+            "notifyEmail": false,
+            "notifySms": false,
+            "isEnabled": false,
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -4101,11 +4210,13 @@ GET /v3.0/notification-groups/{notificationGroupId}
     "isEnabled": false,
     "dbInstances": [
         {
+            "dbInstanceId": "dbInstanceId-example",
             "dbInstanceName": "dbInstanceName-example"
         }
     ],
     "userGroups": [
         {
+            "userGroupId": "userGroupId-example",
             "userGroupName": "userGroupName-example"
         }
     ],
@@ -4208,6 +4319,7 @@ GET /v3.0/metrics
     },
     "metrics": [
         {
+            "measureName": "measureName-example",
             "unit": "unit-example"
         }
     ]
@@ -4264,6 +4376,7 @@ GET /v3.0/event-codes
     },
     "eventCodes": [
         {
+            "eventCode": "ENUM_VALUE",
             "eventCategoryType": "ALL"
         }
     ]
@@ -4313,6 +4426,16 @@ GET /v3.0/events
     "totalCounts": 1,
     "events": [
         {
+            "eventCategoryType": "ALL",
+            "eventCode": "ENUM_VALUE",
+            "sourceId": "sourceId-example",
+            "sourceName": "sourceName-example",
+            "messages": [
+                {
+                    "langCode": "KO",
+                    "message": "message-example"
+                }
+            ],
             "eventYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -4368,6 +4491,20 @@ GET /v3.0/event-subscriptions
     "totalCounts": 1,
     "eventSubscriptions": [
         {
+            "eventSubscriptionId": "eventSubscriptionId-example",
+            "eventCategoryType": "ALL",
+            "eventSubscriptionName": "eventSubscriptionName-example",
+            "enabled": false,
+            "notifyEmail": false,
+            "notifySms": false,
+            "eventCodes": [],
+            "sources": [
+                {
+                    "sourceId": "sourceId-example",
+                    "eventCategoryType": "ALL"
+                }
+            ],
+            "userGroupIds": [],
             "createdYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
@@ -4413,6 +4550,7 @@ POST /v3.0/event-subscriptions
     "eventCodes": [],
     "sources": [
         {
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
             "eventCategoryType": "ALL"
         }
     ],
@@ -4503,6 +4641,7 @@ PUT /v3.0/event-subscriptions/{eventSubscriptionId}
     "eventCodes": [],
     "sources": [
         {
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
             "eventCategoryType": "ALL"
         }
     ],
