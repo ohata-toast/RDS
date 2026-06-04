@@ -1,6 +1,13 @@
-## Database > RDS for MySQL > API 가이드
+## Database > RDS for MySQL > API v3.0 가이드
 
 ## RDS for MySQL API 공통 정보
+
+### API 엔드포인트
+
+| 리전 | 엔드포인트 |
+|------|----------|
+| 한국(판교) 리전 | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
+
 
 ### 인증 및 권한
 
@@ -50,12 +57,6 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | resultCode | Number | 결과 코드<br/>- 성공: `0`<br/>- 실패: `0`이 아닌 값 |
 | resultMessage | String | 결과 메시지 |
 | isSuccessful | Boolean | 성공 여부 |
-### API 엔드포인트
-
-| 리전 | 엔드포인트 |
-|------|----------|
-| 한국(판교) 리전 | https://kr1-rds-mysql.api.gov-nhncloudservice.com |
-
 ### DB 엔진 유형
 
 | DB 엔진 유형 | 생성 가능 여부 | OBS로부터 복원 가능 여부 | 인증 플러그인 지원 |
