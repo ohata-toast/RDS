@@ -96,6 +96,12 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 GET /v4.0/project/members
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Project.Get | 프로젝트 멤버 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -142,6 +148,12 @@ GET /v4.0/project/members
 GET /v4.0/project/regions
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Project.Get | 리전 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -185,6 +197,12 @@ GET /v4.0/project/regions
 ```http
 GET /v4.0/db-flavors
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
 
 #### 요청
 
@@ -233,6 +251,12 @@ GET /v4.0/db-flavors
 ```http
 GET /v4.0/network/subnets
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Network.List | 서브넷 목록 보기 |
 
 #### 요청
 
@@ -284,6 +308,12 @@ GET /v4.0/network/subnets
 GET /v4.0/db-versions
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbVersion.List | DB 엔진 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -329,6 +359,12 @@ GET /v4.0/db-versions
 ```http
 GET /v4.0/storage-types
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Storage.List | 스토리지 타입 목록 보기 |
 
 #### 요청
 
@@ -383,6 +419,12 @@ GET /v4.0/storage-types
 ```http
 GET /v4.0/jobs/{jobId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Job.Get | 작업 정보 상세 보기 |
 
 #### 요청
 
@@ -440,6 +482,12 @@ GET /v4.0/jobs/{jobId}
 GET /v4.0/db-instance-groups
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -485,6 +533,12 @@ GET /v4.0/db-instance-groups
 ```http
 GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
 
 #### 요청
 
@@ -589,6 +643,12 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 GET /v4.0/db-instances
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.List | DB 인스턴스 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -648,6 +708,12 @@ GET /v4.0/db-instances
 ```http
 POST /v4.0/db-instances
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Create | DB 인스턴스 생성하기 |
 
 #### 공통 요청
 
@@ -786,6 +852,12 @@ POST /v4.0/db-instances
 ```http
 POST /v4.0/db-instances/restore-from-obs
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.RestoreFromObs | 오브젝트 스토리지를 이용한 DB 인스턴스 복원 |
 
 #### 공통 요청
 
@@ -930,6 +1002,12 @@ POST /v4.0/db-instances/restore-from-obs
 DELETE /v4.0/db-instances/{dbInstanceId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Delete | DB 인스턴스 삭제하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -979,6 +1057,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 ```http
 GET /v4.0/db-instances/{dbInstanceId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -1059,6 +1143,12 @@ GET /v4.0/db-instances/{dbInstanceId}
 PUT /v4.0/db-instances/{dbInstanceId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -1135,6 +1225,12 @@ PUT /v4.0/db-instances/{dbInstanceId}
 GET /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 백업 정보 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1190,6 +1286,12 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | 백업 정보 수정하기 |
 
 #### 요청
 
@@ -1258,6 +1360,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 GET /v4.0/db-instances/{dbInstanceId}/binlogs
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceBinLog.List | 바이너리 로그 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1306,6 +1414,12 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceBinLog.Purge | 바이너리 로그 삭제 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -1336,6 +1450,12 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/certificates
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceCertificate.List | 인증서 파일 목록 보기 |
 
 #### 요청
 
@@ -1386,6 +1506,12 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceCertificate.Export | 인증서 파일 내보내기 |
 
 #### 요청
 
@@ -1447,6 +1573,12 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceSchema.List | DB 스키마 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1496,6 +1628,12 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceSchema.Create | DB 스키마 생성하기 |
 
 #### 요청
 
@@ -1547,6 +1685,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceSchema.Delete | DB 스키마 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1586,6 +1730,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-users
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceUser.List | DB 사용자 목록 보기 |
 
 #### 요청
 
@@ -1647,6 +1797,12 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 POST /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceUser.Create | DB 사용자 생성하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -1707,6 +1863,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceUser.Delete | DB 사용자 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1746,6 +1908,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceUser.Modify | DB 사용자 수정하기 |
 
 #### 요청
 
@@ -1804,6 +1972,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 삭제 보호 설정 변경 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -1835,6 +2009,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 POST /v4.0/db-instances/{dbInstanceId}/force-restart
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1854,6 +2034,12 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 고가용성 정보 보기 |
 
 #### 요청
 
@@ -1899,6 +2085,12 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Modify | 고가용성 수정하기 |
 
 #### 공통 요청
 
@@ -1958,6 +2150,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Pause | 고가용성 일시 중지하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1996,6 +2194,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Repair | 고가용성 복구하기 |
 
 #### 요청
 
@@ -2036,6 +2240,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Resume | 고가용성 다시 시작하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2075,6 +2285,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Split | 고가용성 분리하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2113,6 +2329,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceLog.List | 로그 파일 목록 보기 |
 
 #### 요청
 
@@ -2163,6 +2385,12 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceLog.Export | 로그 파일 내보내기 |
 
 #### 요청
 
@@ -2224,6 +2452,12 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceLog.Get | 로그 파일 내용 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2263,6 +2497,12 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/maintenances
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Maintenance.List | DB 인스턴스 유지 관리 목록 보기 |
 
 #### 요청
 
@@ -2338,6 +2578,12 @@ GET /v4.0/db-instances/{dbInstanceId}/maintenances
 POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Maintenance.Execute | DB 인스턴스 유지 관리 즉시 실행하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -2396,6 +2642,12 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
 POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Maintenance.Update | DB 인스턴스 유지 관리 예약하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -2435,6 +2687,12 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
 DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Maintenance.Delete | DB 인스턴스 유지 관리 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2455,6 +2713,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/network-info
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 네트워크 정보 보기 |
 
 #### 요청
 
@@ -2515,6 +2779,12 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | 네트워크 정보 수정하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -2565,6 +2835,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 POST /v4.0/db-instances/{dbInstanceId}/promote
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Promote | DB 인스턴스 승격하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2604,6 +2880,12 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 POST /v4.0/db-instances/{dbInstanceId}/rebuild
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2642,6 +2924,12 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/replicate
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Replicate | DB 인스턴스 복제하기 |
 
 #### 공통 요청
 
@@ -2760,6 +3048,12 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 POST /v4.0/db-instances/{dbInstanceId}/restart
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Restart | DB 인스턴스 재시작하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -2815,6 +3109,12 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 복원 정보 조회 |
 
 #### 요청
 
@@ -2896,6 +3196,12 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 복원될 마지막 쿼리 조회 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2936,6 +3242,12 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/restore
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Restore | DB 인스턴스 복원 |
 
 #### 공통 요청
 
@@ -3101,6 +3413,12 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 POST /v4.0/db-instances/{dbInstanceId}/start
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Start | DB 인스턴스 시작하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3140,6 +3458,12 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 POST /v4.0/db-instances/{dbInstanceId}/stop
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Stop | DB 인스턴스 정지하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3178,6 +3502,12 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 스토리지 정보 보기 |
 
 #### 요청
 
@@ -3232,6 +3562,12 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | 스토리지 정보 수정하기 |
 
 #### 공통 요청
 
@@ -3308,6 +3644,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 GET /v4.0/backups
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.List | 백업 목록 조회 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3368,6 +3710,12 @@ GET /v4.0/backups
 POST /v4.0/backups
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Create | 백업 생성하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -3423,6 +3771,12 @@ POST /v4.0/backups
 DELETE /v4.0/backups/{backupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Delete | 백업 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3461,6 +3815,12 @@ DELETE /v4.0/backups/{backupId}
 ```http
 GET /v4.0/backups/{backupId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Get | 백업 단건 조회 |
 
 #### 요청
 
@@ -3537,6 +3897,12 @@ GET /v4.0/backups/{backupId}
 POST /v4.0/backups/{backupId}/export
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Export | 백업 내보내기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -3594,6 +3960,12 @@ POST /v4.0/backups/{backupId}/export
 ```http
 POST /v4.0/backups/{backupId}/restore
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Restore | 백업 복원하기 |
 
 #### 공통 요청
 
@@ -3735,6 +4107,12 @@ POST /v4.0/backups/{backupId}/restore
 GET /v4.0/db-security-groups
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3786,6 +4164,12 @@ GET /v4.0/db-security-groups
 ```http
 POST /v4.0/db-security-groups
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
 
 #### 요청
 
@@ -3860,6 +4244,12 @@ POST /v4.0/db-security-groups
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3879,6 +4269,12 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```http
 GET /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
 
 #### 요청
 
@@ -3957,6 +4353,12 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -3989,6 +4391,12 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 ```http
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroupRule.Delete | DB 보안 그룹 규칙 삭제하기 |
 
 #### 요청
 
@@ -4029,6 +4437,12 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```http
 POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
 
 #### 요청
 
@@ -4094,6 +4508,12 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```http
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
 
 #### 요청
 
@@ -4163,6 +4583,12 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 GET /v4.0/parameter-groups
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.List | 파라미터 그룹 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4219,6 +4645,12 @@ GET /v4.0/parameter-groups
 POST /v4.0/parameter-groups
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Create | 파라미터 그룹 생성하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -4272,6 +4704,12 @@ POST /v4.0/parameter-groups
 DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4291,6 +4729,12 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```http
 GET /v4.0/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
 
 #### 요청
 
@@ -4366,6 +4810,12 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 PUT /v4.0/parameter-groups/{parameterGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -4398,6 +4848,12 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 ```http
 POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
 
 #### 요청
 
@@ -4451,6 +4907,12 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Modify | 파라미터 수정하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -4489,6 +4951,12 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4510,6 +4978,12 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```http
 GET /v4.0/user-groups
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.List | 사용자 그룹 목록 보기 |
 
 #### 요청
 
@@ -4558,6 +5032,12 @@ GET /v4.0/user-groups
 ```http
 POST /v4.0/user-groups
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.Create | 사용자 그룹 생성하기 |
 
 #### 요청
 
@@ -4612,6 +5092,12 @@ POST /v4.0/user-groups
 DELETE /v4.0/user-groups/{userGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.Delete | 사용자 그룹 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4631,6 +5117,12 @@ DELETE /v4.0/user-groups/{userGroupId}
 ```http
 GET /v4.0/user-groups/{userGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.Get | 사용자 그룹 상세 보기 |
 
 #### 요청
 
@@ -4686,6 +5178,12 @@ GET /v4.0/user-groups/{userGroupId}
 PUT /v4.0/user-groups/{userGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.Modify | 사용자 그룹 수정하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -4722,6 +5220,12 @@ PUT /v4.0/user-groups/{userGroupId}
 ```http
 GET /v4.0/notification-groups
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.List | 알림 그룹 목록 보기 |
 
 #### 요청
 
@@ -4774,6 +5278,12 @@ GET /v4.0/notification-groups
 ```http
 POST /v4.0/notification-groups
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.Create | 알림 그룹 생성하기 |
 
 #### 요청
 
@@ -4834,6 +5344,12 @@ POST /v4.0/notification-groups
 DELETE /v4.0/notification-groups/{notificationGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.Delete | 알림 그룹 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4853,6 +5369,12 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 ```http
 GET /v4.0/notification-groups/{notificationGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.Get | 알림 그룹 상세 보기 |
 
 #### 요청
 
@@ -4923,6 +5445,12 @@ GET /v4.0/notification-groups/{notificationGroupId}
 PUT /v4.0/notification-groups/{notificationGroupId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.Modify | 알림 그룹 수정하기 |
+
 #### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
@@ -4966,6 +5494,12 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 GET /v4.0/metric-statistics
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Metric.List | 통계 정보 조회 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4981,6 +5515,12 @@ GET /v4.0/metric-statistics
 ```http
 GET /v4.0/metrics
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Metric.List | Metric 목록 보기 |
 
 #### 요청
 
@@ -5039,6 +5579,12 @@ GET /v4.0/metrics
 GET /v4.0/event-codes
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Event.List | 구독 가능한 이벤트 코드 목록 보기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -5080,6 +5626,12 @@ GET /v4.0/event-codes
 ```http
 GET /v4.0/events
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Event.List | 이벤트 목록 조회 |
 
 #### 요청
 
@@ -5141,6 +5693,12 @@ GET /v4.0/events
 ```http
 GET /v4.0/event-subscriptions
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:EventSubscription.List | 이벤트 구독 목록 조회 |
 
 #### 요청
 
@@ -5208,6 +5766,12 @@ GET /v4.0/event-subscriptions
 ```http
 POST /v4.0/event-subscriptions
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:EventSubscription.Create | 이벤트 구독 생성하기 |
 
 #### 요청
 
@@ -5279,6 +5843,12 @@ POST /v4.0/event-subscriptions
 DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
 
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:EventSubscription.Delete | 이벤트 구독 삭제하기 |
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -5298,6 +5868,12 @@ DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 ```http
 PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:EventSubscription.Modify | 이벤트 구독 수정하기 |
 
 #### 요청
 
@@ -5352,6 +5928,12 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 ```http
 GET /v4.0/availability-zones
 ```
+
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:AvailabilityZone.List | 가용성 영역 목록 보기 |
 
 #### 요청
 
