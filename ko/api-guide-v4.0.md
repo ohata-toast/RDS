@@ -388,7 +388,10 @@ GET /v4.0/storage-types
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "storageTypes": []
+    "storageTypes": [
+        "General SSD",
+        "General HDD"
+    ]
 }
 ```
 
@@ -1121,8 +1124,12 @@ GET /v4.0/db-instances/{dbInstanceId}
     "progressStatus": "NONE",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbSecurityGroupIds": [],
-    "notificationGroupIds": [],
+    "dbSecurityGroupIds": [
+        "550e8400-e29b-41d4-a716-446655440000"
+    ],
+    "notificationGroupIds": [
+        "550e8400-e29b-41d4-a716-446655440000"
+    ],
     "useDeletionProtection": false,
     "useSlowQueryAnalysis": false,
     "supportAuthenticationPlugin": false,
@@ -5751,7 +5758,9 @@ GET /v4.0/event-subscriptions
                     "eventCategoryType": "ALL"
                 }
             ],
-            "userGroupIds": [],
+            "userGroupIds": [
+                "550e8400-e29b-41d4-a716-446655440000"
+            ],
             "createdYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
