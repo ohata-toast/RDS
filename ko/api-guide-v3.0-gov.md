@@ -889,7 +889,7 @@ POST /v3.0/db-instances/restore-from-obs
         ]
     },
     "restore": {
-        "tenantId": "tenantId-example",
+        "tenantId": "0123456789abcdef0123456789abcdef",
         "username": "username-example",
         "password": "password-example",
         "targetContainer": "targetContainer-example",
@@ -1301,7 +1301,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 
 ```json
 {
-    "tenantId": "tenantId-example",
+    "tenantId": "0123456789abcdef0123456789abcdef",
     "username": "username-example",
     "password": "password-example",
     "targetContainer": "targetContainer-example",
@@ -1540,7 +1540,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
         {
             "dbUserId": "550e8400-e29b-41d4-a716-446655440000",
             "dbUserName": "dbUserName-example",
-            "host": "host-example",
+            "host": "192.168.0.1",
             "authorityType": "CUSTOM",
             "dbUserStatus": "STABLE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
@@ -1582,7 +1582,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 {
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
-    "host": "host-example",
+    "host": "192.168.0.1",
     "authorityType": "CUSTOM",
     "authenticationPlugin": "NATIVE",
     "tlsOption": "NONE"
@@ -2047,7 +2047,7 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 ```json
 {
     "logFileNames": [],
-    "tenantId": "tenantId-example",
+    "tenantId": "0123456789abcdef0123456789abcdef",
     "username": "username-example",
     "password": "password-example",
     "targetContainer": "targetContainer-example",
@@ -2901,7 +2901,7 @@ POST /v3.0/backups/{backupId}/export
 
 ```json
 {
-    "tenantId": "tenantId-example",
+    "tenantId": "0123456789abcdef0123456789abcdef",
     "username": "username-example",
     "password": "password-example",
     "targetContainer": "targetContainer-example",
@@ -4415,7 +4415,7 @@ GET /v3.0/events
 | events | Body | Array | 이벤트 목록 |
 | events.eventCategoryType | Body | Enum | 이벤트 카테고리 유형<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
 | events.eventCode | Body | Enum | 발생한 이벤트의 유형 |
-| events.sourceId | Body | String | 이벤트 소스의 식별자 |
+| events.sourceId | Body | UUID | 이벤트 소스의 식별자 |
 | events.sourceName | Body | String | 이벤트 소스를 식별할 수 있는 이름 |
 | events.messages | Body | Array | 이벤트 메세지 목록 |
 | events.messages.langCode | Body | Enum | 언어 코드<br/>- KO<br/>- EN<br/>- JA<br/>- ZH |
@@ -4437,7 +4437,7 @@ GET /v3.0/events
         {
             "eventCategoryType": "ALL",
             "eventCode": "ENUM_VALUE",
-            "sourceId": "sourceId-example",
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
             "sourceName": "sourceName-example",
             "messages": [
                 {
@@ -4482,7 +4482,7 @@ GET /v3.0/event-subscriptions
 | eventSubscriptions.notifySms | Body | Boolean | SMS 발송 여부 |
 | eventSubscriptions.eventCodes | Body | Array | 구독할 이벤트 코드 목록 |
 | eventSubscriptions.sources | Body | Array | 구독할 이벤트 소스 목록 |
-| eventSubscriptions.sources.sourceId | Body | String | 이벤트 소스의 식별자 |
+| eventSubscriptions.sources.sourceId | Body | UUID | 이벤트 소스의 식별자 |
 | eventSubscriptions.sources.eventCategoryType | Body | Enum | 이벤트 카테고리 유형<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
 | eventSubscriptions.userGroupIds | Body | Array | 이벤트 구독 중인 사용자 그룹의 식별자 목록 |
 | eventSubscriptions.createdYmdt | Body | DateTime | 생성 일시 |
@@ -4509,7 +4509,7 @@ GET /v3.0/event-subscriptions
             "eventCodes": [],
             "sources": [
                 {
-                    "sourceId": "sourceId-example",
+                    "sourceId": "550e8400-e29b-41d4-a716-446655440000",
                     "eventCategoryType": "ALL"
                 }
             ],
