@@ -126,8 +126,8 @@ GET /v3.0/project/members
         {
             "memberId": "550e8400-e29b-41d4-a716-446655440000",
             "memberName": "memberName-example",
-            "emailAddress": "emailAddress-example",
-            "phoneNumber": "phoneNumber-example"
+            "emailAddress": "user@example.com",
+            "phoneNumber": "010-1234-5678"
         }
     ]
 }
@@ -265,7 +265,7 @@ GET /v3.0/network/subnets
         {
             "subnetId": "550e8400-e29b-41d4-a716-446655440000",
             "subnetName": "subnetName-example",
-            "subnetCidr": "subnetCidr-example",
+            "subnetCidr": "192.168.0.0/24",
             "usingGateway": false,
             "availableIpCount": 1
         }
@@ -727,7 +727,7 @@ POST /v3.0/db-instances
 | backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- KR4: `한국(대구)` |
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
 | backup.backupSchedules | Body | Array | O | 백업 스케쥴 목록 |
-| backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각 |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | O | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 
 <details><summary>예시</summary>
@@ -769,7 +769,7 @@ POST /v3.0/db-instances
         "useBackupLock": true,
         "backupSchedules": [
             {
-                "backupWndBgnTime": "backupWndBgnTime-example",
+                "backupWndBgnTime": "00:00:00",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -838,7 +838,7 @@ POST /v3.0/db-instances/restore-from-obs
 | backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- KR4: `한국(대구)` |
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
 | backup.backupSchedules | Body | Array | O | 백업 스케쥴 목록 |
-| backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각 |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | O | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 | restore | Body | Object | O | 복원 정보 객체 |
 | restore.tenantId | Body | String | O | 백업이 저장된 오브젝트 스토리지의 테넌트 ID |
@@ -883,7 +883,7 @@ POST /v3.0/db-instances/restore-from-obs
         "useBackupLock": true,
         "backupSchedules": [
             {
-                "backupWndBgnTime": "backupWndBgnTime-example",
+                "backupWndBgnTime": "00:00:00",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -1180,7 +1180,7 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 | replicationRegion | Body | Enum | 백업 복제 리전<br/>- KR4: `한국(대구)` |
 | useBackupLock | Body | Boolean | 테이블 잠금 사용 여부 |
 | backupSchedules | Body | Array | 백업 스케쥴 목록 |
-| backupSchedules.backupWndBgnTime | Body | String | 백업 시작 시각 |
+| backupSchedules.backupWndBgnTime | Body | Time | 백업 시작 시각 |
 | backupSchedules.backupWndDuration | Body | Enum | 백업 Duration<br/>- HALF_AN_HOUR<br/>- ONE_HOUR<br/>- ONE_HOUR_AND_HALF<br/>- TWO_HOURS<br/>- TWO_HOURS_AND_HALF<br/>- THREE_HOURS |
 
 <details><summary>예시</summary>
@@ -1200,7 +1200,7 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
     "useBackupLock": false,
     "backupSchedules": [
         {
-            "backupWndBgnTime": "backupWndBgnTime-example",
+            "backupWndBgnTime": "00:00:00",
             "backupWndDuration": "HALF_AN_HOUR"
         }
     ]
@@ -1229,7 +1229,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- KR4: `한국(대구)` |
 | useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부 |
 | backupSchedules | Body | Array | X | 백업 스케쥴 목록 |
-| backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각 |
+| backupSchedules.backupWndBgnTime | Body | Time | O | 백업 시작 시각 |
 | backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 
 <details><summary>예시</summary>
@@ -1244,7 +1244,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
     "useBackupLock": false,
     "backupSchedules": [
         {
-            "backupWndBgnTime": "backupWndBgnTime-example",
+            "backupWndBgnTime": "00:00:00",
             "backupWndDuration": "HALF_AN_HOUR"
         }
     ]
@@ -2125,13 +2125,13 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
     "subnet": {
         "subnetId": "550e8400-e29b-41d4-a716-446655440000",
         "subnetName": "subnetName-example",
-        "subnetCidr": "subnetCidr-example"
+        "subnetCidr": "192.168.0.0/24"
     },
     "endPoints": [
         {
             "domain": "domain-example",
-            "ipAddress": "ipAddress-example",
-            "endPointType": "endPointType-example"
+            "ipAddress": "192.168.0.1",
+            "endPointType": "https://example.com"
         }
     ]
 }
@@ -2264,7 +2264,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- KR4: `한국(대구)` |
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부 |
 | backup.backupSchedules | Body | Array | X | 백업 스케쥴 목록 |
-| backup.backupSchedules.backupWndBgnTime | Body | String | X | 백업 시작 시각 |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | X | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Body | Enum | X | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 
 <details><summary>예시</summary>
@@ -2297,7 +2297,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
         "useBackupLock": false,
         "backupSchedules": [
             {
-                "backupWndBgnTime": "backupWndBgnTime-example",
+                "backupWndBgnTime": "00:00:00",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -2483,7 +2483,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- KR4: `한국(대구)` |
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
 | backup.backupSchedules | Body | Array | O | 백업 스케쥴 목록 |
-| backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각 |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | O | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 | restore | Body | Object | O | 복원 정보 객체 |
 | restore.restoreType | Body | Enum | O | 복원 타입<br/>- TIMESTAMP: `복원 가능한 시간 이내의 시간을 이용한 시점 복원`<br/>- BINLOG: `복원 가능한 바이너리 로그 위치를 이용한 시점 복원`<br/>- BACKUP: `기존에 생성한 백업을 이용한 스냅숏 복원` |
@@ -2548,7 +2548,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
         "useBackupLock": true,
         "backupSchedules": [
             {
-                "backupWndBgnTime": "backupWndBgnTime-example",
+                "backupWndBgnTime": "00:00:00",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -2973,7 +2973,7 @@ POST /v3.0/backups/{backupId}/restore
 | backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- KR4: `한국(대구)` |
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
 | backup.backupSchedules | Body | Array | O | 백업 스케쥴 목록 |
-| backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각 |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | O | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 
 <details><summary>예시</summary>
@@ -3009,7 +3009,7 @@ POST /v3.0/backups/{backupId}/restore
         "useBackupLock": true,
         "backupSchedules": [
             {
-                "backupWndBgnTime": "backupWndBgnTime-example",
+                "backupWndBgnTime": "00:00:00",
                 "backupWndDuration": "HALF_AN_HOUR"
             }
         ]
@@ -3144,7 +3144,7 @@ POST /v3.0/db-security-groups
                 "minPort": 3306,
                 "maxPort": 1
             },
-            "cidr": "cidr-example",
+            "cidr": "192.168.0.0/24",
             "description": "description-example"
         }
     ]
@@ -3263,7 +3263,7 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
                     "minPort": 1,
                     "maxPort": 1
                 },
-                "cidr": "cidr-example",
+                "cidr": "192.168.0.0/24",
                 "createdYmdt": "2023-12-31T15:00:00+09:00",
                 "updatedYmdt": "2023-12-31T15:00:00+09:00"
             }
@@ -3384,7 +3384,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
         "minPort": 3306,
         "maxPort": 1
     },
-    "cidr": "cidr-example",
+    "cidr": "192.168.0.0/24",
     "description": "description-example"
 }
 ```
@@ -3450,7 +3450,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
         "minPort": 3306,
         "maxPort": 1
     },
-    "cidr": "cidr-example",
+    "cidr": "192.168.0.0/24",
     "description": "description-example"
 }
 ```
