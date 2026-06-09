@@ -1,8 +1,12 @@
 ## Database > RDS for MySQL > DB 엔진
 
+<a id="db-engine"></a>
+
 ## DB 엔진
 
 MySQL의 버전 번호는 `X.Y.Z` 형식으로 구성됩니다. NHN Cloud의 RDS for MySQL에서는 `X.Y`는 메이저 버전을, `Z`는 마이너 버전을 나타냅니다.
+
+<a id="db-engine-version-provided-by-rds"></a>
 
 ### RDS에서 제공하는 DB 엔진 버전
 
@@ -40,6 +44,8 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | <strong>5.6</strong> |                                |
 | MySQL 5.6.33         | 지원이 종료된 버전입니다.                 |
 
+<a id="manage-db-engine-version"></a>
+
 ### DB 엔진 버전 관리
 DB 인스턴스를 생성한 이후, DB 인스턴스 수정과 함께 DB 엔진 버전을 변경할 수 있습니다.
 
@@ -48,6 +54,8 @@ DB 인스턴스를 생성한 이후, DB 인스턴스 수정과 함께 DB 엔진 
 
 DB 엔진 버전 업그레이드 시, 메이저 버전 번호만 변경되는 경우는 메이저 버전 업그레이드로, 마이너 버전 번호만 변경되는 경우는 마이너 버전 업그레이드로 간주합니다.
 DB 엔진 메이저 버전 업그레이드 시 바로 다음 메이저 버전으로만 업그레이드할 수 있습니다.
+
+<a id="pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 
 #### MySQL 5.7에서 MySQL 8.0으로 업그레이드하기 위한 사전 점검
 
@@ -84,6 +92,8 @@ DB 버전 업그레이드 사전 점검 결과는 다음과 같은 방법으로 
 - [8.0에서 제거된 기능 가이드](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
 
+<a id="pre-check-for-upgrading-mysql-80-to-mysql-84"></a>
+
 #### MySQL 8.0에서 MySQL 8.4로 업그레이드하기 위한 사전 점검
 
 MySQL 8.4로 업그레이드하려면 먼저 MySQL 8.0으로 업그레이드된 상태여야 합니다. `8.0`에서 `8.4` 버전으로 메이저 버전 DB 엔진을 업그레이드하면 문제 발생이 예상되는 일부 항목을 사전에 점검해야 합니다.
@@ -94,6 +104,8 @@ MySQL 8.4로 업그레이드하려면 먼저 MySQL 8.0으로 업그레이드된 
 또한 8.4 버전에서 제거 또는 변경된 사항을 확인해야 합니다.
 - [비호환 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [8.4에서 제거된 기능 가이드](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
+
+<a id="mysql-version-upgrade-constraints"></a>
 
 #### MySQL 버전 업그레이드 제약 사항
 
@@ -107,12 +119,16 @@ MySQL 8.0.18 버전은 직접 MySQL 8.4로 업그레이드할 수 없습니다.
 이는 MySQL 8.4 버전에서 요구하는 최소 호환 버전이 8.0.23 이상이기 때문이며, 해당 버전보다 낮은 환경에서는 메타데이터 및 내부 스키마 구조의 호환성이 보장되지 않습니다.
 
 
+<a id="upgrading-the-db-engine-version-using-a-dummy-db-instance"></a>
+
 #### 더미 DB 인스턴스를 사용한 DB 엔진 버전 업그레이드
 
 DB 인스턴스 수정 화면에서 DB 엔진 버전 변경을 시도할 때 더미 DB 인스턴스 사용 여부를 선택해 버전 업그레이드 중에도 고가용성을 유지할 수 있습니다. 더미 DB 인스턴스 사용을 선택하면 DB 버전 업그레이드용 예비 마스터가 생성됩니다.
 
 > [주의]
 > 더미 DB 인스턴스는 업그레이드 과정 중 임시 예비 마스터를 생성하므로, 해당 옵션은 고가용성 구성이 아닌 경우에만 사용할 수 있습니다.
+
+<a id="manual-control-of-failover-when-upgrading-high-availability-db-instances"></a>
 
 #### 고가용성 DB 인스턴스 업그레이드 시 장애 조치 수동 제어
 
@@ -122,6 +138,8 @@ DB 인스턴스가 고가용성으로 구성되어 있을 때 예비 마스터�
 > [주의]
 > 장애 조치 수동 제어가 60시간 이상 트리거되지 않으면 업그레이드 작업이 자동으로 취소됩니다.
 
+<a id="when-using-an-outdated-operating-system"></a>
+
 ### 노후 운영체제를 사용하는 경우
 
 내부 운영체제가 노후된 DB 인스턴스는 DB 버전을 업그레이드하기 전에 VM 교체를 동반한 운영체제 버전 업그레이드가 필요합니다. 알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동 교체됩니다. 단일 DB 인스턴스는 DB 버전 변경 시 더미 DB 인스턴스 사용을 권장합니다. 고가용성 DB 인스턴스는 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 마스터와 예비 마스터의 역할이 변경됩니다. 마스터의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하기를 권장합니다.
@@ -129,7 +147,11 @@ DB 인스턴스가 고가용성으로 구성되어 있을 때 예비 마스터�
 > [주의]
 > IP ACL 또는 보안 그룹에서 기존 DB 인스턴스의 내부 IP를 직접 사용하는 경우 주의해야 합니다.
 
+<a id="options-for-mysql"></a>
+
 ## MySQL을 위한 옵션
+
+<a id="support-for-the-mariadb-server-audit-plugin-for-mysql"></a>
 
 ### MySQL을 위한 MariaDB 서버 감사 플러그인 지원
 
@@ -137,6 +159,8 @@ RDS for MySQL에서는 MariaDB 감사 플러그인을 사용하여 MySQL DB 인�
 
 > [주의]
 > 일부 MySQL 버전에서는 지원하지 않을 수 있으며, 지원하지 않는 버전으로 업그레이드하면 해당 플러그인을 사용할 수 없습니다.
+
+<a id="supported-versions"></a>
 
 #### 지원 버전
 | MySQL 버전                   | 서버 감사 플러그인 지원 여부 |
