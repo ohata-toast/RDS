@@ -2,6 +2,8 @@
 
 RDS for MySQL enables you to use MySQL databases in the cloud environment. You can easily use virtual machines with MySQL installed.
 
+<a id="main-features"></a>
+
 ## Main Features
 
 * You can easily use MySQL databases with the specifications and volume size you want.
