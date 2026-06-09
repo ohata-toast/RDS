@@ -1,5 +1,7 @@
 ## Database > RDS for MySQL > DB 인스턴스
 
+<a id="db-instance"></a>
+
 ## DB 인스턴스
 
 DB 인스턴스는 가상 장비와 설치된 MySQL을 아우르는 개념으로, RDS for MySQL에서 제공하는 MySQL의 단위입니다.
@@ -14,9 +16,13 @@ DB 인스턴스 이름은 아래와 같은 제약 사항이 있습니다.
 > [참고]
 > 2025년 7월 점검 이후 고가용성 DB 인스턴스는 마스터뿐만 아니라 예비 마스터의 이름도 입력하도록 변경되었습니다. 예비 마스터의 이름에도 마스터와 동일한 제약 사항이 적용되며, 마스터와 예비 마스터의 이름은 서로 달라야 합니다. 점검 이전에 생성한 DB 인스턴스는 예비 마스터의 이름이 마스터와 동일합니다.
 
+<a id="create-db-instance"></a>
+
 ## DB 인스턴스 생성
 
 다음 설정으로 DB 인스턴스를 생성할 수 있습니다.
+
+<a id="availability-zone"></a>
 
 ### 가용성 영역
 
@@ -24,6 +30,8 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 
 > [주의]
 > 이미 생성한 DB 인스턴스의 가용성 영역은 변경할 수 없습니다.
+
+<a id="db-engine"></a>
 
 ### DB 엔진
 
@@ -62,6 +70,8 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 DB 엔진은 생성 이후 콘솔의 수정 기능으로 버전을 업그레이드할 수 있습니다.
 DB 엔진에 관한 자세한 내용은 [DB 엔진](db-engine/)에서 확인할 수 있습니다.
 
+<a id="db-instance-type"></a>
+
 ### DB 인스턴스 타입
 
 DB 인스턴스는 타입에 따라 서로 다른 CPU 코어 수와 메모리 용량을 갖습니다.
@@ -78,6 +88,8 @@ DB 인스턴스 생성 시 데이터베이스 워크로드에 따라 알맞은 D
 
 > [주의]
 > 이미 생성한 DB 인스턴스의 타입을 변경하면 DB 인스턴스가 종료되므로 수 분 동안 서비스가 중단됩니다.
+
+<a id="data-storage"></a>
 
 ### 데이터 스토리지
 
@@ -99,9 +111,13 @@ DB 인스턴스 생성 시 데이터베이스 워크로드에 따라 알맞은 D
 * 특정 시점으로 복원
 * 단일 DB 인스턴스에서 백업 후 오브젝트 스토리지로 백업 파일 내보내기
 
+<a id="high-availability"></a>
+
 ### 고가용성
 
 고가용성 DB 인스턴스는 가용성과 데이터 내구성을 높이고, 장애를 허용하는 데이터베이스를 제공합니다. 고가용성 DB 인스턴스는 마스터, 예비 마스터로 구성되며 서로 다른 가용성 영역에 생성됩니다. 예비 마스터는 장애에 대비한 DB 인스턴스로 평소에는 사용할 수 없습니다. 고가용성 DB 인스턴스는 예비 마스터에서 백업이 수행되기 때문에 백업으로 인한 성능 저하를 회피할 수 있습니다. 고가용성 DB 인스턴스가 제공하는 여러 기능은 [고가용성 DB 인스턴스](db-instance/#ha-db-instance)에서 확인할 수 있습니다.
+
+<a id="network"></a>
 
 ### 네트워크
 
@@ -110,25 +126,37 @@ DB 인스턴스에 연결할 VPC 서브넷을 선택해야 합니다. 동일한 
 > [주의]
 > 이미 생성한 DB 인스턴스의 서브넷은 변경할 수 없습니다.
 
+<a id="floating-ip"></a>
+
 ### 플로팅 IP
 
 외부에서 DB 인스턴스에 접근하려면 플로팅 IP를 DB 인스턴스에 연결해야 합니다. Internet Gateway가 연결된 서브넷을 연결할 경우에만 플로팅 IP를 생성할 수 있습니다. 플로팅 IP는 사용과 동시에 과금되며, 이와 별개로 플로팅 IP를 통한 인터넷 방향의 트래픽이 발생할 경우 별도로 과금됩니다.
+
+<a id="parameter-group"></a>
 
 ### 파라미터 그룹
 
 파라미터 그룹은 DB 인스턴스에 설치된 데이터베이스를 설정할 수 있는 파라미터의 집합입니다. DB 인스턴스 생성 시 반드시 하나의 파라미터 그룹을 선택해야 합니다. 파라미터 그룹은 생성 이후에도 자유롭게 변경할 수 있습니다. 자세한 파라미터 그룹 내용은 [파라미터 그룹](parameter-group/) 항목을 참고합니다.
 
+<a id="db-security-group"></a>
+
 ### DB 보안 그룹
 
 DB 보안 그룹은 외부 침입에 대비해 접속을 제한하는 데 사용합니다. 송수신 트래픽에서 특정 포트 범위 또는 데이터베이스 포트에 접근을 허용할 수 있습니다. DB 인스턴스에 여러 개의 DB 보안 그룹을 적용할 수 있습니다. 자세한 DB 보안 그룹 내용은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
+
+<a id="backup"></a>
 
 ### 백업
 
 DB 인스턴스의 데이터베이스를 주기적으로 백업하도록 설정하거나, 콘솔에서 원하는 시기에 백업을 생성할 수 있습니다. 백업이 수행되는 동안 성능 저하가 발생할 수 있습니다. 서비스에 영향을 주지 않으려면 서비스 부하가 적은 시간에 백업하기를 권장합니다. 백업으로 인한 성능 저하를 원치 않으면 고가용성 구성을 사용하거나, 이전 백업 이후 데이터의 증분만 백업할 수 있으며, 읽기 복제본에서 백업을 수행할 수 있습니다. 백업 파일은 내부 백업 스토리지에 저장되며, 백업 용량에 따라 과금됩니다. 필요한 경우 NHN Cloud의 사용자 오브젝트 스토리지로 내보낼 수 있습니다. 예상치 못한 장애에 대비해 주기적으로 백업을 수행하도록 설정하기를 권장합니다. 자세한 백업 내용은 [백업 및 복원](backup-and-restore/) 항목을 참고합니다.
 
+<a id="maintenance"></a>
+
 ### 유지 관리
 
 유지 관리 기능을 사용하면 DB 인스턴스의 다양한 변경 작업을 원하는 시간대에 수행할 수 있습니다. DB 인스턴스 수정, DB 엔진 버전 업그레이드, DB 인스턴스 운영체제 업그레이드 등의 작업은 재시작이 필요해 다운타임이 발생할 수 있습니다. 유지 관리 기간을 설정하면 이러한 작업을 서비스 부하가 적은 시간대에 실행할 수 있습니다.
+
+<a id="maintenance-duration"></a>
 
 #### 유지 관리 기간
 
@@ -136,6 +164,8 @@ DB 인스턴스 생성 또는 수정 시 유지 관리 기간을 설정할 수 �
 
 > [참고]
 > 유지 관리 기간은 유지 관리 시작 요일, 유지 관리 시작 시간, 유지 관리 윈도우(30분 단위)로 구성됩니다.
+
+<a id="maintenance-task"></a>
 
 #### 유지 관리 작업
 
@@ -156,12 +186,16 @@ NHN Cloud에서 제공하는 유지 관리 작업입니다.
 * 파라미터 그룹 변경 사항 적용
 * 하이퍼바이저 점검을 위한 마이그레이션
 
+<a id="maintenance-execution-time"></a>
+
 #### 유지 관리 적용 시점
 
 유지 관리 작업 수행 시 적용 시점을 선택할 수 있습니다.
 
 * **즉시 적용**: 요청 즉시 유지 관리 작업을 수행합니다.
 * **다음 유지 관리 기간에 적용**: 다음 유지 관리 기간에 작업을 수행합니다.
+
+<a id="maintenance-status"></a>
 
 #### 유지 관리 상태
 
@@ -178,6 +212,8 @@ DB 인스턴스 목록에서 각 인스턴스의 유지 관리 상태를 확인�
 > [참고]
 > 고가용성 DB 인스턴스의 예비 마스터는 유지 관리 상태가 표시되지 않습니다.
 
+<a id="maintenance-tab"></a>
+
 #### 유지 관리 탭
 
 DB 인스턴스 상세 화면의 유지 관리 탭에서 다음 정보를 확인할 수 있습니다.
@@ -190,12 +226,16 @@ DB 인스턴스 상세 화면의 유지 관리 탭에서 다음 정보를 확인
 
 준비 중인 유지 관리 작업은 **보류** 또는 **삭제** 버튼을 클릭하여 유지 관리 기간에서 제외할 수 있습니다. 보류 중인 Provider 유지 관리 작업은 **즉시 적용** 또는 **다음 유지 관리 기간에 적용**을 선택하여 수동으로 적용할 수 있습니다.
 
+<a id="execution-order"></a>
+
 #### 작업 실행 순서
 
 유지 관리 기간 내의 모든 작업은 등록 순서에 따라 순차적으로 실행됩니다. 단, 만료 일시가 지난 필수 유지 관리 작업은 가장 먼저 실행됩니다. 유지 관리 기간 내에 실행되지 못한 작업은 다음 유지 관리 기간에 다시 실행됩니다.
 
 > [참고]
 > 자동 백업 및 DB 인스턴스가 '작업 중' 상태에서 유지 관리 기간이 시작되어 유지 관리 시간이 계속 미뤄질 경우 해당 유지 관리는 우선 생략하고 다음 유지 관리 기간에 실행됩니다. 유지 관리 작업이 생략되면 이벤트가 생성됩니다.
+
+<a id="default-notification"></a>
 
 ### 기본 알림
 
@@ -212,9 +252,13 @@ DB 인스턴스 생성 시 기본 알림을 설정할 수 있습니다. 기본 �
 | 메모리 사용량                    | &gt;= | 90%           | 5분    |
 | Slow Query                 | &gt;= | 60 counts/min | 5분    |
 
+<a id="deletion-protection"></a>
+
 ### 삭제 보호
 
 삭제 보호를 활성화하면 실수로 DB 인스턴스가 삭제되지 않도록 보호할 수 있습니다.
+
+<a id="db-instance-list"></a>
 
 ## DB 인스턴스 목록
 
@@ -248,6 +292,8 @@ DB 인스턴스의 상태는 아래와 같은 값으로 구성되며, 사용자�
 
 ❶ 파라미터 변경 사항 적용이 필요한 DB 인스턴스를 필터링 조건으로 검색할 수 있습니다.
 
+<a id="db-instance-details"></a>
+
 ## DB 인스턴스 상세
 
 DB 인스턴스를 선택하면 상세 정보를 볼 수 있습니다.
@@ -260,11 +306,15 @@ DB 인스턴스를 선택하면 상세 정보를 볼 수 있습니다.
 ❹ 마우스로 드래그 앤드 드롭 하여 상세 정보 패널의 높이를 조절할 수 있습니다.
 ❺ 상세 정보 패널의 높이를 미리 지정된 높이로 조절할 수 있습니다.
 
+<a id="access-information"></a>
+
 ### 접속 정보
 
 DB 인스턴스 생성 시 내부 도메인을 발급합니다. 내부 도메인은 사용자 VPC 서브넷에 속한 IP 주소를 가리킵니다. 고가용성 DB 인스턴스는 장애 조치되어 예비 마스터가 새로운 마스터로 변경되더라도 내부 도메인이 변경되지 않습니다. 따라서 특별한 이유가 없으면 응용 프로그램의 접속 정보는 반드시 내부 도메인을 사용해야 합니다.
 
 플로팅 IP를 생성한 경우 외부 도메인을 추가로 발급합니다. 외부 도메인은 플로팅 IP의 주소를 가리킵니다. 외부 도메인 또는 플로팅 IP는 외부에서 접근할 수 있으므로 DB 보안 그룹의 규칙을 적절히 설정하여 DB 인스턴스를 보호해야 합니다.
+
+<a id="virtual-ip"></a>
 
 ### Virtual IP
 
@@ -275,6 +325,8 @@ DB 인스턴스 생성 시 내부 도메인을 발급합니다. 내부 도메인
 > [참고]
 > 2025년 9월 점검 이후 일본(도쿄) 리전 및 공공 일부 프로젝트에서는 더 이상 VIP를 지원하지 않습니다. (다른 서브넷에 속한 인스턴스 또는 DB 인스턴스에서 VIP로 접속할 수 없습니다.)
 > VIP를 지원하지 않는 환경에서는 2025년 5월 점검 이후 생성된 VIP는 삭제되지 않지만, 더 이상 콘솔에서 확인할 수 없습니다.
+
+<a id="log"></a>
 
 ### 로그
 
@@ -304,11 +356,15 @@ DB 인스턴스의 로그 탭에서는 각종 로그 파일을 보거나 다운�
 
 ❺ mysqlbinlog 유틸리티를 이용하여 바이너리 로그(binary log)를 SQL 파일로 변환 후 내려받으려면 선택합니다.
 
+<a id="maintenance-2"></a>
+
 ### 유지 관리
 
 DB 인스턴스의 **유지 관리** 탭에서는 유지 관리 설정 및 상태를 확인하고, 유지 관리 작업을 관리할 수 있습니다.
 
 ![db-instance-detail-maintenance_ko](https://static.toastoven.net/prod_rds/mysql/26.01.13/db-instance-detail-maintenance_ko.png)
+
+<a id="maintenance-information"></a>
 
 #### 유지 관리 정보
 
@@ -323,6 +379,8 @@ DB 인스턴스의 **유지 관리** 탭에서는 유지 관리 설정 및 상�
 
 > [참고]
 > 유지 관리 기간을 설정하지 않은 경우에도 임의로 할당된 유지 관리 기간을 확인할 수 있습니다.
+
+<a id="upcoming-maintenance"></a>
 
 #### 준비 중인 유지 관리
 
@@ -340,6 +398,8 @@ DB 인스턴스의 **유지 관리** 탭에서는 유지 관리 설정 및 상�
 준비 중인 유지 관리 작업은 선택 후 **삭제** 또는 **보류**를 클릭하여 유지 관리 기간에서 제외할 수 있습니다.
 삭제된 사용자 유지 관리 작업은 취소되며, 다시 유지 관리 기간에 적용하려면 해당 작업을 다시 수행해야 합니다.
 Provider 유지 관리 작업은 보류 중인 유지 관리 목록으로 이동합니다. 보류 중인 유지 관리 목록에서 다시 준비 중인 유지 관리 작업으로 이동할 수 있습니다.
+
+<a id="pending-maintenance"></a>
 
 #### 보류 중인 유지 관리
 
@@ -367,9 +427,13 @@ Provider 유지 관리 작업은 보류 중인 유지 관리 목록으로 이동
 > [참고]
 > 유지 관리 작업 적용 시 재시작이 필요한 경우 장애 조치, 백업 등의 추가 옵션을 선택할 수 있는 팝업 화면이 나타납니다. 고가용성 DB 인스턴스는 장애 조치를 이용한 재시작을 사용하여 서비스 중단 시간을 최소화할 수 있습니다.
 
+<a id="db-schema-and-users"></a>
+
 ### DB 스키마 & 사용자
 
 DB 인스턴스의 **DB 스키마 & 사용자** 탭에서는 데이터베이스에 생성된 스키마와 사용자를 조회 및 제어할 수 있습니다.
+
+<a id="db-schema-created"></a>
 
 #### DB 스키마 생성
 
@@ -385,12 +449,16 @@ DB 스키마 이름은 아래와 같은 제약 사항이 있습니다.
 
 생성된 DB 스키마의 이름은 수정할 수 없습니다.
 
+<a id="db-schema-deleted"></a>
+
 #### DB 스키마 삭제
 
 ![db-instance-detail-schema-delete-ko](https://static.toastoven.net/prod_rds/mysql/26.01.13/db-instance-detail-schema-delete-ko.png)
 
 ❶ 삭제할 DB 스키마를 선택 후 드롭다운 메뉴를 클릭합니다.
 ❷ **삭제** 메뉴를 클릭하면 삭제 확인 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
+
+<a id="create-a-user"></a>
 
 #### 사용자 생성
 
@@ -457,6 +525,8 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 > [참고]
 > 사용자 인증 플러그인과 TLS Option은 MySQL 5.7.33 버전 이상에서 지원합니다.
 
+<a id="download-authentication-certificate"></a>
+
 #### 인증서 다운로드
 
 사용자 계정의 TLS Option을 X509로 설정한 경우 DB 인스턴스에 접속하려면 인증서가 필요합니다.
@@ -474,6 +544,8 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 > **가져오기**를 클릭하면 약 5분간 인증서 파일이 백업 스토리지에 업로드되며, 인증서 파일의 크기만큼 백업 스토리지 용량이 과금됩니다.
 > **다운로드**를 클릭하면 인증서 파일의 크기만큼 인터넷 트래픽이 과금됩니다.
 
+<a id="edit-users"></a>
+
 #### 사용자 수정
 
 ![db-instance-detail-user-modify-ko](https://static.toastoven.net/prod_rds/mysql/26.01.13/db-instance-detail-user-modify-ko.png)
@@ -482,12 +554,16 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 ❷ Password를 입력하지 않으면 변경되지 않습니다.
 ❸ 사용자 인증에 적용할 플러그인을 변경하려면 반드시 Password를 변경해야 합니다.
 
+<a id="deleting-a-user"></a>
+
 #### 사용자 삭제
 
 ![db-instance-detail-user-delete-ko](https://static.toastoven.net/prod_rds/mysql/26.01.13/db-instance-detail-user-delete-ko.png)
 
 ❶ 삭제할 사용자를 선택 후 드롭다운 메뉴를 클릭합니다.
 ❷ **삭제**를 클릭하면 **삭제 확인** 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
+
+<a id="modify-db-instance"></a>
 
 ## DB 인스턴스 수정
 
@@ -520,6 +596,8 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 ❶ 유지 관리 기능으로 **다음 유지 관리 기간에 적용** 또는 **즉시 적용**을 선택해 DB 인스턴스 수정을 수행할 수 있습니다.
 ❷ 장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](db-instance/#manual-failover)을 참고합니다.
 
+<a id="db-schema-direct-user-control"></a>
+
 ### DB 스키마 & 사용자 직접 제어
 
 RDS for MySQL에서는 DB 스키마와 사용자를 손쉽게 관리할 수 있도록 콘솔에서 관리 기능을 제공하지만, 사용자가 직접 제어할 수 있도록 설정하는 기능도 제공합니다. 직접 제어를 사용하면 현재 생성된 모든 사용자에게 아래 권한을 부여합니다.
@@ -532,6 +610,8 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 > 직접 제어 사용 이후 다시 사용 안 함으로 변경하면
 > * 기존에 부여한 권한을 회수하지 않습니다. 이때 명령어를 사용해 DB 스키마나 사용자를 추가하면 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
 > * 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
+
+<a id="upgrade-db-instance-operating-system"></a>
 
 ## DB 인스턴스 운영체제 업그레이드
 DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 업그레이드로 보안 취약점을 해결하거나 운영체제의 EOL에 대응할 수 있습니다.
@@ -555,17 +635,25 @@ DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 �
 ❶ 유지 관리 적용 방법으로 유지 관리 기능을 사용할 수 있습니다.
 ❷ 장애 조치를 사용하는 방법만 제공됩니다.
 
+<a id="delete-db-instance"></a>
+
 ## DB 인스턴스 삭제
 
 더 이상 사용하지 않는 DB 인스턴스는 삭제할 수 있습니다. 마스터를 삭제하면 해당 복제 그룹에 속한 예비 마스터와 읽기 복제본도 모두 함께 삭제됩니다. 삭제된 DB 인스턴스는 복구할 수 없으므로 중요한 DB 인스턴스는 삭제 보호 설정을 활성화하기를 권장합니다.
+
+<a id="backup-2"></a>
 
 ## 백업
 
 장애 상황에 대비하여 DB 인스턴스의 데이터베이스를 복구할 수 있도록 미리 준비할 수 있습니다. 필요할 때마다 콘솔에서 백업을 수행하거나, 주기적으로 백업이 수행되도록 설정할 수 있습니다. 자세한 사항은 [백업](backup-and-restore/#overview) 항목을 참고합니다.
 
+<a id="restoration"></a>
+
 ## 복원
 
 백업을 이용하여 원하는 시점으로 데이터를 복원할 수 있습니다. 복원 시에는 항상 새로운 DB 인스턴스가 생성되며, 기존 DB 인스턴스에 복원할 수 없습니다. 자세한 사항은 [복원](backup-and-restore/#restore) 항목을 참고합니다.
+
+<a id="secure-capacity"></a>
 
 ## 용량 확보
 
@@ -577,9 +665,13 @@ DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 �
 > [주의]
 > 삭제된 바이너리 로그(binary log)에 따라 특정 시점으로 복원되지 않을 수 있습니다.
 
+<a id="expand-storage-size"></a>
+
 ## 스토리지 크기 확장
 
 DB 인스턴스의 데이터 스토리지 크기를 확장할 수 있습니다. 확장 시 DB 인스턴스의 재시작 과정 없이 즉시 적용됩니다.
+
+<a id="auto-scale-storage"></a>
 
 ## 스토리지 자동 확장
 
@@ -596,6 +688,8 @@ DB 인스턴스의 데이터 스토리지 크기를 자동으로 확장할 수 �
 * 10GB
 * 스토리지 크기의 10%
 * 직전 한 시간의 데이터 스토리지 사용량 증가분 * 쿨다운(시간으로 환산)
+
+<a id="apply-parameter-group-changes"></a>
 
 ## 파라미터 그룹 변경 사항 적용
 
@@ -618,17 +712,25 @@ DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 �
 
 장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](db-instance/#manual-failover)을 참고합니다.
 
+<a id="recover-from-backup-in-object-storage"></a>
+
 ## 오브젝트 스토리지에 있는 백업으로 복원
 
 외부 MySQL 백업 파일을 NHN Cloud의 사용자 오브젝트 스토리지에 업로드하여 RDS for MySQL의 DB 인스턴스로 복원할 수 있습니다. 자세한 사항은 [외부 MySQL 백업을 이용한 복원](backup-and-restore/#restore-from-external) 항목을 참고합니다.
+
+<a id="export-backup-files-to-the-object-storage-after-backup"></a>
 
 ## 백업 후 오브젝트 스토리지로 백업 파일 내보내기
 
 백업 후 백업 파일을 사용자 오브젝트 스토리지로 내보낼 수 있습니다. 자세한 사항은 [백업 내보내기](backup-and-restore/#export) 항목을 참고합니다.
 
+<a id="read-replica"></a>
+
 ## 읽기 복제본
 
 읽기 성능을 높이기 위해 읽기 전용으로 사용할 수 있는 읽기 복제본을 생성할 수 있습니다. 읽기 복제본은 하나의 마스터당 최대 5대까지 생성할 수 있습니다. 읽기 복제본의 읽기 복제본은 생성할 수 없습니다.
+
+<a id="create-read-replications"></a>
 
 ### 읽기 복제본 생성
 
@@ -655,6 +757,8 @@ DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 �
 
 다음 설정으로 읽기 복제본을 생성할 수 있습니다.
 
+<a id="non-editable-items"></a>
+
 #### 변경 불가 항목
 
 읽기 복제본을 생성할 때 아래 나열된 항목은 원본 DB 인스턴스의 설정을 따르기 때문에 변경할 수 없습니다.
@@ -663,6 +767,8 @@ DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 �
 * 데이터 스토리지 종류
 * 사용자 VPC 서브넷
 
+<a id="read-replica-region"></a>
+
 #### 읽기 복제본 리전
 
 읽기 복제본을 생성할 리전을 선택할 때 리전 피어링을 지원하는 경우 서로 다른 리전에 존재하는 VPC 간 리전 피어링을 연결하면 다른 리전 VPC에 속한 서브넷에 읽기 복제본을 생성할 수 있습니다. 단, 원본 DB 인스턴스의 리전과 다른 리전을 선택하면 복제 지연이 발생할 수 있으며, DB 버전 업그레이드를 지원하지 않습니다.
@@ -670,41 +776,61 @@ DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 �
 > [주의]
 > 리전 피어링이 연결되어 있더라도 라우트 설정이 올바르지 않을 경우 읽기 복제본 생성에 실패하거나 복제가 중단될 수 있습니다.
 
+<a id="availability-zone-2"></a>
+
 #### 가용성 영역
 
 읽기 복제본의 가용성 영역을 선택합니다. 자세한 설명은 [가용성 영역](#_1) 항목을 참고합니다.
+
+<a id="db-instance-type-2"></a>
 
 #### DB 인스턴스 타입
 
 읽기 복제본은 마스터와 동일한 사양 또는 더 높은 사양으로 만들기를 권장합니다. 낮은 사양으로 생성 시 복제 지연이 발생할 수 있습니다.
 
+<a id="data-storage-size"></a>
+
 #### 데이터 스토리지 크기
 
 원본 DB 인스턴스와 동일한 크기로 만들기를 권장합니다. 크기를 작게 설정할 경우, 데이터 스토리지 용량 부족으로 복제 과정이 중단될 수 있습니다.
+
+<a id="floating-ip-2"></a>
 
 #### 플로팅 IP
 
 읽기 복제본의 플로팅 IP 사용 여부를 선택합니다. 자세한 설명은 [플로팅 IP](#ip) 항목을 참고합니다.
 
+<a id="parameter-group-2"></a>
+
 #### 파라미터 그룹
 
 읽기 복제본의 파라미터 그룹을 선택할 때 복제 관련 설정 변경이 필요 없다면 원본 DB 인스턴스와 동일한 파라미터 그룹을 선택하기를 권장합니다. 자세한 파라미터 그룹 내용은 [파라미터 그룹](parameter-group/) 항목을 참고합니다.
+
+<a id="db-security-group-2"></a>
 
 #### DB 보안 그룹
 
 읽기 복제본에 적용할 DB 보안 그룹을 선택합니다. 복제에 필요한 규칙은 자동으로 적용되기 때문에 DB 보안 그룹에 별도로 복제 관련 규칙을 추가할 필요가 없습니다. 자세한 DB 보안 그룹 내용은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
 
+<a id="backup-3"></a>
+
 #### 백업
 
 읽기 복제본의 백업 설정을 선택합니다. 자세한 백업 내용은 [백업 및 복원](backup-and-restore/) 항목을 참고합니다.
+
+<a id="default-notification-2"></a>
 
 #### 기본 알림
 
 기본 알림 사용 여부를 선택합니다. 자세한 설명은 [기본 알림](#_7) 항목을 참고합니다.
 
+<a id="deletion-protection-2"></a>
+
 #### 삭제 보호
 
 삭제 보호 사용 여부를 선택합니다. 자세한 설명은 [삭제 보호](#_8) 항목을 참고합니다.
+
+<a id="promote-read-replication"></a>
 
 ### 읽기 복제본 승격
 
@@ -716,9 +842,13 @@ DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 �
 > [참고]
 > 읽기 복제본이 위치한 리전과 동일한 리전의 콘솔에서 승격 작업을 수행할 수 있습니다.
 
+<a id="force-promotion-of-read-replicas"></a>
+
 ### 읽기 복제본 강제 승격
 
 마스터나 원본 리전의 상태와 관계없이 읽기 복제본의 현재 시점 데이터를 기반으로 강제 승격을 수행합니다. 복제 지연이 있는 경우 데이터 유실이 발생할 수 있습니다. 따라서 읽기 복제본을 긴급하게 서비스에 투입해야 하는 상황이 아니라면 이 기능의 사용은 권장하지 않습니다.
+
+<a id="stop-replication-of-read-replicas"></a>
 
 ### 읽기 복제본의 복제 중단
 
@@ -728,12 +858,16 @@ DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 �
 mysql> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
+<a id="rebuild-read-replica"></a>
+
 ### 읽기 복제본의 재구축
 
 읽기 복제본의 복제 문제를 해결할 수 없는 경우 재구축으로 정상 상태로 복원할 수 있습니다. 이 과정에서 읽기 복제본의 모든 데이터베이스를 삭제하고, 마스터 데이터베이스를 기반으로 새롭게 재구축합니다. 재구축하는 동안 읽기 복제본은 사용할 수 없습니다. 읽기 복제본을 재구축하려면 복제 그룹에 속한 DB 인스턴스 중 테이블 잠금 사용 옵션으로 생성된 백업 파일 및 바이너리 로그(binary log)가 필요합니다. 백업 파일이 없는 경우 동작 및 주의 사항은 [읽기 복제본 생성](#_22) 항목을 참고합니다.
 
 > [참고]
 > 재구축 후에도 접속 정보(도메인, IP)는 변경되지 않습니다.
+
+<a id="restart-db-instance"></a>
 
 ## DB 인스턴스 재시작
 
@@ -744,6 +878,8 @@ DB 인스턴스 재시작을 하려면 콘솔에서
 ![db-instance-restart-ko](https://static.toastoven.net/prod_rds/mysql/26.01.13/db-instance-restart-ko.png)
 
 ❶ 재시작을 원하는 DB 인스턴스를 선택 후 드롭다운 메뉴에서 **DB 인스턴스 재시작** 메뉴를 클릭합니다.
+
+<a id="db-instance-force-restart"></a>
 
 ## DB 인스턴스 강제 재시작
 
@@ -760,6 +896,8 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 ![db-instance-restart-force-ko](https://static.toastoven.net/prod_rds/mysql/26.01.13/db-instance-restart-force-ko.png)
 
 ❶ 강제 재시작을 원하는 DB 인스턴스를 선택 후 드롭다운 메뉴에서 **DB 인스턴스 강제 재시작** 메뉴를 클릭합니다.
+
+<a id="change-deletion-protection-settings"></a>
 
 ## 삭제 보호 설정 변경
 
@@ -782,12 +920,16 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 > [참고]
 > 고가용성 DB 인스턴스에서 MySQL 쿼리문을 사용해 다른 DB 인스턴스 또는 외부 MySQL의 Master로부터 강제로 복제하도록 설정하면 고가용성 및 일부 기능이 정상적으로 동작하지 않습니다.
 
+<a id="failure-detection"></a>
+
 ### 장애 감지
 
 예비 마스터에는 장애를 감지하기 위한 프로세스가 있으며 주기적으로 마스터의 상태를 감지합니다. 이러한 감지 주기를 Ping 간격이라고 하며 4회 연속 상태 체크에 실패하면 장애 조치를 수행합니다. Ping 간격이 짧을수록 장애에 민감하게 반응하며, Ping 간격이 길수록 장애에 둔감하게 반응합니다. 서비스 부하에 맞게 적절한 Ping 간격을 설정하는 것이 중요합니다.
 
 > [참고]
 > 마스터의 데이터 스토리지 사용량이 가득 차면 고가용성 감시 프로세스가 장애로 감지해 장애 조치를 수행하므로 주의해야 합니다.
+
+<a id="automatic-failover"></a>
 
 ### 자동 장애 조치
 
@@ -802,9 +944,13 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 > `replicate-ignore-db` 또는 `replicate-ignore-table`이 적용된 경우, 해당 DB 또는 테이블의 변경 사항은 복제되지 않으므로 장애 조치에 실패할 수 있습니다.
 
 
+<a id="failed-over-master"></a>
+
 ### 장애 조치된 마스터
 
 장애가 발생하여 장애 조치된 마스터를 장애 조치된 마스터라고 합니다. 장애 조치된 마스터의 자동 백업은 수행되지 않으며, 장애 조치된 마스터 복구, 재구축, 분리, 삭제를 제외한 다른 모든 기능은 수행할 수 없습니다.
+
+<a id="recover-failed-over-master"></a>
 
 ### 장애 조치된 마스터 복구
 
@@ -818,6 +964,8 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 ![db-instance-failover-repair-ko](https://static.toastoven.net/prod_rds/mysql/26.01.13/db-instance-failover-repair-ko.png)
 
 ❶ 복구를 원하는 장애 조치된 마스터를 선택 후 드롭다운 메뉴에서 **장애 조치된 마스터 복구** 메뉴를 클릭합니다.
+
+<a id="rebuild-failed-over-master"></a>
 
 ### 장애 조치된 마스터 재구축
 
@@ -840,6 +988,8 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 ![db-instance-failover-rebuild-ko](https://static.toastoven.net/prod_rds/mysql/26.01.13/db-instance-failover-rebuild-ko.png)
 
 ❶ 재구축을 원하는 장애 조치된 마스터를 선택 후 드롭다운 메뉴에서 **장애 조치된 마스터 재구축** 메뉴를 클릭합니다.
+
+<a id="separate-failed-over-master"></a>
 
 ### 장애 조치된 마스터 분리
 
@@ -872,9 +1022,13 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 
 장애 조치를 이용한 재시작 시 다음의 항목을 추가로 선택하여 안정성을 높일 수 있습니다.
 
+<a id="progress-current-point-in-time-backup"></a>
+
 #### 현재 시점 백업 진행
 
 장애 조치 과정에서 바이너리 로그(binary log)가 모두 삭제되기 때문에 장애 조치를 이용한 재시작이 완료된 후 곧바로 수동 백업을 수행할 수 있습니다.
+
+<a id="manual-control-of-failover"></a>
 
 #### 장애 조치 수동 제어
 
@@ -885,25 +1039,37 @@ DB 인스턴스 강제 재시작을 하려면 콘솔에서
 > [주의]
 > 장애 조치를 대기하는 동안에는 자동 장애 조치가 되지 않습니다.
 
+<a id="waiting-for-resolve-replication-delay"></a>
+
 #### 복제 지연 해소 대기
 
 복제 지연 해소 대기 옵션을 활성화하면 예비 마스터와 복제 그룹에 포함된 읽기 복제본의 복제 지연이 사라질 때까지 대기할 수 있습니다.
+
+<a id="block-write-load"></a>
 
 #### 쓰기 부하 차단
 
 복제 지연을 해소하는 동안 쓰기 부하를 추가로 차단할 수 있습니다. 쓰기 부하를 차단하면 장애 조치를 수행하기 바로 전에 마스터가 읽기 전용 모드로 전환되어 모든 변경 쿼리가 실패하도록 설정됩니다.
 
+<a id="high-availability-suspended"></a>
+
 ### 고가용성 일시 중지
 
 일시적인 작업으로 인한 연결 중단 또는 대량의 부하가 예상되는 상황에서 일시적으로 고가용성 기능을 중지할 수 있습니다. 고가용성 기능이 일시 중지되면 장애를 감지하지 않으므로 장애 조치를 수행하지 않습니다. 고가용성 기능이 일시 중지된 상태에서 재시작이 필요한 작업을 수행해도 일시 중지된 고가용성 기능이 재개되지 않습니다. 고가용성 기능이 일시 중지되어도 데이터 복제는 정상적으로 이루어지지만 장애가 감지되지 않기 때문에 장시간 일시 중지 상태로 유지하기를 권장하지 않습니다.
+
+<a id="rebuild-candidate-master"></a>
 
 ### 예비 마스터 재구축
 
 네트워크의 단절, 잘못된 FEDERATED 엔진 사용, 다른 마스터로부터의 복제 설정과 같은 다양한 원인으로 예비 마스터 복제가 중단될 수 있습니다. 복제 중단 상태의 예비 마스터는 자동 장애 조치가 실행되지 않습니다. 예비 마스터의 복제 중단을 해결하려면 예비 마스터를 재구축해야 합니다. 예비 마스터 재구축 시에는 예비 마스터의 데이터베이스를 모두 제거하며, 마스터의 데이터베이스를 토대로 재구축합니다. 이 과정에서 재구축에 필요한 백업 파일이 마스터 데이터베이스에 존재하지 않을 경우 마스터에서 백업이 수행되며, 백업으로 인한 성능 저하가 발생할 수 있습니다.
 
+<a id="mysql-procedure"></a>
+
 ## MySQL Procedure
 
 RDS for MySQL은 사용자의 편의를 제공하기 위해 사용자 계정에서 제한되는 몇몇 기능을 수행하는 프로시저를 자체적으로 제공합니다.
+
+<a id="tcrdsactiveprocess"></a>
 
 ### tcrds_active_process
 
@@ -914,6 +1080,8 @@ RDS for MySQL은 사용자의 편의를 제공하기 위해 사용자 계정에�
 mysql> CALL mysql.tcrds_active_process();
 ```
 
+<a id="tcrdsprocesskill"></a>
+
 ### tcrds_process_kill
 
 * 특정 프로세스를 강제 종료합니다.
@@ -922,6 +1090,8 @@ mysql> CALL mysql.tcrds_active_process();
 ```
 mysql> CALL mysql.tcrds_process_kill(processlist_id );
 ```
+
+<a id="tcrdscurrentlock"></a>
 
 ### tcrds_current_lock
 
@@ -933,6 +1103,8 @@ mysql> CALL mysql.tcrds_process_kill(processlist_id );
 ```
 mysql> CALL mysql.tcrds_current_lock();
 ```
+
+<a id="tcrdsreplchangemaster-prior-to-84"></a>
 
 ### tcrds_repl_changemaster (8.4 이전)
 
@@ -957,6 +1129,8 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 
 > [주의] 복제용 계정이 복제 대상(Master) MySQL에 생성되어 있어야 합니다.
 
+<a id="tcrdsreplchangesource-after-84"></a>
+
 ### tcrds_repl_changesource (8.4 이후)
 
 * 복제를 이용해 외부 MySQL DB를 NHN Cloud RDS로 가져올 때 사용합니다.
@@ -980,6 +1154,8 @@ mysql> CALL mysql.tcrds_repl_changesource (master_instance_ip, master_instance_p
 
 > [주의] 복제용 계정이 복제 대상(Master) MySQL에 생성되어 있어야 합니다.
 
+<a id="tcrdsreplinit"></a>
+
 ### tcrds_repl_init
 
 * MySQL 복제 정보를 초기화합니다.
@@ -987,6 +1163,8 @@ mysql> CALL mysql.tcrds_repl_changesource (master_instance_ip, master_instance_p
 ```
 mysql> CALL mysql.tcrds_repl_init();
 ```
+
+<a id="tcrdsreplslavestop-before-84"></a>
 
 ### tcrds_repl_slave_stop (8.4 이전)
 
@@ -996,6 +1174,8 @@ mysql> CALL mysql.tcrds_repl_init();
 mysql> CALL mysql.tcrds_repl_slave_stop();
 ```
 
+<a id="tcrdsreplreplicastop-after-84"></a>
+
 ### tcrds_repl_replica_stop (8.4 이후)
 
 * MySQL 복제를 멈춥니다.
@@ -1003,6 +1183,8 @@ mysql> CALL mysql.tcrds_repl_slave_stop();
 ```
 mysql> CALL mysql.tcrds_repl_replica_stop();
 ```
+
+<a id="tcrdsreplslavestart-before-84"></a>
 
 ### tcrds_repl_slave_start (8.4 이전)
 
@@ -1013,6 +1195,8 @@ mysql> CALL mysql.tcrds_repl_slave_start();
 
 ```
 
+<a id="tcrdsreplreplicastart-after-84"></a>
+
 ### tcrds_repl_replica_start (8.4 이후)
 
 * MySQL 복제를 시작합니다.
@@ -1021,6 +1205,8 @@ mysql> CALL mysql.tcrds_repl_slave_start();
 mysql> CALL mysql.tcrds_repl_replica_start();
 
 ```
+
+<a id="tcrdsreplskipreplerror"></a>
 
 ### tcrds_repl_skip_repl_error
 
@@ -1033,6 +1219,8 @@ mysql> CALL mysql.tcrds_repl_replica_start();
 mysql> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
+<a id="tcrdsreplnextchangemaster-before-84"></a>
+
 ### tcrds_repl_next_changemaster (8.4 이전)
 
 * Master의 다음 바이너리 로그(binary log)를 읽을 수 있도록 복제 정보를 변경합니다.
@@ -1044,6 +1232,8 @@ mysql> CALL mysql.tcrds_repl_skip_repl_error();
 mysql> CALL mysql.tcrds_repl_next_changemaster();
 ```
 
+<a id="tcrdsreplnextchangesource-after-84"></a>
+
 ### tcrds_repl_next_changesource (8.4 이후)
 
 * Master의 다음 바이너리 로그(binary log)를 읽을 수 있도록 복제 정보를 변경합니다.
@@ -1054,6 +1244,8 @@ mysql> CALL mysql.tcrds_repl_next_changemaster();
 ```
 mysql> CALL mysql.tcrds_repl_next_changesource();
 ```
+
+<a id="tcrdsinnodbmonitorreset"></a>
 
 ### tcrds_innodb_monitor_reset
 
@@ -1070,6 +1262,8 @@ ex) CALL mysql.tcrds_innodb_monitor_reset('dml_reads');
 CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 ```
 
+<a id="tcrdsinnodbmonitorresetall"></a>
+
 ### tcrds_innodb_monitor_reset_all
 
 * counter 값을 재설정하는 innodb_monitor_reset_all variables를 실행하는 프로시저입니다.
@@ -1080,6 +1274,8 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
 ```
 
+<a id="tcrdsforeignkeychecks"></a>
+
 ### tcrds_foreign_key_checks
 * foreign key 제약 조건을 체크하는 `foreign_key_checks` 변수를 제어하는 프로시저입니다.
 * `SET GLOBAL foreign_key_checks ='ON|OFF';` 쿼리를 실행합니다.
@@ -1088,10 +1284,14 @@ mysql> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|patt
 mysql> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
 ```
 
+<a id="data-migration"></a>
+
 ## 데이터 마이그레이션
 
 * RDS는 mysqldump를 사용하여 NHN Cloud RDS의 외부로 데이터를 내보내거나 외부에서 가져올 수 있습니다.
 * mysqldump 유틸리티는 MySQL을 설치했을 때 기본으로 제공됩니다.
+
+<a id="export-using-mysqldump"></a>
 
 ### mysqldump를 이용하여 내보내기
 
@@ -1100,17 +1300,23 @@ mysql> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
 * NHN Cloud의 외부로 데이터를 내보내야 할 경우 플로팅 IP를 생성하여 데이터를 내보낼 RDS 인스턴스에 연결합니다.
 * 다음 mysqldump 명령어로 외부로 데이터를 내보냅니다.
 
+<a id="when-exporting-files"></a>
+
 #### 파일로 내보낼 경우
 
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
+<a id="exporting-in-mysql-db-out-of-nhn-cloud-rds"></a>
+
 #### NHN Cloud RDS 외부의 MySQL DB로 내보낼 경우
 
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
 ```
+
+<a id="import-by-using-mysqldump"></a>
 
 ### mysqldump를 이용하여 가져오기
 
@@ -1123,15 +1329,21 @@ mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port
 mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --set-gtid-purged=off --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
 ```
 
+<a id="when-error-1227-occurs-during-data-importing"></a>
+
 #### 데이터 가져오는 도중 `ERROR 1227` 오류가 발생할 경우
 
 * `ERROR 1227` 오류는 mysqldump 파일의 저장된 객체(트리거, 뷰, 함수 또는 이벤트)에 DEFINER 정의가 되어 있을 때 발생합니다. 이 오류를 해결하려면 mysqldump 파일에서 `DEFINER` 부분을 삭제한 후 다시 적용합니다.
+
+<a id="when-error-1418-occurs-during-data-importing"></a>
 
 #### 데이터 가져오는 도중 `ERROR 1418` 오류가 발생할 경우
 
 * `ERROR 1418` 오류는 mysqldump 파일의 함수 선언에 NO SQL, READS SQL DATA, DETERMINISTIC이 없으며 바이너리 로그가 활성화된 상태일 때 발생합니다.
     * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) 문서를 참고합니다.
 * 이 오류를 해결하려면 mysqldump 파일을 적용할 DB 인스턴스의 `log_bin_trust_function_creators` 파라미터의 값을 `1`로 변경해야 합니다.
+
+<a id="export-by-using-replication"></a>
 
 ### 복제를 이용하여 내보내기
 
@@ -1207,6 +1419,8 @@ START REPLICA;
 ```
 
 * 외부 DB와 NHN Cloud RDS 인스턴스의 원본 데이터가 같아지면 외부 DB에 STOP SLAVE 명령으로 복제를 종료합니다.
+
+<a id="import-with-replication"></a>
 
 ### 복제를 이용하여 가져오기
 
@@ -1293,7 +1507,11 @@ mysql> call mysql.tcrds_repl_replica_start;
 mysql> call mysql.tcrds_repl_init();
 ```
 
+<a id="appendix"></a>
+
 ## 부록
+
+<a id="appendix-1-db-instance-migration-guide-for-hypervisor-maintenance"></a>
 
 ### 부록1. 하이퍼바이저 점검을 위한 DB 인스턴스 마이그레이션 가이드
 
@@ -1304,6 +1522,8 @@ DB 인스턴스 마이그레이션은 NHN Cloud 콘솔에서 시작할 수 있�
 DB 구성에 따라 특정 DB 인스턴스를 선택하여 마이그레이션 시, 연관된 DB 인스턴스(예: Slave 인스턴스)도 점검 대상이면 같이 마이그레이션을 수행합니다.
 아래 가이드에 따라 콘솔에 있는 마이그레이션 기능을 사용하세요.
 점검 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
+
+<a id="check-the-db-instance-that-requires-maintenance"></a>
 
 #### 1. 점검 대상 DB 인스턴스를 확인합니다.
 
@@ -1316,10 +1536,14 @@ DB 구성에 따라 특정 DB 인스턴스를 선택하여 마이그레이션 �
 
 ![rds_planed_migration_1](https://static.toastoven.net/prod_rds/mysql/planned_migration_alarm/26.01.13/image1_kr.png)
 
+<a id="make-sure-you-close-any-running-applications-on-the-db-instance"></a>
+
 #### 2. 점검 대상 DB 인스턴스에 접속 중인 응용 프로그램을 종료해야 합니다.
 
 DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취하세요.
 서비스에 영향을 줄 수밖에 없을 때는 NHN Cloud 고객지원으로 문의하면 적합한 조치를 안내해 드립니다.
+
+<a id="you-can-apply-migration-to-db-instances-targeted-for-maintenance"></a>
 
 #### 3. 점검 대상의 DB 인스턴스 마이그레이션을 적용할 수 있습니다.
 
@@ -1327,6 +1551,8 @@ DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취�
 
 ❶ **즉시 적용**을 클릭해 하이퍼바이저 마이그레이션을 바로 적용할 수 있습니다.
 ❷ **다음 유지 관리 기간에 적용**을 클릭해 원하는 유지 관리 기간에 하이퍼바이저 마이그레이션을 적용할 수 있습니다.
+
+<a id="wait-for-the-db-instance-migration-to-finish"></a>
 
 #### 4. DB 인스턴스 마이그레이션이 끝날 때까지 대기합니다.
 
@@ -1337,9 +1563,13 @@ DB 인스턴스 상태가 변경되지 않는다면 새로 고침하세요.
 DB 인스턴스를 마이그레이션하는 동안에는 아무런 조작을 할 수 없습니다.
 DB 인스턴스 마이그레이션이 정상적으로 완료되지 않으면 자동으로 관리자에게 보고되며, NHN Cloud에서 별도로 연락드립니다.
 
+<a id="appendix-2-configuration-guide-for-using-federated-storage-engine-with-rds"></a>
+
 ### 부록2. RDS를 이용하여 Federated Storage Engine 사용 시 구성 가이드
 
 Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다.
+
+<a id="for-configuration-using-rds-as-a-local-node"></a>
 
 #### 로컬 노드로서 RDS를 이용하는 구성의 경우
 
@@ -1350,6 +1580,8 @@ Federated Storage Engine을 사용하는 경우 다음을 고려해야 합니다
     * Read Only Slave를 구성할 경우 federated 테이블 또한 복제되어 Master와 Read Only Slave가 리모트 노드를 함께 바라봅니다.
     * 이 경우 Master에 수행한 데이터 입력이 federated 설정에 따라 리모트 노드에도 수행되고, Read Only Slave에서도 마찬가지로 동일한 입력이 수행되어 중복 키 오류 등으로 인한 복제 중단이 발생할 수 있습니다.
     * Read Only Slave가 federated 테이블은 복제하지 않도록 replicate-ignore-table에 설정이 필요합니다.
+
+<a id="for-configuration-using-rds-as-a-remote-node"></a>
 
 #### 리모트 노드로서 RDS를 이용하는 구성의 경우
 
@@ -1364,6 +1596,8 @@ NHN Cloud는 DB 인스턴스 운영체제에서 발견된 보안 취약점(CVE)�
 보안 패치는 현재 DB 인스턴스의 취약점을 해결한 최신 보안 업데이트를 적용하는 방식으로 동작합니다.
 아래 가이드에 따라 콘솔에 있는 보안 패치 기능을 사용하세요.
 보안 패치 대상으로 지정된 DB 인스턴스가 있는 프로젝트로 이동합니다.
+
+<a id="check-the-db-instances-targeted-for-security-patching"></a>
 
 #### 1. 보안 패치 대상 DB 인스턴스를 확인합니다.
 
@@ -1383,11 +1617,15 @@ NHN Cloud는 DB 인스턴스 운영체제에서 발견된 보안 취약점(CVE)�
 > [참고]
 > 취약점 심각도는 CRITICAL, HIGH, MEDIUM, LOW로 구분됩니다.
 
+<a id="check-the-applications-connected-to-the-db-instances-targeted-for-security-patching"></a>
+
 #### 2. 보안 패치 대상 DB 인스턴스에 접속 중인 응용 프로그램을 확인합니다.
 
 보안 패치 시 DB 인스턴스의 서비스 순단이 발생할 수 있습니다.
 고가용성 DB 인스턴스는 장애 조치로 서비스 순단을 최소화할 수 있으며, 단일 DB 인스턴스는 재시작으로 보안 패치가 적용됩니다.
 DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취하세요.
+
+<a id="select-when-to-apply-the-security-patch"></a>
 
 #### 3. 보안 패치 적용 시점을 선택합니다.
 
@@ -1402,6 +1640,8 @@ DB에 연결된 서비스에 영향을 주지 않도록 적절한 조치를 취�
 * **장애 조치 방식 선택**: 온라인 장애 조치, 수동 장애 조치 사용 여부를 선택합니다.
 * **복제 지연 대기**: 복제 지연이 해소될 때까지 대기한 후 보안 패치를 수행합니다.
 * **Read Only 모드**: 보안 패치 수행 중 Read Only 모드를 사용합니다.
+
+<a id="wait-until-the-security-patch-is-complete"></a>
 
 #### 4. 보안 패치가 완료될 때까지 대기합니다.
 
