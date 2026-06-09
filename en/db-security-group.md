@@ -1,5 +1,7 @@
 ## Database > RDS for MySQL > DB Security Group
 
+<a id="db-security-group"></a>
+
 ## DB Security Group
 
 DB security groups are used to protect DB instances by controlling the incoming and outgoing traffic of DB instances. The positive security model is used to only allow the traffic specified by rules and block the rest. Unless you connect DB security groups to DB instances, all incoming and outgoing traffic is not allowed. Even if the DB security group is created, the rule will not apply if the DB security group is not set for the DB instance. You can apply multiple DB security groups to DB
@@ -16,9 +18,13 @@ DB security group consists of name, description, and a number of DB security rul
 * Must be unique for each region.
 * Must consist of alphabets, numbers, and some special characters (-, _, .) between 1 and 100 characters, and the first character must be an alphabet.
 
+<a id="applying-db-security-groups"></a>
+
 ### Applying DB Security Groups
 
 When you create a DB instance, you can select the DB security group to apply. You can apply multiple DB security groups to DB instances. The rules of DB security groups already applied also apply to DB instances. You can freely change the applied DB instance on the Modify DB Instance screen.
+
+<a id="db-security-rules"></a>
 
 ## DB Security Rules
 
@@ -34,6 +40,8 @@ You can create multiple DB security rules in one DB security group. When you set
 
 > [Caution]
 > DB port cannot be set to outbound direction.
+
+<a id="change-db-security-rules"></a>
 
 ### Change DB Security Rules
 
