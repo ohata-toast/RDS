@@ -1,5 +1,7 @@
 ## Database > RDS for MySQL > Server Dashboard
 
+<a id="server-dashboard"></a>
+
 ## Server Dashboard
 
 You can visualize performance metrics in chart form on the server dashboard. Charts are arranged according to a preset layout. Metrics are collected once every minute and kept for up to 1 year. Retention period by aggregation unit is as follows.
@@ -7,6 +9,8 @@ You can visualize performance metrics in chart form on the server dashboard. Cha
 | Aggregate Unit | Retention Period |
 |----------------|------------------| 
 | 1 minute | 1 year |
+
+<a id="layout"></a>
 
 ## Layout
 
@@ -16,6 +20,8 @@ Use a layout to show the size and position of charts. When the service is enable
 
 ❶ When you click **Create Layout**, a pop-up window appears where you can create a layout.
 ❷ Enter a layout name and click **Create** to create a layout.
+
+<a id="add-charts-to-layout"></a>
 
 ### Add Charts to Layout
 
@@ -30,6 +36,8 @@ Use a layout to show the size and position of charts. When the service is enable
 ❷ When you click a chart name, a chart preview appears in the area on the left.
 ❸ Click **Add** to add all selected charts.
 
+<a id="change-and-delete-charts-in-layout"></a>
+
 ### Change and Delete Charts in Layout
 
 ![layout_04_en](https://static.toastoven.net/prod_rds/mysql/23.04.11/layout_04_en.png)
@@ -37,6 +45,8 @@ Use a layout to show the size and position of charts. When the service is enable
 ❶ You can reposition the chart by clicking and holding the top area of the chart and dragging and dropping it wherever you want.
 ❷ You can resize the chart by dragging and dropping the bottom right area of the chart.
 ❸ When you click **x** in the upper right corner of the chart, the chart is deleted from the layout.
+
+<a id="chart"></a>
 
 ## Chart
 
@@ -64,9 +74,13 @@ You can view various performance metrics for DB instance in chart form. Each per
 | Data Storage Defect        | disk fault status                                                                                                                    | Abnormal: 0, Normal: 1                                         |
 | Replication Thread Status  | replication IO / SQL thread status                                                                                                   | Abnormal: 0, Normal: 1                                         |
 
+<a id="server-group"></a>
+
 ## Server Group
 
 Server group allows you to view performance metrics for multiple DB instances in a single chart. Performance metrics appear in a single chart for each DB instance that belongs to a server group. Charts that consist of multiple performance metrics are all changed to individual performance metrics across server groups.
+
+<a id="create-server-group"></a>
 
 ### Create Server Group
 
@@ -74,6 +88,8 @@ Server group allows you to view performance metrics for multiple DB instances in
 
 ❶ **Add Group** displays a pop-up window where you can create groups.
 ❷ Select DB instance to add to server groups.
+
+<a id="server-group-settings"></a>
 
 ### Server Group Settings
 
