@@ -1,8 +1,12 @@
 ## Database > RDS for MySQL > DB Engine
 
+<a id="db-engine"></a>
+
 ## DB Engine
 
 The version number of MySQL follows the `X.Y.Z` format. In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
+
+<a id="db-engine-version-provided-by-rds"></a>
 
 ### DB engine version provided by RDS
 
@@ -40,6 +44,8 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 | <strong>5.6</strong> |                                                           |
 | MySQL 5.6.33         | This version is no longer supported.                      |
 
+<a id="manage-db-engine-version"></a>
+
 ### Manage DB Engine Version
 After creating the DB instance, you can change the DB engine version and modify the DB instance.
 
@@ -48,6 +54,8 @@ After creating the DB instance, you can change the DB engine version and modify 
 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
+
+<a id="pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 
 #### Pre-inspection for upgrading from MySQL 5.7 to MySQL 8.0
 
@@ -84,6 +92,8 @@ Also, you must check items that have been removed or changed in 8.0.
 - [Features Removed in MySQL 8.0](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
 
+<a id="pre-check-for-upgrading-mysql-80-to-mysql-84"></a>
+
 #### Pre-check for Upgrading MySQL 8.0 to MySQL 8.4
 
 To upgrade to MySQL 8.4, you must have already upgraded to MySQL 8.0. When upgrading a major version of the DB engine from `8.0` to `8.4`, a pre-check is required for certain items that are expected to cause problems.
@@ -94,6 +104,8 @@ You can check the items detected by the upgrade checker through `DB Engine Upgra
 Also, you must check what has been removed or changed in 8.4.
 - [Guide to Incompatible Changes](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [Guide to Features Removed in 8.4](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
+
+<a id="mysql-version-upgrade-constraints"></a>
 
 #### MySQL Version Upgrade Constraints
 
@@ -107,12 +119,16 @@ Upgrade Path
 This is because the minimum compatible version required by MySQL 8.4 is 8.0.23 or higher, and compatibility of metadata and internal schema structure is not guaranteed in environments lower than that version.
 
 
+<a id="upgrading-the-db-engine-version-using-a-dummy-db-instance"></a>
+
 #### Upgrading the DB Engine Version Using a Dummy DB Instance 
 
 When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created. 
 
 > [Caution]
 > For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high-availability configurations.
+
+<a id="manual-control-of-failover-when-upgrading-high-availability-db-instances"></a>
 
 #### Manual Control of Failover When Upgrading High Availability DB Instances
 
@@ -122,6 +138,8 @@ The manual control of failover during version upgrade allows you to initiate fai
 > [Caution]
 > If manual control of failover is not triggered for more than 60 hours, the upgrade operation is automatically cancelled.
 
+<a id="when-using-an-outdated-operating-system"></a>
+
 ### When using an Outdated Operating System
 
 For DB instances with an outdated internal operating system, an operating system version upgrade accompanied by VM replacement is required before upgrading the DB version. Monitored instances in notification groups and event sources in event subscriptions automatically update to the changed identifiers. For single DB instances, it is recommended to use a dummy DB instance when changing the DB version. For high availability DB instances, the roles of the master and standby master are changed using failover during the DB instance replacement process. If the master is under heavy load, failover may fail, so it is recommended to perform DB version changes during periods of low load.
@@ -129,7 +147,11 @@ For DB instances with an outdated internal operating system, an operating system
 > [Caution]
 > Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
 
+<a id="options-for-mysql"></a>
+
 ## Options for MySQL
+
+<a id="support-for-the-mariadb-server-audit-plugin-for-mysql"></a>
 
 ### Support for the MariaDB Server Audit plugin for MySQL
 
@@ -137,6 +159,8 @@ RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for 
 
 > [Caution]
 > This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
+
+<a id="supported-versions"></a>
 
 #### Supported Versions
 | MySQL version              | Whether to support server audit plugins |
