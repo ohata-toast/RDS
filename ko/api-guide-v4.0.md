@@ -1,6 +1,10 @@
 ## Database > RDS for MySQL > API 가이드
 
+<a id="rds-for-mysql-api"></a>
+
 ## RDS for MySQL API 공통 정보
+
+<a id="api"></a>
 
 ### API 엔드포인트
 
@@ -9,6 +13,8 @@
 | 한국(판교) 리전 | https://kr1-rds-mysql.api.nhncloudservice.com |
 | 한국(평촌) 리전 | https://kr2-rds-mysql.api.nhncloudservice.com |
 | 일본 리전 | https://jp1-rds-mysql.api.nhncloudservice.com |
+
+<a id="rds-for-mysql-api-1"></a>
 
 ### 인증 및 권한
 
@@ -35,9 +41,13 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | 80401      | Unauthorized  | 인증에 실패했습니다. |
 | 80403      | Forbidden     | 권한이 없습니다.   |
 
+<a id="rds-for-mysql-api-2"></a>
+
 ### 응답 공통 정보
 
 모든 API 요청에 '200 OK'로 응답합니다. 자세한 응답 결과는 응답 본문의 헤더를 참고합니다.
+
+<a id="rds-for-mysql-api-2-1"></a>
 
 #### 응답 본문
 ```json
@@ -50,6 +60,8 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 }
 ```
 
+<a id="rds-for-mysql-api-2-2"></a>
+
 #### 필드
 | 이름            | 형식      | 설명                                      |
 |---------------|---------|-----------------------------------------|
@@ -57,6 +69,8 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | resultMessage | String  | 결과 메시지                                  |
 | isSuccessful  | Boolean | 성공 여부                                   |
 
+
+<a id="db"></a>
 
 ### DB 엔진 유형
 
@@ -91,7 +105,11 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 * ENUM 타입의 dbVersion 필드에서 해당 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능한 경우가 있을 수 있습니다.
 
+<a id="section-1"></a>
+
 ## 프로젝트 정보
+
+<a id="section-1-1"></a>
 
 ### 리전 목록 보기
 
@@ -99,15 +117,21 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 GET /v4.0/project/regions
 ```
 
+<a id="section-1-1-1"></a>
+
 #### 필요 권한
 
 | 권한명                                     | 설명         |
 |-----------------------------------------|------------|
 | RDSforMySQL:Project.Get | 프로젝트 정보 조회 |
 
+<a id="section-1-1-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="section-1-1-3"></a>
 
 #### 응답
 
@@ -148,11 +172,15 @@ GET /v4.0/project/regions
 
 ---
 
+<a id="section-1-2"></a>
+
 ### 프로젝트 멤버 목록 보기
 
 ```http
 GET /v4.0/project/members
 ```
+
+<a id="section-1-2-1"></a>
 
 #### 필요 권한
 
@@ -160,9 +188,13 @@ GET /v4.0/project/members
 |-----------------------------------------|------------|
 | RDSforMySQL:Project.Get | 프로젝트 정보 조회 |
 
+<a id="section-1-2-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="section-1-2-3"></a>
 
 #### 응답
 
@@ -200,7 +232,11 @@ GET /v4.0/project/members
 
 ---
 
+<a id="db-2"></a>
+
 ## DB 인스턴스 사양
+
+<a id="db-3"></a>
 
 ### DB 인스턴스 사양 목록 보기
 
@@ -208,15 +244,21 @@ GET /v4.0/project/members
 GET /v4.0/db-flavors
 ```
 
+<a id="db-3-1"></a>
+
 #### 필요 권한
 
 | 권한명                                       | 설명               |
 |-------------------------------------------|------------------|
 | RDSforMySQL:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
 
+<a id="db-3-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="db-3-3"></a>
 
 #### 응답
 
@@ -254,7 +296,11 @@ GET /v4.0/db-flavors
 
 ---
 
+<a id="section-2"></a>
+
 ## 네트워크
+
+<a id="section-2-1"></a>
 
 ### 서브넷 목록 보기
 
@@ -262,15 +308,21 @@ GET /v4.0/db-flavors
 GET /v4.0/network/subnets
 ```
 
+<a id="section-2-1-1"></a>
+
 #### 필요 권한
 
 | 권한명                                      | 설명        |
 |------------------------------------------|-----------|
 | RDSforMySQL:Network.List | 서브넷 목록 보기 |
 
+<a id="section-2-1-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="section-2-1-3"></a>
 
 #### 응답
 
@@ -310,7 +362,11 @@ GET /v4.0/network/subnets
 
 ---
 
+<a id="db-4"></a>
+
 ## DB 엔진
+
+<a id="db-5"></a>
 
 ### DB 엔진 목록 보기
 
@@ -318,15 +374,21 @@ GET /v4.0/network/subnets
 GET /v4.0/db-versions
 ```
 
+<a id="db-5-1"></a>
+
 #### 필요 권한
 
 | 권한명                                        | 설명          |
 |--------------------------------------------|-------------|
 | RDSforMySQL:DbVersion.List | DB 엔진 목록 보기 |
 
+<a id="db-5-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="db-5-3"></a>
 
 #### 응답
 
@@ -362,7 +424,11 @@ GET /v4.0/db-versions
 
 ---
 
+<a id="section-3"></a>
+
 ## 데이터 스토리지
+
+<a id="section-3-1"></a>
 
 ### 데이터 스토리지 타입 목록 보기
 
@@ -370,15 +436,21 @@ GET /v4.0/db-versions
 GET /v4.0/storage-types
 ```
 
+<a id="section-3-1-1"></a>
+
 #### 필요 권한
 
 | 권한명                                      | 설명                |
 |------------------------------------------|-------------------|
 | RDSforMySQL:Storage.List | 데이터 스토리지 타입 목록 보기 |
 
+<a id="section-3-1-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="section-3-1-3"></a>
 
 #### 응답
 
@@ -408,7 +480,11 @@ GET /v4.0/storage-types
 
 ---
 
+<a id="section-4"></a>
+
 ## 작업 정보
+
+<a id="section-4-1"></a>
 
 ### 작업 상태
 
@@ -427,17 +503,23 @@ GET /v4.0/storage-types
 | `DELETED`          | 작업이 삭제된 경우           |
 | `FAIL_TO_READY`    | 작업 준비에 실패한 경우        |
 
+<a id="section-4-2"></a>
+
 ### 작업 정보 상세 보기
 
 ```http
 GET /v4.0/jobs/{jobId}
 ```
 
+<a id="section-4-2-1"></a>
+
 #### 필요 권한
 
 | 권한명                                 | 설명          |
 |-------------------------------------|-------------|
 | RDSforMySQL:Job.Get | 작업 정보 상세 보기 |
+
+<a id="section-4-2-2"></a>
 
 #### 요청
 
@@ -446,6 +528,8 @@ GET /v4.0/jobs/{jobId}
 | 이름    | 종류  | 형식   | 필수 | 설명      |
 |-------|-----|------|----|---------|
 | jobId | URL | UUID | O  | 작업의 식별자 |
+
+<a id="section-4-2-3"></a>
 
 #### 응답
 
@@ -487,7 +571,11 @@ GET /v4.0/jobs/{jobId}
 
 ---
 
+<a id="db-6"></a>
+
 ## DB 인스턴스 그룹
+
+<a id="db-7"></a>
 
 ### DB 인스턴스 그룹 목록 보기
 
@@ -495,15 +583,21 @@ GET /v4.0/jobs/{jobId}
 GET /v4.0/db-instance-groups
 ```
 
+<a id="db-7-1"></a>
+
 #### 필요 권한
 
 | 권한명                                              | 설명               |
 |--------------------------------------------------|------------------|
 | RDSforMySQL:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
 
+<a id="db-7-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="db-7-3"></a>
 
 #### 응답
 
@@ -541,17 +635,23 @@ GET /v4.0/db-instance-groups
 
 ---
 
+<a id="db-8"></a>
+
 ### DB 인스턴스 그룹 상세 보기
 
 ```http
 GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
+<a id="db-8-1"></a>
+
 #### 필요 권한
 
 | 권한명                                             | 설명               |
 |-------------------------------------------------|------------------|
 | RDSforMySQL:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
+
+<a id="db-8-2"></a>
 
 #### 요청
 
@@ -560,6 +660,8 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 | 이름                | 종류  | 형식   | 필수 | 설명              |
 |-------------------|-----|------|----|-----------------|
 | dbInstanceGroupId | URL | UUID | O  | DB 인스턴스 그룹의 식별자 |
+
+<a id="db-8-3"></a>
 
 #### 응답
 
@@ -603,7 +705,11 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 ---
 
+<a id="db-9"></a>
+
 ## DB 인스턴스
+
+<a id="db-10"></a>
 
 ### DB 인스턴스 상태
 
@@ -618,6 +724,8 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 | `FAILOVER`          | DB 인스턴스가 고가용성 장애 조치된 경우      |
 | `SHUTDOWN`          | DB 인스턴스가 중지된 경우              |
 | `DELETED`           | DB 인스턴스가 삭제된 경우              |
+
+<a id="db-11"></a>
 
 ### DB 인스턴스 진행 상태
 
@@ -650,11 +758,15 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 | `SYNCING_USER`             | 사용자 동기화 중	   |
 | `UPDATING_USER`            | 사용자 수정 중	    |
 
+<a id="db-12"></a>
+
 ### DB 인스턴스 목록 보기
 
 ```http
 GET /v4.0/db-instances
 ```
+
+<a id="db-12-1"></a>
 
 #### 필요 권한
 
@@ -662,9 +774,13 @@ GET /v4.0/db-instances
 |---------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.List | DB 인스턴스 목록 보기 |
 
+<a id="db-12-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="db-12-3"></a>
 
 #### 응답
 
@@ -716,17 +832,23 @@ GET /v4.0/db-instances
 
 ---
 
+<a id="db-13"></a>
+
 ### DB 인스턴스 상세 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}
 ```
 
+<a id="db-13-1"></a>
+
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+<a id="db-13-2"></a>
 
 #### 요청
 
@@ -735,6 +857,8 @@ GET /v4.0/db-instances/{dbInstanceId}
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-13-3"></a>
 
 #### 응답
 
@@ -801,17 +925,23 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 ---
 
+<a id="db-14"></a>
+
 ### DB 인스턴스 생성하기
 
 ```http
 POST /v4.0/db-instances
 ```
 
+<a id="db-14-1"></a>
+
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Create | DB 인스턴스 생성하기 |
+
+<a id="db-14-2"></a>
 
 #### 요청
 
@@ -898,6 +1028,8 @@ POST /v4.0/db-instances
 </p>
 </details>
 
+<a id="db-14-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -906,17 +1038,23 @@ POST /v4.0/db-instances
 
 ---
 
+<a id="db-15"></a>
+
 ### DB 인스턴스 수정하기
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}
 ```
 
+<a id="db-15-1"></a>
+
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+
+<a id="db-15-2"></a>
 
 #### 요청
 
@@ -954,6 +1092,8 @@ PUT /v4.0/db-instances/{dbInstanceId}
 </p>
 </details>
 
+<a id="db-15-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -962,17 +1102,23 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 ---
 
+<a id="db-16"></a>
+
 ### DB 인스턴스 삭제하기
 
 ```http
 DELETE /v4.0/db-instances/{dbInstanceId}
 ```
 
+<a id="db-16-1"></a>
+
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Delete | DB 인스턴스 삭제하기 |
+
+<a id="db-16-2"></a>
 
 #### 요청
 
@@ -981,6 +1127,8 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 | deleteAutoBackup          | Body | Boolean  | X  | 자동 백업 삭제 여부<br/>- 기본값: `false` |
 
+<a id="db-16-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -989,17 +1137,23 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 ---
 
+<a id="db-17"></a>
+
 ### DB 인스턴스 재시작하기
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/restart
 ```
 
+<a id="db-17-1"></a>
+
 #### 필요 권한
 
 | 권한명                                            | 설명            |
 |------------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.Restart | DB 인스턴스 재시작하기 |
+
+<a id="db-17-2"></a>
 
 #### 요청
 
@@ -1011,6 +1165,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | waitReplicationDelay     | Body | Boolean | X  | 복제 지연 해소 대기 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
 | useReadOnly     | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
 
+<a id="db-17-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1018,17 +1174,23 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+<a id="db-18"></a>
+
 ### DB 인스턴스 강제 재시작하기
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/force-restart
 ```
 
+<a id="db-18-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                 | 설명               |
 |-----------------------------------------------------|------------------|
 | RDSforMySQL:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
+
+<a id="db-18-2"></a>
 
 #### 요청
 
@@ -1039,6 +1201,8 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 |-------------------|------|---------|----|---------------------------------------------------------------------------|
 | dbInstanceId      | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
 
+
+<a id="db-18-3"></a>
 
 #### 응답
 
@@ -1063,11 +1227,15 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 
 ---
 
+<a id="db-19"></a>
+
 ### DB 인스턴스 시작하기
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/start
 ```
+
+<a id="db-19-1"></a>
 
 #### 필요 권한
 
@@ -1075,6 +1243,8 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 |----------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Start | DB 인스턴스 시작하기 |
 
+<a id="db-19-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1083,6 +1253,8 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="db-19-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1090,6 +1262,8 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+
+<a id="db-20"></a>
 
 ### DB 인스턴스 정지하기
 
@@ -1097,11 +1271,15 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 POST /v4.0/db-instances/{dbInstanceId}/stop
 ```
 
+<a id="db-20-1"></a>
+
 #### 필요 권한
 
 | 권한명                                         | 설명           |
 |---------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Stop | DB 인스턴스 정지하기 |
+
+<a id="db-20-2"></a>
 
 #### 요청
 
@@ -1111,6 +1289,8 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="db-20-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1119,17 +1299,23 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 ---
 
+<a id="db-21"></a>
+
 ### DB 인스턴스 복제하기
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/replicate
 ```
 
+<a id="db-21-1"></a>
+
 #### 필요 권한
 
 | 권한명                                              | 설명           |
 |--------------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Replicate | DB 인스턴스 복제하기 |
+
+<a id="db-21-2"></a>
 
 #### 요청
 
@@ -1187,6 +1373,8 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 </p>
 </details>
 
+<a id="db-21-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1194,6 +1382,8 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+
+<a id="db-22"></a>
 
 ### DB 인스턴스 승격하기
 
@@ -1201,11 +1391,15 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 POST /v4.0/db-instances/{dbInstanceId}/promote
 ```
 
+<a id="db-22-1"></a>
+
 #### 필요 권한
 
 | 권한명                                            | 설명           |
 |------------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Promote | DB 인스턴스 승격하기 |
+
+<a id="db-22-2"></a>
 
 #### 요청
 
@@ -1215,6 +1409,8 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="db-22-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1222,6 +1418,8 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+
+<a id="db-23"></a>
 
 ### DB 인스턴스 재구축하기
 
@@ -1229,11 +1427,15 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 POST /v4.0/db-instances/{dbInstanceId}/rebuild
 ```
 
+<a id="db-23-1"></a>
+
 #### 필요 권한
 
 | 권한명                                            | 설명            |
 |------------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
+
+<a id="db-23-2"></a>
 
 #### 요청
 
@@ -1243,6 +1445,8 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="db-23-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1251,11 +1455,15 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 
 ---
 
+<a id="db-9-1"></a>
+
 ### 복원 정보 조회
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 ```
+
+<a id="db-9-1-1"></a>
 
 #### 필요 권한
 
@@ -1263,11 +1471,15 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 |--------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
 
+<a id="db-9-1-2"></a>
+
 #### 요청
 
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-9-1-3"></a>
 
 #### 응답
 
@@ -1338,17 +1550,23 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 
 ---
 
+<a id="db-9-2"></a>
+
 ### 복원될 마지막 쿼리 조회
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
+<a id="db-9-2-1"></a>
+
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+<a id="db-9-2-2"></a>
 
 #### 공통 요청
 
@@ -1357,11 +1575,15 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | dbInstanceId | URL   | UUID | O  | DB 인스턴스의 식별자                                                                                                                |
 | restoreType  | Query | Enum | O  | 복원 타입 종류<br/>- `TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입<br/>- `BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입 |
 
+<a id="restoretypetimestamp"></a>
+
 #### restoreType이 `TIMESTAMP`인 경우
 
 | 이름          | 종류    | 형식       | 필수 | 설명                                        |
 |-------------|-------|----------|----|-------------------------------------------|
 | restoreYmdt | Query | DateTime | O  | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+<a id="restoretypebinlog"></a>
 
 #### restoreType이 `BINLOG`인 경우
 
@@ -1370,6 +1592,8 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | backupId       | Query | UUID   | O  | 복원에 사용할 백업의 식별자    |
 | binLogFileName | Query | String | O  | 복원에 사용할 바이너리 로그 이름 |
 | binLogPosition | Query | Number | O  | 복원에 사용할 바이너리 로그 위치 |
+
+<a id="db-9-2-3"></a>
 
 #### 응답
 
@@ -1398,17 +1622,23 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 ---
 
+<a id="db-9-3"></a>
+
 ### 복원
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/restore
 ```
 
+<a id="db-9-3-1"></a>
+
 #### 필요 권한
 
 | 권한명                                            | 설명           |
 |------------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Restore | DB 인스턴스 복원하기 |
+
+<a id="db-9-3-2"></a>
 
 #### 공통 요청
 
@@ -1452,6 +1682,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.backupSchedules | Body | Array | X | 예정된 자동 백업 목록<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | backup.backupSchedules.backupWndBgnTime | Body | String | X | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | backup.backupSchedules.backupWndDuration | Body | Enum | X | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
+
+<a id="timestamprestoretypetimestamp"></a>
 
 #### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
 
@@ -1502,6 +1734,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 </p>
 </details>
+
+<a id="restoretypebinlog-2"></a>
 
 #### 바이너리 로그를 이용한 시점 복원 시 요청(restoreType이 `BINLOG`인 경우)
 
@@ -1560,6 +1794,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 </p>
 </details>
 
+<a id="restoretypebackup"></a>
+
 #### 백업을 이용한 복원 시 요청(restoreType이 `BACKUP`인 경우)
 
 | 이름               | 종류   | 형식   | 필수                           | 설명              |
@@ -1611,6 +1847,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 </p>
 </details>
 
+<a id="db-9-3-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1620,17 +1858,23 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 ---
 
+<a id="db-9-4"></a>
+
 ### 오브젝트 스토리지로부터 복원
 
 ```http
 POST /v4.0/db-instances/restore-from-obs
 ```
 
+<a id="db-9-4-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                   | 설명                      |
 |-------------------------------------------------------|-------------------------|
 | RDSforMySQL:DbInstance.RestoreFromObs | DB 인스턴스 오브젝트 스토리지로부터 복원 |
+
+<a id="db-9-4-2"></a>
 
 #### 요청
 
@@ -1728,6 +1972,8 @@ POST /v4.0/db-instances/restore-from-obs
 </p>
 </details>
 
+<a id="db-9-4-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1738,11 +1984,15 @@ POST /v4.0/db-instances/restore-from-obs
 ---
 
 
+<a id="db-24"></a>
+
 ### DB 인스턴스 삭제 보호 설정 변경하기
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 ```
+
+<a id="db-24-1"></a>
 
 #### 필요 권한
 
@@ -1750,12 +2000,16 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 |-----------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
 
+<a id="db-24-2"></a>
+
 #### 요청
 
 | 이름                    | 종류   | 형식      | 필수 | 설명           |
 |-----------------------|------|---------|----|--------------|
 | dbInstanceId          | URL  | UUID    | O  | DB 인스턴스의 식별자 |
 | useDeletionProtection | Body | Boolean | O  | 삭제 보호 여부     |
+
+<a id="db-24-3"></a>
 
 #### 응답
 
@@ -1779,6 +2033,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
+<a id="db-9-5"></a>
+
 ### 고가용성 상태
 
 | 상태                               | 설명                              |
@@ -1800,17 +2056,23 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
+<a id="db-9-6"></a>
+
 ### 고가용성 정보 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
 
+<a id="db-9-6-1"></a>
+
 #### 필요 권한
 
 | 권한명                                              | 설명         |
 |----------------------------------------------------|------------|
 | RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+<a id="db-9-6-2"></a>
 
 #### 요청
 
@@ -1819,6 +2081,8 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-9-6-3"></a>
 
 #### 응답
 
@@ -1853,17 +2117,23 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 
 ---
 
+<a id="db-9-7"></a>
+
 ### 고가용성 수정하기
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
 
+<a id="db-9-7-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                 | 설명        |
 |-----------------------------------------------------|-----------|
 | RDSforMySQL:HighAvailability.Modify | 고가용성 수정하기 |
+
+<a id="db-9-7-2"></a>
 
 #### 요청
 
@@ -1875,6 +2145,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | pingType            | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- `INSERT`<br/>- `SELECT` |
 | dbInstanceCandidateName        | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 고가용성 사용 시 필수값 |
 
+<a id="db-9-7-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1882,6 +2154,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+
+<a id="db-9-8"></a>
 
 ### 고가용성 다시 시작하기
 
@@ -1889,11 +2163,15 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
+<a id="db-9-8-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                 | 설명           |
 |-----------------------------------------------------|--------------|
 | RDSforMySQL:HighAvailability.Resume | 고가용성 다시 시작하기 |
+
+<a id="db-9-8-2"></a>
 
 #### 요청
 
@@ -1903,6 +2181,8 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="db-9-8-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1910,6 +2190,8 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+
+<a id="db-9-9"></a>
 
 ### 고가용성 일시 중지하기
 
@@ -1917,11 +2199,15 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
+<a id="db-9-9-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                | 설명           |
 |----------------------------------------------------|--------------|
 | RDSforMySQL:HighAvailability.Pause | 고가용성 일시 중지하기 |
+
+<a id="db-9-9-2"></a>
 
 #### 요청
 
@@ -1931,6 +2217,8 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="db-9-9-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1938,6 +2226,8 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+
+<a id="db-9-10"></a>
 
 ### 고가용성 복구하기
 
@@ -1945,11 +2235,15 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
+<a id="db-9-10-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                 | 설명        |
 |-----------------------------------------------------|-----------|
 | RDSforMySQL:HighAvailability.Repair | 고가용성 복구하기 |
+
+<a id="db-9-10-2"></a>
 
 #### 요청
 
@@ -1959,6 +2253,8 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="db-9-10-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1966,6 +2262,8 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+
+<a id="db-9-11"></a>
 
 ### 고가용성 분리하기
 
@@ -1973,11 +2271,15 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
+<a id="db-9-11-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                | 설명        |
 |----------------------------------------------------|-----------|
 | RDSforMySQL:HighAvailability.Split | 고가용성 분리하기 |
+
+<a id="db-9-11-2"></a>
 
 #### 요청
 
@@ -1986,6 +2288,8 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-9-11-3"></a>
 
 #### 응답
 
@@ -1995,17 +2299,23 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 
 ---
 
+<a id="db-9-12"></a>
+
 ### 데이터 스토리지 정보 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
+<a id="db-9-12-1"></a>
+
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+<a id="db-9-12-2"></a>
 
 #### 요청
 
@@ -2014,6 +2324,8 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-9-12-3"></a>
 
 #### 응답
 
@@ -2056,17 +2368,23 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
+<a id="db-9-13"></a>
+
 ### 데이터 스토리지 정보 수정하기
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
+<a id="db-9-13-1"></a>
+
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+
+<a id="db-9-13-2"></a>
 
 #### 요청
 
@@ -2081,6 +2399,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 | storageAutoscale.maxStorageSize      | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                         |
 | storageAutoscale.cooldownTime        | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                         |
 
+<a id="db-9-13-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2089,17 +2409,23 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
+<a id="db-9-14"></a>
+
 ### 백업 정보 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
+<a id="db-9-14-1"></a>
+
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+<a id="db-9-14-2"></a>
 
 #### 요청
 
@@ -2108,6 +2434,8 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-9-14-3"></a>
 
 #### 응답
 
@@ -2152,17 +2480,23 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 ---
 
+<a id="db-9-15"></a>
+
 ### 백업 정보 수정하기
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
+<a id="db-9-15-1"></a>
+
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+
+<a id="db-9-15-2"></a>
 
 #### 요청
 
@@ -2197,6 +2531,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 </p>
 </details>
 
+<a id="db-9-15-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2205,17 +2541,23 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 ---
 
+<a id="db-9-16"></a>
+
 ### 네트워크 정보 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
+<a id="db-9-16-1"></a>
+
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+<a id="db-9-16-2"></a>
 
 #### 요청
 
@@ -2224,6 +2566,8 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-9-16-3"></a>
 
 #### 응답
 
@@ -2270,11 +2614,15 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 ---
 
+<a id="db-9-17"></a>
+
 ### 네트워크 정보 수정하기
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```
+
+<a id="db-9-17-1"></a>
 
 #### 필요 권한
 
@@ -2282,12 +2630,16 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 |-----------------------------------------------|--------------|
 | RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
 
+<a id="db-9-17-2"></a>
+
 #### 요청
 
 | 이름              | 종류   | 형식      | 필수 | 설명           |
 |-----------------|------|---------|----|--------------|
 | dbInstanceId    | URL  | UUID    | O  | DB 인스턴스의 식별자 |
 | usePublicAccess | Body | Boolean | O  | 외부 접속 가능 여부 |
+
+<a id="db-9-17-3"></a>
 
 #### 응답
 
@@ -2297,17 +2649,23 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 ---
 
+<a id="db-25"></a>
+
 ### DB 사용자 목록 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
+<a id="db-25-1"></a>
+
 #### 필요 권한
 
 | 권한명                                             | 설명                  |
 |-------------------------------------------------|---------------------|
 | RDSforMySQL:DbInstanceUser.List | DB 인스턴스 내 사용자 목록 보기 |
+
+<a id="db-25-2"></a>
 
 #### 요청
 
@@ -2316,6 +2674,8 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-25-3"></a>
 
 #### 응답
 
@@ -2363,6 +2723,8 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 
 ---
 
+<a id="db-26"></a>
+
 ### DB 사용자 생성하기
 
 ```http
@@ -2370,11 +2732,15 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
 
+<a id="db-26-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명                 |
 |---------------------------------------------------|--------------------|
 | RDSforMySQL:DbInstanceUser.Create | DB 인스턴스 내 사용자 생성하기 |
+
+<a id="db-26-2"></a>
 
 #### 요청
 
@@ -2408,6 +2774,8 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 </p>
 </details>
 
+<a id="db-26-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2416,17 +2784,23 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 ---
 
+<a id="db-27"></a>
+
 ### DB 사용자 수정하기
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+<a id="db-27-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명                 |
 |---------------------------------------------------|--------------------|
 | RDSforMySQL:DbInstanceUser.Modify | DB 인스턴스 내 사용자 수정하기 |
+
+<a id="db-27-2"></a>
 
 #### 요청
 
@@ -2455,6 +2829,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 </p>
 </details>
 
+<a id="db-27-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2463,17 +2839,23 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ---
 
+<a id="db-28"></a>
+
 ### DB 사용자 삭제하기
 
 ```http
 DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+<a id="db-28-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명                 |
 |---------------------------------------------------|--------------------|
 | RDSforMySQL:DbInstanceUser.Delete | DB 인스턴스 내 사용자 삭제하기 |
+
+<a id="db-28-2"></a>
 
 #### 요청
 
@@ -2484,6 +2866,8 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 | dbUserId     | URL | UUID | O  | DB 사용자의 식별자  |
 
+<a id="db-28-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2492,17 +2876,23 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ---
 
+<a id="db-29"></a>
+
 ### DB 스키마 목록 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
+<a id="db-29-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명                  |
 |---------------------------------------------------|---------------------|
 | RDSforMySQL:DbInstanceSchema.List | DB 인스턴스 내 스키마 목록 보기 |
+
+<a id="db-29-2"></a>
 
 #### 요청
 
@@ -2511,6 +2901,8 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-29-3"></a>
 
 #### 응답
 
@@ -2548,11 +2940,15 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 ---
 
+<a id="db-30"></a>
+
 ### DB 스키마 생성하기
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
+
+<a id="db-30-1"></a>
 
 #### 필요 권한
 
@@ -2560,12 +2956,16 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 |-----------------------------------------------------|--------------------|
 | RDSforMySQL:DbInstanceSchema.Create | DB 인스턴스 내 스키마 생성하기 |
 
+<a id="db-30-2"></a>
+
 #### 요청
 
 | 이름           | 종류   | 형식     | 필수 | 설명           |
 |--------------|------|--------|----|--------------|
 | dbInstanceId | URL  | UUID   | O  | DB 인스턴스의 식별자 |
 | dbSchemaName | Body | String | O  | DB 스키마 이름    |
+
+<a id="db-30-3"></a>
 
 #### 응답
 
@@ -2575,17 +2975,23 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 ---
 
+<a id="db-31"></a>
+
 ### DB 스키마 삭제하기
 
 ```http
 DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
+<a id="db-31-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                 | 설명                 |
 |-----------------------------------------------------|--------------------|
 | RDSforMySQL:DbInstanceSchema.Delete | DB 인스턴스 내 스키마 삭제하기 |
+
+<a id="db-31-2"></a>
 
 #### 요청
 
@@ -2596,6 +3002,8 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 | dbSchemaId   | URL | UUID | O  | DB 스키마의 식별자  |
 
+<a id="db-31-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2604,17 +3012,23 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 ---
 
+<a id="db-9-18"></a>
+
 ### 로그 파일 목록 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```
 
+<a id="db-9-18-1"></a>
+
 #### 필요 권한
 
 | 권한명                                            | 설명                    |
 |------------------------------------------------|-----------------------|
 | RDSforMySQL:DbInstanceLog.List | DB 인스턴스 내 로그 파일 목록 보기 |
+
+<a id="db-9-18-2"></a>
 
 #### 요청
 
@@ -2624,6 +3038,8 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 |--------------|-------|-------|----|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId | URL   | UUID  | O  | DB 인스턴스의 식별자                                                                                                                                                                                    |
 | logFileTypes | Query | Array | X  | 로그 파일 타입 종류 목록<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
+
+<a id="db-9-18-3"></a>
 
 #### 응답
 
@@ -2662,17 +3078,23 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 ---
 
+<a id="db-9-19"></a>
+
 ### 로그 파일 내용 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 ```
 
+<a id="db-9-19-1"></a>
+
 #### 필요 권한
 
 | 권한명                                           | 설명                    |
 |-----------------------------------------------|-----------------------|
 | RDSforMySQL:DbInstanceLog.Get | DB 인스턴스 내 로그 파일 내용 보기 |
+
+<a id="db-9-19-2"></a>
 
 #### 요청
 
@@ -2683,6 +3105,8 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 | dbInstanceId | URL   | UUID   | O  | DB 인스턴스의 식별자                                                                                                                                                                                    |
 | logFileName  | URL   | String | O  | 로그 파일명                                                                                                                                                                                        |
 | logFileType  | Query | Enum   | O  | 로그 파일 타입 종류<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
+
+<a id="db-9-19-3"></a>
 
 #### 응답
 
@@ -2709,17 +3133,23 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 
 ---
 
+<a id="db-9-20"></a>
+
 ### 로그 파일 내보내기
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```
 
+<a id="db-9-20-1"></a>
+
 #### 필요 권한
 
 | 권한명                                              | 설명                   |
 |--------------------------------------------------|----------------------|
 | RDSforMySQL:DbInstanceLog.Export | DB 인스턴스 내 로그 파일 내보내기 |
+
+<a id="db-9-20-2"></a>
 
 #### 요청
 
@@ -2750,6 +3180,8 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 </p>
 </details>
 
+<a id="db-9-20-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2758,17 +3190,23 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 ---
 
+<a id="binlog"></a>
+
 ### BinLog 목록 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/binlogs
 ```
 
+<a id="binlog-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|---------------|
 | RDSforMySQL:DbInstanceBinLog.List | BinLog 목록 보기 |
+
+<a id="binlog-2"></a>
 
 #### 요청
 
@@ -2778,6 +3216,8 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 |--------------|-------|---------|----|---------------------------------------------------------------------------------------|
 | dbInstanceId | URL   | UUID    | O  | DB 인스턴스의 식별자                                                                         |
 | deletable    | Query | Boolean | X  | 삭제 가능한 BinLog만 조회할지 여부<br/>- `true`: 마지막 BinLog 제외<br/>- `false`: 전체<br/>- 기본값: `false` |
+
+<a id="binlog-3"></a>
 
 #### 응답
 
@@ -2813,17 +3253,23 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 
 ---
 
+<a id="binlog-4"></a>
+
 ### BinLog 삭제
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 ```
 
+<a id="binlog-4-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                | 설명        |
 |----------------------------------------------------|------------|
 | RDSforMySQL:DbInstanceBinLog.Purge | BinLog 삭제 |
+
+<a id="binlog-4-2"></a>
 
 #### 요청
 
@@ -2843,6 +3289,8 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 </p>
 </details>
+
+<a id="binlog-4-3"></a>
 
 #### 응답
 
@@ -2866,17 +3314,23 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 ---
 
+<a id="db-9-21"></a>
+
 ### 인증서 파일 목록 보기
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/certificates
 ```
 
+<a id="db-9-21-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                    | 설명           |
 |--------------------------------------------------------|---------------|
 | RDSforMySQL:DbInstanceCertificate.List | 인증서 파일 목록 보기 |
+
+<a id="db-9-21-2"></a>
 
 #### 요청
 
@@ -2885,6 +3339,8 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|---------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+<a id="db-9-21-3"></a>
 
 #### 응답
 
@@ -2922,17 +3378,23 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 
 ---
 
+<a id="db-9-22"></a>
+
 ### 인증서 파일 내보내기
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 ```
 
+<a id="db-9-22-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                      | 설명          |
 |----------------------------------------------------------|-------------|
 | RDSforMySQL:DbInstanceCertificate.Export | 인증서 파일 내보내기 |
+
+<a id="db-9-22-2"></a>
 
 #### 요청
 
@@ -2963,6 +3425,8 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 </p>
 </details>
 
+<a id="db-9-22-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2971,7 +3435,11 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 
 ---
 
+<a id="section-5"></a>
+
 ## 백업
+
+<a id="section-5-1"></a>
 
 ### 백업 상태
 
@@ -2983,17 +3451,23 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 | `DELETED`    | 백업이 삭제된 경우   |
 | `ERROR`      | 오류가 발생한 경우   |
 
+<a id="section-5-2"></a>
+
 ### 백업 상세 보기
 
 ```http
 GET /v4.0/backups/{backupId}
 ```
 
+<a id="section-5-2-1"></a>
+
 #### 필요 권한
 
 | 권한명                                    | 설명       |
 |----------------------------------------|----------|
 | RDSforMySQL:Backup.Get | 백업 상세 보기 |
+
+<a id="section-5-2-2"></a>
 
 #### 요청
 
@@ -3002,6 +3476,8 @@ GET /v4.0/backups/{backupId}
 | 이름       | 종류  | 형식   | 필수 | 설명      |
 |----------|-----|------|----|---------|
 | backupId | URL | UUID | O  | 백업의 식별자 |
+
+<a id="section-5-2-3"></a>
 
 #### 응답
 
@@ -3063,17 +3539,23 @@ GET /v4.0/backups/{backupId}
 
 ---
 
+<a id="section-5-3"></a>
+
 ### 백업 목록 조회
 
 ```http
 GET /v4.0/backups
 ```
 
+<a id="section-5-3-1"></a>
+
 #### 필요 권한
 
 | 권한명                                     | 설명       |
 |-----------------------------------------|----------|
 | RDSforMySQL:Backup.List | 백업 목록 조회 |
+
+<a id="section-5-3-2"></a>
 
 #### 요청
 
@@ -3086,6 +3568,8 @@ GET /v4.0/backups
 | backupType   | Query | Enum   | X  | 백업 유형<br/>- `AUTO`: 자동<br/>- `MANUAL`:  수동<br/>- 기본값: 전체 |
 | dbInstanceId | Query | UUID   | X  | 원본 DB 인스턴스의 식별자                                          |
 | dbVersion    | Query | Enum   | X  | DB 엔진 유형                                                 |
+
+<a id="section-5-3-3"></a>
 
 #### 응답
 
@@ -3137,11 +3621,15 @@ GET /v4.0/backups
 
 ---
 
+<a id="section-5-4"></a>
+
 ### 백업 생성하기
 
 ```http
 POST /v4.0/backups
 ```
+
+<a id="section-5-4-1"></a>
 
 #### 필요 권한
 
@@ -3149,12 +3637,16 @@ POST /v4.0/backups
 |-------------------------------------------|---------|
 | RDSforMySQL:Backup.Create | 백업 생성하기 |
 
+<a id="section-5-4-2"></a>
+
 #### 공통 요청
 
 | 이름               | 종류   | 형식     | 필수 | 설명                                                                                   |
 |------------------|------|--------|----|--------------------------------------------------------------------------------------|
 | backupName       | Body | String | O  | 백업을 식별할 수 있는 이름                                                                      |
 | backupMethodType | Body | Enum   | O  | 백업 방식 타입 종류<br/>- `FULL`: 전체 백업<br/>- `INCREMENTAL`: 증분 백업 <br/>- `SNAPSHOT`: 스냅숏 백업 |
+
+<a id="backupmethodtypefull"></a>
 
 #### 전체 백업(backupMethodType이 `FULL`인 경우)
 
@@ -3176,6 +3668,8 @@ POST /v4.0/backups
 
 </p>
 </details>
+
+<a id="backupmethodtypeincremental"></a>
 
 #### 증분 백업(backupMethodType이 `INCREMENTAL`인 경우)
 
@@ -3199,6 +3693,8 @@ POST /v4.0/backups
 </details>
 
 
+<a id="backupmethodtypesnapshot"></a>
+
 #### 스냅숏 백업(backupMethodType이 `SNAPSHOT`인 경우)
 
 | 이름           | 종류   | 형식   | 필수 | 설명           |
@@ -3221,6 +3717,8 @@ POST /v4.0/backups
 </details>
 
 
+<a id="section-5-4-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3229,17 +3727,23 @@ POST /v4.0/backups
 
 ---
 
+<a id="section-5-5"></a>
+
 ### 백업 내보내기
 
 ```http
 POST /v4.0/backups/{backupId}/export
 ```
 
+<a id="section-5-5-1"></a>
+
 #### 필요 권한
 
 | 권한명                                       | 설명      |
 |-------------------------------------------|---------|
 | RDSforMySQL:Backup.Export | 백업 내보내기 |
+
+<a id="section-5-5-2"></a>
 
 #### 요청
 
@@ -3268,6 +3772,8 @@ POST /v4.0/backups/{backupId}/export
 </p>
 </details>
 
+<a id="section-5-5-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3279,17 +3785,23 @@ POST /v4.0/backups/{backupId}/export
 
 ---
 
+<a id="section-5-6"></a>
+
 ### 백업 복원하기
 
 ```http
 POST /v4.0/backups/{backupId}/restore
 ```
 
+<a id="section-5-6-1"></a>
+
 #### 필요 권한
 
 | 권한명                                        | 설명      |
 |--------------------------------------------|---------|
 | RDSforMySQL:Backup.Restore | 백업 복원하기 |
+
+<a id="section-5-6-2"></a>
 
 #### 요청
 
@@ -3365,6 +3877,8 @@ POST /v4.0/backups/{backupId}/restore
 </p>
 </details>
 
+<a id="section-5-6-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3373,17 +3887,23 @@ POST /v4.0/backups/{backupId}/restore
 
 ---
 
+<a id="section-5-7"></a>
+
 ### 백업 삭제하기
 
 ```http
 DELETE /v4.0/backups/{backupId}
 ```
 
+<a id="section-5-7-1"></a>
+
 #### 필요 권한
 
 | 권한명                                       | 설명      |
 |-------------------------------------------|---------|
 | RDSforMySQL:Backup.Delete | 백업 삭제하기 |
+
+<a id="section-5-7-2"></a>
 
 #### 요청
 
@@ -3393,6 +3913,8 @@ DELETE /v4.0/backups/{backupId}
 |----------|-----|------|----|---------|
 | backupId | URL | UUID | O  | 백업의 식별자 |
 
+<a id="section-5-7-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3401,7 +3923,11 @@ DELETE /v4.0/backups/{backupId}
 
 ---
 
+<a id="db-32"></a>
+
 ## DB 보안 그룹
+
+<a id="db-33"></a>
 
 ### DB 보안 그룹 진행 상태
 
@@ -3412,17 +3938,23 @@ DELETE /v4.0/backups/{backupId}
 | `UPDATING_RULE` | 규칙 정책 수정 중   |
 | `DELETING_RULE` | 규칙 정책 삭제 중   |
 
+<a id="db-34"></a>
+
 ### DB 보안 그룹 목록 보기
 
 ```http
 GET /v4.0/db-security-groups
 ```
 
+<a id="db-34-1"></a>
+
 #### 필요 권한
 
 | 권한명                                              | 설명             |
 |--------------------------------------------------|----------------|
 | RDSforMySQL:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
+
+<a id="db-34-2"></a>
 
 #### 요청
 
@@ -3432,6 +3964,8 @@ GET /v4.0/db-security-groups
 |-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
 | page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
 | size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
+
+<a id="db-34-3"></a>
 
 #### 응답
 
@@ -3473,17 +4007,23 @@ GET /v4.0/db-security-groups
 
 ---
 
+<a id="db-35"></a>
+
 ### DB 보안 그룹 상세 보기
 
 ```http
 GET /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+<a id="db-35-1"></a>
+
 #### 필요 권한
 
 | 권한명                                             | 설명             |
 |-------------------------------------------------|----------------|
 | RDSforMySQL:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
+
+<a id="db-35-2"></a>
 
 #### 요청
 
@@ -3492,6 +4032,8 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 | 이름                | 종류  | 형식   | 필수 | 설명            |
 |-------------------|-----|------|----|---------------|
 | dbSecurityGroupId | URL | UUID | O  | DB 보안 그룹의 식별자 |
+
+<a id="db-35-3"></a>
 
 #### 응답
 
@@ -3558,17 +4100,23 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 
 ---
 
+<a id="db-36"></a>
+
 ### DB 보안 그룹 생성하기
 
 ```http
 POST /v4.0/db-security-groups
 ```
 
+<a id="db-36-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                | 설명            |
 |----------------------------------------------------|---------------|
 | RDSforMySQL:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
+
+<a id="db-36-2"></a>
 
 #### 요청
 
@@ -3614,6 +4162,8 @@ POST /v4.0/db-security-groups
 </p>
 </details>
 
+<a id="db-36-3"></a>
+
 #### 응답
 
 | 이름                | 종류   | 형식   | 설명            |
@@ -3622,17 +4172,23 @@ POST /v4.0/db-security-groups
 
 ---
 
+<a id="db-37"></a>
+
 ### DB 보안 그룹 수정하기
 
 ```http
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+<a id="db-37-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                | 설명            |
 |----------------------------------------------------|---------------|
 | RDSforMySQL:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
+
+<a id="db-37-2"></a>
 
 #### 요청
 
@@ -3655,6 +4211,8 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 </p>
 </details>
 
+<a id="db-37-3"></a>
+
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -3678,17 +4236,23 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 
 ---
 
+<a id="db-38"></a>
+
 ### DB 보안 그룹 삭제하기
 
 ```http
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+<a id="db-38-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                | 설명            |
 |----------------------------------------------------|---------------|
 | RDSforMySQL:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
+
+<a id="db-38-2"></a>
 
 #### 요청
 
@@ -3698,6 +4262,8 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 |-------------------|-----|------|----|---------------|
 | dbSecurityGroupId | URL | UUID | O  | DB 보안 그룹의 식별자 |
 
+<a id="db-38-3"></a>
+
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -3720,17 +4286,23 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 
 ---
 
+<a id="db-39"></a>
+
 ### DB 보안 그룹 규칙 생성하기
 
 ```http
 POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
+<a id="db-39-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                    | 설명               |
 |--------------------------------------------------------|------------------|
 | RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
+
+<a id="db-39-2"></a>
 
 #### 요청
 
@@ -3768,6 +4340,8 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 </p>
 </details>
 
+<a id="db-39-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3776,17 +4350,23 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ---
 
+<a id="db-40"></a>
+
 ### DB 보안 그룹 규칙 수정하기
 
 ```http
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
+<a id="db-40-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                    | 설명               |
 |--------------------------------------------------------|------------------|
 | RDSforMySQL:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
+
+<a id="db-40-2"></a>
 
 #### 요청
 
@@ -3823,6 +4403,8 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 </p>
 </details>
 
+<a id="db-40-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3831,17 +4413,23 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 ---
 
+<a id="db-41"></a>
+
 ### DB 보안 그룹 규칙 삭제하기
 
 ```http
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
+<a id="db-41-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                    | 설명               |
 |--------------------------------------------------------|------------------|
 | RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 삭제하기 |
+
+<a id="db-41-2"></a>
 
 #### 요청
 
@@ -3852,6 +4440,8 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | dbSecurityGroupId | URL   | UUID  | O  | DB 보안 그룹의 식별자       |
 | ruleIds           | Query | Array | O  | DB 보안 그룹 규칙의 식별자 목록 |
 
+<a id="db-41-3"></a>
+
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3860,7 +4450,11 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ---
 
+<a id="section-6"></a>
+
 ## 파라미터 그룹
+
+<a id="section-6-1"></a>
 
 ### 파라미터 그룹 목록 보기
 
@@ -3868,11 +4462,15 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 GET /v4.0/parameter-groups
 ```
 
+<a id="section-6-1-1"></a>
+
 #### 필요 권한
 
 | 권한명                                             | 설명            |
 |-------------------------------------------------|---------------|
 | RDSforMySQL:ParameterGroup.List | 파라미터 그룹 목록 보기 |
+
+<a id="section-6-1-2"></a>
 
 #### 요청
 
@@ -3881,6 +4479,8 @@ GET /v4.0/parameter-groups
 | 이름        | 종류    | 형식   | 필수 | 설명       |
 |-----------|-------|------|----|----------|
 | dbVersion | Query | Enum | X  | DB 엔진 유형 |
+
+<a id="section-6-1-3"></a>
 
 #### 응답
 
@@ -3925,17 +4525,23 @@ GET /v4.0/parameter-groups
 
 ---
 
+<a id="section-6-2"></a>
+
 ### 파라미터 그룹 상세 보기
 
 ```http
 GET /v4.0/parameter-groups/{parameterGroupId}
 ```
 
+<a id="section-6-2-1"></a>
+
 #### 필요 권한
 
 | 권한명                                            | 설명            |
 |------------------------------------------------|---------------|
 | RDSforMySQL:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
+
+<a id="section-6-2-2"></a>
 
 #### 요청
 
@@ -3944,6 +4550,8 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 | 이름               | 종류  | 형식   | 필수 | 설명           |
 |------------------|-----|------|----|--------------|
 | parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
+
+<a id="section-6-2-3"></a>
 
 #### 응답
 
@@ -4006,17 +4614,23 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 
 ---
 
+<a id="section-6-3"></a>
+
 ### 파라미터 그룹 생성하기
 
 ```http
 POST /v4.0/parameter-groups
 ```
 
+<a id="section-6-3-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|--------------|
 | RDSforMySQL:ParameterGroup.Create | 파라미터 그룹 생성하기 |
+
+<a id="section-6-3-2"></a>
 
 #### 요청
 
@@ -4039,6 +4653,8 @@ POST /v4.0/parameter-groups
 </p>
 </details>
 
+<a id="section-6-3-3"></a>
+
 #### 응답
 
 | 이름               | 종류   | 형식   | 설명           |
@@ -4047,17 +4663,23 @@ POST /v4.0/parameter-groups
 
 ---
 
+<a id="section-6-4"></a>
+
 ### 파라미터 그룹 복사하기
 
 ```http
 POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```
 
+<a id="section-6-4-1"></a>
+
 #### 필요 권한
 
 | 권한명                                             | 설명           |
 |-------------------------------------------------|--------------|
 | RDSforMySQL:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
+
+<a id="section-6-4-2"></a>
 
 #### 요청
 
@@ -4080,6 +4702,8 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 </p>
 </details>
 
+<a id="section-6-4-3"></a>
+
 #### 응답
 
 | 이름               | 종류   | 형식   | 설명           |
@@ -4088,17 +4712,23 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 ---
 
+<a id="section-6-5"></a>
+
 ### 파라미터 그룹 수정하기
 
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}
 ```
 
+<a id="section-6-5-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|--------------|
 | RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
+
+<a id="section-6-5-2"></a>
 
 #### 요청
 
@@ -4119,6 +4749,8 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 </p>
 </details>
+
+<a id="section-6-5-3"></a>
 
 #### 응답
 
@@ -4142,17 +4774,23 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 ---
 
+<a id="section-6-6"></a>
+
 ### 파라미터 수정하기
 
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
+<a id="section-6-6-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|--------------|
 | RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
+
+<a id="section-6-6-2"></a>
 
 #### 요청
 
@@ -4180,6 +4818,8 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 </p>
 </details>
 
+<a id="section-6-6-3"></a>
+
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4201,6 +4841,8 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 </details>
 
 ---
+
+<a id="section-6-7"></a>
 
 ### 파라미터 그룹 재설정하기
 
@@ -4208,17 +4850,23 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```
 
+<a id="section-6-7-1"></a>
+
 #### 필요 권한
 
 | 권한명                                              | 설명            |
 |--------------------------------------------------|---------------|
 | RDSforMySQL:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
 
+<a id="section-6-7-2"></a>
+
 #### 요청
 
 | 이름               | 종류  | 형식   | 필수 | 설명           |
 |------------------|-----|------|----|--------------|
 | parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
+
+<a id="section-6-7-3"></a>
 
 #### 응답
 
@@ -4241,6 +4889,8 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 </details>
 
 ---
+
+<a id="section-6-8"></a>
 
 ### 파라미터 그룹 삭제하기
 
@@ -4248,11 +4898,15 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```
 
+<a id="section-6-8-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|--------------|
 | RDSforMySQL:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
+
+<a id="section-6-8-2"></a>
 
 #### 요청
 
@@ -4261,6 +4915,8 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 | 이름               | 종류  | 형식   | 필수 | 설명           |
 |------------------|-----|------|----|--------------|
 | parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
+
+<a id="section-6-8-3"></a>
 
 #### 응답
 
@@ -4284,7 +4940,11 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 ---
 
+<a id="section-7"></a>
+
 ## 사용자 그룹
+
+<a id="section-7-1"></a>
 
 ### 사용자 그룹 목록 보기
 
@@ -4292,15 +4952,21 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 GET /v4.0/user-groups
 ```
 
+<a id="section-7-1-1"></a>
+
 #### 필요 권한
 
 | 권한명                                        | 설명           |
 |--------------------------------------------|--------------|
 | RDSforMySQL:UserGroup.List | 사용자 그룹 목록 보기 |
 
+<a id="section-7-1-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="section-7-1-3"></a>
 
 #### 응답
 
@@ -4338,17 +5004,23 @@ GET /v4.0/user-groups
 
 ---
 
+<a id="section-7-2"></a>
+
 ### 사용자 그룹 상세 보기
 
 ```http
 GET /v4.0/user-groups/{userGroupId}
 ```
 
+<a id="section-7-2-1"></a>
+
 #### 필요 권한
 
 | 권한명                                       | 설명           |
 |-------------------------------------------|--------------|
 | RDSforMySQL:UserGroup.Get | 사용자 그룹 상세 보기 |
+
+<a id="section-7-2-2"></a>
 
 #### 요청
 
@@ -4357,6 +5029,8 @@ GET /v4.0/user-groups/{userGroupId}
 | 이름          | 종류  | 형식   | 필수 | 설명          |
 |-------------|-----|------|----|-------------|
 | userGroupId | URL | UUID | O  | 사용자 그룹의 식별자 |
+
+<a id="section-7-2-3"></a>
 
 #### 응답
 
@@ -4398,17 +5072,23 @@ GET /v4.0/user-groups/{userGroupId}
 
 ---
 
+<a id="section-7-3"></a>
+
 ### 사용자 그룹 생성하기
 
 ```http
 POST /v4.0/user-groups
 ```
 
+<a id="section-7-3-1"></a>
+
 #### 필요 권한
 
 | 권한명                                          | 설명          |
 |----------------------------------------------|-------------|
 | RDSforMySQL:UserGroup.Create | 사용자 그룹 생성하기 |
+
+<a id="section-7-3-2"></a>
 
 #### 요청
 
@@ -4440,6 +5120,8 @@ POST /v4.0/user-groups
 </p>
 </details>
 
+<a id="section-7-3-3"></a>
+
 #### 응답
 
 | 이름          | 종류   | 형식   | 설명          |
@@ -4448,17 +5130,23 @@ POST /v4.0/user-groups
 
 ---
 
+<a id="section-7-4"></a>
+
 ### 사용자 그룹 수정하기
 
 ```http
 PUT /v4.0/user-groups/{userGroupId}
 ```
 
+<a id="section-7-4-1"></a>
+
 #### 필요 권한
 
 | 권한명                                          | 설명          |
 |----------------------------------------------|-------------|
 | RDSforMySQL:UserGroup.Modify | 사용자 그룹 수정하기 |
+
+<a id="section-7-4-2"></a>
 
 #### 요청
 
@@ -4485,6 +5173,8 @@ PUT /v4.0/user-groups/{userGroupId}
 </p>
 </details>
 
+<a id="section-7-4-3"></a>
+
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4506,6 +5196,8 @@ PUT /v4.0/user-groups/{userGroupId}
 </details>
 
 ---
+
+<a id="section-7-5"></a>
 
 ### 사용자 그룹 삭제하기
 
@@ -4513,17 +5205,23 @@ PUT /v4.0/user-groups/{userGroupId}
 DELETE /v4.0/user-groups/{userGroupId}
 ```
 
+<a id="section-7-5-1"></a>
+
 #### 필요 권한
 
 | 권한명                                          | 설명          |
 |----------------------------------------------|-------------|
 | RDSforMySQL:UserGroup.Delete | 사용자 그룹 삭제하기 |
 
+<a id="section-7-5-2"></a>
+
 #### 요청
 
 | 이름          | 종류  | 형식   | 필수 | 설명          |
 |-------------|-----|------|----|-------------|
 | userGroupId | URL | UUID | O  | 사용자 그룹의 식별자 |
+
+<a id="section-7-5-3"></a>
 
 #### 응답
 
@@ -4547,7 +5245,11 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 ---
 
+<a id="section-8"></a>
+
 ## 알림 그룹
+
+<a id="section-8-1"></a>
 
 ### 알림 그룹 목록 보기
 
@@ -4555,15 +5257,21 @@ DELETE /v4.0/user-groups/{userGroupId}
 GET /v4.0/notification-groups
 ```
 
+<a id="section-8-1-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                | 설명          |
 |----------------------------------------------------|-------------|
 | RDSforMySQL:NotificationGroup.List | 알림 그룹 목록 보기 |
 
+<a id="section-8-1-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="section-8-1-3"></a>
 
 #### 응답
 
@@ -4607,17 +5315,23 @@ GET /v4.0/notification-groups
 
 ---
 
+<a id="section-8-2"></a>
+
 ### 알림 그룹 상세 보기
 
 ```http
 GET /v4.0/notification-groups/{notificationGroupId}
 ```
 
+<a id="section-8-2-1"></a>
+
 #### 필요 권한
 
 | 권한명                                               | 설명          |
 |---------------------------------------------------|-------------|
 | RDSforMySQL:NotificationGroup.Get | 알림 그룹 상세 보기 |
+
+<a id="section-8-2-2"></a>
 
 #### 요청
 
@@ -4626,6 +5340,8 @@ GET /v4.0/notification-groups/{notificationGroupId}
 | 이름                  | 종류  | 형식   | 필수 | 설명         |
 |---------------------|-----|------|----|------------|
 | notificationGroupId | URL | UUID | O  | 알림 그룹의 식별자 |
+
+<a id="section-8-2-3"></a>
 
 #### 응답
 
@@ -4682,17 +5398,23 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 ---
 
+<a id="section-8-3"></a>
+
 ### 알림 그룹 생성하기
 
 ```http
 POST /v4.0/notification-groups
 ```
 
+<a id="section-8-3-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                  | 설명         |
 |------------------------------------------------------|------------|
 | RDSforMySQL:NotificationGroup.Create | 알림 그룹 생성하기 |
+
+<a id="section-8-3-2"></a>
 
 #### 요청
 
@@ -4725,6 +5447,8 @@ POST /v4.0/notification-groups
 </p>
 </details>
 
+<a id="section-8-3-3"></a>
+
 #### 응답
 
 | 이름                  | 종류   | 형식   | 설명         |
@@ -4733,17 +5457,23 @@ POST /v4.0/notification-groups
 
 ---
 
+<a id="section-8-4"></a>
+
 ### 알림 그룹 수정하기
 
 ```http
 PUT /v4.0/notification-groups/{notificationGroupId}
 ```
 
+<a id="section-8-4-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                  | 설명         |
 |------------------------------------------------------|------------|
 | RDSforMySQL:NotificationGroup.Modify | 알림 그룹 수정하기 |
+
+<a id="section-8-4-2"></a>
 
 #### 요청
 
@@ -4773,6 +5503,8 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 </p>
 </details>
 
+<a id="section-8-4-3"></a>
+
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4795,17 +5527,23 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 
 ---
 
+<a id="section-8-5"></a>
+
 ### 알림 그룹 삭제하기
 
 ```http
 DELETE /v4.0/notification-groups/{notificationGroupId}
 ```
 
+<a id="section-8-5-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                  | 설명         |
 |------------------------------------------------------|------------|
 | RDSforMySQL:NotificationGroup.Delete | 알림 그룹 삭제하기 |
+
+<a id="section-8-5-2"></a>
 
 #### 요청
 
@@ -4815,6 +5553,8 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 |---------------------|-----|------|----|------------|
 | notificationGroupId | URL | UUID | O  | 알림 그룹의 식별자 |
 
+<a id="section-8-5-3"></a>
+
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4837,7 +5577,11 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 ---
 
+<a id="section-9"></a>
+
 ## 모니터링
+
+<a id="metric"></a>
 
 ### Metric 목록 보기
 
@@ -4845,15 +5589,21 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 GET /v4.0/metrics
 ```
 
+<a id="metric-1"></a>
+
 #### 필요 권한
 
 | 권한명                                     | 설명       |
 |-----------------------------------------|----------|
 | RDSforMySQL:Metric.List | 통계 정보 조회 |
 
+<a id="metric-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="metric-3"></a>
 
 #### 응답
 
@@ -4887,17 +5637,23 @@ GET /v4.0/metrics
 
 ---
 
+<a id="section-9-1"></a>
+
 ### 통계 정보 조회
 
 ```http
 GET /v4.0/metric-statistics
 ```
 
+<a id="section-9-1-1"></a>
+
 #### 필요 권한
 
 | 권한명                                     | 설명       |
 |-----------------------------------------|----------|
 | RDSforMySQL:Metric.List | 통계 정보 조회 |
+
+<a id="section-9-1-2"></a>
 
 #### 요청
 
@@ -4908,6 +5664,8 @@ GET /v4.0/metric-statistics
 | from         | Query | Datetime | O  | 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | to           | Query | Datetime | O  | 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | interval     | Query | Number   | X  | 조회 간격                             |
+
+<a id="section-9-1-3"></a>
 
 #### 응답
 
@@ -4953,7 +5711,11 @@ GET /v4.0/metric-statistics
 
 ---
 
+<a id="section-10"></a>
+
 ## 이벤트
+
+<a id="section-10-1"></a>
 
 ### 이벤트 카테고리
 
@@ -4968,17 +5730,23 @@ GET /v4.0/metric-statistics
 | TENANT      | 테넌트     |
 | MONITORING  | 모니터링    |
 
+<a id="section-10-2"></a>
+
 ### 이벤트 목록 조회
 
 ```http
 GET /v4.0/events
 ```
 
+<a id="section-10-2-1"></a>
+
 #### 필요 권한
 
 | 권한명                                    | 설명        |
 |----------------------------------------|-----------|
 | RDSforMySQL:Event.List | 이벤트 목록 보기 |
+
+<a id="section-10-2-2"></a>
 
 #### 요청
 
@@ -4994,6 +5762,8 @@ GET /v4.0/events
 | sourceId          | Query | String   | X  | 이벤트가 발생한 대상 리소스의 식별자                                                                                                                 |
 | keyword           | Query | String   | X  | 이벤트 메시지에 포함된 문자열 검색어                                                                                                                 |
 | ascendingOrder    | Query | Enum     | X  | 이벤트 메시지 정렬 순서<br/>- `ASC`: 오름차순<br/>- `DESC`: 내림차순<br/>- 기본값: `DESC`                                                                 |
+
+<a id="section-10-2-3"></a>
 
 #### 응답
 
@@ -5056,11 +5826,15 @@ GET /v4.0/events
 
 ---
 
+<a id="section-10-3"></a>
+
 ### 구독 가능한 이벤트 코드 목록 보기
 
 ```http
 GET /v4.0/event-codes
 ```
+
+<a id="section-10-3-1"></a>
 
 #### 필요 권한
 
@@ -5068,9 +5842,13 @@ GET /v4.0/event-codes
 |----------------------------------------|-----------|
 | RDSforMySQL:Event.List | 이벤트 목록 보기 |
 
+<a id="section-10-3-2"></a>
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="section-10-3-3"></a>
 
 #### 응답
 
@@ -5104,7 +5882,11 @@ GET /v4.0/event-codes
 
 ---
 
+<a id="section-11"></a>
+
 ## 이벤트 구독
+
+<a id="section-11-1"></a>
 
 ### 이벤트 구독 목록 조회
 
@@ -5112,11 +5894,15 @@ GET /v4.0/event-codes
 GET /v4.0/event-subscriptions
 ```
 
+<a id="section-11-1-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                    | 설명            |
 |---------------------------------------------------------|---------------|
 | RDSforMySQL:EventSubscription.List | 이벤트 구독 목록 조회 |
+
+<a id="section-11-1-2"></a>
 
 #### 요청
 
@@ -5127,6 +5913,8 @@ GET /v4.0/event-subscriptions
 | eventSubscriptionId    | Query | UUID   | X  | 이벤트 구독의 식별자                              |
 | eventSubscriptionName  | Query | String | X  | 이벤트 구독을 식별할 수 있는 이름                      |
 | userGroupId            | Query | UUID   | X  | 사용자 그룹의 식별자                              |
+
+<a id="section-11-1-3"></a>
 
 #### 응답
 
@@ -5189,17 +5977,23 @@ GET /v4.0/event-subscriptions
 
 ---
 
+<a id="section-11-2"></a>
+
 ### 이벤트 구독 생성하기
 
 ```http
 POST /v4.0/event-subscriptions
 ```
 
+<a id="section-11-2-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                      | 설명           |
 |----------------------------------------------------------|--------------|
 | RDSforMySQL:EventSubscription.Create | 이벤트 구독 생성하기 |
+
+<a id="section-11-2-2"></a>
 
 #### 요청
 
@@ -5244,6 +6038,8 @@ POST /v4.0/event-subscriptions
 </p>
 </details>
 
+<a id="section-11-2-3"></a>
+
 #### 응답
 
 | 이름                    | 종류   | 형식   | 설명          |
@@ -5269,17 +6065,23 @@ POST /v4.0/event-subscriptions
 
 ---
 
+<a id="section-11-3"></a>
+
 ### 이벤트 구독 수정하기
 
 ```http
 PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
 
+<a id="section-11-3-1"></a>
+
 #### 필요 권한
 
 | 권한명                                                      | 설명           |
 |----------------------------------------------------------|--------------|
 | RDSforMySQL:EventSubscription.Modify | 이벤트 구독 수정하기 |
+
+<a id="section-11-3-2"></a>
 
 #### 요청
 
@@ -5326,6 +6128,8 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 </p>
 </details>
 
+<a id="section-11-3-3"></a>
+
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -5348,11 +6152,15 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 
 ---
 
+<a id="section-11-4"></a>
+
 ### 이벤트 구독 삭제하기
 
 ```http
 DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
+
+<a id="section-11-4-1"></a>
 
 #### 필요 권한
 
@@ -5360,11 +6168,15 @@ DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 |----------------------------------------------------------|--------------|
 | RDSforMySQL:EventSubscription.Delete | 이벤트 구독 삭제하기 |
 
+<a id="section-11-4-2"></a>
+
 #### 요청
 
 | 이름                    | 종류  | 형식   | 필수 | 설명          |
 |-----------------------|-----|------|----|-------------|
 | eventSubscriptionId   | URL | UUID | O  | 이벤트 구독의 식별자 |
+
+<a id="section-11-4-3"></a>
 
 #### 응답
 
