@@ -1,8 +1,12 @@
 ## Database > RDS for MySQL > 파라미터 그룹
 
+<a id="parameter-group"></a>
+
 ## 파라미터 그룹
 
 RDS for MySQL은 DB 인스턴스에 설치된 MySQL의 설정을 적용하기 위해 파라미터 그룹 기능을 제공합니다. 파라미터 그룹은 MySQL을 설정할 수 있는 파라미터의 집합입니다. 서비스 활성화 시 모든 DB 엔진의 버전별로 기본 파라미터 그룹을 제공합니다. 기본 파라미터 그룹은 `default.{DB 엔진 버전 이름}`으로 제공되며, 버전별 권장하는 기본 파라미터값으로 구성되어 있습니다. 기본 파라미터 그룹은 일반 파라미터 그룹과 동일하게 수정하거나 삭제할 수 있습니다.
+
+<a id="create-parameter-group"></a>
 
 ### 파라미터 그룹 생성
 
@@ -13,9 +17,13 @@ RDS for MySQL은 DB 인스턴스에 설치된 MySQL의 설정을 적용하기 �
 
 파라미터 그룹 생성 시 파라미터는 항상 기본값으로 생성됩니다. 기존 파라미터 그룹을 기준으로 생성하려면 파라미터 복사 기능을 이용해서 파라미터 그룹을 생성해야 합니다.
 
+<a id="copy-parameter-group"></a>
+
 ### 파라미터 그룹 복사
 
 기존 파라미터 그룹을 기준으로 신규 파라미터 그룹을 생성합니다. 복사한 신규 파라미터 그룹은 원본 파라미터 그룹의 파라미터 값으로 구성됩니다. 원본 파라미터 그룹과 복사한 파라미터 그룹 간에는 어떠한 연관 관계가 없으며, 원본 파라미터 그룹의 변경 및 삭제는 복사한 파라미터 그룹에 어떠한 영향도 끼치지 않습니다.
+
+<a id="reset-parameter-group"></a>
 
 ### 파라미터 그룹 재설정
 
@@ -29,13 +37,19 @@ DB 인스턴스 생성 또는 수정 시 DB 인스턴스에 적용할 파라미�
 > [주의]
 > 재시작이 필요한 파라미터가 변경된 경우 적용 과정에서 DB 인스턴스가 재시작됩니다.
 
+<a id="compare-parameter-group"></a>
+
 ### 파라미터 그룹 비교
 
 콘솔에서 서로 다른 2개의 파라미터 그룹을 선택한 뒤 **비교**를 클릭하면 파라미터가 무엇이 다른지 확인할 수 있습니다. 동일한 DB 엔진뿐만 아니라 서로 다른 DB 엔진 버전의 파라미터 그룹도 비교할 수 있습니다.
 
+<a id="delete-parameter-group"></a>
+
 ### 파라미터 그룹 삭제
 
 DB 인스턴스에 적용 중인 파라미터 그룹을 제외하면 자유롭게 삭제할 수 있습니다. DB 인스턴스에 적용 중인 파라미터 그룹을 삭제하려면 삭제하기 전 연결된 모든 DB 인스턴스의 파라미터 그룹을 먼저 변경해야 합니다.
+
+<a id="parameter"></a>
 
 ## 파라미터
 
@@ -50,6 +64,8 @@ DB 인스턴스에 적용 중인 파라미터 그룹을 제외하면 자유롭�
 | 적용 유형  | `고정`과 `동적`으로 구분됩니다.<br/>`고정`인 경우 파라미터 변경 사항을 적용하려면 DB 인스턴스를 재시작해야 합니다.<br/>`동적`인 경우 DB 인스턴스의 재시작 없이 바로 파라미터가 적용됩니다.               |
 | 데이터 형식 | 파라미터값의 형식을 나타냅니다.                                                                                                                 | 
 | 수식 사용  | 수식 사용 가능 여부를 나타냅니다.                                                                                                               |
+
+<a id="parameter-variables-formulas-and-functions"></a>
 
 ### 파라미터 변수, 수식 및 함수
 
@@ -77,19 +93,27 @@ DB 인스턴스에 적용 중인 파라미터 그룹을 제외하면 자유롭�
 ramSizeByte * 6 / 10
 ```
 
+<a id="change-parameter"></a>
+
 ### 파라미터 변경
 
 콘솔에서 파라미터 그룹을 선택한 뒤 **파라미터 편집**을 클릭해 파라미터를 변경할 수 있습니다. 변경할 수 없는 파라미터는 값이 일반 텍스트로 나타나며, 변경할 수 있는 파라미터는 값을 변경할 수 있는 INPUT이 나타납니다. 편집 화면에서 **변경 사항 미리 보기**를 클릭하면 변경된 파라미터를 확인할 수 있는 별도의 팝업 화면이 표시되며, **재설정**을 누르면 변경하기 전으로 되돌릴 수 있습니다. 편집 모드에서 변경한 모든 값은 **변경 사항 저장**을 클릭해야 파라미터 그룹에 반영됩니다. 변경된 파라미터 그룹의 DB 인스턴스 반영은 [파라미터 그룹 적용](parameter-group/#apply) 항목을 참고합니다.
 
+<a id="gtid-constraints"></a>
+
 ## GTID 제약 조건
 
 GTID(global transaction identifier) 모드에서는 enforce_gtid_consistency=ON으로 할 때 다음 제약들이 적용됩니다. 참고: [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
+
+<a id="enforcegtidconsistency"></a>
 
 ### ENFORCE_GTID_CONSISTENCY
 
 * OFF: 제약 대상 쿼리 허용
 * WARN: 제약 대상 쿼리를 허용하지만 warning 발생
 * ON: 제약 대상 쿼리 허용 안 함
+
+<a id="customer-impact"></a>
 
 ### 고객 영향도
 
@@ -102,6 +126,8 @@ GTID(global transaction identifier) 모드에서는 enforce_gtid_consistency=ON�
 2. CREATE TABLE ... SELECT 구문(8.0.21 이전 버전의 경우)
 3. binlog_format이 `STATEMENT`일 때 트랜잭션, 프로시저, 함수, 트리거 내부에서 임시 테이블을 생성/삭제할 수 없습니다.
 
+<a id="customer-recommended-precautions"></a>
+
 ### 고객 권장 사전 조치
 
 1. 가능하면 MyISAM과 같은 비트랜잭션 저장 엔진을 사용하지 마세요. 사용한다면 INNODB과 같은 트랜잭션 저장 엔진과 한 트랜잭션에서 업데이트를 수행하지 마세요.
@@ -113,7 +139,11 @@ GTID(global transaction identifier) 모드에서는 enforce_gtid_consistency=ON�
     create table tbl_backup like tbl_ori; insert tbl_backup select * from tbl_ori;
     ```
 
+<a id="gtid-application-stage"></a>
+
 ## GTID 적용 단계
+
+<a id="gtidmode"></a>
 
 ### gtid_mode
 
@@ -123,6 +153,8 @@ GTID(global transaction identifier) 모드에서는 enforce_gtid_consistency=ON�
 | OFF_PERMISSIVE | GTID도 처리 가능 | GTID도 처리 가능  |
 | ON_PERMISSIVE  | GTID 적용     | GTID 적용      |
 | ON             | GTID만 처리    | GTID만 처리     |
+
+<a id="gtid-application-process-in-rds"></a>
 
 ### RDS에서 GTID 적용 절차
 
