@@ -6,11 +6,17 @@
 | Korea (Pyeongchon) region | https://kr2-rds-mysql.api.nhncloudservice.com |
 | Japan region | https://jp1-rds-mysql.api.nhncloudservice.com |
 
+<a id="authentication-and-authorization"></a>
+
 ## Authentication and Authorization
 
 An AppKey or a Project Integrated Appkey is required to use the RDS for MySQL API. An AppKey is a unique authentication key issued for each individual NHN Cloud service, while a Project Integrated Appkey is a common authentication key that can be shared across multiple services within a single NHN Cloud project. For more information on checking and using Appkeys, please refer to the [Appkey](/nhncloud/en/public-api/appkey). For more information on creating and using Project Integrated Appkeys, please refer to the [Project Integrated Appkey](/nhncloud/en/public-api/project-integrated-appkey).
 
+<a id="monitoring"></a>
+
 ## Monitoring
+
+<a id="view-metric"></a>
 
 ### View metric
 
@@ -20,11 +26,15 @@ An AppKey or a Project Integrated Appkey is required to use the RDS for MySQL AP
 GET /v2.0/metrics
 ```
 
+<a id="request-header"></a>
+
 #### Request header
 
 | Name         | Type | Format | Required | Description                                     |
 |--------------|------|--------|----------|-------------------------------------------------|
 | X-TC-APP-KEY | URL  | String | O        | AppKey or Project Integrated Appkey for RDS for MySQL |
+
+<a id="response"></a>
 
 #### Response
 
@@ -43,6 +53,8 @@ GET /v2.0/metrics
 }
 ```
 
+<a id="view-stats"></a>
+
 ### View stats
 
 - Views the statistical information collected on a regular basis.
@@ -51,11 +63,15 @@ GET /v2.0/metrics
 GET /rds/api/v2.0/metric-statistics
 ```
 
+<a id="request-header-2"></a>
+
 #### Request header
 
 | Name         | Type | Format | Required | Description                                     |
 |--------------|------|--------|----------|-------------------------------------------------|
 | X-TC-APP-KEY | URL  | String | O        | AppKey or Project Integrated Appkey for RDS for MySQL |
+
+<a id="request"></a>
 
 #### Request
 
@@ -76,6 +92,8 @@ GET /rds/api/v2.0/metric-statistics
 - from, to: ISO Datetime format example
     - UTC: 2021-01-01T00:00:00.000Z
     - KST, JST: 2021-01-01T00:00:00.000+09:00
+
+<a id="response-2"></a>
 
 #### Response
 
