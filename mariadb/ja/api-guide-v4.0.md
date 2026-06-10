@@ -73,7 +73,60 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 * ENUMタイプのdbVersionフィールドに対して該当値を使用できます。
 * バージョンによって作成または復元が不可能な場合があります。
 
+
 ## プロジェクト情報
+
+### プロジェクトメンバーリストを表示
+
+```http
+GET /v4.0/project/members
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:Project.Get | プロジェクトメンバーリストを表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| members | Body | Array | プロジェクトメンバーリスト |
+| members.memberId | Body | UUID | プロジェクトメンバーの識別子 |
+| members.memberName | Body | String | プロジェクトメンバーの名前 |
+| members.emailAddress | Body | String | プロジェクトメンバーのメールアドレス |
+| members.phoneNumber | Body | String | プロジェクトメンバーの電話番号 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "members": [
+        {
+            "memberId": "550e8400-e29b-41d4-a716-446655440000",
+            "memberName": "memberName-example",
+            "emailAddress": "user@example.com",
+            "phoneNumber": "010-1234-5678"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
 
 ### リージョンリストを表示
 
@@ -83,9 +136,9 @@ GET /v4.0/project/regions
 
 #### 必要権限
 
-| 権限名                                     | 説明         |
-|-----------------------------------------|------------|
-| RDSforMariaDB:Project.Get | プロジェクト情報照会 |
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:Project.Get | リージョンリストを表示 |
 
 #### リクエスト
 
@@ -93,11 +146,11 @@ GET /v4.0/project/regions
 
 #### レスポンス
 
-| 名前               | 種類 | 形式    | 説明                                                                       |
-|--------------------|------|---------|----------------------------------------------------------------------------|
-| regions            | Body | Array   | リージョンリスト                                                                    |
-| regions.regionCode | Body | Enum    | リージョンコード<br/>- `KR1`:韓国(パンギョ)リージョン |
-| regions.isEnabled  | Body | Boolean | リージョンが有効かどうか                                                                          |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| regions | Body | Array | リージョンリスト |
+| regions.regionCode | Body | Enum | リージョンコード<br/>- KR1: `韓国(パンギョ)` |
+| regions.isEnabled | Body | Boolean | リージョンが有効かどうか |
 
 <details><summary>例</summary>
 <p>
@@ -112,58 +165,7 @@ GET /v4.0/project/regions
     "regions": [
         {
             "regionCode": "KR1",
-            "isEnabled": true
-        }
-    ]
-}
-```
-
-</details>
-
----
-
-### プロジェクトメンバーリストを表示
-
-```http
-GET /v4.0/project/members
-```
-
-#### 必要権限
-
-| 権限名                                   | 説明       |
-|-----------------------------------------|------------|
-| RDSforMariaDB:Project.Get | プロジェクト情報照会 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-#### レスポンス
-
-| 名前                 | 種類 | 形式   | 説明            |
-|----------------------|------|--------|-----------------|
-| members              | Body | Array  | プロジェクトメンバーリスト    |
-| members.memberId     | Body | UUID   | プロジェクトメンバーの識別子  |
-| members.memberName   | Body | String | プロジェクトメンバーの名前   |
-| members.emailAddress | Body | String | プロジェクトメンバーのメールアドレス |
-| members.phoneNumber  | Body | String | プロジェクトメンバーの電話番号 |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "members": [
-        {
-            "memberId": "1b1d3627-507a-49ea-8cb7-c86dfa9caa58",
-            "memberName": "ホン・ギルドン",
-            "emailAddress": "gildong.hong@nhn.com",
-            "phoneNumber": "+821012345678"
+            "isEnabled": false
         }
     ]
 }
@@ -173,7 +175,6 @@ GET /v4.0/project/members
 </details>
 
 ---
-
 ## DBインスタンスの仕様
 
 ### DBインスタンス仕様リストを表示
@@ -184,8 +185,8 @@ GET /v4.0/db-flavors
 
 #### 必要権限
 
-| 権限名                                     | 説明             |
-|-------------------------------------------|------------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbFlavor.List | DBインスタンス仕様リスト表示 |
 
 #### リクエスト
@@ -194,13 +195,13 @@ GET /v4.0/db-flavors
 
 #### レスポンス
 
-| 名前                   | 種類 | 形式   | 説明            |
-|------------------------|------|--------|-----------------|
-| dbFlavors              | Body | Array  | DBインスタンス仕様リスト |
-| dbFlavors.dbFlavorId   | Body | UUID   | DBインスタンス仕様の識別子 |
-| dbFlavors.dbFlavorName | Body | String | DBインスタンス仕様名   |
-| dbFlavors.ram          | Body | Number | メモリ容量(MB)      |
-| dbFlavors.vcpus        | Body | Number | CPUコア数      |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbFlavors | Body | Array | DBインスタンス仕様リスト |
+| dbFlavors.dbFlavorId | Body | UUID | DBインスタンス仕様の識別子 |
+| dbFlavors.dbFlavorName | Body | String | DBインスタンス仕様名 |
+| dbFlavors.ram | Body | Number | メモリ容量(MB) |
+| dbFlavors.vcpus | Body | Number | CPUコア数 |
 
 <details><summary>例</summary>
 <p>
@@ -214,9 +215,9 @@ GET /v4.0/db-flavors
     },
     "dbFlavors": [
         {
-            "dbFlavorId": "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
-            "dbFlavorName": "m2.c1m2",
-            "ram": 2048,
+            "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbFlavorName": "dbFlavorName-example",
+            "ram": 1,
             "vcpus": 1
         }
     ]
@@ -238,8 +239,8 @@ GET /v4.0/network/subnets
 
 #### 必要権限
 
-| 権限名                                    | 説明      |
-|------------------------------------------|-----------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:Network.List | サブネットリスト表示 |
 
 #### リクエスト
@@ -248,14 +249,14 @@ GET /v4.0/network/subnets
 
 #### レスポンス
 
-| 名前                     | 種類 | 形式    | 説明             |
-|--------------------------|------|---------|------------------|
-| subnets                  | Body | Array   | サブネットリスト         |
-| subnets.subnetId         | Body | UUID    | サブネットの識別子       |
-| subnets.subnetName       | Body | String  | サブネットを識別できる名前  |
-| subnets.subnetCidr       | Body | String  | サブネットのCIDR        |
-| subnets.usingGateway     | Body | Boolean | ゲートウェイを使用するかどうか |
-| subnets.availableIpCount | Body | Number  | 使用可能なIP数       |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| subnets | Body | Array | サブネットリスト |
+| subnets.subnetId | Body | UUID | サブネットの識別子 |
+| subnets.subnetName | Body | String | サブネットを識別できる名前 |
+| subnets.subnetCidr | Body | String | サブネットのCIDR |
+| subnets.usingGateway | Body | Boolean | ゲートウェイを使用するかどうか |
+| subnets.availableIpCount | Body | Number | 使用可能なIP数 |
 
 <details><summary>例</summary>
 <p>
@@ -269,11 +270,11 @@ GET /v4.0/network/subnets
     },
     "subnets": [
         {
-            "subnetId": "1b2a9b23-0725-4b92-8c78-35db66b8ad9f",
-            "subnetName": "Default Network",
+            "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+            "subnetName": "subnetName-example",
             "subnetCidr": "192.168.0.0/24",
-            "usingGateway": true,
-            "availableIpCount": 240
+            "usingGateway": false,
+            "availableIpCount": 1
         }
     ]
 }
@@ -294,8 +295,8 @@ GET /v4.0/db-versions
 
 #### 必要権限
 
-| 権限名                                      | 説明        |
-|--------------------------------------------|-------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbVersion.List | DBエンジンリスト表示 |
 
 #### リクエスト
@@ -304,11 +305,11 @@ GET /v4.0/db-versions
 
 #### レスポンス
 
-| 名前                         | 種類 | 形式    | 説明                  |
-|------------------------------|------|---------|-----------------------|
-| dbVersions                   | Body | Array   | DBエンジンリスト            |
-| dbVersions.dbVersion         | Body | String  | DBエンジンタイプ            |
-| dbVersions.dbVersionName     | Body | String  | DBエンジン名            |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbVersions | Body | Array | DBエンジンリスト |
+| dbVersions.dbVersion | Body | String | DBエンジンタイプ |
+| dbVersions.dbVersionName | Body | String | DBエンジン名 |
 | dbVersions.restorableFromObs | Body | Boolean | オブジェクトストレージから復元可能かどうか |
 
 <details><summary>例</summary>
@@ -323,9 +324,9 @@ GET /v4.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "MARIADB_V10330",
-            "dbVersionName": "Maria DB 10.3.30",
-            "restorableFromObs": true
+            "dbVersion": "MYSQL_V8036",
+            "dbVersionName": "dbVersionName-example",
+            "restorableFromObs": false
         }
     ]
 }
@@ -346,8 +347,8 @@ GET /v4.0/storage-types
 
 #### 必要権限
 
-| 権限名                                    | 説明              |
-|------------------------------------------|-------------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:Storage.List | データストレージタイプリスト表示 |
 
 #### リクエスト
@@ -356,8 +357,8 @@ GET /v4.0/storage-types
 
 #### レスポンス
 
-| 名前         | 種類 | 形式  | 説明           |
-|--------------|------|-------|----------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | storageTypes | Body | Array | データストレージタイプリスト |
 
 <details><summary>例</summary>
@@ -409,29 +410,29 @@ GET /v4.0/jobs/{jobId}
 
 #### 必要権限
 
-| 権限名                               | 説明        |
-|-------------------------------------|-------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:Job.Get | 作業情報詳細表示 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前  | 種類 | 形式 | 必須 | 説明    |
-|-------|-----|------|----|---------|
-| jobId | URL | UUID | O  | 作業の識別子 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| jobId | URL | UUID | O |  |
 
 #### レスポンス
 
-| 名前                           | 種類 | 形式     | 説明                              |
-|--------------------------------|------|----------|-----------------------------------|
-| jobId                          | Body | UUID     | 作業の識別子                         |
-| jobStatus                      | Body | Enum     | 作業の現在状態                       |
-| resourceRelations              | Body | Array    | 関連リソースリスト                       |
-| resourceRelations.resourceType | Body | Enum     | 関連リソースタイプ                       |
-| resourceRelations.resourceId   | Body | UUID     | 関連リソースの識別子                      |
-| createdYmdt                    | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt                    | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | 作業の識別子 |
+| jobStatus | Body | Enum | 作業の現在状態<br/>- DELETED<br/>- CANNOT_PROGRESS<br/>- FAILED<br/>- ERROR<br/>- CANCELED<br/>- INTERRUPTED<br/>- COMPLETED<br/>- COMPLETED_WITH_ERROR<br/>- RUNNING<br/>- PREPARING<br/>- READY<br/>- CREATED<br/>- FAIL_TO_READY<br/>- REGISTERED<br/>- FAIL_TO_REGISTER<br/>- WAIT_TO_REGISTER |
+| resourceRelations | Body | Array | 関連リソースリスト |
+| resourceRelations.resourceType | Body | String | 関連リソースタイプ |
+| resourceRelations.resourceId | Body | String | 関連リソースの識別子 |
+| createdYmdt | Body | DateTime | 作成日時 |
+| updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -443,16 +444,16 @@ GET /v4.0/jobs/{jobId}
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "jobId": "0ddb042c-5af6-43fb-a914-f4dd0540eb7c",
-    "jobStatus": "RUNNING",
+    "jobId": "550e8400-e29b-41d4-a716-446655440000",
+    "jobStatus": "DELETED",
     "resourceRelations": [
         {
-            "resourceType": "DB_INSTANCE",
-            "resourceId": "56b39dcf-65eb-47ec-9d4f-09f160ba2266"
+            "resourceType": "resourceType-example",
+            "resourceId": "resourceId-example"
         }
     ],
-    "createdYmdt": "2023-02-22T20:47:12+09:00",
-    "updatedYmdt": "2023-02-22T20:49:46+09:00"
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -460,7 +461,6 @@ GET /v4.0/jobs/{jobId}
 </details>
 
 ---
-
 ## DBインスタンスグループ
 
 ### DBインスタンスグループリストを表示
@@ -471,8 +471,8 @@ GET /v4.0/db-instance-groups
 
 #### 必要権限
 
-| 権限名                                            | 説明             |
-|--------------------------------------------------|------------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbInstanceGroup.List | DBインスタンスグループリスト表示 |
 
 #### リクエスト
@@ -481,13 +481,13 @@ GET /v4.0/db-instance-groups
 
 #### レスポンス
 
-| 名前                               | 種類 | 形式     | 説明                                                                     |
-|------------------------------------|------|----------|--------------------------------------------------------------------------|
-| dbInstanceGroups                   | Body | Array    | DBインスタンスグループリスト                                                          |
-| dbInstanceGroups.dbInstanceGroupId | Body | UUID     | DBインスタンスグループの識別子                                                        |
-| dbInstanceGroups.replicationType   | Body | Enum     | DBインスタンスグループの複製形態<br/>- `STANDALONE`:単一<br/>- `HIGH_AVAILABILITY`:高可用性 |
-| dbInstanceGroups.createdYmdt       | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                        |
-| dbInstanceGroups.updatedYmdt       | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                        |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbInstanceGroups | Body | Array | DBインスタンスグループリスト |
+| dbInstanceGroups.dbInstanceGroupId | Body | UUID | DBインスタンスグループの識別子 |
+| dbInstanceGroups.replicationType | Body | Enum | DBインスタンスグループの複製形態<br/>- STANDALONE: `高可用性を使用しない`<br/>- HIGH_AVAILABILITY: `高可用性を使用` |
+| dbInstanceGroups.createdYmdt | Body | DateTime | 作成日時 |
+| dbInstanceGroups.updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -501,10 +501,10 @@ GET /v4.0/db-instance-groups
     },
     "dbInstanceGroups": [
         {
-            "dbInstanceGroupId": "05de0746-89fd-49c8-94f9-9c5b1df97009",
+            "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "replicationType": "STANDALONE",
-            "createdYmdt": "2023-02-13T17:35:20+09:00",
-            "updatedYmdt": "2023-02-13T17:35:20+09:00"
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
 }
@@ -523,30 +523,30 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 #### 必要権限
 
-| 権限名                                           | 説明             |
-|-------------------------------------------------|------------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbInstanceGroup.Get | DBインスタンスグループ詳細表示 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前              | 種類 | 形式 | 必須 | 説明            |
-|-------------------|-----|------|----|-----------------|
-| dbInstanceGroupId | URL | UUID | O  | DBインスタンスグループの識別子 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceGroupId | URL | UUID | O |  |
 
 #### レスポンス
 
-| 名前                         | 種類 | 形式     | 説明                                                                                                                                  |
-|------------------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceGroupId            | Body | UUID     | DBインスタンスグループの識別子                                                                                                                     |
-| replicationType              | Body | Enum     | DBインスタンスグループの複製形態<br/>- `STANDALONE`:単一<br/>- `HIGH_AVAILABILITY`:高可用性                                                                 |
-| dbInstances                  | Body | Array    | DBインスタンスグループに属するDBインスタンスリスト                                                                                                           |
-| dbInstances.dbInstanceId     | Body | UUID     | DBインスタンスの識別子                                                                                                                        |
-| dbInstances.dbInstanceType   | Body | Enum     | DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
-| dbInstances.dbInstanceStatus | Body | Enum     | DBインスタンスの現在状態                                                                                                                      |
-| createdYmdt                  | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
-| updatedYmdt                  | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbInstanceGroupId | Body | UUID | DBインスタンスグループの識別子 |
+| replicationType | Body | Enum | DBインスタンスグループの複製形態<br/>- STANDALONE: `高可用性を使用しない`<br/>- HIGH_AVAILABILITY: `高可用性を使用` |
+| dbInstances | Body | Array | DBインスタンスグループに属するDBインスタンスリスト |
+| dbInstances.dbInstanceId | Body | UUID | DBインスタンスの識別子 |
+| dbInstances.dbInstanceType | Body | Enum | DBインスタンスの役割タイプ<br/>- MASTER: `マスター`<br/>- FAILED_MASTER: `障害マスター`<br/>- CANDIDATE_MASTER: `予備マスター`<br/>- READ_ONLY_SLAVE: `リードレプリカ` |
+| dbInstances.dbInstanceStatus | Body | Enum | DBインスタンスの現在状態<br/>- BEFORE_CREATE: `作成前(グレー)`<br/>- AVAILABLE: `使用可能(グリーン)`<br/>- STORAGE_FULL: `容量不足(レッド)`<br/>- FAIL_TO_CREATE: `作成失敗(レッド)`<br/>- FAIL_TO_CONNECT: `接続失敗(レッド)`<br/>- REPLICATION_STOP: `複製中断(レッド)`<br/>- REPLICATION_DELAY: `複製遅延(イエロー)`<br/>- FAILOVER: `フェイルオーバー完了(レッド)`<br/>- SHUTDOWN: `停止済み(グレー)`<br/>- DELETED: `削除済み(グレー)` |
+| createdYmdt | Body | DateTime | 作成日時 |
+| updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -558,17 +558,17 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "dbInstanceGroupId": "36617a8e-0df8-4b16-b6ea-6306019e95da",
+    "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "replicationType": "STANDALONE",
     "dbInstances": [
         {
-            "dbInstanceId": "6d2db0ef-fe9b-4ed4-97b1-d97fcb4cf1b8",
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceType": "MASTER",
-            "dbInstanceStatus": "AVAILABLE"
+            "dbInstanceStatus": "BEFORE_CREATE"
         }
     ],
-    "createdYmdt": "2023-03-03T17:38:14+09:00",
-    "updatedYmdt": "2023-03-03T17:38:14+09:00"
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -581,48 +581,48 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 ### DBインスタンス状態
 
-| 状態                | 説明                         |
+| 状態                  | 説明                           |
 |---------------------|------------------------------|
-| `AVAILABLE`         | DBインスタンスが使用可能な場合         |
-| `BEFORE_CREATE`     | DBインスタンスが作成前の場合               |
-| `STORAGE_FULL`      | DBインスタンスの容量が不足している場合          |
-| `FAIL_TO_CREATE`    | DBインスタンス作成に失敗した場合         |
-| `FAIL_TO_CONNECT`   | DBインスタンス接続に失敗した場合         |
-| `REPLICATION_STOP`  | DBインスタンスの複製が中断した場合            |
-| `FAILOVER`          | DBインスタンスが高可用性フェイルオーバーした場合     |
-| `SHUTDOWN`          | DBインスタンスが停止した場合               |
-| `DELETED`           | DBインスタンスが削除された場合            |
+| `AVAILABLE`         | DBインスタンスが使用可能な場合 |
+| `BEFORE_CREATE`     | DBインスタンスが作成前の場合 |
+| `STORAGE_FULL`      | DBインスタンスの容量が不足している場合 |
+| `FAIL_TO_CREATE`    | DBインスタンス作成に失敗した場合 |
+| `FAIL_TO_CONNECT`   | DBインスタンス接続に失敗した場合 |
+| `REPLICATION_STOP`  | DBインスタンスの複製が中断した場合 |
+| `FAILOVER`          | DBインスタンスが高可用性フェイルオーバーした場合 |
+| `SHUTDOWN`          | DBインスタンスが停止した場合 |
+| `DELETED`           | DBインスタンスが削除された場合 |
 
 ### DBインスタンス進行状態
 
-| 状態                       | 説明         |
+| 状態                         | 説明           |
 |----------------------------|--------------|
 | `APPLYING_PARAMETER_GROUP` | パラメータグループ適用中 |
-| `BACKING_UP`               | バックアップ中       |
-| `CANCELING`                | キャンセル中       |
-| `CREATING`                 | 作成中       |
-| `CREATING_SCHEMA`          | DBスキーマ作成中	 |
-| `CREATING_USER`            | ユーザー作成中	    |
-| `DELETING`                 | 削除中       |
+| `BACKING_UP`               | バックアップ中 |
+| `CANCELING`                | キャンセル中 |
+| `CREATING`                 | 作成中 |
+| `CREATING_SCHEMA`          | DBスキーマ作成中 |
+| `CREATING_USER`            | ユーザー作成中 |
+| `DELETING`                 | 削除中 |
 | `DELETING_SCHEMA`          | DBスキーマ削除中 |
-| `DELETING_USER`            | ユーザー削除中   |
+| `DELETING_USER`            | ユーザー削除中 |
 | `EXPORTING_BACKUP`         | バックアップをエクスポート中 |
-| `FAILING_OVER`             | フェイルオーバー中    |
-| `MIGRATING`                | マイグレーション中   |
-| `MODIFYING`                | 修正中       |
-| `PREPARING`                | 準備中       |
-| `PROMOTING`                | 昇格中       |
-| `REBUILDING`               | 再構築中      |
-| `REPAIRING`                | 復旧中       |
-| `REPLICATING`              | 複製中       |
-| `RESTARTING`               | 再起動中          |
-| `RESTARTING_FORCIBLY`      | 強制再起動中        |
-| `RESTORING`                | 復元中       |
-| `STARTING`                 | 起動中       |
-| `STOPPING`                 | 停止中       |
+| `FAILING_OVER`             | フェイルオーバー中 |
+| `MIGRATING`                | マイグレーション中 |
+| `MODIFYING`                | 修正中 |
+| `PREPARING`                | 準備中 |
+| `PROMOTING`                | 昇格中 |
+| `REBUILDING`               | 再構築中 |
+| `REPAIRING`                | 復旧中 |
+| `REPLICATING`              | 複製中 |
+| `RESTARTING`               | 再起動中 |
+| `RESTARTING_FORCIBLY`      | 強制再起動中 |
+| `RESTORING`                | 復元中 |
+| `STARTING`                 | 起動中 |
+| `STOPPING`                 | 停止中 |
 | `SYNCING_SCHEMA`           | DBスキーマ同期中 |
-| `SYNCING_USER`             | ユーザー同期中	   |
-| `UPDATING_USER`            | ユーザー修正中	    |
+| `SYNCING_USER`             | ユーザー同期中 |
+| `UPDATING_USER`            | ユーザー修正中 |
 
 ### DBインスタンスリストを表示
 
@@ -632,8 +632,8 @@ GET /v4.0/db-instances
 
 #### 必要権限
 
-| 権限名                                       | 説明          |
-|---------------------------------------------|---------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbInstance.List | DBインスタンスリスト表示 |
 
 #### リクエスト
@@ -642,20 +642,20 @@ GET /v4.0/db-instances
 
 #### レスポンス
 
-| 名前                          | 種類 | 形式     | 説明                                                                                                                                  |
-|-------------------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstances                   | Body | Array    | DBインスタンスリスト                                                                                                                          |
-| dbInstances.dbInstanceId      | Body | UUID     | DBインスタンスの識別子                                                                                                                        |
-| dbInstances.dbInstanceGroupId | Body | UUID     | DBインスタンスグループの識別子                                                                                                                     |
-| dbInstances.dbInstanceName    | Body | String   | DBインスタンスを識別できる名前                                                                                                                       |
-| dbInstances.description       | Body | String   | DBインスタンスの追加情報                                                                                                                          |
-| dbInstances.dbVersion         | Body | Enum     | DBエンジンタイプ                                                                                                                            |
-| dbInstances.dbPort            | Body | Number   | DBポート                                                                                                                               |
-| dbInstances.dbInstanceType    | Body | Enum     | DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
-| dbInstances.dbInstanceStatus  | Body | Enum     | DBインスタンスの現在状態                                                                                                                      |
-| dbInstances.progressStatus    | Body | Enum     | DBインスタンスの現在進行状態                                                                                                                   |
-| dbInstances.createdYmdt       | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
-| dbInstances.updatedYmdt       | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbInstances | Body | Array | DBインスタンスリスト |
+| dbInstances.dbInstanceId | Body | UUID | DBインスタンスの識別子 |
+| dbInstances.dbInstanceGroupId | Body | UUID | DBインスタンスグループの識別子 |
+| dbInstances.dbInstanceName | Body | String | DBインスタンスを識別できる名前 |
+| dbInstances.description | Body | String | DBインスタンスの追加情報 |
+| dbInstances.dbVersion | Body | Enum | DBエンジンタイプ |
+| dbInstances.dbPort | Body | Number | DBポート |
+| dbInstances.dbInstanceType | Body | Enum | DBインスタンスの役割タイプ<br/>- MASTER: `マスター`<br/>- FAILED_MASTER: `障害マスター`<br/>- CANDIDATE_MASTER: `予備マスター`<br/>- READ_ONLY_SLAVE: `リードレプリカ` |
+| dbInstances.dbInstanceStatus | Body | Enum | DBインスタンスの現在状態<br/>- BEFORE_CREATE: `作成前(グレー)`<br/>- AVAILABLE: `使用可能(グリーン)`<br/>- STORAGE_FULL: `容量不足(レッド)`<br/>- FAIL_TO_CREATE: `作成失敗(レッド)`<br/>- FAIL_TO_CONNECT: `接続失敗(レッド)`<br/>- REPLICATION_STOP: `複製中断(レッド)`<br/>- REPLICATION_DELAY: `複製遅延(イエロー)`<br/>- FAILOVER: `フェイルオーバー完了(レッド)`<br/>- SHUTDOWN: `停止済み(グレー)`<br/>- DELETED: `削除済み(グレー)` |
+| dbInstances.progressStatus | Body | Enum | DBインスタンスの現在進行状態<br/>- NONE<br/>- APPLYING_PARAMETER_GROUP<br/>- BACKING_UP<br/>- CANCELING<br/>- CREATING<br/>- CREATING_SCHEMA<br/>- CREATING_USER<br/>- DELETING<br/>- DELETING_SCHEMA<br/>- DELETING_USER<br/>- EXPORTING_BACKUP<br/>- FAILING_OVER<br/>- MIGRATING<br/>- MODIFYING<br/>- PREPARING<br/>- PROMOTING<br/>- PROMOTING_FORCIBLY<br/>- REBUILDING<br/>- REPAIRING<br/>- REPLICATING<br/>- RESTARTING<br/>- RESTARTING_FORCIBLY<br/>- RESTORING<br/>- STARTING<br/>- STOPPING<br/>- SYNCING_SCHEMA<br/>- SYNCING_USER<br/>- UPDATING_USER<br/>- WAIT_MANUAL_CONTROL |
+| dbInstances.createdYmdt | Body | DateTime | 作成日時 |
+| dbInstances.updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -669,19 +669,366 @@ GET /v4.0/db-instances
     },
     "dbInstances": [
         {
-            "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
-            "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
-            "dbInstanceName": "db-instance",
-            "description": null,
-            "dbVersion": "MARIADB_V10330",
-            "dbPort": 10000,
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceName": "dbInstanceName-example",
+            "description": "description-example",
+            "dbVersion": "MYSQL_V8036",
+            "dbPort": 1,
             "dbInstanceType": "MASTER",
-            "dbInstanceStatus": "AVAILABLE",
+            "dbInstanceStatus": "BEFORE_CREATE",
             "progressStatus": "NONE",
-            "createdYmdt": "2023-01-23T12:03:13+09:00",
-            "updatedYmdt": "2023-02-02T17:20:17+09:00"
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
+}
+```
+
+</p>
+</details>
+
+---
+### DBインスタンスを作成する
+
+```http
+POST /v4.0/db-instances
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Create | DBインスタンスの作成 |
+
+#### 共通リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceName | Body | String | O | DBインスタンスを識別できる名前<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+| description | Body | String | X | DBインスタンスに関する追加情報<br/>- 最大長さ: `100` |
+| dbFlavorId | Body | UUID | O | DBインスタンス仕様の識別子 |
+| dbVersion | Body | Enum | O | DBエンジンタイプ |
+| dbPort | Body | Number | O | DBポート<br/>- 最小値: 3306、最大値: 43306 |
+| dbUserName | Body | String | O | DBユーザーアカウント名<br/>- 最小長さ: `1`<br/>- 最大長さ: `32` |
+| dbPassword | Body | String | O | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256` |
+| parameterGroupId | Body | UUID | O | パラメータグループの識別子 |
+| dbSecurityGroupIds | Body | Array | X | DBセキュリティグループの識別子リスト |
+| userGroupIds | Body | Array | X | ユーザーグループの識別子リスト |
+| useHighAvailability | Body | Boolean | X | 高可用性を使用するかどうか<br/>- デフォルト値: `false` |
+| pingInterval | Body | Number | X | 高可用性使用時のPing間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| useDefaultNotification | Body | Boolean | X | 基本通知の使用有無<br/>- デフォルト値: `false` |
+| useDeletionProtection | Body | Boolean | X | 削除保護の有無<br/>- デフォルト値: `false` |
+| useSlowQueryAnalysis | Body | Boolean | X | Slow query分析の有無<br/>- デフォルト値: `true` |
+| authenticationPlugin | Body | Enum | X | 認証プラグイン<br/>- NATIVE: `mysql_native_password認証`<br/>- ED25519: `ed25519認証(MariaDB専用)` |
+| tlsOption | Body | Enum | X | TLS Option<br/>- デフォルト値: `NONE`<br/>- NONE: `TLS未使用`<br/>- SSL: `SSL認証`<br/>- X509: `X509証明書認証` |
+| network | Body | Object | O | ネットワーク情報オブジェクト |
+| network.subnetId | Body | UUID | O | サブネットの識別子 |
+| network.usePublicAccess | Body | Boolean | X | 外部接続可否<br/>- デフォルト値: `false` |
+| network.availabilityZone | Body | Enum | O | DBインスタンスを作成するアベイラビリティゾーン |
+| storage | Body | Object | O | データストレージ情報オブジェクト |
+| storage.storageType | Body | Enum | O | データストレージタイプ |
+| storage.storageSize | Body | Number | O | データストレージサイズ(GB)<br/>- 最小値: `20` |
+| storage.storageAutoscale | Body | Object | X | データストレージ自動拡張オブジェクト |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどうか<br/>- デフォルト値: `false` |
+| backup | Body | Object | O | バックアップ情報オブジェクト |
+| backup.backupPeriod | Body | Number | O | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730` |
+| backup.backupRetryCount | Body | Number | X | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10` |
+| backup.ftwrlWaitTimeout | Body | Number | X | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600` |
+| backup.replicationRegion | Body | Enum | X | バックアップ複製リージョン<br/>- KR1: `韓国(パンギョ)` |
+| backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br/>- デフォルト値: `true` |
+| backup.backupSchedules | Body | Array | O | 予定された自動バックアップリスト |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | O | バックアップ開始時刻 |
+| backup.backupSchedules.backupWndDuration | Body | Enum | O | バックアップDuration<br/>- HALF_AN_HOUR: `30分`<br/>- ONE_HOUR: `1時間`<br/>- ONE_HOUR_AND_HALF: `1時間30分`<br/>- TWO_HOURS: `2時間`<br/>- TWO_HOURS_AND_HALF: `2時間30分`<br/>- THREE_HOURS: `3時間` |
+
+#### 高可用性使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceCandidateName | Body | String | O | DBインスタンスを識別できる予備マスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+
+#### ストレージ自動拡張使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Body | Number | O | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95` |
+| storage.storageAutoscale.maxStorageSize | Body | Number | O | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096` |
+| storage.storageAutoscale.cooldownTime | Body | Number | O | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbVersion": "MYSQL_V8036",
+    "dbPort": 1,
+    "dbUserName": "dbUserName",
+    "dbPassword": "dbPassword",
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useHighAvailability": false,
+    "pingInterval": 3,
+    "useDefaultNotification": false,
+    "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE",
+    "network": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
+    "backup": {
+        "backupPeriod": 0,
+        "backupRetryCount": 0,
+        "ftwrlWaitTimeout": 1800,
+        "replicationRegion": "KR1",
+        "useBackupLock": true,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
+    }
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### オブジェクトストレージを利用したDBインスタンスの復元
+
+```http
+POST /v4.0/db-instances/restore-from-obs
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.RestoreFromObs | DBインスタンスオブジェクトストレージから復元 |
+
+#### 共通リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceName | Body | String | O | DBインスタンスを識別できるマスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+| description | Body | String | X | DBインスタンスに関する追加情報<br/>- 最大長さ: `100` |
+| dbFlavorId | Body | UUID | O | DBインスタンス仕様の識別子 |
+| dbPort | Body | Number | O | DBポート |
+| dbVersion | Body | Enum | O | DBエンジンタイプ |
+| useHighAvailability | Body | Boolean | X | 高可用性を使用するかどうか<br/>- デフォルト値: `false` |
+| pingInterval | Body | Number | X | 高可用性使用時のPing間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| storage | Body | Object | O | データストレージ情報オブジェクト |
+| storage.storageType | Body | Enum | O | ストレージタイプ |
+| storage.storageSize | Body | Number | O | データストレージサイズ(GB)<br/>- 最小値: `20` |
+| storage.storageAutoscale | Body | Object | X | データストレージ自動拡張オブジェクト |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどうか<br/>- デフォルト値: `false` |
+| network | Body | Object | O | ネットワーク情報オブジェクト |
+| network.subnetId | Body | UUID | O | サブネットの識別子 |
+| network.usePublicAccess | Body | Boolean | X | 外部接続可否<br/>- デフォルト値: `false` |
+| network.availabilityZone | Body | Enum | O | DBインスタンスを作成するアベイラビリティゾーン |
+| backup | Body | Object | O | バックアップ情報オブジェクト |
+| backup.backupPeriod | Body | Number | O | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730` |
+| backup.ftwrlWaitTimeout | Body | Number | X | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600` |
+| backup.backupRetryCount | Body | Number | X | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10` |
+| backup.replicationRegion | Body | Enum | X | バックアップ複製リージョン<br/>- KR1: `韓国(パンギョ)` |
+| backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br/>- デフォルト値: `true` |
+| backup.backupSchedules | Body | Array | O | 予定された自動バックアップリスト |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | O | バックアップ開始時刻 |
+| backup.backupSchedules.backupWndDuration | Body | Enum | O | バックアップDuration<br/>- HALF_AN_HOUR: `30分`<br/>- ONE_HOUR: `1時間`<br/>- ONE_HOUR_AND_HALF: `1時間30分`<br/>- TWO_HOURS: `2時間`<br/>- TWO_HOURS_AND_HALF: `2時間30分`<br/>- THREE_HOURS: `3時間` |
+| restore | Body | Object | O | 復元情報オブジェクト |
+| restore.tenantId | Body | String | O | バックアップが保存されたオブジェクトストレージのテナントID |
+| restore.username | Body | String | O | NHN Cloud会員またはIAMメンバーID |
+| restore.password | Body | String | O | バックアップが保存されたオブジェクトストレージのAPIパスワード |
+| restore.targetContainer | Body | String | O | バックアップが保存されたオブジェクトストレージのコンテナ |
+| restore.objectPath | Body | String | O | コンテナに保存されたバックアップのパス |
+| useDefaultNotification | Body | Boolean | X | 基本通知の使用有無<br/>- デフォルト値: `false` |
+| useSlowQueryAnalysis | Body | Boolean | X | Slow query分析の有無<br/>- デフォルト値: `true` |
+| parameterGroupId | Body | UUID | O | パラメータグループの識別子 |
+| dbSecurityGroupIds | Body | Array | X | DBセキュリティグループの識別子リスト |
+| userGroupIds | Body | Array | X | ユーザーグループの識別子リスト |
+| useDeletionProtection | Body | Boolean | X | 削除保護の有無<br/>- デフォルト値: `false` |
+
+#### 高可用性使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceCandidateName | Body | String | O | DBインスタンスを識別できる予備マスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+
+#### ストレージ自動拡張使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Body | Number | O | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95` |
+| storage.storageAutoscale.maxStorageSize | Body | Number | O | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096` |
+| storage.storageAutoscale.cooldownTime | Body | Number | O | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbPort": 1,
+    "dbVersion": "MYSQL_V8036",
+    "useHighAvailability": false,
+    "pingInterval": 3,
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
+    "network": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "backup": {
+        "backupPeriod": 0,
+        "ftwrlWaitTimeout": 1800,
+        "backupRetryCount": 0,
+        "replicationRegion": "KR1",
+        "useBackupLock": true,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
+    },
+    "restore": {
+        "tenantId": "0123456789abcdef0123456789abcdef",
+        "username": "username-example",
+        "password": "password-example",
+        "targetContainer": "targetContainer-example",
+        "objectPath": "objectPath-example"
+    },
+    "useDefaultNotification": false,
+    "useSlowQueryAnalysis": true,
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useDeletionProtection": false
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+### DBインスタンスを削除する
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Delete | DBインスタンスの削除 |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| deleteAutoBackup | Body | Boolean | X | 自動バックアップの削除有無<br/>- デフォルト値: `false` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "deleteAutoBackup": false
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -698,43 +1045,43 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 #### 必要権限
 
-| 権限名                                      | 説明          |
-|--------------------------------------------|---------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbInstance.Get | DBインスタンス詳細表示 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
 
-| 名前                        | 種類 | 形式     | 説明                                                                                                                                  |
-|-----------------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId                | Body | UUID     | DBインスタンスの識別子                                                                                                                        |
-| dbInstanceGroupId           | Body | UUID     | DBインスタンスグループの識別子                                                                                                                     |
-| dbInstanceName              | Body | String   | DBインスタンスを識別できる名前                                                                                                                       |
-| description                 | Body | String   | DBインスタンスの追加情報                                                                                                                          |
-| dbVersion                   | Body | Enum     | DBエンジンタイプ                                                                                                                            |
-| dbPort                      | Body | Number   | DBポート                                                                                                                               |
-| dbInstanceType              | Body | Enum     | DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
-| dbInstanceStatus            | Body | Enum     | DBインスタンスの現在状態                                                                                                                      |
-| progressStatus              | Body | Enum     | DBインスタンスの現在作業進行状態                                                                                                                |
-| dbFlavorId                  | Body | UUID     | DBインスタンス仕様の識別子                                                                                                                     |
-| parameterGroupId            | Body | UUID     | DBインスタンスに適用されたパラメータグループの識別子                                                                                                           |
-| dbSecurityGroupIds          | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
-| notificationGroupIds        | Body | Array    | DBインスタンスに適用された通知グループの識別子リスト                                                                                                          |
-| useDeletionProtection       | Body | Boolean  | DBインスタンス削除保護の有無                                                                                                                     |
-| useSlowQueryAnalysis        | Body | Boolean  | Slow query分析を行うかどうか                                                                                                                     |
-| supportAuthenticationPlugin | Body | Boolean  | 認証プラグインサポートの有無                                                                                                                         |
-| needToApplyParameterGroup   | Body | Boolean  | 最新パラメータグループの適用が必要かどうか                                                                                                                  |
-| needMigration               | Body | Boolean  | マイグレーションが必要かどうか                                                                                                                        |
-| supportDbVersionUpgrade     | Body | Boolean  | DBのバージョンアップグレードをサポートするかどうか                                                                                                             |
-| createdYmdt                 | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
-| updatedYmdt                 | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbInstanceId | Body | UUID | DBインスタンスの識別子 |
+| dbInstanceGroupId | Body | UUID | DBインスタンスグループの識別子 |
+| dbInstanceName | Body | String | DBインスタンスを識別できる名前 |
+| description | Body | String | DBインスタンスの追加情報 |
+| dbVersion | Body | Enum | DBエンジンタイプ |
+| dbPort | Body | Number | DBポート |
+| dbInstanceType | Body | Enum | DBインスタンスの役割タイプ<br/>- MASTER: `マスター`<br/>- FAILED_MASTER: `障害マスター`<br/>- CANDIDATE_MASTER: `予備マスター`<br/>- READ_ONLY_SLAVE: `リードレプリカ` |
+| dbInstanceStatus | Body | Enum | DBインスタンスの現在状態<br/>- BEFORE_CREATE: `作成前(グレー)`<br/>- AVAILABLE: `使用可能(グリーン)`<br/>- STORAGE_FULL: `容量不足(レッド)`<br/>- FAIL_TO_CREATE: `作成失敗(レッド)`<br/>- FAIL_TO_CONNECT: `接続失敗(レッド)`<br/>- REPLICATION_STOP: `複製中断(レッド)`<br/>- REPLICATION_DELAY: `複製遅延(イエロー)`<br/>- FAILOVER: `フェイルオーバー完了(レッド)`<br/>- SHUTDOWN: `停止済み(グレー)`<br/>- DELETED: `削除済み(グレー)` |
+| progressStatus | Body | Enum | DBインスタンスの現在作業進行状態<br/>- NONE<br/>- APPLYING_PARAMETER_GROUP<br/>- BACKING_UP<br/>- CANCELING<br/>- CREATING<br/>- CREATING_SCHEMA<br/>- CREATING_USER<br/>- DELETING<br/>- DELETING_SCHEMA<br/>- DELETING_USER<br/>- EXPORTING_BACKUP<br/>- FAILING_OVER<br/>- MIGRATING<br/>- MODIFYING<br/>- PREPARING<br/>- PROMOTING<br/>- PROMOTING_FORCIBLY<br/>- REBUILDING<br/>- REPAIRING<br/>- REPLICATING<br/>- RESTARTING<br/>- RESTARTING_FORCIBLY<br/>- RESTORING<br/>- STARTING<br/>- STOPPING<br/>- SYNCING_SCHEMA<br/>- SYNCING_USER<br/>- UPDATING_USER<br/>- WAIT_MANUAL_CONTROL |
+| dbFlavorId | Body | UUID | DBインスタンス仕様の識別子 |
+| parameterGroupId | Body | UUID | DBインスタンスに適用されたパラメータグループの識別子 |
+| dbSecurityGroupIds | Body | Array | DBインスタンスに適用されたDBセキュリティグループの識別子リスト |
+| notificationGroupIds | Body | Array | DBインスタンスに適用された通知グループの識別子リスト |
+| useDeletionProtection | Body | Boolean | DBインスタンス削除保護の有無 |
+| useSlowQueryAnalysis | Body | Boolean | Slow query分析を行うかどうか |
+| supportAuthenticationPlugin | Body | Boolean | 認証プラグインサポートの有無 |
+| needToApplyParameterGroup | Body | Boolean | 最新パラメータグループの適用が必要かどうか |
+| needMigration | Body | Boolean | マイグレーションが必要かどうか |
+| supportDbVersionUpgrade | Body | Boolean | DBのバージョンアップグレードをサポートするかどうか |
+| createdYmdt | Body | DateTime | 作成日時 |
+| updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -746,135 +1093,36 @@ GET /v4.0/db-instances/{dbInstanceId}
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
-    "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
-    "dbInstanceName": "db-instance",
-    "description": null,
-    "dbVersion": "MARIADB_V10330",
-    "dbPort": 10000,
+    "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceName": "dbInstanceName-example",
+    "description": "description-example",
+    "dbVersion": "MYSQL_V8036",
+    "dbPort": 1,
     "dbInstanceType": "MASTER",
-    "dbInstanceStatus": "AVAILABLE",
+    "dbInstanceStatus": "BEFORE_CREATE",
     "progressStatus": "NONE",
-    "dbFlavorId": "e9ed4ef6-78d7-46fa-ace9-32481e97f3b7",
-    "parameterGroupId": "b03e8b13-de27-4d04-a488-ff5689589372",
-    "dbSecurityGroupIds": ["01908c35-d2c9-4852-baf0-17f06ec42c03"],
-    "notificationGroupIds": ["83a62a33-ddbf-4a04-8653-e54463d5b1ac"],
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [
+        "550e8400-e29b-41d4-a716-446655440000"
+    ],
+    "notificationGroupIds": [
+        "550e8400-e29b-41d4-a716-446655440000"
+    ],
     "useDeletionProtection": false,
-    "useSlowQueryAnalysis": true,
-    "supportAuthenticationPlugin": true,
+    "useSlowQueryAnalysis": false,
+    "supportAuthenticationPlugin": false,
     "needToApplyParameterGroup": false,
     "needMigration": false,
-    "supportDbVersionUpgrade": true,
-    "createdYmdt": "2022-11-23T12:03:13+09:00",
-    "updatedYmdt": "2022-12-02T17:20:17+09:00"
+    "supportDbVersionUpgrade": false,
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
 </p>
 </details>
-
----
-
-### DBインスタンスを作成する
-
-```http
-POST /v4.0/db-instances
-```
-
-#### 必要権限
-
-| 権限名                                         | 説明         |
-|-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Create | DBインスタンスの作成 |
-
-#### リクエスト
-
-| 名前                                           | 種類   | 形式      | 必須 | 説明                                                                  |
-|----------------------------------------------|------|---------|----|---------------------------------------------------------------------|
-| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる マスター名                                                |
-| dbInstanceCandidateName                      | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                             |
-| description                                  | Body | String  | X  | DBインスタンスに関する追加情報                                                    |
-| dbFlavorId                                   | Body | UUID    | O  | DBインスタンス仕様の識別子                                                      |
-| dbVersion                                    | Body | Enum    | O  | DBエンジンタイプ                                                           |
-| dbPort                                       | Body | Number  | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |
-| dbUserName                                   | Body | String  | O  | DBユーザーアカウント名                                                        |
-| dbPassword                                   | Body | String  | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256`                 |
-| parameterGroupId                             | Body | UUID    | O  | パラメータグループの識別子                                                       |
-| dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                 |
-| userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                     |
-| useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                 |
-| pingInterval                                 | Body | Number  | X  | 高可用性使用時のPing間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
-| pingType                                            | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- デフォルト値: `INSERT`<br/>- `INSERT`<br/>- `SELECT`        |
-| useDefaultNotification                       | Body | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                     |
-| useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                       |
-| useSlowQueryAnalysis                         | Body | Boolean | X  | スロークエリ分析の有無<br/>- デフォルト値: `true`                                    |
-| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                   |
-| network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
-| network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
-| network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
-| network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                   |
-| storage                                      | Body | Object  | O  | データストレージ情報オブジェクト                                                                                                                                                                                                               |    
-| storage.storageType                          | Body | Enum    | O  | データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                             |
-| storage.storageSize                          | Body | Number  | O  | データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                              |
-| storage.storageAutoscale                     | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                                                                                                                                                                             |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | ストレージ自動拡張を行うかどうか                                                                                                                                                                                                               |
-| storage.storageAutoscale.threshold           | Body | Number  | X  | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95`                                                                                                                                                                                      |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096`                                                                                                                                                                                                |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440`                                                                                                                                                                              |
-| backup                                       | Body | Object  | O  | バックアップ情報オブジェクト                                                                                                                                                                                                                 |
-| backup.backupPeriod                          | Body | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
-| backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                            |
-| backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                   |
-| backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                          |
-| backup.backupSchedules                       | Body | Array   | O  | 予定された自動バックアップリスト                                                                                                                                                                                                               |
-| backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                 |
-| backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "dbInstanceName": "db-instance",
-    "description": "description",
-    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbVersion": "MARIADB_V10330",
-    "dbPort": 10000,
-    "dbUserName": "db-user",
-    "dbPassword": "password",
-    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
-    "dbSecurityGroupIds": [
-        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
-    ],
-    "userGroupIds": [],
-    "network": {
-        "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
-        "availabilityZone": "kr-pub-a"
-    },
-    "storage": {
-        "storageType": "General SSD",
-        "storageSize": 20
-    },
-    "backup": {
-        "backupPeriod": 1,
-        "backupSchedules": [
-            {
-                "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "ONE_HOUR"
-            }
-        ]
-    }
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
 
 ---
 
@@ -886,38 +1134,49 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 #### 必要権限
 
-| 権限名                                         | 説明         |
-|-----------------------------------------------|--------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbInstance.Modify | DBインスタンスを修正する |
 
 #### リクエスト
 
-| 名前                     | 種類  | 形式     | 必須 | 説明                                         |
-|-------------------------|------|---------|----|---------------------------------------------|
-| dbInstanceId            | URL  | UUID    | O  | DBインスタンスの識別子                               |
-| dbInstanceName          | Body | String  | X  | DBインスタンスを識別できる マスター名                   |
-| dbInstanceCandidateName | Body | String  | X  | DBインスタンスを識別できる 予備マスター名 |
-| description             | Body | String  | X  | DBインスタンスに関する追加情報                          |
-| dbPort                  | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`  |
-| useSlowQueryAnalysis | Body | Boolean  | X | Slow query分析を行うかどうか |
-| dbFlavorId         | Body | UUID    | X  | DBインスタンス仕様の識別子                                                         |
-| parameterGroupId   | Body | UUID    | X  | パラメータグループの識別子                                                            |
-| dbSecurityGroupIds | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                        |
-| executeBackup      | Body | Boolean | X  | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false`                                       |
-| useOnlineFailover  | Body | Boolean | X  | フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false` |
-| waitReplicationDelay | Body | Boolean | X | レプリケーション遅延解消の待機有無<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値：`false` |
-| useReadOnly | Body | Boolean | X | 読み取り専用への変更有無<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値：`false` |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| dbInstanceName | Body | String | X | DBインスタンスを識別できるマスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+| dbInstanceCandidateName | Body | String | X | DBインスタンスを識別できる予備マスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+| description | Body | String | X | DBインスタンスの追加情報<br/>- 最大長さ: `100` |
+| dbPort | Body | Number | X | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306` |
+| dbFlavorId | Body | UUID | X | DBインスタンス仕様の識別子 |
+| parameterGroupId | Body | UUID | X | パラメータグループの識別子 |
+| dbVersion | Body | Enum | X | DBエンジンバージョンコード |
+| useSlowQueryAnalysis | Body | Boolean | X | Slow query分析を行うかどうか |
+| useDummy | Body | Boolean | X | 単一DBインスタンスのDBバージョンアップグレード時にダミーを使用するかどうか<br/>- デフォルト値: `false` |
+| dbSecurityGroupIds | Body | Array | X | DBセキュリティグループの識別子リスト |
+| executeBackup | Body | Boolean | X | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false` |
+| useOnlineFailover | Body | Boolean | X | フェイルオーバーを利用した再起動を行うかどうか<br/>- デフォルト値: `false` |
+| waitReplicationDelay | Body | Boolean | X | レプリケーション遅延解消の待機有無<br/>- デフォルト値: `false` |
+| useReadOnly | Body | Boolean | X | 読み取り専用への変更有無<br/>- デフォルト値: `false` |
 
 <details><summary>例</summary>
 <p>
 
 ```json
 {
-    "dbInstanceName": "db-instance2",
-    "description": "description2",
-    "dbPort": 10001,
+    "dbInstanceName": "dbInstanceName",
+    "dbInstanceCandidateName": "dbInstanceCandidateName",
+    "description": "description-example",
+    "dbPort": 1,
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbVersion": "MYSQL_V8036",
+    "useSlowQueryAnalysis": false,
+    "useDummy": false,
     "dbSecurityGroupIds": [],
-    "executeBackup": true
+    "executeBackup": false,
+    "useOnlineFailover": false,
+    "waitReplicationDelay": false,
+    "useReadOnly": false
 }
 ```
 
@@ -926,426 +1185,9 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 #### レスポンス
 
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBインスタンスを削除する
-
-```http
-DELETE /v4.0/db-instances/{dbInstanceId}
-```
-
-#### 必要権限
-
-| 権限名                                         | 説明         |
-|-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Delete | DBインスタンスの削除 |
-
-#### リクエスト
-
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-| deleteAutoBackup | Body | Boolean | X | 自動バックアップの削除有無<br/>- デフォルト値：`false` |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBインスタンスを再起動する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/restart
-```
-
-#### 必要権限
-
-| 権限名                                          | 説明          |
-|------------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Restart | DBインスタンスの再起動 |
-
-#### リクエスト
-
-| 名前              | 種類 | 形式    | 必須 | 説明                                                                            |
-|-------------------|------|---------|----|-------------------------------------------------------------------------------|
-| dbInstanceId      | URL  | UUID    | O  | DBインスタンスの識別子                                                                  |
-| useOnlineFailover | Body | Boolean | X  | フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false` |
-| executeBackup     | Body | Boolean | X  | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false`                                       |
-| waitReplicationDelay | Body | Boolean | X | レプリケーション遅延解消待機を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値：`false` |
-| useReadOnly | Body | Boolean | X | 読み取り専用への変更を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値：`false` |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-### DBインスタンスを強制再起動する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/force-restart
-```
-
-#### 必要権限
-
-| 権限名                                               | 説明             |
-|-----------------------------------------------------|------------------|
-| RDSforMariaDB:DbInstance.ForceRestart | DBインスタンスの強制再起動 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前              | 種類 | 形式    | 必須 | 説明                                                                      |
-|-------------------|------|---------|----|---------------------------------------------------------------------------|
-| dbInstanceId      | URL  | UUID    | O  | DBインスタンスの識別子                                                            |
-
-
-#### レスポンス
-
-このAPIはレスポンス本文を返しません。
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    }
-}
-```
-
-</p>
-</details>
-
-
----
-
-### DBインスタンスを起動する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/start
-```
-
-#### 必要権限
-
-| 権限名                                        | 説明         |
-|----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Start | DBインスタンスの起動 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBインスタンスを停止する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/stop
-```
-
-#### 必要権限
-
-| 権限名                                       | 説明         |
-|---------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Stop | DBインスタンスの停止 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBインスタンスを複製する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/replicate
-```
-
-#### 必要権限
-
-| 権限名                                            | 説明         |
-|--------------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Replicate | DBインスタンスの複製 |
-
-#### リクエスト
-
-| 名前                                         | 種類 | 形式    | 必須 | 説明                                                                      |
-|----------------------------------------------|------|---------|----|---------------------------------------------------------------------------|
-| dbInstanceId                                 | URL  | UUID    | O  | DBインスタンスの識別子                                                            |
-| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる名前                                                 |
-| description                                  | Body | String  | X  | DBインスタンスの追加情報                                                       |
-| dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子<br/>- デフォルト値:原本DBインスタンス値                                 |
-| dbPort                                       | Body | Number  | X  | DBポート<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `3306`<br/>- 最大値: `43306`        |
-| parameterGroupId                             | Body | UUID    | X  | パラメータグループの識別子<br/>- デフォルト値:原本DBインスタンス値                                    |
-| dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト<br/>- デフォルト値:原本DBインスタンス値                                |
-| userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                          |
-| useDefaultNotification                       | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                            |
-| useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                               |
-| useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                        |
-| network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                              |
-| network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値:原本DBインスタンス値                                     |
-| network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                  |
-| storage                                      | Body | Object  | X  | データストレージ情報オブジェクト                                                          |    
-| storage.storageType                          | Body | Enum    | X  | データストレージタイプ<br/>- デフォルト値:原本DBインスタンス値<br/>- 例: `General SSD`                        |
-| storage.storageSize                          | Body | Number  | X  | データストレージサイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `20`<br/>- 最大値: `2048` |
-| storage.storageAutoscale                     | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                       |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | ストレージ自動拡張を行うかどうか   <br/>- デフォルト値:原本DBインスタンス値                                                          |
-| storage.storageAutoscale.threshold           | Body | Number  | X  | 自動拡張条件(%)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `50`<br/>- 最大値: `95`                               |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最大値: `4096`                                         |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `10`<br/>- 最大値: `1440`                         |
-| backup                                       | Body | Object  | X  | バックアップ情報オブジェクト                                                                |
-| backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`       |
-| backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `21600`  |
-| backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `10`          |
-| backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                              |
-| backup.backupSchedules                       | Body | Array   | X  | 予定された自動バックアップリスト                                                                                                                                                                                                                                         |
-| backup.backupSchedules.backupWndBgnTime      | Body | String  | X  | バックアップ開始時刻<br/>- 例: `00:00:00`<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                             |
-| backup.backupSchedules.backupWndDuration     | Body | Enum    | X  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間<br/>- デフォルト値:原本DBインスタンス値 |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "dbInstanceName": "db-instance-replicate",
-    "description": "description",
-    "dbPort": 11000,
-    "network": {
-        "availabilityZone": "kr-pub-a"
-    },
-    "storage": {
-        "stroageSize": 100
-    }
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBインスタンスを昇格する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/promote
-```
-
-#### 必要権限
-
-| 権限名                                          | 説明         |
-|------------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Promote | DBインスタンスの昇格 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBインスタンスの再構築
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/rebuild
-```
-
-#### 必要権限
-
-| 権限名                                          | 説明          |
-|------------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Rebuild | DBインスタンスの再構築 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### 復元情報照会
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/restoration-info
-```
-
-#### 必要権限
-
-| 権限名                                      | 説明          |
-|--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | DBインスタンス詳細表示 |
-
-#### リクエスト
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前                                    | 種類 | 形式     | 説明                                                                                                                                                                         |
-|-----------------------------------------|------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| oldestRestorableYmdt                    | Body | DateTime | 最古の復元可能時間                                                                                                                                                                               |
-| latestRestorableYmdt                    | Body | DateTime | 最新の復元可能時間                                                                                                                                                                               |
-| restorableBackups                       | Body | Array    | 復元可能なバックアップリスト                                                                                                                                                               |
-| restorableBackups.backup                | Body | Object   | バックアップ情報オブジェクト                                                                                                                                                                   |
-| restorableBackups.backup.backupId       | Body | UUID     | バックアップの識別子                                                                                                                                                                    |
-| restorableBackups.backup.backupName     | Body | String   | バックアップ名                                                                                                                                                                      |
-| restorableBackups.backup.useBackupLock  | Body | Boolean  | テーブルロックを使用するかどうか                                                                                                                                                               |
-| restorableBackups.backup.backupSize     | Body | Number   | バックアップサイズ                                                                                                                                                                      |
-| restorableBackups.backup.backupType     | Body | Enum     | バックアップタイプ<br/>- `AUTO`:自動<br/>- `MANUAL`:手動                                                                                                                   |
-| restorableBackups.backup.backupStatus   | Body | Enum     | バックアップ状態<br/>- `BACKING_UP`:バックアップ中の場合<br/>- `COMPLETED`:バックアップが完了している場合<br/>- `DELETING`:バックアップが削除中の場合<br/>- `DELETED`:バックアップが削除されている場合<br/>- `ERROR`:エラーが発生した場合 |
-| restorableBackups.backup.dbInstanceId   | Body | UUID     | 原本DBインスタンスの識別子                                                                                                                                                            |
-| restorableBackups.backup.dbInstanceName | Body | String   | 原本DBインスタンスの名前                                                                                                                                                             |
-| restorableBackups.backup.dbVersion      | Body | String   | DBエンジンタイプ                                                                                                                                                                   |
-| restorableBackups.backup.failoverCount  | Body | Number   | フェイルオーバー回数                                                                                                                                                                   |
-| restorableBackups.backup.binLogFileName | Body | String   | バイナリログファイル名                                                                                                                                                              |
-| restorableBackups.backup.binLogPosition | Body | Number   | バイナリログファイル位置                                                                                                                                                              |
-| restorableBackups.backup.createdYmdt    | Body | DateTime | バックアップ作成日時                                                                                                                                                                   |
-| restorableBackups.backup.updatedYmdt    | Body | DateTime | バックアップ更新日時                                                                                                                                                                   |
-| restorableBackups.restorableBinLogs     | Body | Array    | 該当バックアップを利用して復元可能なバイナリログ名リスト                                                                                                                                                            |
-
-
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-	"header": {
-		"resultCode": 0,
-		"resultMessage": "SUCCESS",
-		"isSuccessful": true
-	},
-    "oldestRestorableYmdt": "2023-07-09T16:33:33+09:00",
-	"latestRestorableYmdt": "2023-07-10T15:44:44+09:00",
-	"restorableBackups": [
-		{
-			"backup": {
-				"backupId": "145d889a-fe08-474f-8f58-bde576ff96a9",
-				"backupName": "example-backup-name",
-				"backupStatus": "COMPLETED",
-				"dbInstanceId": "dba1be25-9429-4589-9716-7fb6daad7cb9",
-				"dbInstanceName": "original-db-instance-name",
-				"dbVersion": "MARIADB_V10330",
-				"backupType": "MANUAL",
-				"backupSize": 8299904,
-				"useBackupLock": true,
-				"failoverCount": 0,
-				"binLogFileName": "mysql-bin.000001",
-				"binLogPosition": 367916037,
-				"createdYmdt": "2023-07-10T15:44:44+09:00",
-				"updatedYmdt": "2023-07-10T15:46:07+09:00"
-			},
-			"restorableBinLogs": [
-				"mysql-bin.000001"
-			]
-		}
-	]
-}
-```
-
-</p>
-</details>
-
----
-
-### 復元される最後のクエリ照会
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
-```
-
-#### 必要権限
-
-| 権限名                                      | 説明          |
-|--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | DBインスタンス詳細表示 |
-
-#### 共通リクエスト
-
-| 名前         | 種類  | 形式 | 必須 | 説明                                                                                                                        |
-|--------------|-------|------|----|-----------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId | URL   | UUID | O  | DBインスタンスの識別子                                                                                                              |
-| restoreType  | Query | Enum | O  | 復元タイプの種類<br/>- `TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ<br/>- `BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ |
-
-#### restoreTypeが`TIMESTAMP`の場合
-
-| 名前        | 種類  | 形式     | 必須 | 説明                                      |
-|-------------|-------|----------|----|-------------------------------------------|
-| restoreYmdt | Query | DateTime | O  | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-
-#### restoreTypeが`BINLOG`の場合
-
-| 名前           | 種類  | 形式   | 必須 | 説明               |
-|----------------|-------|--------|----|--------------------|
-| backupId       | Query | UUID   | O  | 復元に使用するバックアップの識別子  |
-| binLogFileName | Query | String | O  | 復元に使用するバイナリログ名 |
-| binLogPosition | Query | Number | O  | 復元に使用するバイナリログ位置 |
-
-#### レスポンス
-
-| 名前         | 種類 | 形式     | 説明                                 |
-|--------------|------|----------|--------------------------------------|
-| executedYmdt | Body | DateTime | クエリ実行日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| lastQuery    | Body | String   | 最後に実行したクエリ                         |
 
 <details><summary>例</summary>
 <p>
@@ -1357,701 +1199,12 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "executedYmdt": "2023-03-17T14:02:29+09:00",
-    "lastQuery": "INSERT INTO `test`.`test`SET  @1='0123'"
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
 </p>
 </details>
-
----
-
-### 復元
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/restore
-```
-
-#### 必要権限
-
-| 権限名                                          | 説明         |
-|------------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Restore | DBインスタンスの復元 |
-
-#### 共通リクエスト
-
-| 名前                                                | 種類 | 形式    | 必須 | 説明                                                                                                                                                                    |
-|-----------------------------------------------------|------|---------|----|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId                                        | URL  | UUID    | O  | DBインスタンスの識別子                                                                                                                                                          |
-| restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                              |
-| restore.restoreType                                 | Body | Enum    | O  | 復元タイプの種類<br/>- `TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ<br/>- `BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ<br/>- `BACKUP`:既存に作成したバックアップを利用したスナップショット復元タイプ                                                                                                                                                                                                                                                                                                            |
-| dbInstanceName                                      | Body | String  | O  | DBインスタンスを識別できる マスター名                                                                                                                                               |
-| dbInstanceCandidateName                             | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                                                                                                                             |
-| description                                         | Body | String  | X  | DBインスタンスに対する追加情報                                                                                                                                                                                                    |
-| dbFlavorId                                          | Body | UUID    | X  | DBインスタンス仕様の識別子                                                                                                                                                       |
-| dbPort | Body | Number | X | DBポート<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`3306`<br/>- 最大値：`43306` |
-| parameterGroupId | Body | UUID | X | パラメータグループの識別子<br/>- デフォルト値：原本DBインスタンスの値 |
-| dbSecurityGroupIds                                  | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                      |
-| userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                        |
-| useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| pingInterval                                        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                  |
-| pingType                                            | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- デフォルト値: `INSERT`<br/>- `INSERT`<br/>- `SELECT`                                                                                      |
-| useDefaultNotification                              | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| useDeletionProtection                               | Body | Boolean | X  | 削除保護の有無<br>デフォルト値: `false`                                                                                                                                                |
-| useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                                                                                                                      |
-| network                                             | Body | Object  | X  | ネットワーク情報オブジェクト                                                                                                                                                            |
-| network.subnetId                                    | Body | UUID    | X  | サブネットの識別子<br/>- デフォルト値: 原本DBインスタンスの値                                                                                                                                                              |
-| network.usePublicAccess                             | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                           |
-| network.availabilityZone                            | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`<br/>- デフォルト値: ランダム選択                                                                                                                 |
-| storage                                             | Body | Object  | X  | ストレージ情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| storage.storageType | Body | Enum | X | データストレージタイプ<br/>- デフォルト値：原本DBインスタンスの値<br/>- 例：`General SSD` |
-| storage.storageSize | Body | Number | X | データストレージサイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`20`<br/>- 最大値：`2048` |
-| storage.storageAutoscale                            | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                                                                                                                     |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張の使用有無 |
-| storage.storageAutoscale.threshold | Body | Number | X | 自動拡張条件(%)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`50`<br/>- 最大値：`95` |
-| storage.storageAutoscale.maxStorageSize | Body | Number | X | 自動拡張最大サイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最大値：`4096` |
-| storage.storageAutoscale.cooldownTime | Body | Number | X | 自動拡張クールダウン時間(分)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`10`<br/>- 最大値：`1440` |
-| backup                                              | Body | Object  | X  | バックアップ情報オブジェクト                                                                                                                                                              |
-| backup.backupPeriod | Body | Number | X | バックアップ保管期間(日)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`0`<br/>- 最大値：`730` |
-| backup.ftwrlWaitTimeout                             | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                   |
-| backup.backupRetryCount                             | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                              |
-| backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| backup.backupSchedules | Body | Array | X | 予定された自動バックアップリスト                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| backup.backupSchedules.backupWndBgnTime | Body | String | X | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| backup.backupSchedules.backupWndDuration | Body | Enum | X | バックアップDuration<br>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`<span style="color:#313338">: 30分</span><br/>- `ONE_HOUR`<span style="color:#313338">: 1時間</span><br/>- `ONE_HOUR_AND_HALF`<span style="color:#313338">: 1時間30分</span><br/>- `TWO_HOURS`<span style="color:#313338">: 2時間</span><br/>- `TWO_HOURS_AND_HALF`<span style="color:#313338">: 2時間30分</span><br/>- `THREE_HOURS`<span style="color:#313338">: 3時間</span> |
-
-#### Timestampを利用した時点復元時、リクエスト(restoreTypeが`TIMESTAMP`の場合)
-
-| 名前                | 種類 | 形式     | 必須 | 説明                                                                                           |
-|---------------------|------|----------|----|------------------------------------------------------------------------------------------------|
-| restore.restoreYmdt | Body | DateTime | O  | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>復元情報照会で照会した最新の復元可能な時間以前に対してのみ復元が可能です。 |
-
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "dbInstanceName": "db-instance",
-    "description": "description",
-    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbPort": 10000,
-    "dbUserName": "db-user",
-    "dbPassword": "password",
-    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
-    "dbSecurityGroupIds": [
-        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
-    ],
-    "userGroupIds": [],
-    "network": {
-		"subnetId": "3ae7914f-9b42-4729-b125-87417b72cf36",
-		"availabilityZone": "kr-pub-a"
-	},
-	"storage": {
-		"storageType": "General SSD",
-		"storageSize": 20
-	},
-	"restore": {
-		"restoreType": "TIMESTAMP",
-		"restoreYmdt": "2023-07-10T15:44:44+09:00"
-	},
-	"backup": {
-		"backupPeriod": 1,
-		"backupSchedules": [
-			{
-				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF"
-			}
-		]
-	}
-}
-```
-
-</p>
-</details>
-
-#### バイナリログを利用した時点復元時、リクエスト(restoreTypeが`BINLOG`の場合)
-
-| 名前                          | 種類 | 形式   | 必須 | 説明               |
-|-------------------------------|------|--------|----|--------------------|
-| restore.backupId              | Body | UUID   | O  | 復元に使用するバックアップの識別子  |
-| restore.binLog                | Body | Object | O  | バイナリログ情報オブジェクト    |
-| restore.binLog.binLogFileName | Body | String | O  | 復元に使用するバイナリログの名前 |
-| restore.binLog.binLogPosition | Body | Number | O  | 復元に使用するバイナリログの位置 |
-
-* バイナリログを利用した時点復元時、基準バックアップのバイナリログファイルおよび位置を基準に、その後に記録されたログに対して復元が可能です。
-
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "dbInstanceName": "db-instance",
-    "description": "description",
-    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbPort": 10000,
-    "dbUserName": "db-user",
-    "dbPassword": "password",
-    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
-    "dbSecurityGroupIds": [
-        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
-    ],
-    "userGroupIds": [],
-    "network": {
-		"subnetId": "3ae7914f-9b42-4729-b125-87417b72cf36",
-		"availabilityZone": "kr-pub-a"
-	},
-	"storage": {
-		"storageType": "General SSD",
-		"storageSize": 20
-	},
-	"restore": {
-		"restoreType": "BINLOG",
-        "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36",
-		"binLogFileName": "mysql-bin.000001",
-		"binLogPosition": 1234567
-	},
-	"backup": {
-		"backupPeriod": 1,
-		"backupSchedules": [
-			{
-				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF"
-			}
-		]
-	}
-}
-```
-
-</p>
-</details>
-
-#### バックアップを利用した復元時、リクエスト(restoreTypeが`BACKUP`の場合)
-
-| 名前             | 種類 | 形式 | 必須                         | 説明            |
-|------------------|------|------|------------------------------|-----------------|
-| restore.backupId | Body | UUID | O(restoreTypeが`BACKUP`の場合) | 復元に使用するバックアップの識別子 |
-
-
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "dbInstanceName": "db-instance",
-    "description": "description",
-    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbPort": 10000,
-    "dbUserName": "db-user",
-    "dbPassword": "password",
-    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
-    "dbSecurityGroupIds": [
-        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
-    ],
-    "userGroupIds": [],
-    "network": {
-		"subnetId": "3ae7914f-9b42-4729-b125-87417b72cf36",
-		"availabilityZone": "kr-pub-a"
-	},
-	"storage": {
-		"storageType": "General SSD",
-		"storageSize": 20
-	},
-	"restore": {
-		"restoreType": "BACKUP",
-        "backupId":"3ae7914f-9b42-4729-b125-87417b72cf36"
-	},
-	"backup": {
-		"backupPeriod": 1,
-		"backupSchedules": [
-			{
-				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF"
-			}
-		]
-	}
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
-
----
-
-### オブジェクトストレージから復元
-
-```http
-POST /v4.0/db-instances/restore-from-obs
-```
-
-#### 必要権限
-
-| 権限名                                                 | 説明                    |
-|-------------------------------------------------------|-------------------------|
-| RDSforMariaDB:DbInstance.RestoreFromObs | DBインスタンスオブジェクトストレージから復元 |
-
-#### リクエスト
-
-| 名前                                                | 種類 | 形式    | 必須 | 説明                                                                                   |
-|-----------------------------------------------------|------|---------|----|----------------------------------------------------------------------------------------|
-| restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                             |
-| restore.tenantId                                    | Body | String  | O  | バックアップが保存されたオブジェクトストレージのテナントID                                                              |
-| restore.username                                    | Body | String  | O  | NHN Cloud会員またはIAMメンバーID                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| restore.password                                    | Body | String  | O  | バックアップが保存されたオブジェクトストレージのAPIパスワード                                                          |
-| restore.targetContainer                             | Body | String  | O  | バックアップが保存されたオブジェクトストレージのコンテナ                                                              |
-| restore.objectPath                                  | Body | String  | O  | コンテナに保存されたバックアップのパス                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| dbVersion                                           | Body | Enum    | O  | DBエンジンタイプ                                                                             |
-| dbInstanceName                                      | Body | String  | O  | DBインスタンスを識別できる マスター名                                                              |
-| dbInstanceCandidateName                             | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                                            |
-| description                                         | Body | String  | X  | DBインスタンスに対する追加情報                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| dbFlavorId                                          | Body | UUID    | O  | DBインスタンス仕様の識別子                                                                      |
-| dbPort                                              | Body | Number  | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                            |
-| parameterGroupId | Body | UUID    | O  | パラメータグループの識別子                                                                         |
-| dbSecurityGroupIds                                  | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                                     |
-| userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                       |
-| useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| pingInterval                                        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
-| pingType                                            | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- デフォルト値: `INSERT`<br/>- `INSERT`<br/>- `SELECT`       |
-| useDefaultNotification                              | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| useDeletionProtection                               | Body | Boolean | X  | 削除保護の有無<br>デフォルト値: `false`                                                               |
-| useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                                     |
-| network                                             | Body | Object  | O  | ネットワーク情報オブジェクト                                                                           |
-| network.subnetId                                    | Body | UUID    | O  | サブネットの識別子                                                                             |
-| network.usePublicAccess                             | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                          |
-| network.availabilityZone                            | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                |
-| storage                                             | Body | Object  | O  | データストレージ情報オブジェクト                                                                       |
-| storage.storageType                                 | Body | Enum    | O  | データストレージタイプ<br/>- 例: `General SSD`                                     |
-| storage.storageSize                                 | Body | Number  | O  | データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                     |
-| storage.storageAutoscale                            | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                                    |
-| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X  | ストレージ自動拡張を行うかどうか                                                                         |
-| storage.storageAutoscale.threshold                  | Body | Number  | X  | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95`                                            |
-| storage.storageAutoscale.maxStorageSize             | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096`                                                      |
-| storage.storageAutoscale.cooldownTime               | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440`                                      |
-| backup                                              | Body | Object  | O  | バックアップ情報オブジェクト                                                                             |
-| backup.backupPeriod                                 | Body | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                           |
-| backup.ftwrlWaitTimeout                             | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`  |
-| backup.backupRetryCount                             | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`             |
-| backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| backup.backupSchedules | Body | Array | O | 予定された自動バックアップリスト                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| backup.backupSchedules.backupWndBgnTime | Body | String | O | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| backup.backupSchedules.backupWndDuration | Body | Enum | O | バックアップDuration<br>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`<span style="color:#313338">: 30分</span><br/>- `ONE_HOUR`<span style="color:#313338">: 1時間</span><br/>- `ONE_HOUR_AND_HALF`<span style="color:#313338">: 1時間30分</span><br/>- `TWO_HOURS`<span style="color:#313338">: 2時間</span><br/>- `TWO_HOURS_AND_HALF`<span style="color:#313338">: 2時間30分</span><br/>- `THREE_HOURS`<span style="color:#313338">: 3時間</span> |
-
-
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "dbInstanceName": "db-instance",
-    "description": "description",
-    "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbPort": 10000,
-    "dbVersion": "MARIADB_V10330",
-    "dbUserName": "db-user",
-    "dbPassword": "password",
-    "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
-    "dbSecurityGroupIds": [
-        "b0483a3d-e8e2-46f6-9e84-d5e31b0d44f4"
-    ],
-    "userGroupIds": [],
-    "network": {
-		"subnetId": "3ae7914f-9b42-4729-b125-87417b72cf36",
-		"availabilityZone": "kr-pub-a"
-	},
-	"storage": {
-		"storageType": "General SSD",
-		"storageSize": 20
-	},
-	"restore": {
-		"tenantId":"tenant-id",
-        "username":"username",
-        "password":"password",
-        "targetContainer":"targetContainer",
-        "objectPath":"objectPath"
-	},
-	"backup": {
-		"backupPeriod": 1,
-		"backupSchedules": [
-			{
-				"backupWndBgnTime": "00:00:00",
-				"backupWndDuration": "ONE_HOUR_AND_HALF"
-			}
-		]
-	}
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
-
----
-
-
-### DBインスタンス削除保護設定を変更する
-
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
-```
-
-#### 必要権限
-
-| 権限名                                         | 説明         |
-|-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | DBインスタンスを修正する |
-
-#### リクエスト
-
-| 名前                  | 種類 | 形式    | 必須 | 説明         |
-|-----------------------|------|---------|----|--------------|
-| dbInstanceId          | URL  | UUID    | O  | DBインスタンスの識別子 |
-| useDeletionProtection | Body | Boolean | O  | 削除保護の有無    |
-
-#### レスポンス
-
-このAPIはレスポンス本文を返しません。
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    }
-}
-```
-
-</p>
-</details>
-
----
-
-### 高可用性の状態
-
-| 状態                               | 説明                               |
-|----------------------------------|---------------------------------|
-| `CREATED`                        | 高可用性が作成された場合                    |
-| `STABLE`                         | 高可用性が正常な場合                    |
-| `PAUSING`                        | 高可用性が一時停止中の場合               |
-| `PAUSED`                         | 高可用性が一時停止された場合                 |
-| `PAUSED_DUE_TO_TASK`             | タスクにより高可用性が一時停止された場合         |
-| `DISABLE_MASTER_IN_REPLICATION`  | マスターの異常なレプリケーションの検知により高可用性が中断された場合     |
-| `DISABLE_MHA_PROCESS`            | 高可用性プロセスが中断された場合               |
-| `DISABLE_REPLICATION_STOP`       | レプリケーションの中断により高可用性が中断された場合         |
-| `DISABLE_REPLICATION_DELAY`      | レプリケーションの遅延により高可用性が中断された場合         |
-| `MASTER_FAILURE_DETECTION`       | マスターの障害が検知された場合                 |
-| `FAILOVER_STARTED`               | フェイルオーバーが開始された場合                   |
-| `FAILOVER_FAILED`                | フェイルオーバーが失敗した場合                   |
-| `FAILOVER_COMPLETED`             | フェイルオーバーが完了した場合                   |
-| `DELETED`                        | 高可用性が削除された場合                   |
-
----
-
-### 高可用性情報の照会
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/high-availability
-```
-
-#### 必要な権限
-
-| 権限名                                              | 説明         |
-|----------------------------------------------------|------------|
-| RDSforMariaDB:DbInstance.Get | DBインスタンスの詳細照会 |
-
-#### リクエスト
-
-このAPIはリクエストボディを必要としません。
-
-| 名前           | 種類  | 形式   | 必須 | 説明           |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前                  | 種類   | 形式      | 説明                                                                                                                  |
-|---------------------|------|---------|---------------------------------------------------------------------------------------------------------------------|
-| useHighAvailability | Body | Boolean | 高可用性の使用有無                                                                                                          |
-| haStatus            | Body | Enum    | 高可用性の状態                                                                                                          |
-| pingInterval        | Body | Number  | Ping間隔(秒)                                                                                                           |
-| pingType            | Body | Enum    | Pingタイプ<br/>- `INSERT`<br/>- `SELECT`                                                                                |                                                                                              |
-
-<details><summary>例</summary>
-
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "useHighAvailability": true,
-    "haStatus": "STABLE",
-    "pingInterval": 3,
-    "pingType": "INSERT"
-}
-```
-
-</p>
-
-</details>
----
-
-### 高可用性を修正する
-
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/high-availability
-```
-
-#### 必要権限
-
-| 権限名                                               | 説明      |
-|-----------------------------------------------------|-----------|
-| RDSforMariaDB:HighAvailability.Modify | 高可用性の修正 |
-
-#### リクエスト
-
-| 名前                | 種類 | 形式    | 必須 | 説明                                                 |
-|---------------------|------|---------|----|------------------------------------------------------|
-| dbInstanceId        | URL  | UUID    | O  | DBインスタンスの識別子                                       |
-| useHighAvailability | Body | Boolean | O  | 高可用性を使用するかどうか                                       |
-| pingInterval        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600` |
-| pingType            | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- `INSERT`<br/>- `SELECT`         |
-| dbInstanceCandidateName | Body | String | O | DBインスタンスを識別できるスタンバイマスター名 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### 高可用性を再開する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
-```
-
-#### 必要権限
-
-| 権限名                                               | 説明         |
-|-----------------------------------------------------|--------------|
-| RDSforMariaDB:HighAvailability.Resume | 高可用性の再開 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### 高可用性を一時停止する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
-```
-
-#### 必要権限
-
-| 権限名                                              | 説明         |
-|----------------------------------------------------|--------------|
-| RDSforMariaDB:HighAvailability.Pause | 高可用性の一時停止 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### 高可用性を復旧する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
-```
-
-#### 必要権限
-
-| 権限名                                               | 説明      |
-|-----------------------------------------------------|-----------|
-| RDSforMariaDB:HighAvailability.Repair | 高可用性の復旧 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### 高可用性を分離する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
-```
-
-#### 必要権限
-
-| 権限名                                              | 説明      |
-|----------------------------------------------------|-----------|
-| RDSforMariaDB:HighAvailability.Split | 高可用性の分離 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### ストレージ情報を表示
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/storage-info
-```
-
-#### 必要権限
-
-| 権限名                                      | 説明          |
-|--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | DBインスタンス詳細表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前                                 | 種類 | 形式    | 説明                                                                                 |
-|--------------------------------------|------|---------|--------------------------------------------------------------------------------------|
-| storageType                          | Body | Enum    | データストレージタイプ                                                                        |
-| storageSize                          | Body | Number  | データストレージサイズ(GB)                                                                      |
-| storageStatus                        | Body | Enum    | データストレージの現在状態<br/>- `DETACHED`:取り付けられていない<br/>- `ATTACHED`:取り付けられている<br/>- `DELETED`:削除済み |
-| storageAutoscale                     | Body | Object  | データストレージ自動拡張オブジェクト                                                                  |
-| storageAutoscale.useStorageAutoscale | Body | Boolean | ストレージ自動拡張を行うかどうか                                                                       |
-| storageAutoscale.threshold           | Body | Number  | 自動拡張条件(%)                                                                          |
-| storageAutoscale.maxStorageSize      | Body | Number  | 自動拡張最大サイズ(GB)                                                                      |
-| storageAutoscale.cooldownTime        | Body | Number  | 自動拡張クールダウン時間(分)                                                                      |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storageType": "General SSD",
-    "storageSize": 20,
-    "storageStatus": "ATTACHED",
-    "storageAutoscale": {
-         "useStorageAutoscale": true,
-         "threshold": 80,
-         "maxStorageSize": 100,
-         "cooldownTime": 10
-    }
-}
-```
-
-</p>
-</details>
-
-
----
-
-### ストレージ情報を修正する
-
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/storage-info
-```
-
-#### 必要権限
-
-| 権限名                                         | 説明         |
-|-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | DBインスタンスを修正する |
-
-#### リクエスト
-
-| 名前                                 | 種類 | 形式    | 必須 | 説明                                                                      |
-|--------------------------------------|------|---------|----|---------------------------------------------------------------------------|
-| dbInstanceId                         | URL  | UUID    | O  | DBインスタンスの識別子                                                            |
-| storageSize                          | Body | Number  | O  | データストレージサイズ(GB)<br/>- 最小値:現在値<br/>- 最大値: `2048`                          |
-| useOnlineFailover                    | Body | Boolean | X  | フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false` |
-| storageAutoscale                     | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                       |
-| storageAutoscale.useStorageAutoscale | Body | Boolean | X  | ストレージの自動拡張を行うかどうか                                                            |
-| storageAutoscale.threshold           | Body | Number  | X  | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95`                               |
-| storageAutoscale.maxStorageSize      | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096`                                         |
-| storageAutoscale.cooldownTime        | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440`                         |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
 
 ---
 
@@ -2063,30 +1216,30 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 #### 必要権限
 
-| 権限名                                      | 説明          |
-|--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | DBインスタンス詳細表示 |
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | バックアップ情報を表示 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
 
-| 名前                              | 種類 | 形式    | 説明           |
-|-----------------------------------|------|---------|----------------|
-| backupPeriod                      | Body | Number  | バックアップ保管期間(日)    |
-| ftwrlWaitTimeout                  | Body | Number  | クエリ遅延待機時間(秒) |
-| backupRetryCount                  | Body | Number  | バックアップ再試行回数    |
-| replicationRegion                 | Body | Enum    | バックアップ複製リージョン     |
-| useBackupLock                     | Body | Boolean | テーブルロックを使用するかどうか |
-| backupSchedules                   | Body | Array   | 予定された自動バックアップリスト |
-| backupSchedules.backupWndBgnTime  | Body | String  | バックアップ開始時刻     |
-| backupSchedules.backupWndDuration | Body | Enum    | バックアップDuration    |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| backupPeriod | Body | Number | バックアップ保管期間(日) |
+| ftwrlWaitTimeout | Body | Number | クエリ遅延待機時間(秒) |
+| backupRetryCount | Body | Number | バックアップ再試行回数 |
+| replicationRegion | Body | Enum | バックアップ複製リージョン<br/>- KR1: `韓国(パンギョ)` |
+| useBackupLock | Body | Boolean | テーブルロックを使用するかどうか |
+| backupSchedules | Body | Array | 予定された自動バックアップリスト |
+| backupSchedules.backupWndBgnTime | Body | Time | バックアップ開始時刻 |
+| backupSchedules.backupWndDuration | Body | Enum | バックアップDuration<br/>- HALF_AN_HOUR<br/>- ONE_HOUR<br/>- ONE_HOUR_AND_HALF<br/>- TWO_HOURS<br/>- TWO_HOURS_AND_HALF<br/>- THREE_HOURS |
 
 <details><summary>例</summary>
 <p>
@@ -2099,14 +1252,14 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
         "isSuccessful": true
     },
     "backupPeriod": 1,
-    "ftwrlWaitTimeout": 1800,
-    "backupRetryCount": 0,
-    "replicationRegion": null,
+    "ftwrlWaitTimeout": 1,
+    "backupRetryCount": 1,
+    "replicationRegion": "KR1",
     "useBackupLock": false,
     "backupSchedules": [
         {
             "backupWndBgnTime": "00:00:00",
-            "backupWndDuration": "ONE_HOUR_AND_HALF"
+            "backupWndDuration": "HALF_AN_HOUR"
         }
     ]
 }
@@ -2114,7 +1267,6 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 </p>
 </details>
-
 
 ---
 
@@ -2126,520 +1278,51 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 #### 必要権限
 
-| 権限名                                         | 説明         |
-|-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | DBインスタンスを修正する |
-
-#### リクエスト
-
-| 名前                                  | 種類 | 形式    | 必須 | 説明                                                                                                                                                                                                                        |
-|---------------------------------------|------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId                          | URL  | UUID    | O  | DBインスタンスの識別子                                                                                                                                                                                                              |
-| backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                 |
-| ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                                            |
-| backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                                    |
-| useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか                                                                                                                                                                                                              |
-| backupSchedules                       | Body | Array   | X  | 予定された自動バックアップリスト                                                                                                                                                                                                                 |
-| backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                               |
-| backupSchedules.backupWndDuration     | Body | Enum    | O  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "backupPeriod": 5,
-    "useBackupLock": true,
-    "backupSchedules": [
-        {
-            "backupWndBgnTime": "01:00:00",
-            "backupWndDuration": "TWO_HOURS"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### ネットワーク情報表示
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/network-info
-```
-
-#### 必要権限
-
-| 権限名                                      | 説明          |
-|--------------------------------------------|---------------|
-| RDSforMariaDB:DbInstance.Get | DBインスタンス詳細表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前                   | 種類 | 形式   | 説明                                                                                                                                    |
-|------------------------|------|--------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| availabilityZone       | Body | Enum   | DBインスタンスを作成するアベイラビリティゾーン                                                                                                                   |
-| subnet                 | Body | Object | サブネットオブジェクト                                                                                                                                |
-| subnet.subnetId        | Body | UUID   | サブネットの識別子                                                                                                                              |
-| subnet.subnetName      | Body | UUID   | サブネットの識別できる名前                                                                                                                 |
-| subnet.subnetCidr      | Body | UUID   | サブネットのCIDR                                                                                                                               |
-| endPoints              | Body | Array  | 接続情報リスト                                                                                                                              |
-| endPoints.domain       | Body | String | ドメイン                                                                                                                                   |
-| endPoints.ipAddress    | Body | String | IPアドレス                                                                                                                                 |
-| endPoints.endPointType | Body | Enum   | 接続情報タイプ<br>-`EXTERNAL`:外部接続ドメイン<br>-`INTERNAL`:内部接続ドメイン<br>-`PUBLIC`: (Deprecated)外部接続ドメイン<br>-`PRIVATE`: (Deprecated)内部接続ドメイン |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "availabilityZone": "kr-pub-a",
-    "subnet": {
-        "subnetId": "bd453789-34ae-416c-9f78-05b9e43a46be",
-        "subnetName": "Default Network",
-        "subnetCidr": "192.168.0.0/16"
-    },
-    "endPoints": [
-        {
-            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mariadb.rds.nhncloudservice.com",
-            "ipAddress": "192.168.0.2",
-            "endPointType": "INTERNAL"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### ネットワーク情報を修正する
-
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/network-info
-```
-
-#### 必要権限
-
-| 権限名                                         | 説明         |
-|-----------------------------------------------|--------------|
-| RDSforMariaDB:DbInstance.Modify | DBインスタンスを修正する |
-
-#### リクエスト
-
-| 名前            | 種類 | 形式    | 必須 | 説明         |
-|-----------------|------|---------|----|--------------|
-| dbInstanceId    | URL  | UUID    | O  | DBインスタンスの識別子 |
-| usePublicAccess | Body | Boolean | O  | 外部接続可否 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBユーザーリストを表示
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/db-users
-```
-
-#### 必要権限
-
-| 権限名                                           | 説明                |
-|-------------------------------------------------|---------------------|
-| RDSforMariaDB:DbInstanceUser.List | DBインスタンス内のユーザーリストを表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前                           | 種類   | 形式       | 説明                                                                                                                          |
-|------------------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------|
-| dbUsers                      | Body | Array    | DBユーザーリスト                                                                                                                   |
-| dbUsers.dbUserId             | Body | UUID     | DBユーザーの識別子                                                                                                                  |
-| dbUsers.dbUserName           | Body | String   | DBユーザーアカウント名                                                                                                                |
-| dbUsers.host                 | Body | String   | DBユーザーアカウントのホスト名                                                                                                            |
-| dbUsers.authorityType        | Body | Enum     | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                      |
-| dbUsers.dbUserStatus         | Body | Enum     | DBユーザーの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `UPDATING`:修正中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み         |
-| dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
-| dbUsers.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                            |
-| dbUsers.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                            |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbUsers": [
-        {
-            "dbUserId": "4b3d530b-fd02-4d59-a620-83d019a67bbb",
-            "dbUserName": "db-user",
-            "host": "%",
-            "authorityType": "DDL",
-            "dbUserStatus": "STABLE",
-            "createdYmdt": "2023-03-17T14:02:29+09:00",
-            "updatedYmdt": "2023-03-17T14:02:31+09:00"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### DBユーザーを作成する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/db-users
-```
-
-
-#### 必要権限
-
-| 権限名                                             | 説明               |
-|---------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceUser.Create | DBインスタンス内のユーザーを作成 |
-
-#### リクエスト
-
-| 名前                   | 種類   | 形式     | 必須 | 説明                                                                                                     |
-|----------------------|------|--------|----|--------------------------------------------------------------------------------------------------------|
-| dbInstanceId         | URL  | UUID   | O  | DBインスタンスの識別子                                                                                           |
-| dbUserName           | Body | String | O  | DBユーザーアカウント名<br/>- 最小長さ: `1`<br/>- 最大長さ: `32`                                                          |
-| dbPassword           | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256`                                                    |
-| host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                    |
-| authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/> |
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "dbUserName": "db-user",
-    "dbPassword": "password",
-    "host": "1.1.1.%",
-    "authorityType": "CRUD"
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBユーザーを修正する
-
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
-```
-
-#### 必要権限
-
-| 権限名                                             | 説明               |
-|---------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceUser.Modify | DBインスタンス内のユーザーを修正 |
-
-#### リクエスト
-
-| 名前                   | 種類   | 形式     | 必須 | 説明                                                                                                     |
-|----------------------|------|--------|----|--------------------------------------------------------------------------------------------------------|
-| dbInstanceId         | URL  | UUID   | O  | DBインスタンスの識別子                                                                                           |
-| dbUserId             | URL  | UUID   | O  | DBユーザーの識別子                                                                                             |
-| dbPassword           | Body | String | X  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256`                                                    |
-| authorityType        | Body | Enum   | X  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/> |
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "authorityType": "DDL"
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBユーザーを削除する
-
-```http
-DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
-```
-
-#### 必要権限
-
-| 権限名                                             | 説明               |
-|---------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceUser.Delete | DBインスタンス内のユーザーを削除 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-| dbUserId     | URL | UUID | O  | DBユーザーの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBスキーマリストを表示
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/db-schemas
-```
-
-#### 必要権限
-
-| 権限名                                             | 説明                |
-|---------------------------------------------------|---------------------|
-| RDSforMariaDB:DbInstanceSchema.List | DBインスタンス内のスキーマリストを表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前           | 種類  | 形式   | 必須 | 説明           |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-
-#### レスポンス
-
-| 名前                       | 種類   | 形式       | 説明                                                                                             |
-|--------------------------|------|----------|------------------------------------------------------------------------------------------------|
-| dbSchemas                | Body | Array    | DBスキーマリスト                                                                                      |
-| dbSchemas.dbSchemaId     | Body | UUID     | DBスキーマの識別子                                                                                     |
-| dbSchemas.dbSchemaName   | Body | String   | DBスキーマ名                                                                                        |
-| dbSchemas.dbSchemaStatus | Body | Enum     | DBスキーマの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み |
-| dbSchemas.createdYmdt    | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                               |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbSchemas": [
-        {
-            "dbSchemaId": "7c9a94b8-86c1-435d-8af2-82a5e9d53fd4",
-            "dbSchemaName": "schema",
-            "dbSchemaStatus": "STABLE",
-            "createdYmdt": "2023-03-20T13:37:45+09:00"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### DBスキーマを作成する
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/db-schemas
-```
-
-#### 必要権限
-
-| 権限名                                               | 説明               |
-|-----------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceSchema.Create | DBインスタンス内のスキーマを作成 |
-
-#### リクエスト
-
-| 名前         | 種類 | 形式   | 必須 | 説明         |
-|--------------|------|--------|----|--------------|
-| dbInstanceId | URL  | UUID   | O  | DBインスタンスの識別子 |
-| dbSchemaName | Body | String | O  | DBスキーマ名  |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### DBスキーマを削除する
-
-```http
-DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
-```
-
-#### 必要権限
-
-| 権限名                                               | 説明               |
-|-----------------------------------------------------|--------------------|
-| RDSforMariaDB:DbInstanceSchema.Delete | DBインスタンス内のスキーマを削除 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|-----|------|----|--------------|
-| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-| dbSchemaId   | URL | UUID | O  | DBスキーマの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### ログファイルリスト表示
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/log-files
-```
-
-#### 必要権限
-
-| 権限名                                          | 説明                  |
-|------------------------------------------------|-----------------------|
-| RDSforMariaDB:DbInstanceLog.List | DBインスタンス内のログファイルリストを表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前         | 種類  | 形式  | 必須 | 説明                                                                                                                                                                                            |
-|--------------|-------|-------|----|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId | URL   | UUID  | O  | DBインスタンスの識別子                                                                                                                                                                                  |
-| logFileTypes | Query | Array | X  | ログファイルタイプ種類一覧<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
-
-#### レスポンス
-
-| 名前                 | 種類 | 形式     | 説明                                                                                                                                                                                         |
-|----------------------|------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| logFiles             | Body | Array    | ログファイルリスト                                                                                                                                                                                   |
-| logFiles.logFileName | Body | String   | ログファイル名                                                                                                                                                                                   |
-| logFiles.logFileType | Body | Enum     | ログファイルタイプ種類<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
-| logFiles.logFileSize | Body | Number   | ログファイルサイズ(Byte)                                                                                                                                                                               |
-| logFiles.createdYmdt | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                                                            |
-
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "logFiles": [
-        {
-            "logFileName": "xtra_full.log-20230317",
-            "logFileType": "BACKUP",
-            "logFileSize": 4096,
-            "createdYmdt": "2023-03-17T14:02:29+09:00"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### ログファイルの内容照会
-
-```http
-GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
-```
-
-#### 必要な権限
-
 | 権限名 | 説明 |
-|-----------------------------------------------|-----------------------|
-| RDSforMariaDB:DbInstanceLog.Get | DBインスタンス内のログファイル内容照会 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Modify | バックアップ情報を修正する |
 
 #### リクエスト
-
-このAPIはリクエストボディを要求しません。
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
-|--------------|-------|--------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
-| logFileName | URL | String | O | ログファイル名 |
-| logFileType | Query | Enum | O | ログファイルタイプの種類<br/>- `ERROR`：error.log<br/>- `BINLOG`：mysql-bin<br/>- `GENERAL`：general.log<br/>- `SLOW_QUERY`：slow_query.log<br/>- `AUDIT`：server_audit.log<br/>- `BACKUP`：xtra_full.log |
+| backupPeriod | Body | Number | X | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730` |
+| ftwrlWaitTimeout | Body | Number | X | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600` |
+| backupRetryCount | Body | Number | X | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10` |
+| replicationRegion | Body | Enum | X | バックアップ複製リージョン<br/>- KR1: `韓国(パンギョ)` |
+| useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか |
+| backupSchedules | Body | Array | X | 予定された自動バックアップリスト |
+| backupSchedules.backupWndBgnTime | Body | Time | O | バックアップ開始時刻 |
+| backupSchedules.backupWndDuration | Body | Enum | O | バックアップDuration<br/>- HALF_AN_HOUR: `30分`<br/>- ONE_HOUR: `1時間`<br/>- ONE_HOUR_AND_HALF: `1時間30分`<br/>- TWO_HOURS: `2時間`<br/>- TWO_HOURS_AND_HALF: `2時間30分`<br/>- THREE_HOURS: `3時間` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "backupPeriod": 0,
+    "ftwrlWaitTimeout": 0,
+    "backupRetryCount": 0,
+    "replicationRegion": "KR1",
+    "useBackupLock": false,
+    "backupSchedules": [
+        {
+            "backupWndBgnTime": "00:00:00",
+            "backupWndDuration": "HALF_AN_HOUR"
+        }
+    ]
+}
+```
+
+</p>
+</details>
 
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
-|---------|------|--------|--------------------------|
-| content | Body | String | ログファイルの内容(最大65533 Bytes) |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
 
 <details><summary>例</summary>
 <p>
@@ -2651,7 +1334,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "content": "..."
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2659,57 +1342,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 </details>
 
 ---
-
-### ログファイルのエクスポート
-
-```http
-POST /v4.0/db-instances/{dbInstanceId}/log-files/export
-```
-
-#### 必要権限
-
-| 権限名                                            | 説明                 |
-|--------------------------------------------------|----------------------|
-| RDSforMariaDB:DbInstanceLog.Export | DBインスタンス内のログファイルをエクスポート |
-
-#### リクエスト
-
-| 名前            | 種類 | 形式   | 必須 | 説明                           |
-|-----------------|------|--------|----|--------------------------------|
-| dbInstanceId    | URL  | UUID   | O  | DBインスタンスの識別子                 |
-| logFileNames    | Body | Array  | O  | ログファイル名リスト<br/>- 最小サイズ: `1`      |
-| tenantId        | Body | String | O  | ログファイルが保存されるオブジェクトストレージのテナントID   |
-| username        | Body | String | O  | NHN CloudアカウントまたはIAMアカウントID      |
-| password        | Body | String | O  | ログファイルが保存されるオブジェクトストレージのAPIパスワード |
-| targetContainer | Body | String | O  | ログファイルが保存されるオブジェクトストレージのコンテナ   |
-| objectPath      | Body | String | O  | コンテナに保存されるログファイルのパス          |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "logFileNames": ["xtra_full.log-20230317"],
-    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
-    "username": "gildong.hong@nhn.com",
-    "password": "password",
-    "targetContainer": "container",
-    "objectPath": "logs/backup"
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
-
----
-
-### BinLog一覧照会
+### バイナリログ一覧照会
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/binlogs
@@ -2718,26 +1351,25 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 #### 必要な権限
 
 | 権限名 | 説明 |
-|---------------------------------------------------|---------------|
-| RDSforMariaDB:DbInstanceBinLog.List | BinLog一覧照会 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceBinLog.List | バイナリログ一覧照会 |
 
 #### リクエスト
 
 このAPIはリクエストボディを要求しません。
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
-|--------------|-------|---------|----|---------------------------------------------------------------------------------------|
-| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
-| deletable | Query | Boolean | X | 削除可能なBinLogのみ照会するかどうか<br/>- `true`：最後のBinLogを除く<br/>- `false`：全体<br/>- デフォルト値：`false` |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O |  |
 
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
-|------------------------|------|----------|-----------------------------------|
+|-----|-----|-----|-----|
 | binLogs | Body | Array | BinLogファイル一覧 |
 | binLogs.binLogFileName | Body | String | BinLogファイル名 |
 | binLogs.binLogFileSize | Body | Number | BinLogファイルサイズ(Byte) |
-| binLogs.createdYmdt | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| binLogs.createdYmdt | Body | DateTime | 作成日時 |
 
 <details><summary>例</summary>
 <p>
@@ -2751,9 +1383,9 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
     },
     "binLogs": [
         {
-            "binLogFileName": "mysql-bin.000001",
-            "binLogFileSize": 1073741824,
-            "createdYmdt": "2023-03-17T14:02:29+09:00"
+            "binLogFileName": "binLogFileName-example",
+            "binLogFileSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
 }
@@ -2764,7 +1396,7 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 
 ---
 
-### BinLog削除
+### バイナリログ削除
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
@@ -2773,14 +1405,14 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 #### 必要な権限
 
 | 権限名 | 説明 |
-|----------------------------------------------------|------------|
-| RDSforMariaDB:DbInstanceBinLog.Purge | BinLog削除 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceBinLog.Purge | バイナリログ削除 |
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
-|--------------------|------|--------|----|---------------------------------------|
-| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O |  |
 | lastBinLogFileName | Body | String | O | 削除する最後のBinLogファイル名(該当ファイルの直前まで削除されます) |
 
 <details><summary>例</summary>
@@ -2799,22 +1431,6 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 このAPIはレスポンスボディを返しません。
 
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    }
-}
-```
-
-</p>
-</details>
-
 ---
 
 ### 証明書ファイル一覧照会
@@ -2826,7 +1442,7 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 #### 必要な権限
 
 | 権限名 | 説明 |
-|--------------------------------------------------------|---------------|
+|-----|-----|
 | RDSforMariaDB:DbInstanceCertificate.List | 証明書ファイル一覧照会 |
 
 #### リクエスト
@@ -2834,18 +1450,18 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 このAPIはリクエストボディを要求しません。
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
-|--------------|-----|------|----|---------------|
+|-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
-|------------------------------|------|----------|------------------------------------------------------------------------------|
+|-----|-----|-----|-----|
 | certificates | Body | Array | 証明書ファイル一覧 |
 | certificates.fileName | Body | String | 証明書ファイル名 |
-| certificates.certificateType | Body | Enum | 証明書タイプ<br/>- `CA_FILE`：CA証明書<br/>- `CERT_FILE`：証明書<br/>- `KEY_FILE`：秘密鍵 |
+| certificates.certificateType | Body | Enum | 証明書タイプ<br/>- CA_FILE<br/>- CERT_FILE<br/>- KEY_FILE |
 | certificates.fileSize | Body | Number | 証明書ファイルサイズ(Byte) |
-| certificates.createdYmdt | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| certificates.createdYmdt | Body | DateTime | 作成日時 |
 
 <details><summary>例</summary>
 <p>
@@ -2859,10 +1475,10 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
     },
     "certificates": [
         {
-            "fileName": "ca.pem",
+            "fileName": "fileName-example",
             "certificateType": "CA_FILE",
-            "fileSize": 2048,
-            "createdYmdt": "2023-03-17T14:02:29+09:00"
+            "fileSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
 }
@@ -2882,16 +1498,16 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 #### 必要な権限
 
 | 権限名 | 説明 |
-|----------------------------------------------------------|-------------|
+|-----|-----|
 | RDSforMariaDB:DbInstanceCertificate.Export | 証明書ファイルエクスポート |
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
-|------------------|------|--------|----|------------------------------------------------------------------------------|
+|-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
-| certificateTypes | Body | Array | O | アップロードする証明書タイプ<br/>- `CA_FILE`：CA証明書<br/>- `CERT_FILE`：証明書<br/>- `KEY_FILE`：秘密鍵 |
-| tenantId | Body | String | O | 証明書ファイルが保存されるObject StorageのテナントID |
+| certificateTypes | Body | Array | O | アップロードする証明書タイプ一覧 |
+| tenantId | Body | String | O | 証明書ファイルが保存されるObject StorageのテナントID<br/>- 最小長さ: `32`<br/>- 最大長さ: `32` |
 | username | Body | String | O | NHN CloudメンバーまたはIAMメンバーID |
 | password | Body | String | O | 証明書ファイルが保存されるObject StorageのAPIパスワード |
 | targetContainer | Body | String | O | 証明書ファイルが保存されるObject Storageのコンテナ |
@@ -2902,12 +1518,12 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 
 ```json
 {
-    "certificateTypes": ["CA_FILE", "CERT_FILE", "KEY_FILE"],
-    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
-    "username": "gildong.hong@nhn.com",
-    "password": "password",
-    "targetContainer": "container",
-    "objectPath": "certificates/"
+    "certificateTypes": [],
+    "tenantId": "0123456789abcdef0123456789abcdef",
+    "username": "username-example",
+    "password": "password-example",
+    "targetContainer": "targetContainer-example",
+    "objectPath": "objectPath-example"
 }
 ```
 
@@ -2917,64 +1533,8 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストされたジョブの識別子 |
-
----
-
-## バックアップ
-
-### バックアップ状態
-
-| 状態         | 説明         |
-|--------------|--------------|
-| `BACKING_UP` | バックアップ中の場合   |
-| `COMPLETED`  | バックアップが完了している場合 |
-| `DELETING`   | バックアップが削除中の場合 |
-| `DELETED`    | バックアップが削除されている場合 |
-| `ERROR`      | エラーが発生した場合 |
-
-### バックアップ詳細照会
-
-```http
-GET /v4.0/backups/{backupId}
-```
-
-#### 必要な権限
-
-| 権限名 | 説明 |
-|----------------------------------------|----------|
-| RDSforMariaDB:Backup.Get | バックアップ詳細照会 |
-
-#### リクエスト
-
-このAPIはリクエストボディを要求しません。
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|----------|-----|------|----|---------|
-| backupId | URL | UUID | O | バックアップの識別子 |
-
-#### レスポンス
-
-| 名前 | 種類 | 形式 | 説明 |
-|-------------------------|------|----------|-----------------|
-| backup | Body | Object | バックアップ詳細情報 |
-| backup.backupId | Body | UUID | バックアップの識別子 |
-| backup.regionCode | Body | Enum | リージョンコード |
-| backup.backupName | Body | String | バックアップを識別できる名前 |
-| backup.backupStatus | Body | Enum | バックアップの現在のステータス |
-| backup.dbInstanceId | Body | UUID | 原本DBインスタンスの識別子 |
-| backup.dbInstanceName | Body | String | 原本DBインスタンスの名前 |
-| backup.dbVersion | Body | Enum | DBエンジンバージョン |
-| backup.backupType | Body | Enum | バックアップタイプ |
-| backup.backupMethodType | Body | Enum | バックアップ方式 |
-| backup.backupFileType | Body | Enum | バックアップファイルタイプ |
-| backup.backupSize | Body | Number | バックアップのサイズ(Byte) |
-| backup.isReplicable | Body | Boolean | レプリケーション可否 |
-| backup.binLogFileName | Body | String | バイナリログファイル名 |
-| backup.binLogPosition | Body | Number | バイナリログ位置 |
-| backup.createdYmdt | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| backup.updatedYmdt | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
 
 <details><summary>例</summary>
 <p>
@@ -2986,23 +1546,1990 @@ GET /v4.0/backups/{backupId}
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBスキーマリストを表示
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/db-schemas
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceSchema.List | DBスキーマリストを表示 |
+
+#### リクエスト
+
+このAPIはリクエストボディを要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbSchemas | Body | Array | DBスキーマリスト |
+| dbSchemas.dbSchemaId | Body | UUID | DBスキーマの識別子 |
+| dbSchemas.dbSchemaName | Body | String | DBスキーマ名 |
+| dbSchemas.dbSchemaStatus | Body | Enum | DBスキーマの現在状態<br/>- STABLE<br/>- CREATING<br/>- SYNCING<br/>- DELETING<br/>- DELETED |
+| dbSchemas.createdYmdt | Body | DateTime | 作成日時 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbSchemas": [
+        {
+            "dbSchemaId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbSchemaName": "dbSchemaName-example",
+            "dbSchemaStatus": "STABLE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBスキーマを作成する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/db-schemas
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceSchema.Create | DBスキーマを作成する |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| dbSchemaName | Body | String | O | DBスキーマ名<br/>- 最大長さ: `64`<br/>- 英字で始まり、英字/数字/_のみ使用可、1〜64文字、MySQLの予約語は不可 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "dbSchemaName": "dbSchemaName-example"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBスキーマを削除する
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceSchema.Delete | DBスキーマを削除する |
+
+#### リクエスト
+
+このAPIはリクエストボディを要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| dbSchemaId | URL | UUID | O | DBスキーマの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBユーザーリストを表示
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/db-users
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceUser.List | DBユーザーリストを表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbUsers | Body | Array | DBユーザーリスト |
+| dbUsers.dbUserId | Body | UUID | DBユーザーの識別子 |
+| dbUsers.dbUserName | Body | String | DBユーザーアカウント名 |
+| dbUsers.host | Body | String | DBユーザーアカウントのホスト名 |
+| dbUsers.authorityType | Body | Enum | DBユーザー権限タイプ<br/>- CUSTOM: `ユーザー定義権限`<br/>- READ: `読み取り権限`<br/>- CRUD: `CRUD権限`<br/>- DDL: `DDL権限`<br/>- ALL: `全権限` |
+| dbUsers.dbUserStatus | Body | Enum | DBユーザーの現在状態<br/>- STABLE<br/>- CREATING<br/>- UPDATING<br/>- SYNCING<br/>- DELETING<br/>- DELETED |
+| dbUsers.createdYmdt | Body | DateTime | 作成日時 |
+| dbUsers.updatedYmdt | Body | DateTime | 修正日時 |
+| dbUsers.authenticationPlugin | Body | Enum | 認証プラグイン<br/>- NATIVE: `mysql_native_password認証`<br/>- ED25519: `ed25519認証(MariaDB専用)` |
+| dbUsers.tlsOption | Body | Enum | 証明書オプション<br/>- NONE: `TLS未使用`<br/>- SSL: `SSL認証`<br/>- X509: `X509証明書認証` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbUsers": [
+        {
+            "dbUserId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbUserName": "dbUserName-example",
+            "host": "192.168.0.1",
+            "authorityType": "CUSTOM",
+            "dbUserStatus": "STABLE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00",
+            "authenticationPlugin": "NATIVE",
+            "tlsOption": "NONE"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBユーザーを作成する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/db-users
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceUser.Create | DBユーザーを作成する |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| dbUserName | Body | String | O | DBユーザーアカウント名<br/>- 最小長さ: `1`<br/>- 最大長さ: `32` |
+| dbPassword | Body | String | O | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256` |
+| host | Body | String | O | DBユーザーアカウントのホスト名<br/>- 最大長さ: `45` |
+| authorityType | Body | Enum | O | DBユーザー権限タイプ<br/>- CUSTOM: `ユーザー定義権限`<br/>- READ: `読み取り権限`<br/>- CRUD: `CRUD権限`<br/>- DDL: `DDL権限`<br/>- ALL: `全権限` |
+| authenticationPlugin | Body | Enum | X | 認証プラグイン<br/>- NATIVE: `mysql_native_password認証`<br/>- ED25519: `ed25519認証(MariaDB専用)` |
+| tlsOption | Body | Enum | X | 証明書オプション<br/>- デフォルト値: `NONE`<br/>- NONE: `TLS未使用`<br/>- SSL: `SSL認証`<br/>- X509: `X509証明書認証` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "dbUserName": "dbUserName",
+    "dbPassword": "dbPassword",
+    "host": "192.168.0.1",
+    "authorityType": "CUSTOM",
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBユーザーを削除する
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceUser.Delete | DBユーザーを削除する |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| dbUserId | URL | UUID | O | DBユーザーの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBユーザーを修正する
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceUser.Modify | DBユーザーを修正する |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| dbUserId | URL | UUID | O | DBユーザーの識別子 |
+| dbPassword | Body | String | X | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256` |
+| authorityType | Body | Enum | X | DBユーザー権限タイプ<br/>- CUSTOM: `ユーザー定義権限`<br/>- READ: `読み取り権限`<br/>- CRUD: `CRUD権限`<br/>- DDL: `DDL権限`<br/>- ALL: `全権限` |
+| authenticationPlugin | Body | Enum | X | 認証プラグイン<br/>- NATIVE: `mysql_native_password認証`<br/>- ED25519: `ed25519認証(MariaDB専用)` |
+| tlsOption | Body | Enum | X | 証明書オプション<br/>- NONE: `TLS未使用`<br/>- SSL: `SSL認証`<br/>- X509: `X509証明書認証` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "dbPassword": "dbPassword",
+    "authorityType": "CUSTOM",
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBインスタンス削除保護設定を変更する
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Modify | DBインスタンス削除保護設定を変更する |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| useDeletionProtection | Body | Boolean | O | 削除保護の有無 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "useDeletionProtection": false
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
+
+### DBインスタンスを強制再起動する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/force-restart
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.ForceRestart | DBインスタンスを強制再起動する |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
+### 高可用性情報の照会
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/high-availability
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | 高可用性情報の照会 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| useHighAvailability | Body | Boolean | 高可用性の使用有無<br/>- デフォルト値: `false` |
+| haStatus | Body | Enum | 高可用性の状態<br/>- CREATED: `作成済み`<br/>- STABLE: `正常`<br/>- PAUSING: `一時停止中`<br/>- DISABLE: `停止`<br/>- DISABLE_MASTER_IN_REPLICATION: `マスターの異常なレプリケーション検知による高可用性(HA)の中断`<br/>- DISABLE_MHA_PROCESS: `高可用性(HA)プロセスの中断`<br/>- DISABLE_REPLICATION_STOP: `レプリケーション中断による高可用性(HA)の中断`<br/>- DISABLE_REPLICATION_DELAY: `レプリケーション遅延による高可用性(HA)の中断`<br/>- FAILOVER_STARTED: `フェイルオーバー開始`<br/>- FAILOVER_FAILED: `フェイルオーバー失敗`<br/>- FAILOVER_COMPLETED: `フェイルオーバー完了`<br/>- DELETED: `削除済み`<br/>- PAUSED: `一時停止`<br/>- PAUSED_DUE_TO_TASK: `タスクによる一時停止`<br/>- MASTER_FAILURE_DETECTION: `マスター障害検知` |
+| pingInterval | Body | Number | Ping間隔(秒) |
+| pingType | Body | String | Pingタイプ |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "useHighAvailability": false,
+    "haStatus": "CREATED",
+    "pingInterval": 1,
+    "pingType": "pingType-example"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 高可用性を修正する
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/high-availability
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:HighAvailability.Modify | 高可用性の修正 |
+
+#### 共通リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| useHighAvailability | Body | Boolean | O | 高可用性を使用するかどうか |
+| pingInterval | Body | Number | X | 高可用性使用時のPing間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600` |
+
+#### 高可用性使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceCandidateName | Body | String | O | DBインスタンスを識別できる予備マスター名<br/>- 最小長: `1`<br/>- 最大長: `100` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "useHighAvailability": false,
+    "pingInterval": 1
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 高可用性を一時停止する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:HighAvailability.Pause | 高可用性の一時停止 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 高可用性を復旧する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:HighAvailability.Repair | 高可用性の復旧 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 高可用性を再開する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:HighAvailability.Resume | 高可用性の再開 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 高可用性を分離する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:HighAvailability.Split | 高可用性の分離 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+### ログファイルリスト表示
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/log-files
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceLog.List | ログファイルリスト表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| logFiles | Body | Array | ログファイルリスト |
+| logFiles.logFileName | Body | String | ログファイル名 |
+| logFiles.logFileType | Body | Enum | ログファイルタイプ種類<br/>- ERROR<br/>- BINLOG<br/>- GENERAL<br/>- SLOW_QUERY<br/>- AUDIT<br/>- BACKUP |
+| logFiles.logFileSize | Body | Number | ログファイルサイズ(Byte) |
+| logFiles.createdYmdt | Body | DateTime | 作成日時 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "logFiles": [
+        {
+            "logFileName": "logFileName-example",
+            "logFileType": "ERROR",
+            "logFileSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### ログファイルのエクスポート
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/log-files/export
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceLog.Export | ログファイルのエクスポート |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O |  |
+| logFileNames | Body | Array | O | ログファイル名リスト |
+| tenantId | Body | String | O | ログファイルが保存されるオブジェクトストレージのテナントID<br/>- 最小長: `32`<br/>- 最大長: `32` |
+| username | Body | String | O | NHN CloudアカウントまたはIAMメンバーID |
+| password | Body | String | O | ログファイルが保存されるオブジェクトストレージのAPIパスワード |
+| targetContainer | Body | String | O | ログファイルが保存されるオブジェクトストレージのコンテナ |
+| objectPath | Body | String | O | コンテナに保存されるログファイルのパス |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "logFileNames": [],
+    "tenantId": "0123456789abcdef0123456789abcdef",
+    "username": "username-example",
+    "password": "password-example",
+    "targetContainer": "targetContainer-example",
+    "objectPath": "objectPath-example"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### ログファイルの内容照会
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstanceLog.Get | ログファイルの内容照会 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| logFileName | URL | UUID | O | ログファイル名 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| content | Body | String | ログファイルの内容(最大65533 bytes) |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "content": "content-example"
+}
+```
+
+</p>
+</details>
+
+---
+### DBインスタンスメンテナンスリストを表示する
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/maintenances
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Maintenance.List | DBインスタンスメンテナンスリストを表示する |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| type | Query | String | X |  |
+| statuses | Query | String | X |  |
+| category | Query | String | X |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| totalCounts | Body | Number | メンテナンスリストの件数 |
+| maintenances | Body | Array | メンテナンスリスト |
+| maintenances.maintenanceId | Body | UUID | メンテナンスID |
+| maintenances.dbInstanceId | Body | UUID | DBインスタンスID |
+| maintenances.category | Body | Enum | メンテナンスカテゴリ<br/>- USER: `ユーザーメンテナンスカテゴリ`<br/>- PROVIDER: `Providerメンテナンスカテゴリ`<br/>- AUTO: `自動メンテナンスカテゴリ` |
+| maintenances.description | Body | String | メンテナンスの説明 |
+| maintenances.type | Body | Enum | メンテナンスタイプ<br/>- UPDATE_DB_INSTANCE: `DBインスタンスの修正(スペック変更、ポート変更、パラメータグループ変更)`<br/>- UPGRADE_ENGINE_VERSION: `エンジンバージョンアップグレード`<br/>- APPLY_CHANGE_PARAMETER: `パラメータグループのパラメータ変更`<br/>- UPGRADE_OS: `OSバージョンアップグレード`<br/>- PATCH_SECURITY: `セキュリティアップデート`<br/>- MIGRATION: `ハイパーバイザーメンテナンスのためのマイグレーション`<br/>- CLEANUP_STORAGE: `ストレージの整理` |
+| maintenances.payload | Body | Object | メンテナンスタイプに応じたPayload |
+| maintenances.required | Body | Boolean | メンテナンスが必須かどうか |
+| maintenances.deadlineYmdt | Body | DateTime | メンテナンスの強制適用日時 |
+| maintenances.status | Body | Enum | メンテナンスのステータス<br/>- PENDING: `待機`<br/>- READY: `準備`<br/>- RUNNING: `実行中`<br/>- COMPLETED: `完了`<br/>- FAILED: `失敗`<br/>- EXCLUDED: `除外`<br/>- DELETED: `削除`<br/>- UNKNOWN |
+| maintenances.executionType | Body | Enum | メンテナンスの実行タイプ<br/>- SCHEDULED: `予約実行(メンテナンス期間中の自動実行)`<br/>- MANUAL: `手動実行(即時実行)`<br/>- FORCED: `強制実行(デッドライン超過後の自動実行)` |
+| maintenances.addedYmdt | Body | DateTime | メンテナンススケジュール登録日時 |
+| maintenances.executionStartedYmdt | Body | DateTime | メンテナンス開始日時 |
+| maintenances.executionCompletedYmdt | Body | DateTime | メンテナンス終了日時 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "maintenances": [
+        {
+            "maintenanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "category": "USER",
+            "description": "description-example",
+            "type": "UPDATE_DB_INSTANCE",
+            "payload": {
+            },
+            "required": false,
+            "deadlineYmdt": "2023-12-31T15:00:00+09:00",
+            "status": "PENDING",
+            "executionType": "SCHEDULED",
+            "addedYmdt": "2023-12-31T15:00:00+09:00",
+            "executionStartedYmdt": "2023-12-31T15:00:00+09:00",
+            "executionCompletedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBインスタンスメンテナンスを即時実行する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Maintenance.Execute | DBインスタンスメンテナンスを即時実行する |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| configId | Body | String | O | 設定ID |
+| category | Body | Enum | O | メンテナンスカテゴリ<br/>- USER: `ユーザーメンテナンスカテゴリ`<br/>- PROVIDER: `Providerメンテナンスカテゴリ`<br/>- AUTO: `自動メンテナンスカテゴリ` |
+| description | Body | String | X | メンテナンスの説明 |
+| type | Body | Enum | O | メンテナンスタイプ<br/>- UPDATE_DB_INSTANCE: `DBインスタンスの修正(スペック変更、ポート変更、パラメータグループ変更)`<br/>- UPGRADE_ENGINE_VERSION: `エンジンバージョンアップグレード`<br/>- APPLY_CHANGE_PARAMETER: `パラメータグループのパラメータ変更`<br/>- UPGRADE_OS: `OSバージョンアップグレード`<br/>- PATCH_SECURITY: `セキュリティアップデート`<br/>- MIGRATION: `ハイパーバイザーメンテナンスのためのマイグレーション`<br/>- CLEANUP_STORAGE: `ストレージの整理` |
+| payload | Body | String | O | メンテナンスタイプに応じたPayload |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "configId": "configId-example",
+    "category": "USER",
+    "description": "description-example",
+    "type": "UPDATE_DB_INSTANCE",
+    "payload": "payload-example"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBインスタンスメンテナンスを予約する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Maintenance.Update | DBインスタンスメンテナンスを予約する |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| configId | Body | String | O | 設定ID |
+| category | Body | Enum | O | メンテナンスカテゴリ<br/>- USER: `ユーザーメンテナンスカテゴリ`<br/>- PROVIDER: `Providerメンテナンスカテゴリ`<br/>- AUTO: `自動メンテナンスカテゴリ` |
+| description | Body | String | X | メンテナンスの説明 |
+| type | Body | Enum | O | メンテナンスタイプ<br/>- UPDATE_DB_INSTANCE: `DBインスタンスの修正(スペック変更、ポート変更、パラメータグループ変更)`<br/>- UPGRADE_ENGINE_VERSION: `エンジンバージョンアップグレード`<br/>- APPLY_CHANGE_PARAMETER: `パラメータグループのパラメータ変更`<br/>- UPGRADE_OS: `OSバージョンアップグレード`<br/>- PATCH_SECURITY: `セキュリティアップデート`<br/>- MIGRATION: `ハイパーバイザーメンテナンスのためのマイグレーション`<br/>- CLEANUP_STORAGE: `ストレージの整理` |
+| payload | Body | String | O | メンテナンスタイプに応じたPayload |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "configId": "configId-example",
+    "category": "USER",
+    "description": "description-example",
+    "type": "UPDATE_DB_INSTANCE",
+    "payload": "payload-example"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
+
+### DBインスタンスメンテナンスを削除する
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Maintenance.Delete | DBインスタンスメンテナンスを削除する |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| maintenanceId | URL | UUID | O | メンテナンスID |
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
+### ネットワーク情報表示
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/network-info
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | ネットワーク情報表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| availabilityZone | Body | String | DBインスタンスを作成するアベイラビリティゾーン |
+| subnet | Body | Object | サブネットオブジェクト |
+| subnet.subnetId | Body | UUID | サブネットの識別子 |
+| subnet.subnetName | Body | String | サブネットを識別できる名前 |
+| subnet.subnetCidr | Body | String | サブネットのCIDR |
+| endPoints | Body | Array | 接続情報リスト |
+| endPoints.domain | Body | String | ドメイン |
+| endPoints.ipAddress | Body | String | IPアドレス |
+| endPoints.endPointType | Body | String | 接続情報タイプ |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "availabilityZone": "kr-pub-a",
+    "subnet": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "subnetName": "subnetName-example",
+        "subnetCidr": "192.168.0.0/24"
+    },
+    "endPoints": [
+        {
+            "domain": "domain-example",
+            "ipAddress": "192.168.0.1",
+            "endPointType": "https://example.com"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### ネットワーク情報を修正する
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/network-info
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Modify | ネットワーク情報を修正する |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| usePublicAccess | Body | Boolean | O | 外部接続可否 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "usePublicAccess": false
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBインスタンスを昇格する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/promote
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Promote | DBインスタンスの昇格 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBインスタンスの再構築
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/rebuild
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Rebuild | DBインスタンスの再構築 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+### DBインスタンスを複製する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/replicate
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Replicate | DBインスタンスの複製 |
+
+#### 共通リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| dbInstanceName | Body | String | O | DBインスタンスを識別できる名前<br/>- 最小の長さ: `1`<br/>- 最大の長さ: `100` |
+| description | Body | String | X | DBインスタンスの追加情報<br/>- 最大の長さ: `100` |
+| dbFlavorId | Body | UUID | X | DBインスタンス仕様の識別子 |
+| dbPort | Body | Number | X | DBポート<br/>- 最小値: 3306、最大値: 43306 |
+| parameterGroupId | Body | UUID | X | パラメータグループの識別子 |
+| dbSecurityGroupIds | Body | Array | X | DBセキュリティグループの識別子リスト |
+| userGroupIds | Body | Array | X | ユーザーグループの識別子リスト |
+| useDefaultNotification | Body | Boolean | X | 基本通知を使用するかどうか<br/>- デフォルト値: `false` |
+| useDeletionProtection | Body | Boolean | X | 削除保護の有無<br/>- デフォルト値: `false` |
+| useSlowQueryAnalysis | Body | Boolean | X | Slow query分析を行うかどうか<br/>- デフォルト値: `true` |
+| network | Body | Object | O | ネットワーク情報オブジェクト |
+| network.usePublicAccess | Body | Boolean | X | 外部接続可否 |
+| network.availabilityZone | Body | Enum | O | DBインスタンスを作成するアベイラビリティゾーン |
+| storage | Body | Object | X | ストレージ情報オブジェクト |
+| storage.storageType | Body | Enum | X | データストレージタイプ |
+| storage.storageSize | Body | Number | X | データストレージサイズ(GB)<br/>- 最小値: `20` |
+| storage.storageAutoscale | Body | Object | X | データストレージ自動拡張オブジェクト |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどうか<br/>- デフォルト値: `false` |
+| backup | Body | Object | X | バックアップ情報オブジェクト |
+| backup.backupPeriod | Body | Number | X | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730` |
+| backup.backupRetryCount | Body | Number | X | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10` |
+| backup.ftwrlWaitTimeout | Body | Number | X | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600` |
+| backup.replicationRegion | Body | Enum | X | バックアップ複製リージョン<br/>- KR1: `韓国(パンギョ)` |
+| backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか |
+| backup.backupSchedules | Body | Array | X | 予定された自動バックアップリスト |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | X | バックアップ開始時刻 |
+| backup.backupSchedules.backupWndDuration | Body | Enum | X | バックアップDuration<br/>- HALF_AN_HOUR: `30分`<br/>- ONE_HOUR: `1時間`<br/>- ONE_HOUR_AND_HALF: `1時間30分`<br/>- TWO_HOURS: `2時間`<br/>- TWO_HOURS_AND_HALF: `2時間30分`<br/>- THREE_HOURS: `3時間` |
+
+#### ストレージ自動拡張使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Body | Number | O | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95` |
+| storage.storageAutoscale.maxStorageSize | Body | Number | O | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096` |
+| storage.storageAutoscale.cooldownTime | Body | Number | O | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbPort": 1,
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useDefaultNotification": false,
+    "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
+    "network": {
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
     "backup": {
-        "backupId": "0017f136-3e01-4530-94aa-20661afe6632",
-        "regionCode": "KR1",
-        "backupName": "backup",
-        "backupStatus": "COMPLETED",
-        "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-        "dbInstanceName": "db-instance",
-        "dbVersion": "MARIADB_V10330",
-        "backupType": "AUTO",
-        "backupMethodType": "FULL",
-        "backupFileType": "XTRA_BACKUP",
-        "backupSize": 4996786,
-        "isReplicable": true,
-        "binLogFileName": "mysql-bin.000001",
-        "binLogPosition": 154,
-        "createdYmdt": "2023-02-21T00:35:00+09:00",
-        "updatedYmdt": "2023-02-22T00:35:32+09:00"
+        "backupPeriod": 0,
+        "backupRetryCount": 0,
+        "ftwrlWaitTimeout": 0,
+        "replicationRegion": "KR1",
+        "useBackupLock": false,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
+    }
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBインスタンスを再起動する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/restart
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Restart | DBインスタンスの再起動 |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| useOnlineFailover | Body | Boolean | X | フェイルオーバーを利用した再起動を行うかどうか<br/>- デフォルト値: `false` |
+| executeBackup | Body | Boolean | X | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false` |
+| waitReplicationDelay | Body | Boolean | X | レプリケーション遅延解消待機を行うかどうか<br/>- デフォルト値: `false` |
+| useReadOnly | Body | Boolean | X | 書き込み負荷のブロック<br/>- デフォルト値: `false` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "useOnlineFailover": false,
+    "executeBackup": false,
+    "waitReplicationDelay": false,
+    "useReadOnly": false
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DB インスタンス復元情報照会
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/restoration-info
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | DB インスタンス復元情報照会 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| oldestRestorableYmdt | Body | DateTime | 最古の復元可能時間 |
+| latestRestorableYmdt | Body | DateTime | 最新の復元可能時間 |
+| restorableBackups | Body | Array | 復元可能なバックアップリスト |
+| restorableBackups.backup | Body | Object | バックアップ情報オブジェクト |
+| restorableBackups.backup.backupId | Body | UUID | バックアップの識別子 |
+| restorableBackups.backup.backupName | Body | String | バックアップ名 |
+| restorableBackups.backup.backupStatus | Body | Enum | バックアップ状態<br/>- BACKING_UP: `バックアップ中(スピナー)`<br/>- VERIFYING: `検証中(スピナー)`<br/>- COMPLETED: `使用可能(緑アイコン)`<br/>- DELETING: `削除中(スピナー)`<br/>- DELETED: `削除済み(グレーアイコン)`<br/>- ERROR: `エラー(赤アイコン)` |
+| restorableBackups.backup.dbInstanceId | Body | UUID | 原本DBインスタンスの識別子 |
+| restorableBackups.backup.dbInstanceName | Body | String | 原本DBインスタンスの名前 |
+| restorableBackups.backup.dbVersion | Body | Enum | DBエンジンタイプ |
+| restorableBackups.backup.backupType | Body | Enum | バックアップタイプ<br/>- AUTO<br/>- MANUAL |
+| restorableBackups.backup.backupSize | Body | Number | バックアップサイズ |
+| restorableBackups.backup.useBackupLock | Body | Boolean | テーブルロックを使用するかどうか |
+| restorableBackups.backup.failoverCount | Body | Number | フェイルオーバー回数 |
+| restorableBackups.backup.binLogFileName | Body | String | バイナリログファイル名 |
+| restorableBackups.backup.binLogPosition | Body | Object | バイナリログファイル位置 |
+| restorableBackups.backup.createdYmdt | Body | DateTime | バックアップ作成日時 |
+| restorableBackups.backup.updatedYmdt | Body | DateTime | バックアップ更新日時 |
+| restorableBackups.restorableBinLogs | Body | Array | 該当バックアップを利用して復元可能なバイナリログ名リスト |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "oldestRestorableYmdt": "2023-12-31T15:00:00+09:00",
+    "latestRestorableYmdt": "2023-12-31T15:00:00+09:00",
+    "restorableBackups": [
+        {
+            "backup": {
+                "backupId": "550e8400-e29b-41d4-a716-446655440000",
+                "backupName": "backupName-example",
+                "backupStatus": "BACKING_UP",
+                "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+                "dbInstanceName": "dbInstanceName-example",
+                "dbVersion": "MYSQL_V8036",
+                "backupType": "AUTO",
+                "backupSize": 1,
+                "useBackupLock": false,
+                "failoverCount": 1,
+                "binLogFileName": "binLogFileName-example",
+                "binLogPosition": {
+                },
+                "createdYmdt": "2023-12-31T15:00:00+09:00",
+                "updatedYmdt": "2023-12-31T15:00:00+09:00"
+            },
+            "restorableBinLogs": []
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### 復元される最後のクエリ照会
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | 復元される最後のクエリ照会 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| executedYmdt | Body | DateTime | クエリ実行日時 |
+| lastQuery | Body | String | 最後に実行したクエリ |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "executedYmdt": "2023-12-31T15:00:00+09:00",
+    "lastQuery": "lastQuery-example"
+}
+```
+
+</p>
+</details>
+
+---
+### DBインスタンスの復元
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/restore
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Restore | DBインスタンスの復元 |
+
+#### 共通リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| dbInstanceName | Body | String | O | DBインスタンスを識別できるマスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+| description | Body | String | X | DBインスタンスに対する追加情報<br/>- 最大長さ: `100` |
+| dbFlavorId | Body | UUID | X | DBインスタンス仕様の識別子。未入力時は原本インスタンスの仕様が適用されます。 |
+| dbPort | Body | Number | X | DBポート |
+| useHighAvailability | Body | Boolean | X | 高可用性を使用するかどうか<br/>- デフォルト値: `false` |
+| pingInterval | Body | Number | X | 高可用性使用時のPing間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| storage | Body | Object | X | ストレージ情報オブジェクト。未入力時は原本インスタンスのストレージ設定が適用されます。 |
+| storage.storageType | Body | Enum | X | ストレージタイプ。未入力時は原本インスタンスのストレージタイプが適用されます。 |
+| storage.storageSize | Body | Number | X | データストレージサイズ(GB)。未入力時は原本インスタンスのストレージサイズが適用されます。<br/>- 最小値: `20` |
+| storage.storageAutoscale | Body | Object | X | データストレージ自動拡張オブジェクト |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどうか<br/>- デフォルト値: `false` |
+| network | Body | Object | X | ネットワーク情報オブジェクト。未入力時は原本インスタンスのネットワーク設定が適用されます。 |
+| network.subnetId | Body | UUID | X | サブネットの識別子。未入力時は原本インスタンスの値を使用します。 |
+| network.usePublicAccess | Body | Boolean | X | 外部接続可否<br/>- デフォルト値: `false` |
+| network.availabilityZone | Body | Enum | X | DBインスタンスを作成するアベイラビリティゾーン。未入力時はランダムに選択されます。 |
+| backup | Body | Object | X | バックアップ情報オブジェクト。未入力時は原本インスタンスのバックアップ設定が適用されます。 |
+| backup.backupPeriod | Body | Number | X | バックアップ保管期間(日)。未入力時は原本インスタンスのバックアップ保管期間が適用されます。<br/>- 最小値: `0`<br/>- 最大値: `730` |
+| backup.ftwrlWaitTimeout | Body | Number | X | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600` |
+| backup.backupRetryCount | Body | Number | X | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10` |
+| backup.replicationRegion | Body | Enum | X | バックアップ複製リージョン<br/>- KR1: `韓国(パンギョ)` |
+| backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br/>- デフォルト値: `true` |
+| backup.backupSchedules | Body | Array | X | 予定された自動バックアップリスト。未入力時は原本インスタンスのバックアップスケジュールが適用されます。 |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | X | バックアップ開始時刻 |
+| backup.backupSchedules.backupWndDuration | Body | Enum | X | バックアップDuration<br/>- HALF_AN_HOUR: `30分`<br/>- ONE_HOUR: `1時間`<br/>- ONE_HOUR_AND_HALF: `1時間30分`<br/>- TWO_HOURS: `2時間`<br/>- TWO_HOURS_AND_HALF: `2時間30分`<br/>- THREE_HOURS: `3時間` |
+| restore | Body | Object | O | 復元情報オブジェクト |
+| restore.restoreType | Body | Enum | O | 復元タイプの種類<br/>- TIMESTAMP: `復元可能な時間内の時間を利用した時点復元タイプ`<br/>- BINLOG: `復元可能なバイナリログ位置を利用した時点復元タイプ`<br/>- BACKUP: `既存に作成したバックアップを利用したスナップショット復元タイプ` |
+| restore.binLog.binLogFileName | Body | String | X | 復元に使用するバイナリログ名 |
+| restore.binLog.binLogPosition | Body | Object | X | 復元に使用するバイナリログ位置 |
+| useDefaultNotification | Body | Boolean | X | 基本アラームを使用するかどうか<br/>- デフォルト値: `false` |
+| useSlowQueryAnalysis | Body | Boolean | X | Slow query分析を行うかどうか<br/>- デフォルト値: `true` |
+| parameterGroupId | Body | UUID | X | パラメータグループの識別子。未入力時は原本インスタンスのパラメータグループが適用されます。 |
+| dbSecurityGroupIds | Body | Array | X | DBセキュリティグループの識別子リスト。未入力時は原本インスタンスのセキュリティグループが適用されます。 |
+| userGroupIds | Body | Array | X | ユーザーグループの識別子リスト |
+| useDeletionProtection | Body | Boolean | X | 削除保護の有無<br/>- デフォルト値: `false` |
+
+#### 高可用性使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceCandidateName | Body | String | O | DBインスタンスを識別できる予備マスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+
+#### ストレージ自動拡張使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Body | Number | O | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95` |
+| storage.storageAutoscale.maxStorageSize | Body | Number | O | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096` |
+| storage.storageAutoscale.cooldownTime | Body | Number | O | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440` |
+
+#### Timestampを利用した時点復元時、リクエスト(restoreTypeが`TIMESTAMP`の場合)
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| restore.restoreYmdt | Body | DateTime | X | DBインスタンス復元日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+復元情報照会で照会した最新の復元可能な時間以前に対してのみ復元が可能です。
+
+#### バイナリログを利用した時点復元時、リクエスト(restoreTypeが`BINLOG`の場合)
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| restore.backupId | Body | UUID | X | 復元に使用するバックアップの識別子 |
+| restore.binLog | Body | Object | X | バイナリログ情報オブジェクト |
+
+バイナリログを利用した時点復元時、基準バックアップのバイナリログファイルおよび位置を基準に、その後に記録されたログに対して復元が可能です。
+
+#### バックアップを利用した復元時、リクエスト(restoreTypeが`BACKUP`の場合)
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| restore.backupId | Body | UUID | X | 復元に使用するバックアップの識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbPort": 1,
+    "useHighAvailability": false,
+    "pingInterval": 3,
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
+    "network": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "backup": {
+        "backupPeriod": 0,
+        "ftwrlWaitTimeout": 1800,
+        "backupRetryCount": 0,
+        "replicationRegion": "KR1",
+        "useBackupLock": true,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
+    },
+    "restore": {
+        "restoreType": "TIMESTAMP",
+        "binLog": {
+            "binLogFileName": "binLogFileName-example",
+            "binLogPosition": {
+            }
+        }
+    },
+    "useDefaultNotification": false,
+    "useSlowQueryAnalysis": true,
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useDeletionProtection": false
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBインスタンスを起動する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/start
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Start | DBインスタンスの起動 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBインスタンスを停止する
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/stop
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Stop | DBインスタンスの停止 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### ストレージ情報を表示
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/storage-info
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | ストレージ情報を表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| storageType | Body | String | データストレージタイプ |
+| storageSize | Body | Number | データストレージサイズ(GB) |
+| storageStatus | Body | Enum | データストレージの現在状態<br/>- DELETED: `削除済み`<br/>- PENDING_DELETION: `削除猶予中`<br/>- DELETION_RESERVED: `削除予約済み(スナップショット整理待ち)`<br/>- DETACHED: `取り外し済み`<br/>- ATTACHED: `割り当て済み` |
+| storageAutoscale | Body | Object | データストレージ自動拡張オブジェクト |
+| storageAutoscale.useStorageAutoscale | Body | Boolean | ストレージ自動拡張を行うかどうか |
+| storageAutoscale.threshold | Body | Number | 自動拡張条件(%) |
+| storageAutoscale.maxStorageSize | Body | Number | 自動拡張最大サイズ(GB) |
+| storageAutoscale.cooldownTime | Body | Number | 自動拡張クールダウン時間(分) |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "storageType": "General SSD",
+    "storageSize": 1,
+    "storageStatus": "DELETED",
+    "storageAutoscale": {
+        "useStorageAutoscale": false,
+        "threshold": 1,
+        "maxStorageSize": 1,
+        "cooldownTime": 1
     }
 }
 ```
@@ -3012,6 +3539,86 @@ GET /v4.0/backups/{backupId}
 
 ---
 
+### ストレージ情報を修正する
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/storage-info
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Modify | ストレージ情報を修正する |
+
+#### 共通リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| storageSize | Body | Number | O | データストレージサイズ(GB)<br/>- 最大値: `2048` |
+| storageAutoscale | Body | Object | X | データストレージ自動拡張オブジェクト |
+| storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどうか |
+
+#### ストレージ自動拡張使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| storageAutoscale.threshold | Body | Number | O | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95` |
+| storageAutoscale.maxStorageSize | Body | Number | O | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096` |
+| storageAutoscale.cooldownTime | Body | Number | O | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "storageSize": 1,
+    "storageAutoscale": {
+        "useStorageAutoscale": false
+    }
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+## バックアップ
+
+### バックアップ状態
+
+| 状態           | 説明           |
+|--------------|--------------|
+| `BACKING_UP` | バックアップ中の場合     |
+| `COMPLETED`  | バックアップが完了している場合   |
+| `DELETING`   | バックアップが削除中の場合 |
+| `DELETED`    | バックアップが削除されている場合   |
+| `ERROR`      | エラーが発生した場合   |
+
 ### バックアップリスト照会
 
 ```http
@@ -3020,37 +3627,30 @@ GET /v4.0/backups
 
 #### 必要権限
 
-| 権限名                                   | 説明     |
-|-----------------------------------------|----------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:Backup.List | バックアップリスト照会 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前         | 種類  | 形式   | 必須 | 説明                                                     |
-|-------------------|-------|----------|----|------------------------------------|
-| page | Query | Number | X | 照会する一覧のページ<br/>- デフォルト値：1 <br/>- 最小値：`1` |
-| size | Query | Number | X | 照会する一覧のページサイズ<br/>- デフォルト値：20 |
-| backupType   | Query | Enum   | X  | バックアップタイプ<br/>- `AUTO`:自動<br/>- `MANUAL`:手動<br/>- デフォルト値:全体 |
-| dbInstanceId | Query | UUID   | X  | 原本DBインスタンスの識別子                                        |
-| dbVersion    | Query | Enum   | X  | DBエンジンタイプ                                               |
-
 #### レスポンス
 
-| 名前                 | 種類 | 形式     | 説明                              |
-|----------------------|------|----------|-----------------------------------|
-| totalCounts          | Body | Number   | 全バックアップリスト数                     |
-| backups              | Body | Array    | バックアップリスト                           |
-| backups.backupId     | Body | UUID     | バックアップの識別子                         |
-| backups.backupName   | Body | String   | バックアップを識別できる名前                  |
-| backups.backupStatus | Body | Enum     | バックアップの現在状態                       |
-| backups.dbInstanceId | Body | UUID     | 原本DBインスタンスの識別子                 |
-| backups.dbVersion    | Body | Enum     | DBエンジンタイプ                        |
-| backups.backupType   | Body | Enum     | バックアップタイプ                           |
-| backups.backupSize   | Body | Number   | バックアップのサイズ(Byte)                      |
-| createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| totalCounts | Body | Number | 全バックアップリスト数 |
+| backups | Body | Array | バックアップリスト |
+| backups.backupId | Body | UUID | バックアップの識別子 |
+| backups.backupName | Body | String | バックアップを識別できる名前 |
+| backups.backupStatus | Body | Enum | バックアップの現在状態<br/>- BACKING_UP: `バックアップ中 (スピナー)`<br/>- VERIFYING: `検証中 (スピナー)`<br/>- COMPLETED: `使用可能 (緑色アイコン)`<br/>- DELETING: `削除中 (スピナー)`<br/>- DELETED: `削除済み (グレーアイコン)`<br/>- ERROR: `エラー (赤色アイコン)` |
+| backups.dbInstanceId | Body | UUID | 原本DBインスタンスの識別子 |
+| backups.dbVersion | Body | Enum | DBエンジンタイプ |
+| backups.utilVersion | Body | String | ユーティリティバージョン |
+| backups.backupType | Body | Enum | バックアップタイプ<br/>- AUTO<br/>- MANUAL |
+| backups.backupSize | Body | Number | バックアップのサイズ(Byte) |
+| backups.createdYmdt | Body | DateTime | 作成日時 |
+| backups.updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -3065,15 +3665,16 @@ GET /v4.0/backups
     "totalCounts": 1,
     "backups": [
         {
-            "backupId": "0017f136-3e01-4530-94aa-20661afe6632",
-            "backupName": "backup",
-            "backupStatus": "COMPLETED",
-            "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-            "dbVersion": "MARIADB_V10330",
+            "backupId": "550e8400-e29b-41d4-a716-446655440000",
+            "backupName": "backupName-example",
+            "backupStatus": "BACKING_UP",
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbVersion": "MYSQL_V8036",
+            "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
-            "backupSize": 4996786,
-            "createdYmdt": "2023-02-21T00:35:00+09:00",
-            "updatedYmdt": "2023-02-22T00:35:32+09:00"
+            "backupSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
 }
@@ -3092,89 +3693,182 @@ POST /v4.0/backups
 
 #### 必要権限
 
-| 権限名                                     | 説明    |
-|-------------------------------------------|---------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:Backup.Create | バックアップの作成 |
 
-#### 共通リクエスト
-
-| 名前             | 種類 | 形式   | 必須 | 説明                                                                                         |
-|------------------|------|--------|----|--------------------------------------------------------------------------------------------|
-| backupName       | Body | String | O  | バックアップを識別できる名前                                                                             |
-| backupMethodType | Body | Enum | O | バックアップ方式タイプ種類<br/>- `FULL`：全体バックアップ<br/>- `INCREMENTAL`：増分バックアップ<br/>- `SNAPSHOT`：スナップショットバックアップ |
-
-#### 全体バックアップ(backupMethodTypeが`FULL`の場合)
-
-| 名前         | 種類 | 形式 | 必須 | 説明         |
-|--------------|------|------|----|--------------|
-| dbInstanceId | Body | UUID | O  | DBインスタンスの識別子 |
-
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "backupName": "example-backup-name",
-    "backupMethodType": "FULL",
-    "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd"
-}
-```
-
-</p>
-</details>
-
-#### 増分バックアップ(backupMethodTypeが`INCREMENTAL`の場合)
-
-| 名前         | 種類 | 形式 | 必須 | 説明       |
-|--------------|------|------|----|------------|
-| baseBackupId | Body | UUID | O  | 基準バックアップの識別子 |
-
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "backupName": "example-backup-name",
-    "backupMethodType": "INCREMENTAL",
-    "baseBackupId": "3ae7914f-9b42-4729-b125-87417b72cf36"
-}
-```
-
-</p>
-</details>
-
-
-
-#### スナップショットバックアップ(backupMethodTypeが`SNAPSHOT`の場合)
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
-|--------------|------|------|----|--------------|
-| dbInstanceId | Body | UUID | O | DBインスタンスの識別子 |
-
+|-----|-----|-----|-----|-----|
+| backupName | Body | String | O | バックアップを識別できる名前<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+| baseBackupId | Body | UUID | X | 原本バックアップの識別子 |
+| dbInstanceId | Body | UUID | X | DBインスタンスの識別子 |
+| backupMethodType | Body | Enum | O | バックアップ方式タイプ<br/>- FULL: `全体バックアップ`<br/>- INCREMENTAL: `増分バックアップ`<br/>- SNAPSHOT: `スナップショットバックアップ` |
 
 <details><summary>例</summary>
 <p>
 
 ```json
 {
-    "backupName": "example-backup-name",
-    "backupMethodType": "SNAPSHOT",
-    "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd"
+    "backupName": "backupName",
+    "baseBackupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+    "backupMethodType": "FULL"
 }
 ```
 
 </p>
 </details>
-
-
 
 #### レスポンス
 
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### バックアップの削除
+
+```http
+DELETE /v4.0/backups/{backupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:Backup.Delete | バックアップの削除 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| backupId | URL | UUID | O |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### バックアップ詳細照会
+
+```http
+GET /v4.0/backups/{backupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:Backup.Get | バックアップ詳細照会 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| backupId | URL | UUID | O |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| backup | Body | Object | バックアップ詳細情報 |
+| backup.backupId | Body | UUID | バックアップの識別子 |
+| backup.regionCode | Body | Enum | リージョンコード<br/>- KR1: `韓国(パンギョ)` |
+| backup.backupName | Body | String | バックアップを識別できる名前 |
+| backup.backupStatus | Body | Enum | バックアップの現在状態<br/>- BACKING_UP: `バックアップ中 (スピナー)`<br/>- VERIFYING: `検証中 (スピナー)`<br/>- COMPLETED: `使用可能 (緑色アイコン)`<br/>- DELETING: `削除中 (スピナー)`<br/>- DELETED: `削除済み (グレーアイコン)`<br/>- ERROR: `エラー (赤色アイコン)` |
+| backup.dbInstanceId | Body | UUID | 原本DBインスタンスの識別子 |
+| backup.dbInstanceName | Body | String | 原本DBインスタンスの名前 |
+| backup.dbVersion | Body | Enum | DBエンジンバージョン |
+| backup.utilVersion | Body | String | ユーティリティバージョン |
+| backup.backupType | Body | Enum | バックアップタイプ(AUTO、MANUAL)<br/>- AUTO<br/>- MANUAL |
+| backup.backupMethodType | Body | Enum | バックアップ方式(FULL、SNAPSHOT、INCREMENTAL)<br/>- FULL<br/>- INCREMENTAL<br/>- SNAPSHOT |
+| backup.backupFileType | Body | Enum | バックアップファイルタイプ<br/>- XBSTREAM<br/>- TAR_ZSTD<br/>- TAR_LZ4<br/>- TAR_GZIP<br/>- SNAPSHOT |
+| backup.backupSize | Body | Number | バックアップのサイズ(Byte) |
+| backup.isReplicable | Body | Boolean | レプリケーション可否 |
+| backup.binLogFileName | Body | String | バイナリログファイル名 |
+| backup.binLogPosition | Body | Object | バイナリログ位置 |
+| backup.createdYmdt | Body | DateTime | 作成日時 |
+| backup.updatedYmdt | Body | DateTime | 修正日時 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "backup": {
+        "backupId": "550e8400-e29b-41d4-a716-446655440000",
+        "regionCode": "KR1",
+        "backupName": "backupName-example",
+        "backupStatus": "BACKING_UP",
+        "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+        "dbInstanceName": "dbInstanceName-example",
+        "dbVersion": "MYSQL_V8036",
+        "utilVersion": "utilVersion-example",
+        "backupType": "AUTO",
+        "backupMethodType": "FULL",
+        "backupFileType": "XBSTREAM",
+        "backupSize": 1,
+        "isReplicable": false,
+        "binLogFileName": "binLogFileName-example",
+        "binLogPosition": {
+        },
+        "createdYmdt": "2023-12-31T15:00:00+09:00",
+        "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -3186,31 +3880,31 @@ POST /v4.0/backups/{backupId}/export
 
 #### 必要権限
 
-| 権限名                                     | 説明    |
-|-------------------------------------------|---------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:Backup.Export | バックアップエクスポート |
 
 #### リクエスト
 
-| 名前            | 種類 | 形式   | 必須 | 説明                        |
-|-----------------|------|--------|----|-----------------------------|
-| backupId        | URL  | UUID   | O  | バックアップの識別子                   |
-| tenantId        | Body | String | O  | バックアップが保存されるオブジェクトストレージのテナントID   |
-| username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID          |
-| password        | Body | String | O  | バックアップが保存されるオブジェクトストレージのAPIパスワード |
-| targetContainer | Body | String | O  | バックアップが保存されるオブジェクトストレージのコンテナ   |
-| objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス          |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| backupId | URL | UUID | O |  |
+| tenantId | Body | String | O | バックアップが保存されるオブジェクトストレージのテナントID<br/>- 最小長さ: `32`<br/>- 最大長さ: `32` |
+| username | Body | String | O | NHN CloudアカウントまたはIAMメンバーID |
+| password | Body | String | O | バックアップが保存されるオブジェクトストレージのAPIパスワード |
+| targetContainer | Body | String | O | バックアップが保存されるオブジェクトストレージのコンテナ |
+| objectPath | Body | String | O | コンテナに保存されるバックアップのパス |
 
 <details><summary>例</summary>
 <p>
 
 ```json
 {
-    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
-    "username": "gildong.hong@nhn.com",
-    "password": "password",
-    "targetContainer": "container",
-    "objectPath": "backups/backup_file"
+    "tenantId": "0123456789abcdef0123456789abcdef",
+    "username": "username-example",
+    "password": "password-example",
+    "targetContainer": "targetContainer-example",
+    "objectPath": "objectPath-example"
 }
 ```
 
@@ -3219,12 +3913,26 @@ POST /v4.0/backups/{backupId}/export
 
 #### レスポンス
 
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | jobId | Body | UUID | リクエストした作業の識別子 |
 
-> [注意]
-> 手動バックアップの場合、バックアップが行われたDBインスタンスが存在しない場合、バックアップをオブジェクトストレージにエクスポートすることができません。
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -3236,70 +3944,95 @@ POST /v4.0/backups/{backupId}/restore
 
 #### 必要権限
 
-| 権限名                                      | 説明    |
-|--------------------------------------------|---------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:Backup.Restore | バックアップの復元 |
 
-#### リクエスト
+#### 共通リクエスト
 
-| 名前                                         | 種類 | 形式    | 必須 | 説明                                                                |
-|----------------------------------------------|------|---------|----|---------------------------------------------------------------------|
-| backupId                                     | URL  | UUID    | O  | バックアップの識別子                                                           |
-| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる マスター名                                           |
-| dbInstanceCandidateName                      | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
-| description                                  | Body | String  | X  | DBインスタンスの追加情報                                                 |
-| dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子<br/>- デフォルト値：原本DBインスタンスの値                                                   |
-| dbPort | Body | Integer | X | DBポート<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`3306`<br/>- 最大値：`43306` |
-| parameterGroupId                             | Body | UUID    | X  | パラメータグループの識別子<br/>- デフォルト値：原本DBインスタンスの値                                                      |
-| dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                  ||network|Body|Object|O|ネットワーク情報オブジェクト|
-| userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                    |
-| useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                       |
-| pingInterval                                 | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
-| pingType                                             | Body | Enum    | X  | 高可用性使用時のPingタイプ<br/>- デフォルト値: `INSERT`<br/>- `INSERT`<br/>- `SELECT`      |
-| useDefaultNotification                       | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                      |
-| useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         | 
-| useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                  |
-| network                                      | Body | Object  | X  | ネットワーク情報オブジェクト                                                        |
-| network.subnetId | Body | UUID | X | サブネットの識別子<br/>- デフォルト値：原本DBインスタンスの値 |
-| network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                      |
-| network.availabilityZone                     | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`<br/>- デフォルト値：ランダム選択                            |
-| storage                                      | Body | Object  | X  | データストレージ情報オブジェクト                                                    |    
-| storage.storageType | Body | Enum | X | データストレージタイプ<br/>- デフォルト値：原本DBインスタンスの値<br/>- 例：`General SSD` |
-| storage.storageSize | Body | Number | X | データストレージサイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`20`<br/>- 最大値：`2048` |
-| storage.storageAutoscale                     | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                 |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどうか<br/>- デフォルト値：原本DBインスタンスの値 |
-| storage.storageAutoscale.threshold | Body | Number | X | 自動拡張条件(%)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`50`<br/>- 最大値：`95` |
-| storage.storageAutoscale.maxStorageSize | Body | Number | X | 自動拡張最大サイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最大値：`4096` |
-| storage.storageAutoscale.cooldownTime | Body | Number | X | 自動拡張クールダウン時間(分)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`10`<br/>- 最大値：`1440` |
-| backup                                       | Body | Object  | X  | バックアップ情報オブジェクト                                                          |
-| backup.backupPeriod | Body | Number | X | バックアップ保管期間(日)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`0`<br/>- 最大値：`730` |
-| backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`  |
-| backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`             |
-| backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                              |
-| backup.backupSchedules                       | Body | Array   | X  | 予定された自動バックアップリスト<br/>- デフォルト値：原本DBインスタンスの値                                                                                                                                                                                                                 |
-| backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                               |
-| backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| backupId | URL | UUID | O |  |
+| dbInstanceName | Body | String | O | DBインスタンスを識別できるマスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+| description | Body | String | X | DBインスタンスの追加情報<br/>- 最大長さ: `100` |
+| dbFlavorId | Body | UUID | X | DBインスタンス仕様の識別子。未指定の場合、原本インスタンスの値を使用 |
+| dbPort | Body | Number | X | DBポート。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: 3306、最大値: 43306 |
+| parameterGroupId | Body | UUID | X | パラメータグループの識別子。未指定の場合、原本インスタンスの値を使用 |
+| dbSecurityGroupIds | Body | Array | X | DBセキュリティグループの識別子リスト |
+| userGroupIds | Body | Array | X | ユーザーグループの識別子リスト |
+| useHighAvailability | Body | Boolean | X | 高可用性を使用するかどうか<br/>- デフォルト値: `false` |
+| pingInterval | Body | Number | X | 高可用性使用時のPing間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| useDefaultNotification | Body | Boolean | X | 基本通知を使用するかどうか<br/>- デフォルト値: `false` |
+| useDeletionProtection | Body | Boolean | X | 削除保護の有無<br/>- デフォルト値: `false` |
+| useSlowQueryAnalysis | Body | Boolean | X | Slow query分析を行うかどうか<br/>- デフォルト値: `true` |
+| network | Body | Object | X | ネットワーク情報オブジェクト。未指定の場合、原本インスタンスの値を使用 |
+| network.subnetId | Body | UUID | X | サブネットの識別子。未指定の場合、原本インスタンスの値を使用 |
+| network.usePublicAccess | Body | Boolean | X | 外部接続可否<br/>- デフォルト値: `false` |
+| network.availabilityZone | Body | Enum | X | DBインスタンスを作成するアベイラビリティゾーン。未指定の場合、ランダム選択 |
+| storage | Body | Object | X | ストレージ情報オブジェクト。未指定の場合、原本インスタンスの値を使用 |
+| storage.storageType | Body | Enum | X | ストレージタイプ。未指定の場合、原本インスタンスの値を使用 |
+| storage.storageSize | Body | Number | X | データストレージサイズ(GB)。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: `20` |
+| storage.storageAutoscale | Body | Object | X | データストレージ自動拡張オブジェクト。未指定の場合、原本インスタンスの値を使用 |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどうか<br/>- デフォルト値: `false` |
+| backup | Body | Object | X | バックアップ情報オブジェクト。未指定の場合、原本インスタンスのバックアップ設定を使用 |
+| backup.backupPeriod | Body | Number | X | バックアップ保管期間(日)。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `730` |
+| backup.backupRetryCount | Body | Number | X | バックアップ再試行回数。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `10` |
+| backup.ftwrlWaitTimeout | Body | Number | X | クエリ遅延待機時間(秒)。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `21600` |
+| backup.replicationRegion | Body | Enum | X | バックアップ複製リージョン<br/>- KR1: `韓国(パンギョ)` |
+| backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか。未指定の場合、原本インスタンスの値を使用 |
+| backup.backupSchedules | Body | Array | X | バックアップスケジュールリスト。未指定の場合、原本インスタンスの値を使用 |
+| backup.backupSchedules.backupWndBgnTime | Body | Time | O | バックアップ開始時刻 |
+| backup.backupSchedules.backupWndDuration | Body | Enum | O | バックアップDuration<br/>- HALF_AN_HOUR: `30分`<br/>- ONE_HOUR: `1時間`<br/>- ONE_HOUR_AND_HALF: `1時間30分`<br/>- TWO_HOURS: `2時間`<br/>- TWO_HOURS_AND_HALF: `2時間30分`<br/>- THREE_HOURS: `3時間` |
+
+#### 高可用性使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceCandidateName | Body | String | O | DBインスタンスを識別できる予備マスター名<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+
+#### ストレージ自動拡張使用時
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Body | Number | O | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95` |
+| storage.storageAutoscale.maxStorageSize | Body | Number | O | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096` |
+| storage.storageAutoscale.cooldownTime | Body | Number | O | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440` |
 
 <details><summary>例</summary>
 <p>
 
 ```json
-
 {
-    "dbInstanceName": "db-instance-restore",
-    "dbFlavorId": "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
-    "dbPort": 10000,
-    "parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbPort": 1,
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useHighAvailability": false,
+    "pingInterval": 3,
+    "useDefaultNotification": false,
+    "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
     "network": {
-        "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "usePublicAccess": false,
         "availabilityZone": "kr-pub-a"
     },
     "storage": {
         "storageType": "General SSD",
-        "storageSize": 20
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
     },
     "backup": {
-        "backupPeriod": 1,
+        "backupPeriod": 0,
+        "backupRetryCount": 0,
+        "ftwrlWaitTimeout": 0,
+        "replicationRegion": "KR1",
+        "useBackupLock": false,
         "backupSchedules": [
             {
                 "backupWndBgnTime": "00:00:00",
@@ -3315,50 +4048,38 @@ POST /v4.0/backups/{backupId}/restore
 
 #### レスポンス
 
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | jobId | Body | UUID | リクエストした作業の識別子 |
 
----
+<details><summary>例</summary>
+<p>
 
-### バックアップを削除する
-
-```http
-DELETE /v4.0/backups/{backupId}
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
 ```
 
-#### 必要権限
-
-| 権限名                                     | 説明    |
-|-------------------------------------------|---------|
-| RDSforMariaDB:Backup.Delete | バックアップの削除 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前     | 種類 | 形式 | 必須 | 説明    |
-|----------|-----|------|----|---------|
-| backupId | URL | UUID | O  | バックアップの識別子 |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
+</p>
+</details>
 
 ---
-
 ## DBセキュリティグループ
 
 ### DBセキュリティグループ進行状態
 
-| 状態            | 説明         |
-|-----------------|--------------|
-| `NONE`          | 進行中の作業がない  |
-| `CREATING_RULE` | ルールポリシーの作成中 |
-| `UPDATING_RULE` | ルールポリシーの修正中 |
-| `DELETING_RULE` | ルールポリシーの削除中 |
+| 状態              | 説明               |
+|-----------------|------------------|
+| `NONE`          | 進行中の作業がない        |
+| `CREATING_RULE` | ルールポリシーの作成中      |
+| `UPDATING_RULE` | ルールポリシーの修正中      |
+| `DELETING_RULE` | ルールポリシーの削除中      |
 
 ### DBセキュリティグループリストを表示
 
@@ -3368,30 +4089,26 @@ GET /v4.0/db-security-groups
 
 #### 必要権限
 
-| 権限名                                            | 説明           |
-|--------------------------------------------------|----------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbSecurityGroup.List | DBセキュリティグループリスト表示 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
-| page | Query | Number | X | 照会する一覧のページ<br/>- デフォルト値：1 <br/>- 最小値：`1` |
-| size | Query | Number | X | 照会する一覧のページサイズ<br/>- デフォルト値：20 |
-
 #### レスポンス
 
-| 名前                                 | 種類 | 形式     | 説明                              |
-|--------------------------------------|------|----------|-----------------------------------|
-| dbSecurityGroups                     | Body | Array    | DBセキュリティグループリスト                     |
-| dbSecurityGroups.dbSecurityGroupId   | Body | UUID     | DBセキュリティグループの識別子                   |
-| dbSecurityGroups.dbSecurityGroupName | Body | String   | DBセキュリティグループを識別できる名前            |
-| dbSecurityGroups.description         | Body | String   | DBセキュリティグループの追加情報               |
-| dbSecurityGroups.progressStatus      | Body | Enum     | DBセキュリティグループの現在進行状態              |
-| dbSecurityGroups.createdYmdt         | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| dbSecurityGroups.updatedYmdt         | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| totalCounts | Body | Number | DBセキュリティグループリストの総数 |
+| dbSecurityGroups | Body | Array | DBセキュリティグループリスト |
+| dbSecurityGroups.dbSecurityGroupId | Body | UUID | DBセキュリティグループの識別子 |
+| dbSecurityGroups.dbSecurityGroupName | Body | String | DBセキュリティグループを識別できる名前 |
+| dbSecurityGroups.description | Body | String | DBセキュリティグループの追加情報 |
+| dbSecurityGroups.progressStatus | Body | Enum | DBセキュリティグループの現在進行状態<br/>- NONE: `なし`<br/>- CREATING_RULE: `ルール作成中`<br/>- UPDATING_RULE: `ルール修正中`<br/>- DELETING_RULE: `ルール削除中`<br/>- APPLYING_DEFAULT_RULE: `デフォルトルール適用中` |
+| dbSecurityGroups.createdYmdt | Body | DateTime | 作成日時 |
+| dbSecurityGroups.updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -3403,101 +4120,17 @@ GET /v4.0/db-security-groups
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
+    "totalCounts": 1,
     "dbSecurityGroups": [
         {
-            "dbSecurityGroupId": "fe4f2aee-afbb-4c19-a5e9-eb2eab394708",
-            "dbSecurityGroupName": "dbSecurityGroup",
-            "description": "description",
+            "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbSecurityGroupName": "dbSecurityGroupName-example",
+            "description": "description-example",
             "progressStatus": "NONE",
-            "createdYmdt": "2023-02-19T19:18:13+09:00",
-            "updatedYmdt": "2022-02-19T19:18:13+09:00"
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
-}
-```
-
-</p>
-</details>
-
----
-
-### DBセキュリティグループの詳細を表示
-
-```http
-GET /v4.0/db-security-groups/{dbSecurityGroupId}
-```
-
-#### 必要権限
-
-| 権限名                                           | 説明           |
-|-------------------------------------------------|----------------|
-| RDSforMariaDB:DbSecurityGroup.Get | DBセキュリティグループ詳細表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前              | 種類 | 形式 | 必須 | 説明          |
-|-------------------|-----|------|----|---------------|
-| dbSecurityGroupId | URL | UUID | O  | DBセキュリティグループの識別子 |
-
-#### レスポンス
-
-| 名前                | 種類 | 形式     | 説明                                                                                                               |
-|---------------------|------|----------|--------------------------------------------------------------------------------------------------------------------|
-| dbSecurityGroupId   | Body | UUID     | DBセキュリティグループの識別子                                                                                                    |
-| dbSecurityGroupName | Body | String   | DBセキュリティグループを識別できる名前                                                                                             |
-| description         | Body | String   | DBセキュリティグループの追加情報                                                                                                |
-| progressStatus      | Body | Enum     | DBセキュリティグループの現在進行状態                                                                                               |
-| rules               | Body | Array    | DBセキュリティグループルールリスト                                                                                                   |
-| rules.ruleId        | Body | UUID     | DBセキュリティグループルールの識別子                                                                                                 |
-| rules.description   | Body | String   | DBセキュリティグループルールの追加情報                                                                                             |
-| rules.direction     | Body | Enum     | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                     |
-| rules.etherType     | Body | Enum     | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                     |
-| rules.port          | Body | Object   | ポートオブジェクト                                                                                                            |
-| rules.port.portType | Body | Enum     | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。<br/>- `PORT`:指定されたポート値に設定されます。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
-| rules.port.minPort  | Body | Number   | 最小ポート範囲                                                                                                          |
-| rules.port.maxPort  | Body | Number   | 最大ポート範囲                                                                                                         |
-| rules.cidr          | Body | String   | 許可するトラフィックの遠隔ソース                                                                                                   |
-| rules.createdYmdt   | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
-| rules.updatedYmdt   | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
-| createdYmdt         | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
-| updatedYmdt         | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbSecurityGroup": {
-        "dbSecurityGroupId": "fe4f2aee-afbb-4c19-a5e9-eb2eab394708",
-        "dbSecurityGroupName": "dbSecurityGroup",
-        "description": "description",
-        "progressStatus": "NONE",
-        "rules": [
-            {
-                "ruleId": "17c88ef6-95f1-4678-84f9-fee1b22e250d",
-                "description": "description",
-                "direction": "INGRESS",
-                "etherType": "IPV4",
-                "port": {
-                    "portType": "PORT_RANGE",
-                    "minPort": 10000,
-                    "maxPort": 10005
-                },
-                "cidr": "0.0.0.0/0",
-                "createdYmdt": "2023-02-19T19:18:13+09:00",
-                "updatedYmdt": "2023-02-19T19:18:13+09:00"
-            }
-        ],
-        "createdYmdt": "2023-02-19T19:18:13+09:00",
-        "updatedYmdt": "2023-02-19T19:18:13+09:00"
-    }
 }
 ```
 
@@ -3514,46 +4147,44 @@ POST /v4.0/db-security-groups
 
 #### 必要権限
 
-| 権限名                                              | 説明          |
-|----------------------------------------------------|---------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbSecurityGroup.Create | DBセキュリティグループの作成 |
 
 #### リクエスト
 
-| 名前                | 種類 | 形式   | 必須 | 説明                                                                                                                                                                                     |
-|---------------------|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbSecurityGroupName | Body | String | O  | DBセキュリティグループを識別できる名前                                                                                                                                                                |
-| description         | Body | String | X  | DBセキュリティグループの追加情報                                                                                                                                                                   |
-| rules               | Body | Array  | O  | DBセキュリティグループルールリスト                                                                                                                                                                         |
-| rules.description   | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                |
-| rules.direction     | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                           |
-| rules.etherType     | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
-| rules.cidr          | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                                    |
-| rules.port          | Body | Object | O  | ポートオブジェクト                                                                                                                                                                                  |
-| rules.port.portType | Body | Enum   | O  | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。 `minPort`値と`maxPort`値を必要としません。<br/>- `PORT`:指定されたポート値に設定されます。 `minPort`値と`maxPort`値が同じでなければなりません。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
-| rules.port.minPort  | Body | Number | X  | 最小ポート範囲<br/>- 最小値: 1                                                                                                                                                                 |
-| rules.port.maxPort  | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                                |
-
-> [注意]
-> DBポートは送信方向(アウトバウンド)には設定できません。
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupName | Body | String | O | DBセキュリティグループを識別できる名前<br/>- 最小長: `1`<br/>- 最大長: `100` |
+| description | Body | String | X | DBセキュリティグループの追加情報<br/>- 最大長: `100` |
+| rules | Body | Array | O | DBセキュリティグループルールリスト |
+| rules.direction | Body | Enum | O | 通信方向<br/>- INGRESS: `受信`<br/>- EGRESS: `送信` |
+| rules.etherType | Body | Enum | O | Etherタイプ<br/>- IPV4: `IPv4形式`<br/>- IPV6: `IPv6形式` |
+| rules.port | Body | Object | O | ポートオブジェクト |
+| rules.port.portType | Body | Enum | O | ポートタイプ<br/>- ALL: `ポート範囲全体(ユーザーコンソールでは使用しない)`<br/>- PORT: `特定ポート`<br/>- DB_PORT: `DB受信ポート`<br/>- PORT_RANGE: `ポート範囲` |
+| rules.port.minPort | Body | Number | X | 最小ポート範囲<br/>- 最小値: `3306` |
+| rules.port.maxPort | Body | Number | X | 最大ポート範囲<br/>- 最大値: `65535` |
+| rules.cidr | Body | String | O | CIDR |
+| rules.description | Body | String | X | DBセキュリティグループルールの追加情報 |
 
 <details><summary>例</summary>
 <p>
 
 ```json
 {
-    "dbSecurityGroupName": "dbSecurityGroup",
-    "description": "description",
+    "dbSecurityGroupName": "dbSecurityGroupName",
+    "description": "description-example",
     "rules": [
         {
             "direction": "INGRESS",
             "etherType": "IPV4",
             "port": {
-                "portType": "PORT_RANGE",
-                "minPort": 10000,
-                "maxPort": 10005
+                "portType": "ALL",
+                "minPort": 3306,
+                "maxPort": 1
             },
-            "cidr": "0.0.0.0/0"
+            "cidr": "192.168.0.0/24",
+            "description": "description-example"
         }
     ]
 }
@@ -3564,48 +4195,9 @@ POST /v4.0/db-security-groups
 
 #### レスポンス
 
-| 名前              | 種類 | 形式 | 説明          |
-|-------------------|------|------|---------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | dbSecurityGroupId | Body | UUID | DBセキュリティグループの識別子 |
-
----
-
-### DBセキュリティグループを修正する
-
-```http
-PUT /v4.0/db-security-groups/{dbSecurityGroupId}
-```
-
-#### 必要権限
-
-| 権限名                                              | 説明          |
-|----------------------------------------------------|---------------|
-| RDSforMariaDB:DbSecurityGroup.Modify | DBセキュリティグループの修正 |
-
-#### リクエスト
-
-| 名前                | 種類 | 形式   | 必須 | 説明                  |
-|---------------------|------|--------|----|-----------------------|
-| dbSecurityGroupId   | URL  | UUID   | O  | DBセキュリティグループの識別子       |
-| dbSecurityGroupName | Body | String | X  | DBセキュリティグループを識別できる名前 |
-| description         | Body | String | X  | DBセキュリティグループの追加情報   |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "dbSecurityGroupName": "dbSecurityGroup",
-    "description": "description"
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-このAPIはレスポンス本文を返しません。
 
 <details><summary>例</summary>
 <p>
@@ -3616,13 +4208,13 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
         "resultCode": 0,
         "resultMessage": "SUCCESS",
         "isSuccessful": true
-    }
+    },
+    "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
 </p>
 </details>
-
 
 ---
 
@@ -3634,21 +4226,66 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 
 #### 必要権限
 
-| 権限名                                              | 説明          |
-|----------------------------------------------------|---------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbSecurityGroup.Delete | DBセキュリティグループの削除 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前              | 種類 | 形式 | 必須 | 説明          |
-|-------------------|-----|------|----|---------------|
-| dbSecurityGroupId | URL | UUID | O  | DBセキュリティグループの識別子 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
 
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+---
+
+### DBセキュリティグループの詳細を表示
+
+```http
+GET /v4.0/db-security-groups/{dbSecurityGroupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbSecurityGroup.Get | DBセキュリティグループ詳細表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| dbSecurityGroupId | Body | UUID | DBセキュリティグループの識別子 |
+| dbSecurityGroupName | Body | String | DBセキュリティグループを識別できる名前 |
+| description | Body | String | DBセキュリティグループの追加情報 |
+| progressStatus | Body | Enum | DBセキュリティグループの現在進行状態<br/>- NONE: `なし`<br/>- CREATING_RULE: `ルール作成中`<br/>- UPDATING_RULE: `ルール修正中`<br/>- DELETING_RULE: `ルール削除中`<br/>- APPLYING_DEFAULT_RULE: `デフォルトルール適用中` |
+| rules | Body | Array | DBセキュリティグループルールリスト |
+| rules.ruleId | Body | UUID | DBセキュリティグループルールの識別子 |
+| rules.description | Body | String | DBセキュリティグループルールの追加情報 |
+| rules.direction | Body | Enum | 通信方向<br/>- INGRESS: `受信`<br/>- EGRESS: `送信` |
+| rules.etherType | Body | Enum | Etherタイプ<br/>- IPV4: `IPv4形式`<br/>- IPV6: `IPv6形式` |
+| rules.port | Body | Object | ポートオブジェクト |
+| rules.port.portType | Body | Enum | ポートタイプ<br/>- ALL: `ポート範囲全体(ユーザーコンソールでは使用しない)`<br/>- PORT: `特定ポート`<br/>- DB_PORT: `DB受信ポート`<br/>- PORT_RANGE: `ポート範囲` |
+| rules.port.minPort | Body | Number | 最小ポート範囲 |
+| rules.port.maxPort | Body | Number | 最大ポート範囲 |
+| rules.cidr | Body | String | CIDR |
+| rules.createdYmdt | Body | DateTime | 作成日時 |
+| rules.updatedYmdt | Body | DateTime | 修正日時 |
+| createdYmdt | Body | DateTime | 作成日時 |
+| updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -3659,7 +4296,114 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
         "resultCode": 0,
         "resultMessage": "SUCCESS",
         "isSuccessful": true
-    }
+    },
+    "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupName": "dbSecurityGroupName-example",
+    "description": "description-example",
+    "progressStatus": "NONE",
+    "rules": [
+        {
+            "ruleId": "550e8400-e29b-41d4-a716-446655440000",
+            "description": "description-example",
+            "direction": "INGRESS",
+            "etherType": "IPV4",
+            "port": {
+                "portType": "ALL",
+                "minPort": 1,
+                "maxPort": 1
+            },
+            "cidr": "192.168.0.0/24",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+```
+
+</p>
+</details>
+
+---
+
+### DBセキュリティグループを修正する
+
+```http
+PUT /v4.0/db-security-groups/{dbSecurityGroupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbSecurityGroup.Modify | DBセキュリティグループの修正 |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+| dbSecurityGroupName | Body | String | X | DBセキュリティグループを識別できる名前<br/>- 最小長: `1`<br/>- 最大長: `100` |
+| description | Body | String | X | DBセキュリティグループの追加情報<br/>- 最大長: `100` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "dbSecurityGroupName": "dbSecurityGroupName",
+    "description": "description-example"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
+
+### DBセキュリティグループルールを削除する
+
+```http
+DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbSecurityGroupRule.Delete | DBセキュリティグループルールの削除 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+| ruleIds | Query | String | O |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -3676,26 +4420,23 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 #### 必要権限
 
-| 権限名                                                  | 説明             |
-|--------------------------------------------------------|------------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbSecurityGroupRule.Create | DBセキュリティグループルールの作成 |
 
 #### リクエスト
 
-| 名前              | 種類 | 形式   | 必須 | 説明                                                                                                                                                                                     |
-|-------------------|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbSecurityGroupId | URL  | UUID   | O  | DBセキュリティグループの識別子                                                                                                                                                                          |
-| description       | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                |
-| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                           |
-| etherType         | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
-| port              | Body | Object | O  | ポートオブジェクト                                                                                                                                                                                  |
-| port.portType     | Body | Enum   | O  | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。 `minPort`値と`maxPort`値を必要としません。<br/>- `PORT`:指定されたポート値に設定されます。 `minPort`値と`maxPort`値が同じでなければなりません。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
-| port.minPort      | Body | Number | X  | 最小ポート範囲<br/>- 最小値: 1                                                                                                                                                                 |
-| port.maxPort      | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                                |
-| cidr              | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                                    |
-
-> [注意]
-> DBポートは送信方向(アウトバウンド)には設定できません。
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+| direction | Body | Enum | O | 通信方向<br/>- INGRESS: `受信`<br/>- EGRESS: `送信` |
+| etherType | Body | Enum | O | Etherタイプ<br/>- IPV4: `IPv4形式`<br/>- IPV6: `IPv6形式` |
+| port | Body | Object | O | ポートオブジェクト |
+| port.portType | Body | Enum | O | ポートタイプ<br/>- ALL: `ポート範囲全体(ユーザーコンソールでは使用しない)`<br/>- PORT: `特定ポート`<br/>- DB_PORT: `DB受信ポート`<br/>- PORT_RANGE: `ポート範囲` |
+| port.minPort | Body | Number | X | 最小ポート範囲<br/>- 最小値: `3306` |
+| port.maxPort | Body | Number | X | 最大ポート範囲<br/>- 最大値: `65535` |
+| cidr | Body | String | O | CIDR |
+| description | Body | String | X | DBセキュリティグループルールの追加情報<br/>- 最大長: `200` |
 
 <details><summary>例</summary>
 <p>
@@ -3705,11 +4446,12 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
     "direction": "INGRESS",
     "etherType": "IPV4",
     "port": {
-        "portType": "PORT",
-        "minPort": 10000,
-        "maxPort": 10000
+        "portType": "ALL",
+        "minPort": 3306,
+        "maxPort": 1
     },
-    "cidr": "0.0.0.0/0"
+    "cidr": "192.168.0.0/24",
+    "description": "description-example"
 }
 ```
 
@@ -3718,9 +4460,26 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 #### レスポンス
 
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | jobId | Body | UUID | リクエストした作業の識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -3732,27 +4491,24 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 #### 必要権限
 
-| 権限名                                                  | 説明             |
-|--------------------------------------------------------|------------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:DbSecurityGroupRule.Modify | DBセキュリティグループルールの修正 |
 
 #### リクエスト
 
-| 名前              | 種類 | 形式   | 必須 | 説明                                                                                                                                                                                     |
-|-------------------|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbSecurityGroupId | URL  | UUID   | O  | DBセキュリティグループの識別子                                                                                                                                                                          |
-| ruleId            | URL  | UUID   | O  | DBセキュリティグループルールの識別子                                                                                                                                                                       |
-| description       | Body | String | X  | DBセキュリティグループルールの追加情報                                                                                                                                                                |
-| direction         | Body | Enum   | O  | 通信方向<br/>- `INGRESS`:受信<br/>- `EGRESS`:送信                                                                                                                                           |
-| etherType         | Body | Enum   | O  | Etherタイプ<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
-| port              | Body | Object | O  | ポートオブジェクト                                                                                                                                                                                  |
-| port.portType     | Body | Enum   | O  | ポートタイプ<br/>- `DB_PORT`:各DBインスタンスポート値に設定されます。 `minPort`値と`maxPort`値を必要としません。<br/>- `PORT`:指定されたポート値に設定されます。 `minPort`値と`maxPort`値が同じでなければなりません。<br/>- `PORT_RANGE`:指定されたポート範囲に設定されます。 |
-| port.minPort      | Body | Number | X  | 最小ポート範囲<br/>- 最小値: 1                                                                                                                                                                 |
-| port.maxPort      | Body | Number | X  | 最大ポート範囲<br/>- 最大値: 65535                                                                                                                                                                |
-| cidr              | Body | String | O  | 許可するトラフィックの遠隔ソース<br/>- 例: `1.1.1.1/32`                                                                                                                                                    |
-
-> [注意]
-> DBポートは送信方向(アウトバウンド)には設定できません。
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | O |  |
+| ruleId | URL | UUID | O |  |
+| direction | Body | Enum | O | 通信方向<br/>- INGRESS: `受信`<br/>- EGRESS: `送信` |
+| etherType | Body | Enum | O | Etherタイプ<br/>- IPV4: `IPv4形式`<br/>- IPV6: `IPv6形式` |
+| port | Body | Object | O | ポートオブジェクト |
+| port.portType | Body | Enum | O | ポートタイプ<br/>- ALL: `ポート範囲全体(ユーザーコンソールでは使用しない)`<br/>- PORT: `特定ポート`<br/>- DB_PORT: `DB受信ポート`<br/>- PORT_RANGE: `ポート範囲` |
+| port.minPort | Body | Number | X | 最小ポート範囲<br/>- 最小値: `3306` |
+| port.maxPort | Body | Number | X | 最大ポート範囲<br/>- 最大値: `65535` |
+| cidr | Body | String | O | CIDR |
+| description | Body | String | X | DBセキュリティグループルールの追加情報<br/>- 最大長: `200` |
 
 <details><summary>例</summary>
 <p>
@@ -3762,9 +4518,12 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
     "direction": "INGRESS",
     "etherType": "IPV4",
     "port": {
-        "portType": "DB_PORT"
+        "portType": "ALL",
+        "minPort": 3306,
+        "maxPort": 1
     },
-    "cidr": "0.0.0.0/0"
+    "cidr": "192.168.0.0/24",
+    "description": "description-example"
 }
 ```
 
@@ -3773,41 +4532,28 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 #### レスポンス
 
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | jobId | Body | UUID | リクエストした作業の識別子 |
 
----
+<details><summary>例</summary>
+<p>
 
-### DBセキュリティグループルールを削除する
-
-```http
-DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
 ```
 
-#### 必要権限
-
-| 権限名                                                  | 説明             |
-|--------------------------------------------------------|------------------|
-| RDSforMariaDB:DbSecurityGroupRule.Create | DBセキュリティグループルールの削除 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前              | 種類  | 形式  | 必須 | 説明                |
-|-------------------|-------|-------|----|---------------------|
-| dbSecurityGroupId | URL   | UUID  | O  | DBセキュリティグループの識別子     |
-| ruleIds           | Query | Array | O  | DBセキュリティグループルールの識別子リスト |
-
-#### レスポンス
-
-| 名前  | 種類 | 形式 | 説明        |
-|-------|------|------|-------------|
-| jobId | Body | UUID | リクエストした作業の識別子 |
+</p>
+</details>
 
 ---
-
 ## パラメータグループ
 
 ### パラメータグループリストを表示
@@ -3818,30 +4564,28 @@ GET /v4.0/parameter-groups
 
 #### 必要権限
 
-| 権限名                                           | 説明          |
-|-------------------------------------------------|---------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:ParameterGroup.List | パラメータグループリスト表示 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前      | 種類  | 形式 | 必須 | 説明     |
-|-----------|-------|------|----|----------|
-| dbVersion | Query | Enum | X  | DBエンジンタイプ |
-
 #### レスポンス
 
-| 名前                                 | 種類 | 形式     | 説明                                                              |
-|--------------------------------------|------|----------|-------------------------------------------------------------------|
-| parameterGroups                      | Body | Array    | パラメータグループリスト                                                      |
-| parameterGroups.parameterGroupId     | Body | UUID     | パラメータグループの識別子                                                    |
-| parameterGroups.parameterGroupName   | Body | String   | パラメータグループを識別できる名前                                            |
-| parameterGroups.description          | Body | String   | パラメータグループの追加情報                                               |
-| parameterGroups.dbVersion            | Body | Enum     | DBエンジンタイプ                                                        |
-| parameterGroups.parameterGroupStatus | Body | Enum     | パラメータグループの現在状態<br/>- `STABLE`:適用完了<br/>- `NEED_TO_APPLY`:適用必要 |
-| parameterGroups.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                 |
-| parameterGroups.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                 |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| totalCounts | Body | Number | パラメータグループの総数 |
+| parameterGroups | Body | Array | パラメータグループリスト |
+| parameterGroups.parameterGroupId | Body | UUID | パラメータグループの識別子 |
+| parameterGroups.parameterGroupName | Body | String | パラメータグループを識別できる名前 |
+| parameterGroups.description | Body | String | パラメータグループの追加情報 |
+| parameterGroups.dbVersion | Body | Enum | DBエンジンタイプ |
+| parameterGroups.parameterGroupType | Body | Enum | パラメータグループタイプ<br/>- USER<br/>- ADMIN<br/>- DEFAULT<br/>- CLUSTER_USER |
+| parameterGroups.parameterGroupStatus | Body | Enum | パラメータグループの現在状態<br/>- STABLE: `適用完了`<br/>- NEED_TO_APPLY: `適用必要`<br/>- DELETED: `削除済み` |
+| parameterGroups.createdYmdt | Body | DateTime | 作成日時 |
+| parameterGroups.updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -3853,15 +4597,17 @@ GET /v4.0/parameter-groups
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
+    "totalCounts": 1,
     "parameterGroups": [
         {
-            "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
-            "parameterGroupName": "parameter-group",
-            "description": null,
-            "dbVersion": "MARIADB_V10330",
+            "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "parameterGroupName": "parameterGroupName-example",
+            "description": "description-example",
+            "dbVersion": "MYSQL_V8036",
+            "parameterGroupType": "USER",
             "parameterGroupStatus": "STABLE",
-            "createdYmdt": "2023-02-31T15:28:17+09:00",
-            "updatedYmdt": "2023-02-31T15:28:17+09:00"
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
 }
@@ -3869,88 +4615,6 @@ GET /v4.0/parameter-groups
 
 </p>
 </details>
-
-
----
-
-### パラメータグループの詳細を表示
-
-```http
-GET /v4.0/parameter-groups/{parameterGroupId}
-```
-
-#### 必要権限
-
-| 権限名                                          | 説明          |
-|------------------------------------------------|---------------|
-| RDSforMariaDB:ParameterGroup.Get | パラメータグループ詳細表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前             | 種類 | 形式 | 必須 | 説明         |
-|------------------|-----|------|----|--------------|
-| parameterGroupId | URL | UUID | O  | パラメータグループの識別子 |
-
-#### レスポンス
-
-| 名前                          | 種類 | 形式     | 説明                                                                                                   |
-|-------------------------------|------|----------|--------------------------------------------------------------------------------------------------------|
-| parameterGroupId              | Body | UUID     | パラメータグループの識別子                                                                                         |
-| parameterGroupName            | Body | String   | パラメータグループを識別できる名前                                                                              |
-| description                   | Body | String   | パラメータグループの追加情報                                                                                 |
-| dbVersion                     | Body | Enum     | DBエンジンタイプ                                                                                             |
-| parameterGroupStatus          | Body | Enum     | パラメータグループの現在状態<br/>- `STABLE`:適用完了<br/>- `NEED_TO_APPLY`:適用必要                                    |
-| parameters                    | Body | Array    | パラメータリスト                                                                                              |
-| parameters.parameterId        | Body | UUID     | パラメータ識別子                                                                                             |
-| parameters.parameterFileGroup | Body | Enum     | パラメータファイルグループタイプ<br/>- `CLIENT`: client<br/>- `MYSQL`: mysql<br/>- `MYSQLD`: mysqld                       |
-| parameters.parameterName      | Body | String   | パラメータ名                                                                                              |
-| parameters.fileParameterName  | Body | String   | パラメータファイル名                                                                                           |
-| parameters.value              | Body | String   | 現在設定されている値                                                                                     |
-| parameters.defaultValue       | Body | String   | デフォルト値                                                                                                  |
-| parameters.allowedValue       | Body | String   | 許可された値                                                                                         |
-| parameters.updateType         | Body | Enum     | 修正タイプ<br/>- `VARIABLE`:いつでも修正可能<br/>- `CONSTANT`:修正不可<br/>- `INIT_VARIABLE`: DBインスタンス作成時にのみ修正可能 |
-| parameters.applyType          | Body | Enum     | 適用タイプ<br/>- `SESSION`:セッション適用<br/>- `FILE`:設定ファイル適用(再起動必要)<br/>- `BOTH`:全体(再起動必要)                   |
-| createdYmdt                   | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                      |
-| updatedYmdt                   | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                      |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
-    "parameterGroupName": "parameter-group",
-    "description": null,
-    "dbVersion": "MARIADB_V10330",
-    "parameterGroupStatus": "STABLE",
-    "parameters": [
-        {
-            "parameterId": "fa040b5e-f29f-46de-8f0d-bba4cb82887a",
-            "parameterFileGroup": "client",
-            "parameterName": "socket",
-            "fileParameterName": "socket",
-            "value": "/home/tcrds/db/mysql/tmp/mysql.sock",
-            "defaultValue": "/home/tcrds/db/mysql/tmp/mysql.sock",
-            "allowedValue": "",
-            "updateType": "CONSTANT",
-            "applyType": "BOTH"
-        }
-    ],
-    "createdYmdt": "2023-03-13T11:02:28+09:00",
-    "updatedYmdt": "2023-03-13T11:02:28+09:00"
-}
-```
-
-</p>
-</details>
-
 
 ---
 
@@ -3962,25 +4626,26 @@ POST /v4.0/parameter-groups
 
 #### 必要権限
 
-| 権限名                                             | 説明         |
-|---------------------------------------------------|--------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:ParameterGroup.Create | パラメータグループの作成 |
 
 #### リクエスト
 
-| 名前               | 種類 | 形式   | 必須 | 説明                 |
-|--------------------|------|--------|----|----------------------|
-| parameterGroupName | Body | String | O  | パラメータグループを識別できる名前 |
-| description        | Body | String | X  | パラメータグループの追加情報   |
-| dbVersion          | Body | Enum   | O  | DBエンジンタイプ           |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| parameterGroupName | Body | String | O | パラメータグループを識別できる名前<br/>- 最小長: `1`<br/>- 最大長: `100` |
+| description | Body | String | X | パラメータグループの追加情報<br/>- 最大長: `100` |
+| dbVersion | Body | Enum | O | DBエンジンタイプ |
 
 <details><summary>例</summary>
 <p>
 
 ```json
 {
-    "parameterGroupName": "parameter-group",
-    "dbVersion": "MARIADB_V10330"
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example",
+    "dbVersion": "MYSQL_V8036"
 }
 ```
 
@@ -3989,89 +4654,10 @@ POST /v4.0/parameter-groups
 
 #### レスポンス
 
-| 名前             | 種類 | 形式 | 説明         |
-|------------------|------|------|--------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | parameterGroupId | Body | UUID | パラメータグループの識別子 |
 
----
-
-### パラメータグループをコピーする
-
-```http
-POST /v4.0/parameter-groups/{parameterGroupId}/copy
-```
-
-#### 必要権限
-
-| 権限名                                           | 説明         |
-|-------------------------------------------------|--------------|
-| RDSforMariaDB:ParameterGroup.Copy | パラメータグループコピーする |
-
-#### リクエスト
-
-| 名前               | 種類 | 形式   | 必須 | 説明                 |
-|--------------------|------|--------|----|----------------------|
-| parameterGroupId   | URL  | UUID   | O  | パラメータグループの識別子       |
-| parameterGroupName | Body | String | O  | パラメータグループを識別できる名前 |
-| description        | Body | String | X  | パラメータグループの追加情報   |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "parameterGroupName": "parameter-group-copy",
-    "description": "copy"
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前             | 種類 | 形式 | 説明         |
-|------------------|------|------|--------------|
-| parameterGroupId | Body | UUID | パラメータグループの識別子 |
-
----
-
-### パラメータグループを修正する
-
-```http
-PUT /v4.0/parameter-groups/{parameterGroupId}
-```
-
-#### 必要権限
-
-| 権限名                                             | 説明         |
-|---------------------------------------------------|--------------|
-| RDSforMariaDB:ParameterGroup.Modify | パラメータグループの修正 |
-
-#### リクエスト
-
-| 名前               | 種類 | 形式   | 必須 | 説明                 |
-|--------------------|------|--------|----|----------------------|
-| parameterGroupId   | URL  | UUID   | O  | パラメータグループの識別子       |
-| parameterGroupName | Body | String | X  | パラメータグループを識別できる名前 |
-| description        | Body | String | X  | パラメータグループの追加情報   |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "parameterGroupName": "parameter-group"
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-このAPIはレスポンス本文を返しません。
-
 <details><summary>例</summary>
 <p>
 
@@ -4081,107 +4667,8 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
         "resultCode": 0,
         "resultMessage": "SUCCESS",
         "isSuccessful": true
-    }
-}
-```
-
-</p>
-</details>
-
----
-
-### パラメータを修正する
-
-```http
-PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
-```
-
-#### 必要権限
-
-| 権限名                                             | 説明         |
-|---------------------------------------------------|--------------|
-| RDSforMariaDB:ParameterGroup.Modify | パラメータグループの修正 |
-
-#### リクエスト
-
-| 名前                           | 種類 | 形式   | 必須 | 説明         |
-|--------------------------------|------|--------|----|--------------|
-| parameterGroupId               | URL  | UUID   | O  | パラメータグループの識別子 |
-| modifiedParameters             | Body | Array  | O  | 変更するパラメータリスト |
-| modifiedParameters.parameterId | Body | UUID   | O  | パラメータの識別子  |
-| modifiedParameters.value       | Body | String | O  | 変更するパラメータ値 |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "modifiedParameters": [
-        {
-            "parameterId": "3abac558-7274-44e1-9f4a-f100f53f67ba",
-            "value": "0"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-このAPIはレスポンス本文を返しません。
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    }
-}
-```
-
-</p>
-</details>
-
----
-
-### パラメータグループをリセットする
-
-```http
-PUT /v4.0/parameter-groups/{parameterGroupId}/reset
-```
-
-#### 必要権限
-
-| 権限名                                            | 説明          |
-|--------------------------------------------------|---------------|
-| RDSforMariaDB:ParameterGroup.Reset | パラメータグループのリセット |
-
-#### リクエスト
-
-| 名前             | 種類 | 形式 | 必須 | 説明         |
-|------------------|-----|------|----|--------------|
-| parameterGroupId | URL | UUID | O  | パラメータグループの識別子 |
-
-#### レスポンス
-
-このAPIはレスポンス本文を返しません。
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    }
+    },
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4198,21 +4685,65 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 #### 必要権限
 
-| 権限名                                             | 説明         |
-|---------------------------------------------------|--------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:ParameterGroup.Delete | パラメータグループの削除 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前             | 種類 | 形式 | 必須 | 説明         |
-|------------------|-----|------|----|--------------|
-| parameterGroupId | URL | UUID | O  | パラメータグループの識別子 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
 
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+---
+
+### パラメータグループの詳細を表示
+
+```http
+GET /v4.0/parameter-groups/{parameterGroupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:ParameterGroup.Get | パラメータグループ詳細表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| parameterGroupId | Body | UUID | パラメータグループの識別子 |
+| parameterGroupName | Body | String | パラメータグループを識別できる名前 |
+| description | Body | String | パラメータグループの追加情報 |
+| dbVersion | Body | Enum | DBエンジンタイプ |
+| parameterGroupStatus | Body | Enum | パラメータグループの現在状態<br/>- STABLE: `適用完了`<br/>- NEED_TO_APPLY: `適用必要`<br/>- DELETED: `削除済み` |
+| parameters | Body | Array | パラメータリスト |
+| parameters.parameterId | Body | UUID | パラメータの識別子 |
+| parameters.parameterFileGroup | Body | Enum | パラメータファイルグループタイプ<br/>- CLIENT<br/>- MYSQL<br/>- MYSQLD |
+| parameters.parameterName | Body | String | パラメータ名 |
+| parameters.fileParameterName | Body | String | パラメータファイル名 |
+| parameters.value | Body | String | 現在設定されている値 |
+| parameters.defaultValue | Body | String | デフォルト値 |
+| parameters.allowedValue | Body | String | 許可された値 |
+| parameters.updateType | Body | Enum | 修正タイプ<br/>- VARIABLE<br/>- CONSTANT<br/>- INIT_VARIABLE |
+| parameters.applyType | Body | Enum | 適用タイプ<br/>- BOTH<br/>- SESSION<br/>- FILE |
+| createdYmdt | Body | DateTime | 作成日時 |
+| updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -4223,7 +4754,27 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
         "resultCode": 0,
         "resultMessage": "SUCCESS",
         "isSuccessful": true
-    }
+    },
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "parameterGroupName": "parameterGroupName-example",
+    "description": "description-example",
+    "dbVersion": "MYSQL_V8036",
+    "parameterGroupStatus": "STABLE",
+    "parameters": [
+        {
+            "parameterId": "550e8400-e29b-41d4-a716-446655440000",
+            "parameterFileGroup": "CLIENT",
+            "parameterName": "parameterName-example",
+            "fileParameterName": "fileParameterName-example",
+            "value": "value-example",
+            "defaultValue": "defaultValue-example",
+            "allowedValue": "allowedValue-example",
+            "updateType": "VARIABLE",
+            "applyType": "BOTH"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -4232,6 +4783,172 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 ---
 
+### パラメータグループを修正する
+
+```http
+PUT /v4.0/parameter-groups/{parameterGroupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:ParameterGroup.Modify | パラメータグループの修正 |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+| parameterGroupName | Body | String | X | パラメータグループを識別できる名前<br/>- 最小長: `1`<br/>- 最大長: `100` |
+| description | Body | String | X | パラメータグループの追加情報<br/>- 最大長: `100` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
+
+### パラメータグループをコピーする
+
+```http
+POST /v4.0/parameter-groups/{parameterGroupId}/copy
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:ParameterGroup.Copy | パラメータグループコピーする |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+| parameterGroupName | Body | String | O | パラメータグループを識別できる名前<br/>- 最小長: `1`<br/>- 最大長: `100` |
+| description | Body | String | X | パラメータグループの追加情報<br/>- 最大長: `100` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example"
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| parameterGroupId | Body | UUID | パラメータグループの識別子 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</p>
+</details>
+
+---
+
+### パラメータを修正する
+
+```http
+PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:ParameterGroup.Modify | パラメータグループの修正 |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+| modifiedParameters | Body | Array | O | 変更するパラメータリスト |
+| modifiedParameters.parameterId | Body | UUID | O | パラメータの識別子 |
+| modifiedParameters.value | Body | String | O | 変更するパラメータ値 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "modifiedParameters": [
+        {
+            "parameterId": "550e8400-e29b-41d4-a716-446655440000",
+            "value": "value-example"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
+
+### パラメータグループをリセットする
+
+```http
+PUT /v4.0/parameter-groups/{parameterGroupId}/reset
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:ParameterGroup.Reset | パラメータグループのリセット |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | O |  |
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
 ## ユーザーグループ
 
 ### ユーザーグループリストを表示
@@ -4242,8 +4959,8 @@ GET /v4.0/user-groups
 
 #### 必要権限
 
-| 権限名                                      | 説明         |
-|--------------------------------------------|--------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:UserGroup.List | ユーザーグループリスト表示 |
 
 #### リクエスト
@@ -4252,13 +4969,14 @@ GET /v4.0/user-groups
 
 #### レスポンス
 
-| 名前                     | 種類 | 形式     | 説明                              |
-|--------------------------|------|----------|-----------------------------------|
-| userGroups               | Body | Array    | ユーザーグループリスト                       |
-| userGroups.userGroupId   | Body | UUID     | ユーザーグループの識別子                     |
-| userGroups.userGroupName | Body | String   | ユーザーグループを識別できる名前                |
-| userGroups.createdYmdt   | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| userGroups.updatedYmdt   | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| totalCounts | Body | Number | ユーザーグループリストの総数 |
+| userGroups | Body | Array | ユーザーグループリスト |
+| userGroups.userGroupId | Body | UUID | ユーザーグループの識別子 |
+| userGroups.userGroupName | Body | String | ユーザーグループを識別できる名前 |
+| userGroups.createdYmdt | Body | DateTime | 作成日時 |
+| userGroups.updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -4270,74 +4988,15 @@ GET /v4.0/user-groups
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
+    "totalCounts": 1,
     "userGroups": [
         {
-            "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
-            "userGroupName": "dev-team",
-            "createdYmdt": "2023-02-23T10:07:54+09:00",
-            "updatedYmdt": "2023-02-26T01:15:50+09:00"
+            "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "userGroupName": "userGroupName-example",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
-}
-```
-
-</p>
-</details>
-
----
-
-### ユーザーグループの詳細を表示
-
-```http
-GET /v4.0/user-groups/{userGroupId}
-```
-
-#### 必要権限
-
-| 権限名                                     | 説明         |
-|-------------------------------------------|--------------|
-| RDSforMariaDB:UserGroup.Get | ユーザーグループ詳細表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前        | 種類 | 形式 | 必須 | 説明        |
-|-------------|-----|------|----|-------------|
-| userGroupId | URL | UUID | O  | ユーザーグループの識別子 |
-
-#### レスポンス
-
-| 名前              | 種類 | 形式     | 説明                                                                                                      |
-|-------------------|------|----------|-----------------------------------------------------------------------------------------------------------|
-| userGroupId       | Body | UUID     | ユーザーグループの識別子                                                                                             |
-| userGroupName     | Body | String   | ユーザーグループを識別できる名前                                                                                         |
-| userGroupTypeCode | Body | Enum     | ユーザーグループの種類 <br /> `ENTIRE`:プロジェクトメンバー全体を含むユーザーグループ <br /> `INDIVIDUAL_MEMBER`:特定のプロジェクトメンバーを含むユーザーグループ |
-| members           | Body | Array    | プロジェクトメンバーリスト                                                                                              |
-| members.memberId  | Body | UUID     | プロジェクトメンバーの識別子                                                                                            |
-| createdYmdt       | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                         |
-| updatedYmdt       | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                         |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
-    "userGroupName": "dev-team",
-	"userGroupTypeCode": "INDIVIDUAL_MEMBER",
-    "members": [
-        {
-            "memberId": "1321e759-2ef3-4b85-9921-b13e918b24b5"
-        }
-    ],
-    "createdYmdt": "2023-02-23T10:07:54+09:00",
-    "updatedYmdt": "2023-02-26T01:15:50+09:00"
 }
 ```
 
@@ -4354,34 +5013,26 @@ POST /v4.0/user-groups
 
 #### 必要権限
 
-| 権限名                                        | 説明        |
-|----------------------------------------------|-------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:UserGroup.Create | ユーザーグループの作成 |
 
 #### リクエスト
 
-| 名前          | 種類 | 形式    | 必須 | 説明                                                      |
-|---------------|------|---------|----|-----------------------------------------------------------|
-| userGroupName | Body | String  | O  | ユーザーグループを識別できる名前                                     |
-| memberIds     | Body | Array   | O  | プロジェクトメンバーの識別子リスト <br /> `selectAll`がtrueの場合、該当フィールドの値は無視される |
-| selectAll     | Body | Boolean | X  | プロジェクトメンバー全員かどうか <br /> trueの場合、該当グループは全メンバーに対して設定される       |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| userGroupName | Body | String | O | ユーザーグループを識別できる名前 |
+| memberIds | Body | Array | O | プロジェクトメンバーの識別子リスト |
+| selectAll | Body | Boolean | X | プロジェクトメンバー全員を含むかどうか<br/>- デフォルト値: `false` |
 
 <details><summary>例</summary>
 <p>
 
 ```json
 {
-    "userGroupName": "dev-team",
-    "memberIds": [
-        "1321e759-2ef3-4b85-9921-b13e918b24b5"
-    ]
-}
-```
-
-```json
-{
-    "userGroupName": "dev-team",
-    "selectAll": true
+    "userGroupName": "userGroupName-example",
+    "memberIds": [],
+    "selectAll": false
 }
 ```
 
@@ -4390,52 +5041,9 @@ POST /v4.0/user-groups
 
 #### レスポンス
 
-| 名前        | 種類 | 形式 | 説明        |
-|-------------|------|------|-------------|
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
 | userGroupId | Body | UUID | ユーザーグループの識別子 |
-
----
-
-### ユーザーグループを修正する
-
-```http
-PUT /v4.0/user-groups/{userGroupId}
-```
-
-#### 必要権限
-
-| 権限名                                        | 説明        |
-|----------------------------------------------|-------------|
-| RDSforMariaDB:UserGroup.Modify | ユーザーグループの修正 |
-
-#### リクエスト
-
-| 名前          | 種類 | 形式    | 必須 | 説明                                               |
-|---------------|------|---------|----|----------------------------------------------------|
-| userGroupId   | URL  | UUID    | O  | ユーザーグループの識別子                                      |
-| userGroupName | Body | String  | X  | ユーザーグループを識別できる名前                                     |
-| memberIds     | Body | Array   | X  | プロジェクトメンバーの識別子リスト                                  |
-| selectAll     | Body | Boolean | X  | プロジェクトメンバー全員かどうか <br /> trueの場合、該当グループは全メンバーに対して設定される |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "userGroupName": "dev-team",
-    "memberIds": [
-        "1321e759-2ef3-4b85-9921-b13e918b24b5",
-        "f9064b09-2b15-442e-a4b0-3a5a2754555e"
-    ]
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-このAPIはレスポンス本文を返しません。
 
 <details><summary>例</summary>
 <p>
@@ -4446,7 +5054,8 @@ PUT /v4.0/user-groups/{userGroupId}
         "resultCode": 0,
         "resultMessage": "SUCCESS",
         "isSuccessful": true
-    }
+    },
+    "userGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4463,19 +5072,55 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 #### 必要権限
 
-| 権限名                                        | 説明        |
-|----------------------------------------------|-------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:UserGroup.Delete | ユーザーグループの削除 |
 
 #### リクエスト
 
-| 名前        | 種類 | 形式 | 必須 | 説明        |
-|-------------|-----|------|----|-------------|
-| userGroupId | URL | UUID | O  | ユーザーグループの識別子 |
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| userGroupId | URL | UUID | O |  |
 
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+---
+
+### ユーザーグループの詳細を表示
+
+```http
+GET /v4.0/user-groups/{userGroupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:UserGroup.Get | ユーザーグループ詳細表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| userGroupId | URL | UUID | O |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| userGroupId | Body | UUID | ユーザーグループの識別子 |
+| userGroupName | Body | String | ユーザーグループを識別できる名前 |
+| userGroupTypeCode | Body | Enum | ユーザーグループの種類<br/>- ENTIRE<br/>- INDIVIDUAL_MEMBER |
+| members | Body | Array | プロジェクトメンバーリスト |
+| members.memberId | Body | UUID | プロジェクトメンバーの識別子 |
+| createdYmdt | Body | DateTime | 作成日時 |
+| updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -4486,7 +5131,17 @@ DELETE /v4.0/user-groups/{userGroupId}
         "resultCode": 0,
         "resultMessage": "SUCCESS",
         "isSuccessful": true
-    }
+    },
+    "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "userGroupName": "userGroupName-example",
+    "userGroupTypeCode": "ENTIRE",
+    "members": [
+        {
+            "memberId": "550e8400-e29b-41d4-a716-446655440000"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -4495,6 +5150,46 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 ---
 
+### ユーザーグループを修正する
+
+```http
+PUT /v4.0/user-groups/{userGroupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:UserGroup.Modify | ユーザーグループの修正 |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| userGroupId | URL | UUID | O |  |
+| userGroupName | Body | String | O | ユーザーグループを識別できる名前 |
+| memberIds | Body | Array | X | プロジェクトメンバーの識別子リスト |
+| selectAll | Body | Boolean | X | プロジェクトメンバー全員を含むかどうか<br/>- デフォルト値: `false` |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "userGroupName": "userGroupName-example",
+    "memberIds": [],
+    "selectAll": false
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
 ## 通知グループ
 
 ### 通知グループリストを表示
@@ -4505,8 +5200,8 @@ GET /v4.0/notification-groups
 
 #### 必要権限
 
-| 権限名                                              | 説明        |
-|----------------------------------------------------|-------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:NotificationGroup.List | 通知グループリスト表示 |
 
 #### リクエスト
@@ -4515,16 +5210,16 @@ GET /v4.0/notification-groups
 
 #### レスポンス
 
-| 名前                                     | 種類 | 形式     | 説明                              |
-|------------------------------------------|------|----------|-----------------------------------|
-| notificationGroups                       | Body | Array    | 通知グループリスト                        |
-| notificationGroups.notificationGroupId   | Body | UUID     | 通知グループの識別子                      |
-| notificationGroups.notificationGroupName | Body | String   | 通知グループを識別できる名前                  |
-| notificationGroups.notifyEmail           | Body | Boolean  | メール通知                           |
-| notificationGroups.notifySms             | Body | Boolean  | SMS通知                           |
-| notificationGroups.isEnabled             | Body | Boolean  | 有効かどうか                           |
-| notificationGroups.createdYmdt           | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| notificationGroups.updatedYmdt           | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| notificationGroups | Body | Array | 通知グループリスト |
+| notificationGroups.notificationGroupId | Body | UUID | 通知グループの識別子 |
+| notificationGroups.notificationGroupName | Body | String | 通知グループを識別できる名前 |
+| notificationGroups.notifyEmail | Body | Boolean | メール通知の有無 |
+| notificationGroups.notifySms | Body | Boolean | SMS通知の有無 |
+| notificationGroups.isEnabled | Body | Boolean | 有効かどうか |
+| notificationGroups.createdYmdt | Body | DateTime | 作成日時 |
+| notificationGroups.updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -4538,13 +5233,13 @@ GET /v4.0/notification-groups
     },
     "notificationGroups": [
         {
-            "notificationGroupId": "b3901f17-9971-4d1e-8a81-8448cf533dc7",
-            "notificationGroupName": "dev-team-noti",
-            "notifyEmail": true,
+            "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "notificationGroupName": "notificationGroupName-example",
+            "notifyEmail": false,
             "notifySms": false,
-            "isEnabled": true,
-            "createdYmdt": "2023-02-20T13:34:13+09:00",
-            "updatedYmdt": "2023-02-20T13:34:13+09:00"
+            "isEnabled": false,
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
 }
@@ -4555,43 +5250,51 @@ GET /v4.0/notification-groups
 
 ---
 
-### アラームグループの詳細を表示
+### 通知グループを作成する
 
 ```http
-GET /v4.0/notification-groups/{notificationGroupId}
+POST /v4.0/notification-groups
 ```
 
 #### 必要権限
 
-| 権限名                                             | 説明        |
-|---------------------------------------------------|-------------|
-| RDSforMariaDB:NotificationGroup.Get | 通知グループ詳細表示 |
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:NotificationGroup.Create | 通知グループの作成 |
 
 #### リクエスト
 
-このAPIはリクエスト本文を要求しません。
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| notificationGroupName | Body | String | O | 通知グループを識別できる名前<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
+| notifyEmail | Body | Boolean | X | メール通知の有無<br/>- デフォルト値: `true` |
+| notifySms | Body | Boolean | X | SMS通知の有無<br/>- デフォルト値: `true` |
+| isEnabled | Body | Boolean | X | 有効かどうか<br/>- デフォルト値: `true` |
+| dbInstanceIds | Body | Array | O | 監視対象DBインスタンスの識別子リスト |
+| userGroupIds | Body | Array | O | ユーザーグループの識別子リスト |
 
-| 名前                | 種類 | 形式 | 必須 | 説明       |
-|---------------------|-----|------|----|------------|
-| notificationGroupId | URL | UUID | O  | 通知グループの識別子 |
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "notificationGroupName": "notificationGroupName",
+    "notifyEmail": true,
+    "notifySms": true,
+    "isEnabled": true,
+    "dbInstanceIds": [],
+    "userGroupIds": []
+}
+```
+
+</p>
+</details>
 
 #### レスポンス
 
-| 名前                       | 種類 | 形式     | 説明                              |
-|----------------------------|------|----------|-----------------------------------|
-| notificationGroupId        | Body | UUID     | 通知グループの識別子                      |
-| notificationGroupName      | Body | String   | 通知グループを識別できる名前                  |
-| notifyEmail                | Body | Boolean  | メール通知                           |
-| notifySms                  | Body | Boolean  | SMS通知                           |
-| isEnabled                  | Body | Boolean  | 有効かどうか                           |
-| dbInstances                | Body | Array    | 監視対象DBインスタンスリスト                |
-| dbInstances.dbInstanceId   | Body | UUID     | DBインスタンスの識別子                    |
-| dbInstances.dbInstanceName | Body | String   | DBインスタンスを識別できる名前                |
-| userGroups                 | Body | Array    | ユーザーグループリスト                       |
-| userGroups.userGroupId     | Body | UUID     | ユーザーグループの識別子                     |
-| userGroups.userGroupName   | Body | String   | ユーザーグループを識別できる名前                |
-| createdYmdt                | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt                | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| notificationGroupId | Body | UUID | 通知グループの識別子 |
 
 <details><summary>例</summary>
 <p>
@@ -4603,25 +5306,7 @@ GET /v4.0/notification-groups/{notificationGroupId}
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "notificationGroupId": "b3901f17-9971-4d1e-8a81-8448cf533dc7",
-    "notificationGroupName": "dev-team-noti",
-    "notifyEmail": true,
-    "notifySms": false,
-    "isEnabled": true,
-    "dbInstances": [
-        {
-            "dbInstanceId": "ed5cb985-526f-4c54-9ae0-40288593de65",
-            "dbInstanceName": "database"
-        }
-    ],
-    "userGroups": [
-        {
-            "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
-            "userGroupName": "dev-team"
-        }
-    ],
-    "createdYmdt": "2023-02-20T13:34:13+09:00",
-    "updatedYmdt": "2023-02-20T13:34:13+09:00"
+    "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4630,120 +5315,7 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 ---
 
-### アラームグループを作成する
-
-```http
-POST /v4.0/notification-groups
-```
-
-#### 必要権限
-
-| 権限名                                                | 説明       |
-|------------------------------------------------------|------------|
-| RDSforMariaDB:NotificationGroup.Create | 通知グループの作成 |
-
-#### リクエスト
-
-| 名前                  | 種類 | 形式    | 必須 | 説明                        |
-|-----------------------|------|---------|----|-----------------------------|
-| notificationGroupName | Body | String  | O  | 通知グループを識別できる名前             |
-| notifyEmail           | Body | Boolean | X  | メール通知<br/>- デフォルト値: `true`  |
-| notifySms             | Body | Boolean | X  | SMS通知<br/>- デフォルト値: `true`  |
-| isEnabled             | Body | Boolean | X  | 有効かどうか<br/>- デフォルト値: `true`    |
-| dbInstanceIds         | Body | Array   | O  | 監視対象DBインスタンスの識別子リスト     |
-| userGroupIds          | Body | Array   | O  | ユーザーグループの識別子リスト            |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "notificationGroupName": "dev-team-noti",
-    "notifyEmail": false,
-    "isEnable": true,
-    "dbInstanceIds": [
-        "ed5cb985-526f-4c54-9ae0-40288593de65"
-    ],
-    "userGroupIds": [
-        "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0"
-    ]
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-| 名前                | 種類 | 形式 | 説明       |
-|---------------------|------|------|------------|
-| notificationGroupId | Body | UUID | 通知グループの識別子 |
-
----
-
-### アラームグループを修正する
-
-```http
-PUT /v4.0/notification-groups/{notificationGroupId}
-```
-
-#### 必要権限
-
-| 権限名                                                | 説明       |
-|------------------------------------------------------|------------|
-| RDSforMariaDB:NotificationGroup.Modify | 通知グループの修正 |
-
-#### リクエスト
-
-| 名前                  | 種類 | 形式    | 必須 | 説明                  |
-|-----------------------|------|---------|----|-----------------------|
-| notificationGroupId   | URL  | UUID    | O  | 通知グループの識別子          |
-| notificationGroupName | Body | String  | X  | 通知グループを識別できる名前     |
-| notifyEmail           | Body | Boolean | X  | メール通知              |
-| notifySms             | Body | Boolean | X  | SMS通知              |
-| isEnabled             | Body | Boolean | X  | 有効かどうか               |
-| dbInstanceIds         | Body | Array   | X  | 監視対象DBインスタンスの識別子リスト |
-| userGroupIds          | Body | Array   | X  | ユーザーグループの識別子リスト      |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "notifyEmail": true,
-    "dbInstanceIds": [
-        "ed5cb985-526f-4c54-9ae0-40288593de65",
-        "d51b7da0-682f-47ff-b588-b739f6adc740"
-    ]
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-このAPIはレスポンス本文を返しません。
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    }
-}
-```
-
-</p>
-</details>
-
----
-
-### アラームグループを削除する
+### 通知グループを削除する
 
 ```http
 DELETE /v4.0/notification-groups/{notificationGroupId}
@@ -4751,21 +5323,61 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 #### 必要権限
 
-| 権限名                                                | 説明       |
-|------------------------------------------------------|------------|
+| 権限名 | 説明 |
+|-----|-----|
 | RDSforMariaDB:NotificationGroup.Delete | 通知グループの削除 |
 
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前                | 種類 | 形式 | 必須 | 説明       |
-|---------------------|-----|------|----|------------|
-| notificationGroupId | URL | UUID | O  | 通知グループの識別子 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| notificationGroupId | URL | UUID | O |  |
 
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+---
+
+### 通知グループの詳細を表示
+
+```http
+GET /v4.0/notification-groups/{notificationGroupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:NotificationGroup.Get | 通知グループ詳細表示 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| notificationGroupId | URL | UUID | O |  |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| notificationGroupId | Body | UUID | 通知グループの識別子 |
+| notificationGroupName | Body | String | 通知グループを識別できる名前 |
+| notifyEmail | Body | Boolean | メール通知の有無 |
+| notifySms | Body | Boolean | SMS通知の有無 |
+| isEnabled | Body | Boolean | 有効かどうか |
+| dbInstances | Body | Array | 監視対象DBインスタンスリスト |
+| dbInstances.dbInstanceId | Body | UUID | DBインスタンスの識別子 |
+| dbInstances.dbInstanceName | Body | String | DBインスタンスを識別できる名前 |
+| userGroups | Body | Array | ユーザーグループリスト |
+| userGroups.userGroupId | Body | UUID | ユーザーグループの識別子 |
+| userGroups.userGroupName | Body | String | ユーザーグループを識別できる名前 |
+| createdYmdt | Body | DateTime | 作成日時 |
+| updatedYmdt | Body | DateTime | 修正日時 |
 
 <details><summary>例</summary>
 <p>
@@ -4776,7 +5388,26 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
         "resultCode": 0,
         "resultMessage": "SUCCESS",
         "isSuccessful": true
-    }
+    },
+    "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "notificationGroupName": "notificationGroupName-example",
+    "notifyEmail": false,
+    "notifySms": false,
+    "isEnabled": false,
+    "dbInstances": [
+        {
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceName": "dbInstanceName-example"
+        }
+    ],
+    "userGroups": [
+        {
+            "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "userGroupName": "userGroupName-example"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -4785,7 +5416,75 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 ---
 
+### 通知グループを修正する
+
+```http
+PUT /v4.0/notification-groups/{notificationGroupId}
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:NotificationGroup.Modify | 通知グループの修正 |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| notificationGroupId | URL | UUID | O |  |
+| notificationGroupName | Body | String | X | 通知グループを識別できる名前 |
+| notifyEmail | Body | Boolean | X | メール通知の有無<br/>- デフォルト値: `false` |
+| notifySms | Body | Boolean | X | SMS通知の有無<br/>- デフォルト値: `false` |
+| isEnabled | Body | Boolean | X | 有効かどうか<br/>- デフォルト値: `false` |
+| dbInstanceIds | Body | Array | X | 監視対象DBインスタンスの識別子リスト |
+| userGroupIds | Body | Array | X | ユーザーグループの識別子リスト |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "notificationGroupName": "notificationGroupName-example",
+    "notifyEmail": false,
+    "notifySms": false,
+    "isEnabled": false,
+    "dbInstanceIds": [],
+    "userGroupIds": []
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
 ## モニタリング
+
+### 統計情報照会
+
+```http
+GET /v4.0/metric-statistics
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:Metric.List | 統計情報照会 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+#### レスポンス
+
+このAPIはレスポンス本文を返しません。
+
+---
 
 ### Metricリスト表示
 
@@ -4795,9 +5494,9 @@ GET /v4.0/metrics
 
 #### 必要権限
 
-| 権限名                                   | 説明     |
-|-----------------------------------------|----------|
-| RDSforMariaDB:Metric.List | 統計情報照会 |
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:Metric.List | Metricリスト表示 |
 
 #### リクエスト
 
@@ -4805,11 +5504,11 @@ GET /v4.0/metrics
 
 #### レスポンス
 
-| 名前                | 種類 | 形式   | 説明      |
-|---------------------|------|--------|-----------|
-| metrics             | Body | Array  | Metricリスト |
-| metrics.measureName | Body | Enum   | 照会指標タイプ |
-| metrics.unit        | Body | String | 測定値単位  |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| metrics | Body | Array | Metricリスト |
+| metrics.measureName | Body | String | 照会指標タイプ |
+| metrics.unit | Body | String | 測定値単位 |
 
 <details><summary>例</summary>
 <p>
@@ -4823,74 +5522,8 @@ GET /v4.0/metrics
     },
     "metrics": [
         {
-            "measureName": "CPU_USAGE",
-            "unit": "%"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
-### 統計情報照会
-
-```http
-GET /v4.0/metric-statistics
-```
-
-#### 必要権限
-
-| 権限名                                   | 説明     |
-|-----------------------------------------|----------|
-| RDSforMariaDB:Metric.List | 統計情報照会 |
-
-#### リクエスト
-
-| 名前         | 種類  | 形式     | 必須 | 説明                              |
-|--------------|-------|----------|----|-----------------------------------|
-| dbInstanceId | Query | UUID     | O  | DBインスタンスの識別子                    |
-| measureNames | Query | Array    | O  | 照会指標リスト<br/>- 最小サイズ: `1`         |
-| from         | Query | Datetime | O  | 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| to           | Query | Datetime | O  | 終了日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| interval     | Query | Number   | X  | 照会間隔                           |
-
-#### レスポンス
-
-| 名前                              | 種類 | 形式      | 説明     |
-|-----------------------------------|------|-----------|----------|
-| metricStatistics                  | Body | Array     | 統計情報リスト |
-| metricStatistics.measureName      | Body | Enum      | 測定項目タイプ |
-| metricStatistics.unit             | Body | String    | 測定値単位 |
-| metricStatistics.values           | Body | Array     | 測定値リスト |
-| metricStatistics.values.timestamp | Body | Timestamp | 測定時間  |
-| metricStatistics.values.value     | Body | Object    | 測定値    |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "metricStatistics": [
-        {
-            "measureName": "MYSQL_STATUS",
-            "unit": "",
-            "values": [
-                [
-                    1679298540,
-                    "1"
-                ],
-                [
-                    1679298600,
-                    "1"
-                ],
-                [
-                    1679298660,
-                    "1"
-                ]
-            ]
+            "measureName": "measureName-example",
+            "unit": "unit-example"
         }
     ]
 }
@@ -4907,102 +5540,14 @@ GET /v4.0/metric-statistics
 
 イベントはカテゴリに分類することができ、下記の通りです。
 
-| イベントカテゴリー  | 説明    |
+| イベントカテゴリー    | 説明      |
 |-------------|---------|
-| ALL         | 全体    |
-| BACKUP      | バックアップ    |
+| ALL         | 全体      |
+| BACKUP      | バックアップ      |
 | DB_INSTANCE | DBインスタンス |
-| JOB         | 作業    |
-| TENANT      | テナント   |
-| MONITORING  | モニタリング  |
-
-### イベントリスト照会
-
-```http
-GET /v4.0/events
-```
-
-#### 必要権限
-
-| 権限名                                  | 説明      |
-|----------------------------------------|-----------|
-| RDSforMariaDB:Event.List | イベントリスト表示 |
-
-#### リクエスト
-
-このAPIはリクエスト本文を要求しません。
-
-| 名前              | 種類  | 形式     | 必須 | 説明                                                                                                                                 |
-|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
-| page | Query | Number | X | 照会する一覧のページ<br/>- デフォルト値：1 <br/>- 最小値：`1` |
-| size | Query | Number | X | 照会する一覧のページサイズ<br/>- デフォルト値：20 |
-| from              | Query | Datetime | O  | 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                    |
-| to                | Query | Datetime | O  | 終了日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                    |
-| eventCategoryType | Query | Enum     | O  | 照会するイベントカテゴリータイプ<br/>- `ALL`:全体<br/>- `INSTANCE`: DBインスタンス<br/>- `BACKUP`:バックアップ<br/>- `DB_SECURITY_GROUP`: DBセキュリティグループ<br/>- `TENANT`:テナント |
-| sourceId          | Query | String   | X  | イベントが発生した対象リソースの識別子                                                                                                               |
-| keyword           | Query | String   | X  | イベントメッセージに含まれる文字列検索ワード                                                                                                                      |
-| ascendingOrder    | Query | Enum     | X  | イベントメッセージソート順序<br/>- `ASC`:昇順<br/>- `DESC`:降順<br/>- デフォルト値: `DESC`                                                                 |
-
-#### レスポンス
-
-| 名前                     | 種類 | 形式     | 説明                                  |
-|--------------------------|------|----------|---------------------------------------|
-| totalCounts              | Body | Number   | 全イベントリストの数                          |
-| events                   | Body | Array    | イベントリスト                              |
-| events.eventCategoryType | Body | Enum     | イベントカテゴリータイプ                         |
-| events.eventCode         | Body | Enum     | 発生したイベントのタイプ                         |
-| events.sourceId          | Body | String   | イベントソースの識別子                         |
-| events.sourceName        | Body | String   | イベントソースを識別できる名前                     |
-| events.messages          | Body | Array    | イベントメッセージリスト                          |
-| events.messages.langCode | Body | String   | 言語コード                               |
-| events.messages.message  | Body | String   | イベントメッセージ                             |
-| events.eventYmdt         | Body | DateTime | イベント発生日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 28,
-    "events": [
-        {
-            "eventCategoryType": "INSTANCE",
-            "eventCode": "INSTC_02_01",
-            "sourceId": "76f00947-356e-4a20-8922-428368cc45ed",
-            "sourceName": "db-instance",
-            "messages": [
-                {
-                    "langCode": "EN",
-                    "message": "DB instance started"
-                },
-                {
-                    "langCode": "JA",
-                    "message": "DBインスタンスの起動"
-                },
-                {
-                    "langCode": "KO",
-                    "message": "DBインスタンスの起動"
-                },
-                {
-                    "langCode": "ZH",
-                    "message": "DB instance started"
-                }
-            ],
-            "eventYmdt": "2023-03-20T16:31:59+09:00"
-        }
-    ]
-}
-```
-
-</p>
-</details>
-
----
+| JOB         | 作業      |
+| TENANT      | テナント     |
+| MONITORING  | モニタリング    |
 
 ### 購読可能なイベントコード一覧表示
 
@@ -5012,9 +5557,9 @@ GET /v4.0/event-codes
 
 #### 必要権限
 
-| 権限名                                  | 説明      |
-|----------------------------------------|-----------|
-| RDSforMariaDB:Event.List | イベントリスト表示 |
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:Event.List | 購読可能なイベントコード一覧表示 |
 
 #### リクエスト
 
@@ -5022,11 +5567,11 @@ GET /v4.0/event-codes
 
 #### レスポンス
 
-| 名前                         | 種類 | 形式  | 説明        |
-|------------------------------|------|-------|-------------|
-| eventCodes                   | Body | Array | イベントコードリスト |
-| eventCodes.eventCode         | Body | Enum  | イベントコード    |
-| eventCodes.eventCategoryType | Body | Enum  | イベントカテゴリータイプ |
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| eventCodes | Body | Array | イベントコードリスト |
+| eventCodes.eventCode | Body | Enum | イベントコード |
+| eventCodes.eventCategoryType | Body | Enum | イベントカテゴリータイプ<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
 
 <details><summary>例</summary>
 <p>
@@ -5040,8 +5585,73 @@ GET /v4.0/event-codes
     },
     "eventCodes": [
         {
-            "eventCode": "INSTC_05_01",
-            "eventCategoryType": "INSTANCE"
+            "eventCode": "ENUM_VALUE",
+            "eventCategoryType": "ALL"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### イベントリスト照会
+
+```http
+GET /v4.0/events
+```
+
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:Event.List | イベントリスト照会 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| totalCounts | Body | Number | 全イベントリストの数 |
+| events | Body | Array | イベントリスト |
+| events.eventCategoryType | Body | Enum | イベントカテゴリータイプ<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| events.eventCode | Body | Enum | 発生したイベントのタイプ |
+| events.sourceId | Body | UUID | イベントソースの識別子 |
+| events.sourceName | Body | String | イベントソースを識別できる名前 |
+| events.messages | Body | Array | イベントメッセージリスト |
+| events.messages.langCode | Body | Enum | 言語コード<br/>- KO<br/>- EN<br/>- JA<br/>- ZH |
+| events.messages.message | Body | String | イベントメッセージ |
+| events.eventYmdt | Body | DateTime | イベント発生日時 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "events": [
+        {
+            "eventCategoryType": "ALL",
+            "eventCode": "ENUM_VALUE",
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
+            "sourceName": "sourceName-example",
+            "messages": [
+                {
+                    "langCode": "KO",
+                    "message": "message-example"
+                }
+            ],
+            "eventYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
 }
@@ -5062,35 +5672,29 @@ GET /v4.0/event-subscriptions
 #### 必要な権限
 
 | 権限名 | 説明 |
-|---------------------------------------------------------|---------------|
+|-----|-----|
 | RDSforMariaDB:EventSubscription.List | イベント購読一覧照会 |
 
 #### リクエスト
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
-| page | Query | Number | X | 照会する一覧のページ<br/>- デフォルト値：1 <br/>- 最小値：`1` |
-| size | Query | Number | X | 照会する一覧のページサイズ<br/>- デフォルト値：20 |
-| eventSubscriptionId | Query | UUID | X | イベント購読の識別子 |
-| eventSubscriptionName | Query | String | X | イベント購読を識別できる名前 |
-| userGroupId | Query | UUID | X | ユーザーグループの識別子 |
+このAPIはリクエスト本文を要求しません。
 
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
-|-----------------------------------------------|------|----------|---------------------|
+|-----|-----|-----|-----|
 | totalCounts | Body | Number | 全イベント購読一覧数 |
 | eventSubscriptions | Body | Array | イベント購読一覧 |
 | eventSubscriptions.eventSubscriptionId | Body | UUID | イベント購読の識別子 |
-| eventSubscriptions.eventCategoryType | Body | Enum | イベントカテゴリタイプ |
+| eventSubscriptions.eventCategoryType | Body | Enum | イベントカテゴリータイプ<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
 | eventSubscriptions.eventSubscriptionName | Body | String | イベント購読を識別できる名前 |
-| eventSubscriptions.enabled                    | Body | Boolean  | 有効かどうか              |
+| eventSubscriptions.enabled | Body | Boolean | 有効かどうか |
 | eventSubscriptions.notifyEmail | Body | Boolean | メール送信の有無 |
 | eventSubscriptions.notifySms | Body | Boolean | SMS送信の有無 |
 | eventSubscriptions.eventCodes | Body | Array | 購読するイベントコード一覧 |
 | eventSubscriptions.sources | Body | Array | 購読するイベントソース一覧 |
 | eventSubscriptions.sources.sourceId | Body | UUID | イベントソースの識別子 |
-| eventSubscriptions.sources.eventCategoryType | Body | Enum | イベントカテゴーリタイプ |
+| eventSubscriptions.sources.eventCategoryType | Body | Enum | イベントカテゴリータイプ<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
 | eventSubscriptions.userGroupIds | Body | Array | イベント購読中のユーザーグループの識別子一覧 |
 | eventSubscriptions.createdYmdt | Body | DateTime | 作成日時 |
 
@@ -5107,25 +5711,23 @@ GET /v4.0/event-subscriptions
     "totalCounts": 1,
     "eventSubscriptions": [
         {
-            "eventSubscriptionId": "12345678-1234-1234-1234-123456789012",
-            "eventCategoryType": "INSTANCE",
-            "eventSubscriptionName": "example-event-subscription",
-            "enabled": true,
-            "notifyEmail": true,
+            "eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000",
+            "eventCategoryType": "ALL",
+            "eventSubscriptionName": "eventSubscriptionName-example",
+            "enabled": false,
+            "notifyEmail": false,
             "notifySms": false,
-            "eventCodes": [
-                "INSTC_05_01"
-            ],
+            "eventCodes": [],
             "sources": [
                 {
-                    "sourceId": "87654321-4321-4321-4321-210987654321",
-                    "eventCategoryType": "INSTANCE"
+                    "sourceId": "550e8400-e29b-41d4-a716-446655440000",
+                    "eventCategoryType": "ALL"
                 }
             ],
             "userGroupIds": [
-                "11111111-2222-3333-4444-555555555555"
+                "550e8400-e29b-41d4-a716-446655440000"
             ],
-            "createdYmdt": "2024-01-01T12:00:00+09:00"
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
         }
     ]
 }
@@ -5145,22 +5747,22 @@ POST /v4.0/event-subscriptions
 #### 必要な権限
 
 | 権限名 | 説明 |
-|----------------------------------------------------------|--------------|
+|-----|-----|
 | RDSforMariaDB:EventSubscription.Create | イベント購読作成 |
 
 #### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
-|------------------------------|------|---------|----|-----------------------------------------|
-| eventCategoryType | Body | Enum | O | イベントカテゴリータイプ |
-| eventSubscriptionName | Body | String | O | イベント購読を識別できる名前<br/>- 最大長：`100` |
-| enabled                      | Body | Boolean | O  | 有効かどうか                                |
+|-----|-----|-----|-----|-----|
+| eventCategoryType | Body | Enum | O | イベントカテゴリータイプ<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| eventSubscriptionName | Body | String | O | イベント購読を識別できる名前 |
+| enabled | Body | Boolean | O | 有効かどうか |
 | notifyEmail | Body | Boolean | O | メール送信の有無 |
 | notifySms | Body | Boolean | O | SMS送信の有無 |
 | eventCodes | Body | Array | O | 購読するイベントコード一覧 |
 | sources | Body | Array | O | 購読するイベントソース一覧 |
 | sources.sourceId | Body | UUID | O | イベントソースの識別子 |
-| sources.eventCategoryType | Body | Enum | O | イベントカテゴリータイプ |
+| sources.eventCategoryType | Body | Enum | O | イベントカテゴリータイプ<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
 | userGroupIds | Body | Array | O | イベント購読するユーザーグループの識別子一覧 |
 
 <details><summary>例</summary>
@@ -5168,23 +5770,19 @@ POST /v4.0/event-subscriptions
 
 ```json
 {
-    "eventCategoryType": "INSTANCE",
-    "eventSubscriptionName": "example-event-subscription",
-    "enabled": true,
-    "notifyEmail": true,
+    "eventCategoryType": "ALL",
+    "eventSubscriptionName": "eventSubscriptionName-example",
+    "enabled": false,
+    "notifyEmail": false,
     "notifySms": false,
-    "eventCodes": [
-        "INSTC_05_01"
-    ],
+    "eventCodes": [],
     "sources": [
         {
-            "sourceId": "87654321-4321-4321-4321-210987654321",
-            "eventCategoryType": "INSTANCE"
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
+            "eventCategoryType": "ALL"
         }
     ],
-    "userGroupIds": [
-        "11111111-2222-3333-4444-555555555555"
-    ]
+    "userGroupIds": []
 }
 ```
 
@@ -5194,7 +5792,7 @@ POST /v4.0/event-subscriptions
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
-|-----------------------|------|------|-------------|
+|-----|-----|-----|-----|
 | eventSubscriptionId | Body | UUID | イベント購読の識別子 |
 
 <details><summary>例</summary>
@@ -5207,86 +5805,7 @@ POST /v4.0/event-subscriptions
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "eventSubscriptionId": "12345678-1234-1234-1234-123456789012"
-}
-```
-
-</p>
-</details>
-
----
-
-### イベント購読修正
-
-```http
-PUT /v4.0/event-subscriptions/{eventSubscriptionId}
-```
-
-#### 必要な権限
-
-| 権限名 | 説明 |
-|----------------------------------------------------------|--------------|
-| RDSforMariaDB:EventSubscription.Modify | イベント購読修正 |
-
-#### リクエスト
-
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|------------------------------|------|---------|----|-----------------------------------|
-| eventSubscriptionId | URL | UUID | O | イベント購読の識別子 |
-| eventCategoryType | Body | Enum | X | イベントカテゴリータイプ |
-| eventSubscriptionName | Body | String | X | イベント購読を識別できる名前 |
-| enabled                      | Body | Boolean | X  | 有効かどうか                          |
-| notifyEmail | Body | Boolean | X | メール送信の有無 |
-| notifySms | Body | Boolean | X | SMS送信の有無 |
-| eventCodes | Body | Array | X | 購読するイベントコード一覧 |
-| sources | Body | Array | X | 購読するイベントソース一覧 |
-| sources.sourceId | Body | UUID | X | イベントソースの識別子 |
-| sources.eventCategoryType | Body | Enum | X | イベントカテゴリータイプ |
-| userGroupIds | Body | Array | X | イベント購読するユーザーグループの識別子一覧 |
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "eventSubscriptionName": "updated-event-subscription",
-    "enabled": false,
-    "notifyEmail": false,
-    "notifySms": true,
-    "eventCodes": [
-        "INSTC_05_01",
-        "INSTC_06_01"
-    ],
-    "sources": [
-        {
-            "sourceId": "87654321-4321-4321-4321-210987654321",
-            "eventCategoryType": "INSTANCE"
-        }
-    ],
-    "userGroupIds": [
-        "11111111-2222-3333-4444-555555555555",
-        "22222222-3333-4444-5555-666666666666"
-    ]
-}
-```
-
-</p>
-</details>
-
-#### レスポンス
-
-このAPIはレスポンスボディを返しません。
-
-<details><summary>例</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    }
+    "eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -5304,18 +5823,107 @@ DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 #### 必要な権限
 
 | 権限名 | 説明 |
-|----------------------------------------------------------|--------------|
+|-----|-----|
 | RDSforMariaDB:EventSubscription.Delete | イベント購読削除 |
 
 #### リクエスト
 
+このAPIはリクエスト本文を要求しません。
+
 | 名前 | 種類 | 形式 | 必須 | 説明 |
-|-----------------------|-----|------|----|-------------|
-| eventSubscriptionId | URL | UUID | O | イベント購読の識別子 |
+|-----|-----|-----|-----|-----|
+| eventSubscriptionId | URL | UUID | O |  |
 
 #### レスポンス
 
 このAPIはレスポンスボディを返しません。
+
+---
+
+### イベント購読修正
+
+```http
+PUT /v4.0/event-subscriptions/{eventSubscriptionId}
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:EventSubscription.Modify | イベント購読修正 |
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| eventSubscriptionId | URL | UUID | O |  |
+| eventCategoryType | Body | Enum | X | イベントカテゴリータイプ<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| eventSubscriptionName | Body | String | X | イベント購読を識別できる名前 |
+| enabled | Body | Boolean | X | 有効かどうか |
+| notifyEmail | Body | Boolean | X | メール送信の有無 |
+| notifySms | Body | Boolean | X | SMS送信の有無 |
+| eventCodes | Body | Array | X | 購読するイベントコード一覧 |
+| sources | Body | Array | X | 購読するイベントソース一覧 |
+| sources.sourceId | Body | UUID | O | イベントソースの識別子 |
+| sources.eventCategoryType | Body | Enum | O | イベントカテゴリータイプ<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| userGroupIds | Body | Array | X | イベント購読するユーザーグループの識別子一覧 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "eventCategoryType": "ALL",
+    "eventSubscriptionName": "eventSubscriptionName-example",
+    "enabled": false,
+    "notifyEmail": false,
+    "notifySms": false,
+    "eventCodes": [],
+    "sources": [
+        {
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
+            "eventCategoryType": "ALL"
+        }
+    ],
+    "userGroupIds": []
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+このAPIはレスポンスボディを返しません。
+
+---
+
+## アベイラビリティゾーン
+
+### アベイラビリティゾーン一覧照会
+
+```http
+GET /v4.0/availability-zones
+```
+
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:AvailabilityZone.List | アベイラビリティゾーン一覧照会 |
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| availabilityZones | Body | Array | アベイラビリティゾーン一覧 |
+| availabilityZones.availabilityZoneName | Body | String | アベイラビリティゾーン名 |
+| availabilityZones.zoneState | Body | Object | アベイラビリティゾーンの状態 |
+| availabilityZones.zoneState.available | Body | Boolean | アベイラビリティゾーンの使用可否 |
 
 <details><summary>例</summary>
 <p>
@@ -5326,7 +5934,15 @@ DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
         "resultCode": 0,
         "resultMessage": "SUCCESS",
         "isSuccessful": true
-    }
+    },
+    "availabilityZones": [
+        {
+            "availabilityZoneName": "availabilityZoneName-example",
+            "zoneState": {
+                "available": false
+            }
+        }
+    ]
 }
 ```
 
