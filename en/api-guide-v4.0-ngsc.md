@@ -1,89 +1,110 @@
-## Database > RDS for MySQL > API Guide
+## RDS for MySQL API Guide
+
+**Database > RDS for MySQL > API v4.0 Guide**
 
 ## RDS for MySQL API Common Information
 
 ### API Endpoint
 
 | Region | Endpoint |
-|--------|----------|
-| Korea (Daegu) region | https://kr4-rds-mysql-api.ngsc.go.kr |
+|------|----------|
+| Korea (Daegu) region | https://ngsc-kr4-rds-proxy.cloud.toastoven.net |
+
 
 ### Authentication and Authorization
 
 RDS for MySQL uses User Access Key tokens for authentication and authorization when making API calls. The User Access Key token is a temporary, Bearer-type access token issued from a User Access Key. For more information on issuing and using User Access Key tokens, please refer to the [User Access Key Token](/nhncloud/en/public-api/user-access-key-token).
 The issued token must be included in the request header along with the Appkey.
 
-| Name                | Type   | Format | Required | Description                                           |
-|---------------------|--------|--------|----|-------------------------------------------------------------|
-| X-TC-APP-KEY        | Header | String | O  | Appkey of RDS for MySQL or integrated Appkey for project |
-| X-NHN-AUTHORIZATION | Header | String | O  | Bearer type token issued with the Public API                           |
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| X-TC-APP-KEY | Header | String | Y | Appkey of RDS for MySQL or integrated Appkey for project |
+| X-NHN-AUTHORIZATION | Header | String | Y | Bearer type token issued with the Public API |
 
 In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for MySQL ADMIN` and `RDS for MySQL VIEWER`.
 
 * `RDS for MySQL ADMIN permission holders` can use all available features as before.
 * `RDS for MySQL VIEWER permission holders` can use read-only feature.
-    * Cannot use any features aimed at DB instances or create, modify, or delete any DB instance.
-    * But, notification group and user group-related features are available.
+* Cannot use any features aimed at DB instances or create, modify, or delete any DB instance.
+* But, notification group and user group-related features are available.
 
 If an API request fails to authenticate or is not authorized, the following error occurs.
 
-| resultCode | resultMessage | Description            |
-|------------|---------------|------------------------|
-| 80401      | Unauthorized  | Failed to authenticate |
-| 80403      | Forbidden     | Unauthorized.          |
+| resultCode | resultMessage | Description |
+|------------|---------------|-----|
+| 80401 | Unauthorized | Failed to authenticate |
+| 80403 | Forbidden | Unauthorized. |
 
 ### Common Response Information
 
 The API responds with "200 OK" to all API requests. For more information on the response results, see Response Body Header.
 
-#### Response Body
+<details>
+  <summary><strong>Successful Response</strong></summary>
+
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    }
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+}
 }
 ```
 
-#### Field
-| Name          | Format  | Description                                              |
-|---------------|---------|----------------------------------------------------------|
-| resultCode    | Number  | Result code<br/>- Success: `0`<br/>- Failure: `Non-zero` |
-| resultMessage | String  | Result message                                           |
-| isSuccessful  | Boolean | Successful or not                                        |
+</details>
 
+<details>
+  <summary><strong>Failure Response</strong></summary>
 
+```json
+{
+"header": {
+        "resultCode": -1,
+        "resultMessage": "FAIL",
+        "isSuccessful": false
+}
+}
+```
+
+</details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| resultCode | Number | Result code<br/>- Success: `0`<br/>- Failure: `Non-zero` |
+| resultMessage | String | Result message |
+| isSuccessful | Boolean | Successful or not |
 ### DB engine type
 
 | DB engine type | Available for creation | Available for restoration from OBS | Authentication Plugin Support |
-|--------------|----------|-----------------|--------|
-| MYSQL\_V5633 | X        | X               | NATIVE |
-| MYSQL\_V5715 | O        | O               | NATIVE |
-| MYSQL\_V5719 | O        | O               | NATIVE |
-| MYSQL\_V5726 | O        | O               | NATIVE |
-| MYSQL\_V5731 | X        | X               | NATIVE |
-| MYSQL\_V5733 | O        | X               | NATIVE, SHA256 |
-| MYSQL\_V5737 | O        | O               | NATIVE, SHA256 |
-| MYSQL\_V8018 | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL\_V8023 | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL\_V8028 | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL\_V8032 | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL\_V8033 | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL\_V8034 | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8035  | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8036  | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8040  | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8041  | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8042  | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8043  | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8044  | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8045  | O        | O               | NATIVE, CACHING_SHA2 |
-| MYSQL_V8405  | O        | O               | CACHING_SHA2 |
-| MYSQL_V8406  | O        | O               | CACHING_SHA2 |
-| MYSQL_V8407  | O        | O               | CACHING_SHA2 |
-| MYSQL_V8408  | O        | O               | CACHING_SHA2 |
+|------------|----------|------------------|------------|
+| MYSQL_V5633 | X | X | NATIVE |
+| MYSQL_V5715 | O | O | SHA256, NATIVE |
+| MYSQL_V5719 | O | O | SHA256, NATIVE |
+| MYSQL_V5726 | O | O | SHA256, NATIVE |
+| MYSQL_V5731 | X | X | SHA256, NATIVE |
+| MYSQL_V5733 | O | X | SHA256, NATIVE |
+| MYSQL_V5737 | O | O | SHA256, NATIVE |
+| MYSQL_V8018 | X | X | CACHING_SHA2, NATIVE |
+| MYSQL_V8023 | X | X | CACHING_SHA2, NATIVE |
+| MYSQL_V8028 | X | X | CACHING_SHA2, NATIVE |
+| MYSQL_V8032 | X | X | CACHING_SHA2, NATIVE |
+| MYSQL_V8033 | X | X | CACHING_SHA2, NATIVE |
+| MYSQL_V8034 | X | X | CACHING_SHA2, NATIVE |
+| MYSQL_V8035 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8036 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8040 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8041 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8042 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8043 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8044 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8045 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8046 | O | O | CACHING_SHA2, NATIVE |
+| MYSQL_V8405 | O | O | CACHING_SHA2 |
+| MYSQL_V8406 | O | O | CACHING_SHA2 |
+| MYSQL_V8407 | O | O | CACHING_SHA2 |
+| MYSQL_V8408 | O | O | CACHING_SHA2 |
+| MYSQL_V8409 | O | O | CACHING_SHA2 |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -92,11 +113,7 @@ The API responds with "200 OK" to all API requests. For more information on the 
 
 ### List Project Members
 
-```http
-GET /v4.0/project/members
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -104,51 +121,52 @@ GET /v4.0/project/members
 
 #### Request
 
+```http
+GET /v4.0/project/members
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| members | Body | Array | Project member list |
-| members.memberId | Body | UUID | Project member identifier |
-| members.memberName | Body | String | Project member name |
-| members.emailAddress | Body | String | Project member email address |
-| members.phoneNumber | Body | String | Project member phone number |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "members": [
-        {
-            "memberId": "550e8400-e29b-41d4-a716-446655440000",
-            "memberName": "memberName-example",
-            "emailAddress": "user@example.com",
-            "phoneNumber": "010-1234-5678"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"members": [
+{
+"memberId": "550e8400-e29b-41d4-a716-446655440000",
+"memberName": "memberName-example",
+"emailAddress": "user@example.com",
+"phoneNumber": "010-1234-5678"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| members | Array | Project member list |
+| members.memberId | UUID | Project member identifier |
+| members.memberName | String | Project member name |
+| members.emailAddress | String | Project member email address |
+| members.phoneNumber | String | Project member phone number |
 
 ---
 
 ### List Regions
 
-```http
-GET /v4.0/project/regions
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -156,48 +174,50 @@ GET /v4.0/project/regions
 
 #### Request
 
+```http
+GET /v4.0/project/regions
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| regions | Body | Array | Region list |
-| regions.regionCode | Body | Enum | Region code<br/>- KR4: `Korea (Daegu)` |
-| regions.isEnabled | Body | Boolean | Whether the region is enabled |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "regions": [
-        {
-            "regionCode": "KR4",
-            "isEnabled": false
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"regions": [
+{
+"regionCode": "KR4",
+"isEnabled": false
+}
+]
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| regions | Array | Region list |
+| regions.regionCode | Enum | Region code<br/>- KR4: `Korea (Daegu)` |
+| regions.isEnabled | Boolean | Whether the region is enabled |
+
 ---
+
 ## Specifications of DB Instance
 
 ### List DB Instance Specifications
 
-```http
-GET /v4.0/db-flavors
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -205,41 +225,46 @@ GET /v4.0/db-flavors
 
 #### Request
 
+```http
+GET /v4.0/db-flavors
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbFlavors | Body | Array | List of DB instance specifications |
-| dbFlavors.dbFlavorId | Body | UUID | Identifier of DB instance specifications |
-| dbFlavors.dbFlavorName | Body | String | Name of DB instance specifications |
-| dbFlavors.ram | Body | Number | Memory size (MB) |
-| dbFlavors.vcpus | Body | Number | CPU cores |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbFlavors": [
-        {
-            "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbFlavorName": "dbFlavorName-example",
-            "ram": 1,
-            "vcpus": 1
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbFlavors": [
+{
+"dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+"dbFlavorName": "dbFlavorName-example",
+"ram": 1,
+"vcpus": 1
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbFlavors | Array | List of DB instance specifications |
+| dbFlavors.dbFlavorId | UUID | Identifier of DB instance specifications |
+| dbFlavors.dbFlavorName | String | Name of DB instance specifications |
+| dbFlavors.ram | Number | Memory size (MB) |
+| dbFlavors.vcpus | Number | CPU cores |
 
 ---
 
@@ -247,11 +272,7 @@ This API does not require a request body.
 
 ### List Subnets
 
-```http
-GET /v4.0/network/subnets
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -259,43 +280,48 @@ GET /v4.0/network/subnets
 
 #### Request
 
+```http
+GET /v4.0/network/subnets
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| subnets | Body | Array | Subnet list |
-| subnets.subnetId | Body | UUID | Subnet identifier |
-| subnets.subnetName | Body | String | Name to identify subnets |
-| subnets.subnetCidr | Body | String | CIDR of subnet |
-| subnets.usingGateway | Body | Boolean | Whether to use gateway |
-| subnets.availableIpCount | Body | Number | Number of available IPs |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "subnets": [
-        {
-            "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-            "subnetName": "subnetName-example",
-            "subnetCidr": "192.168.0.0/24",
-            "usingGateway": false,
-            "availableIpCount": 1
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"subnets": [
+{
+"subnetId": "550e8400-e29b-41d4-a716-446655440000",
+"subnetName": "subnetName-example",
+"subnetCidr": "192.168.0.0/24",
+"usingGateway": false,
+"availableIpCount": 1
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| subnets | Array | Subnet list |
+| subnets.subnetId | UUID | Subnet identifier |
+| subnets.subnetName | String | Name to identify subnets |
+| subnets.subnetCidr | String | CIDR of subnet |
+| subnets.usingGateway | Boolean | Whether to use gateway |
+| subnets.availableIpCount | Number | Number of available IPs |
 
 ---
 
@@ -303,11 +329,7 @@ This API does not require a request body.
 
 ### List DB Engines
 
-```http
-GET /v4.0/db-versions
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -315,39 +337,44 @@ GET /v4.0/db-versions
 
 #### Request
 
+```http
+GET /v4.0/db-versions
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbVersions | Body | Array | DB engine list |
-| dbVersions.dbVersion | Body | String | DB engine type |
-| dbVersions.dbVersionName | Body | String | DB engine name |
-| dbVersions.restorableFromObs | Body | Boolean | Restoring backup from object storage available or not |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbVersions": [
-        {
-            "dbVersion": "MYSQL_V8036",
-            "dbVersionName": "dbVersionName-example",
-            "restorableFromObs": false
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbVersions": [
+{
+"dbVersion": "MYSQL_V8036",
+"dbVersionName": "dbVersionName-example",
+"restorableFromObs": false
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbVersions | Array | DB engine list |
+| dbVersions.dbVersion | String | DB engine type |
+| dbVersions.dbVersionName | String | DB engine name |
+| dbVersions.restorableFromObs | Boolean | Restoring backup from object storage available or not |
 
 ---
 
@@ -355,11 +382,7 @@ This API does not require a request body.
 
 ### List Storage Types
 
-```http
-GET /v4.0/storage-types
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -367,33 +390,38 @@ GET /v4.0/storage-types
 
 #### Request
 
+```http
+GET /v4.0/storage-types
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| storageTypes | Body | Array | Storage type list |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storageTypes": [
-        "General SSD",
-        "General HDD"
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"storageTypes": [
+"General SSD",
+"General HDD"
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| storageTypes | Array | Storage type list |
 
 ---
 
@@ -401,28 +429,24 @@ This API does not require a request body.
 
 ### Task Status
 
-| Status Name        | Description                           |
-|--------------------|---------------------------------------|
-| `PREPARING`        | Task in preparation                   |
-| `READY`            | Task in ready                         |
-| `RUNNING`          | Task in progress                      |
-| `COMPLETED`        | Task completed                        |
-| `REGISTERED`       | Task registered                       |
-| `WAIT_TO_REGISTER` | Task waiting to register              |
-| `INTERRUPTED`      | Task being interrupted                |
-| `CANCELED`         | Task canceled                         |
-| `FAILED`           | Task failed                           |
-| `ERROR`            | Error occurred while task in progress |
-| `DELETED`          | Task deleted                          |
-| `FAIL_TO_READY`    | Failed to get ready for task          |
+| Status | Description |
+|--------------------|----------------------|
+| `PREPARING` | Task in preparation |
+| `READY` | Task in ready |
+| `RUNNING` | Task in progress |
+| `COMPLETED` | Task completed |
+| `REGISTERED` | Task registered |
+| `WAIT_TO_REGISTER` | Task waiting to register |
+| `INTERRUPTED` | Task being interrupted |
+| `CANCELED` | Task canceled |
+| `FAILED` | Task failed |
+| `ERROR` | Error occurred while task in progress |
+| `DELETED` | Task deleted |
+| `FAIL_TO_READY` | Failed to get ready for task |
 
 ### List Task Details
 
-```http
-GET /v4.0/jobs/{jobId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -430,60 +454,64 @@ GET /v4.0/jobs/{jobId}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/jobs/{jobId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| jobId | URL | UUID | O |  |
+| jobId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Task identifier |
-| jobStatus | Body | Enum | Current task status<br/>- DELETED<br/>- CANNOT_PROGRESS<br/>- FAILED<br/>- ERROR<br/>- CANCELED<br/>- INTERRUPTED<br/>- COMPLETED<br/>- COMPLETED_WITH_ERROR<br/>- RUNNING<br/>- PREPARING<br/>- READY<br/>- CREATED<br/>- FAIL_TO_READY<br/>- REGISTERED<br/>- FAIL_TO_REGISTER<br/>- WAIT_TO_REGISTER |
-| resourceRelations | Body | Array | Relevant resource list |
-| resourceRelations.resourceType | Body | String | Relevant resource type |
-| resourceRelations.resourceId | Body | String | Relevant resource identifier |
-| createdYmdt | Body | DateTime | Created date and time |
-| updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000",
-    "jobStatus": "DELETED",
-    "resourceRelations": [
-        {
-            "resourceType": "resourceType-example",
-            "resourceId": "resourceId-example"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000",
+"jobStatus": "DELETED",
+"resourceRelations": [
+{
+"resourceType": "resourceType-example",
+"resourceId": "resourceId-example"
+}
+],
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+| jobStatus | Enum | Current task status<br/>- DELETED<br/>- CANNOT_PROGRESS<br/>- FAILED<br/>- ERROR<br/>- CANCELED<br/>- INTERRUPTED<br/>- COMPLETED<br/>- COMPLETED_WITH_ERROR<br/>- RUNNING<br/>- PREPARING<br/>- READY<br/>- CREATED<br/>- FAIL_TO_READY<br/>- REGISTERED<br/>- FAIL_TO_REGISTER<br/>- WAIT_TO_REGISTER |
+| resourceRelations | Array | Relevant resource list |
+| resourceRelations.resourceType | String | Relevant resource type |
+| resourceRelations.resourceId | String | Relevant resource identifier |
+| createdYmdt | DateTime | Created at |
+| updatedYmdt | DateTime | Modified date and time |
+
 ---
+
 ## DB Instance Group
 
 ### List DB Instance Groups
 
-```http
-GET /v4.0/db-instance-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -491,51 +519,52 @@ GET /v4.0/db-instance-groups
 
 #### Request
 
+```http
+GET /v4.0/db-instance-groups
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbInstanceGroups | Body | Array | DB instance group list |
-| dbInstanceGroups.dbInstanceGroupId | Body | UUID | DB instance group identifier |
-| dbInstanceGroups.replicationType | Body | Enum | DB instance group replication type<br/>- STANDALONE: `Without high availability`<br/>- HIGH_AVAILABILITY: `With high availability` |
-| dbInstanceGroups.createdYmdt | Body | DateTime | Created date and time |
-| dbInstanceGroups.updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstanceGroups": [
-        {
-            "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
-            "replicationType": "STANDALONE",
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbInstanceGroups": [
+{
+"dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"replicationType": "STANDALONE",
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbInstanceGroups | Array | DB instance group list |
+| dbInstanceGroups.dbInstanceGroupId | UUID | DB instance group identifier |
+| dbInstanceGroups.replicationType | Enum | DB instance group replication type<br/>- STANDALONE: `Without high availability`<br/>- HIGH_AVAILABILITY: `With high availability` |
+| dbInstanceGroups.createdYmdt | DateTime | Created at |
+| dbInstanceGroups.updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### List DB Instance Group Details
 
-```http
-GET /v4.0/db-instance-groups/{dbInstanceGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -543,51 +572,58 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instance-groups/{dbInstanceGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceGroupId | URL | UUID | O |  |
+| dbInstanceGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbInstanceGroupId | Body | UUID | DB instance group identifier |
-| replicationType | Body | Enum | DB instance group replication type<br/>- STANDALONE: `Without high availability`<br/>- HIGH_AVAILABILITY: `With high availability` |
-| dbInstances | Body | Array | List of DB instances belonging to the DB instance group |
-| dbInstances.dbInstanceId | Body | UUID | DB instance identifier |
-| dbInstances.dbInstanceType | Body | Enum | DB instance role type<br/>- MASTER: `Master`<br/>- FAILED_MASTER: `Failed master`<br/>- CANDIDATE_MASTER: `Candidate master`<br/>- READ_ONLY_SLAVE: `Read replica` |
-| dbInstances.dbInstanceStatus | Body | Enum | DB instance current status<br/>- BEFORE_CREATE: `Before creation (gray)`<br/>- AVAILABLE: `Available (green)`<br/>- STORAGE_FULL: `Insufficient storage (red)`<br/>- FAIL_TO_CREATE: `Creation failed (red)`<br/>- FAIL_TO_CONNECT: `Connection failed (red)`<br/>- REPLICATION_STOP: `Replication stopped (red)`<br/>- REPLICATION_DELAY: `Replication delayed (yellow)`<br/>- FAILOVER: `Failover completed (red)`<br/>- SHUTDOWN: `Stopped (gray)`<br/>- DELETED: `Deleted (gray)` |
-| createdYmdt | Body | DateTime | Created date and time |
-| updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "replicationType": "STANDALONE",
-    "dbInstances": [
-        {
-            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbInstanceType": "MASTER",
-            "dbInstanceStatus": "BEFORE_CREATE"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"replicationType": "STANDALONE",
+"dbInstances": [
+{
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceType": "MASTER",
+"dbInstanceStatus": "BEFORE_CREATE"
+}
+],
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbInstanceGroupId | UUID | DB instance group identifier |
+| replicationType | Enum | DB instance group replication type<br/>- STANDALONE: `Without high availability`<br/>- HIGH_AVAILABILITY: `With high availability` |
+| dbInstances | Array | List of DB instances belonging to the DB instance group |
+| dbInstances.dbInstanceId | UUID | DB instance identifier |
+| dbInstances.dbInstanceType | Enum | DB instance role type<br/>- MASTER: `Master`<br/>- FAILED_MASTER: `Failed master`<br/>- CANDIDATE_MASTER: `Candidate master`<br/>- READ_ONLY_SLAVE: `Read replica` |
+| dbInstances.dbInstanceStatus | Enum | DB instance current status<br/>- BEFORE_CREATE: `Before create (gray)`<br/>- AVAILABLE: `Available (green)`<br/>- STORAGE_FULL: `Storage full (red)`<br/>- FAIL_TO_CREATE: `Failed to create (red)`<br/>- FAIL_TO_CONNECT: `Failed to connect (red)`<br/>- REPLICATION_STOP: `Replication stopped (red)`<br/>- REPLICATION_DELAY: `Replication delayed (yellow)`<br/>- FAILOVER: `Failover completed (red)`<br/>- SHUTDOWN: `Stopped (gray)`<br/>- DELETED: `Deleted (gray)` |
+| createdYmdt | DateTime | Created at |
+| updatedYmdt | DateTime | Modified date and time |
 
 ---
 
@@ -597,54 +633,50 @@ This API does not require a request body.
 
 | Status | Description |
 |---------------------|------------------------------|
-| `AVAILABLE`         | DB instance is available |
-| `BEFORE_CREATE`     | Before DB instance is created |
-| `STORAGE_FULL`      | Insufficient DB instance storage |
-| `FAIL_TO_CREATE`    | Failed to create DB instance |
-| `FAIL_TO_CONNECT`   | Failed to connect DB instance |
-| `REPLICATION_STOP`  | Replication of DB instance is stopped |
-| `FAILOVER`          | High availability DB instance failed over |
-| `SHUTDOWN`          | DB instance is stopped |
-| `DELETED`           | DB instance is deleted |
+| `AVAILABLE` | DB instance is available |
+| `BEFORE_CREATE` | Before DB instance is created |
+| `STORAGE_FULL` | Insufficient DB instance storage |
+| `FAIL_TO_CREATE` | Failed to create DB instance |
+| `FAIL_TO_CONNECT` | Failed to connect DB instance |
+| `REPLICATION_STOP` | Replication of DB instance is stopped |
+| `FAILOVER` | High availability DB instance failed over |
+| `SHUTDOWN` | DB instance is stopped |
+| `DELETED` | DB instance is deleted |
 
 ### DB Instance Progress Status
 
 | Status | Description |
 |----------------------------|--------------|
 | `APPLYING_PARAMETER_GROUP` | Parameter group is being applied |
-| `BACKING_UP`               | Backing up |
-| `CANCELING`                | Canceling |
-| `CREATING`                 | Creating |
-| `CREATING_SCHEMA`          | Creating DB schema |
-| `CREATING_USER`            | Creating user |
-| `DELETING`                 | Deleting |
-| `DELETING_SCHEMA`          | Deleting DB schema |
-| `DELETING_USER`            | Deleting user |
-| `EXPORTING_BACKUP`         | Exporting backup |
-| `FAILING_OVER`             | Under failover |
-| `MIGRATING`                | Under migration |
-| `MODIFYING`                | Under modification |
-| `PREPARING`                | In preparation |
-| `PROMOTING`                | Promoting |
-| `REBUILDING`               | Rebuilding |
-| `REPAIRING`                | Recovering |
-| `REPLICATING`              | Replicating |
-| `RESTARTING`               | Restarting |
-| `RESTARTING_FORCIBLY`      | Force restarting |
-| `RESTORING`                | Restoring |
-| `STARTING`                 | Starting |
-| `STOPPING`                 | Stopping |
-| `SYNCING_SCHEMA`           | Synchronizing DB schema |
-| `SYNCING_USER`             | Synchronizing user |
-| `UPDATING_USER`            | Modifying user |
+| `BACKING_UP` | Backing up |
+| `CANCELING` | Canceling |
+| `CREATING` | Creating |
+| `CREATING_SCHEMA` | Creating DB schema |
+| `CREATING_USER` | Creating user |
+| `DELETING` | Deleting |
+| `DELETING_SCHEMA` | Deleting DB schema |
+| `DELETING_USER` | Deleting user |
+| `EXPORTING_BACKUP` | Exporting backup |
+| `FAILING_OVER` | Under failover |
+| `MIGRATING` | Under migration |
+| `MODIFYING` | Under modification |
+| `PREPARING` | In preparation |
+| `PROMOTING` | Promoting |
+| `REBUILDING` | Rebuilding |
+| `REPAIRING` | Recovering |
+| `REPLICATING` | Replicating |
+| `RESTARTING` | Restarting |
+| `RESTARTING_FORCIBLY` | Force restarting |
+| `RESTORING` | Restoring |
+| `STARTING` | Starting |
+| `STOPPING` | Stopping |
+| `SYNCING_SCHEMA` | Synchronizing DB schema |
+| `SYNCING_USER` | Synchronizing user |
+| `UPDATING_USER` | Modifying user |
 
 ### List DB Instances
 
-```http
-GET /v4.0/db-instances
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -652,356 +684,359 @@ GET /v4.0/db-instances
 
 #### Request
 
+```http
+GET /v4.0/db-instances
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbInstances | Body | Array | DB instance list |
-| dbInstances.dbInstanceId | Body | UUID | DB instance identifier |
-| dbInstances.dbInstanceGroupId | Body | UUID | DB instance group identifier |
-| dbInstances.dbInstanceName | Body | String | Name to identify DB instances |
-| dbInstances.description | Body | String | Additional information on DB instances |
-| dbInstances.dbVersion | Body | Enum | DB engine type |
-| dbInstances.dbPort | Body | Number | DB port |
-| dbInstances.dbInstanceType | Body | Enum | DB instance role type<br/>- MASTER: `Master`<br/>- FAILED_MASTER: `Failed master`<br/>- CANDIDATE_MASTER: `Candidate master`<br/>- READ_ONLY_SLAVE: `Read replica` |
-| dbInstances.dbInstanceStatus | Body | Enum | DB instance current status<br/>- BEFORE_CREATE: `Before creation (gray)`<br/>- AVAILABLE: `Available (green)`<br/>- STORAGE_FULL: `Insufficient storage (red)`<br/>- FAIL_TO_CREATE: `Creation failed (red)`<br/>- FAIL_TO_CONNECT: `Connection failed (red)`<br/>- REPLICATION_STOP: `Replication stopped (red)`<br/>- REPLICATION_DELAY: `Replication delayed (yellow)`<br/>- FAILOVER: `Failover completed (red)`<br/>- SHUTDOWN: `Stopped (gray)`<br/>- DELETED: `Deleted (gray)` |
-| dbInstances.progressStatus | Body | Enum | DB instance current progress status<br/>- NONE<br/>- APPLYING_PARAMETER_GROUP<br/>- BACKING_UP<br/>- CANCELING<br/>- CREATING<br/>- CREATING_SCHEMA<br/>- CREATING_USER<br/>- DELETING<br/>- DELETING_SCHEMA<br/>- DELETING_USER<br/>- EXPORTING_BACKUP<br/>- FAILING_OVER<br/>- MIGRATING<br/>- MODIFYING<br/>- PREPARING<br/>- PROMOTING<br/>- PROMOTING_FORCIBLY<br/>- REBUILDING<br/>- REPAIRING<br/>- REPLICATING<br/>- RESTARTING<br/>- RESTARTING_FORCIBLY<br/>- RESTORING<br/>- STARTING<br/>- STOPPING<br/>- SYNCING_SCHEMA<br/>- SYNCING_USER<br/>- UPDATING_USER<br/>- WAIT_MANUAL_CONTROL |
-| dbInstances.createdYmdt | Body | DateTime | Created date and time |
-| dbInstances.updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstances": [
-        {
-            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbInstanceName": "dbInstanceName-example",
-            "description": "description-example",
-            "dbVersion": "MYSQL_V8036",
-            "dbPort": 1,
-            "dbInstanceType": "MASTER",
-            "dbInstanceStatus": "BEFORE_CREATE",
-            "progressStatus": "NONE",
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbInstances": [
+{
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceName": "dbInstanceName-example",
+"description": "description-example",
+"dbVersion": "MYSQL_V8036",
+"dbPort": 1,
+"dbInstanceType": "MASTER",
+"dbInstanceStatus": "BEFORE_CREATE",
+"progressStatus": "NONE",
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| dbInstances | Array | DB instance list |
+| dbInstances.dbInstanceId | UUID | DB instance identifier |
+| dbInstances.dbInstanceGroupId | UUID | DB instance group identifier |
+| dbInstances.dbInstanceName | String | Name to identify DB instances |
+| dbInstances.description | String | Additional information on DB instances |
+| dbInstances.dbVersion | String | DB engine type |
+| dbInstances.dbPort | Number | DB port |
+| dbInstances.dbInstanceType | Enum | DB instance role type<br/>- MASTER: `Master`<br/>- FAILED_MASTER: `Failed master`<br/>- CANDIDATE_MASTER: `Candidate master`<br/>- READ_ONLY_SLAVE: `Read replica` |
+| dbInstances.dbInstanceStatus | Enum | DB instance current status<br/>- BEFORE_CREATE: `Before create (gray)`<br/>- AVAILABLE: `Available (green)`<br/>- STORAGE_FULL: `Storage full (red)`<br/>- FAIL_TO_CREATE: `Failed to create (red)`<br/>- FAIL_TO_CONNECT: `Failed to connect (red)`<br/>- REPLICATION_STOP: `Replication stopped (red)`<br/>- REPLICATION_DELAY: `Replication delayed (yellow)`<br/>- FAILOVER: `Failover completed (red)`<br/>- SHUTDOWN: `Stopped (gray)`<br/>- DELETED: `Deleted (gray)` |
+| dbInstances.progressStatus | Enum | DB instance current task status<br/>- NONE<br/>- APPLYING_PARAMETER_GROUP<br/>- BACKING_UP<br/>- CANCELING<br/>- CREATING<br/>- CREATING_SCHEMA<br/>- CREATING_USER<br/>- DELETING<br/>- DELETING_SCHEMA<br/>- DELETING_USER<br/>- EXPORTING_BACKUP<br/>- FAILING_OVER<br/>- MIGRATING<br/>- MODIFYING<br/>- PREPARING<br/>- PROMOTING<br/>- PROMOTING_FORCIBLY<br/>- REBUILDING<br/>- REPAIRING<br/>- REPLICATING<br/>- RESTARTING<br/>- RESTARTING_FORCIBLY<br/>- RESTORING<br/>- STARTING<br/>- STOPPING<br/>- SYNCING_SCHEMA<br/>- SYNCING_USER<br/>- UPDATING_USER<br/>- WAIT_MANUAL_CONTROL |
+| dbInstances.createdYmdt | DateTime | Created at |
+| dbInstances.updatedYmdt | DateTime | Modified date and time |
+
 ---
+
 ### Create DB Instance
 
-```http
-POST /v4.0/db-instances
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstance.Create | Create DB Instance |
 
-#### Common request
+#### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceName | Body | String | O | Name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on DB instances<br/>- Maximum length: `100` |
-| dbFlavorId | Body | UUID | O | Identifier of DB instance specifications |
-| dbVersion | Body | Enum | O | DB engine type |
-| dbPort | Body | Number | O | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
-| dbUserName | Body | String | O | DB user account name<br/>- Minimum length: `1`<br/>- Maximum length: `32` |
-| dbPassword | Body | String | O | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `256` |
-| parameterGroupId | Body | UUID | O | Parameter group identifier |
-| dbSecurityGroupIds | Body | Array | X | DB security group identifiers |
-| userGroupIds | Body | Array | X | User group identifiers |
-| useHighAvailability | Body | Boolean | X | Whether to use high availability<br/>- Default: `false` |
-| pingInterval | Body | Number | X | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
-| useDefaultNotification | Body | Boolean | X | Whether to use default notification<br/>- Default: `false` |
-| useDeletionProtection | Body | Boolean | X | Whether to protect against deletion<br/>- Default: `false` |
-| useSlowQueryAnalysis | Body | Boolean | X | Whether to analyze slow queries<br/>- Default: `true` |
-| authenticationPlugin | Body | Enum | X | Authentication Plugin<br/>- NATIVE: `mysql_native_password authentication`<br/>- CACHING_SHA2: `caching_sha2_password authentication (MySQL only)`<br/>- SHA256: `sha256_password authentication (MySQL only)` |
-| tlsOption | Body | Enum | X | TLS Option<br/>- Default: `NONE`<br/>- NONE: `TLS not used`<br/>- SSL: `SSL authentication`<br/>- X509: `X509 certificate authentication` |
-| network | Body | Object | O | Network information objects |
-| network.subnetId | Body | UUID | O | Subnet identifier |
-| network.usePublicAccess | Body | Boolean | X | External access is available or not<br/>- Default: `false` |
-| network.availabilityZone | Body | Enum | O | Availability zone where DB instance will be created |
-| storage | Body | Object | O | Storage information objects |
-| storage.storageType | Body | Enum | O | Data storage type |
-| storage.storageSize | Body | Number | O | Data storage size (GB)<br/>- Minimum value: `20` |
-| storage.storageAutoscale | Body | Object | X | Data storage auto scaling objects |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | Whether to enable storage auto scaling<br/>- Default: `false` |
-| backup | Body | Object | O | Backup information objects |
-| backup.backupPeriod | Body | Number | O | Backup retention period (days)<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.backupRetryCount | Body | Number | X | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Body | Number | X | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
-| backup.replicationRegion | Body | Enum | X | Backup replication region<br/>- KR4: `Korea (Daegu)` |
-| backup.useBackupLock | Body | Boolean | X | Whether to use table lock<br/>- Default: `true` |
-| backup.backupSchedules | Body | Array | O | Scheduled auto backup list |
-| backup.backupSchedules.backupWndBgnTime | Body | Time | O | Backup started time |
-| backup.backupSchedules.backupWndDuration | Body | Enum | O | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1.5 hours`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2.5 hours`<br/>- THREE_HOURS: `3 hours` |
+```http
+POST /v4.0/db-instances
+```
 
-#### When using high availability
+#### Request Body
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceCandidateName | Body | String | O | Candidate master name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-
-#### When using storage auto scaling
-
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| storage.storageAutoscale.threshold | Body | Number | O | Auto scale out condition (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
-| storage.storageAutoscale.maxStorageSize | Body | Number | O | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
-| storage.storageAutoscale.cooldownTime | Body | Number | O | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbInstanceName": "dbInstanceName",
-    "description": "description-example",
-    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8036",
-    "dbPort": 1,
-    "dbUserName": "dbUserName",
-    "dbPassword": "dbPassword",
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbSecurityGroupIds": [],
-    "userGroupIds": [],
-    "useHighAvailability": false,
-    "pingInterval": 3,
-    "useDefaultNotification": false,
-    "useDeletionProtection": false,
-    "useSlowQueryAnalysis": true,
-    "authenticationPlugin": "NATIVE",
-    "tlsOption": "NONE",
-    "network": {
-        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-        "usePublicAccess": false,
-        "availabilityZone": "kr-pub-a"
-    },
-    "storage": {
-        "storageType": "General SSD",
-        "storageSize": 20,
-        "storageAutoscale": {
-            "useStorageAutoscale": false
-        }
-    },
-    "backup": {
-        "backupPeriod": 0,
-        "backupRetryCount": 0,
-        "ftwrlWaitTimeout": 1800,
-        "replicationRegion": "KR4",
-        "useBackupLock": true,
-        "backupSchedules": [
-            {
-                "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "HALF_AN_HOUR"
-            }
-        ]
-    }
+"dbInstanceName": "dbInstanceName",
+"description": "description-example",
+"dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+"dbVersion": "MYSQL_V8036",
+"dbPort": 1,
+"dbUserName": "dbUserName",
+"dbPassword": "dbPassword",
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSecurityGroupIds": [],
+"userGroupIds": [],
+"useHighAvailability": false,
+"pingInterval": 3,
+"useDefaultNotification": false,
+"useDeletionProtection": false,
+"useSlowQueryAnalysis": true,
+"authenticationPlugin": "NATIVE",
+"tlsOption": "NONE",
+"network": {
+"subnetId": "550e8400-e29b-41d4-a716-446655440000",
+"usePublicAccess": false,
+"availabilityZone": "kr-pub-a"
+},
+"storage": {
+"storageType": "General SSD",
+"storageSize": 20,
+"storageAutoscale": {
+"useStorageAutoscale": false
+}
+},
+"backup": {
+"backupPeriod": 0,
+"backupRetryCount": 0,
+"ftwrlWaitTimeout": 1800,
+"replicationRegion": "KR4",
+"useBackupLock": true,
+"backupSchedules": [
+{
+"backupWndBgnTime": "00:00:00",
+"backupWndDuration": "HALF_AN_HOUR"
+}
+]
+}
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceName | String | Y | Name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on the DB instance<br/>- Maximum length: `100` |
+| dbFlavorId | UUID | Y | Identifier of DB instance specifications |
+| dbVersion | String | Y | DB engine type |
+| dbPort | Number | Y | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
+| dbUserName | String | Y | DB user account name<br/>- Minimum length: `1`<br/>- Maximum length: `32` |
+| dbPassword | String | Y | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `256` |
+| parameterGroupId | UUID | Y | Parameter group identifier |
+| dbSecurityGroupIds | Array | N | List of DB security group identifiers |
+| userGroupIds | Array | N | List of user group identifiers |
+| useHighAvailability | Boolean | N | Whether to use high availability<br/>- Default: `false` |
+| pingInterval | Number | N | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| useDefaultNotification | Boolean | N | Whether to use default notification<br/>- Default: `false` |
+| useDeletionProtection | Boolean | N | Whether to enable deletion protection<br/>- Default: `false` |
+| useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries<br/>- Default: `true` |
+| authenticationPlugin | Enum | N | Authentication Plugin<br/>- NATIVE: `mysql_native_password authentication`<br/>- CACHING_SHA2: `caching_sha2_password authentication (MySQL only)`<br/>- SHA256: `sha256_password authentication (MySQL only)` |
+| tlsOption | Enum | N | TLS Option<br/>- Default: `NONE`<br/>- NONE: `TLS not used`<br/>- SSL: `SSL authentication`<br/>- X509: `X509 certificate authentication` |
+| network | Object | Y | Network information object |
+| network.subnetId | UUID | Y | Subnet identifier |
+| network.usePublicAccess | Boolean | N | Whether external access is available<br/>- Default: `false` |
+| network.availabilityZone | Enum | Y | Availability zone where DB instance will be created |
+| storage | Object | Y | Storage information object |
+| storage.storageType | Enum | Y | Data storage type |
+| storage.storageSize | Number | Y | Data storage size (GB)<br/>- Minimum value: `20` |
+| storage.storageAutoscale | Object | N | Data storage auto scaling object |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | Whether to enable storage auto scaling<br/>- Default: `false` |
+| backup | Object | Y | Backup information object |
+| backup.backupPeriod | Number | Y | Backup retention period (days)<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
+| backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
+| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.replicationRegion | Enum | N | Backup replication region<br/>- KR4: `Korea (Daegu)` |
+| backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
+| backup.backupSchedules | Array | Y | Scheduled auto backup list |
+| backup.backupSchedules.backupWndBgnTime | Time | Y | Backup start time |
+| backup.backupSchedules.backupWndDuration | Enum | Y | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1 hour 30 minutes`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2 hours 30 minutes`<br/>- THREE_HOURS: `3 hours` |
+
+#### When Using High Availability
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Candidate master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+
+#### When Using Storage Auto Scaling
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | Auto scaling threshold (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Restore DB Instance from Object Storage
 
-```http
-POST /v4.0/db-instances/restore-from-obs
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstance.RestoreFromObs | Restore a DB instance from object storage |
 
-#### Common request
+#### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceName | Body | String | O | Master name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on DB instances<br/>- Maximum length: `100` |
-| dbFlavorId | Body | UUID | O | Identifier of DB instance specifications |
-| dbPort | Body | Number | O | DB port |
-| dbVersion | Body | Enum | O | DB engine type |
-| useHighAvailability | Body | Boolean | X | Whether to use high availability<br/>- Default: `false` |
-| pingInterval | Body | Number | X | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
-| storage | Body | Object | O | Storage information objects |
-| storage.storageType | Body | Enum | O | Storage type |
-| storage.storageSize | Body | Number | O | Data storage size (GB)<br/>- Minimum value: `20` |
-| storage.storageAutoscale | Body | Object | X | Data storage auto scaling objects |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | Whether to enable storage auto scaling<br/>- Default: `false` |
-| network | Body | Object | O | Network information objects |
-| network.subnetId | Body | UUID | O | Subnet identifier |
-| network.usePublicAccess | Body | Boolean | X | External access is available or not<br/>- Default: `false` |
-| network.availabilityZone | Body | Enum | O | Availability zone where DB instance will be created |
-| backup | Body | Object | O | Backup information objects |
-| backup.backupPeriod | Body | Number | O | Backup retention period (days)<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.ftwrlWaitTimeout | Body | Number | X | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
-| backup.backupRetryCount | Body | Number | X | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.replicationRegion | Body | Enum | X | Backup replication region<br/>- KR4: `Korea (Daegu)` |
-| backup.useBackupLock | Body | Boolean | X | Whether to use table lock<br/>- Default: `true` |
-| backup.backupSchedules | Body | Array | O | Scheduled auto backup list |
-| backup.backupSchedules.backupWndBgnTime | Body | Time | O | Backup started time |
-| backup.backupSchedules.backupWndDuration | Body | Enum | O | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1.5 hours`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2.5 hours`<br/>- THREE_HOURS: `3 hours` |
-| restore | Body | Object | O | Restoration information object |
-| restore.tenantId | Body | String | O | Tenant ID of object storage where backups are stored |
-| restore.username | Body | String | O | NHN Cloud account or IAM member ID |
-| restore.password | Body | String | O | API password for object storage where backups are stored |
-| restore.targetContainer | Body | String | O | Container for object storage where backups are stored |
-| restore.objectPath | Body | String | O | Backup path stored in container |
-| useDefaultNotification | Body | Boolean | X | Whether to use default notification<br/>- Default: `false` |
-| useSlowQueryAnalysis | Body | Boolean | X | Whether to analyze slow queries<br/>- Default: `true` |
-| parameterGroupId | Body | UUID | O | Parameter group identifier |
-| dbSecurityGroupIds | Body | Array | X | DB security group identifiers |
-| userGroupIds | Body | Array | X | User group identifiers |
-| useDeletionProtection | Body | Boolean | X | Whether to protect against deletion<br/>- Default: `false` |
+```http
+POST /v4.0/db-instances/restore-from-obs
+```
 
-#### When using high availability
+#### Request Body
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceCandidateName | Body | String | O | Candidate master name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-
-#### When using storage auto scaling
-
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| storage.storageAutoscale.threshold | Body | Number | O | Auto scale out condition (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
-| storage.storageAutoscale.maxStorageSize | Body | Number | O | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
-| storage.storageAutoscale.cooldownTime | Body | Number | O | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbInstanceName": "dbInstanceName",
-    "description": "description-example",
-    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbPort": 1,
-    "dbVersion": "MYSQL_V8036",
-    "useHighAvailability": false,
-    "pingInterval": 3,
-    "storage": {
-        "storageType": "General SSD",
-        "storageSize": 20,
-        "storageAutoscale": {
-            "useStorageAutoscale": false
-        }
-    },
-    "network": {
-        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-        "usePublicAccess": false,
-        "availabilityZone": "kr-pub-a"
-    },
-    "backup": {
-        "backupPeriod": 0,
-        "ftwrlWaitTimeout": 1800,
-        "backupRetryCount": 0,
-        "replicationRegion": "KR4",
-        "useBackupLock": true,
-        "backupSchedules": [
-            {
-                "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "HALF_AN_HOUR"
-            }
-        ]
-    },
-    "restore": {
-        "tenantId": "0123456789abcdef0123456789abcdef",
-        "username": "username-example",
-        "password": "password-example",
-        "targetContainer": "targetContainer-example",
-        "objectPath": "objectPath-example"
-    },
-    "useDefaultNotification": false,
-    "useSlowQueryAnalysis": true,
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbSecurityGroupIds": [],
-    "userGroupIds": [],
-    "useDeletionProtection": false
+"dbInstanceName": "dbInstanceName",
+"description": "description-example",
+"dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+"dbPort": 1,
+"dbVersion": "MYSQL_V8036",
+"useHighAvailability": false,
+"pingInterval": 3,
+"storage": {
+"storageType": "General SSD",
+"storageSize": 20,
+"storageAutoscale": {
+"useStorageAutoscale": false
+}
+},
+"network": {
+"subnetId": "550e8400-e29b-41d4-a716-446655440000",
+"usePublicAccess": false,
+"availabilityZone": "kr-pub-a"
+},
+"backup": {
+"backupPeriod": 0,
+"ftwrlWaitTimeout": 1800,
+"backupRetryCount": 0,
+"replicationRegion": "KR4",
+"useBackupLock": true,
+"backupSchedules": [
+{
+"backupWndBgnTime": "00:00:00",
+"backupWndDuration": "HALF_AN_HOUR"
+}
+]
+},
+"restore": {
+"tenantId": "0123456789abcdef0123456789abcdef",
+"username": "username-example",
+"password": "password-example",
+"targetContainer": "targetContainer-example",
+"objectPath": "objectPath-example"
+},
+"useDefaultNotification": false,
+"useSlowQueryAnalysis": true,
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSecurityGroupIds": [],
+"userGroupIds": [],
+"useDeletionProtection": false
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceName | String | Y | Master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on the DB instance<br/>- Maximum length: `100` |
+| dbFlavorId | UUID | Y | Identifier of DB instance specifications |
+| dbPort | Number | Y | DB port |
+| dbVersion | String | Y | DB engine type |
+| useHighAvailability | Boolean | N | Whether to use high availability<br/>- Default: `false` |
+| pingInterval | Number | N | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| storage | Object | Y | Storage information object |
+| storage.storageType | Enum | Y | Storage type |
+| storage.storageSize | Number | Y | Data storage size (GB)<br/>- Minimum value: `20` |
+| storage.storageAutoscale | Object | N | Data storage auto scaling object |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | Whether to enable storage auto scaling<br/>- Default: `false` |
+| network | Object | Y | Network information object |
+| network.subnetId | UUID | Y | Subnet identifier |
+| network.usePublicAccess | Boolean | N | Whether external access is available<br/>- Default: `false` |
+| network.availabilityZone | Enum | Y | Availability zone where DB instance will be created |
+| backup | Object | Y | Backup information object |
+| backup.backupPeriod | Number | Y | Backup retention period (days)<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
+| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
+| backup.replicationRegion | Enum | N | Backup replication region<br/>- KR4: `Korea (Daegu)` |
+| backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
+| backup.backupSchedules | Array | Y | Scheduled auto backup list |
+| backup.backupSchedules.backupWndBgnTime | Time | Y | Backup start time |
+| backup.backupSchedules.backupWndDuration | Enum | Y | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1 hour 30 minutes`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2 hours 30 minutes`<br/>- THREE_HOURS: `3 hours` |
+| restore | Object | Y | Restoration information object |
+| restore.tenantId | String | Y | Tenant ID of object storage where backups are stored |
+| restore.username | String | Y | NHN Cloud account or IAM member ID |
+| restore.password | String | Y | API password for object storage where backups are stored |
+| restore.targetContainer | String | Y | Container for object storage where backups are stored |
+| restore.objectPath | String | Y | Backup path stored in container |
+| useDefaultNotification | Boolean | N | Whether to use default notification<br/>- Default: `false` |
+| useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries<br/>- Default: `true` |
+| parameterGroupId | UUID | Y | Parameter group identifier |
+| dbSecurityGroupIds | Array | N | List of DB security group identifiers |
+| userGroupIds | Array | N | List of user group identifiers |
+| useDeletionProtection | Boolean | N | Whether to enable deletion protection<br/>- Default: `false` |
+
+#### When Using High Availability
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Candidate master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+
+#### When Using Storage Auto Scaling
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | Auto scaling threshold (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
 ---
+
 ### Delete DB Instance
 
-```http
-DELETE /v4.0/db-instances/{dbInstanceId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1009,55 +1044,60 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| deleteAutoBackup | Body | Boolean | X | Whether to delete automated backups<br/>- Default: `false` |
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "deleteAutoBackup": false
+"deleteAutoBackup": false
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| deleteAutoBackup | Boolean | N | Whether to delete automated backups<br/>- Default: `false` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### List DB Instance Details
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1065,88 +1105,91 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbInstanceId | Body | UUID | DB instance identifier |
-| dbInstanceGroupId | Body | UUID | DB instance group identifier |
-| dbInstanceName | Body | String | Name to identify DB instances |
-| description | Body | String | Additional information on DB instances |
-| dbVersion | Body | Enum | DB engine type |
-| dbPort | Body | Number | DB port |
-| dbInstanceType | Body | Enum | DB instance role type<br/>- MASTER: `Master`<br/>- FAILED_MASTER: `Failed master`<br/>- CANDIDATE_MASTER: `Candidate master`<br/>- READ_ONLY_SLAVE: `Read replica` |
-| dbInstanceStatus | Body | Enum | DB instance current status<br/>- BEFORE_CREATE: `Before create (gray)`<br/>- AVAILABLE: `Available (green)`<br/>- STORAGE_FULL: `Storage full (red)`<br/>- FAIL_TO_CREATE: `Failed to create (red)`<br/>- FAIL_TO_CONNECT: `Failed to connect (red)`<br/>- REPLICATION_STOP: `Replication stopped (red)`<br/>- REPLICATION_DELAY: `Replication delayed (yellow)`<br/>- FAILOVER: `Failover completed (red)`<br/>- SHUTDOWN: `Stopped (gray)`<br/>- DELETED: `Deleted (gray)` |
-| progressStatus | Body | Enum | DB instance current task status<br/>- NONE<br/>- APPLYING_PARAMETER_GROUP<br/>- BACKING_UP<br/>- CANCELING<br/>- CREATING<br/>- CREATING_SCHEMA<br/>- CREATING_USER<br/>- DELETING<br/>- DELETING_SCHEMA<br/>- DELETING_USER<br/>- EXPORTING_BACKUP<br/>- FAILING_OVER<br/>- MIGRATING<br/>- MODIFYING<br/>- PREPARING<br/>- PROMOTING<br/>- PROMOTING_FORCIBLY<br/>- REBUILDING<br/>- REPAIRING<br/>- REPLICATING<br/>- RESTARTING<br/>- RESTARTING_FORCIBLY<br/>- RESTORING<br/>- STARTING<br/>- STOPPING<br/>- SYNCING_SCHEMA<br/>- SYNCING_USER<br/>- UPDATING_USER<br/>- WAIT_MANUAL_CONTROL |
-| dbFlavorId | Body | UUID | Identifier of DB instance specifications |
-| parameterGroupId | Body | UUID | Parameter group identifier applied to DB instance |
-| dbSecurityGroupIds | Body | Array | DB security group identifiers applied to DB instance |
-| notificationGroupIds | Body | Array | Notification group identifiers applied to DB instance |
-| useDeletionProtection | Body | Boolean | Whether to protect DB instance against deletion |
-| useSlowQueryAnalysis | Body | Boolean | Whether to analyze slow queries |
-| supportAuthenticationPlugin | Body | Boolean | Whether to support authentication plugin |
-| needToApplyParameterGroup | Body | Boolean | Need to apply the latest parameter group |
-| needMigration | Body | Boolean | Need to migrate |
-| supportDbVersionUpgrade | Body | Boolean | Whether to support DB version upgrade |
-| createdYmdt | Body | DateTime | Created date and time |
-| updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbInstanceName": "dbInstanceName-example",
-    "description": "description-example",
-    "dbVersion": "MYSQL_V8036",
-    "dbPort": 1,
-    "dbInstanceType": "MASTER",
-    "dbInstanceStatus": "BEFORE_CREATE",
-    "progressStatus": "NONE",
-    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbSecurityGroupIds": [
-        "550e8400-e29b-41d4-a716-446655440000"
-    ],
-    "notificationGroupIds": [
-        "550e8400-e29b-41d4-a716-446655440000"
-    ],
-    "useDeletionProtection": false,
-    "useSlowQueryAnalysis": false,
-    "supportAuthenticationPlugin": false,
-    "needToApplyParameterGroup": false,
-    "needMigration": false,
-    "supportDbVersionUpgrade": false,
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceName": "dbInstanceName-example",
+"description": "description-example",
+"dbVersion": "MYSQL_V8036",
+"dbPort": 1,
+"dbInstanceType": "MASTER",
+"dbInstanceStatus": "BEFORE_CREATE",
+"progressStatus": "NONE",
+"dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSecurityGroupIds": [
+"550e8400-e29b-41d4-a716-446655440000"
+],
+"notificationGroupIds": [
+"550e8400-e29b-41d4-a716-446655440000"
+],
+"useDeletionProtection": false,
+"useSlowQueryAnalysis": false,
+"supportAuthenticationPlugin": false,
+"needToApplyParameterGroup": false,
+"needMigration": false,
+"supportDbVersionUpgrade": false,
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbInstanceId | UUID | DB instance identifier |
+| dbInstanceGroupId | UUID | DB instance group identifier |
+| dbInstanceName | String | Name to identify DB instances |
+| description | String | Additional information on DB instances |
+| dbVersion | String | DB engine type |
+| dbPort | Number | DB port |
+| dbInstanceType | Enum | DB instance role type<br/>- MASTER: `Master`<br/>- FAILED_MASTER: `Failed master`<br/>- CANDIDATE_MASTER: `Candidate master`<br/>- READ_ONLY_SLAVE: `Read replica` |
+| dbInstanceStatus | Enum | DB instance current status<br/>- BEFORE_CREATE: `Before create (gray)`<br/>- AVAILABLE: `Available (green)`<br/>- STORAGE_FULL: `Storage full (red)`<br/>- FAIL_TO_CREATE: `Failed to create (red)`<br/>- FAIL_TO_CONNECT: `Failed to connect (red)`<br/>- REPLICATION_STOP: `Replication stopped (red)`<br/>- REPLICATION_DELAY: `Replication delayed (yellow)`<br/>- FAILOVER: `Failover completed (red)`<br/>- SHUTDOWN: `Stopped (gray)`<br/>- DELETED: `Deleted (gray)` |
+| progressStatus | Enum | DB instance current task status<br/>- NONE<br/>- APPLYING_PARAMETER_GROUP<br/>- BACKING_UP<br/>- CANCELING<br/>- CREATING<br/>- CREATING_SCHEMA<br/>- CREATING_USER<br/>- DELETING<br/>- DELETING_SCHEMA<br/>- DELETING_USER<br/>- EXPORTING_BACKUP<br/>- FAILING_OVER<br/>- MIGRATING<br/>- MODIFYING<br/>- PREPARING<br/>- PROMOTING<br/>- PROMOTING_FORCIBLY<br/>- REBUILDING<br/>- REPAIRING<br/>- REPLICATING<br/>- RESTARTING<br/>- RESTARTING_FORCIBLY<br/>- RESTORING<br/>- STARTING<br/>- STOPPING<br/>- SYNCING_SCHEMA<br/>- SYNCING_USER<br/>- UPDATING_USER<br/>- WAIT_MANUAL_CONTROL |
+| dbFlavorId | UUID | Identifier of DB instance specifications |
+| parameterGroupId | UUID | Parameter group identifier applied to DB instance |
+| dbSecurityGroupIds | Array | DB security group identifiers applied to DB instance |
+| notificationGroupIds | Array | Notification group identifiers applied to DB instance |
+| useDeletionProtection | Boolean | Whether to protect DB instance against deletion |
+| useSlowQueryAnalysis | Boolean | Whether to analyze slow queries |
+| supportAuthenticationPlugin | Boolean | Whether to support authentication plugin |
+| needToApplyParameterGroup | Boolean | Need to apply the latest parameter group |
+| needMigration | Boolean | Need to migrate |
+| supportDbVersionUpgrade | Boolean | Whether to support DB version upgrade |
+| createdYmdt | DateTime | Created at |
+| updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Modify DB Instance
 
-```http
-PUT /v4.0/db-instances/{dbInstanceId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1154,81 +1197,86 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| dbInstanceName | Body | String | X | Master name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| dbInstanceCandidateName | Body | String | X | Candidate name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on DB instances<br/>- Maximum length: `100` |
-| dbPort | Body | Number | X | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306` |
-| dbFlavorId | Body | UUID | X | Identifier of DB instance specifications |
-| parameterGroupId | Body | UUID | X | Parameter group identifier |
-| dbVersion | Body | Enum | X | DB engine type |
-| useSlowQueryAnalysis | Body | Boolean | X | Whether to analyze slow queries |
-| useDummy | Body | Boolean | X | Whether to use dummies when upgrading the DB version of a single DB instance<br/>- Default: `false` |
-| dbSecurityGroupIds | Body | Array | X | DB security group identifiers |
-| executeBackup | Body | Boolean | X | Whether to execute backup at this time<br/>- Default: `false` |
-| useOnlineFailover | Body | Boolean | X | Whether to restart using failover<br/>- Default: `false` |
-| waitReplicationDelay | Body | Boolean | X | Wait for replication lag to clear<br/>- Default: `false` |
-| useReadOnly | Body | Boolean | X | Switch to read-only mode<br/>- Default: `false` |
+```http
+PUT /v4.0/db-instances/{dbInstanceId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbInstanceName": "dbInstanceName",
-    "dbInstanceCandidateName": "dbInstanceCandidateName",
-    "description": "description-example",
-    "dbPort": 1,
-    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8036",
-    "useSlowQueryAnalysis": false,
-    "useDummy": false,
-    "dbSecurityGroupIds": [],
-    "executeBackup": false,
-    "useOnlineFailover": false,
-    "waitReplicationDelay": false,
-    "useReadOnly": false
+"dbInstanceName": "dbInstanceName",
+"dbInstanceCandidateName": "dbInstanceCandidateName",
+"description": "description-example",
+"dbPort": 1,
+"dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbVersion": "MYSQL_V8036",
+"useSlowQueryAnalysis": false,
+"useDummy": false,
+"dbSecurityGroupIds": [],
+"executeBackup": false,
+"useOnlineFailover": false,
+"waitReplicationDelay": false,
+"useReadOnly": false
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceName | String | N | Name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceCandidateName | String | N | Candidate master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on the DB instance<br/>- Maximum length: `100` |
+| dbPort | Number | N | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
+| dbFlavorId | UUID | N | Identifier of DB instance specifications |
+| parameterGroupId | UUID | N | Parameter group identifier |
+| dbVersion | String | N | DB engine type |
+| useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries |
+| useDummy | Boolean | N | Whether to use dummies when upgrading the DB version of a single DB instance<br/>- Default: `false` |
+| dbSecurityGroupIds | Array | N | List of DB security group identifiers |
+| executeBackup | Boolean | N | Whether to execute backup at this time<br/>- Default: `false` |
+| useOnlineFailover | Boolean | N | Whether to restart using failover<br/>- Default: `false` |
+| waitReplicationDelay | Boolean | N | Wait for replication lag to clear<br/>- Default: `false` |
+| useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### View Backup Information
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/backup-info
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1236,61 +1284,64 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/backup-info
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| backupPeriod | Body | Number | Backup retention period (days) |
-| ftwrlWaitTimeout | Body | Number | Query latency (sec) |
-| backupRetryCount | Body | Number | Number of backup retries |
-| replicationRegion | Body | Enum | Backup replication region<br/>- KR4: `Korea (Daegu) Region` |
-| useBackupLock | Body | Boolean | Whether to use table lock |
-| backupSchedules | Body | Array | Scheduled auto backup list |
-| backupSchedules.backupWndBgnTime | Body | Time | Backup started time |
-| backupSchedules.backupWndDuration | Body | Enum | Backup duration<br/>- HALF_AN_HOUR<br/>- ONE_HOUR<br/>- ONE_HOUR_AND_HALF<br/>- TWO_HOURS<br/>- TWO_HOURS_AND_HALF<br/>- THREE_HOURS |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "backupPeriod": 1,
-    "ftwrlWaitTimeout": 1,
-    "backupRetryCount": 1,
-    "replicationRegion": "KR4",
-    "useBackupLock": false,
-    "backupSchedules": [
-        {
-            "backupWndBgnTime": "00:00:00",
-            "backupWndDuration": "HALF_AN_HOUR"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"backupPeriod": 1,
+"ftwrlWaitTimeout": 1,
+"backupRetryCount": 1,
+"replicationRegion": "KR4",
+"useBackupLock": false,
+"backupSchedules": [
+{
+"backupWndBgnTime": "00:00:00",
+"backupWndDuration": "HALF_AN_HOUR"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| backupPeriod | Number | Backup retention period (days) |
+| ftwrlWaitTimeout | Number | Query latency (sec) |
+| backupRetryCount | Number | Number of backup retries |
+| replicationRegion | Enum | Backup replication region<br/>- KR4: `Korea (Daegu)` |
+| useBackupLock | Boolean | Whether to use table lock |
+| backupSchedules | Array | Scheduled auto backup list |
+| backupSchedules.backupWndBgnTime | Time | Backup start time |
+| backupSchedules.backupWndDuration | Enum | Backup duration<br/>- HALF_AN_HOUR<br/>- ONE_HOUR<br/>- ONE_HOUR_AND_HALF<br/>- TWO_HOURS<br/>- TWO_HOURS_AND_HALF<br/>- THREE_HOURS |
 
 ---
 
 ### Modify Backup Information
 
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/backup-info
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1298,148 +1349,167 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| backupPeriod | Body | Number | X | Backup retention period (days)<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| ftwrlWaitTimeout | Body | Number | X | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
-| backupRetryCount | Body | Number | X | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| replicationRegion | Body | Enum | X | Backup replication region<br/>- KR4: `Korea (Daegu) Region` |
-| useBackupLock | Body | Boolean | X | Whether to use table lock |
-| backupSchedules | Body | Array | X | Scheduled auto backup list |
-| backupSchedules.backupWndBgnTime | Body | Time | O | Backup started time |
-| backupSchedules.backupWndDuration | Body | Enum | O | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1.5 hours`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2.5 hours`<br/>- THREE_HOURS: `3 hours` |
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/backup-info
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "backupPeriod": 0,
-    "ftwrlWaitTimeout": 0,
-    "backupRetryCount": 0,
-    "replicationRegion": "KR4",
-    "useBackupLock": false,
-    "backupSchedules": [
-        {
-            "backupWndBgnTime": "00:00:00",
-            "backupWndDuration": "HALF_AN_HOUR"
-        }
-    ]
+"backupPeriod": 0,
+"ftwrlWaitTimeout": 0,
+"backupRetryCount": 0,
+"replicationRegion": "KR4",
+"useBackupLock": false,
+"backupSchedules": [
+{
+"backupWndBgnTime": "00:00:00",
+"backupWndDuration": "HALF_AN_HOUR"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| backupPeriod | Number | N | Backup retention period (days)<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
+| ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
+| replicationRegion | Enum | N | Backup replication region<br/>- KR4: `Korea (Daegu)` |
+| useBackupLock | Boolean | N | Whether to use table lock |
+| backupSchedules | Array | N | Scheduled auto backup list |
+| backupSchedules.backupWndBgnTime | Time | Y | Backup start time |
+| backupSchedules.backupWndDuration | Enum | Y | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1 hour 30 minutes`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2 hours 30 minutes`<br/>- THREE_HOURS: `3 hours` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
 
----
-### View Binary Log List
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/binlogs
-```
+---
+
+### View Binary Log List
 
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstanceBinLog.List | View binary log list |
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/binlogs
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O |  |
+| dbInstanceId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| binLogs | Body | Array | BinLog file list |
-| binLogs.binLogFileName | Body | String | BinLog file name |
-| binLogs.binLogFileSize | Body | Number | BinLog file size (Byte) |
-| binLogs.createdYmdt | Body | DateTime | Created date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "binLogs": [
-        {
-            "binLogFileName": "binLogFileName-example",
-            "binLogFileSize": 1,
-            "createdYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"binLogs": [
+{
+"binLogFileName": "binLogFileName-example",
+"binLogFileSize": 1,
+"createdYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| binLogs | Array | BinLog file list |
+| binLogs.binLogFileName | String | BinLog file name |
+| binLogs.binLogFileSize | Number | BinLog file size (Byte) |
+| binLogs.createdYmdt | DateTime | Created at |
 
 ---
 
 ### Delete Binary Log
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstanceBinLog.Purge | Delete binary log |
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O |  |
-| lastBinLogFileName | Body | String | O | Last BinLog file name to delete (delete all files prior to this file) |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "lastBinLogFileName": "mysql-bin.000010"
+"lastBinLogFileName": "mysql-bin.000010"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| lastBinLogFileName | String | Y | Last BinLog file name to delete (delete all files prior to this file) |
 
 #### Response
 
@@ -1449,291 +1519,306 @@ This API does not return a response body.
 
 ### View Certificate File List
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/certificates
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstanceCertificate.List | View certificate file list |
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/certificates
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| certificates | Body | Array | Certificate file list |
-| certificates.fileName | Body | String | Certificate file name |
-| certificates.certificateType | Body | Enum | Certificate type<br/>- CA_FILE<br/>- CERT_FILE<br/>- KEY_FILE |
-| certificates.fileSize | Body | Number | Certificate file size (Byte) |
-| certificates.createdYmdt | Body | DateTime | Created date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "certificates": [
-        {
-            "fileName": "fileName-example",
-            "certificateType": "CA_FILE",
-            "fileSize": 1,
-            "createdYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"certificates": [
+{
+"fileName": "fileName-example",
+"certificateType": "CA_FILE",
+"fileSize": 1,
+"createdYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| certificates | Array | Certificate file list |
+| certificates.fileName | String | Certificate file name |
+| certificates.certificateType | Enum | Certificate type<br/>- CA_FILE<br/>- CERT_FILE<br/>- KEY_FILE |
+| certificates.fileSize | Number | Certificate file size (Byte) |
+| certificates.createdYmdt | DateTime | Created at |
 
 ---
 
 ### Export Certificate File
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstanceCertificate.Export | Export certificate file |
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| certificateTypes | Body | Array | O | Certificate type list to upload |
-| tenantId | Body | String | O | Tenant ID of object storage where certificate file is stored<br/>- Minimum length: `32`<br/>- Maximum length: `32` |
-| username | Body | String | O | NHN Cloud account or IAM account ID |
-| password | Body | String | O | API password for object storage where certificate file is stored |
-| targetContainer | Body | String | O | Object storage container where certificate file is stored |
-| objectPath | Body | String | O | Path of the certificate file to be stored in the container |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "certificateTypes": [],
-    "tenantId": "0123456789abcdef0123456789abcdef",
-    "username": "username-example",
-    "password": "password-example",
-    "targetContainer": "targetContainer-example",
-    "objectPath": "objectPath-example"
+"certificateTypes": [],
+"tenantId": "0123456789abcdef0123456789abcdef",
+"username": "username-example",
+"password": "password-example",
+"targetContainer": "targetContainer-example",
+"objectPath": "objectPath-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| certificateTypes | Array | Y | Certificate type list to upload |
+| tenantId | String | Y | Tenant ID of object storage where certificate file is stored<br/>- Minimum length: `32`<br/>- Maximum length: `32` |
+| username | String | Y | NHN Cloud account or IAM member ID |
+| password | String | Y | API password for object storage where certificate file is stored |
+| targetContainer | String | Y | Object storage container where certificate file is stored |
+| objectPath | String | Y | Path of the certificate file to be stored in the container |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### List DB Schema
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/db-schemas
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstanceSchema.List | List DB schemas |
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/db-schemas
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbSchemas | Body | Array | DB schema list |
-| dbSchemas.dbSchemaId | Body | UUID | DB schema identifier |
-| dbSchemas.dbSchemaName | Body | String | DB schema name |
-| dbSchemas.dbSchemaStatus | Body | Enum | DB schema current status<br/>- STABLE<br/>- CREATING<br/>- SYNCING<br/>- DELETING<br/>- DELETED |
-| dbSchemas.createdYmdt | Body | DateTime | Created date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbSchemas": [
-        {
-            "dbSchemaId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbSchemaName": "dbSchemaName-example",
-            "dbSchemaStatus": "STABLE",
-            "createdYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbSchemas": [
+{
+"dbSchemaId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSchemaName": "dbSchemaName-example",
+"dbSchemaStatus": "STABLE",
+"createdYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbSchemas | Array | DB schema list |
+| dbSchemas.dbSchemaId | UUID | DB schema identifier |
+| dbSchemas.dbSchemaName | String | DB schema name |
+| dbSchemas.dbSchemaStatus | Enum | DB schema current status<br/>- STABLE<br/>- CREATING<br/>- SYNCING<br/>- DELETING<br/>- DELETED |
+| dbSchemas.createdYmdt | DateTime | Created at |
 
 ---
 
 ### Create DB Schema
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/db-schemas
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstanceSchema.Create | Create DB schema |
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| dbSchemaName | Body | String | O | DB schema name<br/>- Maximum length: `64`<br/>- Must start with a letter; letters, digits, and _ allowed; 1–64 characters; MySQL reserved words not allowed |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/db-schemas
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbSchemaName": "dbSchemaName-example"
+"dbSchemaName": "dbSchemaName-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbSchemaName | String | Y | DB schema name<br/>- Maximum length: `64`<br/>- Must start with a letter; letters, digits, and _ allowed; 1–64 characters; MySQL reserved words not allowed |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Delete DB Schema
 
-```http
-DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstanceSchema.Delete | Delete DB schema |
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| dbSchemaId | URL | UUID | O | DB schema identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+| dbSchemaId | URL | UUID | Y | DB schema identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### List DB Users
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/db-users
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1741,65 +1826,68 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/db-users
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbUsers | Body | Array | DB users |
-| dbUsers.dbUserId | Body | UUID | DB user identifier |
-| dbUsers.dbUserName | Body | String | DB user account name |
-| dbUsers.host | Body | String | DB user account host name |
-| dbUsers.authorityType | Body | Enum | DB user permission type<br/>- CUSTOM: `Custom permission`<br/>- READ: `Read permission`<br/>- CRUD: `CRUD permission`<br/>- DDL: `DDL permission`<br/>- ALL: `Full permission` |
-| dbUsers.dbUserStatus | Body | Enum | DB user current status<br/>- STABLE<br/>- CREATING<br/>- UPDATING<br/>- SYNCING<br/>- DELETING<br/>- DELETED |
-| dbUsers.createdYmdt | Body | DateTime | Created date and time |
-| dbUsers.updatedYmdt | Body | DateTime | Modified date and time |
-| dbUsers.authenticationPlugin | Body | Enum | Authentication plugin<br/>- NATIVE: `mysql_native_password authentication`<br/>- CACHING_SHA2: `caching_sha2_password authentication (MySQL only)`<br/>- SHA256: `sha256_password authentication (MySQL only)` |
-| dbUsers.tlsOption | Body | Enum | TLS option<br/>- NONE: `TLS not used`<br/>- SSL: `SSL authentication`<br/>- X509: `X509 certificate authentication` |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbUsers": [
-        {
-            "dbUserId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbUserName": "dbUserName-example",
-            "host": "192.168.0.1",
-            "authorityType": "CUSTOM",
-            "dbUserStatus": "STABLE",
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00",
-            "authenticationPlugin": "NATIVE",
-            "tlsOption": "NONE"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbUsers": [
+{
+"dbUserId": "550e8400-e29b-41d4-a716-446655440000",
+"dbUserName": "dbUserName-example",
+"host": "192.168.0.1",
+"authorityType": "CUSTOM",
+"dbUserStatus": "STABLE",
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00",
+"authenticationPlugin": "NATIVE",
+"tlsOption": "NONE"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbUsers | Array | DB users |
+| dbUsers.dbUserId | UUID | DB user identifier |
+| dbUsers.dbUserName | String | DB user account name |
+| dbUsers.host | String | DB user account host name |
+| dbUsers.authorityType | Enum | DB user permission type<br/>- CUSTOM: `Custom permission`<br/>- READ: `Read permission`<br/>- CRUD: `CRUD permission`<br/>- DDL: `DDL permission`<br/>- ALL: `Full permission` |
+| dbUsers.dbUserStatus | Enum | DB user current status<br/>- STABLE<br/>- CREATING<br/>- UPDATING<br/>- SYNCING<br/>- DELETING<br/>- DELETED |
+| dbUsers.createdYmdt | DateTime | Created at |
+| dbUsers.updatedYmdt | DateTime | Modified date and time |
+| dbUsers.authenticationPlugin | Enum | Authentication plugin<br/>- NATIVE: `mysql_native_password authentication`<br/>- CACHING_SHA2: `caching_sha2_password authentication (MySQL only)`<br/>- SHA256: `sha256_password authentication (MySQL only)` |
+| dbUsers.tlsOption | Enum | TLS option<br/>- NONE: `TLS not used`<br/>- SSL: `SSL authentication`<br/>- X509: `X509 certificate authentication` |
 
 ---
 
 ### Create DB User
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/db-users
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1807,65 +1895,70 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| dbUserName | Body | String | O | DB user account name<br/>- Minimum length: `1`<br/>- Maximum length: `32` |
-| dbPassword | Body | String | O | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `256` |
-| host | Body | String | O | DB user account host name<br/>- Maximum length: `45` |
-| authorityType | Body | Enum | O | DB user permission type<br/>- CUSTOM: `Custom permission`<br/>- READ: `Read permission`<br/>- CRUD: `CRUD permission`<br/>- DDL: `DDL permission`<br/>- ALL: `Full permission` |
-| authenticationPlugin | Body | Enum | X | Authentication plugin<br/>- NATIVE: `mysql_native_password authentication`<br/>- CACHING_SHA2: `caching_sha2_password authentication (MySQL only)`<br/>- SHA256: `sha256_password authentication (MySQL only)` |
-| tlsOption | Body | Enum | X | TLS option<br/>- Default value: `NONE`<br/>- NONE: `TLS not used`<br/>- SSL: `SSL authentication`<br/>- X509: `X509 certificate authentication` |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/db-users
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbUserName": "dbUserName",
-    "dbPassword": "dbPassword",
-    "host": "192.168.0.1",
-    "authorityType": "CUSTOM",
-    "authenticationPlugin": "NATIVE",
-    "tlsOption": "NONE"
+"dbUserName": "dbUserName",
+"dbPassword": "dbPassword",
+"host": "192.168.0.1",
+"authorityType": "CUSTOM",
+"authenticationPlugin": "NATIVE",
+"tlsOption": "NONE"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbUserName | String | Y | DB user account name<br/>- Minimum length: `1`<br/>- Maximum length: `32` |
+| dbPassword | String | Y | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `256` |
+| host | String | Y | DB user account host name<br/>- Maximum length: `45` |
+| authorityType | Enum | Y | DB user permission type<br/>- CUSTOM: `Custom permission`<br/>- READ: `Read permission`<br/>- CRUD: `CRUD permission`<br/>- DDL: `DDL permission`<br/>- ALL: `Full permission` |
+| authenticationPlugin | Enum | N | Authentication plugin<br/>- NATIVE: `mysql_native_password authentication`<br/>- CACHING_SHA2: `caching_sha2_password authentication (MySQL only)`<br/>- SHA256: `sha256_password authentication (MySQL only)` |
+| tlsOption | Enum | N | TLS option<br/>- Default value: `NONE`<br/>- NONE: `TLS not used`<br/>- SSL: `SSL authentication`<br/>- X509: `X509 certificate authentication` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Delete DB User
 
-```http
-DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1873,45 +1966,48 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| dbUserId | URL | UUID | O | DB user identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+| dbUserId | URL | UUID | Y | DB user identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Modify DB User
 
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1919,62 +2015,67 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| dbUserId | URL | UUID | O | DB user identifier |
-| dbPassword | Body | String | X | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `256` |
-| authorityType | Body | Enum | X | DB user permission type<br/>- CUSTOM: `Custom permission`<br/>- READ: `Read permission`<br/>- CRUD: `CRUD permission`<br/>- DDL: `DDL permission`<br/>- ALL: `Full permission` |
-| authenticationPlugin | Body | Enum | X | Authentication plugin<br/>- NATIVE: `mysql_native_password authentication`<br/>- CACHING_SHA2: `caching_sha2_password authentication (MySQL only)`<br/>- SHA256: `sha256_password authentication (MySQL only)` |
-| tlsOption | Body | Enum | X | TLS option<br/>- NONE: `TLS not used`<br/>- SSL: `SSL authentication`<br/>- X509: `X509 certificate authentication` |
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+| dbUserId | URL | UUID | Y | DB user identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbPassword": "dbPassword",
-    "authorityType": "CUSTOM",
-    "authenticationPlugin": "NATIVE",
-    "tlsOption": "NONE"
+"dbPassword": "dbPassword",
+"authorityType": "CUSTOM",
+"authenticationPlugin": "NATIVE",
+"tlsOption": "NONE"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbPassword | String | N | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `256` |
+| authorityType | Enum | N | DB user permission type<br/>- CUSTOM: `Custom permission`<br/>- READ: `Read permission`<br/>- CRUD: `CRUD permission`<br/>- DDL: `DDL permission`<br/>- ALL: `Full permission` |
+| authenticationPlugin | Enum | N | Authentication plugin<br/>- NATIVE: `mysql_native_password authentication`<br/>- CACHING_SHA2: `caching_sha2_password authentication (MySQL only)`<br/>- SHA256: `sha256_password authentication (MySQL only)` |
+| tlsOption | Enum | N | TLS option<br/>- NONE: `TLS not used`<br/>- SSL: `SSL authentication`<br/>- X509: `X509 certificate authentication` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Change DB Instance Deletion Protection Settings
 
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -1982,22 +2083,32 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| useDeletionProtection | Body | Boolean | O | Whether to enable deletion protection |
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "useDeletionProtection": false
+"useDeletionProtection": false
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| useDeletionProtection | Boolean | Y | Whether to enable deletion protection |
 
 #### Response
 
@@ -2007,11 +2118,7 @@ This API does not return a response body.
 
 ### Force Restart DB Instance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/force-restart
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2019,24 +2126,29 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/force-restart
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
 This API does not return a response body.
 
 ---
+
 ### View High Availability Information
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/high-availability
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2044,114 +2156,122 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/high-availability
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| useHighAvailability | Body | Boolean | Whether high availability is enabled<br/>- Default: `false` |
-| haStatus | Body | Enum | High availability status<br/>- CREATED: `Created`<br/>- STABLE: `Stable`<br/>- PAUSING: `Pausing`<br/>- DISABLE: `Disabled`<br/>- DISABLE_MASTER_IN_REPLICATION: `High availability stopped due to abnormal master replication detected`<br/>- DISABLE_MHA_PROCESS: `High availability process stopped`<br/>- DISABLE_REPLICATION_STOP: `High availability stopped due to replication stop`<br/>- DISABLE_REPLICATION_DELAY: `High availability stopped due to replication delay`<br/>- FAILOVER_STARTED: `Failover started`<br/>- FAILOVER_FAILED: `Failover failed`<br/>- FAILOVER_COMPLETED: `Failover completed`<br/>- DELETED: `Deleted`<br/>- PAUSED: `Paused`<br/>- PAUSED_DUE_TO_TASK: `Paused due to task`<br/>- MASTER_FAILURE_DETECTION: `Master failure detected` |
-| pingInterval | Body | Number | Ping interval (seconds) |
-| pingType | Body | String | Ping type |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "useHighAvailability": false,
-    "haStatus": "CREATED",
-    "pingInterval": 1,
-    "pingType": "pingType-example"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"useHighAvailability": false,
+"haStatus": "CREATED",
+"pingInterval": 1,
+"pingType": "pingType-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| useHighAvailability | Boolean | Whether to use high availability<br/>- Default: `false` |
+| haStatus | Enum | High availability status<br/>- CREATED: `Created`<br/>- STABLE: `Stable`<br/>- PAUSING: `Pausing`<br/>- DISABLE: `Disabled`<br/>- DISABLE_MASTER_IN_REPLICATION: `High availability stopped due to abnormal master replication detected`<br/>- DISABLE_MHA_PROCESS: `High availability process stopped`<br/>- DISABLE_REPLICATION_STOP: `High availability stopped due to replication stop`<br/>- DISABLE_REPLICATION_DELAY: `High availability stopped due to replication delay`<br/>- FAILOVER_STARTED: `Failover started`<br/>- FAILOVER_FAILED: `Failover failed`<br/>- FAILOVER_COMPLETED: `Failover completed`<br/>- DELETED: `Deleted`<br/>- PAUSED: `Paused`<br/>- PAUSED_DUE_TO_TASK: `Paused due to task`<br/>- MASTER_FAILURE_DETECTION: `Master failure detected` |
+| pingInterval | Number | Ping interval (seconds) |
+| pingType | String | Ping type |
 
 ---
 
 ### Modify High Availability
 
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/high-availability
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:HighAvailability.Modify | Modify high availability |
 
-#### Common Request
+#### Request
 
-| Name | Type | Format | Required | Description |
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/high-availability
+```
+
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
-| useHighAvailability | Body | Boolean | O | Whether to use high availability |
-| pingInterval | Body | Number | X | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
+
+```json
+{
+"useHighAvailability": false,
+"pingInterval": 1
+}
+```
+
+</details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| useHighAvailability | Boolean | Y | Whether to use high availability |
+| pingInterval | Number | N | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
 
 #### When Using High Availability
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceCandidateName | Body | String | O | Candidate master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-    "useHighAvailability": false,
-    "pingInterval": 1
-}
-```
-
-</p>
-</details>
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Candidate master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Pause High Availability
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2159,44 +2279,47 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Repair High Availability
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2204,44 +2327,47 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Restart High Availability
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2249,44 +2375,47 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Separate High Availability
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2294,43 +2423,47 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
 ---
+
 ### List Log Files
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/log-files
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2338,55 +2471,58 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/log-files
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O |  |
+| dbInstanceId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| logFiles | Body | Array | Log file list |
-| logFiles.logFileName | Body | String | Log file name |
-| logFiles.logFileType | Body | Enum | Log file type<br/>- ERROR<br/>- BINLOG<br/>- GENERAL<br/>- SLOW_QUERY<br/>- AUDIT<br/>- BACKUP |
-| logFiles.logFileSize | Body | Number | Log file size (Byte) |
-| logFiles.createdYmdt | Body | DateTime | Created date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "logFiles": [
-        {
-            "logFileName": "logFileName-example",
-            "logFileType": "ERROR",
-            "logFileSize": 1,
-            "createdYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"logFiles": [
+{
+"logFileName": "logFileName-example",
+"logFileType": "ERROR",
+"logFileSize": 1,
+"createdYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| logFiles | Array | Log file list |
+| logFiles.logFileName | String | Log file name |
+| logFiles.logFileType | Enum | Log file type<br/>- ERROR<br/>- BINLOG<br/>- GENERAL<br/>- SLOW_QUERY<br/>- AUDIT<br/>- BACKUP |
+| logFiles.logFileSize | Number | Log file size (Byte) |
+| logFiles.createdYmdt | DateTime | Created at |
 
 ---
 
 ### Export Log File
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/log-files/export
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2394,65 +2530,70 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O |  |
-| logFileNames | Body | Array | O | Log file name list |
-| tenantId | Body | String | O | Tenant ID of the object storage where log files are stored<br/>- Minimum length: `32`<br/>- Maximum length: `32` |
-| username | Body | String | O | NHN Cloud account or IAM member ID |
-| password | Body | String | O | API password for the object storage where log files are stored |
-| targetContainer | Body | String | O | Object storage container where log files are stored |
-| objectPath | Body | String | O | Path of the log file to be stored in the container |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/log-files/export
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "logFileNames": [],
-    "tenantId": "0123456789abcdef0123456789abcdef",
-    "username": "username-example",
-    "password": "password-example",
-    "targetContainer": "targetContainer-example",
-    "objectPath": "objectPath-example"
+"logFileNames": [],
+"tenantId": "0123456789abcdef0123456789abcdef",
+"username": "username-example",
+"password": "password-example",
+"targetContainer": "targetContainer-example",
+"objectPath": "objectPath-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| logFileNames | Array | Y | Log file name list |
+| tenantId | String | Y | Tenant ID of the object storage where log files are stored<br/>- Minimum length: `32`<br/>- Maximum length: `32` |
+| username | String | Y | NHN Cloud account or IAM member ID |
+| password | String | Y | API password for the object storage where log files are stored |
+| targetContainer | String | Y | Object storage container where log files are stored |
+| objectPath | String | Y | Path of the log file to be stored in the container |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of the requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### View Log File Contents
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2460,44 +2601,48 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| logFileName | URL | UUID | O | Log file name |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+| logFileName | URL | UUID | Y | Log file name |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| content | Body | String | Log file contents (maximum 65533 bytes) |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "content": "content-example"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"content": "content-example"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| content | String | Log file contents (maximum 65533 bytes) |
+
 ---
+
 ### List DB Instance Maintenances
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/maintenances
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2505,79 +2650,82 @@ GET /v4.0/db-instances/{dbInstanceId}/maintenances
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/maintenances
+```
 
-| Name | In | Type | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
-| type | Query | String | X |  |
-| statuses | Query | String | X |  |
-| category | Query | String | X |  |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+| type | Query | String | N |  |
+| statuses | Query | String | N |  |
+| category | Query | String | N |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | In | Type | Description |
-|-----|-----|-----|-----|
-| totalCounts | Body | Number | Total number of maintenances |
-| maintenances | Body | Array | List of maintenances |
-| maintenances.maintenanceId | Body | UUID | Maintenance ID |
-| maintenances.dbInstanceId | Body | UUID | DB instance ID |
-| maintenances.category | Body | Enum | Maintenance category<br/>- USER: `User maintenance category`<br/>- PROVIDER: `Provider maintenance category`<br/>- AUTO: `Auto maintenance category` |
-| maintenances.description | Body | String | Maintenance description |
-| maintenances.type | Body | Enum | Maintenance type<br/>- UPDATE_DB_INSTANCE: `Modify DB instance (flavor change, port change, parameter group change)`<br/>- UPGRADE_ENGINE_VERSION: `Engine version upgrade`<br/>- APPLY_CHANGE_PARAMETER: `Apply parameter changes in parameter group`<br/>- UPGRADE_OS: `OS version upgrade`<br/>- PATCH_SECURITY: `Security patch`<br/>- MIGRATION: `Migration for hypervisor maintenance`<br/>- CLEANUP_STORAGE: `Storage cleanup` |
-| maintenances.payload | Body | Object | Payload according to maintenance type |
-| maintenances.required | Body | Boolean | Whether the maintenance is required |
-| maintenances.deadlineYmdt | Body | DateTime | Datetime when the maintenance is forcibly applied |
-| maintenances.status | Body | Enum | Maintenance status<br/>- PENDING: `Pending`<br/>- READY: `Ready`<br/>- RUNNING: `Running`<br/>- COMPLETED: `Completed`<br/>- FAILED: `Failed`<br/>- EXCLUDED: `Excluded`<br/>- DELETED: `Deleted`<br/>- UNKNOWN |
-| maintenances.executionType | Body | Enum | Maintenance execution type<br/>- SCHEDULED: `Scheduled execution (automatic execution during maintenance window)`<br/>- MANUAL: `Manual execution (immediate execution)`<br/>- FORCED: `Forced execution (automatic execution after deadline exceeded)` |
-| maintenances.addedYmdt | Body | DateTime | Datetime when the maintenance was scheduled |
-| maintenances.executionStartedYmdt | Body | DateTime | Maintenance start datetime |
-| maintenances.executionCompletedYmdt | Body | DateTime | Maintenance end datetime |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 1,
-    "maintenances": [
-        {
-            "maintenanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "category": "USER",
-            "description": "description-example",
-            "type": "UPDATE_DB_INSTANCE",
-            "payload": {
-            },
-            "required": false,
-            "deadlineYmdt": "2023-12-31T15:00:00+09:00",
-            "status": "PENDING",
-            "executionType": "SCHEDULED",
-            "addedYmdt": "2023-12-31T15:00:00+09:00",
-            "executionStartedYmdt": "2023-12-31T15:00:00+09:00",
-            "executionCompletedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"totalCounts": 1,
+"maintenances": [
+{
+"maintenanceId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"category": "USER",
+"description": "description-example",
+"type": "UPDATE_DB_INSTANCE",
+"payload": {
+},
+"required": false,
+"deadlineYmdt": "2023-12-31T15:00:00+09:00",
+"status": "PENDING",
+"executionType": "SCHEDULED",
+"addedYmdt": "2023-12-31T15:00:00+09:00",
+"executionStartedYmdt": "2023-12-31T15:00:00+09:00",
+"executionCompletedYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| totalCounts | Number | Total number of maintenances |
+| maintenances | Array | List of maintenances |
+| maintenances.maintenanceId | UUID | Maintenance ID |
+| maintenances.dbInstanceId | UUID | DB instance ID |
+| maintenances.category | Enum | Maintenance category<br/>- USER: `User maintenance category`<br/>- PROVIDER: `Provider maintenance category`<br/>- AUTO: `Auto maintenance category` |
+| maintenances.description | String | Maintenance description |
+| maintenances.type | Enum | Maintenance type<br/>- UPDATE_DB_INSTANCE: `Modify DB instance (flavor change, port change, parameter group change)`<br/>- UPGRADE_ENGINE_VERSION: `Engine version upgrade`<br/>- APPLY_CHANGE_PARAMETER: `Apply parameter changes in parameter group`<br/>- UPGRADE_OS: `OS version upgrade`<br/>- PATCH_SECURITY: `Security patch`<br/>- MIGRATION: `Migration for hypervisor maintenance`<br/>- CLEANUP_STORAGE: `Storage cleanup` |
+| maintenances.payload | Object | Payload according to maintenance type |
+| maintenances.required | Boolean | Whether the maintenance is required |
+| maintenances.deadlineYmdt | DateTime | Datetime when the maintenance is forcibly applied |
+| maintenances.status | Enum | Maintenance status<br/>- PENDING: `Pending`<br/>- READY: `Ready`<br/>- RUNNING: `Running`<br/>- COMPLETED: `Completed`<br/>- FAILED: `Failed`<br/>- EXCLUDED: `Excluded`<br/>- DELETED: `Deleted`<br/>- UNKNOWN |
+| maintenances.executionType | Enum | Maintenance execution type<br/>- SCHEDULED: `Scheduled execution (automatic execution during maintenance window)`<br/>- MANUAL: `Manual execution (immediate execution)`<br/>- FORCED: `Forced execution (automatic execution after deadline exceeded)` |
+| maintenances.addedYmdt | DateTime | Datetime when the maintenance was scheduled |
+| maintenances.executionStartedYmdt | DateTime | Maintenance start datetime |
+| maintenances.executionCompletedYmdt | DateTime | Maintenance end datetime |
 
 ---
 
 ### Execute DB Instance Maintenance Now
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2585,63 +2733,68 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
 
 #### Request
 
-| Name | In | Type | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
-| configId | Body | String | O | Configuration ID |
-| category | Body | Enum | O | Maintenance category<br/>- USER: `User maintenance category`<br/>- PROVIDER: `Provider maintenance category`<br/>- AUTO: `Auto maintenance category` |
-| description | Body | String | X | Maintenance description |
-| type | Body | Enum | O | Maintenance type<br/>- UPDATE_DB_INSTANCE: `Modify DB instance (flavor change, port change, parameter group change)`<br/>- UPGRADE_ENGINE_VERSION: `Engine version upgrade`<br/>- APPLY_CHANGE_PARAMETER: `Apply parameter changes in parameter group`<br/>- UPGRADE_OS: `OS version upgrade`<br/>- PATCH_SECURITY: `Security patch`<br/>- MIGRATION: `Migration for hypervisor maintenance`<br/>- CLEANUP_STORAGE: `Storage cleanup` |
-| payload | Body | String | O | Payload according to maintenance type |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "configId": "configId-example",
-    "category": "USER",
-    "description": "description-example",
-    "type": "UPDATE_DB_INSTANCE",
-    "payload": "payload-example"
+"configId": "configId-example",
+"category": "USER",
+"description": "description-example",
+"type": "UPDATE_DB_INSTANCE",
+"payload": "payload-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| configId | String | Y | Configuration ID |
+| category | Enum | Y | Maintenance category<br/>- USER: `User maintenance category`<br/>- PROVIDER: `Provider maintenance category`<br/>- AUTO: `Auto maintenance category` |
+| description | String | N | Maintenance description |
+| type | Enum | Y | Maintenance type<br/>- UPDATE_DB_INSTANCE: `Modify DB instance (flavor change, port change, parameter group change)`<br/>- UPGRADE_ENGINE_VERSION: `Engine version upgrade`<br/>- APPLY_CHANGE_PARAMETER: `Apply parameter changes in parameter group`<br/>- UPGRADE_OS: `OS version upgrade`<br/>- PATCH_SECURITY: `Security patch`<br/>- MIGRATION: `Migration for hypervisor maintenance`<br/>- CLEANUP_STORAGE: `Storage cleanup` |
+| payload | String | Y | Payload according to maintenance type |
 
 #### Response
 
-| Name | In | Type | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Schedule DB Instance Maintenance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2649,30 +2802,40 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
 
 #### Request
 
-| Name | In | Type | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
-| configId | Body | String | O | Configuration ID |
-| category | Body | Enum | O | Maintenance category<br/>- USER: `User maintenance category`<br/>- PROVIDER: `Provider maintenance category`<br/>- AUTO: `Auto maintenance category` |
-| description | Body | String | X | Maintenance description |
-| type | Body | Enum | O | Maintenance type<br/>- UPDATE_DB_INSTANCE: `Modify DB instance (flavor change, port change, parameter group change)`<br/>- UPGRADE_ENGINE_VERSION: `Engine version upgrade`<br/>- APPLY_CHANGE_PARAMETER: `Apply parameter changes in parameter group`<br/>- UPGRADE_OS: `OS version upgrade`<br/>- PATCH_SECURITY: `Security patch`<br/>- MIGRATION: `Migration for hypervisor maintenance`<br/>- CLEANUP_STORAGE: `Storage cleanup` |
-| payload | Body | String | O | Payload according to maintenance type |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "configId": "configId-example",
-    "category": "USER",
-    "description": "description-example",
-    "type": "UPDATE_DB_INSTANCE",
-    "payload": "payload-example"
+"configId": "configId-example",
+"category": "USER",
+"description": "description-example",
+"type": "UPDATE_DB_INSTANCE",
+"payload": "payload-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| configId | String | Y | Configuration ID |
+| category | Enum | Y | Maintenance category<br/>- USER: `User maintenance category`<br/>- PROVIDER: `Provider maintenance category`<br/>- AUTO: `Auto maintenance category` |
+| description | String | N | Maintenance description |
+| type | Enum | Y | Maintenance type<br/>- UPDATE_DB_INSTANCE: `Modify DB instance (flavor change, port change, parameter group change)`<br/>- UPGRADE_ENGINE_VERSION: `Engine version upgrade`<br/>- APPLY_CHANGE_PARAMETER: `Apply parameter changes in parameter group`<br/>- UPGRADE_OS: `OS version upgrade`<br/>- PATCH_SECURITY: `Security patch`<br/>- MIGRATION: `Migration for hypervisor maintenance`<br/>- CLEANUP_STORAGE: `Storage cleanup` |
+| payload | String | Y | Payload according to maintenance type |
 
 #### Response
 
@@ -2682,11 +2845,7 @@ This API does not return a response body.
 
 ### Delete DB Instance Maintenance
 
-```http
-DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2694,25 +2853,30 @@ DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
+```
 
-| Name | In | Type | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | Identifier of the DB instance |
-| maintenanceId | URL | UUID | O | Maintenance ID |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+| maintenanceId | URL | UUID | Y | Maintenance ID |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
 This API does not return a response body.
 
 ---
+
 ### List Network Information
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/network-info
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2720,64 +2884,67 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/network-info
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| availabilityZone | Body | String | Availability zone where DB instance will be created |
-| subnet | Body | Object | Subnet object |
-| subnet.subnetId | Body | UUID | Subnet identifier |
-| subnet.subnetName | Body | String | Name to identify subnets |
-| subnet.subnetCidr | Body | String | CIDR of subnet |
-| endPoints | Body | Array | List of access information |
-| endPoints.domain | Body | String | Domain |
-| endPoints.ipAddress | Body | String | IP address |
-| endPoints.endPointType | Body | String | Access information type |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "availabilityZone": "kr-pub-a",
-    "subnet": {
-        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-        "subnetName": "subnetName-example",
-        "subnetCidr": "192.168.0.0/24"
-    },
-    "endPoints": [
-        {
-            "domain": "domain-example",
-            "ipAddress": "192.168.0.1",
-            "endPointType": "https://example.com"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"availabilityZone": "kr-pub-a",
+"subnet": {
+"subnetId": "550e8400-e29b-41d4-a716-446655440000",
+"subnetName": "subnetName-example",
+"subnetCidr": "192.168.0.0/24"
+},
+"endPoints": [
+{
+"domain": "domain-example",
+"ipAddress": "192.168.0.1",
+"endPointType": "https://example.com"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| availabilityZone | String | Availability zone where DB instance will be created |
+| subnet | Object | Subnet object |
+| subnet.subnetId | UUID | Subnet identifier |
+| subnet.subnetName | String | Name to identify subnets |
+| subnet.subnetCidr | String | CIDR of subnet |
+| endPoints | Array | List of access information |
+| endPoints.domain | String | Domain |
+| endPoints.ipAddress | String | IP address |
+| endPoints.endPointType | String | Access information type |
 
 ---
 
 ### Modify Network Information
 
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/network-info
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2785,55 +2952,60 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| usePublicAccess | Body | Boolean | O | External access is available or not |
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/network-info
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "usePublicAccess": false
+"usePublicAccess": false
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| usePublicAccess | Boolean | Y | External access is available or not |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Promote DB Instance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/promote
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2841,44 +3013,47 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/promote
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Rebuild DB Instance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/rebuild
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -2886,166 +3061,175 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/rebuild
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
 ---
+
 ### Replicate DB Instance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/replicate
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstance.Replicate | Replicate DB Instance |
 
-#### Common Request
+#### Request
 
-| Name | Type | Format | Required | Description |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/replicate
+```
+
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| dbInstanceName | Body | String | O | Name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on DB instances<br/>- Maximum length: `100` |
-| dbFlavorId | Body | UUID | X | Identifier of DB instance specifications |
-| dbPort | Body | Number | X | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
-| parameterGroupId | Body | UUID | X | Parameter group identifier |
-| dbSecurityGroupIds | Body | Array | X | DB security group identifier list |
-| userGroupIds | Body | Array | X | User group identifier list |
-| useDefaultNotification | Body | Boolean | X | Whether to use default notification<br/>- Default: `false` |
-| useDeletionProtection | Body | Boolean | X | Whether deletion protection is enabled<br/>- Default: `false` |
-| useSlowQueryAnalysis | Body | Boolean | X | Whether to analyze Slow query<br/>- Default: `true` |
-| network | Body | Object | O | Network information object |
-| network.usePublicAccess | Body | Boolean | X | External access is available or not |
-| network.availabilityZone | Body | Enum | O | Availability zone where DB instance will be created |
-| storage | Body | Object | X | Storage information object |
-| storage.storageType | Body | Enum | X | Data storage type |
-| storage.storageSize | Body | Number | X | Data storage size (GB)<br/>- Minimum value: `20` |
-| storage.storageAutoscale | Body | Object | X | Data storage auto scaling object |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | Whether to enable storage auto scaling<br/>- Default: `false` |
-| backup | Body | Object | X | Backup information object |
-| backup.backupPeriod | Body | Number | X | Backup retention period (days)<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.backupRetryCount | Body | Number | X | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Body | Number | X | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
-| backup.replicationRegion | Body | Enum | X | Backup replication region<br/>- KR4: `Korea (Daegu)` |
-| backup.useBackupLock | Body | Boolean | X | Whether to use table lock |
-| backup.backupSchedules | Body | Array | X | Scheduled auto backup list |
-| backup.backupSchedules.backupWndBgnTime | Body | Time | X | Backup started time |
-| backup.backupSchedules.backupWndDuration | Body | Enum | X | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1.5 hours`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2.5 hours`<br/>- THREE_HOURS: `3 hours` |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
 
-#### When using storage auto scaling
+#### Request Body
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| storage.storageAutoscale.threshold | Body | Number | O | Auto scaling condition (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
-| storage.storageAutoscale.maxStorageSize | Body | Number | O | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
-| storage.storageAutoscale.cooldownTime | Body | Number | O | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbInstanceName": "dbInstanceName",
-    "description": "description-example",
-    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbPort": 1,
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbSecurityGroupIds": [],
-    "userGroupIds": [],
-    "useDefaultNotification": false,
-    "useDeletionProtection": false,
-    "useSlowQueryAnalysis": true,
-    "network": {
-        "usePublicAccess": false,
-        "availabilityZone": "kr-pub-a"
-    },
-    "storage": {
-        "storageType": "General SSD",
-        "storageSize": 20,
-        "storageAutoscale": {
-            "useStorageAutoscale": false
-        }
-    },
-    "backup": {
-        "backupPeriod": 0,
-        "backupRetryCount": 0,
-        "ftwrlWaitTimeout": 0,
-        "replicationRegion": "KR4",
-        "useBackupLock": false,
-        "backupSchedules": [
-            {
-                "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "HALF_AN_HOUR"
-            }
-        ]
-    }
+"dbInstanceName": "dbInstanceName",
+"description": "description-example",
+"dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+"dbPort": 1,
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSecurityGroupIds": [],
+"userGroupIds": [],
+"useDefaultNotification": false,
+"useDeletionProtection": false,
+"useSlowQueryAnalysis": true,
+"network": {
+"usePublicAccess": false,
+"availabilityZone": "kr-pub-a"
+},
+"storage": {
+"storageType": "General SSD",
+"storageSize": 20,
+"storageAutoscale": {
+"useStorageAutoscale": false
+}
+},
+"backup": {
+"backupPeriod": 0,
+"backupRetryCount": 0,
+"ftwrlWaitTimeout": 0,
+"replicationRegion": "KR4",
+"useBackupLock": false,
+"backupSchedules": [
+{
+"backupWndBgnTime": "00:00:00",
+"backupWndDuration": "HALF_AN_HOUR"
+}
+]
+}
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceName | String | Y | Name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on the DB instance<br/>- Maximum length: `100` |
+| dbFlavorId | UUID | N | Identifier of DB instance specifications |
+| dbPort | Number | N | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
+| parameterGroupId | UUID | N | Parameter group identifier |
+| dbSecurityGroupIds | Array | N | List of DB security group identifiers |
+| userGroupIds | Array | N | List of user group identifiers |
+| useDefaultNotification | Boolean | N | Whether to use default notification<br/>- Default: `false` |
+| useDeletionProtection | Boolean | N | Whether to enable deletion protection<br/>- Default: `false` |
+| useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries<br/>- Default: `true` |
+| network | Object | Y | Network information object |
+| network.usePublicAccess | Boolean | N | External access is available or not |
+| network.availabilityZone | Enum | Y | Availability zone where DB instance will be created |
+| storage | Object | N | Storage information object |
+| storage.storageType | Enum | N | Data storage type |
+| storage.storageSize | Number | N | Data storage size (GB)<br/>- Minimum value: `20` |
+| storage.storageAutoscale | Object | N | Data storage auto scaling object |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | Whether to enable storage auto scaling<br/>- Default: `false` |
+| backup | Object | N | Backup information object |
+| backup.backupPeriod | Number | N | Backup retention period (days)<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
+| backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
+| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.replicationRegion | Enum | N | Backup replication region<br/>- KR4: `Korea (Daegu)` |
+| backup.useBackupLock | Boolean | N | Whether to use table lock |
+| backup.backupSchedules | Array | N | Scheduled auto backup list |
+| backup.backupSchedules.backupWndBgnTime | Time | N | Backup start time |
+| backup.backupSchedules.backupWndDuration | Enum | N | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1 hour 30 minutes`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2 hours 30 minutes`<br/>- THREE_HOURS: `3 hours` |
+
+#### When Using Storage Auto Scaling
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | Auto scaling threshold (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Restart DB Instance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/restart
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3053,61 +3237,66 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| useOnlineFailover | Body | Boolean | X | Whether to restart using failover<br/>- Default: `false` |
-| executeBackup | Body | Boolean | X | Whether to execute backup at this time<br/>- Default: `false` |
-| waitReplicationDelay | Body | Boolean | X | Wait for replication lag to clear<br/>- Default: `false` |
-| useReadOnly | Body | Boolean | X | Block write load<br/>- Default: `false` |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/restart
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "useOnlineFailover": false,
-    "executeBackup": false,
-    "waitReplicationDelay": false,
-    "useReadOnly": false
+"useOnlineFailover": false,
+"executeBackup": false,
+"waitReplicationDelay": false,
+"useReadOnly": false
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| useOnlineFailover | Boolean | N | Whether to restart using failover<br/>- Default: `false` |
+| executeBackup | Boolean | N | Whether to execute backup at this time<br/>- Default: `false` |
+| waitReplicationDelay | Boolean | N | Wait for replication lag to clear<br/>- Default: `false` |
+| useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### View Restoration Information
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/restoration-info
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3115,85 +3304,88 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/restoration-info
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| oldestRestorableYmdt | Body | DateTime | Oldest restorable time |
-| latestRestorableYmdt | Body | DateTime | Most recent restorable time |
-| restorableBackups | Body | Array | List of restorable backups |
-| restorableBackups.backup | Body | Object | Backup information object |
-| restorableBackups.backup.backupId | Body | UUID | Backup identifier |
-| restorableBackups.backup.backupName | Body | String | Backup name |
-| restorableBackups.backup.backupStatus | Body | Enum | Backup status<br/>- BACKING_UP: `Backing up (spinner)`<br/>- VERIFYING: `Verifying (spinner)`<br/>- COMPLETED: `Available (green icon)`<br/>- DELETING: `Deleting (spinner)`<br/>- DELETED: `Deleted (gray icon)`<br/>- ERROR: `Error (red icon)` |
-| restorableBackups.backup.dbInstanceId | Body | UUID | Original DB instance identifier |
-| restorableBackups.backup.dbInstanceName | Body | String | Original DB instance name |
-| restorableBackups.backup.dbVersion | Body | Enum | DB engine type |
-| restorableBackups.backup.backupType | Body | Enum | Backup type<br/>- AUTO<br/>- MANUAL |
-| restorableBackups.backup.backupSize | Body | Number | Backup size |
-| restorableBackups.backup.useBackupLock | Body | Boolean | Whether to use table lock |
-| restorableBackups.backup.failoverCount | Body | Number | Number of failovers |
-| restorableBackups.backup.binLogFileName | Body | String | Binary log file name |
-| restorableBackups.backup.binLogPosition | Body | Object | Binary log file location |
-| restorableBackups.backup.createdYmdt | Body | DateTime | Date and time of backup creation |
-| restorableBackups.backup.updatedYmdt | Body | DateTime | Date and time of backup renewal |
-| restorableBackups.restorableBinLogs | Body | Array | Binary log names that can be restored using the backup |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "oldestRestorableYmdt": "2023-12-31T15:00:00+09:00",
-    "latestRestorableYmdt": "2023-12-31T15:00:00+09:00",
-    "restorableBackups": [
-        {
-            "backup": {
-                "backupId": "550e8400-e29b-41d4-a716-446655440000",
-                "backupName": "backupName-example",
-                "backupStatus": "BACKING_UP",
-                "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-                "dbInstanceName": "dbInstanceName-example",
-                "dbVersion": "MYSQL_V8036",
-                "backupType": "AUTO",
-                "backupSize": 1,
-                "useBackupLock": false,
-                "failoverCount": 1,
-                "binLogFileName": "binLogFileName-example",
-                "binLogPosition": {
-                },
-                "createdYmdt": "2023-12-31T15:00:00+09:00",
-                "updatedYmdt": "2023-12-31T15:00:00+09:00"
-            },
-            "restorableBinLogs": []
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"oldestRestorableYmdt": "2023-12-31T15:00:00+09:00",
+"latestRestorableYmdt": "2023-12-31T15:00:00+09:00",
+"restorableBackups": [
+{
+"backup": {
+"backupId": "550e8400-e29b-41d4-a716-446655440000",
+"backupName": "backupName-example",
+"backupStatus": "BACKING_UP",
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceName": "dbInstanceName-example",
+"dbVersion": "MYSQL_V8036",
+"backupType": "AUTO",
+"backupSize": 1,
+"useBackupLock": false,
+"failoverCount": 1,
+"binLogFileName": "binLogFileName-example",
+"binLogPosition": {
+},
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+},
+"restorableBinLogs": []
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| oldestRestorableYmdt | DateTime | Oldest restorable time |
+| latestRestorableYmdt | DateTime | Most recent restorable time |
+| restorableBackups | Array | List of restorable backups |
+| restorableBackups.backup | Object | Backup information object |
+| restorableBackups.backup.backupId | UUID | Backup identifier |
+| restorableBackups.backup.backupName | String | Backup name |
+| restorableBackups.backup.backupStatus | Enum | Backup status<br/>- BACKING_UP: `Backing up (spinner)`<br/>- VERIFYING: `Verifying (spinner)`<br/>- COMPLETED: `Available (green icon)`<br/>- DELETING: `Deleting (spinner)`<br/>- DELETED: `Deleted (gray icon)`<br/>- ERROR: `Error (red icon)` |
+| restorableBackups.backup.dbInstanceId | UUID | Source DB instance identifier |
+| restorableBackups.backup.dbInstanceName | String | Source DB instance name |
+| restorableBackups.backup.dbVersion | String | DB engine type |
+| restorableBackups.backup.backupType | Enum | Backup type<br/>- AUTO<br/>- MANUAL |
+| restorableBackups.backup.backupSize | Number | Backup size |
+| restorableBackups.backup.useBackupLock | Boolean | Whether to use table lock |
+| restorableBackups.backup.failoverCount | Number | Number of failovers |
+| restorableBackups.backup.binLogFileName | String | Binary log file name |
+| restorableBackups.backup.binLogPosition | Object | Binary log file location |
+| restorableBackups.backup.createdYmdt | DateTime | Date and time of backup creation |
+| restorableBackups.backup.updatedYmdt | DateTime | Date and time of backup renewal |
+| restorableBackups.restorableBinLogs | Array | Binary log names that can be restored using the backup |
 
 ---
 
 ### View the Last Query to Be Restored
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3201,215 +3393,224 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| executedYmdt | Body | DateTime | Query executed date |
-| lastQuery | Body | String | Last executed query |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "executedYmdt": "2023-12-31T15:00:00+09:00",
-    "lastQuery": "lastQuery-example"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"executedYmdt": "2023-12-31T15:00:00+09:00",
+"lastQuery": "lastQuery-example"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| executedYmdt | DateTime | Query executed date |
+| lastQuery | String | Last executed query |
+
 ---
+
 ### Restore DB Instance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/restore
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstance.Restore | Restore DB Instance |
 
-#### Common Request
+#### Request
 
-| Name | Type | Format | Required | Description |
+```http
+POST /v4.0/db-instances/{dbInstanceId}/restore
+```
+
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| dbInstanceName | Body | String | O | Master name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on DB instances<br/>- Maximum length: `100` |
-| dbFlavorId | Body | UUID | X | Identifier of DB instance specifications. If not specified, the specifications of the source instance are applied. |
-| dbPort | Body | Number | X | DB port |
-| useHighAvailability | Body | Boolean | X | Whether to use high availability<br/>- Default: `false` |
-| pingInterval | Body | Number | X | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
-| storage | Body | Object | X | Storage information object. If not specified, the storage settings of the source instance are applied. |
-| storage.storageType | Body | Enum | X | Storage type. If not specified, the storage type of the source instance is applied. |
-| storage.storageSize | Body | Number | X | Data storage size (GB). If not specified, the storage size of the source instance is applied.<br/>- Minimum value: `20` |
-| storage.storageAutoscale | Body | Object | X | Data storage auto scaling object |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | Whether to enable storage auto scaling<br/>- Default: `false` |
-| network | Body | Object | X | Network information object. If not specified, the network settings of the source instance are applied. |
-| network.subnetId | Body | UUID | X | Subnet identifier. If not specified, the source instance value is used. |
-| network.usePublicAccess | Body | Boolean | X | External access is available or not<br/>- Default: `false` |
-| network.availabilityZone | Body | Enum | X | Availability zone where DB instance will be created. If not specified, randomly selected. |
-| backup | Body | Object | X | Backup information object. If not specified, the backup settings of the source instance are applied. |
-| backup.backupPeriod | Body | Number | X | Backup retention period (days). If not specified, the backup retention period of the source instance is applied.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.ftwrlWaitTimeout | Body | Number | X | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
-| backup.backupRetryCount | Body | Number | X | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.replicationRegion | Body | Enum | X | Backup replication region<br/>- KR4: `Korea (Daegu)` |
-| backup.useBackupLock | Body | Boolean | X | Whether to use table lock<br/>- Default: `true` |
-| backup.backupSchedules | Body | Array | X | Scheduled auto backup list. If not specified, the backup schedule of the source instance is applied. |
-| backup.backupSchedules.backupWndBgnTime | Body | Time | X | Backup started time |
-| backup.backupSchedules.backupWndDuration | Body | Enum | X | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1.5 hours`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2.5 hours`<br/>- THREE_HOURS: `3 hours` |
-| restore | Body | Object | O | Restoration information object |
-| restore.restoreType | Body | Enum | O | Restoration type<br/>- TIMESTAMP: `A point-in-time restoration type using the time within the restorable time`<br/>- BINLOG: `A point-in-time restoration type using a binary log location that can be restored`<br/>- BACKUP: `Snapshot restoration type using a previously created backup` |
-| restore.binLog.binLogFileName | Body | String | X | Binary log name to use for restoration |
-| restore.binLog.binLogPosition | Body | Object | X | Binary log location to use for restoration |
-| useDefaultNotification | Body | Boolean | X | Whether to use default notification<br/>- Default: `false` |
-| useSlowQueryAnalysis | Body | Boolean | X | Whether to analyze slow queries<br/>- Default: `true` |
-| parameterGroupId | Body | UUID | X | Parameter group identifier. If not specified, the parameter group of the source instance is applied. |
-| dbSecurityGroupIds | Body | Array | X | DB security group identifier list. If not specified, the security groups of the source instance are applied. |
-| userGroupIds | Body | Array | X | User group identifier list |
-| useDeletionProtection | Body | Boolean | X | Whether to protect against deletion<br/>- Default: `false` |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
 
-#### When using high availability
+#### Request Body
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceCandidateName | Body | String | O | Candidate master name to identify DB instances<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+<details>
+  <summary><strong>Example Code</strong></summary>
 
-#### When using storage auto scaling
+```json
+{
+"dbInstanceName": "dbInstanceName",
+"description": "description-example",
+"dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+"dbPort": 1,
+"useHighAvailability": false,
+"pingInterval": 3,
+"storage": {
+"storageType": "General SSD",
+"storageSize": 20,
+"storageAutoscale": {
+"useStorageAutoscale": false
+}
+},
+"network": {
+"subnetId": "550e8400-e29b-41d4-a716-446655440000",
+"usePublicAccess": false,
+"availabilityZone": "kr-pub-a"
+},
+"backup": {
+"backupPeriod": 0,
+"ftwrlWaitTimeout": 1800,
+"backupRetryCount": 0,
+"replicationRegion": "KR4",
+"useBackupLock": true,
+"backupSchedules": [
+{
+"backupWndBgnTime": "00:00:00",
+"backupWndDuration": "HALF_AN_HOUR"
+}
+]
+},
+"restore": {
+"restoreType": "TIMESTAMP",
+"binLog": {
+"binLogFileName": "binLogFileName-example",
+"binLogPosition": {
+}
+}
+},
+"useDefaultNotification": false,
+"useSlowQueryAnalysis": true,
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSecurityGroupIds": [],
+"userGroupIds": [],
+"useDeletionProtection": false
+}
+```
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| storage.storageAutoscale.threshold | Body | Number | O | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
-| storage.storageAutoscale.maxStorageSize | Body | Number | O | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
-| storage.storageAutoscale.cooldownTime | Body | Number | O | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
+</details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceName | String | Y | Master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on the DB instance<br/>- Maximum length: `100` |
+| dbFlavorId | UUID | N | Identifier of DB instance specifications. If not specified, the specifications of the source instance are applied. |
+| dbPort | Number | N | DB port |
+| useHighAvailability | Boolean | N | Whether to use high availability<br/>- Default: `false` |
+| pingInterval | Number | N | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| storage | Object | N | Storage information object. If not specified, the storage settings of the source instance are applied. |
+| storage.storageType | Enum | N | Storage type. If not specified, the storage type of the source instance is applied. |
+| storage.storageSize | Number | N | Data storage size (GB). If not specified, the storage size of the source instance is applied.<br/>- Minimum value: `20` |
+| storage.storageAutoscale | Object | N | Data storage auto scaling object |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | Whether to enable storage auto scaling<br/>- Default: `false` |
+| network | Object | N | Network information object. If not specified, the network settings of the source instance are applied. |
+| network.subnetId | UUID | N | Subnet identifier. If not specified, the source instance value is used. |
+| network.usePublicAccess | Boolean | N | Whether external access is available<br/>- Default: `false` |
+| network.availabilityZone | Enum | N | Availability zone where DB instance will be created. If not specified, randomly selected. |
+| backup | Object | N | Backup information object. If not specified, the backup settings of the source instance are applied. |
+| backup.backupPeriod | Number | N | Backup retention period (days). If not specified, the backup retention period of the source instance is applied.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
+| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
+| backup.replicationRegion | Enum | N | Backup replication region<br/>- KR4: `Korea (Daegu)` |
+| backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
+| backup.backupSchedules | Array | N | Scheduled auto backup list. If not specified, the backup schedule of the source instance is applied. |
+| backup.backupSchedules.backupWndBgnTime | Time | N | Backup start time |
+| backup.backupSchedules.backupWndDuration | Enum | N | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1 hour 30 minutes`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2 hours 30 minutes`<br/>- THREE_HOURS: `3 hours` |
+| restore | Object | Y | Restoration information object |
+| restore.restoreType | Enum | Y | Restoration type<br/>- TIMESTAMP: `A point-in-time restoration type using the time within the restorable time`<br/>- BINLOG: `A point-in-time restoration type using a binary log location that can be restored`<br/>- BACKUP: `Snapshot restoration type using a previously created backup` |
+| restore.binLog.binLogFileName | String | N | Binary log name to use for restoration |
+| restore.binLog.binLogPosition | Object | N | Binary log location to use for restoration |
+| useDefaultNotification | Boolean | N | Whether to use default notification<br/>- Default: `false` |
+| useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries<br/>- Default: `true` |
+| parameterGroupId | UUID | N | Parameter group identifier. If not specified, the parameter group of the source instance is applied. |
+| dbSecurityGroupIds | Array | N | DB security group identifier list. If not specified, the security groups of the source instance are applied. |
+| userGroupIds | Array | N | List of user group identifiers |
+| useDeletionProtection | Boolean | N | Whether to enable deletion protection<br/>- Default: `false` |
+
+#### When Using High Availability
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Candidate master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+
+#### When Using Storage Auto Scaling
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | Auto scaling threshold (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 
 #### Request when restoring a point in time using Timestamp (if restoreType is `TIMESTAMP`)
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| restore.restoreYmdt | Body | DateTime | X | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| restore.restoreYmdt | DateTime | N | DB instance restore date (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 Restoration is possible only before the most recent restorable time, which is queried through restoration information inquiry.
 
 #### Request for point-in-time restoration using binary logs (if restoreType is `BINLOG`)
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| restore.backupId | Body | UUID | X | Identifier of the backup to use for restoration |
-| restore.binLog | Body | Object | X | Binary log information object |
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| restore.backupId | UUID | N | Identifier of the backup to use for restoration |
+| restore.binLog | Object | N | Binary log information object |
 
 When restoring a point in time using the binary log, it is possible to restore the log recorded after that based on the binary log file and location of the base backup.
 
 #### Request when restoring from backup (if restoreType is `BACKUP`)
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| restore.backupId | Body | UUID | X | Identifier of the backup to use for restoration |
-
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-    "dbInstanceName": "dbInstanceName",
-    "description": "description-example",
-    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbPort": 1,
-    "useHighAvailability": false,
-    "pingInterval": 3,
-    "storage": {
-        "storageType": "General SSD",
-        "storageSize": 20,
-        "storageAutoscale": {
-            "useStorageAutoscale": false
-        }
-    },
-    "network": {
-        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-        "usePublicAccess": false,
-        "availabilityZone": "kr-pub-a"
-    },
-    "backup": {
-        "backupPeriod": 0,
-        "ftwrlWaitTimeout": 1800,
-        "backupRetryCount": 0,
-        "replicationRegion": "KR4",
-        "useBackupLock": true,
-        "backupSchedules": [
-            {
-                "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "HALF_AN_HOUR"
-            }
-        ]
-    },
-    "restore": {
-        "restoreType": "TIMESTAMP",
-        "binLog": {
-            "binLogFileName": "binLogFileName-example",
-            "binLogPosition": {
-            }
-        }
-    },
-    "useDefaultNotification": false,
-    "useSlowQueryAnalysis": true,
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbSecurityGroupIds": [],
-    "userGroupIds": [],
-    "useDeletionProtection": false
-}
-```
-
-</p>
-</details>
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| restore.backupId | UUID | N | Identifier of the backup to use for restoration |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Start DB Instance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/start
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3417,44 +3618,47 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/start
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Stop DB Instance
 
-```http
-POST /v4.0/db-instances/{dbInstanceId}/stop
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3462,44 +3666,47 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 #### Request
 
-This API does not require a request body.
+```http
+POST /v4.0/db-instances/{dbInstanceId}/stop
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### View Storage Information
 
-```http
-GET /v4.0/db-instances/{dbInstanceId}/storage-info
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3507,139 +3714,148 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-instances/{dbInstanceId}/storage-info
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| storageType | Body | String | Data storage type |
-| storageSize | Body | Number | Data storage size (GB) |
-| storageStatus | Body | Enum | Current status of data storage<br/>- DELETED: `Deleted`<br/>- PENDING_DELETION: `Pending deletion`<br/>- DELETION_RESERVED: `Deletion reserved (awaiting snapshot cleanup)`<br/>- DETACHED: `Detached`<br/>- ATTACHED: `Attached` |
-| storageAutoscale | Body | Object | Data storage auto scaling object |
-| storageAutoscale.useStorageAutoscale | Body | Boolean | Whether to enable storage auto scaling |
-| storageAutoscale.threshold | Body | Number | Auto scale out conditions (%) |
-| storageAutoscale.maxStorageSize | Body | Number | Auto scaling maximum size (GB) |
-| storageAutoscale.cooldownTime | Body | Number | Auto scaling cooldown time (minutes) |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storageType": "General SSD",
-    "storageSize": 1,
-    "storageStatus": "DELETED",
-    "storageAutoscale": {
-        "useStorageAutoscale": false,
-        "threshold": 1,
-        "maxStorageSize": 1,
-        "cooldownTime": 1
-    }
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"storageType": "General SSD",
+"storageSize": 1,
+"storageStatus": "DELETED",
+"storageAutoscale": {
+"useStorageAutoscale": false,
+"threshold": 1,
+"maxStorageSize": 1,
+"cooldownTime": 1
+}
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| storageType | String | Data storage type |
+| storageSize | Number | Data storage size (GB) |
+| storageStatus | Enum | Current status of data storage<br/>- DELETED: `Deleted`<br/>- PENDING_DELETION: `Pending deletion`<br/>- DELETION_RESERVED: `Deletion reserved (awaiting snapshot cleanup)`<br/>- DETACHED: `Detached`<br/>- ATTACHED: `Attached` |
+| storageAutoscale | Object | Data storage auto scaling object |
+| storageAutoscale.useStorageAutoscale | Boolean | Whether to enable storage auto scaling |
+| storageAutoscale.threshold | Number | Auto scale out conditions (%) |
+| storageAutoscale.maxStorageSize | Number | Auto scaling maximum size (GB) |
+| storageAutoscale.cooldownTime | Number | Auto scaling cooldown time (minutes) |
 
 ---
 
 ### Modify Storage Information
 
-```http
-PUT /v4.0/db-instances/{dbInstanceId}/storage-info
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:DbInstance.Modify | Modify Storage Information |
 
-#### Common Request
+#### Request
 
-| Name | Type | Format | Required | Description |
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/storage-info
+```
+
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | O | DB instance identifier |
-| storageSize | Body | Number | O | Data storage size (GB)<br/>- Maximum value: `2048` |
-| storageAutoscale | Body | Object | X | Data storage auto scaling object |
-| storageAutoscale.useStorageAutoscale | Body | Boolean | X | Whether to enable storage auto scaling |
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
 
-#### When using storage auto scaling
+#### Request Body
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| storageAutoscale.threshold | Body | Number | O | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
-| storageAutoscale.maxStorageSize | Body | Number | O | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
-| storageAutoscale.cooldownTime | Body | Number | O | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "storageSize": 1,
-    "storageAutoscale": {
-        "useStorageAutoscale": false
-    }
+"storageSize": 1,
+"storageAutoscale": {
+"useStorageAutoscale": false
+}
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| storageSize | Number | Y | Data storage size (GB)<br/>- Maximum value: `2048` |
+| storageAutoscale | Object | N | Data storage auto scaling object |
+| storageAutoscale.useStorageAutoscale | Boolean | N | Whether to enable storage auto scaling |
+
+#### When Using Storage Auto Scaling
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| storageAutoscale.threshold | Number | Y | Auto scaling threshold (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
+| storageAutoscale.maxStorageSize | Number | Y | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
+| storageAutoscale.cooldownTime | Number | Y | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
 ---
+
 ## Backups
 
 ### Backup Status
 
-| Status       | Description             |
-|--------------|-------------------------|
-| `BACKING_UP` | Backup in progress      |
-| `COMPLETED`  | Backup is completed     |
-| `DELETING`   | Backup is being deleted |
-| `DELETED`    | Backup is deleted       |
-| `ERROR`      | Error occurred          |
+| Status | Description |
+|--------------|--------------|
+| `BACKING_UP` | Backup in progress |
+| `COMPLETED` | Backup is completed |
+| `DELETING` | Backup is being deleted |
+| `DELETED` | Backup is deleted |
+| `ERROR` | Error occurred |
 
 ### Retrieve Backup List
 
-```http
-GET /v4.0/backups
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3647,65 +3863,66 @@ GET /v4.0/backups
 
 #### Request
 
+```http
+GET /v4.0/backups
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| totalCounts | Body | Number | Total number of backup list entries |
-| backups | Body | Array | Backup list |
-| backups.backupId | Body | UUID | Backup identifier |
-| backups.backupName | Body | String | Name to identify the backup |
-| backups.backupStatus | Body | Enum | Current backup status<br/>- BACKING_UP: `Backup in progress (spinner)`<br/>- VERIFYING: `Verifying (spinner)`<br/>- COMPLETED: `Available (green icon)`<br/>- DELETING: `Deleting (spinner)`<br/>- DELETED: `Deleted (gray icon)`<br/>- ERROR: `Error (red icon)` |
-| backups.dbInstanceId | Body | UUID | Source DB instance identifier |
-| backups.dbVersion | Body | Enum | DB engine type |
-| backups.utilVersion | Body | String | Utility version |
-| backups.backupType | Body | Enum | Backup type<br/>- AUTO<br/>- MANUAL |
-| backups.backupSize | Body | Number | Backup size (Byte) |
-| backups.createdYmdt | Body | DateTime | Created date and time |
-| backups.updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 1,
-    "backups": [
-        {
-            "backupId": "550e8400-e29b-41d4-a716-446655440000",
-            "backupName": "backupName-example",
-            "backupStatus": "BACKING_UP",
-            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MYSQL_V8036",
-            "utilVersion": "utilVersion-example",
-            "backupType": "AUTO",
-            "backupSize": 1,
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"totalCounts": 1,
+"backups": [
+{
+"backupId": "550e8400-e29b-41d4-a716-446655440000",
+"backupName": "backupName-example",
+"backupStatus": "BACKING_UP",
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"dbVersion": "MYSQL_V8036",
+"utilVersion": "utilVersion-example",
+"backupType": "AUTO",
+"backupSize": 1,
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| totalCounts | Number | Total number of backup list entries |
+| backups | Array | Backup list |
+| backups.backupId | UUID | Backup identifier |
+| backups.backupName | String | Name to identify the backup |
+| backups.backupStatus | Enum | Current backup status<br/>- BACKING_UP: `Backup in progress (spinner)`<br/>- VERIFYING: `Verifying (spinner)`<br/>- COMPLETED: `Available (green icon)`<br/>- DELETING: `Deleting (spinner)`<br/>- DELETED: `Deleted (gray icon)`<br/>- ERROR: `Error (red icon)` |
+| backups.dbInstanceId | UUID | Source DB instance identifier |
+| backups.dbVersion | String | DB engine type |
+| backups.utilVersion | String | Utility version |
+| backups.backupType | Enum | Backup type<br/>- AUTO<br/>- MANUAL |
+| backups.backupSize | Number | Backup size (Byte) |
+| backups.createdYmdt | DateTime | Created at |
+| backups.updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Create Backup
 
-```http
-POST /v4.0/backups
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3713,60 +3930,60 @@ POST /v4.0/backups
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| backupName | Body | String | O | Name to identify the backup<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| baseBackupId | Body | UUID | X | Source backup identifier |
-| dbInstanceId | Body | UUID | X | DB instance identifier |
-| backupMethodType | Body | Enum | O | Backup method type<br/>- FULL: `Full backup`<br/>- INCREMENTAL: `Incremental backup`<br/>- SNAPSHOT: `Snapshot backup` |
+```http
+POST /v4.0/backups
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "backupName": "backupName",
-    "baseBackupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-    "backupMethodType": "FULL"
+"backupName": "backupName",
+"baseBackupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"backupMethodType": "FULL"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| backupName | String | Y | Name to identify the backup<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| baseBackupId | UUID | N | Source backup identifier |
+| dbInstanceId | UUID | N | DB instance identifier |
+| backupMethodType | Enum | Y | Backup method type<br/>- FULL: `Full backup`<br/>- INCREMENTAL: `Incremental backup`<br/>- SNAPSHOT: `Snapshot backup` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Delete Backup
 
-```http
-DELETE /v4.0/backups/{backupId}
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3774,44 +3991,47 @@ DELETE /v4.0/backups/{backupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/backups/{backupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| backupId | URL | UUID | O |  |
+| backupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### View Backup Details
 
-```http
-GET /v4.0/backups/{backupId}
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3819,80 +4039,83 @@ GET /v4.0/backups/{backupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/backups/{backupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| backupId | URL | UUID | O |  |
+| backupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| backup | Body | Object | Backup details |
-| backup.backupId | Body | UUID | Backup identifier |
-| backup.regionCode | Body | Enum | Region code<br/>- KR4: `Korea (Daegu)` |
-| backup.backupName | Body | String | Name to identify the backup |
-| backup.backupStatus | Body | Enum | Current backup status<br/>- BACKING_UP: `Backup in progress (spinner)`<br/>- VERIFYING: `Verifying (spinner)`<br/>- COMPLETED: `Available (green icon)`<br/>- DELETING: `Deleting (spinner)`<br/>- DELETED: `Deleted (gray icon)`<br/>- ERROR: `Error (red icon)` |
-| backup.dbInstanceId | Body | UUID | Source DB instance identifier |
-| backup.dbInstanceName | Body | String | Source DB instance name |
-| backup.dbVersion | Body | Enum | DB engine version |
-| backup.utilVersion | Body | String | Utility version |
-| backup.backupType | Body | Enum | Backup type (AUTO, MANUAL)<br/>- AUTO<br/>- MANUAL |
-| backup.backupMethodType | Body | Enum | Backup method (FULL, SNAPSHOT, INCREMENTAL)<br/>- FULL<br/>- INCREMENTAL<br/>- SNAPSHOT |
-| backup.backupFileType | Body | Enum | Backup file type<br/>- XBSTREAM<br/>- TAR_ZSTD<br/>- TAR_LZ4<br/>- TAR_GZIP<br/>- SNAPSHOT |
-| backup.backupSize | Body | Number | Backup size (Byte) |
-| backup.isReplicable | Body | Boolean | Whether replication is possible |
-| backup.binLogFileName | Body | String | Binary log file name |
-| backup.binLogPosition | Body | Object | Binary log location |
-| backup.createdYmdt | Body | DateTime | Created date and time |
-| backup.updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "backup": {
-        "backupId": "550e8400-e29b-41d4-a716-446655440000",
-        "regionCode": "KR4",
-        "backupName": "backupName-example",
-        "backupStatus": "BACKING_UP",
-        "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-        "dbInstanceName": "dbInstanceName-example",
-        "dbVersion": "MYSQL_V8036",
-        "utilVersion": "utilVersion-example",
-        "backupType": "AUTO",
-        "backupMethodType": "FULL",
-        "backupFileType": "XBSTREAM",
-        "backupSize": 1,
-        "isReplicable": false,
-        "binLogFileName": "binLogFileName-example",
-        "binLogPosition": {
-        },
-        "createdYmdt": "2023-12-31T15:00:00+09:00",
-        "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"backup": {
+"backupId": "550e8400-e29b-41d4-a716-446655440000",
+"regionCode": "KR4",
+"backupName": "backupName-example",
+"backupStatus": "BACKING_UP",
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceName": "dbInstanceName-example",
+"dbVersion": "MYSQL_V8036",
+"utilVersion": "utilVersion-example",
+"backupType": "AUTO",
+"backupMethodType": "FULL",
+"backupFileType": "XBSTREAM",
+"backupSize": 1,
+"isReplicable": false,
+"binLogFileName": "binLogFileName-example",
+"binLogPosition": {
+},
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| backup | Object | Backup details |
+| backup.backupId | UUID | Backup identifier |
+| backup.regionCode | Enum | Region code<br/>- KR4: `Korea (Daegu)` |
+| backup.backupName | String | Name to identify the backup |
+| backup.backupStatus | Enum | Current backup status<br/>- BACKING_UP: `Backup in progress (spinner)`<br/>- VERIFYING: `Verifying (spinner)`<br/>- COMPLETED: `Available (green icon)`<br/>- DELETING: `Deleting (spinner)`<br/>- DELETED: `Deleted (gray icon)`<br/>- ERROR: `Error (red icon)` |
+| backup.dbInstanceId | UUID | Source DB instance identifier |
+| backup.dbInstanceName | String | Source DB instance name |
+| backup.dbVersion | String | DB engine version |
+| backup.utilVersion | String | Utility version |
+| backup.backupType | Enum | Backup type (AUTO, MANUAL)<br/>- AUTO<br/>- MANUAL |
+| backup.backupMethodType | Enum | Backup method (FULL, SNAPSHOT, INCREMENTAL)<br/>- FULL<br/>- INCREMENTAL<br/>- SNAPSHOT |
+| backup.backupFileType | Enum | Backup file type<br/>- XBSTREAM<br/>- TAR_ZSTD<br/>- TAR_LZ4<br/>- TAR_GZIP<br/>- SNAPSHOT |
+| backup.backupSize | Number | Backup size (Byte) |
+| backup.isReplicable | Boolean | Whether replication is possible |
+| backup.binLogFileName | String | Binary log file name |
+| backup.binLogPosition | Object | Binary log location |
+| backup.createdYmdt | DateTime | Created at |
+| backup.updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Export Backup
 
-```http
-POST /v4.0/backups/{backupId}/export
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -3900,208 +4123,219 @@ POST /v4.0/backups/{backupId}/export
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| backupId | URL | UUID | O |  |
-| tenantId | Body | String | O | Tenant ID of the object storage where the backup will be stored<br/>- Minimum length: `32`<br/>- Maximum length: `32` |
-| username | Body | String | O | NHN Cloud account or IAM member ID |
-| password | Body | String | O | API password of the object storage where the backup will be stored |
-| targetContainer | Body | String | O | Object storage container where the backup will be stored |
-| objectPath | Body | String | O | Path of the backup to be stored in the container |
+```http
+POST /v4.0/backups/{backupId}/export
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| backupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "tenantId": "0123456789abcdef0123456789abcdef",
-    "username": "username-example",
-    "password": "password-example",
-    "targetContainer": "targetContainer-example",
-    "objectPath": "objectPath-example"
+"tenantId": "0123456789abcdef0123456789abcdef",
+"username": "username-example",
+"password": "password-example",
+"targetContainer": "targetContainer-example",
+"objectPath": "objectPath-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| tenantId | String | Y | Tenant ID of the object storage where the backup will be stored<br/>- Minimum length: `32`<br/>- Maximum length: `32` |
+| username | String | Y | NHN Cloud account or IAM member ID |
+| password | String | Y | API password of the object storage where the backup will be stored |
+| targetContainer | String | Y | Object storage container where the backup will be stored |
+| objectPath | String | Y | Path of the backup to be stored in the container |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Restore Backup
 
-```http
-POST /v4.0/backups/{backupId}/restore
-```
-
-#### Required Permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:Backup.Restore | Restore backup |
 
-#### Common Request
+#### Request
 
-| Name | Type | Format | Required | Description |
+```http
+POST /v4.0/backups/{backupId}/restore
+```
+
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| backupId | URL | UUID | O |  |
-| dbInstanceName | Body | String | O | Master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on the DB instance<br/>- Maximum length: `100` |
-| dbFlavorId | Body | UUID | X | DB instance specification identifier. If not specified, the source instance value is used |
-| dbPort | Body | Number | X | DB port. If not specified, the source instance value is used<br/>- Minimum value: 3306, Maximum value: 43306 |
-| parameterGroupId | Body | UUID | X | Parameter group identifier. If not specified, the source instance value is used |
-| dbSecurityGroupIds | Body | Array | X | List of DB security group identifiers |
-| userGroupIds | Body | Array | X | List of user group identifiers |
-| useHighAvailability | Body | Boolean | X | Whether to use high availability<br/>- Default: `false` |
-| pingInterval | Body | Number | X | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
-| useDefaultNotification | Body | Boolean | X | Whether to use default notification<br/>- Default: `false` |
-| useDeletionProtection | Body | Boolean | X | Whether to enable deletion protection<br/>- Default: `false` |
-| useSlowQueryAnalysis | Body | Boolean | X | Whether to analyze slow queries<br/>- Default: `true` |
-| network | Body | Object | X | Network information object. If not specified, the source instance value is used |
-| network.subnetId | Body | UUID | X | Subnet identifier. If not specified, the source instance value is used |
-| network.usePublicAccess | Body | Boolean | X | Whether external access is available<br/>- Default: `false` |
-| network.availabilityZone | Body | Enum | X | Availability zone where the DB instance will be created. If not specified, a random zone is selected |
-| storage | Body | Object | X | Storage information object. If not specified, the source instance value is used |
-| storage.storageType | Body | Enum | X | Storage type. If not specified, the source instance value is used |
-| storage.storageSize | Body | Number | X | Data storage size (GB). If not specified, the source instance value is used<br/>- Minimum value: `20` |
-| storage.storageAutoscale | Body | Object | X | Data storage auto scaling object. If not specified, the source instance value is used |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | Whether to enable storage auto scaling<br/>- Default: `false` |
-| backup | Body | Object | X | Backup information object. If not specified, the source instance backup settings are used |
-| backup.backupPeriod | Body | Number | X | Backup retention period (days). If not specified, the source instance value is used<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.backupRetryCount | Body | Number | X | Number of backup retries. If not specified, the source instance value is used<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Body | Number | X | Query latency wait time (sec). If not specified, the source instance value is used<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
-| backup.replicationRegion | Body | Enum | X | Backup replication region<br/>- KR4: `Korea (Daegu)` |
-| backup.useBackupLock | Body | Boolean | X | Whether to use table lock. If not specified, the source instance value is used |
-| backup.backupSchedules | Body | Array | X | Backup schedule list. If not specified, the source instance value is used |
-| backup.backupSchedules.backupWndBgnTime | Body | Time | O | Backup start time |
-| backup.backupSchedules.backupWndDuration | Body | Enum | O | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1 hour 30 minutes`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2 hours 30 minutes`<br/>- THREE_HOURS: `3 hours` |
+| backupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
+
+```json
+{
+"dbInstanceName": "dbInstanceName",
+"description": "description-example",
+"dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+"dbPort": 1,
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSecurityGroupIds": [],
+"userGroupIds": [],
+"useHighAvailability": false,
+"pingInterval": 3,
+"useDefaultNotification": false,
+"useDeletionProtection": false,
+"useSlowQueryAnalysis": true,
+"network": {
+"subnetId": "550e8400-e29b-41d4-a716-446655440000",
+"usePublicAccess": false,
+"availabilityZone": "kr-pub-a"
+},
+"storage": {
+"storageType": "General SSD",
+"storageSize": 20,
+"storageAutoscale": {
+"useStorageAutoscale": false
+}
+},
+"backup": {
+"backupPeriod": 0,
+"backupRetryCount": 0,
+"ftwrlWaitTimeout": 0,
+"replicationRegion": "KR4",
+"useBackupLock": false,
+"backupSchedules": [
+{
+"backupWndBgnTime": "00:00:00",
+"backupWndDuration": "HALF_AN_HOUR"
+}
+]
+}
+}
+```
+
+</details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceName | String | Y | Master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on the DB instance<br/>- Maximum length: `100` |
+| dbFlavorId | UUID | N | DB instance specification identifier. If not specified, the source instance value is used |
+| dbPort | Number | N | DB port. If not specified, the source instance value is used<br/>- Minimum value: 3306, Maximum value: 43306 |
+| parameterGroupId | UUID | N | Parameter group identifier. If not specified, the source instance value is used |
+| dbSecurityGroupIds | Array | N | List of DB security group identifiers |
+| userGroupIds | Array | N | List of user group identifiers |
+| useHighAvailability | Boolean | N | Whether to use high availability<br/>- Default: `false` |
+| pingInterval | Number | N | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| useDefaultNotification | Boolean | N | Whether to use default notification<br/>- Default: `false` |
+| useDeletionProtection | Boolean | N | Whether to enable deletion protection<br/>- Default: `false` |
+| useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries<br/>- Default: `true` |
+| network | Object | N | Network information object. If not specified, the source instance value is used |
+| network.subnetId | UUID | N | Subnet identifier. If not specified, the source instance value is used |
+| network.usePublicAccess | Boolean | N | Whether external access is available<br/>- Default: `false` |
+| network.availabilityZone | Enum | N | Availability zone where the DB instance will be created. If not specified, a random zone is selected |
+| storage | Object | N | Storage information object. If not specified, the source instance value is used |
+| storage.storageType | Enum | N | Storage type. If not specified, the source instance value is used |
+| storage.storageSize | Number | N | Data storage size (GB). If not specified, the source instance value is used<br/>- Minimum value: `20` |
+| storage.storageAutoscale | Object | N | Data storage auto scaling object. If not specified, the source instance value is used |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | Whether to enable storage auto scaling<br/>- Default: `false` |
+| backup | Object | N | Backup information object. If not specified, the source instance backup settings are used |
+| backup.backupPeriod | Number | N | Backup retention period (days). If not specified, the source instance value is used<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
+| backup.backupRetryCount | Number | N | Number of backup retries. If not specified, the source instance value is used<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
+| backup.ftwrlWaitTimeout | Number | N | Query latency wait time (sec). If not specified, the source instance value is used<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.replicationRegion | Enum | N | Backup replication region<br/>- KR4: `Korea (Daegu)` |
+| backup.useBackupLock | Boolean | N | Whether to use table lock. If not specified, the source instance value is used |
+| backup.backupSchedules | Array | N | Backup schedule list. If not specified, the source instance value is used |
+| backup.backupSchedules.backupWndBgnTime | Time | Y | Backup start time |
+| backup.backupSchedules.backupWndDuration | Enum | Y | Backup duration<br/>- HALF_AN_HOUR: `30 minutes`<br/>- ONE_HOUR: `1 hour`<br/>- ONE_HOUR_AND_HALF: `1 hour 30 minutes`<br/>- TWO_HOURS: `2 hours`<br/>- TWO_HOURS_AND_HALF: `2 hours 30 minutes`<br/>- THREE_HOURS: `3 hours` |
 
 #### When Using High Availability
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbInstanceCandidateName | Body | String | O | Candidate master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Candidate master name to identify the DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 
 #### When Using Storage Auto Scaling
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| storage.storageAutoscale.threshold | Body | Number | O | Auto scaling threshold (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
-| storage.storageAutoscale.maxStorageSize | Body | Number | O | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
-| storage.storageAutoscale.cooldownTime | Body | Number | O | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
-
-<details><summary>Example</summary>
-<p>
-
-```json
-{
-    "dbInstanceName": "dbInstanceName",
-    "description": "description-example",
-    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbPort": 1,
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbSecurityGroupIds": [],
-    "userGroupIds": [],
-    "useHighAvailability": false,
-    "pingInterval": 3,
-    "useDefaultNotification": false,
-    "useDeletionProtection": false,
-    "useSlowQueryAnalysis": true,
-    "network": {
-        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-        "usePublicAccess": false,
-        "availabilityZone": "kr-pub-a"
-    },
-    "storage": {
-        "storageType": "General SSD",
-        "storageSize": 20,
-        "storageAutoscale": {
-            "useStorageAutoscale": false
-        }
-    },
-    "backup": {
-        "backupPeriod": 0,
-        "backupRetryCount": 0,
-        "ftwrlWaitTimeout": 0,
-        "replicationRegion": "KR4",
-        "useBackupLock": false,
-        "backupSchedules": [
-            {
-                "backupWndBgnTime": "00:00:00",
-                "backupWndDuration": "HALF_AN_HOUR"
-            }
-        ]
-    }
-}
-```
-
-</p>
-</details>
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | Auto scaling threshold (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | Auto scaling maximum size (GB)<br/>- Maximum value: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
 ---
+
 ## DB Security Group
 
 ### DB Security Group Progress
 
-| Status              | Description             |
-|---------------------|-------------------------|
-| `NONE`              | No task in progress     |
-| `CREATING_RULE`     | Creating rules          |
-| `UPDATING_RULE`     | Modifying rules         |
-| `DELETING_RULE`     | Deleting rules          |
+| Status | Description |
+|-----------------|--------------|
+| `NONE` | No task in progress |
+| `CREATING_RULE` | Creating rules |
+| `UPDATING_RULE` | Modifying rules |
+| `DELETING_RULE` | Deleting rules |
 
 ### List DB Security Groups
 
-```http
-GET /v4.0/db-security-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4109,57 +4343,58 @@ GET /v4.0/db-security-groups
 
 #### Request
 
+```http
+GET /v4.0/db-security-groups
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| totalCounts | Body | Number | Total number of DB security groups |
-| dbSecurityGroups | Body | Array | DB security groups |
-| dbSecurityGroups.dbSecurityGroupId | Body | UUID | DB security group identifier |
-| dbSecurityGroups.dbSecurityGroupName | Body | String | Name to identify the DB security group |
-| dbSecurityGroups.description | Body | String | Additional information on DB security group |
-| dbSecurityGroups.progressStatus | Body | Enum | Current status of DB security group<br/>- NONE: `None`<br/>- CREATING_RULE: `Creating rules`<br/>- UPDATING_RULE: `Modifying rules`<br/>- DELETING_RULE: `Deleting rules`<br/>- APPLYING_DEFAULT_RULE: `Applying default rules` |
-| dbSecurityGroups.createdYmdt | Body | DateTime | Created date and time |
-| dbSecurityGroups.updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 1,
-    "dbSecurityGroups": [
-        {
-            "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbSecurityGroupName": "dbSecurityGroupName-example",
-            "description": "description-example",
-            "progressStatus": "NONE",
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"totalCounts": 1,
+"dbSecurityGroups": [
+{
+"dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSecurityGroupName": "dbSecurityGroupName-example",
+"description": "description-example",
+"progressStatus": "NONE",
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| totalCounts | Number | Total number of DB security groups |
+| dbSecurityGroups | Array | DB security groups |
+| dbSecurityGroups.dbSecurityGroupId | UUID | DB security group identifier |
+| dbSecurityGroups.dbSecurityGroupName | String | Name to identify the DB security group |
+| dbSecurityGroups.description | String | Additional information on DB security group |
+| dbSecurityGroups.progressStatus | Enum | Current status of DB security group<br/>- NONE: `None`<br/>- CREATING_RULE: `Creating rules`<br/>- UPDATING_RULE: `Modifying rules`<br/>- DELETING_RULE: `Deleting rules`<br/>- APPLYING_DEFAULT_RULE: `Applying default rules` |
+| dbSecurityGroups.createdYmdt | DateTime | Created at |
+| dbSecurityGroups.updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Create DB Security Group
 
-```http
-POST /v4.0/db-security-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4167,78 +4402,78 @@ POST /v4.0/db-security-groups
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupName | Body | String | O | Name to identify the DB security group<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on DB security group<br/>- Maximum length: `100` |
-| rules | Body | Array | O | DB security group rules |
-| rules.direction | Body | Enum | O | Communication direction<br/>- INGRESS: `Inbound`<br/>- EGRESS: `Outbound` |
-| rules.etherType | Body | Enum | O | Ether type<br/>- IPV4: `IPv4`<br/>- IPV6: `IPv6` |
-| rules.port | Body | Object | O | Port object |
-| rules.port.portType | Body | Enum | O | Port type<br/>- ALL: `All port range (not used in the user console)`<br/>- PORT: `Specific port`<br/>- DB_PORT: `DB receiving port`<br/>- PORT_RANGE: `Port range` |
-| rules.port.minPort | Body | Number | X | Minimum port range<br/>- Minimum value: `3306` |
-| rules.port.maxPort | Body | Number | X | Maximum port range<br/>- Maximum value: `65535` |
-| rules.cidr | Body | String | O | CIDR |
-| rules.description | Body | String | X | Additional information on DB security group rule |
+```http
+POST /v4.0/db-security-groups
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbSecurityGroupName": "dbSecurityGroupName",
-    "description": "description-example",
-    "rules": [
-        {
-            "direction": "INGRESS",
-            "etherType": "IPV4",
-            "port": {
-                "portType": "ALL",
-                "minPort": 3306,
-                "maxPort": 1
-            },
-            "cidr": "192.168.0.0/24",
-            "description": "description-example"
-        }
-    ]
+"dbSecurityGroupName": "dbSecurityGroupName",
+"description": "description-example",
+"rules": [
+{
+"direction": "INGRESS",
+"etherType": "IPV4",
+"port": {
+"portType": "ALL",
+"minPort": 3306,
+"maxPort": 1
+},
+"cidr": "192.168.0.0/24",
+"description": "description-example"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbSecurityGroupName | String | Y | Name to identify the DB security group<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on DB security group<br/>- Maximum length: `100` |
+| rules | Array | Y | DB security group rules |
+| rules.direction | Enum | Y | Communication direction<br/>- INGRESS: `Inbound`<br/>- EGRESS: `Outbound` |
+| rules.etherType | Enum | Y | Ether type<br/>- IPV4: `IPv4`<br/>- IPV6: `IPv6` |
+| rules.port | Object | Y | Port object |
+| rules.port.portType | Enum | Y | Port type<br/>- ALL: `All port range (not used in the user console)`<br/>- PORT: `Specific port`<br/>- DB_PORT: `DB receiving port`<br/>- PORT_RANGE: `Port range` |
+| rules.port.minPort | Number | N | Minimum port range<br/>- Minimum value: `3306` |
+| rules.port.maxPort | Number | N | Maximum port range<br/>- Maximum value: `65535` |
+| rules.cidr | String | Y | CIDR |
+| rules.description | String | N | Additional information on DB security group rule |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbSecurityGroupId | Body | UUID | DB security group identifier |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbSecurityGroupId | UUID | DB security group identifier |
 
 ---
 
 ### Delete DB Security Group
 
-```http
-DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4246,11 +4481,19 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
+| dbSecurityGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
@@ -4260,11 +4503,7 @@ This API does not return a response body.
 
 ### List DB Security Group Details
 
-```http
-GET /v4.0/db-security-groups/{dbSecurityGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4272,82 +4511,85 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/db-security-groups/{dbSecurityGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
+| dbSecurityGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| dbSecurityGroupId | Body | UUID | DB security group identifier |
-| dbSecurityGroupName | Body | String | Name to identify the DB security group |
-| description | Body | String | Additional information on DB security group |
-| progressStatus | Body | Enum | Current status of DB security group<br/>- NONE: `None`<br/>- CREATING_RULE: `Creating rules`<br/>- UPDATING_RULE: `Modifying rules`<br/>- DELETING_RULE: `Deleting rules`<br/>- APPLYING_DEFAULT_RULE: `Applying default rules` |
-| rules | Body | Array | DB security group rules |
-| rules.ruleId | Body | UUID | DB security group rule identifier |
-| rules.description | Body | String | Additional information on DB security group rule |
-| rules.direction | Body | Enum | Communication direction<br/>- INGRESS: `Inbound`<br/>- EGRESS: `Outbound` |
-| rules.etherType | Body | Enum | Ether type<br/>- IPV4: `IPv4`<br/>- IPV6: `IPv6` |
-| rules.port | Body | Object | Port object |
-| rules.port.portType | Body | Enum | Port type<br/>- ALL: `All port range (not used in the user console)`<br/>- PORT: `Specific port`<br/>- DB_PORT: `DB receiving port`<br/>- PORT_RANGE: `Port range` |
-| rules.port.minPort | Body | Number | Minimum port range |
-| rules.port.maxPort | Body | Number | Maximum port range |
-| rules.cidr | Body | String | CIDR |
-| rules.createdYmdt | Body | DateTime | Created date and time |
-| rules.updatedYmdt | Body | DateTime | Modified date and time |
-| createdYmdt | Body | DateTime | Created date and time |
-| updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbSecurityGroupName": "dbSecurityGroupName-example",
-    "description": "description-example",
-    "progressStatus": "NONE",
-    "rules": [
-        {
-            "ruleId": "550e8400-e29b-41d4-a716-446655440000",
-            "description": "description-example",
-            "direction": "INGRESS",
-            "etherType": "IPV4",
-            "port": {
-                "portType": "ALL",
-                "minPort": 1,
-                "maxPort": 1
-            },
-            "cidr": "192.168.0.0/24",
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"dbSecurityGroupName": "dbSecurityGroupName-example",
+"description": "description-example",
+"progressStatus": "NONE",
+"rules": [
+{
+"ruleId": "550e8400-e29b-41d4-a716-446655440000",
+"description": "description-example",
+"direction": "INGRESS",
+"etherType": "IPV4",
+"port": {
+"portType": "ALL",
+"minPort": 1,
+"maxPort": 1
+},
+"cidr": "192.168.0.0/24",
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+],
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| dbSecurityGroupId | UUID | DB security group identifier |
+| dbSecurityGroupName | String | Name to identify the DB security group |
+| description | String | Additional information on DB security group |
+| progressStatus | Enum | Current status of DB security group<br/>- NONE: `None`<br/>- CREATING_RULE: `Creating rules`<br/>- UPDATING_RULE: `Modifying rules`<br/>- DELETING_RULE: `Deleting rules`<br/>- APPLYING_DEFAULT_RULE: `Applying default rules` |
+| rules | Array | DB security group rules |
+| rules.ruleId | UUID | DB security group rule identifier |
+| rules.description | String | Additional information on DB security group rule |
+| rules.direction | Enum | Communication direction<br/>- INGRESS: `Inbound`<br/>- EGRESS: `Outbound` |
+| rules.etherType | Enum | Ether type<br/>- IPV4: `IPv4`<br/>- IPV6: `IPv6` |
+| rules.port | Object | Port object |
+| rules.port.portType | Enum | Port type<br/>- ALL: `All port range (not used in the user console)`<br/>- PORT: `Specific port`<br/>- DB_PORT: `DB receiving port`<br/>- PORT_RANGE: `Port range` |
+| rules.port.minPort | Number | Minimum port range |
+| rules.port.maxPort | Number | Maximum port range |
+| rules.cidr | String | CIDR |
+| rules.createdYmdt | DateTime | Created at |
+| rules.updatedYmdt | DateTime | Modified date and time |
+| createdYmdt | DateTime | Created at |
+| updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Modify DB Security Group
 
-```http
-PUT /v4.0/db-security-groups/{dbSecurityGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4355,24 +4597,34 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-| dbSecurityGroupName | Body | String | X | Name to identify the DB security group<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on DB security group<br/>- Maximum length: `100` |
+```http
+PUT /v4.0/db-security-groups/{dbSecurityGroupId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "dbSecurityGroupName": "dbSecurityGroupName",
-    "description": "description-example"
+"dbSecurityGroupName": "dbSecurityGroupName",
+"description": "description-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| dbSecurityGroupName | String | N | Name to identify the DB security group<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on DB security group<br/>- Maximum length: `100` |
 
 #### Response
 
@@ -4382,11 +4634,7 @@ This API does not return a response body.
 
 ### Delete DB Security Group Rule
 
-```http
-DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4394,45 +4642,48 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-| ruleIds | Query | String | O |  |
+| dbSecurityGroupId | URL | UUID | Y |  |
+| ruleIds | Query | String | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Create DB Security Group Rule
 
-```http
-POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4440,70 +4691,75 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-| direction | Body | Enum | O | Communication direction<br/>- INGRESS: `Inbound`<br/>- EGRESS: `Outbound` |
-| etherType | Body | Enum | O | Ether type<br/>- IPV4: `IPv4`<br/>- IPV6: `IPv6` |
-| port | Body | Object | O | Port object |
-| port.portType | Body | Enum | O | Port type<br/>- ALL: `All port range (not used in the user console)`<br/>- PORT: `Specific port`<br/>- DB_PORT: `DB receiving port`<br/>- PORT_RANGE: `Port range` |
-| port.minPort | Body | Number | X | Minimum port range<br/>- Minimum value: `3306` |
-| port.maxPort | Body | Number | X | Maximum port range<br/>- Maximum value: `65535` |
-| cidr | Body | String | O | CIDR |
-| description | Body | String | X | Additional information on DB security group rule<br/>- Maximum length: `200` |
+```http
+POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "direction": "INGRESS",
-    "etherType": "IPV4",
-    "port": {
-        "portType": "ALL",
-        "minPort": 3306,
-        "maxPort": 1
-    },
-    "cidr": "192.168.0.0/24",
-    "description": "description-example"
+"direction": "INGRESS",
+"etherType": "IPV4",
+"port": {
+"portType": "ALL",
+"minPort": 3306,
+"maxPort": 1
+},
+"cidr": "192.168.0.0/24",
+"description": "description-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| direction | Enum | Y | Communication direction<br/>- INGRESS: `Inbound`<br/>- EGRESS: `Outbound` |
+| etherType | Enum | Y | Ether type<br/>- IPV4: `IPv4`<br/>- IPV6: `IPv6` |
+| port | Object | Y | Port object |
+| port.portType | Enum | Y | Port type<br/>- ALL: `All port range (not used in the user console)`<br/>- PORT: `Specific port`<br/>- DB_PORT: `DB receiving port`<br/>- PORT_RANGE: `Port range` |
+| port.minPort | Number | N | Minimum port range<br/>- Minimum value: `3306` |
+| port.maxPort | Number | N | Maximum port range<br/>- Maximum value: `65535` |
+| cidr | String | Y | CIDR |
+| description | String | N | Additional information on DB security group rule<br/>- Maximum length: `200` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
 
 ---
 
 ### Modify DB Security Group Rule
 
-```http
-PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4511,72 +4767,78 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| dbSecurityGroupId | URL | UUID | O |  |
-| ruleId | URL | UUID | O |  |
-| direction | Body | Enum | O | Communication direction<br/>- INGRESS: `Inbound`<br/>- EGRESS: `Outbound` |
-| etherType | Body | Enum | O | Ether type<br/>- IPV4: `IPv4`<br/>- IPV6: `IPv6` |
-| port | Body | Object | O | Port object |
-| port.portType | Body | Enum | O | Port type<br/>- ALL: `All port range (not used in the user console)`<br/>- PORT: `Specific port`<br/>- DB_PORT: `DB receiving port`<br/>- PORT_RANGE: `Port range` |
-| port.minPort | Body | Number | X | Minimum port range<br/>- Minimum value: `3306` |
-| port.maxPort | Body | Number | X | Maximum port range<br/>- Maximum value: `65535` |
-| cidr | Body | String | O | CIDR |
-| description | Body | String | X | Additional information on DB security group rule<br/>- Maximum length: `200` |
+```http
+PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbSecurityGroupId | URL | UUID | Y |  |
+| ruleId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "direction": "INGRESS",
-    "etherType": "IPV4",
-    "port": {
-        "portType": "ALL",
-        "minPort": 3306,
-        "maxPort": 1
-    },
-    "cidr": "192.168.0.0/24",
-    "description": "description-example"
+"direction": "INGRESS",
+"etherType": "IPV4",
+"port": {
+"portType": "ALL",
+"minPort": 3306,
+"maxPort": 1
+},
+"cidr": "192.168.0.0/24",
+"description": "description-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| direction | Enum | Y | Communication direction<br/>- INGRESS: `Inbound`<br/>- EGRESS: `Outbound` |
+| etherType | Enum | Y | Ether type<br/>- IPV4: `IPv4`<br/>- IPV6: `IPv6` |
+| port | Object | Y | Port object |
+| port.portType | Enum | Y | Port type<br/>- ALL: `All port range (not used in the user console)`<br/>- PORT: `Specific port`<br/>- DB_PORT: `DB receiving port`<br/>- PORT_RANGE: `Port range` |
+| port.minPort | Number | N | Minimum port range<br/>- Minimum value: `3306` |
+| port.maxPort | Number | N | Maximum port range<br/>- Maximum value: `65535` |
+| cidr | String | Y | CIDR |
+| description | String | N | Additional information on DB security group rule<br/>- Maximum length: `200` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| jobId | Body | UUID | Identifier of requested task |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
 ---
+
 ## Parameter Groups
 
 ### List Parameter Groups
 
-```http
-GET /v4.0/parameter-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4584,61 +4846,62 @@ GET /v4.0/parameter-groups
 
 #### Request
 
+```http
+GET /v4.0/parameter-groups
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| totalCounts | Body | Number | Total number of parameter groups |
-| parameterGroups | Body | Array | Parameter groups |
-| parameterGroups.parameterGroupId | Body | UUID | Parameter group identifier |
-| parameterGroups.parameterGroupName | Body | String | Name to identify parameter groups |
-| parameterGroups.description | Body | String | Additional information on parameter group |
-| parameterGroups.dbVersion | Body | Enum | DB engine type |
-| parameterGroups.parameterGroupType | Body | Enum | Parameter group type<br/>- USER<br/>- ADMIN<br/>- DEFAULT<br/>- CLUSTER_USER |
-| parameterGroups.parameterGroupStatus | Body | Enum | Parameter group current status<br/>- STABLE: `Applied`<br/>- NEED_TO_APPLY: `Need to apply`<br/>- DELETED: `Deleted` |
-| parameterGroups.createdYmdt | Body | DateTime | Created date and time |
-| parameterGroups.updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 1,
-    "parameterGroups": [
-        {
-            "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-            "parameterGroupName": "parameterGroupName-example",
-            "description": "description-example",
-            "dbVersion": "MYSQL_V8036",
-            "parameterGroupType": "USER",
-            "parameterGroupStatus": "STABLE",
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"totalCounts": 1,
+"parameterGroups": [
+{
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"parameterGroupName": "parameterGroupName-example",
+"description": "description-example",
+"dbVersion": "MYSQL_V8036",
+"parameterGroupType": "USER",
+"parameterGroupStatus": "STABLE",
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| totalCounts | Number | Total number of parameter groups |
+| parameterGroups | Array | Parameter groups |
+| parameterGroups.parameterGroupId | UUID | Parameter group identifier |
+| parameterGroups.parameterGroupName | String | Name to identify parameter groups |
+| parameterGroups.description | String | Additional information on parameter group |
+| parameterGroups.dbVersion | String | DB engine type |
+| parameterGroups.parameterGroupType | Enum | Parameter group type<br/>- USER<br/>- ADMIN<br/>- DEFAULT<br/>- CLUSTER_USER |
+| parameterGroups.parameterGroupStatus | Enum | Parameter group current status<br/>- STABLE: `Applied`<br/>- NEED_TO_APPLY: `Need to apply`<br/>- DELETED: `Deleted` |
+| parameterGroups.createdYmdt | DateTime | Created at |
+| parameterGroups.updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Create Parameter Group
 
-```http
-POST /v4.0/parameter-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4646,58 +4909,58 @@ POST /v4.0/parameter-groups
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| parameterGroupName | Body | String | O | Name to identify parameter groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on parameter group<br/>- Maximum length: `100` |
-| dbVersion | Body | Enum | O | DB engine type |
+```http
+POST /v4.0/parameter-groups
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "parameterGroupName": "parameterGroupName",
-    "description": "description-example",
-    "dbVersion": "MYSQL_V8036"
+"parameterGroupName": "parameterGroupName",
+"description": "description-example",
+"dbVersion": "MYSQL_V8036"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| parameterGroupName | String | Y | Name to identify parameter groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on parameter group<br/>- Maximum length: `100` |
+| dbVersion | String | Y | DB engine type |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| parameterGroupId | Body | UUID | Parameter group identifier |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| parameterGroupId | UUID | Parameter group identifier |
 
 ---
 
 ### Delete Parameter Group
 
-```http
-DELETE /v4.0/parameter-groups/{parameterGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4705,11 +4968,19 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/parameter-groups/{parameterGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
+| parameterGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
@@ -4719,11 +4990,7 @@ This API does not return a response body.
 
 ### List Parameter Group Details
 
-```http
-GET /v4.0/parameter-groups/{parameterGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4731,79 +4998,82 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/parameter-groups/{parameterGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
+| parameterGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| parameterGroupId | Body | UUID | Parameter group identifier |
-| parameterGroupName | Body | String | Name to identify parameter groups |
-| description | Body | String | Additional information on parameter group |
-| dbVersion | Body | Enum | DB engine type |
-| parameterGroupStatus | Body | Enum | Parameter group current status<br/>- STABLE: `Applied`<br/>- NEED_TO_APPLY: `Need to apply`<br/>- DELETED: `Deleted` |
-| parameters | Body | Array | Parameter list |
-| parameters.parameterId | Body | UUID | Parameter identifier |
-| parameters.parameterFileGroup | Body | Enum | Parameter file group type<br/>- CLIENT<br/>- MYSQL<br/>- MYSQLD |
-| parameters.parameterName | Body | String | Parameter name |
-| parameters.fileParameterName | Body | String | Parameter file name |
-| parameters.value | Body | String | Current value |
-| parameters.defaultValue | Body | String | Default value |
-| parameters.allowedValue | Body | String | Permitted values |
-| parameters.updateType | Body | Enum | Modify type<br/>- VARIABLE<br/>- CONSTANT<br/>- INIT_VARIABLE |
-| parameters.applyType | Body | Enum | Apply type<br/>- BOTH<br/>- SESSION<br/>- FILE |
-| createdYmdt | Body | DateTime | Created date and time |
-| updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "parameterGroupName": "parameterGroupName-example",
-    "description": "description-example",
-    "dbVersion": "MYSQL_V8036",
-    "parameterGroupStatus": "STABLE",
-    "parameters": [
-        {
-            "parameterId": "550e8400-e29b-41d4-a716-446655440000",
-            "parameterFileGroup": "CLIENT",
-            "parameterName": "parameterName-example",
-            "fileParameterName": "fileParameterName-example",
-            "value": "value-example",
-            "defaultValue": "defaultValue-example",
-            "allowedValue": "allowedValue-example",
-            "updateType": "VARIABLE",
-            "applyType": "BOTH"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"parameterGroupName": "parameterGroupName-example",
+"description": "description-example",
+"dbVersion": "MYSQL_V8036",
+"parameterGroupStatus": "STABLE",
+"parameters": [
+{
+"parameterId": "550e8400-e29b-41d4-a716-446655440000",
+"parameterFileGroup": "CLIENT",
+"parameterName": "parameterName-example",
+"fileParameterName": "fileParameterName-example",
+"value": "value-example",
+"defaultValue": "defaultValue-example",
+"allowedValue": "allowedValue-example",
+"updateType": "VARIABLE",
+"applyType": "BOTH"
+}
+],
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| parameterGroupId | UUID | Parameter group identifier |
+| parameterGroupName | String | Name to identify parameter groups |
+| description | String | Additional information on parameter group |
+| dbVersion | String | DB engine type |
+| parameterGroupStatus | Enum | Parameter group current status<br/>- STABLE: `Applied`<br/>- NEED_TO_APPLY: `Need to apply`<br/>- DELETED: `Deleted` |
+| parameters | Array | Parameter list |
+| parameters.parameterId | UUID | Parameter identifier |
+| parameters.parameterFileGroup | Enum | Parameter file group type<br/>- CLIENT<br/>- MYSQL<br/>- MYSQLD |
+| parameters.parameterName | String | Parameter name |
+| parameters.fileParameterName | String | Parameter file name |
+| parameters.value | String | Current value |
+| parameters.defaultValue | String | Default value |
+| parameters.allowedValue | String | Permitted values |
+| parameters.updateType | Enum | Modify type<br/>- VARIABLE<br/>- CONSTANT<br/>- INIT_VARIABLE |
+| parameters.applyType | Enum | Apply type<br/>- BOTH<br/>- SESSION<br/>- FILE |
+| createdYmdt | DateTime | Created at |
+| updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Modify Parameter Group
 
-```http
-PUT /v4.0/parameter-groups/{parameterGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4811,24 +5081,34 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-| parameterGroupName | Body | String | X | Name to identify parameter groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on parameter group<br/>- Maximum length: `100` |
+```http
+PUT /v4.0/parameter-groups/{parameterGroupId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "parameterGroupName": "parameterGroupName",
-    "description": "description-example"
+"parameterGroupName": "parameterGroupName",
+"description": "description-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| parameterGroupName | String | N | Name to identify parameter groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on parameter group<br/>- Maximum length: `100` |
 
 #### Response
 
@@ -4838,11 +5118,7 @@ This API does not return a response body.
 
 ### Copy Parameter Group
 
-```http
-POST /v4.0/parameter-groups/{parameterGroupId}/copy
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4850,57 +5126,62 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-| parameterGroupName | Body | String | O | Name to identify parameter groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| description | Body | String | X | Additional information on parameter group<br/>- Maximum length: `100` |
+```http
+POST /v4.0/parameter-groups/{parameterGroupId}/copy
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "parameterGroupName": "parameterGroupName",
-    "description": "description-example"
+"parameterGroupName": "parameterGroupName",
+"description": "description-example"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| parameterGroupName | String | Y | Name to identify parameter groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| description | String | N | Additional information on parameter group<br/>- Maximum length: `100` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| parameterGroupId | Body | UUID | Parameter group identifier |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| parameterGroupId | UUID | Parameter group identifier |
 
 ---
 
 ### Modify Parameter
 
-```http
-PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4908,29 +5189,39 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
-| modifiedParameters | Body | Array | O | Parameters to change |
-| modifiedParameters.parameterId | Body | UUID | O | Parameter identifier |
-| modifiedParameters.value | Body | String | O | Parameter value to change |
+```http
+PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| parameterGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "modifiedParameters": [
-        {
-            "parameterId": "550e8400-e29b-41d4-a716-446655440000",
-            "value": "value-example"
-        }
-    ]
+"modifiedParameters": [
+{
+"parameterId": "550e8400-e29b-41d4-a716-446655440000",
+"value": "value-example"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| modifiedParameters | Array | Y | Parameters to change |
+| modifiedParameters.parameterId | UUID | Y | Parameter identifier |
+| modifiedParameters.value | String | Y | Parameter value to change |
 
 #### Response
 
@@ -4940,11 +5231,7 @@ This API does not return a response body.
 
 ### Reset Parameter Group
 
-```http
-PUT /v4.0/parameter-groups/{parameterGroupId}/reset
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4952,26 +5239,31 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 
 #### Request
 
-This API does not require a request body.
+```http
+PUT /v4.0/parameter-groups/{parameterGroupId}/reset
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| parameterGroupId | URL | UUID | O |  |
+| parameterGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
 This API does not return a response body.
 
 ---
+
 ## User Group
 
 ### List User Groups
 
-```http
-GET /v4.0/user-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -4979,53 +5271,54 @@ GET /v4.0/user-groups
 
 #### Request
 
+```http
+GET /v4.0/user-groups
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| totalCounts | Body | Number | Total number of user groups |
-| userGroups | Body | Array | User group list |
-| userGroups.userGroupId | Body | UUID | User group identifier |
-| userGroups.userGroupName | Body | String | Name to identify user groups |
-| userGroups.createdYmdt | Body | DateTime | Created date and time |
-| userGroups.updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 1,
-    "userGroups": [
-        {
-            "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
-            "userGroupName": "userGroupName-example",
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"totalCounts": 1,
+"userGroups": [
+{
+"userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"userGroupName": "userGroupName-example",
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| totalCounts | Number | Total number of user groups |
+| userGroups | Array | User group list |
+| userGroups.userGroupId | UUID | User group identifier |
+| userGroups.userGroupName | String | Name to identify user groups |
+| userGroups.createdYmdt | DateTime | Created at |
+| userGroups.updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Create User Group
 
-```http
-POST /v4.0/user-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5033,58 +5326,58 @@ POST /v4.0/user-groups
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| userGroupName | Body | String | O | Name to identify user groups |
-| memberIds | Body | Array | O | List of project member identifiers |
-| selectAll | Body | Boolean | X | Whether to include all project members<br/>- Default: `false` |
+```http
+POST /v4.0/user-groups
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "userGroupName": "userGroupName-example",
-    "memberIds": [],
-    "selectAll": false
+"userGroupName": "userGroupName-example",
+"memberIds": [],
+"selectAll": false
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| userGroupName | String | Y | Name to identify user groups |
+| memberIds | Array | Y | List of project member identifiers |
+| selectAll | Boolean | N | Whether to include all project members<br/>- Default: `false` |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| userGroupId | Body | UUID | User group identifier |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "userGroupId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"userGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| userGroupId | UUID | User group identifier |
 
 ---
 
 ### Delete User Group
 
-```http
-DELETE /v4.0/user-groups/{userGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5092,11 +5385,19 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/user-groups/{userGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| userGroupId | URL | UUID | O |  |
+| userGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
@@ -5106,11 +5407,7 @@ This API does not return a response body.
 
 ### List User Group Details
 
-```http
-GET /v4.0/user-groups/{userGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5118,59 +5415,62 @@ GET /v4.0/user-groups/{userGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/user-groups/{userGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| userGroupId | URL | UUID | O |  |
+| userGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| userGroupId | Body | UUID | User group identifier |
-| userGroupName | Body | String | Name to identify user groups |
-| userGroupTypeCode | Body | Enum | User group type<br/>- ENTIRE<br/>- INDIVIDUAL_MEMBER |
-| members | Body | Array | Project member list |
-| members.memberId | Body | UUID | Project member identifier |
-| createdYmdt | Body | DateTime | Created date and time |
-| updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "userGroupName": "userGroupName-example",
-    "userGroupTypeCode": "ENTIRE",
-    "members": [
-        {
-            "memberId": "550e8400-e29b-41d4-a716-446655440000"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"userGroupName": "userGroupName-example",
+"userGroupTypeCode": "ENTIRE",
+"members": [
+{
+"memberId": "550e8400-e29b-41d4-a716-446655440000"
+}
+],
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| userGroupId | UUID | User group identifier |
+| userGroupName | String | Name to identify user groups |
+| userGroupTypeCode | Enum | User group type<br/>- ENTIRE<br/>- INDIVIDUAL_MEMBER |
+| members | Array | Project member list |
+| members.memberId | UUID | Project member identifier |
+| createdYmdt | DateTime | Created at |
+| updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Modify User Group
 
-```http
-PUT /v4.0/user-groups/{userGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5178,41 +5478,48 @@ PUT /v4.0/user-groups/{userGroupId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| userGroupId | URL | UUID | O |  |
-| userGroupName | Body | String | O | Name to identify user groups |
-| memberIds | Body | Array | X | List of project member identifiers |
-| selectAll | Body | Boolean | X | Whether to include all project members<br/>- Default: `false` |
+```http
+PUT /v4.0/user-groups/{userGroupId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| userGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "userGroupName": "userGroupName-example",
-    "memberIds": [],
-    "selectAll": false
+"userGroupName": "userGroupName-example",
+"memberIds": [],
+"selectAll": false
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| userGroupName | String | Y | Name to identify user groups |
+| memberIds | Array | N | List of project member identifiers |
+| selectAll | Boolean | N | Whether to include all project members<br/>- Default: `false` |
 
 #### Response
 
 This API does not return a response body.
 
 ---
+
 ## Notification Group
 
 ### List Notification Groups
 
-```http
-GET /v4.0/notification-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5220,57 +5527,58 @@ GET /v4.0/notification-groups
 
 #### Request
 
+```http
+GET /v4.0/notification-groups
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| notificationGroups | Body | Array | Notification group list |
-| notificationGroups.notificationGroupId | Body | UUID | Notification group identifier |
-| notificationGroups.notificationGroupName | Body | String | Name to identify notification groups |
-| notificationGroups.notifyEmail | Body | Boolean | Whether to be notified by email |
-| notificationGroups.notifySms | Body | Boolean | Whether to be notified by SMS |
-| notificationGroups.isEnabled | Body | Boolean | Whether enabled |
-| notificationGroups.createdYmdt | Body | DateTime | Created date and time |
-| notificationGroups.updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "notificationGroups": [
-        {
-            "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
-            "notificationGroupName": "notificationGroupName-example",
-            "notifyEmail": false,
-            "notifySms": false,
-            "isEnabled": false,
-            "createdYmdt": "2023-12-31T15:00:00+09:00",
-            "updatedYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"notificationGroups": [
+{
+"notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"notificationGroupName": "notificationGroupName-example",
+"notifyEmail": false,
+"notifySms": false,
+"isEnabled": false,
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| notificationGroups | Array | Notification group list |
+| notificationGroups.notificationGroupId | UUID | Notification group identifier |
+| notificationGroups.notificationGroupName | String | Name to identify notification groups |
+| notificationGroups.notifyEmail | Boolean | Whether to be notified by email |
+| notificationGroups.notifySms | Boolean | Whether to be notified by SMS |
+| notificationGroups.isEnabled | Boolean | Whether to activate |
+| notificationGroups.createdYmdt | DateTime | Created at |
+| notificationGroups.updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Create Notification Group
 
-```http
-POST /v4.0/notification-groups
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5278,64 +5586,64 @@ POST /v4.0/notification-groups
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| notificationGroupName | Body | String | O | Name to identify notification groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
-| notifyEmail | Body | Boolean | X | Whether to be notified by email<br/>- Default: `true` |
-| notifySms | Body | Boolean | X | Whether to be notified by SMS<br/>- Default: `true` |
-| isEnabled | Body | Boolean | X | Whether enabled<br/>- Default: `true` |
-| dbInstanceIds | Body | Array | O | List of DB instance identifiers to monitor |
-| userGroupIds | Body | Array | O | List of user group identifiers |
+```http
+POST /v4.0/notification-groups
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "notificationGroupName": "notificationGroupName",
-    "notifyEmail": true,
-    "notifySms": true,
-    "isEnabled": true,
-    "dbInstanceIds": [],
-    "userGroupIds": []
+"notificationGroupName": "notificationGroupName",
+"notifyEmail": true,
+"notifySms": true,
+"isEnabled": true,
+"dbInstanceIds": [],
+"userGroupIds": []
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| notificationGroupName | String | Y | Name to identify notification groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| notifyEmail | Boolean | N | Whether to be notified by email<br/>- Default: `true` |
+| notifySms | Boolean | N | Whether to be notified by SMS<br/>- Default: `true` |
+| isEnabled | Boolean | N | Whether enabled<br/>- Default: `true` |
+| dbInstanceIds | Array | Y | List of DB instance identifiers to monitor |
+| userGroupIds | Array | Y | List of user group identifiers |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| notificationGroupId | Body | UUID | Notification group identifier |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"notificationGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| notificationGroupId | UUID | Notification group identifier |
 
 ---
 
 ### Delete Notification Group
 
-```http
-DELETE /v4.0/notification-groups/{notificationGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5343,11 +5651,19 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/notification-groups/{notificationGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| notificationGroupId | URL | UUID | O |  |
+| notificationGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
@@ -5357,11 +5673,7 @@ This API does not return a response body.
 
 ### View Notification Group Details
 
-```http
-GET /v4.0/notification-groups/{notificationGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5369,74 +5681,77 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 #### Request
 
-This API does not require a request body.
+```http
+GET /v4.0/notification-groups/{notificationGroupId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| notificationGroupId | URL | UUID | O |  |
+| notificationGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| notificationGroupId | Body | UUID | Notification group identifier |
-| notificationGroupName | Body | String | Name to identify notification groups |
-| notifyEmail | Body | Boolean | Whether to be notified by email |
-| notifySms | Body | Boolean | Whether to be notified by SMS |
-| isEnabled | Body | Boolean | Whether enabled |
-| dbInstances | Body | Array | List of DB instances to monitor |
-| dbInstances.dbInstanceId | Body | UUID | DB instance identifier |
-| dbInstances.dbInstanceName | Body | String | Name to identify DB instances |
-| userGroups | Body | Array | User group list |
-| userGroups.userGroupId | Body | UUID | User group identifier |
-| userGroups.userGroupName | Body | String | Name to identify user groups |
-| createdYmdt | Body | DateTime | Created date and time |
-| updatedYmdt | Body | DateTime | Modified date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "notificationGroupName": "notificationGroupName-example",
-    "notifyEmail": false,
-    "notifySms": false,
-    "isEnabled": false,
-    "dbInstances": [
-        {
-            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbInstanceName": "dbInstanceName-example"
-        }
-    ],
-    "userGroups": [
-        {
-            "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
-            "userGroupName": "userGroupName-example"
-        }
-    ],
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"notificationGroupName": "notificationGroupName-example",
+"notifyEmail": false,
+"notifySms": false,
+"isEnabled": false,
+"dbInstances": [
+{
+"dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+"dbInstanceName": "dbInstanceName-example"
+}
+],
+"userGroups": [
+{
+"userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+"userGroupName": "userGroupName-example"
+}
+],
+"createdYmdt": "2023-12-31T15:00:00+09:00",
+"updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| notificationGroupId | UUID | Notification group identifier |
+| notificationGroupName | String | Name to identify notification groups |
+| notifyEmail | Boolean | Whether to be notified by email |
+| notifySms | Boolean | Whether to be notified by SMS |
+| isEnabled | Boolean | Whether to activate |
+| dbInstances | Array | List of DB instances to monitor |
+| dbInstances.dbInstanceId | UUID | DB instance identifier |
+| dbInstances.dbInstanceName | String | Name to identify DB instances |
+| userGroups | Array | User group list |
+| userGroups.userGroupId | UUID | User group identifier |
+| userGroups.userGroupName | String | Name to identify user groups |
+| createdYmdt | DateTime | Created at |
+| updatedYmdt | DateTime | Modified date and time |
 
 ---
 
 ### Modify Notification Group
 
-```http
-PUT /v4.0/notification-groups/{notificationGroupId}
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5444,53 +5759,66 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| notificationGroupId | URL | UUID | O |  |
-| notificationGroupName | Body | String | X | Name to identify notification groups |
-| notifyEmail | Body | Boolean | X | Whether to be notified by email<br/>- Default: `false` |
-| notifySms | Body | Boolean | X | Whether to be notified by SMS<br/>- Default: `false` |
-| isEnabled | Body | Boolean | X | Whether enabled<br/>- Default: `false` |
-| dbInstanceIds | Body | Array | X | List of DB instance identifiers to monitor |
-| userGroupIds | Body | Array | X | List of user group identifiers |
+```http
+PUT /v4.0/notification-groups/{notificationGroupId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| notificationGroupId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "notificationGroupName": "notificationGroupName-example",
-    "notifyEmail": false,
-    "notifySms": false,
-    "isEnabled": false,
-    "dbInstanceIds": [],
-    "userGroupIds": []
+"notificationGroupName": "notificationGroupName-example",
+"notifyEmail": false,
+"notifySms": false,
+"isEnabled": false,
+"dbInstanceIds": [],
+"userGroupIds": []
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| notificationGroupName | String | N | Name to identify notification groups |
+| notifyEmail | Boolean | N | Whether to be notified by email<br/>- Default: `false` |
+| notifySms | Boolean | N | Whether to be notified by SMS<br/>- Default: `false` |
+| isEnabled | Boolean | N | Whether enabled<br/>- Default: `false` |
+| dbInstanceIds | Array | N | List of DB instance identifiers to monitor |
+| userGroupIds | Array | N | List of user group identifiers |
 
 #### Response
 
 This API does not return a response body.
 
 ---
+
 ## Monitoring
 
 ### View Stats
 
-```http
-GET /v4.0/metric-statistics
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:Metric.List | View stats |
 
 #### Request
+
+```http
+GET /v4.0/metric-statistics
+```
+
+#### Request Body
 
 This API does not require a request body.
 
@@ -5502,11 +5830,7 @@ This API does not return a response body.
 
 ### List Metric List
 
-```http
-GET /v4.0/metrics
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5514,37 +5838,42 @@ GET /v4.0/metrics
 
 #### Request
 
+```http
+GET /v4.0/metrics
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| metrics | Body | Array | Metric list |
-| metrics.measureName | Body | String | Metric type to query |
-| metrics.unit | Body | String | Measure unit |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "metrics": [
-        {
-            "measureName": "measureName-example",
-            "unit": "unit-example"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"metrics": [
+{
+"measureName": "measureName-example",
+"unit": "unit-example"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| metrics | Array | Metric list |
+| metrics.measureName | String | Metric type to query |
+| metrics.unit | String | Measure unit |
 
 ---
 
@@ -5554,22 +5883,18 @@ This API does not require a request body.
 
 Events can be categorized into categories, which are shown below.
 
-| Event category    | Description      |
+| Event category | Description |
 |-------------|---------|
-| ALL         | All      |
-| BACKUP      | Backup      |
+| ALL | All |
+| BACKUP | Backup |
 | DB_INSTANCE | DB instance |
-| JOB         | Job      |
-| TENANT      | Tenant     |
-| MONITORING  | Monitoring    |
+| JOB | Job |
+| TENANT | Tenant |
+| MONITORING | Monitoring |
 
 ### List Subscribable Event Codes
 
-```http
-GET /v4.0/event-codes
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5577,47 +5902,48 @@ GET /v4.0/event-codes
 
 #### Request
 
+```http
+GET /v4.0/event-codes
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| eventCodes | Body | Array | Event code list |
-| eventCodes.eventCode | Body | Enum | Event code |
-| eventCodes.eventCategoryType | Body | Enum | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "eventCodes": [
-        {
-            "eventCode": "ENUM_VALUE",
-            "eventCategoryType": "ALL"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"eventCodes": [
+{
+"eventCode": "ENUM_VALUE",
+"eventCategoryType": "ALL"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| eventCodes | Array | Event code list |
+| eventCodes.eventCode | Enum | Event code |
+| eventCodes.eventCategoryType | Enum | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
 
 ---
 
 ### List Events
 
-```http
-GET /v4.0/events
-```
-
-#### Required permissions
+#### Required Permission
 
 | Permission Name | Description |
 |-----|-----|
@@ -5625,228 +5951,239 @@ GET /v4.0/events
 
 #### Request
 
+```http
+GET /v4.0/events
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| totalCounts | Body | Number | Total number of events |
-| events | Body | Array | Event list |
-| events.eventCategoryType | Body | Enum | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-| events.eventCode | Body | Enum | Occurred event type |
-| events.sourceId | Body | UUID | Event source identifier |
-| events.sourceName | Body | String | Name to identify event sources |
-| events.messages | Body | Array | Event messages |
-| events.messages.langCode | Body | Enum | Language code<br/>- KO<br/>- EN<br/>- JA<br/>- ZH |
-| events.messages.message | Body | String | Event message |
-| events.eventYmdt | Body | DateTime | Event occurred date and time |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 1,
-    "events": [
-        {
-            "eventCategoryType": "ALL",
-            "eventCode": "ENUM_VALUE",
-            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
-            "sourceName": "sourceName-example",
-            "messages": [
-                {
-                    "langCode": "KO",
-                    "message": "message-example"
-                }
-            ],
-            "eventYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"totalCounts": 1,
+"events": [
+{
+"eventCategoryType": "ALL",
+"eventCode": "ENUM_VALUE",
+"sourceId": "550e8400-e29b-41d4-a716-446655440000",
+"sourceName": "sourceName-example",
+"messages": [
+{
+"langCode": "KO",
+"message": "message-example"
+}
+],
+"eventYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
 
+| Name | Type | Description |
+|-----|-----|-----|
+| totalCounts | Number | Total number of events |
+| events | Array | Event list |
+| events.eventCategoryType | Enum | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| events.eventCode | Enum | Occurred event type |
+| events.sourceId | UUID | Identifier of the event source |
+| events.sourceName | String | Name to identify event sources |
+| events.messages | Array | Event messages |
+| events.messages.langCode | Enum | Language code<br/>- KO<br/>- EN<br/>- JA<br/>- ZH |
+| events.messages.message | String | Event message |
+| events.eventYmdt | DateTime | Event occurred date and time |
+
 ---
+
 ## Event Subscription
 
 ### List Event Subscriptions
 
-```http
-GET /v4.0/event-subscriptions
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:EventSubscription.List | List event subscriptions |
 
 #### Request
 
+```http
+GET /v4.0/event-subscriptions
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| totalCounts | Body | Number | Total number of event subscriptions |
-| eventSubscriptions | Body | Array | List of event subscriptions |
-| eventSubscriptions.eventSubscriptionId | Body | UUID | Event subscription identifier |
-| eventSubscriptions.eventCategoryType | Body | Enum | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-| eventSubscriptions.eventSubscriptionName | Body | String | A name that identifies the event subscription |
-| eventSubscriptions.enabled | Body | Boolean | Whether to activate |
-| eventSubscriptions.notifyEmail | Body | Boolean | Whether to send emails |
-| eventSubscriptions.notifySms | Body | Boolean | Whether to send SMS messages |
-| eventSubscriptions.eventCodes | Body | Array | List of event codes to subscribe to |
-| eventSubscriptions.sources | Body | Array | List of event sources to subscribe to |
-| eventSubscriptions.sources.sourceId | Body | UUID | Identifier of the event source |
-| eventSubscriptions.sources.eventCategoryType | Body | Enum | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-| eventSubscriptions.userGroupIds | Body | Array | List of identifiers of user groups subscribing to the event |
-| eventSubscriptions.createdYmdt | Body | DateTime | Created at |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "totalCounts": 1,
-    "eventSubscriptions": [
-        {
-            "eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000",
-            "eventCategoryType": "ALL",
-            "eventSubscriptionName": "eventSubscriptionName-example",
-            "enabled": false,
-            "notifyEmail": false,
-            "notifySms": false,
-            "eventCodes": [],
-            "sources": [
-                {
-                    "sourceId": "550e8400-e29b-41d4-a716-446655440000",
-                    "eventCategoryType": "ALL"
-                }
-            ],
-            "userGroupIds": [
-                "550e8400-e29b-41d4-a716-446655440000"
-            ],
-            "createdYmdt": "2023-12-31T15:00:00+09:00"
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"totalCounts": 1,
+"eventSubscriptions": [
+{
+"eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000",
+"eventCategoryType": "ALL",
+"eventSubscriptionName": "eventSubscriptionName-example",
+"enabled": false,
+"notifyEmail": false,
+"notifySms": false,
+"eventCodes": [],
+"sources": [
+{
+"sourceId": "550e8400-e29b-41d4-a716-446655440000",
+"eventCategoryType": "ALL"
+}
+],
+"userGroupIds": [
+"550e8400-e29b-41d4-a716-446655440000"
+],
+"createdYmdt": "2023-12-31T15:00:00+09:00"
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| totalCounts | Number | Total number of event subscriptions |
+| eventSubscriptions | Array | List of event subscriptions |
+| eventSubscriptions.eventSubscriptionId | UUID | Event subscription identifier |
+| eventSubscriptions.eventCategoryType | Enum | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| eventSubscriptions.eventSubscriptionName | String | A name that identifies the event subscription |
+| eventSubscriptions.enabled | Boolean | Whether to activate |
+| eventSubscriptions.notifyEmail | Boolean | Whether to send emails |
+| eventSubscriptions.notifySms | Boolean | Whether to send SMS messages |
+| eventSubscriptions.eventCodes | Array | List of event codes to subscribe to |
+| eventSubscriptions.sources | Array | List of event sources to subscribe to |
+| eventSubscriptions.sources.sourceId | UUID | Identifier of the event source |
+| eventSubscriptions.sources.eventCategoryType | Enum | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| eventSubscriptions.userGroupIds | Array | List of identifiers of user groups subscribing to the event |
+| eventSubscriptions.createdYmdt | DateTime | Created at |
 
 ---
 
 ### Create an Event Subscription
 
-```http
-POST /v4.0/event-subscriptions
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:EventSubscription.Create | Create an event subscription |
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| eventCategoryType | Body | Enum | O | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-| eventSubscriptionName | Body | String | O | A name that identifies the event subscription |
-| enabled | Body | Boolean | O | Whether to activate |
-| notifyEmail | Body | Boolean | O | Whether to send emails |
-| notifySms | Body | Boolean | O | Whether to send SMS messages |
-| eventCodes | Body | Array | O | List of event codes to subscribe to |
-| sources | Body | Array | O | List of event sources to subscribe to |
-| sources.sourceId | Body | UUID | O | Identifier of the event source |
-| sources.eventCategoryType | Body | Enum | O | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-| userGroupIds | Body | Array | O | List of identifiers of user groups to subscribe to |
+```http
+POST /v4.0/event-subscriptions
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "eventCategoryType": "ALL",
-    "eventSubscriptionName": "eventSubscriptionName-example",
-    "enabled": false,
-    "notifyEmail": false,
-    "notifySms": false,
-    "eventCodes": [],
-    "sources": [
-        {
-            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
-            "eventCategoryType": "ALL"
-        }
-    ],
-    "userGroupIds": []
+"eventCategoryType": "ALL",
+"eventSubscriptionName": "eventSubscriptionName-example",
+"enabled": false,
+"notifyEmail": false,
+"notifySms": false,
+"eventCodes": [],
+"sources": [
+{
+"sourceId": "550e8400-e29b-41d4-a716-446655440000",
+"eventCategoryType": "ALL"
+}
+],
+"userGroupIds": []
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| eventCategoryType | Enum | Y | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| eventSubscriptionName | String | Y | A name that identifies the event subscription |
+| enabled | Boolean | Y | Whether to activate |
+| notifyEmail | Boolean | Y | Whether to send emails |
+| notifySms | Boolean | Y | Whether to send SMS messages |
+| eventCodes | Array | Y | List of event codes to subscribe to |
+| sources | Array | Y | List of event sources to subscribe to |
+| sources.sourceId | UUID | Y | Identifier of the event source |
+| sources.eventCategoryType | Enum | Y | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| userGroupIds | Array | Y | List of identifiers of user groups to subscribe to |
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| eventSubscriptionId | Body | UUID | Event subscription identifier |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000"
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| eventSubscriptionId | UUID | Event subscription identifier |
 
 ---
 
 ### Delete an Event Subscription
 
-```http
-DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:EventSubscription.Delete | Delete an event subscription |
 
 #### Request
 
-This API does not require a request body.
+```http
+DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
+```
 
-| Name | Type | Format | Required | Description |
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| eventSubscriptionId | URL | UUID | O |  |
+| eventSubscriptionId | URL | UUID | Y |  |
+
+#### Request Body
+
+This API does not require a request body.
 
 #### Response
 
@@ -5856,55 +6193,61 @@ This API does not return a response body.
 
 ### Modify an Event Subscription
 
-```http
-PUT /v4.0/event-subscriptions/{eventSubscriptionId}
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:EventSubscription.Modify | Modify an event subscription |
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|-----|-----|-----|-----|-----|
-| eventSubscriptionId | URL | UUID | O |  |
-| eventCategoryType | Body | Enum | X | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-| eventSubscriptionName | Body | String | X | A name that identifies the event subscription |
-| enabled | Body | Boolean | X | Whether to activate |
-| notifyEmail | Body | Boolean | X | Whether to send emails |
-| notifySms | Body | Boolean | X | Whether to send SMS messages |
-| eventCodes | Body | Array | X | List of event codes to subscribe to |
-| sources | Body | Array | X | List of event sources to subscribe to |
-| sources.sourceId | Body | UUID | O | Identifier of the event source |
-| sources.eventCategoryType | Body | Enum | O | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-| userGroupIds | Body | Array | X | List of identifiers of user groups to subscribe to |
+```http
+PUT /v4.0/event-subscriptions/{eventSubscriptionId}
+```
 
-<details><summary>Example</summary>
-<p>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| eventSubscriptionId | URL | UUID | Y |  |
+
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "eventCategoryType": "ALL",
-    "eventSubscriptionName": "eventSubscriptionName-example",
-    "enabled": false,
-    "notifyEmail": false,
-    "notifySms": false,
-    "eventCodes": [],
-    "sources": [
-        {
-            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
-            "eventCategoryType": "ALL"
-        }
-    ],
-    "userGroupIds": []
+"eventCategoryType": "ALL",
+"eventSubscriptionName": "eventSubscriptionName-example",
+"enabled": false,
+"notifyEmail": false,
+"notifySms": false,
+"eventCodes": [],
+"sources": [
+{
+"sourceId": "550e8400-e29b-41d4-a716-446655440000",
+"eventCategoryType": "ALL"
+}
+],
+"userGroupIds": []
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| eventCategoryType | Enum | N | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| eventSubscriptionName | String | N | A name that identifies the event subscription |
+| enabled | Boolean | N | Whether to activate |
+| notifyEmail | Boolean | N | Whether to send emails |
+| notifySms | Boolean | N | Whether to send SMS messages |
+| eventCodes | Array | N | List of event codes to subscribe to |
+| sources | Array | N | List of event sources to subscribe to |
+| sources.sourceId | UUID | Y | Identifier of the event source |
+| sources.eventCategoryType | Enum | Y | Event category type<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
+| userGroupIds | Array | N | List of identifiers of user groups to subscribe to |
 
 #### Response
 
@@ -5916,51 +6259,52 @@ This API does not return a response body.
 
 ### List Availability Zones
 
-```http
-GET /v4.0/availability-zones
-```
-
 #### Required Permission
 
-| Permission | Description |
+| Permission Name | Description |
 |-----|-----|
 | RDSforMySQL:AvailabilityZone.List | List availability zones |
 
 #### Request
 
+```http
+GET /v4.0/availability-zones
+```
+
+#### Request Body
+
 This API does not require a request body.
 
 #### Response
 
-| Name | Type | Format | Description |
-|-----|-----|-----|-----|
-| availabilityZones | Body | Array | List of availability zones |
-| availabilityZones.availabilityZoneName | Body | String | Availability zone name |
-| availabilityZones.zoneState | Body | Object | Availability zone status |
-| availabilityZones.zoneState.available | Body | Boolean | Whether the availability zone is available |
-
-<details><summary>Example</summary>
-<p>
+<details>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "availabilityZones": [
-        {
-            "availabilityZoneName": "availabilityZoneName-example",
-            "zoneState": {
-                "available": false
-            }
-        }
-    ]
+"header": {
+"resultCode": 0,
+"resultMessage": "SUCCESS",
+"isSuccessful": true
+},
+"availabilityZones": [
+{
+"availabilityZoneName": "availabilityZoneName-example",
+"zoneState": {
+"available": false
+}
+}
+]
 }
 ```
 
-</p>
 </details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| availabilityZones | Array | List of availability zones |
+| availabilityZones.availabilityZoneName | String | Availability zone name |
+| availabilityZones.zoneState | Object | Availability zone status |
+| availabilityZones.zoneState.available | Boolean | Whether the availability zone is available |
 
 ---
