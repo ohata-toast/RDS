@@ -14,7 +14,7 @@ instances. Main features of DB security group are as follows.
 DB security group consists of name, description, and a number of DB security rules, and DB security group name has the following restrictions.
 
 * Must be unique for each region.
-* Must consist of alphabets, numbers, - _ between 1 and 100 characters. and the first character has must be an alphabet.
+* Must consist of alphabets, numbers, and some special characters (-, _, .) between 1 and 100 characters, and the first character must be an alphabet.
 
 ### Applying DB Security Groups
 
@@ -29,11 +29,11 @@ You can create multiple DB security rules in one DB security group. When you set
 | Direction   | Inbound refers to the direction into the DB instance. Outbound means the direction out of the DB instance.                                                                                                                                                                           | 
 | EtherType   | The version of EtherType IP. You can specify IPv4, IPv6.                                                                                                                                                                                                                             | 
 | Port        | Set the port to which rules apply. You can enter a single port or a port range, or select the DB port. When you select the DB port, the DB port of the DB instance is automatically entered.                                                                                         | 
-| Remote      | You can set the IP address range. If the direction of the rule is 'outbound', the traffic destination is remote; if 'inbound', the traffic source is remote.<br/>Depending on the direction of the rule, compares whether the traffic source or destination is IP address or range.. | 
+| Remote      | You can set the IP address range. If the direction of the rule is 'outbound', the traffic destination is remote; if 'inbound', the traffic source is remote.<br/>Depending on the direction of the rule, compares whether the traffic source or destination is IP address or range. | 
 | Description | You can add a description for DB security group rules.                                                                                                                                                                                                                               |
 
 > [Caution]
-> DB port cannot be set to transmit direction.
+> DB port cannot be set to outbound direction.
 
 ### Change DB Security Rules
 
