@@ -59,7 +59,7 @@ DBインスタンスに適用しているパラメータグループ以外は、
     * `()`, `+`, `-`, `*`, `/`を使用できます。
     * 数式の結果は常に数字でなければなりません。
     * データ形式が`INTEGER`の場合、小数点以下は切り捨てます。
-    * データ形式が`NUMERIC`の場合、小数点以下を四捨五入します。
+    * データ形式が`NUMERIC`の場合、小数点第9位で四捨五入します。
 * 関数
     * `max(a, b, ...)`:複数の値の中から最も大きい値を返します。
     * `min(a, b, ...)`:複数の値の中から最も小さい値を返します。
@@ -126,7 +126,7 @@ GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が�
 ### RDSでのGTID適用手順
 
 GTIDを円滑に適用するためには、gtid_mode(GTIDの適用手順)とenforce_gtid_consistency(クエリ適用の制限手順)を、パラメータグループを通じて次の順序で適用する必要があります。
-参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
+- 参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
 
 | 手順 | 対象          | パラメータ設定                         | 動作                                      | 備考                                                                                         |
 |:---|:------------|:--------------------------------|:----------------------------------------|:-------------------------------------------------------------------------------------------|
