@@ -33,17 +33,21 @@ MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.9          |                                                           |
+| MySQL 8.4.8          |                                                           |
 | MySQL 8.4.7          |                                                           |
 | MySQL 8.4.6          |                                                           |
 | MySQL 8.4.5          |                                                           |
 | <strong>8.0</strong> |                                                           |
+| MySQL 8.0.46         |                                                           |
+| MySQL 8.0.45         |                                                           |
 | MySQL 8.0.44         |                                                           |
 | MySQL 8.0.43         |                                                           |
 | MySQL 8.0.42         |                                                           |
 | MySQL 8.0.41         |                                                           |
 | MySQL 8.0.40         |                                                           |
-| MySQL 8.0.36         |                                                           |
-| MySQL 8.0.35         |                                                           |
+| MySQL 8.0.36         | Creation and read replicas unsupported                    |
+| MySQL 8.0.35         | Creation and read replicas unsupported                    |
 | MySQL 8.0.34         | Creation and read replicas unsupported                    |
 | MySQL 8.0.33         | Creation and read replicas unsupported                    |
 | MySQL 8.0.32         | Creation and read replicas unsupported                    |

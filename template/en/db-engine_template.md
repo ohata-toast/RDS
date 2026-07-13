@@ -15,16 +15,20 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.9          |                                                           |
+| MySQL 8.4.8          |                                                           |
 | MySQL 8.4.7          |                                                           |
 | MySQL 8.4.6          |                                                           |
 | MySQL 8.4.5          |                                                           |
 | <strong>8.0</strong> |                                                           |
+| MySQL 8.0.46         |                                                           |
+| MySQL 8.0.45         |                                                           |
 | MySQL 8.0.44         |                                                           |
 | MySQL 8.0.43         |                                                           |
 | MySQL 8.0.42         |                                                           |
 | MySQL 8.0.41         |                                                           |
 | MySQL 8.0.40         |                                                           |
-| MySQL 8.0.36         |                                                           |
+| MySQL 8.0.36         | Creation and read replicas unsupported                    |
 | MySQL 8.0.35         | Creation and read replicas unsupported                    |
 | MySQL 8.0.34         | Creation and read replicas unsupported                    |
 | MySQL 8.0.33         | Creation and read replicas unsupported                    |
@@ -48,11 +52,14 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 | Version                | Note                                   |
 |------------------------|----------------------------------------|
 | <strong>11.8</strong>  |                                        |
+| MariaDB 11.8.8         |                                        |
 | MariaDB 11.8.6         |                                        |
 | <strong>11.4</strong>  |                                        |
+| MariaDB 11.4.14        |                                        |
 | MariaDB 11.4.10        |                                        |
 | MariaDB 11.4.7         |                                        |
 | <strong>10.11</strong> |                                        |
+| MariaDB 10.11.18       |                                        |
 | MariaDB 10.11.16       |                                        |
 | MariaDB 10.11.13       |                                        |
 | MariaDB 10.11.8        |                                        |
@@ -192,10 +199,14 @@ RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for 
 | MySQL version              | Whether to support server audit plugins |
 |----------------------------|-----------------------------------------|
 | <strong>8.4</strong>       |                                         |
+| MySQL 8.4.9                | O                                       |
+| MySQL 8.4.8                | O                                       |
 | MySQL 8.4.7                | O                                       |
 | MySQL 8.4.6                | O                                       |
 | MySQL 8.4.5                | O                                       |
 | <strong>8.0</strong>       |                                         |
+| MySQL 8.0.46               | O                                       |
+| MySQL 8.0.45               | O                                       |
 | MySQL 8.0.44               | O                                       |
 | MySQL 8.0.43               | O                                       |
 | MySQL 8.0.42               | O                                       |

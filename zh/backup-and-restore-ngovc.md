@@ -10,7 +10,7 @@ high-availability configuration or back up only increments of data since the pre
 > High availability DB instances perform backups on the redundant master so that the storage performance of the master is not degraded.
 > However, backups can be performed on the master even if it is a high availability DB instance in the following cases.
 > * If a backup cannot be performed due to a candidate master failure.
-> * If you do not have a read replica in a situation where you need a backup taken from a DB instance other than the candidate master for rebuilding the candidate master and you do not have a read replica
+> * If you do not have a read replica in a situation where you need a backup taken from a DB instance other than the candidate master for rebuilding the candidate master
 
 RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
 
@@ -36,16 +36,16 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 | 8.4.5         | 8.4.0              |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
-  * https://docs.percona.com/percona-xtrabackup/8.4/
+      * https://docs.percona.com/percona-xtrabackup/2.4/
+      * https://docs.percona.com/percona-xtrabackup/8.0/
+      * https://docs.percona.com/percona-xtrabackup/8.4/
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.
 
 ## Backup Type
 
-Backups can be categorized into manual and automa backups.
+Backups can be categorized into manual and automatic backups.
 
 ### Manual Backup
 
@@ -64,13 +64,13 @@ When creating a manual backup, you must specify a name for the backup, with the 
 
 **Create a Manual Incremental Backup**
 
-❸ You can create an incremental backup by selecting a baseline backup from the backup list and then clicking **Create incremental backup**. Some backups cannot be selected as a baseline backup; for a detailed description of baseline [backups](#기준-백업), see [Baseline backups](#기준-백업).
+❸ You can create an incremental backup by selecting a baseline backup from the backup list and then clicking **Create incremental backup**. Some backups cannot be selected as a baseline backup; for a detailed description of baseline [backups](#baseline-backup), see [Baseline backups](#baseline-backup).
 
 
 ### Auto Backup
 
 In addition to performing backups manually, auto backups can occur when required for restore operations or based on scheduled auto backup settings.
-For settings that apply during auto backups, see [Auto Backup Settings](#자동-백업-설정).
+For settings that apply during auto backups, see [Auto Backup Settings](#set-auto-backup).
 
 ## Backup Method
 
@@ -88,7 +88,8 @@ When restoring to an incremental backup, the restore proceeds from the first ful
 
 > [Caution]
 > Restoring from incremental backups may take more time than restoring from a full backup, which is proportional to the sum of the capacity of the incremental backups required for the restore.
-#### Baseline Backup
+
+#### <a id="baseline-backup"></a>Baseline Backup
 
 Incremental backups require a backup to baseline data changes on. An incremental backup can also be the baseline backup for a new incremental backup.
 
@@ -100,10 +101,32 @@ The following limitations exist for backups that are the basis for incremental b
 * If the DB instance that took that backup has been deleted or is unable to take a backup due to failure, it cannot be the baseline backup.
 * Backups created before the September 2024 scheduled release cannot be baseline backups.
 
-When incremental backups are scheduled according to [Auto Backup Strategy](#Set-Auto-Backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
+When incremental backups are scheduled according to [Auto Backup Strategy](#set-auto-backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
 * A backup performed on a candidate master, read replica that is in a replication down state cannot be a baseline backup.
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
+
+## Snapshot Backup
+
+While existing backup methods can degrade performance when run directly on the DB instance, our **Storage Snapshot Backup** leverages Cinder snapshots—provided HA is active and healthy—to eliminate system overhead.
+Because all heavy lifting—such as validation and file conversion—is offloaded to a separate server, your database maintains peak performance even during backups.
+
+Main Features
+* Zero performance impact: DB instance performance is maintained at 100% even during backup operations.
+* Enhanced reliability: Rigorous verification processes ensure the reliability of your backup data.
+* Temporary High Availability (HA) suspension: HA features may be briefly paused during snapshot creation to ensure strict data consistency.
+
+### Pricing
+
+Unlike existing backup methods, Snapshot Backup incurs separate charges for the resources used during the backup process.
+
+| Category | Existing backup | Snapshot backup                 |
+| --- | --- |---------------------------|
+| Billing method | Included with DB instance (free of charge) | Additional charges apply for dedicated backup resources        |
+| Billable item | OBS upload fee (billed separately) | Shared backup server + volume + snapshot + OBS |
+
+* Shared backup server fee: This fee covers the use of backup servers for data validation and file conversion.
+    * Even when using shared resources, you are billed only for the actual time used during your backup operations.
 
 ## Backup Settings
 
@@ -112,20 +135,21 @@ When creating and modifying DB instances, you can specify settings that will be 
 ![db-instance-backup-form-en](https://static-station.ngovc.com/v1/AUTH_3365819a41194e7ca358853f5b2eec52/cdn/prod_rds/mysql/24.11.12/db-instance-backup-form-en.png)
 
 ### Common Settings
+
 The following topics are common to both auto and manual backups.
 
 **Use Table Lock**
 
-* `FLUSH TABLES WITH READ LOCK` ets whether the syntax is enabled or disabled.
+* `FLUSH TABLES WITH READ LOCK` Sets whether the syntax is enabled or disabled.
 * Table lock enables the `FLUSH TABLES WITH READ LOCK` syntax periodically during backups to ensure consistency in backup data. If `FLUSH TABLES WITH READ LOCK` syntax fails to run, the backup will fail.
 * You can disable table locking if the DML query load is high during a backup. If you do not use table lock, `FLUSH TABLES WITH READ LOCK` syntax will not run, so a high DML load does not cause the backup to fail. However, backups without table lock may not ensure consistency of backup data, and as a result, some operations, including restore and replication processes, are not supported for backups created without table lock and for DB instances with table locking disabled.
 
-**Query Latency Dash Time (second)**
+**Query Delay Wait Time (second)**
 
-* When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
+* When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query delay wait time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
 
-### Set Auto Backup
+### <a id="set-auto-backup"></a>Set Auto Backup
 
 The following items apply only to auto backups.
 
@@ -140,9 +164,6 @@ The following items apply only to auto backups.
 > [Caution]
 > Incrementally created backups are deleted when the baseline backup is deleted, even if the auto backup retention period has not passed.
 
-**Auto Backup Replication Region**
-
-* Set the auto backup file to be replicated to backup storage in another region. Auto Backup replication regions are features for disaster recovery that replicate and manage auto backup files from the original region equally to the destination region. Replication occurs in the background at regular intervals. When you set up an auto backup replication region, you are charged with inter-regional replication traffic, and the destination region is charged additionally for backup storage usage.
 
 **Number of Auto Backup Retries**
 
@@ -155,9 +176,9 @@ The following items apply only to auto backups.
 **Auto Backup Strategy**
 
 * You can specify a strategy for performing auto backups.
-  * Daily full backup: Back up your entire data every day.
-  * Daily full and incremental backups: One full backup of your data each day, and multiple incremental backups.
-  * Weekly full backups and daily incremental backups: One full backup of your data on certain days of the week, and one incremental backup on the remaining days of the week.
+    * Daily full backup: Back up your entire data every day.
+    * Daily full and incremental backups: One full backup of your data each day, and multiple incremental backups.
+    * Weekly full backups and daily incremental backups: One full backup of your data on certain days of the week, and one incremental backup on the remaining days of the week.
 
 **All Data Backup Days**
 
@@ -170,7 +191,7 @@ The following items apply only to auto backups.
 > [Caution]
 > A backup might not be performed in some situations, such as when a previous backup does not terminate.
 > If no incremental baseline backup exists, a full backup might be performed even though it is the scheduled turn to perform an incremental backup.
-> For a detailed description of incremental baseline backups, see [Baseline Backup](#기준-백업).
+> For a detailed description of incremental baseline backups, see [Baseline Backup](#baseline-backup).
 
 ### Backup Storage and Pricing
 
@@ -204,7 +225,7 @@ You can export backup files stored in internal backup storage to user object sto
 
 ![backup-export-en](https://static-station.ngovc.com/v1/AUTH_3365819a41194e7ca358853f5b2eec52/cdn/prod_rds/mysql/24.03.12/backup-export-en.png)
 
-Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
+❷ Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
 
 > [Note]
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
@@ -302,7 +323,7 @@ xtrabackup --defaults-file={my.cnf path} --user={ user } --password='{ password 
 
 * The maximum file size that can be uploaded at a time is 5GB.
 * If the backup file is larger than 5GB, you have to use a utility such as split to cut the backup file to less than 5GB and upload it in multi-part.
-* For detailed information, refer to [Multipart Upload](/Storage/Object%20Storage/ko/api-guide-ngovc/#_44).
+* For detailed information, refer to [Multipart Upload](/Storage/Object%20Storage/en/api-guide-ngovc/#_45).
 
 (4) After accessing the console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
 
