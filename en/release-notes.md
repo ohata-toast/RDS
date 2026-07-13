@@ -1,14 +1,14 @@
 ## Database > RDS for MySQL > Release Notes
 
-## 2026. 07. 14.
+## July 14, 2026
 
-### 기능 추가 및 개선
+### Feature Updates
 
-* MySQL 8.0.46, 8.4.9 버전 추가
+* Added MySQL 8.0.46, 8.4.9 version
 
-### 버그 수정
+### Bug Fixes
 
-* 보안 패치 대상인 단일 인스턴스를 고가용성 인스턴스로 변경 시 보안 패치가 수행되지 않는 문제 수정
+* Fixed an issue where the security patch was not performed when a single instance subject to security patch was changed to a high availability instance
 
 ## May 12, 2026
 
