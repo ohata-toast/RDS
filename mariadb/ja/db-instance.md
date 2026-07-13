@@ -34,11 +34,14 @@ NHN Cloudは、物理的なハードウェアの問題で生じる障害に備�
 | バージョン                  | 備考 |
 |------------------------|----|
 | <strong>11.8</strong>  |    |
+| MariaDB 11.8.8         |    |
 | MariaDB 11.8.6         |    |
 | <strong>11.4</strong>  |    |
+| MariaDB 11.4.14        |    |
 | MariaDB 11.4.10        |    |
 | MariaDB 11.4.7         |    |
 | <strong>10.11</strong> |    |
+| MariaDB 10.11.18       |    |
 | MariaDB 10.11.16       |    |
 | MariaDB 10.11.13       |    |
 | MariaDB 10.11.8        |    |
