@@ -29,32 +29,32 @@ NHN Cloudは、物理的なハードウェアの問題で生じる障害に備�
 
 ### DBエンジン
 
-以下に明示されたバージョンを使用できます。
-| バージョン        | 備考                                                   |
-|--------------|------------------------------------------------------|
-| **8.4**      |                                                      |
-| MySQL 8.4.5  |                                                      |
-| **8.0**      |                                                      |
-| MySQL 8.0.43 |                                                      |
-| MySQL 8.0.42 |                                                      |
-| MySQL 8.0.41 |                                                      |
-| MySQL 8.0.40 |                                                      |
-| MySQL 8.0.36 |                                                      |
-| MySQL 8.0.35 |                                                      |
-| MySQL 8.0.34 |                                                      | 
-| MySQL 8.0.33 |                                                      |
-| MySQL 8.0.32 |                                                      | 
-| MySQL 8.0.28 |                                                      | 
-| MySQL 8.0.23 |                                                      |
-| MySQL 8.0.18 |                                                      |
-| **5.7**      |                                                      |
-| MySQL 5.7.37 |                                                      |
-| MySQL 5.7.33 | 外部のバックアップでDBインスタンスを復元できません。                          |
-| MySQL 5.7.26 |                                                      |
-| MySQL 5.7.19 |                                                      |
-| MySQL 5.7.15 |                                                      |
-| **5.6**      |                                                      |
-| MySQL 5.6.33 | 新規DBインスタンスを作成できません。既存DBインスタンスのリードレプリカ作成、復元のみサポートします。 |
+以下に記載されたバージョンを使用できます。新規DBインスタンスの作成及びリードレプリカの追加は、メジャーバージョンごとに上位7つのマイナーバージョンまでのみサポートします。
+MySQL 8.0.34未満のバージョンは、MySQL LTSサポートポリシーに従いサポートが終了しました。該当バージョンのDBインスタンスは最新バージョンにアップグレードすることを推奨します。
+
+| バージョン                | 備考                                    |
+|----------------------|---------------------------------------|
+| <strong>8.4</strong> |                                       |
+| MySQL 8.4.7          |                                       |
+| MySQL 8.4.6          |                                       |
+| MySQL 8.4.5          |                                       |
+| <strong>8.0</strong> |                                       |
+| MySQL 8.0.44         |                                       |
+| MySQL 8.0.43         |                                       |
+| MySQL 8.0.42         |                                       |
+| MySQL 8.0.41         |                                       |
+| MySQL 8.0.40         |                                       |
+| MySQL 8.0.36         |                                       |
+| MySQL 8.0.35         |                                       |
+| MySQL 8.0.34         | 新規に作成したりリードレプリカを追加することはできません。         | 
+| MySQL 8.0.33         | 新規に作成したりリードレプリカを追加することはできません。         | 
+| MySQL 8.0.32         | 新規に作成したりリードレプリカを追加することはできません。         | 
+| MySQL 8.0.28         | 新規に作成したりリードレプリカを追加することはできません。         | 
+| MySQL 8.0.23         | 新規に作成したりリードレプリカを追加することはできません。         |
+| MySQL 8.0.18         | 新規に作成したりリードレプリカを追加することはできません。         |
+| <strong>5.7</strong> |                                       |
+| MySQL 5.7.37         |                                       |
+| MySQL 5.7.33         | 外部のバックアップファイルからDBインスタンスを復元することはできません。 |
 
 DBエンジンの場合、作成後、コンソールの修正機能でバージョンアップが可能です。
 DBエンジンの詳細は[DBエンジン](db-engine-ninc/)で確認できます。
@@ -117,15 +117,86 @@ DBインスタンスに接続するVPCサブネットを選択する必要があ
 
 ### DBセキュリティグループ
 
-DBセキュリティグループは、外部からの侵入に備えて接続を制限するために使用します。送受信トラフィックに対して特定のポート範囲あるいはデータベースポートに対してアクセスを許可できます。DBインスタンスに複数のDBセキュリティグループを適用できます。DBセキュリティグループの詳しい説明は[DBセキュリティグループ](db-security-group.md)を参照してください。
+DBセキュリティグループは、外部からの侵入に備えて接続を制限するために使用します。送受信トラフィックに対して特定のポート範囲あるいはデータベースポートに対してアクセスを許可できます。DBインスタンスに複数のDBセキュリティグループを適用できます。DBセキュリティグループの詳しい説明は[DBセキュリティグループ](db-security-group-ninc/)を参照してください。
 
 ### バックアップ
 
-DBインスタンスのデータベースを定期的にバックアップするように設定したり、コンソールから好きなタイミングでバックアップを作成できます。バックアップが実行されている間、パフォーマンスの低下が発生する場合があります。サービスに影響を与えないように、サービスの負荷が少ない時間にバックアップすることを推奨します。バックアップによる性能低下を望まない場合は、高可用性構成を使用するか、以前バックアップ以降のデータの増分のみをバックアップすることができ、読み取りレプリカでバックアップを実行できます。バックアップファイルは内部オブジェクトストレージに保存され、バックアップ容量に応じて課金されます。必要に応じて、NHN Cloudのユーザーオブジェクトストレージにエクスポートできます。予期せぬ障害に備えるため、定期的にバックアップを行うように設定することを推奨します。バックアップの詳細については、[バックアップと復元](backup-and-restore.md)を参照してください。
+DBインスタンスのデータベースを定期的にバックアップするように設定したり、コンソールから好きなタイミングでバックアップを作成できます。バックアップが実行されている間、パフォーマンスの低下が発生する場合があります。サービスに影響を与えないように、サービスの負荷が少ない時間にバックアップすることを推奨します。バックアップによる性能低下を望まない場合は、高可用性構成を使用するか、以前バックアップ以降のデータの増分のみをバックアップすることができ、読み取りレプリカでバックアップを実行できます。バックアップファイルは内部バックアップストレージに保存され、バックアップ容量に応じて課金されます。必要に応じて、NHN Cloudのユーザーオブジェクトストレージにエクスポートできます。予期せぬ障害に備えるため、定期的にバックアップを行うように設定することを推奨します。バックアップの詳細については、[バックアップと復元](backup-and-restore-ninc/)を参照してください。
+
+### メンテナンス
+
+メンテナンス機能を使用すると、DBインスタンスの様々な変更作業を任意の時間帯に実行できます。DBインスタンスの修正、DBエンジンバージョンのアップグレード、DBインスタンスのOSのアップグレードなどの作業は再起動が必要で、ダウンタイムが発生する可能性があります。メンテナンス期間を設定すると、これらの作業をサービス負荷が少ない時間帯に実行できます。
+
+#### メンテナンス期間
+
+DBインスタンスの作成または修正時にメンテナンス期間を設定できます。メンテナンス期間を設定しない場合、22:00～06:00の間の30分がランダムに自動割り当てられます。メンテナンス期間は自動バックアップ時間と重複できません。
+
+> [参考]
+> メンテナンス期間は、メンテナンス開始曜日、メンテナンス開始時間、メンテナンスウィンドウ(30分単位)で構成されます。
+
+#### メンテナンス作業
+
+メンテナンス作業は、ユーザーメンテナンス作業とProviderメンテナンス作業に区分されます。
+
+**ユーザーメンテナンス作業**
+
+ユーザーが直接実行を予約できる作業です。
+
+* DBインスタンスの修正(DBインスタンス仕様変更、ポート変更、パラメータグループ変更など)
+* DBエンジンバージョンのアップグレード
+* DBインスタンスOSアップグレード
+
+**Providerメンテナンス作業**
+
+NHN Cloudが提供するメンテナンス作業です。
+
+* パラメータグループ変更事項の適用
+* ハイパーバイザー点検のためのマイグレーション
+
+#### メンテナンス適用時点
+
+メンテナンス作業実行時、適用時点を選択できます。
+
+* **即時適用**: リクエスト後すぐにメンテナンス作業を実行します。
+* **次回のメンテナンス期間に適用**: 次回のメンテナンス期間に作業を実行します。
+
+#### メンテナンス状態
+
+DBインスタンス一覧で各インスタンスのメンテナンス状態を確認できます。
+
+| 状態     | 説明                                    |
+|---------|----------------------------------------|
+| なし      | 予約及び保留中のメンテナンス作業がありません。             |
+| 次回適用   | ユーザーメンテナンス作業が次回のメンテナンス期間に実行予定です。   |
+| 適用中   | メンテナンス作業が進行中です。                     |
+| 必須     | 必須Providerメンテナンス作業が保留中です。         |
+| 使用可能   | 必須ではないProviderメンテナンス作業が保留/準備中です。 |
+
+> [参考]
+> 高可用性DBインスタンスのスタンバイマスターにはメンテナンス状態が表示されません。
+
+#### メンテナンスタブ
+
+DBインスタンス詳細画面のメンテナンスタブで次の情報を確認できます。
+
+* メンテナンス開始曜日及び期間
+* 次回のメンテナンス期間
+* メンテナンス状態
+* 準備中のメンテナンス作業リスト(次回のメンテナンス期間に実行される作業)
+* 保留中のメンテナンス作業リスト
+
+準備中のメンテナンス作業は、保留/削除ボタンを使用してメンテナンス期間から除外できます。保留中のProviderメンテナンス作業は、**即時適用**または**次回のメンテナンス期間に適用**を選択して手動で適用できます。
+
+#### 作業実行順序
+
+メンテナンス期間内の全ての作業は、登録順序に従って順次実行されます。ただし、有効期限が過ぎた必須メンテナンス作業は最初に実行されます。メンテナンス期間内に実行されなかった作業は、次回のメンテナンス期間に再度実行されます。
+
+> [参考]
+> 自動バックアップ及びDBインスタンスが「作業中」の状態でメンテナンス期間が開始され、メンテナンス時間が継続して延期される場合、該当のメンテナンスは一旦省略され、次回のメンテナンス期間に実行されます。メンテナンス作業が省略されるとイベントが生成されます。
 
 ### 基本通知
 
-DBインスタンス作成時、基本通知を設定できます。基本通知を設定すると、`{DBインスタンス名}-default`という名前で新しい通知グループが作成され、下記の通知項目が自動で設定されます。基本通知として作成された通知グループは自由に修正、削除できます。通知グループについての詳しい説明は[通知グループ](notification-group.md)を参照してください。
+DBインスタンス作成時、基本通知を設定できます。基本通知を設定すると、`{DBインスタンス名}-default`という名前で新しい通知グループが作成され、下記の通知項目が自動で設定されます。基本通知として作成された通知グループは自由に修正、削除できます。通知グループについての詳しい説明は[通知グループ](notification-ninc/)を参照してください。
 
 | 項目                         | 比較方法  | しきい値          | 持続時間 |
 |----------------------------|-------|---------------|------|
@@ -144,15 +215,16 @@ DBインスタンス作成時、基本通知を設定できます。基本通知
 
 ## DBインスタンスリスト
 
-コンソールで作成されたDBインスタンスを確認できます。レプリケーショングループ単位でまとめて見たり、個別DBインスタンスで見ることができます。
+コンソールで作成されたDBインスタンスを確認できます。DBインスタンスグループ単位でまとめて見たり、個別DBインスタンスで見ることができます。
 
-![db-instance-list_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-list_ja.png)
+![db-instance-list_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-list_ja.png)
 
 ❶ DBインスタンス画面モードを変更できます。
 ❷ボタンをクリックして、グループ内に属するDBインスタンスを展開したり、折りたたむことができます。
 ❸最近収集されたモニタリング指標を表示します。
 ❹現在の状態を見ることができます。
 ❺進行中の作業がある場合、スピナーが表示されます。
+❻検索条件を変更できます。
 
 DBインスタンスの状態は下記のような値で構成され、ユーザーの行為と現在の状態によって変更されます。
 
@@ -169,7 +241,7 @@ DBインスタンスの状態は下記のような値で構成され、ユーザ
 
 変更できる検索条件は次のとおりです。
 
-![db-instance-filter_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-filter_ja.png)
+![db-instance-filter_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-filter_ja.png)
 
 ❶パラメータ変更事項適用が必要なDBインスタンスをフィルタリング条件で検索できます。
 
@@ -177,7 +249,7 @@ DBインスタンスの状態は下記のような値で構成され、ユーザ
 
 DBインスタンスを選択すると、詳細情報を見ることができます。
 
-![db-instance-detail_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail_ja.png)
+![db-instance-detail_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail_ja.png)
 
 ❶接続情報のドメインをクリックすると、IPアドレスを確認できるポップアップが表示されます。
 ❷ DBセキュリティグループをクリックすると、DBセキュリティルールを確認できるポップアップが表示されます。
@@ -214,7 +286,7 @@ DBインスタンスのログタブでは、各種ログファイルの閲覧や
 | server_audit.log | 20MB 30個 | 変更可能 | `server_audit_logging`<br />`server_audit_file_rotations`              | 
 | mysql-bin.xxxxxx | 5日      | 変更可能 | `binlog_expire_logs_seconds` (8.Xバージョン)<br />`expire_logs_days` (5.Xバージョン) |
 
-![db-instance-detail-log_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail-log_ja.png)
+![db-instance-detail-log_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-log_ja.png)
 
 ❶ **ログ表示**をクリックすると、ログファイルの内容を確認できるポップアップ画面が表示されます。最大65,535Bytesのログを確認できます。
 ❷ **インポート**をクリックすると、DBインスタンスのログファイルをダウンロードするようにリクエストします。
@@ -230,13 +302,76 @@ DBインスタンスのログタブでは、各種ログファイルの閲覧や
 
 ❺ mysqlbinlogユーティリティを利用してバイナリログ(binary log)をSQLファイルに変換してダウンロードする場合は選択します。
 
+### メンテナンス
+
+DBインスタンスの**メンテナンス**タブでは、メンテナンス設定及び状態を確認し、メンテナンス作業を管理できます。
+
+![db-instance-detail-maintenance_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-maintenance_ja.png)
+
+#### メンテナンス情報
+
+メンテナンスタブ上部で現在のDBインスタンスのメンテナンス設定情報を確認できます。
+
+| 項目              | 説明                                                                             |
+|------------------|---------------------------------------------------------------------------------|
+| メンテナンス開始曜日      | DBインスタンスに設定されたメンテナンス開始曜日です。                                                    |
+| メンテナンス期間        | DBインスタンスに設定されたメンテナンス時間範囲です。                                                    |
+| 次回のメンテナンス期間      | 次回にメンテナンス作業が実行される予定の日時です。                                                    |
+| メンテナンス状態         | 現在のメンテナンス状態を示します。**なし**、**次回適用**、**適用中**、**必須**、**使用可能**のいずれかで表示されます。 |
+
+> [参考]
+> メンテナンス期間を設定していない場合でも、ランダムに割り当てられたメンテナンス期間を確認できます。
+
+#### 準備中のメンテナンス
+
+準備中のメンテナンスは、次回のメンテナンス期間に実行される予定の作業リストです。ユーザーがDBインスタンスの修正、DBエンジンバージョンのアップグレードなどの作業を実行する際に**次回のメンテナンス期間に適用**を選択すると、このリストに追加されます。
+
+| 項目        | 説明                              |
+|------------|----------------------------------|
+| 説明         | メンテナンス作業に関する説明です。              |
+| タイプ        | メンテナンス作業のタイプです。                 |
+| 状態         | メンテナンス作業の現在の状態です。              |
+| 必須かどうか     | 必須メンテナンス作業の有無を示します。           |
+| 登録日時     | メンテナンス作業が登録された日時です。             |
+| 強制適用日時   | 必須作業の場合、この日時以降には自動的に適用されます。 |
+
+準備中のメンテナンス作業は、選択後**削除**または**保留**をクリックしてメンテナンス期間から除外できます。
+削除されたユーザーメンテナンス作業はキャンセルされ、再度メンテナンス期間に適用するには該当の作業を再度実行する必要があります。
+Providerメンテナンス作業は、保留中のメンテナンスリストに移動します。保留中のメンテナンスリストから再度準備中のメンテナンス作業に移動できます。
+
+#### 保留中のメンテナンス
+
+保留中のメンテナンスは、NHN Cloudが提供するProviderメンテナンス作業リストです。パラメータグループ変更事項の適用、ハイパーバイザー点検のためのマイグレーションなどの作業が含まれます。
+
+| 項目        | 説明                              |
+|------------|----------------------------------|
+| 説明         | メンテナンス作業に関する説明です。              |
+| タイプ        | メンテナンス作業のタイプです。                 |
+| 状態         | メンテナンス作業の現在の状態です。              |
+| 必須かどうか     | 必須メンテナンス作業の有無を示します。           |
+| 強制適用日時   | 必須作業の場合、この日時以降には自動的に適用されます。 |
+
+保留中のメンテナンス作業を選択した後、**次へ**をクリックして適用時点を選択できます。
+
+**即時適用**: 選択したメンテナンス作業を即時実行します。**確認**をクリックするとすぐに実行されます。
+![db-instance-detail-maintenance-immediately_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-maintenance-immediately_ja.png)
+
+**次回のメンテナンス期間に適用**: 選択したメンテナンス作業を次回のメンテナンス期間に実行します。**確認**をクリックすると準備中のメンテナンスリストに移動します。
+![db-instance-detail-maintenance-schedule_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-maintenance-schedule_ja.png)
+
+> [注意]
+> 必須メンテナンス作業は、強制適用日時以前までは適用時点を選択できますが、強制適用日時以降は自動的に次回のメンテナンス期間に実行されます。
+
+> [参考]
+> メンテナンス作業適用時に再起動が必要な場合、フェイルオーバー、バックアップなどの追加オプションを選択できるポップアップ画面が表示されます。高可用性DBインスタンスの場合、フェイルオーバーを利用した再起動を使用してサービス中断時間を最小化できます。
+
 ### DBスキーマ&ユーザー
 
 DBインスタンスの**DBスキーマ＆ユーザー**タブでは、データベースに作成されたスキーマとユーザーの照会及び制御を行うことができます。
 
 #### DBスキーマの作成
 
-![db-instance-detail-schema_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail-schema_ja.png)
+![db-instance-detail-schema_ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-schema_ja.png)
 
 ❶ **作成**をクリックすると、DBスキーマの名前を入力できるポップアップウィンドウが表示されます。
 ❷ DBスキーマ名を入力した後、**確認**をクリックしてDBスキーマを作成することができます。
@@ -250,14 +385,14 @@ DBスキーマ名には下記のような制約事項があります。
 
 #### DBスキーマの削除
 
-![db-instance-detail-schema-delete-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail-schema-delete-ja.png)
+![db-instance-detail-schema-delete-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-schema-delete-ja.png)
 
 ❶削除するDBスキーマを選択し、ドロップダウンメニューをクリックします。
 ❷ **削除**メニューをクリックすると、削除確認ポップアップ画面が表示されます。**確認**をクリックして削除をリクエストできます。
 
 #### ユーザーの作成
 
-![db-instance-detail-user-create-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail-user-create-ja.png)
+![db-instance-detail-user-create-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-user-create-ja.png)
 
 ❶ **+作成**をクリックすると、ユーザー追加ポップアップ画面が表示されます。
 ❷ユーザーIDを入力します。
@@ -268,7 +403,7 @@ DBスキーマ名には下記のような制約事項があります。
 * `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl`はユーザーIDとして使用できません。
 
 ❸ Passwordを入力します。
-❹接続を許可するHost IPを入力します。`%`文字を利用すると、許可するHost IPを範囲として指定できます。例えば、`1.1.1.1.1.%`は、`1.1.1.0`~`1.1.1.255`の間のすべてのIPを意味します。
+❹接続を許可するHost IPを入力します。`%`文字を利用すると、許可するHost IPを範囲として指定できます。例えば、`1.1.1.%`は、`1.1.1.0`~`1.1.1.255`の間のすべてのIPを意味します。
 ❺ユーザーに付与する権限を選択します。付与できる権限と説明は次のとおりです。
 
 **READ**
@@ -303,11 +438,11 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 ❻ユーザー認証に適用するプラグインを選択します。選択できるバージョン別プラグインは次のとおりです。
 
-| 認証プラグイン             | サポートバージョン                |
-|-----------------------|------------------------|
-| mysql_native_password | すべてのバージョン                |
+| 認証プラグイン               | サポートバージョン               |
+|-----------------------|-------------------------|
+| mysql_native_password | 8.4バージョン未満              |
 | sha256_password       | 5.7.33バージョン以上8.0バージョン未満 |
-| caching_sha2_password | 8.0バージョン以上             |
+| caching_sha2_password | 8.0バージョン以上              |
 
 ❼ DBインスタンスの接続暗号化オプションを選択します。
 
@@ -324,7 +459,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 ユーザーアカウントのTLS OptionをX509に設定した場合、DBインスタンスに接続するには証明書が必要です。
 
-![db-instance-detail-user-cert-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail-user-cert-ja.png)
+![db-instance-detail-user-cert-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-user-cert-ja.png)
 ![db-instance-detail-user-cert-down-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail-user-cert-down-ja.png)
 
 ❶証明書をダウンロードするDBインスタンスを選択します。
@@ -339,7 +474,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 #### ユーザーの修正
 
-![db-instance-detail-user-modify-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail-user-modify-ja.png)
+![db-instance-detail-user-modify-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-user-modify-ja.png)
 
 ❶修正するユーザー行の**修正**をクリックすると、ユーザー情報を修正できるポップアップ画面が表示されます。
 ❷ Passwordを入力しないと変更されません。
@@ -347,7 +482,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 #### ユーザーの削除
 
-![db-instance-detail-user-delete-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-detail-user-delete-ja.png)
+![db-instance-detail-user-delete-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-detail-user-delete-ja.png)
 
 ❶削除するユーザーを選択し、ドロップダウンメニューをクリックします。
 ❷ **削除**をクリックすると、**削除確認**ポップアップ画面が表示されます。**確認**をクリックして削除をリクエストできます。
@@ -364,6 +499,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 | データストレージ種類 | いいえ     |                         |
 | 高可用性の有無     | はい       | いいえ                    |
 | Ping間隔    | はい       | いいえ                    | 
+| Ping方式       | はい        | いいえ                     |
 | 名前         | はい       | いいえ                    |
 | 説明         | はい       | いいえ                    |
 | DBポート      | はい       | はい                      |
@@ -377,9 +513,10 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 高可用性DBインスタンスの場合、再起動が必要な項目の変更がある場合、安定性を高め、瞬断時間を減らすためにフェイルオーバーを利用した再起動機能を提供します。
 
-![modify-ha-popup-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.11.12/modify-ha-popup-ja.png)
+![modify-ha-popup-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/modify-ha-popup-ja.png)
 
-フェイルオーバーを利用した再起動を使用しない場合は、マスターと予備マスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](db-instance-ninc/#manual-failover)を参照してください。
+❶ メンテナンス機能で**次回のメンテナンス期間に適用**または**即時適用**を通じてDBインスタンスの修正を進めることができます。
+❷ フェイルオーバーを利用した再起動を使用しない場合、マスターとスタンバイマスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](db-instance-ninc/#manual-failover)を参照してください。
 
 ### DBスキーマ&ユーザー直接制御
 
@@ -389,8 +526,8 @@ RDS for MySQLではDBスキーマとユーザーを簡単に管理できるよ�
 GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
 ```
 
-> [直接]
-> コントロールを使用した後、再度使用しないに変更した時の注意点
+> [注意]
+> 直接制御を使用した後、再び使用しないに変更すると
 > * 既に付与した権限を回収しません。 この時、コマンドを使用してDBスキーマやユーザーを追加すると、コンソールのデータと整合性が合わなくなる場合があります。
 > * ユーザーに付与された権限と関係なく、データベースに存在するすべてのユーザーはCUSTOM権限で表現されます。
 
@@ -399,7 +536,7 @@ DBインスタンスOSアップグレードをサポートします。OSのア�
 OSアップグレードはサービス瞬断が発生するため注意が必要です。高可用性DBインスタンスはフェイルオーバーにより、サービス瞬断を最小限に抑えることができます。
 
 現在のDBインスタンスのOS情報は、DBインスタンスの詳細画面で確認できます。
-![db-instance-os-upgrade-ja.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.06.11/db-instance-os-upgrade-ja.png)
+![db-instance-os-upgrade-ja.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-os-upgrade-ja.png)
 
 ❶ DBインスタンスのOS情報を確認できます。
 ❷ OSがバージョンアップグレード対象である場合、**OSバージョンアップグレード**ボタンが表示されます。
@@ -407,10 +544,14 @@ OSアップグレードはサービス瞬断が発生するため注意が必要
 OSバージョンアップグレードは、高可用性構成であるかどうかによって異なります。高可用性の場合は、フェイルオーバーを利用してOSバージョンアップグレードを実行します。高可用性ではない場合は、DBインスタンスを再起動してOSバージョンアップグレードを実行します。
 
 単一DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。
-![db-instance-os-upgrade-single-popup-ja.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.06.11/db-instance-os-upgrade-simple-popup-ja.png)→
+シングルDBインスタンスのOSバージョンアップグレード時にも、メンテナンス機能を使用できます。
+![db-instance-os-upgrade-single-popup-ja.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-os-upgrade-simple-popup-ja.png)
 
 高可用性DBインスタンスのOSバージョンアップグレードボタンをクリックすると、次のようなポップアップ画面が表示されます。詳細については、高可用性DBインスタンスの[手動フェイルオーバー項目](db-instance-ninc/#manual-failover)を参照してください。
-![os-upgrade-ha-popup-ja.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.11.12/os-upgrade-ha-popup-ja.png)→
+![os-upgrade-ha-popup-ja.png](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/os-upgrade-ha-popup-ja.png)
+
+❶ メンテナンス適用方法を通じてメンテナンス機能を使用できます。
+❷ フェイルオーバーを使用する方法のみ提供されます。
 
 ## DBインスタンスの削除
 
@@ -424,7 +565,7 @@ OSバージョンアップグレードは、高可用性構成であるかどう
 
 バックアップを利用して希望の時点にデータを復元できます。復元時には常に新しいDBインスタンスが作成され、既存のDBインスタンスに復元することはできません。詳細は[復元](backup-and-restore-ninc/#restore)の項目を参照してください。
 
-### 容量確保
+## 容量確保
 
 急激な負荷でバイナリログ(binary log)が過剰に生成され、ストレージの容量が不足する場合、コンソールの容量確保機能を利用してバイナリログを削除できます。コンソールで容量確保を選択すると、DBインスタンスのバイナリログを選択できるポップアップ画面が表示されます。バイナリログを選択した後、**OK**を押して選択した項目より前に生成された全てのバイナリログを削除します。容量確保機能は一時的に容量を確保する機能です。継続して容量が不足する場合は、サービス負荷に合わせてバイナリログの保存期間を設定するか、ストレージのサイズを拡張する必要があります。
 
@@ -456,21 +597,22 @@ DBインスタンスのデータストレージサイズを自動的に拡張で
 
 ## パラメータグループの変更事項適用
 
-DBインスタンスに接続されたパラメータグループの設定が変更されても、この変更はDBインスタンスに自動的に適用されません。DBインスタンスに適用されたパラメータと接続されたパラメータグループの設定が異なる場合、コンソールに**パラメータ**ボタンが表示されます。
+DBインスタンスに関連付けられたパラメータグループの設定が変更されても、この変更事項はDBインスタンスに自動的に適用されません。
+DBインスタンスに適用されたパラメータと、関連付けられたパラメータグループの設定が一致しない場合、**パラメータ変更の適用**メンテナンスが生成され、メンテナンス状態が変更されます。
 
-次のいずれかの方法を使用してDBインスタンスにパラメータグループの変更を適用できます。
+次の方法は、複数のDBインスタンスまたはシングルDBインスタンスに対してパラメータグループの変更事項を適用できます。
 
-![db-instance-list-parameter-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-list-parameter-ja.png)
+![db-instance-list-parameter-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-list-parameter-ja.png)
 
-❶対象DBインスタンスの**パラメータ**をクリックする。
-❷対象DBインスタンスを選択した後、ドロップダウンメニューの**パラメータグループ変更適用**メニューをクリックするか、または
-❸対象DBインスタンスの**基本情報**タブで**パラメータグループの変更事項の適用**をクリックする。
+❶ 対象のDBインスタンスを選択した後、ドロップダウンメニューから**パラメータグループ変更事項の適用**メニューをクリック
+
+メンテナンス機能で**次回のメンテナンス期間に適用**または**即時適用**を選択して、パラメータグループ変更事項を適用できます。
 
 パラメータグループで再起動を必要とするパラメータが変更された場合、変更内容を適用する過程でDBインスタンスが再起動されます。
 
 高可用性DBインスタンスの場合、安定性を高め、瞬断時間を減らすためにフェイルオーバーを利用した再起動機能を提供します。
 
-![db-instance-parameter-ha-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-parameter-ha-ja.png)
+![db-instance-parameter-ha-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-parameter-ha-ja.png)
 
 フェイルオーバーを利用した再起動を使用しない場合は、マスターと予備マスターに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](db-instance-ninc/#manual-failover)を参照してください。
 
@@ -497,15 +639,15 @@ DBインスタンスに接続されたパラメータグループの設定が変
 条件に合致するDBインスタンスがない場合、リードレプリカ作成リクエストは失敗します。
 
 > [注意]
-> リードレプリカ作成時、マスターのI/O性能が通常より低くなることがあります。
+> マスターのデータベースサイズに比例して、リードレプリカの作成時間が長くなる場合があります。
 > バックアップが実行されるDBインスタンスの場合、リードレプリカの作成過程でストレージI/O性能が低下する可能性があります。
 
 > [参考]
-> リードレプリカの作成過程で必要なバイナリログ(binary log)サイズ分、オブジェクトストレージ課金が発生する可能性があります。
+> リードレプリカの作成過程で必要なバイナリログ(binary log)サイズ分、バックアップストレージ課金が発生する可能性があります。
 
 リードレプリカを作成するには、コンソールで
 
-![db-instance-replica-create-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-replica-create-ja.png)
+![db-instance-replica-create-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-replica-create-ja.png)
 
 ❶原本DBインスタンスを選択した後、[リードレプリカ作成]をクリックすると
 
@@ -519,12 +661,6 @@ DBインスタンスに接続されたパラメータグループの設定が変
 * データストレージの種類
 * ユーザーVPCサブネット
 
-#### リードレプリカリージョン
-
-リードレプリカを作成するリージョンを選択する際、リージョンピアリングをサポートする場合、異なるリージョンに存在するVPC間のリージョンピアリングを接続すると、他のリージョンVPCに属するサブネットにリードレプリカを作成できます。ただし、元のDBインスタンスのリージョンと異なるリージョンを選択すると、レプリケーションの遅延が発生する可能性があり、DBバージョンのアップグレードをサポートしません。
-
-> [注意]
-> リージョンピアリングが接続されていても、ルート設定が正しくない場合、リードレプリカの作成に失敗したり、レプリケーションが中断されることがあります。
 
 #### アベイラビリティゾーン
 
@@ -538,7 +674,7 @@ DBインスタンスに接続されたパラメータグループの設定が変
 
 原本DBインスタンスと同じサイズで作成することを推奨します。サイズを小さく設定する場合、データストレージ容量不足で複製プロセスが中断される場合があります。
 
-#### 弹性IP
+#### Floating IP
 
 リードレプリカのFloating IPを使用するかどうかを選択します。詳しい説明は[Floating IP](#ip)の項目を参照してください。
 
@@ -549,6 +685,18 @@ DBインスタンスに接続されたパラメータグループの設定が変
 #### DBセキュリティグループ
 
 リードレプリカに適用するDBセキュリティグループを選択します。レプリケーションに必要なルールは自動的に適用されるため、DBセキュリティグループに別途レプリケーション関連ルールを追加する必要はありません。 DBセキュリティグループの詳しい説明は[DBセキュリティグループ](db-security-group-ninc/)の項目を参照してください。
+
+#### バックアップ
+
+リードレプリカのバックアップ設定を選択します。バックアップの詳しい説明は[バックアップと復元](backup-and-restore-ninc/)の項目を参照してください。
+
+#### 基本通知
+
+基本通知の使用有無を選択します。詳しい説明は[基本通知](#_7)の項目を参照してください。
+
+#### 削除保護
+
+削除保護の使用有無を選択します。詳しい説明は[削除保護](#_8)の項目を参照してください。
 
 ### リードレプリカの昇格
 
@@ -585,7 +733,7 @@ MySQLを再起動したり、高可用性DBインスタンスを手動でフェ�
 
 DBインスタンスを再起動するには、コンソールで
 
-![db-instance-restart-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-restart-ja.png)
+![db-instance-restart-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-restart-ja.png)
 
 ❶再起動を希望するDBインスタンスを選択した後、ドロップダウンメニューから**DBインスタンスの再起動**メニューをクリックします。
 
@@ -601,7 +749,7 @@ DBインスタンスのMySQLが正常に動作しない場合、強制的に再�
 
 DBインスタンスを強制的に再起動するには、コンソールで
 
-![db-instance-restart-force-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-restart-force-ja.png)
+![db-instance-restart-force-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-restart-force-ja.png)
 
 ❶強制再起動を希望するDBインスタンスを選択した後、ドロップダウンメニューから**DBインスタンス強制再起動**メニューをクリックします。
 
@@ -609,7 +757,7 @@ DBインスタンスを強制的に再起動するには、コンソールで
 
 削除保護を有効にすると、誤ってDBインスタンスが削除されないように保護できます。削除保護を無効化するまで、そのDBインスタンスを削除できません。削除保護設定を変更するには
 
-![db-instance-deletion-protection-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-deletion-protection-ja.png)
+![db-instance-deletion-protection-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-deletion-protection-ja.png)
 
 ❶削除保護設定を変更したいDBインスタンスを選択した後、ドロップダウンメニューから**削除保護設定変更**メニューをクリックすると、ポップアップウィンドウが表示されます。
 
@@ -643,7 +791,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 > 内部ドメインのA recordの変更が反映されるのに約3秒程度かかります。所要時間は、接続を試みるクライアント環境のDNS Cacheポリシーによって異なる場合があります。
 
 > [注意]
-> マスターと予備マスター間のバイナリログ(binary log)のposition numberの値が100,000,000,000以上差がある場合、フェイルオーバーが行われません。
+> マスターと予備マスター間のバイナリログ(binary log)のposition numberの値が100,000,000以上差がある場合、フェイルオーバーが行われません。
 > `replicate-ignore-db`または`replicate-ignore-table`が適用されている場合、該当するDBまたはテーブルの変更内容はレプリケーションされないため、フェイルオーバーに失敗する可能性があります。
 
 ### フェイルオーバーが発生したマスター
@@ -659,7 +807,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 フェイルオーバーされたマスターを復旧するには、コンソールで
 
-![db-instance-failover-repair-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-failover-repair-ja.png)
+![db-instance-failover-repair-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-failover-repair-ja.png)
 
 ❶復旧を希望するフェイルオーバーされたマスターを選択した後、ドロップダウンメニューから**フェイルオーバーされたマスターの復旧**メニューをクリックします。
 
@@ -681,7 +829,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 フェイルオーバーされたマスターを再構築するには、コンソールで
 
-![db-instance-failover-rebuild-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-failover-rebuild-ja.png)
+![db-instance-failover-rebuild-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-failover-rebuild-ja.png)
 
 ❶再構築を希望するフェイルオーバーされたマスターを選択した後、ドロップダウンメニューから**フェイルオーバーされたマスターの再構築**メニューをクリックします。
 
@@ -691,13 +839,9 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 フェイルオーバーされたマスターを分離するには、コンソールで
 
-![db-instance-failover-split-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-failover-split-ja.png)
+![db-instance-failover-split-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-failover-split-ja.png)
 
 ❶分離を希望するフェイルオーバーされたマスターを選択した後、ドロップダウンメニューから**フェイルオーバーされたマスター分離**メニューをクリックします。
-
-### フェイルオーバーが発生したマスター分離
-
-フェイルオーバーが発生したマスターの復旧に失敗してデータ補正が必要な場合、そのマスターを分離して高可用性機能を無効にできます。分離されたマスターと昇格されたマスター間の複製関係が切断され、それぞれ一般DBインスタンスとして動作します。分離後は既存の構成に戻せません。
 
 <a id="manual-failover"></a>
 ### 手動フェイルオーバー
@@ -710,6 +854,9 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 * ハイパーバイザーの点検のためのDBインスタンスのマイグレーション
 
 フェイルオーバーを利用した再起動を行うと、予備マスターを先に再起動します。その後、フェイルオーバーにより予備マスターをマスターに昇格させ、既存のマスターは予備マスターの役割をすることになります。昇格時に接続のための内部ドメインのA recordはマスターから予備マスターに変更されるので、アプリケーションの変更は必要ありません。昇格されたマスターは、以前のマスターのすべての自動バックアップを継承します。フェイルオーバーの過程でマスターが変更され、バイナリログ(binary log)がすべて削除されるため、既存のバックアップを利用した時点復元はサポートしません。昇格されたマスターで新規にバックアップが行われた時点から時点復元を行うことができます。
+
+> [参考]
+> 高可用性機能はドメインベースで動作するため、接続を行うクライアントが接続するDNSサーバーまたはそのローカルキャッシュに対して内部ドメインのAレコード変更が反映されるまでに約3秒かかることがあります。この間に行われる接続試行は、元のマスターに接続される可能性があります。
 
 > [注意]
 > 予備マスターとレプリケーショングループに含まれるリードレプリカのSeconds_Behind_Masterの値が1以上の場合、製遅遅延が発生したものとみなし、手動フェイルオーバーは失敗します。負荷が少ない時間に手動フェイルオーバーを行うことを推奨します。レプリケーション遅延による再起動の失敗は、イベント画面で確認できます。
@@ -724,7 +871,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 予備マスターに変更事項を先に適用した後、その推移を観察したり、正確な時間にフェイルオーバーを実行したい場合、コンソールでフェイルオーバーのタイミングを直接制御できます。フェイルオーバー手動制御を選択すると、予備マスターが再起動された後、❶コンソールに**フェイルオーバー**ボタンが表示されます。このボタンをクリックするとフェイルオーバーが実行され、最大5日間実行を待機できます。5日以内にフェイルオーバーを実行しない場合、その作業は自動的にキャンセルされます。
 
-![db-instance-ha-wait-manual-failover-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/24.03.12/db-instance-ha-wait-manual-failover-ja.png)
+![db-instance-ha-wait-manual-failover-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-ha-wait-manual-failover-ja.png)
 
 > [注意]
 > フェイルオーバーを待機している間は、自動フェイルオーバーは行われません。
@@ -739,7 +886,7 @@ recordは障害が発生したマスターから予備マスターに変更さ�
 
 ### 高可用性の一時停止
 
-一時的な作業による接続中断や大量の負荷が予想される状況で、一時的に高可用性機能を停止できます。高可用性機能が一時停止されると、障害を検出しないため、フェイルオーバーを実行しません。高可用性機能が一時停止した状態で再起動が必要な作業を実行しても一時停止された高可用性機能が再開されません。高可用性機能が一時停止するとデータ複製は正常に行われず、障害が検出されないため、長時間一時停止状態に維持することは推奨しません。
+一時的な作業による接続中断や大量の負荷が予想される状況で、一時的に高可用性機能を停止できます。高可用性機能が一時停止されると、障害を検出しないため、フェイルオーバーを実行しません。高可用性機能が一時停止した状態で再起動が必要な作業を実行しても一時停止された高可用性機能が再開されません。高可用性機能が一時停止してもデータ複製は正常に行われますが、障害が検出されないため、長時間一時停止状態に維持することは推奨しません。
 
 ### 予備マスター再構築
 
@@ -788,12 +935,12 @@ mysql> CALL mysql.tcrds_repl_changemaster (master_instance_ip, master_instance_p
 ```
 
 * パラメータの説明
-  * master_instance_ip:複製対象(Master)サーバーのIP
-  * master_instance_port:複製対象(Master)サーバーのMySQLポート
-  * user_id_for_replication:複製対象(Master)サーバーのMySQLに接続する複製用アカウント
-  * password_for_replication_user:複製用アカウントパスワード
-  * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名
-  * MASTER_LOG_POS:複製対象(Master)のbinary logポジション
+    * master_instance_ip:複製対象(Master)サーバーのIP
+    * master_instance_port:複製対象(Master)サーバーのMySQLポート
+    * user_id_for_replication:複製対象(Master)サーバーのMySQLに接続する複製用アカウント
+    * password_for_replication_user:複製用アカウントパスワード
+    * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名
+    * MASTER_LOG_POS:複製対象(Master)のbinary logポジション
 
 ```
 ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
@@ -811,16 +958,18 @@ mysql> CALL mysql.tcrds_repl_changesource (master_instance_ip, master_instance_p
 ```
 
 * パラメータの説明
-    * master_instance_ip:レプリケーション元(マスター)サーバーのIP
-    * master_instance_port:レプリケーション元(マスター)サーバーのMySQLポート
-    * user_id_for_replication:レプリケーション元(マスター)サーバーのMySQLに接続するためのレプリケーション用アカウント
-    * password_for_replication_user:レプリケーション用アカウントのパスワード
-    * SOURCE_LOG_FILE:レプリケーション元(マスター)のバイナリログファイル名
-    * SOURCE_LOG_POS:レプリケーション元(マスター)のバイナリログポジション
+      * master_instance_ip:レプリケーション元(マスター)サーバーのIP
+      * master_instance_port:レプリケーション元(マスター)サーバーのMySQLポート
+      * user_id_for_replication:レプリケーション元(マスター)サーバーのMySQLに接続するためのレプリケーション用アカウント
+      * password_for_replication_user:レプリケーション用アカウントのパスワード
+      * SOURCE_LOG_FILE:レプリケーション元(マスター)のバイナリログファイル名
+      * SOURCE_LOG_POS:レプリケーション元(マスター)のバイナリログポジション
 
 ```
 ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
 ```
+
+> [注意]レプリケーション用アカウントがレプリケーション元(マスター) MySQLに作成されている必要があります。
 
 ### tcrds_repl_init
 
@@ -867,8 +1016,8 @@ mysql> CALL mysql.tcrds_repl_replica_start();
 ### tcrds_repl_skip_repl_error
 
 * 以下のようなDuplicate keyエラーが発生した場合、tcrds_repl_skip_repl_errorプロシージャを実行するとレプリケーションエラーを解決できます。
-    * 8.4以前: SQL_SLAVE_SKIP_COUNTER=1を実行します。
-    * 8.4以降: `SQL_REPLICA_SKIP_COUNTER=1`を実行します。
+      * 8.4以前: SQL_SLAVE_SKIP_COUNTER=1を実行します。
+      * 8.4以降: `SQL_REPLICA_SKIP_COUNTER=1`を実行します。
 * `MySQL error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
@@ -972,7 +1121,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 #### データのインポート中に`ERROR 1418`エラーが発生する場合
 
 * `ERROR 1418`エラーはmysqldumpファイルの関数宣言にNO SQL、READS SQL DATA, DETERMINISTICがなく、バイナリログが有効な状態の時に発生します。
-  * 詳細については[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
+    * 詳細については[The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL文書を参照してください。
 * これを解決するためには、mysqldumpファイルを適用するDBインスタンスの`log_bin_trust_function_creators`パラメータの値を`1`に変更する必要があります。
 
 ### 複製を利用してエクスポート
@@ -1149,28 +1298,32 @@ DB構成に応じて特定DBインスタンスを選択してマイグレーシ�
 
 #### 1. メンテナンス対象DBインスタンスを確認します。
 
-名前の横にマイグレーションボタンがあるDBインスタンスがメンテナンス対象のインスタンスです。
+**メンテナンス**で**必須**をクリックするか、**DBインスタンス詳細**の**メンテナンス**タブでハイパーバイザーマイグレーションメンテナンス作業があるか確認できます。
 
-![rds_planed_migration_0](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/planned_migration_alarm/image0_ja.png)
+![rds_planed_migration_0](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/planned_migration_alarm/26.01.13/image0_ja.png)
 
-マイグレーションボタンにマウスオーバーすると、メンテナンス日程の詳細を確認できます。
+❶ ハイパーバイザーマイグレーションメンテナンスの**表示**ボタンをクリック
+❷ ハイパーバイザーマイグレーションに関する詳細な点検内容を確認できます。
 
-![rds_planed_migration_1](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/planned_migration_alarm/image1_ja.png)
+![rds_planed_migration_1](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/planned_migration_alarm/26.01.13/image1_ja.png)
 
 #### 2. メンテナンス対象DBインスタンスに接続中のアプリケーションソフトウェアを終了する必要があります。
 
 DBに接続しているサービスに影響を与えないように、適切な措置を取ってください。
 やむを得ずサービスに影響を与えてしまう時は、NHN Cloudサポートに連絡してくだされば、適切な措置を案内いたします。
 
-#### 3. メンテナンス対象DBインスタンスを選択してマイグレーションボタンをクリックし、DBインスタンスマイグレーションの確認ウィンドウが表示されたら確認ボタンをクリックします。
+#### 3. 点検対象のDBインスタンスのマイグレーションを適用できます。
 
-![rds_planed_migration_2](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/planned_migration_alarm/image2_ja.png)
+![rds_planed_migration_2](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/planned_migration_alarm/26.01.13/image2_ja.png)
+
+❶ **即時適用**をクリックして、ハイパーバイザーマイグレーションをすぐに適用できます。
+❷ **次回のメンテナンス期間に適用**をクリックして、希望するメンテナンス期間にハイパーバイザーマイグレーションを適用できます。
 
 #### 4. DBインスタンスのマイグレーションが終わるまで待機します。
 
 DBインスタンスの状態が変更されない場合は「更新」を行ってください。
 
-![rds_planed_migration_3](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/planned_migration_alarm/image3_ja.png)
+![rds_planed_migration_3](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/planned_migration_alarm/26.01.13/image3_ja.png)
 
 DBインスタンスのマイグレーション中は何も操作ができません。
 DBインスタンスのマイグレーションが正常に完了しなかった場合、自動的に管理者に報告され、NHN Cloudから別途連絡いたします。
@@ -1182,15 +1335,70 @@ Federated Storage Engineを使用する場合、次を考慮する必要があ�
 #### ローカルノードとしてRDSを利用する構成の場合
 
 * リモートノードへの送信を許可する設定が必要です。
-  * DBセキュリティグループでルールを追加できます。
-  * 詳細については、 [DBセキュリティグループ](db-security-group-ninc/)項目を参照してください。
+    * DBセキュリティグループでルールを追加できます。
+    * 詳細については、 [DBセキュリティグループ](db-security-group-ninc/)項目を参照してください。
 * ローカルノード役割のRDSにRead Only Slaveを追加した構成で使用する場合は、パラメータのreplicate-ignore-tableにfederated設定されたテーブル名を指定する必要があります。
-  * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
-  * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
-  * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
+    * Read Only Slaveを構成する場合、 federatedテーブルも複製され、MasterとRead Only Slaveがリモートノードを一緒に見ます。
+    * この場合、Masterに行ったデータ入力がfederated設定によってリモートノードにも行われ、Read Only Slaveでも同様に同じ入力が行われ、重複キーエラーなどによるレプリケーション中断が発生することがあります。
+    * Read Only Slaveがfederatedテーブルを複製しないようにreplicate-ignore-tableに設定する必要があります。
 
 #### リモートノードとしてRDSを利用する構成の場合
 
 * ローカルノードでの受信を許可する設定が必要です。
-  * DBセキュリティグループでルールを追加できます。
-  * 詳細については、 [DBセキュリティグループ](db-security-group-ninc/)項目を参照してください。
+    * DBセキュリティグループでルールを追加できます。
+    * 詳細については、 [DBセキュリティグループ](db-security-group-ninc/)項目を参照してください。
+
+<a id="security-patch"></a>
+### 付録3. セキュリティパッチ
+
+NHN Cloudは、DBインスタンスのOSで発見されたセキュリティの脆弱性(CVE)を定期的に管理し、影響を受けるDBインスタンスにセキュリティパッチのメンテナンス作業を提供します。
+セキュリティパッチは、現在のDBインスタンスの脆弱性を解決した最新のセキュリティアップデートを適用する方式で動作します。
+以下のガイドに従って、コンソールにあるセキュリティパッチ機能を利用してください。
+セキュリティパッチの対象として指定されたDBインスタンスがあるプロジェクトへ移動します。
+
+#### 1. セキュリティパッチの対象となるDBインスタンスを確認します。
+
+**メンテナンス**で**必須**または**利用可能**をクリックするか、**DBインスタンスの詳細**の**メンテナンス**タブで、セキュリティパッチのメンテナンス作業があるかを確認できます。
+
+![patch-security-list-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.05.12/patch-security-list-ja.png)
+
+❶ セキュリティパッチメンテナンスの**表示**ボタンをクリック
+❷ 現在のDBイメージに該当する、セキュリティの脆弱性情報を確認できます。
+
+![patch-security-detail-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.05.12/patch-security-detail-ja.png)
+
+セキュリティパッチを適用した際に解決されるセキュリティの脆弱性情報を確認できます。
+
+![patch-security-popup-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.05.12/patch-security-popup-ja.png)
+
+> [参考]
+> 脆弱性の深刻度は、CRITICAL、HIGH、MEDIUM、LOWに分類されます。
+
+#### 2. セキュリティパッチ対象のDBインスタンスに接続中のアプリケーションを確認します。
+
+セキュリティパッチにより、DBインスタンスのサービス瞬断が発生する可能性があります。
+高可用性DBインスタンスは、フェイルオーバーを通じてサービスの瞬断を最小限に抑えることができ、単一のDBインスタンスは再起動によってセキュリティパッチが適用されます。
+DBに接続されているサービスに影響を与えないよう、適切な措置を講じてください。
+
+#### 3. セキュリティパッチの適用タイミングを選択します。
+
+![patch-security-maintenance-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.05.12/patch-security-maintenance-ja.png)
+
+❶ **今すぐ適用**をクリックして、セキュリティパッチを直ちに適用できます。
+❷ **次のメンテナンス期間に適用**をクリックして、指定されたメンテナンス期間にセキュリティパッチを適用できます。
+
+高可用性DBインスタンスに適用する場合は、以下のオプションを一緒に選択できます。
+
+* **事前バックアップの実行**: セキュリティパッチを実行する前に、バックアップを自動で実行します。
+* **フェイルオーバー方式の選択**: オンラインフェイルオーバー、手動フェイルオーバーの使用有無を選択します。
+* **レプリケーション遅延の待機**: レプリケーションの遅延が解消されるまで待機した後、セキュリティパッチを適用します。
+* **Read Onlyモード**: セキュリティパッチの実行中にRead Onlyモードを使用します。
+
+#### 4. セキュリティパッチが完了するまで待機します。
+
+DBインスタンスの状態が変更されない場合は、更新してください。
+
+![patch-security-running-ja](https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.05.12/patch-security-running-ja.png)
+
+DBインスタンスへのセキュリティパッチ適用中は、一切の操作を行うことができません。
+セキュリティパッチが正常に完了しない場合は自動的に再試行され、繰り返し失敗する場合は管理者に報告され、NHN Cloudから別途ご連絡します。

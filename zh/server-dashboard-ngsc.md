@@ -1,6 +1,7 @@
 ## Database > RDS for MySQL > Server Dashboard
 
 ## Server Dashboard
+
 You can visualize performance metrics in chart form on the server dashboard. Charts are arranged according to a preset layout. Metrics are collected once every minute and kept for up to 1 year. Retention period by aggregation unit is as follows.
 
 | Aggregate Unit | Retention Period |
@@ -13,29 +14,29 @@ Use a layout to show the size and position of charts. When the service is enable
 
 ![layout_01_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/layout_01_en.png)
 
-* ❶ When you click **Create Layout**, a pop-up window appears where you can create a layout.
-* ❷ Enter a layout name and click **Create** to create a layout.
+❶ When you click **Create Layout**, a pop-up window appears where you can create a layout.
+❷ Enter a layout name and click **Create** to create a layout.
 
 ### Add Charts to Layout
 
 ![layout_02_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/layout_02_en.png)
 
-* ❶ Select the layout you want.
-* ❷ When you click **Add Chart**, a pop-up window appears where you can add charts.
+❶ Select the layout you want.
+❷ When you click **Add Chart**, a pop-up window appears where you can add charts.
 
 ![layout_03_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/layout_03_en.png)
 
-* ❶ You can select multiple charts that you want to add by checking the check box.
-* ❷ When you click a chart name, a chart preview appears in the red square area on the left.
-* ❸ Click **Add** to add all selected charts.
+❶ You can select multiple charts that you want to add by checking the check box.
+❷ When you click a chart name, a chart preview appears in the area on the left.
+❸ Click **Add** to add all selected charts.
 
 ### Change and Delete Charts in Layout
 
 ![layout_04_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/layout_04_en.png)
 
-* ❶ You can reposition the chart by clicking and holding the top area of the chart and dragging and dropping it wherever you want.
-* ❷ You can resize the chart by dragging and dropping the bottom right area of the chart.
-* ❸ When you click **x** in the upper right corner of the chart, the chart is deleted from the layout.
+❶ You can reposition the chart by clicking and holding the top area of the chart and dragging and dropping it wherever you want.
+❷ You can resize the chart by dragging and dropping the bottom right area of the chart.
+❸ When you click **x** in the upper right corner of the chart, the chart is deleted from the layout.
 
 ## Chart
 
@@ -71,8 +72,8 @@ Server group allows you to view performance metrics for multiple DB instances in
 
 ![chart_01_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/chart_01_en.png)
 
-* ❶ **Add Group** displays a pop-up window where you can create groups.
-* ❷ Select DB instance to add to server groups.
+❶ **Add Group** displays a pop-up window where you can create groups.
+❷ Select DB instance to add to server groups.
 
 ### Server Group Settings
 
@@ -80,9 +81,9 @@ DB instances and server groups appear together in the list of servers on the lef
 
 ![server_group_01_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/server_group_01_en.png)
 
-* ❶ Click **+**, **-** to unfold or close the server group.
-* ❷ When you click DB instance that belongs to a server group, a color selection pop-up appears where you can change the color that will appear in the chart.
+❶ Click **+**, **-** to unfold or close the server group.
+❷ When you click DB instance that belongs to a server group, a color selection pop-up appears where you can change the color that will appear in the chart.
 
 ![server_group_02_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.04.11/server_group_02_en.png)
 
-* ❶ **:You can change or delete the server group by clicking **.
+❶ **:** You can change or delete the server group by clicking the menu icon displayed on the right of each item in the server list.
