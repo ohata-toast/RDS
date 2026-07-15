@@ -8,7 +8,7 @@
 
 ### Bug Fixes
 
-* Fixed an issue where the security patch was not performed when a single instance subject to security patch was changed to a high availability instance
+* Fixed an issue where a security patch was not applied when a single instance scheduled for a security patch was changed to a high availability instance
 
 ## May 12, 2026
 
