@@ -14,16 +14,20 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | 버전                   | 비고                             |
 |----------------------|--------------------------------|
 | <strong>8.4</strong> |                                |
+| MySQL 8.4.9          |                                |
+| MySQL 8.4.8          |                                |
 | MySQL 8.4.7          |                                |
 | MySQL 8.4.6          |                                |
 | MySQL 8.4.5          |                                |
 | <strong>8.0</strong> |                                |
+| MySQL 8.0.46         |                                |
+| MySQL 8.0.45         |                                |
 | MySQL 8.0.44         |                                |
 | MySQL 8.0.43         |                                |
 | MySQL 8.0.42         |                                |
 | MySQL 8.0.41         |                                |
 | MySQL 8.0.40         |                                |
-| MySQL 8.0.36         |                                |
+| MySQL 8.0.36         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.  |
 | MySQL 8.0.35         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.  |
 | MySQL 8.0.34         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.  |
 | MySQL 8.0.33         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.  |
@@ -139,31 +143,35 @@ RDS for MySQL에서는 MariaDB 감사 플러그인을 사용하여 MySQL DB 인�
 > 일부 MySQL 버전에서는 지원하지 않을 수 있으며, 지원하지 않는 버전으로 업그레이드하면 해당 플러그인을 사용할 수 없습니다.
 
 #### 지원 버전
-| MySQL 버전                   | 서버 감사 플러그인 지원 여부 |
-|----------------------------|------------------|
-| <strong>8.4</strong>       |                  |
-| MySQL 8.4.7                | O                |
-| MySQL 8.4.6                | O                |
-| MySQL 8.4.5                | O                |
-| <strong>8.0</strong>       |                  |
-| MySQL 8.0.44               | O                |
-| MySQL 8.0.43               | O                |
-| MySQL 8.0.42               | O                |
-| MySQL 8.0.41               | O                |
-| MySQL 8.0.40               | O                |
-| MySQL 8.0.36               | O                |
-| MySQL 8.0.35               | O                |
-| MySQL 8.0.34               | O                |
-| MySQL 8.0.33               | O                |
-| MySQL 8.0.32               | O                |
-| MySQL 8.0.28               | O                |
-| MySQL 8.0.23               | O                |
-| MySQL 8.0.18               | X                |
-| <strong>5.7</strong>       |                  |
-| MySQL 5.7.37               | X                |
-| MySQL 5.7.33               | O                |
-| MySQL 5.7.26               | O                |
-| MySQL 5.7.19               | O                |
-| MySQL 5.7.15               | X                |
-| <strong>5.6</strong>       |                  |
-| MySQL 5.6.33               | O                |
+| MySQL 버전             | 서버 감사 플러그인 지원 여부 |
+|----------------------|------------------|
+| <strong>8.4</strong> |                  |
+| MySQL 8.4.9          | O                |
+| MySQL 8.4.8          | O                |
+| MySQL 8.4.7          | O                |
+| MySQL 8.4.6          | O                |
+| MySQL 8.4.5          | O                |
+| <strong>8.0</strong> |                  |
+| MySQL 8.0.46         | O                |
+| MySQL 8.0.45         | O                |
+| MySQL 8.0.44         | O                |
+| MySQL 8.0.43         | O                |
+| MySQL 8.0.42         | O                |
+| MySQL 8.0.41         | O                |
+| MySQL 8.0.40         | O                |
+| MySQL 8.0.36         | O                |
+| MySQL 8.0.35         | O                |
+| MySQL 8.0.34         | O                |
+| MySQL 8.0.33         | O                |
+| MySQL 8.0.32         | O                |
+| MySQL 8.0.28         | O                |
+| MySQL 8.0.23         | O                |
+| MySQL 8.0.18         | X                |
+| <strong>5.7</strong> |                  |
+| MySQL 5.7.37         | X                |
+| MySQL 5.7.33         | O                |
+| MySQL 5.7.26         | O                |
+| MySQL 5.7.19         | O                |
+| MySQL 5.7.15         | X                |
+| <strong>5.6</strong> |                  |
+| MySQL 5.6.33         | O                |
