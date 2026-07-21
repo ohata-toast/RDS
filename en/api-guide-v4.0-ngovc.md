@@ -2715,7 +2715,7 @@ This API does not require a request body.
 | maintenances.payload | Object | Payload according to maintenance type |
 | maintenances.required | Boolean | Whether the maintenance is required |
 | maintenances.deadlineYmdt | DateTime | Datetime when the maintenance is forcibly applied |
-| maintenances.status | Enum | Maintenance status<br/>- PENDING: `Pending`<br/>- READY: `Ready`<br/>- RUNNING: `Running`<br/>- COMPLETED: `Completed`<br/>- FAILED: `Failed`<br/>- EXCLUDED: `Excluded`<br/>- DELETED: `Deleted`<br/>- UNKNOWN |
+| maintenances.status | Enum | Maintenance status<br/>- PENDING: `Pending`<br/>- READY: `Ready`<br/>- RUNNING: `Running`<br/>- COMPLETED: `Completed`<br/>- FAILED: `Failed`<br/>- EXCLUDED: `Excluded`<br/>- DELETED: `Deleted`<br/>- SUSPENDED: `Suspended`<br/>- UNKNOWN |
 | maintenances.executionType | Enum | Maintenance execution type<br/>- SCHEDULED: `Scheduled execution (automatic execution during maintenance window)`<br/>- MANUAL: `Manual execution (immediate execution)`<br/>- FORCED: `Forced execution (automatic execution after deadline exceeded)` |
 | maintenances.addedYmdt | DateTime | Datetime when the maintenance was scheduled |
 | maintenances.executionStartedYmdt | DateTime | Maintenance start datetime |
@@ -3257,7 +3257,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 "useOnlineFailover": false,
 "executeBackup": false,
 "waitReplicationDelay": false,
-"useReadOnly": false
+"useReadOnly": false,
+"osRestart": false
 }
 ```
 
@@ -3269,6 +3270,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | executeBackup | Boolean | N | Whether to execute backup at this time<br/>- Default: `false` |
 | waitReplicationDelay | Boolean | N | Wait for replication lag to clear<br/>- Default: `false` |
 | useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
+| osRestart | Boolean | N | Whether to restart the operating system<br/>- Default: `false` |
 
 #### Response
 
@@ -4892,7 +4894,7 @@ This API does not require a request body.
 | parameterGroups.parameterGroupName | String | Name to identify parameter groups |
 | parameterGroups.description | String | Additional information on parameter group |
 | parameterGroups.dbVersion | String | DB engine type |
-| parameterGroups.parameterGroupType | Enum | Parameter group type<br/>- USER<br/>- ADMIN<br/>- DEFAULT<br/>- CLUSTER_USER |
+| parameterGroups.parameterGroupType | Enum | Parameter group type<br/>- USER<br/>- ADMIN<br/>- DEFAULT |
 | parameterGroups.parameterGroupStatus | Enum | Parameter group current status<br/>- STABLE: `Applied`<br/>- NEED_TO_APPLY: `Need to apply`<br/>- DELETED: `Deleted` |
 | parameterGroups.createdYmdt | DateTime | Created at |
 | parameterGroups.updatedYmdt | DateTime | Modified date and time |

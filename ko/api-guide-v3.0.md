@@ -18,7 +18,7 @@
 RDS for MySQL API를 사용하려면 User Access Key가 필요합니다. User Access Key는 NHN Cloud 계정 또는 IAM 계정을 기반으로 발급되는 인증 키로, Secret Access Key와 함께 사용하여 API 요청에 대한 인증 수단으로 활용됩니다.
 
 User Access Key와 Secret Access Key는 콘솔의 **API 보안 설정**에서 발급할 수 있습니다. User Access Key 발급 및 사용에 대한 자세한 내용은 [User Access Key](/nhncloud/ko/public-api/user-access-key)를 참고하세요.
-생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
+생성된 Key는 Appkey와 함께 요청 헤더에 포함해야 합니다.
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
@@ -611,7 +611,7 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | dbInstances | Array | DB 인스턴스 그룹에 속한 DB 인스턴스 목록 |
 | dbInstances.dbInstanceId | UUID | DB 인스턴스의 식별자 |
 | dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 타입<br/>- MASTER: `마스터`<br/>- FAILED_MASTER: `장애 마스터`<br/>- CANDIDATE_MASTER: `예비 마스터`<br/>- READ_ONLY_SLAVE: `읽기 복제본` |
-| dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- BEFORE_CREATE: `생성 이전 (회색)`<br/>- AVAILABLE: `사용 가능 (녹색)`<br/>- STORAGE_FULL: `용량 부족 (적색)`<br/>- FAIL_TO_CREATE: `생성 실패 (적색)`<br/>- FAIL_TO_CONNECT: `연결 실패 (적색)`<br/>- REPLICATION_STOP: `복제 중단 (적색)`<br/>- REPLICATION_DELAY: `복제 지연 (황색)`<br/>- FAILOVER: `장애 조치 완료 (적색)`<br/>- SHUTDOWN: `중지 됨 (회색)`<br/>- DELETED: `삭제됨 (회색)` |
+| dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- BEFORE_CREATE: `생성 이전(회색)`<br/>- AVAILABLE: `사용 가능(녹색)`<br/>- STORAGE_FULL: `용량 부족(적색)`<br/>- FAIL_TO_CREATE: `생성 실패(적색)`<br/>- FAIL_TO_CONNECT: `연결 실패(적색)`<br/>- REPLICATION_STOP: `복제 중단(적색)`<br/>- REPLICATION_DELAY: `복제 지연(황색)`<br/>- FAILOVER: `장애 조치 완료(적색)`<br/>- SHUTDOWN: `중지됨(회색)`<br/>- DELETED: `삭제됨(회색)` |
 | createdYmdt | DateTime | 생성 일시 |
 | updatedYmdt | DateTime | 수정 일시 |
 
@@ -718,7 +718,7 @@ GET /v3.0/db-instances
 | dbInstances.dbVersion | String | DB 엔진 유형 |
 | dbInstances.dbPort | Number | DB 포트 |
 | dbInstances.dbInstanceType | Enum | DB 인스턴스 역할 타입<br/>- MASTER: `마스터`<br/>- FAILED_MASTER: `장애 마스터`<br/>- CANDIDATE_MASTER: `예비 마스터`<br/>- READ_ONLY_SLAVE: `읽기 복제본` |
-| dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- BEFORE_CREATE: `생성 이전 (회색)`<br/>- AVAILABLE: `사용 가능 (녹색)`<br/>- STORAGE_FULL: `용량 부족 (적색)`<br/>- FAIL_TO_CREATE: `생성 실패 (적색)`<br/>- FAIL_TO_CONNECT: `연결 실패 (적색)`<br/>- REPLICATION_STOP: `복제 중단 (적색)`<br/>- REPLICATION_DELAY: `복제 지연 (황색)`<br/>- FAILOVER: `장애 조치 완료 (적색)`<br/>- SHUTDOWN: `중지 됨 (회색)`<br/>- DELETED: `삭제됨 (회색)` |
+| dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- BEFORE_CREATE: `생성 이전(회색)`<br/>- AVAILABLE: `사용 가능(녹색)`<br/>- STORAGE_FULL: `용량 부족(적색)`<br/>- FAIL_TO_CREATE: `생성 실패(적색)`<br/>- FAIL_TO_CONNECT: `연결 실패(적색)`<br/>- REPLICATION_STOP: `복제 중단(적색)`<br/>- REPLICATION_DELAY: `복제 지연(황색)`<br/>- FAILOVER: `장애 조치 완료(적색)`<br/>- SHUTDOWN: `중지됨(회색)`<br/>- DELETED: `삭제됨(회색)` |
 | dbInstances.progressStatus | Enum | DB 인스턴스의 현재 진행 상태<br/>- NONE<br/>- APPLYING_PARAMETER_GROUP<br/>- BACKING_UP<br/>- CANCELING<br/>- CREATING<br/>- CREATING_SCHEMA<br/>- CREATING_USER<br/>- DELETING<br/>- DELETING_SCHEMA<br/>- DELETING_USER<br/>- EXPORTING_BACKUP<br/>- FAILING_OVER<br/>- MIGRATING<br/>- MODIFYING<br/>- PREPARING<br/>- PROMOTING<br/>- PROMOTING_FORCIBLY<br/>- REBUILDING<br/>- REPAIRING<br/>- REPLICATING<br/>- RESTARTING<br/>- RESTARTING_FORCIBLY<br/>- RESTORING<br/>- STARTING<br/>- STOPPING<br/>- SYNCING_SCHEMA<br/>- SYNCING_USER<br/>- UPDATING_USER<br/>- WAIT_MANUAL_CONTROL |
 | dbInstances.createdYmdt | DateTime | 생성 일시 |
 | dbInstances.updatedYmdt | DateTime | 수정 일시 |
@@ -792,7 +792,7 @@ POST /v3.0/db-instances
 | dbFlavorId | UUID | Y | DB 인스턴스 사양의 식별자 |
 | dbVersion | String | Y | DB 엔진 유형 |
 | dbPort | Number | Y | DB 포트<br/>- 최솟값: 3306, 최댓값: 43306 |
-| dbUserName | String | Y | DB 사용자 계정명<br/>- 최소 길이: `1`<br/>- 최대 길이: `32` |
+| dbUserName | String | Y | DB 사용자 계정 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `32` |
 | dbPassword | String | Y | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
 | parameterGroupId | UUID | Y | 파라미터 그룹의 식별자 |
 | dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
@@ -801,8 +801,8 @@ POST /v3.0/db-instances
 | pingInterval | Number | N | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 | useDefaultNotification | Boolean | N | 기본 알림 사용 여부<br/>- 기본값: `false` |
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
-| authenticationPlugin | Enum | N | 인증 Plugin<br/>- NATIVE: `mysql_native_password 인증`<br/>- CACHING_SHA2: `caching_sha2_password 인증 (MySQL 전용)`<br/>- SHA256: `sha256_password 인증 (MySQL 전용)` |
-| tlsOption | Enum | N | TLS Option<br/>- 기본값: `NONE`<br/>- NONE: `TLS 미사용`<br/>- SSL: `SSL 인증`<br/>- X509: `X509 인증서 인증` |
+| authenticationPlugin | Enum | N | 인증 플러그인<br/>- NATIVE: `mysql_native_password 인증`<br/>- CACHING_SHA2: `caching_sha2_password 인증(MySQL 전용)`<br/>- SHA256: `sha256_password 인증(MySQL 전용)` |
+| tlsOption | Enum | N | TLS ìµì<br/>- 기본값: `NONE`<br/>- NONE: `TLS 미사용`<br/>- SSL: `SSL 인증`<br/>- X509: `X509 인증서 인증` |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.subnetId | UUID | Y | 서브넷의 식별자 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부<br/>- 기본값: `false` |
@@ -816,7 +816,7 @@ POST /v3.0/db-instances
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
 | backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
-| backup.backupSchedules | Array | Y | 백업 스케쥴 목록 |
+| backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Enum | Y | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 
@@ -931,12 +931,12 @@ POST /v3.0/db-instances/restore-from-obs
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
 | backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
-| backup.backupSchedules | Array | Y | 백업 스케쥴 목록 |
+| backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Enum | Y | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 | restore | Object | Y | 복원 정보 객체 |
 | restore.tenantId | String | Y | 백업이 저장된 오브젝트 스토리지의 테넌트 ID |
-| restore.username | String | Y | NHN Cloud 계정 혹은 IAM 멤버 ID |
+| restore.username | String | Y | NHN Cloud 계정 또는 IAM 계정 ID |
 | restore.password | String | Y | 백업이 저장된 오브젝트 스토리지의 API 비밀번호 |
 | restore.targetContainer | String | Y | 백업이 저장된 오브젝트 스토리지의 컨테이너 |
 | restore.objectPath | String | Y | 컨테이너에 저장된 백업의 경로 |
@@ -1062,14 +1062,14 @@ GET /v3.0/db-instances/{dbInstanceId}
 | dbVersion | String | DB 엔진 유형 |
 | dbPort | Number | DB 포트 |
 | dbInstanceType | Enum | DB 인스턴스 역할 타입<br/>- MASTER: `마스터`<br/>- FAILED_MASTER: `장애 마스터`<br/>- CANDIDATE_MASTER: `예비 마스터`<br/>- READ_ONLY_SLAVE: `읽기 복제본` |
-| dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- BEFORE_CREATE: `생성 이전 (회색)`<br/>- AVAILABLE: `사용 가능 (녹색)`<br/>- STORAGE_FULL: `용량 부족 (적색)`<br/>- FAIL_TO_CREATE: `생성 실패 (적색)`<br/>- FAIL_TO_CONNECT: `연결 실패 (적색)`<br/>- REPLICATION_STOP: `복제 중단 (적색)`<br/>- REPLICATION_DELAY: `복제 지연 (황색)`<br/>- FAILOVER: `장애 조치 완료 (적색)`<br/>- SHUTDOWN: `중지 됨 (회색)`<br/>- DELETED: `삭제됨 (회색)` |
+| dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- BEFORE_CREATE: `생성 이전(회색)`<br/>- AVAILABLE: `사용 가능(녹색)`<br/>- STORAGE_FULL: `용량 부족(적색)`<br/>- FAIL_TO_CREATE: `생성 실패(적색)`<br/>- FAIL_TO_CONNECT: `연결 실패(적색)`<br/>- REPLICATION_STOP: `복제 중단(적색)`<br/>- REPLICATION_DELAY: `복제 지연(황색)`<br/>- FAILOVER: `장애 조치 완료(적색)`<br/>- SHUTDOWN: `중지됨(회색)`<br/>- DELETED: `삭제됨(회색)` |
 | progressStatus | Enum | DB 인스턴스의 현재 진행 상태<br/>- NONE<br/>- APPLYING_PARAMETER_GROUP<br/>- BACKING_UP<br/>- CANCELING<br/>- CREATING<br/>- CREATING_SCHEMA<br/>- CREATING_USER<br/>- DELETING<br/>- DELETING_SCHEMA<br/>- DELETING_USER<br/>- EXPORTING_BACKUP<br/>- FAILING_OVER<br/>- MIGRATING<br/>- MODIFYING<br/>- PREPARING<br/>- PROMOTING<br/>- PROMOTING_FORCIBLY<br/>- REBUILDING<br/>- REPAIRING<br/>- REPLICATING<br/>- RESTARTING<br/>- RESTARTING_FORCIBLY<br/>- RESTORING<br/>- STARTING<br/>- STOPPING<br/>- SYNCING_SCHEMA<br/>- SYNCING_USER<br/>- UPDATING_USER<br/>- WAIT_MANUAL_CONTROL |
 | dbFlavorId | UUID | DB 인스턴스 사양의 식별자 |
 | parameterGroupId | UUID | DB 인스턴스에 적용된 파라미터 그룹의 식별자 |
 | dbSecurityGroupIds | Array | DB 인스턴스에 적용된 DB 보안 그룹의 식별자 목록 |
 | notificationGroupIds | Array | DB 인스턴스에 적용된 알림 그룹의 식별자 목록 |
 | useDeletionProtection | Boolean | DB 인스턴스 삭제 보호 여부 |
-| supportAuthenticationPlugin | Boolean | 인증 plugin 지원 여부 |
+| supportAuthenticationPlugin | Boolean | 인증 플러그인 지원 여부 |
 | needToApplyParameterGroup | Boolean | 최신 파라미터 그룹 적용 필요 여부 |
 | needMigration | Boolean | 마이그레이션 필요 여부 |
 | supportDbVersionUpgrade | Boolean | DB 버전 업그레이드 지원 여부 |
@@ -1265,7 +1265,7 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupRetryCount | Number | 백업 재시도 횟수 |
 | replicationRegion | Enum | 백업 복제 리전<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
 | useBackupLock | Boolean | 테이블 잠금 사용 여부 |
-| backupSchedules | Array | 백업 스케쥴 목록 |
+| backupSchedules | Array | 백업 스케줄 목록 |
 | backupSchedules.backupWndBgnTime | Time | 백업 시작 시각 |
 | backupSchedules.backupWndDuration | Enum | 백업 Duration<br/>- HALF_AN_HOUR<br/>- ONE_HOUR<br/>- ONE_HOUR_AND_HALF<br/>- TWO_HOURS<br/>- TWO_HOURS_AND_HALF<br/>- THREE_HOURS |
 
@@ -1315,7 +1315,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
 | replicationRegion | Enum | N | 백업 복제 리전<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
 | useBackupLock | Boolean | N | 테이블 잠금 사용 여부 |
-| backupSchedules | Array | N | 백업 스케쥴 목록 |
+| backupSchedules | Array | N | 백업 스케줄 목록 |
 | backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시각 |
 | backupSchedules.backupWndDuration | Enum | Y | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 
@@ -1377,7 +1377,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | tenantId | String | Y | 백업이 저장될 오브젝트 스토리지의 테넌트 ID<br/>- 최소 길이: `32`<br/>- 최대 길이: `32` |
-| username | String | Y | NHN Cloud 계정 혹은 IAM 회원 ID |
+| username | String | Y | NHN Cloud 계정 또는 IAM 계정 ID |
 | password | String | Y | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
 | targetContainer | String | Y | 백업이 저장될 오브젝트 스토리지의 컨테이너 |
 | objectPath | String | Y | 컨테이너에 저장될 백업의 경로 |
@@ -1406,7 +1406,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 
 ---
 
-### 테스트 용 DB 이미지 메타 변경
+### 테스트용 DB 이미지 메타 변경
 
 #### 요청
 
@@ -1639,7 +1639,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.dbUserStatus | Enum | DB 사용자의 현재 상태<br/>- STABLE<br/>- CREATING<br/>- UPDATING<br/>- SYNCING<br/>- DELETING<br/>- DELETED |
 | dbUsers.createdYmdt | DateTime | 생성 일시 |
 | dbUsers.updatedYmdt | DateTime | 수정 일시 |
-| dbUsers.authenticationPlugin | Enum | 사용자 인증 플러그인<br/>- NATIVE: `mysql_native_password 인증`<br/>- CACHING_SHA2: `caching_sha2_password 인증 (MySQL 전용)`<br/>- SHA256: `sha256_password 인증 (MySQL 전용)` |
+| dbUsers.authenticationPlugin | Enum | 사용자 인증 플러그인<br/>- NATIVE: `mysql_native_password 인증`<br/>- CACHING_SHA2: `caching_sha2_password 인증(MySQL 전용)`<br/>- SHA256: `sha256_password 인증(MySQL 전용)` |
 | dbUsers.tlsOption | Enum | 인증서 옵션<br/>- NONE: `TLS 미사용`<br/>- SSL: `SSL 인증`<br/>- X509: `X509 인증서 인증` |
 
 ---
@@ -1678,11 +1678,11 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbUserName | String | Y | DB 사용자 계정명<br/>- 최소 길이: `1`<br/>- 최대 길이: `32` |
+| dbUserName | String | Y | DB 사용자 계정 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `32` |
 | dbPassword | String | Y | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
-| host | String | Y | DB 사용자 계정의 호스트명<br/>- 최대 길이: `45` |
+| host | String | Y | DB 사용자 계정의 호스트 이름<br/>- 최대 길이: `45` |
 | authorityType | Enum | Y | DB 사용자 권한 타입<br/>- CUSTOM: `사용자 정의 권한`<br/>- READ: `읽기 권한`<br/>- CRUD: `CRUD 권한`<br/>- DDL: `DDL 권한`<br/>- ALL: `전체 권한` |
-| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- NATIVE: `mysql_native_password 인증`<br/>- CACHING_SHA2: `caching_sha2_password 인증 (MySQL 전용)`<br/>- SHA256: `sha256_password 인증 (MySQL 전용)` |
+| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- NATIVE: `mysql_native_password 인증`<br/>- CACHING_SHA2: `caching_sha2_password 인증(MySQL 전용)`<br/>- SHA256: `sha256_password 인증(MySQL 전용)` |
 | tlsOption | Enum | N | 인증서 옵션<br/>- 기본값: `NONE`<br/>- NONE: `TLS 미사용`<br/>- SSL: `SSL 인증`<br/>- X509: `X509 인증서 인증` |
 
 #### 응답
@@ -1787,7 +1787,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 |-----|-----|-----|-----|
 | dbPassword | String | N | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
 | authorityType | Enum | N | DB 사용자 권한 타입<br/>- CUSTOM: `사용자 정의 권한`<br/>- READ: `읽기 권한`<br/>- CRUD: `CRUD 권한`<br/>- DDL: `DDL 권한`<br/>- ALL: `전체 권한` |
-| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- NATIVE: `mysql_native_password 인증`<br/>- CACHING_SHA2: `caching_sha2_password 인증 (MySQL 전용)`<br/>- SHA256: `sha256_password 인증 (MySQL 전용)` |
+| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- NATIVE: `mysql_native_password 인증`<br/>- CACHING_SHA2: `caching_sha2_password 인증(MySQL 전용)`<br/>- SHA256: `sha256_password 인증(MySQL 전용)` |
 | tlsOption | Enum | N | 인증서 옵션<br/>- NONE: `TLS 미사용`<br/>- SSL: `SSL 인증`<br/>- X509: `X509 인증서 인증` |
 
 #### 응답
@@ -2189,7 +2189,7 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 |-----|-----|-----|-----|
 | logFileNames | Array | Y | 로그 파일 이름 목록 |
 | tenantId | String | Y | 로그 파일이 저장될 오브젝트 스토리지의 테넌트 ID<br/>- 최소 길이: `32`<br/>- 최대 길이: `32` |
-| username | String | Y | NHN Cloud 회원 또는 IAM 멤버 ID |
+| username | String | Y | NHN Cloud 계정 또는 IAM 계정 ID |
 | password | String | Y | 로그 파일이 저장될 오브젝트 스토리지의 API 비밀번호 |
 | targetContainer | String | Y | 로그 파일이 저장될 오브젝트 스토리지의 컨테이너 |
 | objectPath | String | Y | 컨테이너에 저장될 로그 파일의 경로 |
@@ -2456,7 +2456,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
 | backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부 |
-| backup.backupSchedules | Array | N | 백업 스케쥴 목록 |
+| backup.backupSchedules | Array | N | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | N | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Enum | N | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 
@@ -2705,7 +2705,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
 | backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
-| backup.backupSchedules | Array | Y | 백업 스케쥴 목록 |
+| backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Enum | Y | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 | restore | Object | Y | 복원 정보 객체 |
@@ -2891,7 +2891,7 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
 |-----|-----|-----|
 | storageType | Enum | 데이터 스토리지 타입 |
 | storageSize | Number | 데이터 스토리지 크기(GB) |
-| storageStatus | Enum | 데이터 스토리지의 현재 상태<br/>- DELETED: `삭제됨`<br/>- PENDING_DELETION: `삭제 유예됨`<br/>- DELETION_RESERVED: `삭제 예약됨 (스냅샷 정리 대기)`<br/>- DETACHED: `해제됨`<br/>- ATTACHED: `할당됨` |
+| storageStatus | Enum | 데이터 스토리지의 현재 상태<br/>- DELETED: `삭제됨`<br/>- PENDING_DELETION: `삭제 유예됨`<br/>- DELETION_RESERVED: `삭제 예약됨(스냅숏 정리 대기)`<br/>- DETACHED: `해제됨`<br/>- ATTACHED: `할당됨` |
 
 ---
 
@@ -3012,7 +3012,7 @@ GET /v3.0/backups
 | backups | Array | 백업 목록 |
 | backups.backupId | UUID | 백업의 식별자 |
 | backups.backupName | String | 백업을 식별할 수 있는 이름 |
-| backups.backupStatus | Enum | 백업의 현재 상태<br/>- BACKING_UP: `백업 중 (스피너)`<br/>- VERIFYING: `검증 중 (스피너)`<br/>- COMPLETED: `사용 가능 (녹색 아이콘)`<br/>- DELETING: `삭제 중 (스피너)`<br/>- DELETED: `삭제 됨 (회색 아이콘)`<br/>- ERROR: `에러 (적색 아이콘)` |
+| backups.backupStatus | Enum | 백업의 현재 상태<br/>- BACKING_UP: `백업 중(스피너)`<br/>- VERIFYING: `검증 중(스피너)`<br/>- COMPLETED: `사용 가능(녹색 아이콘)`<br/>- DELETING: `삭제 중(스피너)`<br/>- DELETED: `삭제됨(회색 아이콘)`<br/>- ERROR: `에러(적색 아이콘)` |
 | backups.dbInstanceId | UUID | 원본 DB 인스턴스의 식별자 |
 | backups.dbVersion | String | DB 엔진 유형 |
 | backups.utilVersion | String | 유틸리티 버전 |
@@ -3099,7 +3099,7 @@ POST /v3.0/backups/{backupId}/export
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | tenantId | String | Y | 백업이 저장될 오브젝트 스토리지의 테넌트 ID<br/>- 최소 길이: `32`<br/>- 최대 길이: `32` |
-| username | String | Y | NHN Cloud 계정 혹은 IAM 회원 ID |
+| username | String | Y | NHN Cloud 계정 또는 IAM 계정 ID |
 | password | String | Y | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
 | targetContainer | String | Y | 백업이 저장될 오브젝트 스토리지의 컨테이너 |
 | objectPath | String | Y | 컨테이너에 저장될 백업의 경로 |
@@ -3213,7 +3213,7 @@ POST /v3.0/backups/{backupId}/restore
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
 | backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- KR1: `한국(판교)`<br/>- KR2: `한국(평촌)`<br/>- JP1: `일본(도쿄)` |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
-| backup.backupSchedules | Array | Y | 백업 스케쥴 목록 |
+| backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시각 |
 | backup.backupSchedules.backupWndDuration | Enum | Y | 백업 Duration<br/>- HALF_AN_HOUR: `30분`<br/>- ONE_HOUR: `1시간`<br/>- ONE_HOUR_AND_HALF: `1시간 30분`<br/>- TWO_HOURS: `2시간`<br/>- TWO_HOURS_AND_HALF: `2시간 30분`<br/>- THREE_HOURS: `3시간` |
 
@@ -3297,7 +3297,7 @@ GET /v3.0/db-security-groups
 | dbSecurityGroups.dbSecurityGroupId | UUID | DB 보안 그룹의 식별자 |
 | dbSecurityGroups.dbSecurityGroupName | String | DB 보안 그룹을 식별할 수 있는 이름 |
 | dbSecurityGroups.description | String | DB 보안 그룹에 대한 추가 정보 |
-| dbSecurityGroups.progressStatus | Enum | DB 보안 그룹의 현재 진행 상태<br/>- NONE: `없음`<br/>- CREATING_RULE: `규칙 생성중`<br/>- UPDATING_RULE: `규칙 수정중`<br/>- DELETING_RULE: `규칙 삭제중`<br/>- APPLYING_DEFAULT_RULE: `기본 규칙 적용중` |
+| dbSecurityGroups.progressStatus | Enum | DB 보안 그룹의 현재 진행 상태<br/>- NONE: `없음`<br/>- CREATING_RULE: `규칙 생성 중`<br/>- UPDATING_RULE: `규칙 수정 중`<br/>- DELETING_RULE: `규칙 삭제 중`<br/>- APPLYING_DEFAULT_RULE: `기본 규칙 적용 중` |
 | dbSecurityGroups.createdYmdt | DateTime | 생성 일시 |
 | dbSecurityGroups.updatedYmdt | DateTime | 수정 일시 |
 
@@ -3346,7 +3346,7 @@ POST /v3.0/db-security-groups
 | rules.direction | Enum | Y | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
 | rules.etherType | Enum | Y | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
 | rules.port | Object | Y | 포트 객체 |
-| rules.port.portType | Enum | Y | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
+| rules.port.portType | Enum | Y | 포트 타입<br/>- ALL: `포트 범위 전체(사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
 | rules.port.minPort | Number | N | 최소 포트 범위<br/>- 최솟값: `3306` |
 | rules.port.maxPort | Number | N | 최대 포트 범위<br/>- 최댓값: `65535` |
 | rules.cidr | String | Y | CIDR |
@@ -3465,14 +3465,14 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 | dbSecurityGroup.dbSecurityGroupId | UUID | DB 보안 그룹의 식별자 |
 | dbSecurityGroup.dbSecurityGroupName | String | DB 보안 그룹을 식별할 수 있는 이름 |
 | dbSecurityGroup.description | String | DB 보안 그룹에 대한 추가 정보 |
-| dbSecurityGroup.progressStatus | Enum | DB 보안 그룹의 현재 진행 상태<br/>- NONE: `없음`<br/>- CREATING_RULE: `규칙 생성중`<br/>- UPDATING_RULE: `규칙 수정중`<br/>- DELETING_RULE: `규칙 삭제중`<br/>- APPLYING_DEFAULT_RULE: `기본 규칙 적용중` |
+| dbSecurityGroup.progressStatus | Enum | DB 보안 그룹의 현재 진행 상태<br/>- NONE: `없음`<br/>- CREATING_RULE: `규칙 생성 중`<br/>- UPDATING_RULE: `규칙 수정 중`<br/>- DELETING_RULE: `규칙 삭제 중`<br/>- APPLYING_DEFAULT_RULE: `기본 규칙 적용 중` |
 | dbSecurityGroup.rules | Array | DB 보안 그룹 규칙 목록 |
 | dbSecurityGroup.rules.ruleId | UUID | DB 보안 그룹 규칙의 식별자 |
 | dbSecurityGroup.rules.description | String | DB 보안 그룹 규칙에 대한 추가 정보 |
 | dbSecurityGroup.rules.direction | Enum | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
 | dbSecurityGroup.rules.etherType | Enum | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
 | dbSecurityGroup.rules.port | Object | 포트 객체 |
-| dbSecurityGroup.rules.port.portType | Enum | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
+| dbSecurityGroup.rules.port.portType | Enum | 포트 타입<br/>- ALL: `포트 범위 전체(사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
 | dbSecurityGroup.rules.port.minPort | Number | 최소 포트 범위 |
 | dbSecurityGroup.rules.port.maxPort | Number | 최대 포트 범위 |
 | dbSecurityGroup.rules.cidr | String | CIDR |
@@ -3605,7 +3605,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 | direction | Enum | Y | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
 | etherType | Enum | Y | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
 | port | Object | Y | 포트 객체 |
-| port.portType | Enum | Y | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
+| port.portType | Enum | Y | 포트 타입<br/>- ALL: `포트 범위 전체(사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
 | port.minPort | Number | N | 최소 포트 범위<br/>- 최솟값: `3306` |
 | port.maxPort | Number | N | 최대 포트 범위<br/>- 최댓값: `65535` |
 | cidr | String | Y | CIDR |
@@ -3676,7 +3676,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | direction | Enum | Y | 통신 방향<br/>- INGRESS: `수신`<br/>- EGRESS: `송신` |
 | etherType | Enum | Y | Ether 타입<br/>- IPV4: `IPv4 형식`<br/>- IPV6: `IPv6 형식` |
 | port | Object | Y | 포트 객체 |
-| port.portType | Enum | Y | 포트 타입<br/>- ALL: `포트 범위 전체 (사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
+| port.portType | Enum | Y | 포트 타입<br/>- ALL: `포트 범위 전체(사용자 콘솔에서는 사용하지 않음)`<br/>- PORT: `특정 포트`<br/>- DB_PORT: `DB 수신 포트`<br/>- PORT_RANGE: `포트 범위` |
 | port.minPort | Number | N | 최소 포트 범위<br/>- 최솟값: `3306` |
 | port.maxPort | Number | N | 최대 포트 범위<br/>- 최댓값: `65535` |
 | cidr | String | Y | CIDR |
@@ -4734,9 +4734,9 @@ GET /v3.0/events
 | events.eventCode | Enum | 발생한 이벤트의 유형 |
 | events.sourceId | UUID | 이벤트 소스의 식별자 |
 | events.sourceName | String | 이벤트 소스를 식별할 수 있는 이름 |
-| events.messages | Array | 이벤트 메세지 목록 |
+| events.messages | Array | 이벤트 메시지 목록 |
 | events.messages.langCode | Enum | 언어 코드<br/>- KO<br/>- EN<br/>- JA<br/>- ZH |
-| events.messages.message | String | 이벤트 메세지 |
+| events.messages.message | String | 이벤트 메시지 |
 | events.eventYmdt | DateTime | 이벤트 발생 일시 |
 
 ---
@@ -4800,7 +4800,7 @@ GET /v3.0/event-subscriptions
 | eventSubscriptions | Array | 이벤트 구독 목록 |
 | eventSubscriptions.eventSubscriptionId | UUID | 이벤트 구독의 식별자 |
 | eventSubscriptions.eventCategoryType | Enum | 이벤트 카테고리 유형<br/>- ALL<br/>- INSTANCE<br/>- DB_SECURITY_GROUP<br/>- MONITORING<br/>- JOB<br/>- BACKUP<br/>- TENANT |
-| eventSubscriptions.eventSubscriptionName | String | 이벤트 구독의 식별할 수 있는 이름 |
+| eventSubscriptions.eventSubscriptionName | String | 이벤트 구독을 식별할 수 있는 이름 |
 | eventSubscriptions.enabled | Boolean | 활성화 여부 |
 | eventSubscriptions.notifyEmail | Boolean | 이메일 발송 여부 |
 | eventSubscriptions.notifySms | Boolean | SMS 발송 여부 |

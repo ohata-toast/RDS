@@ -78,22 +78,22 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 
 | DBエンジンタイプ | 作成可否 | OBSからの復元可否 | 認証プラグインサポート情報 |
 |------------|----------|------------------|------------|
-| MARIADB_V10330 | X | X | NATIVE, ED25519 |
-| MARIADB_V10611 | X | X | NATIVE, ED25519 |
-| MARIADB_V10612 | X | X | NATIVE, ED25519 |
-| MARIADB_V10616 | X | X | NATIVE, ED25519 |
-| MARIADB_V10622 | X | X | NATIVE, ED25519 |
-| MARIADB_V10625 | X | X | NATIVE, ED25519 |
-| MARIADB_V101107 | O | O | NATIVE, ED25519 |
-| MARIADB_V101108 | O | O | NATIVE, ED25519 |
-| MARIADB_V101113 | O | O | NATIVE, ED25519 |
-| MARIADB_V101116 | O | O | NATIVE, ED25519 |
-| MARIADB_V101118 | O | O | NATIVE, ED25519 |
-| MARIADB_V11407 | O | O | NATIVE, ED25519 |
-| MARIADB_V11410 | O | O | NATIVE, ED25519 |
-| MARIADB_V11412 | O | O | NATIVE, ED25519 |
-| MARIADB_V11806 | O | O | NATIVE, ED25519 |
-| MARIADB_V11808 | O | O | NATIVE, ED25519 |
+| MARIADB_V10330 | X | X | ED25519, NATIVE |
+| MARIADB_V10611 | X | X | ED25519, NATIVE |
+| MARIADB_V10612 | X | X | ED25519, NATIVE |
+| MARIADB_V10616 | X | X | ED25519, NATIVE |
+| MARIADB_V10622 | X | X | ED25519, NATIVE |
+| MARIADB_V10625 | X | X | ED25519, NATIVE |
+| MARIADB_V101107 | O | O | ED25519, NATIVE |
+| MARIADB_V101108 | O | O | ED25519, NATIVE |
+| MARIADB_V101113 | O | O | ED25519, NATIVE |
+| MARIADB_V101116 | O | O | ED25519, NATIVE |
+| MARIADB_V101118 | O | O | ED25519, NATIVE |
+| MARIADB_V11407 | O | O | ED25519, NATIVE |
+| MARIADB_V11410 | O | O | ED25519, NATIVE |
+| MARIADB_V11412 | O | O | ED25519, NATIVE |
+| MARIADB_V11806 | O | O | ED25519, NATIVE |
+| MARIADB_V11808 | O | O | ED25519, NATIVE |
 
 * ENUMタイプのdbVersionフィールドに対して該当値を使用できます。
 * バージョンによって作成または復元が不可能な場合があります。
@@ -348,7 +348,7 @@ GET /v4.0/db-versions
 },
 "dbVersions": [
 {
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "dbVersionName": "dbVersionName-example",
 "restorableFromObs": false
 }
@@ -699,7 +699,7 @@ GET /v4.0/db-instances
 "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
 "dbInstanceName": "dbInstanceName-example",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "dbPort": 1,
 "dbInstanceType": "MASTER",
 "dbInstanceStatus": "BEFORE_CREATE",
@@ -754,7 +754,7 @@ POST /v4.0/db-instances
 "dbInstanceName": "dbInstanceName",
 "description": "description-example",
 "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "dbPort": 1,
 "dbUserName": "dbUserName",
 "dbPassword": "dbPassword",
@@ -899,7 +899,7 @@ POST /v4.0/db-instances/restore-from-obs
 "description": "description-example",
 "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
 "dbPort": 1,
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "useHighAvailability": false,
 "pingInterval": 3,
 "storage": {
@@ -1124,7 +1124,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
 "dbInstanceName": "dbInstanceName-example",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "dbPort": 1,
 "dbInstanceType": "MASTER",
 "dbInstanceStatus": "BEFORE_CREATE",
@@ -1209,7 +1209,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 "dbPort": 1,
 "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
 "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "useSlowQueryAnalysis": false,
 "useDummy": false,
 "dbSecurityGroupIds": [],
@@ -2704,7 +2704,7 @@ GET /v4.0/db-instances/{dbInstanceId}/maintenances
 | maintenances.payload | Object | メンテナンスタイプに応じたPayload |
 | maintenances.required | Boolean | メンテナンスが必須かどうか |
 | maintenances.deadlineYmdt | DateTime | メンテナンスの強制適用日時 |
-| maintenances.status | Enum | メンテナンスのステータス<br/>- PENDING: `待機`<br/>- READY: `準備`<br/>- RUNNING: `実行中`<br/>- COMPLETED: `完了`<br/>- FAILED: `失敗`<br/>- EXCLUDED: `除外`<br/>- DELETED: `削除`<br/>- UNKNOWN |
+| maintenances.status | Enum | メンテナンスのステータス<br/>- PENDING: `待機`<br/>- READY: `準備`<br/>- RUNNING: `実行中`<br/>- COMPLETED: `完了`<br/>- FAILED: `失敗`<br/>- EXCLUDED: `除外`<br/>- DELETED: `削除`<br/>- SUSPENDED: `保留`<br/>- UNKNOWN |
 | maintenances.executionType | Enum | メンテナンスの実行タイプ<br/>- SCHEDULED: `予約実行(メンテナンス期間中の自動実行)`<br/>- MANUAL: `手動実行(即時実行)`<br/>- FORCED: `強制実行(デッドライン超過後の自動実行)` |
 | maintenances.addedYmdt | DateTime | メンテナンススケジュール登録日時 |
 | maintenances.executionStartedYmdt | DateTime | メンテナンス開始日時 |
@@ -3246,7 +3246,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 "useOnlineFailover": false,
 "executeBackup": false,
 "waitReplicationDelay": false,
-"useReadOnly": false
+"useReadOnly": false,
+"osRestart": false
 }
 ```
 
@@ -3258,6 +3259,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | executeBackup | Boolean | N | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false` |
 | waitReplicationDelay | Boolean | N | レプリケーション遅延解消待機を行うかどうか<br/>- デフォルト値: `false` |
 | useReadOnly | Boolean | N | 書き込み負荷のブロック<br/>- デフォルト値: `false` |
+| osRestart | Boolean | N | オペレーティングシステムを再起動するかどうか<br/>- デフォルト値: `false` |
 
 #### レスポンス
 
@@ -3329,7 +3331,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 "backupStatus": "BACKING_UP",
 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
 "dbInstanceName": "dbInstanceName-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "backupType": "AUTO",
 "backupSize": 1,
 "useBackupLock": false,
@@ -3879,7 +3881,7 @@ GET /v4.0/backups
 "backupName": "backupName-example",
 "backupStatus": "BACKING_UP",
 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "utilVersion": "utilVersion-example",
 "backupType": "AUTO",
 "backupSize": 1,
@@ -4061,7 +4063,7 @@ GET /v4.0/backups/{backupId}
 "backupStatus": "BACKING_UP",
 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
 "dbInstanceName": "dbInstanceName-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "utilVersion": "utilVersion-example",
 "backupType": "AUTO",
 "backupMethodType": "FULL",
@@ -4861,7 +4863,7 @@ GET /v4.0/parameter-groups
 "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
 "parameterGroupName": "parameterGroupName-example",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "parameterGroupType": "USER",
 "parameterGroupStatus": "STABLE",
 "createdYmdt": "2023-12-31T15:00:00+09:00",
@@ -4881,7 +4883,7 @@ GET /v4.0/parameter-groups
 | parameterGroups.parameterGroupName | String | パラメータグループを識別できる名前 |
 | parameterGroups.description | String | パラメータグループの追加情報 |
 | parameterGroups.dbVersion | String | DBエンジンタイプ |
-| parameterGroups.parameterGroupType | Enum | パラメータグループタイプ<br/>- USER<br/>- ADMIN<br/>- DEFAULT<br/>- CLUSTER_USER |
+| parameterGroups.parameterGroupType | Enum | パラメータグループタイプ<br/>- USER<br/>- ADMIN<br/>- DEFAULT |
 | parameterGroups.parameterGroupStatus | Enum | パラメータグループの現在状態<br/>- STABLE: `適用完了`<br/>- NEED_TO_APPLY: `適用必要`<br/>- DELETED: `削除済み` |
 | parameterGroups.createdYmdt | DateTime | 作成日時 |
 | parameterGroups.updatedYmdt | DateTime | 修正日時 |
@@ -4911,7 +4913,7 @@ POST /v4.0/parameter-groups
 {
 "parameterGroupName": "parameterGroupName",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036"
+"dbVersion": "MARIADB_V101107"
 }
 ```
 
@@ -5016,7 +5018,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
 "parameterGroupName": "parameterGroupName-example",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "parameterGroupStatus": "STABLE",
 "parameters": [
 {

@@ -2717,7 +2717,7 @@ GET /v4.0/db-instances/{dbInstanceId}/maintenances
 | maintenances.payload | Object | メンテナンスタイプに応じたPayload |
 | maintenances.required | Boolean | メンテナンスが必須かどうか |
 | maintenances.deadlineYmdt | DateTime | メンテナンスの強制適用日時 |
-| maintenances.status | Enum | メンテナンスのステータス<br/>- PENDING: `待機`<br/>- READY: `準備`<br/>- RUNNING: `実行中`<br/>- COMPLETED: `完了`<br/>- FAILED: `失敗`<br/>- EXCLUDED: `除外`<br/>- DELETED: `削除`<br/>- UNKNOWN |
+| maintenances.status | Enum | メンテナンスのステータス<br/>- PENDING: `待機`<br/>- READY: `準備`<br/>- RUNNING: `実行中`<br/>- COMPLETED: `完了`<br/>- FAILED: `失敗`<br/>- EXCLUDED: `除外`<br/>- DELETED: `削除`<br/>- SUSPENDED: `保留`<br/>- UNKNOWN |
 | maintenances.executionType | Enum | メンテナンスの実行タイプ<br/>- SCHEDULED: `予約実行(メンテナンス期間中の自動実行)`<br/>- MANUAL: `手動実行(即時実行)`<br/>- FORCED: `強制実行(デッドライン超過後の自動実行)` |
 | maintenances.addedYmdt | DateTime | メンテナンススケジュール登録日時 |
 | maintenances.executionStartedYmdt | DateTime | メンテナンス開始日時 |
@@ -3259,7 +3259,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 "useOnlineFailover": false,
 "executeBackup": false,
 "waitReplicationDelay": false,
-"useReadOnly": false
+"useReadOnly": false,
+"osRestart": false
 }
 ```
 
@@ -3271,6 +3272,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | executeBackup | Boolean | N | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false` |
 | waitReplicationDelay | Boolean | N | レプリケーション遅延解消待機を行うかどうか<br/>- デフォルト値: `false` |
 | useReadOnly | Boolean | N | 書き込み負荷のブロック<br/>- デフォルト値: `false` |
+| osRestart | Boolean | N | オペレーティングシステムを再起動するかどうか<br/>- デフォルト値: `false` |
 
 #### レスポンス
 
@@ -4894,7 +4896,7 @@ GET /v4.0/parameter-groups
 | parameterGroups.parameterGroupName | String | パラメータグループを識別できる名前 |
 | parameterGroups.description | String | パラメータグループの追加情報 |
 | parameterGroups.dbVersion | String | DBエンジンタイプ |
-| parameterGroups.parameterGroupType | Enum | パラメータグループタイプ<br/>- USER<br/>- ADMIN<br/>- DEFAULT<br/>- CLUSTER_USER |
+| parameterGroups.parameterGroupType | Enum | パラメータグループタイプ<br/>- USER<br/>- ADMIN<br/>- DEFAULT |
 | parameterGroups.parameterGroupStatus | Enum | パラメータグループの現在状態<br/>- STABLE: `適用完了`<br/>- NEED_TO_APPLY: `適用必要`<br/>- DELETED: `削除済み` |
 | parameterGroups.createdYmdt | DateTime | 作成日時 |
 | parameterGroups.updatedYmdt | DateTime | 修正日時 |

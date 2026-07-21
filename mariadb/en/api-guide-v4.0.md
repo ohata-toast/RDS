@@ -78,22 +78,22 @@ The API responds with "200 OK" to all API requests. For more information on the 
 
 | DB engine type | Available for creation | Available for restoration from OBS | Authentication Plugin Support |
 |------------|----------|------------------|------------|
-| MARIADB_V10330 | X | X | NATIVE, ED25519 |
-| MARIADB_V10611 | X | X | NATIVE, ED25519 |
-| MARIADB_V10612 | X | X | NATIVE, ED25519 |
-| MARIADB_V10616 | X | X | NATIVE, ED25519 |
-| MARIADB_V10622 | X | X | NATIVE, ED25519 |
-| MARIADB_V10625 | X | X | NATIVE, ED25519 |
-| MARIADB_V101107 | O | O | NATIVE, ED25519 |
-| MARIADB_V101108 | O | O | NATIVE, ED25519 |
-| MARIADB_V101113 | O | O | NATIVE, ED25519 |
-| MARIADB_V101116 | O | O | NATIVE, ED25519 |
-| MARIADB_V101118 | O | O | NATIVE, ED25519 |
-| MARIADB_V11407 | O | O | NATIVE, ED25519 |
-| MARIADB_V11410 | O | O | NATIVE, ED25519 |
-| MARIADB_V11412 | O | O | NATIVE, ED25519 |
-| MARIADB_V11806 | O | O | NATIVE, ED25519 |
-| MARIADB_V11808 | O | O | NATIVE, ED25519 |
+| MARIADB_V10330 | X | X | ED25519, NATIVE |
+| MARIADB_V10611 | X | X | ED25519, NATIVE |
+| MARIADB_V10612 | X | X | ED25519, NATIVE |
+| MARIADB_V10616 | X | X | ED25519, NATIVE |
+| MARIADB_V10622 | X | X | ED25519, NATIVE |
+| MARIADB_V10625 | X | X | ED25519, NATIVE |
+| MARIADB_V101107 | O | O | ED25519, NATIVE |
+| MARIADB_V101108 | O | O | ED25519, NATIVE |
+| MARIADB_V101113 | O | O | ED25519, NATIVE |
+| MARIADB_V101116 | O | O | ED25519, NATIVE |
+| MARIADB_V101118 | O | O | ED25519, NATIVE |
+| MARIADB_V11407 | O | O | ED25519, NATIVE |
+| MARIADB_V11410 | O | O | ED25519, NATIVE |
+| MARIADB_V11412 | O | O | ED25519, NATIVE |
+| MARIADB_V11806 | O | O | ED25519, NATIVE |
+| MARIADB_V11808 | O | O | ED25519, NATIVE |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -348,7 +348,7 @@ This API does not require a request body.
 },
 "dbVersions": [
 {
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "dbVersionName": "dbVersionName-example",
 "restorableFromObs": false
 }
@@ -699,7 +699,7 @@ This API does not require a request body.
 "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
 "dbInstanceName": "dbInstanceName-example",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "dbPort": 1,
 "dbInstanceType": "MASTER",
 "dbInstanceStatus": "BEFORE_CREATE",
@@ -754,7 +754,7 @@ POST /v4.0/db-instances
 "dbInstanceName": "dbInstanceName",
 "description": "description-example",
 "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "dbPort": 1,
 "dbUserName": "dbUserName",
 "dbPassword": "dbPassword",
@@ -899,7 +899,7 @@ POST /v4.0/db-instances/restore-from-obs
 "description": "description-example",
 "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
 "dbPort": 1,
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "useHighAvailability": false,
 "pingInterval": 3,
 "storage": {
@@ -1124,7 +1124,7 @@ This API does not require a request body.
 "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
 "dbInstanceName": "dbInstanceName-example",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "dbPort": 1,
 "dbInstanceType": "MASTER",
 "dbInstanceStatus": "BEFORE_CREATE",
@@ -1209,7 +1209,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 "dbPort": 1,
 "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
 "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "useSlowQueryAnalysis": false,
 "useDummy": false,
 "dbSecurityGroupIds": [],
@@ -2704,7 +2704,7 @@ This API does not require a request body.
 | maintenances.payload | Object | Payload according to maintenance type |
 | maintenances.required | Boolean | Whether the maintenance is required |
 | maintenances.deadlineYmdt | DateTime | Datetime when the maintenance is forcibly applied |
-| maintenances.status | Enum | Maintenance status<br/>- PENDING: `Pending`<br/>- READY: `Ready`<br/>- RUNNING: `Running`<br/>- COMPLETED: `Completed`<br/>- FAILED: `Failed`<br/>- EXCLUDED: `Excluded`<br/>- DELETED: `Deleted`<br/>- UNKNOWN |
+| maintenances.status | Enum | Maintenance status<br/>- PENDING: `Pending`<br/>- READY: `Ready`<br/>- RUNNING: `Running`<br/>- COMPLETED: `Completed`<br/>- FAILED: `Failed`<br/>- EXCLUDED: `Excluded`<br/>- DELETED: `Deleted`<br/>- SUSPENDED: `Suspended`<br/>- UNKNOWN |
 | maintenances.executionType | Enum | Maintenance execution type<br/>- SCHEDULED: `Scheduled execution (automatic execution during maintenance window)`<br/>- MANUAL: `Manual execution (immediate execution)`<br/>- FORCED: `Forced execution (automatic execution after deadline exceeded)` |
 | maintenances.addedYmdt | DateTime | Datetime when the maintenance was scheduled |
 | maintenances.executionStartedYmdt | DateTime | Maintenance start datetime |
@@ -3246,7 +3246,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 "useOnlineFailover": false,
 "executeBackup": false,
 "waitReplicationDelay": false,
-"useReadOnly": false
+"useReadOnly": false,
+"osRestart": false
 }
 ```
 
@@ -3258,6 +3259,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | executeBackup | Boolean | N | Whether to execute backup at this time<br/>- Default: `false` |
 | waitReplicationDelay | Boolean | N | Wait for replication lag to clear<br/>- Default: `false` |
 | useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
+| osRestart | Boolean | N | Whether to restart the operating system<br/>- Default: `false` |
 
 #### Response
 
@@ -3329,7 +3331,7 @@ This API does not require a request body.
 "backupStatus": "BACKING_UP",
 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
 "dbInstanceName": "dbInstanceName-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "backupType": "AUTO",
 "backupSize": 1,
 "useBackupLock": false,
@@ -3879,7 +3881,7 @@ This API does not require a request body.
 "backupName": "backupName-example",
 "backupStatus": "BACKING_UP",
 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "utilVersion": "utilVersion-example",
 "backupType": "AUTO",
 "backupSize": 1,
@@ -4061,7 +4063,7 @@ This API does not require a request body.
 "backupStatus": "BACKING_UP",
 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
 "dbInstanceName": "dbInstanceName-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "utilVersion": "utilVersion-example",
 "backupType": "AUTO",
 "backupMethodType": "FULL",
@@ -4861,7 +4863,7 @@ This API does not require a request body.
 "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
 "parameterGroupName": "parameterGroupName-example",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "parameterGroupType": "USER",
 "parameterGroupStatus": "STABLE",
 "createdYmdt": "2023-12-31T15:00:00+09:00",
@@ -4881,7 +4883,7 @@ This API does not require a request body.
 | parameterGroups.parameterGroupName | String | Name to identify parameter groups |
 | parameterGroups.description | String | Additional information on parameter group |
 | parameterGroups.dbVersion | String | DB engine type |
-| parameterGroups.parameterGroupType | Enum | Parameter group type<br/>- USER<br/>- ADMIN<br/>- DEFAULT<br/>- CLUSTER_USER |
+| parameterGroups.parameterGroupType | Enum | Parameter group type<br/>- USER<br/>- ADMIN<br/>- DEFAULT |
 | parameterGroups.parameterGroupStatus | Enum | Parameter group current status<br/>- STABLE: `Applied`<br/>- NEED_TO_APPLY: `Need to apply`<br/>- DELETED: `Deleted` |
 | parameterGroups.createdYmdt | DateTime | Created at |
 | parameterGroups.updatedYmdt | DateTime | Modified date and time |
@@ -4911,7 +4913,7 @@ POST /v4.0/parameter-groups
 {
 "parameterGroupName": "parameterGroupName",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036"
+"dbVersion": "MARIADB_V101107"
 }
 ```
 
@@ -5016,7 +5018,7 @@ This API does not require a request body.
 "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
 "parameterGroupName": "parameterGroupName-example",
 "description": "description-example",
-"dbVersion": "MYSQL_V8036",
+"dbVersion": "MARIADB_V101107",
 "parameterGroupStatus": "STABLE",
 "parameters": [
 {
