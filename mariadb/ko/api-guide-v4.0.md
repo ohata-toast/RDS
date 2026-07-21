@@ -816,7 +816,7 @@ POST /v4.0/db-instances
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
 | useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
 | authenticationPlugin | Enum | N | 인증 플러그인<br/>- NATIVE: `mysql_native_password 인증`<br/>- ED25519: `ed25519 인증(MariaDB 전용)` |
-| tlsOption | Enum | N | TLS ìµì<br/>- 기본값: `NONE`<br/>- NONE: `TLS 미사용`<br/>- SSL: `SSL 인증`<br/>- X509: `X509 인증서 인증` |
+| tlsOption | Enum | N | TLS 옵션<br/>- 기본값: `NONE`<br/>- NONE: `TLS 미사용`<br/>- SSL: `SSL 인증`<br/>- X509: `X509 인증서 인증` |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.subnetId | UUID | Y | 서브넷의 식별자 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부<br/>- 기본값: `false` |
