@@ -30,47 +30,47 @@ const allConfigs = [
     {
         engine: 'mysql',
         env: 'public',
-        exclusionDocs: []
+        exclusionDocs: ['api-guide-v3.0', 'api-guide-v4.0']
     },
     {
         engine: 'mysql',
         env: 'gov',
-        exclusionDocs: []
+        exclusionDocs: ['api-guide-v3.0', 'api-guide-v4.0']
     },
     {
         engine: 'mysql',
         env: 'ncgn',
-        exclusionDocs: []
+        exclusionDocs: ['api-guide-v3.0', 'api-guide-v4.0']
     },
     {
         engine: 'mysql',
         env: 'ninc',
-        exclusionDocs: ['api-guide-v2.0']
+        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0', 'api-guide-v4.0']
     },
     {
         engine: 'mysql',
         env: 'ngovc',
-        exclusionDocs: ['api-guide-v2.0']
+        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0', 'api-guide-v4.0']
     },
     {
         engine: 'mysql',
         env: 'ngoic',
-        exclusionDocs: ['api-guide-v2.0']
+        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0', 'api-guide-v4.0']
     },
     {
         engine: 'mysql',
         env: 'ngsc',
-        exclusionDocs: ['api-guide-v2.0']
+        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0', 'api-guide-v4.0']
     },
     {
         engine: 'mariadb',
         env: 'public',
-        exclusionDocs: []
+        exclusionDocs: ['api-guide-v4.0']
     },
     {
         engine: 'mariadb',
         env: 'gov',
-        exclusionDocs: []
+        exclusionDocs: ['api-guide-v4.0']
     }
 ];
 
