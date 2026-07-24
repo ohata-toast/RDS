@@ -936,7 +936,7 @@ POST /v3.0/db-instances/restore-from-obs
 | backup.backupSchedules.backupWndDuration | Enum | Y | バックアップDuration<br/>- HALF_AN_HOUR: `30分`<br/>- ONE_HOUR: `1時間`<br/>- ONE_HOUR_AND_HALF: `1時間30分`<br/>- TWO_HOURS: `2時間`<br/>- TWO_HOURS_AND_HALF: `2時間30分`<br/>- THREE_HOURS: `3時間` |
 | restore | Object | Y | 復元情報オブジェクト |
 | restore.tenantId | String | Y | バックアップが保存されたオブジェクトストレージのテナントID |
-| restore.username | String | Y | NHN CloudアカウントまたはメンバーアカウントまたはIAMメンバーID |
+| restore.username | String | Y | NHN CloudアカウントまたはメンバーアカウントまたはIAMアカウントID |
 | restore.password | String | Y | バックアップが保存されたオブジェクトストレージのAPIパスワード |
 | restore.targetContainer | String | Y | バックアップが保存されたオブジェクトストレージのコンテナ |
 | restore.objectPath | String | Y | コンテナに保存されたバックアップのパス |
@@ -1377,7 +1377,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 | 名前 | タイプ | 必須 | 説明 |
 |-----|-----|-----|-----|
 | tenantId | String | Y | バックアップが保存されるオブジェクトストレージのテナントID<br/>- 最小長さ: `32`<br/>- 最大長さ: `32` |
-| username | String | Y | NHN Cloud会員またはIAMメンバーID |
+| username | String | Y | NHN Cloud会員またはIAMアカウントID |
 | password | String | Y | バックアップが保存されるオブジェクトストレージのAPIパスワード |
 | targetContainer | String | Y | バックアップが保存されるオブジェクトストレージのコンテナ |
 | objectPath | String | Y | コンテナに保存されるバックアップのパス |
@@ -1649,7 +1649,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 #### リクエスト
 
 ```http
-<!-- TERM-UNRESOLVED: DB 이미지 메타 (セクション「テスト用DBイメージメタの変更」— 発行済みJA先例なし) -->
+<!-- TERM-UNRESOLVED: DBイメージメタ (セクション「テスト用DBイメージメタの変更」— 発行済みJA先例なし) -->
 ```
 
 #### リクエストパラメータ
@@ -2189,7 +2189,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 |-----|-----|-----|-----|
 | logFileNames | Array | Y | ログファイル名リスト |
 | tenantId | String | Y | ログファイルが保存されるオブジェクトストレージのテナントID<br/>- 最小長: `32`<br/>- 最大長: `32` |
-| username | String | Y | NHN CloudアカウントまたはIAMメンバーID |
+| username | String | Y | NHN CloudアカウントまたはIAMアカウントID |
 | password | String | Y | ログファイルが保存されるオブジェクトストレージのAPIパスワード |
 | targetContainer | String | Y | ログファイルが保存されるオブジェクトストレージのコンテナ |
 | objectPath | String | Y | コンテナに保存されるログファイルのパス |
@@ -3099,7 +3099,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | 名前 | タイプ | 必須 | 説明 |
 |-----|-----|-----|-----|
 | tenantId | String | Y | バックアップが保存されるオブジェクトストレージのテナントID<br/>- 最小長さ: `32`<br/>- 最大長さ: `32` |
-| username | String | Y | NHN Cloud会員またはIAMメンバーID |
+| username | String | Y | NHN Cloud会員またはIAMアカウントID |
 | password | String | Y | バックアップが保存されるオブジェクトストレージのAPIパスワード |
 | targetContainer | String | Y | バックアップが保存されるオブジェクトストレージのコンテナ |
 | objectPath | String | Y | コンテナに保存されるバックアップのパス |

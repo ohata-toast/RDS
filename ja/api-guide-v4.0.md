@@ -987,7 +987,7 @@ POST /v4.0/db-instances/restore-from-obs
 | backup.backupSchedules.backupWndDuration | Enum | Y | バックアップDuration<br/>- HALF_AN_HOUR: `30分`<br/>- ONE_HOUR: `1時間`<br/>- ONE_HOUR_AND_HALF: `1時間30分`<br/>- TWO_HOURS: `2時間`<br/>- TWO_HOURS_AND_HALF: `2時間30分`<br/>- THREE_HOURS: `3時間` |
 | restore | Object | Y | 復元情報オブジェクト |
 | restore.tenantId | String | Y | バックアップが保存されたオブジェクトストレージのテナントID |
-| restore.username | String | Y | NHN Cloud会員またはIAMメンバーID |
+| restore.username | String | Y | NHN Cloud会員またはIAMアカウントID |
 | restore.password | String | Y | バックアップが保存されたオブジェクトストレージのAPIパスワード |
 | restore.targetContainer | String | Y | バックアップが保存されたオブジェクトストレージのコンテナ |
 | restore.objectPath | String | Y | コンテナに保存されたバックアップのパス |
@@ -1620,7 +1620,7 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 |-----|-----|-----|-----|
 | certificateTypes | Array | Y | アップロードする証明書タイプ一覧 |
 | tenantId | String | Y | 証明書ファイルが保存されるObject StorageのテナントID<br/>- 最小長さ: `32`<br/>- 最大長さ: `32` |
-| username | String | Y | NHN CloudアカウントまたはIAMメンバーID |
+| username | String | Y | NHN CloudアカウントまたはIAMアカウントID |
 | password | String | Y | 証明書ファイルが保存されるObject StorageのAPIパスワード |
 | targetContainer | String | Y | 証明書ファイルが保存されるObject Storageのコンテナ |
 | objectPath | String | Y | コンテナに保存される証明書ファイルのパス |
@@ -2564,7 +2564,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 |-----|-----|-----|-----|
 | logFileNames | Array | Y | ログファイル名リスト |
 | tenantId | String | Y | ログファイルが保存されるオブジェクトストレージのテナントID<br/>- 最小長: `32`<br/>- 最大長: `32` |
-| username | String | Y | NHN CloudアカウントまたはIAMメンバーID |
+| username | String | Y | NHN CloudアカウントまたはIAMアカウントID |
 | password | String | Y | ログファイルが保存されるオブジェクトストレージのAPIパスワード |
 | targetContainer | String | Y | ログファイルが保存されるオブジェクトストレージのコンテナ |
 | objectPath | String | Y | コンテナに保存されるログファイルのパス |
@@ -4157,7 +4157,7 @@ POST /v4.0/backups/{backupId}/export
 | 名前 | タイプ | 必須 | 説明 |
 |-----|-----|-----|-----|
 | tenantId | String | Y | バックアップが保存されるオブジェクトストレージのテナントID<br/>- 最小長さ: `32`<br/>- 最大長さ: `32` |
-| username | String | Y | NHN CloudアカウントまたはIAMメンバーID |
+| username | String | Y | NHN CloudアカウントまたはIAMアカウントID |
 | password | String | Y | バックアップが保存されるオブジェクトストレージのAPIパスワード |
 | targetContainer | String | Y | バックアップが保存されるオブジェクトストレージのコンテナ |
 | objectPath | String | Y | コンテナに保存されるバックアップのパス |
